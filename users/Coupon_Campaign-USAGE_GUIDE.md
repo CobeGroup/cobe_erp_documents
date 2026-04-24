@@ -1,6 +1,7 @@
 ---
 title: Guide
 layout: default
+nav_order: 1
 ---
 # Hướng dẫn sử dụng Coupon Campaign
 
