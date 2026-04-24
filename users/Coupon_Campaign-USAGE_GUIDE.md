@@ -1,3 +1,7 @@
+---
+title: Guide
+layout: default
+---
 # Hướng dẫn sử dụng Coupon Campaign
 
 ## Mục lục
