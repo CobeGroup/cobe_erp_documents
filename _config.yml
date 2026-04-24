@@ -1,3 +1,16 @@
-theme: jekyll-theme-cayman
+remote_theme: just-the-docs/just-the-docs
 title: COBE Group - ERP - Documents
 description: Tài liệu hướng dẫn cho COBE Group ERP
+
+plugins:
+  - jekyll-remote-theme
+
+# Bật mục lục tự động (sidebar bên phải trong mỗi trang)
+toc_list:
+  toc_heading: "Mục lục"
+
+# Tùy chọn màu: light, dark
+color_scheme: light
+
+# Bật search box
+search_enabled: true
