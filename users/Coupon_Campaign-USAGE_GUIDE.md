@@ -1,8 +1,10 @@
 ---
-title: Guide
+title: Coupon Campaign — Khuyến mãi
 layout: default
+parent: Marketing & Khách hàng
 nav_order: 1
 ---
+
 # Hướng dẫn sử dụng Coupon Campaign
 
 ## Mục lục

@@ -1,3 +1,10 @@
+---
+title: Zalo Mini App (Khách hàng)
+layout: default
+parent: Marketing & Khách hàng
+nav_order: 3
+---
+
 # Hướng dẫn sử dụng Zalo Mini App — Thế Giới Điện Giải
 
 Tài liệu dành cho khách hàng, hướng dẫn cách mở và sử dụng đầy đủ các tính năng
