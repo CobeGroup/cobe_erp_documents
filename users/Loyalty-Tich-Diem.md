@@ -36,6 +36,29 @@ go-live.
 
 ---
 
+## 1.1. Master switch — feature flag để rollout an toàn
+
+Toàn bộ phần **AWARD điểm tự động** (SO complete, SI cash, referral) được
+gate bởi 2 cấp switch trong `COBE Loyalty Settings`:
+
+| Switch | Default | Tắt = |
+|---|---|---|
+| `enabled` (Master, Single) | **OFF** | Mọi SI submit không tích điểm. Hook `before_submit` set `dont_create_loyalty_points=1` cho TẤT CẢ SI → chặn cả built-in ERPNext. Khách bị return/cancel SI vẫn được reverse (chỉ chặn FORWARD award). |
+| `enabled` (per-company row) | **OFF** | Riêng company đó không award (SO + SI cash + referral). Company khác không ảnh hưởng. Phải bật cả Master + row của company thì mới award. |
+
+> Default OFF khi deploy mới — ZERO RISK. Admin tự bật từng cấp khi sẵn sàng.
+
+**Các đường KHÔNG bị chặn bởi switch** (vẫn chạy ngay cả khi Master OFF):
+- `COBE Loyalty Adjustment` thủ công (Add/Deduct)
+- `Set VIP Tier` button trên Customer form
+- Backfill / VIP Seed CSV qua page Loyalty Migration
+- Reverse khi cancel/return SI (giữ audit trail)
+- Outbound 3rd party event — gate bởi `Sync Settings.enabled` riêng
+
+Workflow rollout production an toàn xem [§2.1](#21-workflow-rollout-production).
+
+---
+
 ## 2. Checklist setup (làm trước khi bật tính năng)
 
 1. **Tạo 1 Loyalty Program cho mỗi Company** (hoặc 1 program dùng chung —
@@ -78,6 +101,44 @@ go-live.
    bench --site <site> clear-cache
    bench restart
    ```
+
+---
+
+## 2.1. Workflow rollout production
+
+Mỗi lần deploy production (hoặc rollout cho company mới):
+
+```
+Bước 1: bench migrate + restart
+        → Master OFF, mọi company OFF, Sync OFF (default)
+        → SI submit bình thường, KHÔNG tích điểm, KHÔNG báo 3rd party
+        → ZERO RISK ngay sau deploy
+
+Bước 2: Setup config
+        - Tạo / gán Loyalty Program cho 1-2 customer test
+        - Vào COBE Loyalty Settings → tick Master `enabled`
+        - Tick row company test (`enabled = 1`)
+
+Bước 3: Test award (offline với 3rd party)
+        - Submit SI test với customer test trong company test
+        - Verify LPE +N được tạo trong Loyalty Point Entry list
+        - Cancel SI test, verify LPE -N bù trừ
+
+Bước 4: Test outbound (riêng)
+        - Vào COBE Loyalty Sync Settings → tick Sync Enabled
+        - Thêm endpoint test cho company test trong Endpoints table
+        - Submit SI mới, verify Event được POST tới 3rd party staging
+          (xem COBE Loyalty Event list, status=Sent + response)
+
+Bước 5: Rollout từng company production
+        - Bật từng row company trong COBE Loyalty Settings
+        - Thêm endpoint production cho từng row trong Sync Settings
+        - Theo dõi Error Log + COBE Loyalty Event list
+
+Bước EMERGENCY: phát hiện bug nghiêm trọng
+        - Tắt Master `enabled` → toàn bộ award stop ngay lập tức
+        - Hoặc tắt Sync Settings.enabled → ngắt outbound (giữ award local)
+```
 
 ---
 
@@ -319,10 +380,11 @@ của Loyalty Program / `referral_conversion_factor` của settings → Reset �
 custom_for_cobegroup/custom_for_cobegroup/custom_for_cobegroup/
 ├── doctype/
 │   ├── cobe_loyalty_settings/                  # Single (cấu hình referral)
-│   ├── cobe_loyalty_settings_company/          # Child table
+│   ├── cobe_loyalty_settings_company/          # Child table (referral per company)
 │   ├── cobe_loyalty_adjustment/                # Submittable (cộng/trừ điểm thủ công)
 │   ├── cobe_loyalty_migration_run/             # 1 record / lần chạy migration
-│   ├── cobe_loyalty_sync_settings/             # Single (cấu hình outbound 3rd party)
+│   ├── cobe_loyalty_sync_settings/             # Single (cấu hình outbound 3rd party — general + endpoints)
+│   ├── cobe_loyalty_sync_endpoint/             # Child table (endpoint 3rd party per company)
 │   └── cobe_loyalty_event/                     # Queue 1 record / 1 event outbound
 ├── page/
 │   └── loyalty_migration/                      # Page admin để chạy migration
@@ -395,23 +457,72 @@ event lên hệ thống bên ngoài:
 ### 10a. Kiến trúc
 
 - Hook `Loyalty Point Entry.on_submit` → `loyalty/emitter.py::emit_lpe_event`
-  → tạo 1 record `COBE Loyalty Event` (status=Pending).
-- Scheduler `all` (~4 phút/lần) → `loyalty/sync_worker.py::flush_pending_events`
-  → POST tới `{base_url}/loyalty/events` kèm header `Idempotency-Key=<event_id>`
-  và `Authorization: Bearer <auth_token>`.
+  → tạo 1 record `COBE Loyalty Event` (status=Pending, ghi `company` lấy từ LPE).
+- Scheduler `all` (~4 phút/lần) → `loyalty/sync_worker.py::flush_pending_events`:
+  1. Pick các event `Pending` + `Failed` chưa quá `max_retry_attempts`.
+  2. Với mỗi event: resolve endpoint theo `event.company` qua
+     `get_endpoint_for_company()` đọc từ `COBE Loyalty Sync Settings → Endpoints`.
+  3. Không tìm thấy endpoint enabled cho company → mark `Skipped` (không retry).
+  4. POST tới `{endpoint.base_url}/loyalty/events` với headers:
+     - `Idempotency-Key: <event_id>`
+     - `Authorization: Bearer <endpoint.auth_token>` (nếu có token)
 - Backoff khi fail: 1m, 5m, 30m, 2h, 12h, 24h, 24h… đến `max_retry_attempts`
-  (mặc định 10) thì mark Failed vĩnh viễn.
+  của endpoint thì mark `Failed` vĩnh viễn.
+
+> Mỗi event đi tới endpoint của **đúng company của nó** — không có endpoint
+> chung. 3 company → 3 URL độc lập, retry/timeout độc lập.
 
 ### 10b. Cấu hình — `COBE Loyalty Sync Settings` (Single)
 
+Mỗi company gửi event tới một endpoint 3rd party RIÊNG (vd 3 company, 3 URL khác).
+
+**General** (toàn cục):
+
 | Field | Ý nghĩa |
 |---|---|
-| `enabled` | Master switch toàn bộ outbound. Tắt = ngừng gửi (LPE vẫn tạo bình thường). |
+| `enabled` | Master switch toàn bộ outbound. Tắt = ngừng gửi tất cả company. |
 | `event_emit_enabled` | Tắt riêng phần emit. Tắt khi chưa muốn báo 3rd party. |
-| `base_url` | Vd `https://loyalty.example.com/api/v1`. |
-| `auth_token` | Bearer token (Password field, mã hoá trong DB). |
-| `request_timeout_seconds` | Timeout HTTP, default 30. |
-| `max_retry_attempts` | Số lần thử tối đa, default 10. |
+| `request_timeout_seconds` | Default timeout HTTP (giây), default 30. Endpoint row có thể override. |
+| `max_retry_attempts` | Default số lần thử tối đa, default 10. Endpoint row có thể override. |
+
+**Endpoints** (child table — 1 row / company):
+
+| Field | Ý nghĩa |
+|---|---|
+| `enabled` | Tick = gửi event của company này. Bỏ tick = tạm dừng. |
+| `company` | Company nào dùng endpoint này (Link Company). Unique trong table. |
+| `base_url` | Vd `https://loyalty.companyA.com/api/v1`. Bắt buộc khi enabled. |
+| `auth_token` | Bearer token (Password, mã hoá DB). Trống = không gửi auth header. |
+| `request_timeout_seconds` | Override timeout cho company này. 0 = lấy default. |
+| `max_retry_attempts` | Override max retry cho company này. 0 = lấy default. |
+
+> Event của company KHÔNG có row enabled (hoặc base_url trống) sẽ bị mark
+> `Skipped` ngay khi worker pick lên — không retry. Operator có thể đổi
+> `status` về `Pending` thủ công nếu config sau đó.
+
+**Optional Payload Fields** (per endpoint, mặc định TẮT hết):
+
+Mặc định outbound payload chỉ chứa field tối thiểu để bảo vệ thông tin nhạy
+cảm: `event_type, occurred_at, customer.phone, company, delta_points,
+current_balance, current_rank`. Mỗi flag dưới đây thêm 1 nhóm field vào
+payload, áp riêng cho endpoint này (company khác không bị ảnh hưởng):
+
+| Flag | Field thêm vào payload | Cân nhắc |
+|---|---|---|
+| `include_customer_id` | `customer.id` | ID Customer nội bộ. |
+| `include_customer_pii` | `customer.name`, `customer.email` | **PII** — chỉ bật khi 3rd party cần hiển thị/gửi email. |
+| `include_loyalty_program` | `loyalty_program`, `loyalty_program_tier` | Tên chương trình + tier tại entry. |
+| `include_invoice_ref` | `invoice_type`, `invoice` | **Tên đơn nội bộ** (vd `SO-2026-00321`). |
+| `include_purchase_amount` | `purchase_amount` | **Doanh số giao dịch** (VND). |
+| `include_dates` | `posting_date`, `expiry_date` | Ngày ghi nhận + hạn dùng điểm. |
+| `include_reason` | `reason` | Chi tiết workflow nội bộ. |
+| `include_local_id` | `event_id_local` | ID LPE nội bộ. |
+
+> Filter happen ở worker (lúc send), KHÔNG ở emitter. Event row trong DB
+> luôn lưu payload đầy đủ → đổi flag bất kỳ lúc nào không cần re-emit; các
+> event Pending sau đó sẽ tự dùng flag mới. Event đã Sent không gửi lại.
+
+Spec đầy đủ để gửi cho bên thứ 3: [LOYALTY_3RD_PARTY_API.md](LOYALTY_3RD_PARTY_API.md).
 
 ### 10c. Payload mẫu
 
@@ -447,12 +558,23 @@ hoặc bỏ qua tuỳ ý.
 
 ### 10d. Vận hành
 
-- Xem queue: List view `COBE Loyalty Event` (Status standard filter).
-- Flush thủ công: gọi `flush_pending_events_now` (whitelisted, System Manager)
+- **Xem queue**: List view `COBE Loyalty Event`. Standard filter: `status`,
+  `company`, `event_type`. Lọc `status=Skipped` để soi các event mất do
+  thiếu endpoint config.
+- **Flush thủ công**: gọi `flush_pending_events_now` (whitelisted, System Manager)
   hoặc bench console:
   ```python
   bench --site <site> execute custom_for_cobegroup.custom_for_cobegroup.loyalty.sync_worker.flush_pending_events_now
   ```
-- Re-emit 1 event đã Failed: mở record, đổi `status` về `Pending` và clear
-  `next_attempt_at` (chỉnh tay) → scheduler tự pick lại lần kế tiếp.
-- Tắt khẩn cấp: vào `COBE Loyalty Sync Settings` bỏ tick `enabled`.
+- **Re-emit 1 event đã `Failed` hoặc `Skipped`**: mở record, đổi `status` về
+  `Pending`, clear `next_attempt_at` + `error_log`. Scheduler tick sau sẽ
+  pick lại. Nếu Skipped do thiếu endpoint, nhớ cấu hình endpoint trước.
+- **Thêm company mới**: vào `COBE Loyalty Sync Settings → Endpoints`, thêm 1
+  row mới (company + base_url + auth_token), tick enabled, Save.
+- **Đổi endpoint cho 1 company** (vd 3rd party đổi domain): sửa `base_url`
+  của row tương ứng → Save. Các event Pending của company đó sẽ tự đi tới
+  URL mới ở tick scheduler tiếp theo. Các event Sent đã xong không gửi lại.
+- **Tạm tắt 1 company**: bỏ tick `enabled` của row đó. Event của company
+  khác KHÔNG bị ảnh hưởng. Các event của company bị tắt sẽ Skipped.
+- **Tắt toàn bộ outbound**: vào General → bỏ tick `Sync Enabled`. Worker
+  không pick event nào (tất cả nằm Pending chờ bật lại).
