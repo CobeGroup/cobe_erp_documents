@@ -30,7 +30,8 @@ CFC="$APPS_DIR/custom_for_cobegroup/custom_for_cobegroup/custom_for_cobegroup"
 MAP=(
   # --- Marketing & Khách hàng ---
   "Coupon_Campaign-USAGE_GUIDE.md|$CFC/doctype/coupon_campaign/USAGE_GUIDE.md|Marketing & Khách hàng|1|Coupon Campaign — Khuyến mãi"
-  "Loyalty-Tich-Diem.md|$CFC/loyalty/LOYALTY_GUIDE.vi.md|Marketing & Khách hàng|2|Loyalty — Tích điểm"
+  # Loyalty docs (users/Loyalty-Tich-Diem.md + tech/Loyalty-3rd-Party-API.md)
+  # đã chuyển hẳn về repo này — biên soạn trực tiếp, không sync từ app source nữa.
   "HUONG_DAN_ZALO_MINIAPP.md|$CFC/zalo_miniapp/HUONG_DAN_ZALO_MINIAPP.md|Marketing & Khách hàng|3|Zalo Mini App (Khách hàng)"
 
   # --- Dịch vụ & Bảo dưỡng ---
@@ -54,7 +55,6 @@ STALE=(
 #  như README.md / ../hooks.py được giữ nguyên.)
 REWRITE=(
   "HUONG_DAN_SU_DUNG.md|Service_Reminder_Auto_Assign.md"
-  "LOYALTY_GUIDE.md|Loyalty-Tich-Diem.md"
 )
 
 # ---------------------------------------------------------------------------
@@ -89,8 +89,11 @@ Chọn nhóm tính năng ở thanh điều hướng bên trái, hoặc xem nhanh
 - **Marketing & Khách hàng** — Coupon khuyến mãi, Loyalty tích điểm, Zalo Mini App.
 - **Dịch vụ & Bảo dưỡng** — Tự động phân bổ ticket bảo dưỡng cho nhân viên.
 - **Vận chuyển & Giao nhận** — Quản lý vận đơn, tích hợp ERP, biên bản bàn giao.
+- **Tài liệu kỹ thuật** — API spec, design notes cho developer / 3rd party vendor.
 
-> Tài liệu được sinh tự động từ hướng dẫn trong source code. Để cập nhật, chạy `./sync.sh`.
+> Hướng dẫn người dùng cuối được sinh tự động qua `./sync.sh` (xem nguồn trong
+> source code các app). Tài liệu kỹ thuật trong `tech/` được biên soạn trực
+> tiếp trong repo này.
 EOF
 
   # Trang nhóm

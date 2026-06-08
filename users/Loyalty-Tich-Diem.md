@@ -15,7 +15,6 @@ go-live.
 Đối tượng: System Manager / Accounts Manager. Mọi đường dẫn nằm trong
 `apps/custom_for_cobegroup/custom_for_cobegroup/custom_for_cobegroup/`.
 
-> Bản tiếng Anh: [LOYALTY_GUIDE.md](Loyalty-Tich-Diem.md)
 
 ---
 
@@ -393,8 +392,6 @@ custom_for_cobegroup/custom_for_cobegroup/custom_for_cobegroup/
     ├── emitter.py                              # hook LPE.on_submit → tạo COBE Loyalty Event
     ├── sync_worker.py                          # scheduler all: gửi event Pending lên 3rd party
     ├── odoo_matcher.py                         # matcher 5 chiến lược
-    ├── LOYALTY_GUIDE.md                        # bản tiếng Anh
-    ├── LOYALTY_GUIDE.vi.md                     # file này
     └── api/
         ├── migration_runner.py                 # orchestrator enqueue + background job
         ├── lead_source_fix.py                  # analyze / dry_run / apply
@@ -522,7 +519,7 @@ payload, áp riêng cho endpoint này (company khác không bị ảnh hưởng)
 > luôn lưu payload đầy đủ → đổi flag bất kỳ lúc nào không cần re-emit; các
 > event Pending sau đó sẽ tự dùng flag mới. Event đã Sent không gửi lại.
 
-Spec đầy đủ để gửi cho bên thứ 3: [LOYALTY_3RD_PARTY_API.md](LOYALTY_3RD_PARTY_API.md).
+Spec đầy đủ để gửi cho bên thứ 3: [Loyalty — API tích hợp 3rd party](../tech/Loyalty-3rd-Party-API.md).
 
 ### 10c. Payload mẫu
 
