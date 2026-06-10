@@ -11,8 +11,10 @@ Tài liệu mô tả contract HTTP mà hệ thống ERPNext của Cobe Group s�
 hệ thống membership của bên thứ 3, để báo mọi thay đổi điểm thưởng (cộng/trừ)
 của khách hàng theo từng công ty.
 
-> Mỗi công ty trong Cobe Group có endpoint 3rd party RIÊNG. Bên thứ 3 cần
-> chuẩn bị 1 URL + 1 Bearer token cho mỗi công ty được tích hợp.
+> Mỗi công ty trong Cobe Group có **2 endpoint 3rd party RIÊNG**: 1 cho
+> cộng điểm (`loyalty.points_increased`) và 1 cho trừ điểm
+> (`loyalty.points_decreased`). Bên thứ 3 cần chuẩn bị 2 URL ĐẦY ĐỦ + 2
+> Bearer token (có thể giống nhau) cho mỗi công ty được tích hợp.
 
 ---
 
@@ -31,39 +33,45 @@ của khách hàng theo từng công ty.
 
 ## 2. Endpoint contract
 
-### URL
+### URL — 2 cái mỗi công ty (cộng + trừ)
 
+Bên thứ 3 cấp 2 URL **ĐẦY ĐỦ** cho mỗi công ty. ERPNext POST thẳng vào URL,
+KHÔNG tự ghép path — path tuỳ bên thứ 3 thiết kế.
+
+| Công ty Cobe | URL nhận `points_increased` (cộng điểm) | URL nhận `points_decreased` (trừ điểm) |
+|---|---|---|
+| COBE A | `https://loyalty.companyA.example.com/api/v1/points/credit` | `https://loyalty.companyA.example.com/api/v1/points/debit` |
+| COBE B | `https://loyalty.companyB.example.com/api/credit-points` | `https://loyalty.companyB.example.com/api/debit-points` |
+| COBE C | `https://loyalty-c.example.com/inc` | `https://loyalty-c.example.com/dec` |
+
+> 2 URL có thể CÙNG host + khác path (vd COBE A), hoặc HOÀN TOÀN KHÁC host
+> (vd COBE C). Tuỳ bên thứ 3.
+
+### Method + Content-Type
+
+```http
+POST <URL>
+Content-Type: application/json
 ```
-POST {base_url}/loyalty/events
-```
-
-`{base_url}` do bên thứ 3 cấp, **riêng cho mỗi công ty**. Ví dụ:
-
-| Công ty Cobe | Base URL mẫu |
-|---|---|
-| COBE A | `https://loyalty.companyA.example.com/api/v1` |
-| COBE B | `https://loyalty.companyB.example.com/api/v1` |
-| COBE C | `https://loyalty.companyC.example.com/api/v1` |
-
-→ Full URL gửi: `https://loyalty.companyA.example.com/api/v1/loyalty/events`
 
 ### Authentication
 
-Mỗi base URL đi kèm 1 Bearer token (do bên thứ 3 cấp).
+Mỗi URL đi kèm 1 Bearer token (do bên thứ 3 cấp). 2 token có thể giống nhau
+hoặc khác nhau.
 
 ```http
-Authorization: Bearer <token-của-công-ty-này>
+Authorization: Bearer <token-của-URL-này>
 ```
 
 Token tùy chọn (có thể trống nếu bên thứ 3 dùng IP allowlist), nhưng
 khuyến nghị bắt buộc.
 
-### Method + Content-Type
+### Routing — event nào đi tới URL nào
 
-```http
-POST /loyalty/events
-Content-Type: application/json
-```
+| event_type | URL ERPNext sẽ POST tới | Auth token dùng |
+|---|---|---|
+| `loyalty.points_increased` | URL cộng điểm | Token tương ứng |
+| `loyalty.points_decreased` | URL trừ điểm | Token tương ứng |
 
 ---
 
@@ -113,7 +121,7 @@ doanh số) **không gửi** trừ khi bên thứ 3 yêu cầu và Cobe bật fl
 | `event_type` | string | `loyalty.points_increased` hoặc `loyalty.points_decreased`. |
 | `occurred_at` | ISO 8601 datetime | Thời điểm LPE được tạo (lúc event sinh, không phải lúc gửi). |
 | `customer.phone` | string \| `null` | SĐT chuẩn hóa `0xxxxxxxxx`. Một số khách có thể chưa có SĐT. |
-| `company` | string | Tên công ty trong Cobe Group. Luôn khớp với base_url của endpoint. |
+| `company` | string | Tên công ty trong Cobe Group. Khớp với endpoint mà event này được route tới. |
 | `delta_points` | int signed | Điểm thay đổi lần này. Dương khi `increased`, âm khi `decreased`. |
 | `current_balance` | int | **Snapshot tuyệt đối** số điểm khả dụng SAU khi LPE này được apply. |
 | `current_rank` | string \| `null` | Tier hiện tại của khách trong Loyalty Program này sau khi apply. |
@@ -316,13 +324,13 @@ Lý do không dùng `SUM(delta_points)`:
 
 ## 9. Test với cURL
 
-### 9.1. Payload mặc định (minimal)
+### 9.1. Test endpoint CỘNG điểm — payload mặc định (minimal)
 
 ```bash
-curl -X POST 'https://your-3rd-party.example.com/api/v1/loyalty/events' \
+curl -X POST 'https://your-3rd-party.example.com/api/v1/points/credit' \
   -H 'Content-Type: application/json' \
   -H 'Idempotency-Key: 5f7c8b3a-4e2d-11f0-8b2e-0242ac120002' \
-  -H 'Authorization: Bearer YOUR_TEST_TOKEN' \
+  -H 'Authorization: Bearer YOUR_INCREASE_TOKEN' \
   -d '{
     "event_type": "loyalty.points_increased",
     "occurred_at": "2026-06-08T10:15:32.123456",
@@ -334,13 +342,31 @@ curl -X POST 'https://your-3rd-party.example.com/api/v1/loyalty/events' \
   }'
 ```
 
-### 9.2. Payload đầy đủ (tất cả flag bật)
+### 9.2. Test endpoint TRỪ điểm — payload mặc định
 
 ```bash
-curl -X POST 'https://your-3rd-party.example.com/api/v1/loyalty/events' \
+curl -X POST 'https://your-3rd-party.example.com/api/v1/points/debit' \
+  -H 'Content-Type: application/json' \
+  -H 'Idempotency-Key: a1b2c3d4-4e2d-11f0-8b2e-0242ac120002' \
+  -H 'Authorization: Bearer YOUR_DECREASE_TOKEN' \
+  -d '{
+    "event_type": "loyalty.points_decreased",
+    "occurred_at": "2026-06-08T11:00:00.000000",
+    "customer": { "phone": "0902537814" },
+    "company": "COBE A",
+    "delta_points": -250,
+    "current_balance": 12500,
+    "current_rank": "Gold"
+  }'
+```
+
+### 9.3. Payload đầy đủ (tất cả flag bật)
+
+```bash
+curl -X POST 'https://your-3rd-party.example.com/api/v1/points/credit' \
   -H 'Content-Type: application/json' \
   -H 'Idempotency-Key: 5f7c8b3a-4e2d-11f0-8b2e-0242ac120002' \
-  -H 'Authorization: Bearer YOUR_TEST_TOKEN' \
+  -H 'Authorization: Bearer YOUR_INCREASE_TOKEN' \
   -d '{
     "event_type": "loyalty.points_increased",
     "event_id_local": "LPE-TEST-0001",
@@ -366,7 +392,7 @@ curl -X POST 'https://your-3rd-party.example.com/api/v1/loyalty/events' \
   }'
 ```
 
-Expected response cho cả 2: `200 OK` với body tuỳ chọn.
+Expected response cho cả 3: `200 OK` với body tuỳ chọn.
 
 Gửi lại CÙNG request lần thứ 2 (same `Idempotency-Key`) → vẫn nên trả `200 OK`,
 KHÔNG cộng điểm lần 2.
@@ -375,14 +401,19 @@ KHÔNG cộng điểm lần 2.
 
 ## 10. Checklist tích hợp cho bên thứ 3
 
-- [ ] Cấp **1 URL endpoint riêng cho mỗi công ty** Cobe Group (3 URL nếu 3 công ty).
-- [ ] Cấp **1 Bearer token cho mỗi URL** (gửi Cobe để cấu hình).
-- [ ] Implement endpoint `POST /loyalty/events` parse JSON body theo §4.1
-      (payload mặc định tối thiểu).
+- [ ] Cấp **2 URL endpoint riêng cho mỗi công ty** Cobe Group:
+      1 URL nhận `loyalty.points_increased` (cộng điểm) + 1 URL nhận
+      `loyalty.points_decreased` (trừ điểm). 3 công ty → tổng 6 URL.
+- [ ] Cấp **Bearer token** cho mỗi URL (có thể giống nhau giữa cộng/trừ; gửi Cobe để cấu hình).
+- [ ] Implement endpoint nhận POST + parse JSON body theo §4.1 (payload mặc định tối thiểu).
 - [ ] Verify `Authorization: Bearer <token>` khớp token đã cấp; reject 401 nếu sai.
 - [ ] Verify `Content-Type: application/json`; reject 415 nếu sai.
 - [ ] **Dedupe theo `Idempotency-Key`** (xem §6). Đây là yêu cầu BẮT BUỘC.
-- [ ] Handle cả 2 `event_type`: increased + decreased.
+      Lưu ý: cùng `event_id` không xuất hiện trên cả 2 URL — mỗi event chỉ
+      route tới 1 URL theo `event_type`.
+- [ ] Endpoint cộng điểm CHỈ cần handle `loyalty.points_increased`; endpoint
+      trừ điểm CHỈ cần handle `loyalty.points_decreased`. Field `event_type`
+      vẫn có trong body để cross-check.
 - [ ] Identify khách qua `customer.phone` (chuẩn `0xxxxxxxxx`). SĐT có thể null.
 - [ ] Lưu `current_balance` + `current_rank` làm snapshot — dùng cho hiển thị
       điểm hiện tại của khách, không recompute từ `delta_points`.
@@ -390,7 +421,7 @@ KHÔNG cộng điểm lần 2.
 - [ ] **Nếu cần thêm field** (customer.id, name/email, invoice ref, purchase_amount,
       dates, reason, local_id): gửi yêu cầu cho Cobe IT kèm danh sách flag cần bật
       (§4.3). Lưu ý lập trình parse các field optional có thể `null`/vắng mặt.
-- [ ] Test với cURL mẫu §9 trước khi go-live.
+- [ ] Test cả 2 URL với cURL mẫu §9 trước khi go-live.
 - [ ] Confirm với Cobe để chuyển sang production endpoint.
 
 ---
@@ -402,4 +433,4 @@ KHÔNG cộng điểm lần 2.
 
 ---
 
-*Version 1.0 — last updated 2026-06-08*
+*Version 1.1 — last updated 2026-06-08 — split outbound endpoint into separate increase/decrease URLs per company.*

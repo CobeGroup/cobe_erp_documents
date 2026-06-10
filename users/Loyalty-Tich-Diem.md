@@ -454,24 +454,27 @@ event lên hệ thống bên ngoài:
 ### 10a. Kiến trúc
 
 - Hook `Loyalty Point Entry.on_submit` → `loyalty/emitter.py::emit_lpe_event`
-  → tạo 1 record `COBE Loyalty Event` (status=Pending, ghi `company` lấy từ LPE).
+  → tạo 1 record `COBE Loyalty Event` (status=Pending, ghi `company` + `event_type` lấy từ LPE).
 - Scheduler `all` (~4 phút/lần) → `loyalty/sync_worker.py::flush_pending_events`:
   1. Pick các event `Pending` + `Failed` chưa quá `max_retry_attempts`.
-  2. Với mỗi event: resolve endpoint theo `event.company` qua
-     `get_endpoint_for_company()` đọc từ `COBE Loyalty Sync Settings → Endpoints`.
-  3. Không tìm thấy endpoint enabled cho company → mark `Skipped` (không retry).
-  4. POST tới `{endpoint.base_url}/loyalty/events` với headers:
+  2. Với mỗi event: resolve endpoint theo `(event.company, event.event_type)`
+     qua `get_endpoint_for_event()` — chọn URL + token tương ứng:
+     - `loyalty.points_increased` → `url_increase` + `auth_token_increase`
+     - `loyalty.points_decreased` → `url_decrease` + `auth_token_decrease`
+  3. Không tìm thấy endpoint enabled (hoặc URL trống cho hướng đó) → mark `Skipped` (không retry).
+  4. POST thẳng vào URL với headers:
      - `Idempotency-Key: <event_id>`
-     - `Authorization: Bearer <endpoint.auth_token>` (nếu có token)
+     - `Authorization: Bearer <token>` (nếu có)
 - Backoff khi fail: 1m, 5m, 30m, 2h, 12h, 24h, 24h… đến `max_retry_attempts`
   của endpoint thì mark `Failed` vĩnh viễn.
 
-> Mỗi event đi tới endpoint của **đúng company của nó** — không có endpoint
-> chung. 3 company → 3 URL độc lập, retry/timeout độc lập.
+> Mỗi company có **2 URL riêng** (1 cộng + 1 trừ) — vì 3rd party thiết kế 2
+> endpoint khác nhau cho 2 chiều. 3 company → 6 URL độc lập, retry/timeout
+> độc lập, payload includes chung.
 
 ### 10b. Cấu hình — `COBE Loyalty Sync Settings` (Single)
 
-Mỗi company gửi event tới một endpoint 3rd party RIÊNG (vd 3 company, 3 URL khác).
+Mỗi company có 2 endpoint 3rd party RIÊNG: 1 cho cộng điểm, 1 cho trừ điểm.
 
 **General** (toàn cục):
 
@@ -488,14 +491,16 @@ Mỗi company gửi event tới một endpoint 3rd party RIÊNG (vd 3 company, 3
 |---|---|
 | `enabled` | Tick = gửi event của company này. Bỏ tick = tạm dừng. |
 | `company` | Company nào dùng endpoint này (Link Company). Unique trong table. |
-| `base_url` | Vd `https://loyalty.companyA.com/api/v1`. Bắt buộc khi enabled. |
-| `auth_token` | Bearer token (Password, mã hoá DB). Trống = không gửi auth header. |
-| `request_timeout_seconds` | Override timeout cho company này. 0 = lấy default. |
-| `max_retry_attempts` | Override max retry cho company này. 0 = lấy default. |
+| `url_increase` | URL ĐẦY ĐỦ cho event `loyalty.points_increased`. Vd `https://loyalty.companyA.com/api/v1/points/credit`. Bắt buộc khi enabled. |
+| `auth_token_increase` | Bearer token gửi kèm khi POST tới `url_increase`. Để trống = không gửi auth header. |
+| `url_decrease` | URL ĐẦY ĐỦ cho event `loyalty.points_decreased`. Vd `https://loyalty.companyA.com/api/v1/points/debit`. Bắt buộc khi enabled. |
+| `auth_token_decrease` | Bearer token gửi kèm khi POST tới `url_decrease`. Có thể giống `auth_token_increase` nếu 3rd party dùng chung. |
+| `request_timeout_seconds` | Override timeout cho company này (áp cho cả 2 URL). 0 = lấy default. |
+| `max_retry_attempts` | Override max retry cho company này (áp cho cả 2 URL). 0 = lấy default. |
 
-> Event của company KHÔNG có row enabled (hoặc base_url trống) sẽ bị mark
-> `Skipped` ngay khi worker pick lên — không retry. Operator có thể đổi
-> `status` về `Pending` thủ công nếu config sau đó.
+> Event của company KHÔNG có row enabled (hoặc URL của chiều đó trống) sẽ
+> bị mark `Skipped` ngay khi worker pick lên — không retry. Operator có thể
+> đổi `status` về `Pending` thủ công nếu config sau đó.
 
 **Optional Payload Fields** (per endpoint, mặc định TẮT hết):
 
@@ -567,10 +572,14 @@ hoặc bỏ qua tuỳ ý.
   `Pending`, clear `next_attempt_at` + `error_log`. Scheduler tick sau sẽ
   pick lại. Nếu Skipped do thiếu endpoint, nhớ cấu hình endpoint trước.
 - **Thêm company mới**: vào `COBE Loyalty Sync Settings → Endpoints`, thêm 1
-  row mới (company + base_url + auth_token), tick enabled, Save.
-- **Đổi endpoint cho 1 company** (vd 3rd party đổi domain): sửa `base_url`
-  của row tương ứng → Save. Các event Pending của company đó sẽ tự đi tới
-  URL mới ở tick scheduler tiếp theo. Các event Sent đã xong không gửi lại.
+  row mới (company + `url_increase` + `url_decrease` + 2 token tương ứng),
+  tick enabled, Save.
+- **Đổi endpoint cho 1 company** (vd 3rd party đổi domain): sửa
+  `url_increase` và/hoặc `url_decrease` của row tương ứng → Save. Các event
+  Pending của company đó sẽ tự đi tới URL mới ở tick scheduler tiếp theo.
+  Các event Sent đã xong không gửi lại.
+- **Tạm dừng riêng 1 chiều** (vd chỉ tắt trừ điểm): xoá `url_decrease` cho
+  row company đó → Save. Event tăng vẫn gửi bình thường; event trừ → Skipped.
 - **Tạm tắt 1 company**: bỏ tick `enabled` của row đó. Event của company
   khác KHÔNG bị ảnh hưởng. Các event của company bị tắt sẽ Skipped.
 - **Tắt toàn bộ outbound**: vào General → bỏ tick `Sync Enabled`. Worker
