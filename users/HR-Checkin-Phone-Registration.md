@@ -115,21 +115,70 @@ PWA tự re-check status mỗi lần mở. Khi thấy Active → cho phép tap "
 
 ---
 
-## 5. Đổi phone — re-register
+## 5. Đổi phone / đổi browser — re-register
 
-Khi nhân viên đổi phone (mất, hỏng, mua mới):
+Khi nào dùng:
+- Nhân viên mua phone mới
+- Phone cũ hỏng/mất
+- Đổi sang browser khác (Safari → Chrome → fingerprint khác)
+- Đăng ký nhầm thiết bị test
 
-### Bước 1: Cancel record cũ
+### Quy trình chuẩn (recommend)
 
-1. HR Manager mở record cũ của nhân viên → click **Cancel** (docstatus=2)
+**Bước 1: Nhân viên đăng ký phone mới (làm trước, không cần đợi HR)**
 
-### Bước 2: Nhân viên đăng ký phone mới
+1. Mở PWA trên phone/browser mới → login Frappe
+2. PWA detect fingerprint khác record cũ → **tự tạo record mới ở status Draft**
+3. PWA hiển thị "Đang chờ HR duyệt"
 
-1. Mở PWA trên phone mới → login
-2. PWA tự tạo record mới với fingerprint khác → status=Draft
-3. HR Manager duyệt lại như quy trình trên
+→ Lúc này tồn tại đồng thời:
+- 1 record CŨ docstatus=1, status=**Active**
+- 1 record MỚI docstatus=0 (Draft)
 
-**Lưu ý**: nếu không cancel record cũ trước, hệ thống sẽ có 2 record Active cho cùng employee → conflict, hành vi không xác định. Luôn cancel cũ trước.
+**Bước 2: HR Manager Deactivate record cũ**
+
+1. Mở record CŨ
+2. Đổi field **Status** từ `Active` → `Inactive`
+3. **Save** (không cần Cancel — field `status` có `allow_on_submit=1` nên edit được dù đã submit)
+
+**Bước 3: HR Manager Submit record mới**
+
+1. Mở record MỚI (Draft)
+2. Review user_agent xem có vẻ là phone của nhân viên đó không
+3. Click **Submit** → docstatus=1, status=Active
+
+**Bước 4: Nhân viên refresh PWA**
+
+PWA tự re-check status sau ~30s. Hoặc nhân viên F5 thủ công. Khi thấy Active → cho phép chấm công.
+
+### Nếu thử Submit record mới khi cũ chưa Inactive
+
+Server throw error:
+```
+Nhân viên HR-EMP-00001 đã có một phone đang Active (PHR-XXXXX).
+Vui lòng deactivate phone cũ trước khi duyệt phone mới.
+```
+
+→ Hệ thống **chặn rõ ràng** không cho có 2 phone Active cùng lúc. Phải làm Bước 2 trước Bước 3.
+
+### Khi nào Cancel thay vì Inactive?
+
+| Action | Khi nào dùng | Hệ quả |
+|---|---|---|
+| **Set status=Inactive** (recommend) | Đổi phone bình thường | docstatus vẫn = 1, vẫn xuất hiện trong list view với badge Inactive. Audit trail clean — biết phone này từng được duyệt rồi tắt. Có thể reactivate (đổi lại Active) nếu nhân viên dùng lại phone cũ. |
+| **Cancel** (docstatus=2) | Record bị nhập sai nghiêm trọng / cần xóa hẳn khỏi flow active | docstatus=2 = "Cancelled". Khó trace lại, không reactivate được. Chỉ dùng khi muốn xóa. |
+
+**Khuyến nghị**: luôn dùng Inactive trừ trường hợp đặc biệt.
+
+### Test flow này nhanh (dev)
+
+Tận dụng 2 browser khác nhau làm 2 phone:
+
+1. Chrome → `/attendance` → đăng ký → HR submit → chấm công OK
+2. Mở **Firefox** (hoặc Chrome Incognito) → `/attendance` → đăng ký lần 2 → Draft mới
+3. Desk: record Chrome → status=Inactive → Save
+4. Desk: record Firefox → Submit
+5. Firefox refresh → chấm công được
 
 ---
 
