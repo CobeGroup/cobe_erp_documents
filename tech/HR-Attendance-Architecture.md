@@ -208,18 +208,40 @@ Pivot history: dự án từng có ESP32 + TFT + QR rotation thiết kế hardwa
 
 Firmware code preserved trong commit `7c61481` của repo nếu cần khôi phục.
 
-### Feature flag mechanics (request-level caching)
+### Feature flag mechanics (per-Company, request-level caching)
 
-Settings loaded mỗi request (cheap — Single doctype 1 query). Pattern:
+Settings là **regular doctype, 1 record per Company** (unique constraint trên `company` field). Lookup theo `Employee.company`, cache request-level. Helpers ở `hr_for_cobegroup/utils/settings.py`:
 
 ```python
-def _get_settings():
-    if not hasattr(frappe.local, "_hr_attendance_settings"):
-        frappe.local._hr_attendance_settings = frappe.get_single("HR Attendance Settings")
-    return frappe.local._hr_attendance_settings
+def get_settings_for_employee(employee_name: str):
+    cache_key = f"_attendance_settings_emp_{employee_name}"
+    if hasattr(frappe.local, cache_key):
+        return getattr(frappe.local, cache_key)
+    company = frappe.db.get_value("Employee", employee_name, "company")
+    if not company:
+        frappe.throw(_("Employee {0} chưa có Company...").format(employee_name))
+    doc = get_settings_for_company(company)
+    setattr(frappe.local, cache_key, doc)
+    return doc
+
+def get_settings_for_company(company: str):
+    cache_key = f"_attendance_settings_co_{company}"
+    if hasattr(frappe.local, cache_key):
+        return getattr(frappe.local, cache_key)
+    name = frappe.db.get_value("HR Attendance Settings", {"company": company}, "name")
+    if not name:
+        frappe.throw(_("Company {0} chưa có HR Attendance Settings...").format(company))
+    doc = frappe.get_cached_doc("HR Attendance Settings", name)
+    setattr(frappe.local, cache_key, doc)
+    return doc
 ```
 
 Đổi flag → có hiệu lực ngay request tiếp theo. Không cần bench restart.
+
+**Bootstrap** (cả fresh install lẫn migrate):
+- `hooks.py.after_install` → `hr_for_cobegroup.install.after_install` → seed 1 record / Company
+- Patch `patches/v0_002/migrate_settings_to_per_company.py` cho existing sites — idempotent
+- Salvage legacy `tabSingles` rows nếu doctype cũ từng là Single → gán cho Company đầu tiên
 
 ### Multi-office logic — linear scan
 

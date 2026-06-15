@@ -25,12 +25,13 @@ nav_order: 3
 
 ---
 
-## 1. Feature flags (HR Attendance Settings)
+## 1. Feature flags (HR Attendance Settings — per Company)
 
-Single doctype, default off cho tính năng chưa verify.
+Regular doctype, **1 record per Company** (unique constraint on `company`). Naming `format:HRAS-{company}`. Default off cho tính năng chưa verify.
 
 | Field | Type | Default | Mô tả |
 |---|---|---|---|
+| `company` | Link → Company, reqd, unique | — | Company áp dụng setting này |
 | `enable_wfh_mode` | Check | 0 | Bật flow WFH cho nhân viên đã được duyệt WFH theo ngày |
 | `enable_webrtc_check` | Check | 0 | Bật check WebRTC local IP để defend iOS GPS-spoof. Yêu cầu office wifi subnet đã verify |
 | `enable_wifi_bssid_check` | Check | 0 | Bật check Wifi BSSID (Android only). Yêu cầu office wifi BSSID đã enroll |
@@ -39,6 +40,16 @@ Single doctype, default off cho tính năng chưa verify.
 | `duplicate_window_seconds` | Int | 60 | Reject checkin trùng < N giây từ checkin gần nhất của cùng employee |
 
 Permissions: HR Manager + System Manager.
+
+**Server-side lookup**: helpers ở [`hr_for_cobegroup/utils/settings.py`](https://github.com/CobeGroup/hr_for_cobegroup/blob/main/hr_for_cobegroup/utils/settings.py):
+- `get_settings_for_employee(employee_name)` — lookup theo `Employee.company`, cache request-level
+- `get_settings_for_company(company)` — direct lookup, cache request-level
+
+Endpoint nào cần settings → call `get_settings_for_employee(employee.name)`. Lỗi:
+- Employee không có Company → throw *"Employee {X} chưa có Company"*
+- Company chưa có HR Attendance Settings → throw *"Company {X} chưa có HR Attendance Settings"*
+
+**Bootstrap**: `after_install` hook + patch `v0_002.migrate_settings_to_per_company` seed 1 record / Company hiện có với defaults. Khi tạo Company mới sau install, HR Manager phải tạo Settings cho Company đó thủ công.
 
 ---
 

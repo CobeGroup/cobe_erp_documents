@@ -65,11 +65,11 @@ yarn build   # output sang ../../hr_for_cobegroup/public/attendance-pwa/
 bench build --app hr_for_cobegroup
 ```
 
-PWA truy cập tại `https://<your-erp-domain>/attendance-pwa/`.
+PWA truy cập tại `https://working.thegioidiengiai.com/attendance`.
 
 ### 2.3. Nhân viên cài PWA trên phone
 
-1. Mở Safari (iOS) hoặc Chrome (Android), vào `https://<your-erp-domain>/attendance-pwa/`
+1. Mở Safari (iOS) hoặc Chrome (Android), vào `https://working.thegioidiengiai.com/attendance`
 2. Login bằng tài khoản Frappe của mình
 3. Trên iOS: tap nút **Share** → "Add to Home Screen"
 4. Trên Android: trình duyệt sẽ tự prompt "Install app"
