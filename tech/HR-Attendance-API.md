@@ -32,10 +32,12 @@ Regular doctype, **1 record per Company** (unique constraint on `company`). Nami
 | Field | Type | Default | Mô tả |
 |---|---|---|---|
 | `company` | Link → Company, reqd, unique | — | Company áp dụng setting này |
+| `enable_selfie_capture` | Check | 0 | Bật yêu cầu chụp selfie khi chấm công. Tắt = PWA không mở camera, server không reject thiếu selfie |
 | `enable_wfh_mode` | Check | 0 | Bật flow WFH cho nhân viên đã được duyệt WFH theo ngày |
 | `enable_webrtc_check` | Check | 0 | Bật check WebRTC local IP để defend iOS GPS-spoof. Yêu cầu office wifi subnet đã verify |
 | `enable_wifi_bssid_check` | Check | 0 | Bật check Wifi BSSID (Android only). Yêu cầu office wifi BSSID đã enroll |
 | `enable_face_match` | Check | 0 | Phase 2: bật server-side face match selfie ↔ HR Employee photo |
+| `enforce_checkout_same_office` | Check | 1 | Bắt buộc check-out cùng office với check-in (cùng ngày). Tắt = cho phép IN VP A + OUT VP B |
 | `default_radius_m` | Int | 100 | Bán kính GPS check mặc định nếu Office Location chưa đặt riêng |
 | `duplicate_window_seconds` | Int | 60 | Reject checkin trùng < N giây từ checkin gần nhất của cùng employee |
 
@@ -201,24 +203,28 @@ Request body:
 {
   "latitude": 10.7769,
   "longitude": 106.7009,
-  "wifi_bssid": "aa:bb:cc:dd:ee:ff",
-  "webrtc_local_ip": "192.168.10.123",
+  "device_fingerprint": "sha256-hash",
   "selfie_file_url": "/private/files/selfie_xxx.jpg",
-  "device_fingerprint": "sha256-hash"
+  "wifi_bssid": "aa:bb:cc:dd:ee:ff",
+  "webrtc_local_ip": "192.168.10.123"
 }
 ```
 
-Note: `wifi_bssid`, `webrtc_local_ip` là **optional** — chỉ gửi nếu tương ứng feature flag bật + PWA detect được. Backend không required.
+Note: `selfie_file_url`, `wifi_bssid`, `webrtc_local_ip` đều **optional** — chỉ gửi nếu tương ứng feature flag bật + PWA detect được. Backend không required khi flag off.
 
 Server validation chain (theo thứ tự, fail nhanh):
 1. Resolve employee (cache trong `frappe.local`)
 2. Phone registered (lookup HR Checkin Phone Registration approved)
-3. Find nearest active HR Office Location → khoảng cách phải ≤ `allowed_radius_m`
-4. Nếu `enable_wifi_bssid_check` ON + office có BSSID list → `wifi_bssid` phải khớp
-5. Nếu `enable_webrtc_check` ON + office có subnet list → `webrtc_local_ip` phải nằm trong 1 subnet
-6. Check duplicate: chưa có checkin nào trong `duplicate_window_seconds` gần nhất
-7. (Stub, nếu `enable_face_match` ON) face match selfie với HR Employee photo
-8. Insert `Employee Checkin` với tất cả custom fields
+3. Duplicate window + log_type determination (IN/OUT từ checkin gần nhất, throw `DUPLICATE_CHECKIN` nếu < `duplicate_window_seconds`)
+4. Resolve target office:
+   - **OUT + `enforce_checkout_same_office` ON**: lock to today's IN office. Nếu phone gần hơn 1 office khác → throw `OFFICE_MISMATCH`
+   - Else: find nearest active HR Office Location
+5. Khoảng cách phải ≤ `allowed_radius_m` (override of office) hoặc `default_radius_m` (fallback) → else `OUT_OF_RANGE`
+6. Nếu `enable_wifi_bssid_check` ON + office có BSSID list → `wifi_bssid` phải khớp → else `WIFI_MISMATCH`
+7. Nếu `enable_webrtc_check` ON + office có subnet list → `webrtc_local_ip` phải nằm trong 1 subnet → else `LAN_MISMATCH`
+8. Nếu `enable_selfie_capture` ON + `selfie_file_url` empty → throw `SELFIE_REQUIRED`
+9. (Stub, nếu `enable_face_match` ON) face match selfie với HR Employee photo → else `FACE_MISMATCH`
+10. Insert `Employee Checkin` với tất cả custom fields
 
 Response success (200):
 ```json
@@ -357,11 +363,13 @@ Server lưu vào `HR Checkin Phone Registration.device_fingerprint` lúc đăng 
 | Code | Message (VN) | Hành động PWA |
 |---|---|---|
 | `OUT_OF_RANGE` | Bạn đang ở ngoài vùng văn phòng (cách Xm) | Hiển thị khoảng cách |
+| `OFFICE_MISMATCH` | Check-out phải ở cùng văn phòng đã check-in sáng nay (VP A). Bạn đang gần hơn với VP B. | Đề nghị về VP A check-out |
 | `WIFI_MISMATCH` | Vui lòng kết nối wifi văn phòng | Hướng dẫn |
 | `LAN_MISMATCH` | Phone của bạn không trên mạng văn phòng | Hướng dẫn |
 | `PHONE_NOT_REGISTERED` | Phone chưa được duyệt, chờ HR | Hiện trang đăng ký |
 | `EMPLOYEE_NOT_FOUND` | Không tìm thấy thông tin nhân viên | Liên hệ HR |
 | `DUPLICATE_CHECKIN` | Bạn vừa chấm công cách đây < N giây | Show last checkin |
+| `SELFIE_REQUIRED` | Chấm công yêu cầu chụp ảnh selfie | Mở camera (chỉ khi PWA bị mất sync flag) |
 | `FACE_MISMATCH` | Selfie không khớp với ảnh nhân viên | Chụp lại |
 | `NO_ACTIVE_OFFICE` | Hệ thống chưa cấu hình văn phòng | Liên hệ HR |
 | `WFH_NOT_ENABLED` | Tính năng WFH chưa được bật | - |

@@ -68,6 +68,44 @@ Khi vừa tạo 1 Company mới (vd "Cobe NewCo"):
 
 Company áp dụng setting này. Mỗi Company 1 record.
 
+### `enable_selfie_capture` (Check, default: 0 = off)
+
+Bật yêu cầu chụp ảnh selfie khi chấm công. Khi bật:
+- PWA mở camera trước khi submit → nhân viên chụp selfie + xem preview
+- Server reject checkin nếu không có `selfie_file_url` (`SELFIE_REQUIRED`)
+
+Khi tắt (default):
+- PWA **không mở camera**, không yêu cầu permission camera
+- Sau khi có GPS → hiển thị nút "Xác nhận chấm công" → submit thẳng
+- Selfie field `custom_selfie` trên Employee Checkin để trống
+
+**Khi nào bật**:
+- Đã có policy audit selfie hàng tháng/quý
+- Đã thông báo nhân viên về privacy (camera/lưu ảnh)
+- Phone iOS/Android đã được training cách cho phép camera
+
+→ Default off vì không phải Company nào cũng muốn lưu trữ ảnh + xử lý GDPR-like requirement.
+
+---
+
+### `enforce_checkout_same_office` (Check, default: 1 = on)
+
+Bắt buộc check-out tại **cùng văn phòng** với check-in **cùng ngày**.
+
+Khi bật (default):
+- Server lookup `custom_office_location` của lần IN sớm nhất hôm nay
+- Khi chấm OUT: nếu phone đang gần một office khác (Q3 thay vì Q1 đã IN) → reject `OFFICE_MISMATCH`
+- Error message: "Check-out phải ở cùng văn phòng đã check-in sáng nay (VP Q1). Bạn đang gần hơn với VP Q3."
+
+Khi tắt:
+- Nhân viên có thể IN ở VP Q1 sáng + OUT ở VP Q3 chiều → cả 2 đều pass nếu trong radius của office tương ứng
+
+**Khi nào tắt**:
+- Nhân viên thường di chuyển giữa các VP trong ngày (sales đi gặp khách + về VP khác)
+- Cho phép linh hoạt nhưng giảm anti-cheat strength
+
+---
+
 ### `enable_wfh_mode` (Check, default: 0 = off)
 
 Bật cho phép nhân viên Company này chấm công từ xa (Work From Home / công tác). Khi bật:
