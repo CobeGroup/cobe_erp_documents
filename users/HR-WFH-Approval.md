@@ -138,7 +138,7 @@ Sáng ngày `wfh_date`, khi nhân viên mở PWA:
    - Response trả `wfh_today.active = true`
    - Response trả `wfh_today.approval_name` + `work_location_label`
 4. PWA hiển thị banner "Hôm nay bạn đăng ký WFH tại {location}" thay HomePage thường
-5. Nhân viên tap "Bắt đầu ca WFH" → chỉ chụp selfie + GPS audit (không enforce radius)
+5. Nhân viên tap "Bắt đầu ca WFH" → GPS audit (không enforce radius) + selfie nếu Policy có `enable_selfie_capture = 1`
 6. POST `attendance.checkin_wfh`
 7. Server insert `Employee Checkin` với:
    - `custom_checkin_source = "WFH-PWA"`

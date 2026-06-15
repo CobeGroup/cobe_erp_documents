@@ -7,7 +7,7 @@ has_children: true
 
 # Chấm công & HR
 
-Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nhân viên. Không phụ thuộc thiết bị phần cứng (ESP32, vân tay, máy chấm công vật lý). Chống cheat đa lớp qua GPS, selfie audit, device fingerprint, kèm các tính năng optional (WiFi BSSID check, WebRTC local IP, WFH approval) có thể bật/tắt qua feature flag.
+Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nhân viên. Không phụ thuộc thiết bị phần cứng (ESP32, vân tay, máy chấm công vật lý). Chống cheat đa lớp qua GPS + device fingerprint always-on; thêm WiFi BSSID, WebRTC local IP, selfie audit, face match, WFH approval, same-office check-out enforcement — toàn bộ optional, bật/tắt qua feature flag per-Company.
 
 ## Mô hình tổng quan
 

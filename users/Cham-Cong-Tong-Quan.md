@@ -30,9 +30,9 @@ Tài liệu đầu-đến-cuối: cài app, setup văn phòng, duyệt phone nh�
 
 Nhân viên chấm công IN/OUT bằng PWA cài trên phone. Mỗi lần chấm công:
 - Phone tự lấy GPS → server check trong bán kính của văn phòng gần nhất
-- Phone chụp selfie → upload làm bằng chứng audit
 - Phone gửi device fingerprint → server kiểm tra phone đã được duyệt
-- (Tuỳ chọn) Phone gửi WiFi BSSID / WebRTC local IP để chống fake GPS
+- (Tuỳ chọn, theo Policy của Company) Phone chụp selfie audit, gửi WiFi BSSID / WebRTC local IP để chống fake GPS
+- (Tuỳ chọn) Cho check-out, server enforce cùng văn phòng với check-in cùng ngày
 
 Sau khi pass hết các check, server tạo bản ghi `Employee Checkin` chuẩn HRMS (Hồ sơ chấm công Frappe HRMS), tự động `log_type=IN` hoặc `OUT` tuỳ trạng thái trước đó.
 
@@ -105,21 +105,32 @@ Manager nhận request từ nhân viên qua PWA hoặc Desk, duyệt từng ngà
 
 ### 4.1. Nhân viên onsite (98% case)
 
+Khi Policy có `enable_selfie_capture = 0` (mặc định):
 1. Đến VP, mở PWA
 2. Tap "Chấm công"
 3. PWA hỏi quyền GPS lần đầu → cho phép
+4. Sau khi có GPS → tap nút "Xác nhận chấm công"
+5. PWA POST checkin → server validate (radius + same-office cho OUT)
+6. Thông báo "✓ Đã chấm công vào ca" hoặc "✓ Đã chấm công ra ca"
+
+Tổng thời gian: **5-8 giây**.
+
+Khi Policy có `enable_selfie_capture = 1`:
+1. Bước 1-3 như trên
 4. PWA hỏi quyền camera → cho phép
 5. Nhìn camera, chụp selfie (tự động hoặc tap)
-6. PWA upload → POST checkin → server validate
-7. Thông báo "✓ Đã chấm công vào ca" hoặc "✓ Đã chấm công ra ca"
+6. PWA upload selfie → POST checkin
+7. Thông báo kết quả
 
 Tổng thời gian: **10-15 giây**.
 
-### 4.2. Nhân viên WFH/công tác (nếu feature_flag bật)
+### 4.2. Nhân viên WFH/công tác (nếu `enable_wfh_mode` ON + có WFH Approval hôm nay)
 
 1. Manager đã duyệt `HR WFH Approval` cho hôm nay → PWA tự detect
 2. Sáng mở PWA → trang chủ hiện banner "Hôm nay bạn đăng ký WFH"
-3. Tap "Bắt đầu ca WFH" → chụp selfie → submit
+3. Tap "Bắt đầu ca WFH"
+   - Nếu `enable_selfie_capture = 0`: tap "Xác nhận WFH" → submit
+   - Nếu `enable_selfie_capture = 1`: chụp selfie → submit
 4. Cuối ngày tap "Kết thúc ca WFH"
 
 Không enforce GPS radius (vì đang ở nhà / nơi công tác). GPS chỉ lưu audit.
@@ -162,11 +173,13 @@ Tổ hợp các lớp tùy theo feature flag bật:
 
 Dùng built-in **Monthly Attendance Sheet** của HRMS — đã hoạt động vì ta extend `Employee Checkin` chứ không thay thế.
 
-### 6.2. Audit selfie khi nghi cheat
+### 6.2. Audit selfie khi nghi cheat (chỉ khi `enable_selfie_capture` ON)
 
 1. Mở danh sách `Employee Checkin` của nhân viên đó
 2. Click bản ghi → field `custom_selfie` có ảnh
 3. So sánh với ảnh chuẩn của nhân viên trong `Employee → Personal Details`
+
+Nếu Policy chưa bật `enable_selfie_capture` → field này trống cho mọi record → không có cách audit selfie hồi tố. Cần bật flag trước khi cần audit.
 
 ### 6.3. Audit GPS distance
 
