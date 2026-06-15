@@ -55,13 +55,21 @@ Optional. Dùng khi tổ chức có nhiều company trong cùng group, muốn fi
 
 Latitude (vĩ độ) của VP. Lấy từ Google Maps (xem [phần 5](#5-hướng-dẫn-lấy-tọa-độ-gps)).
 
-Ví dụ: `10.7769` (Q1 TPHCM).
+Ví dụ: `10.7769` (Q1 TPHCM). Range hợp lệ: **-90 đến 90**.
 
-Format: số thập phân, 4-6 chữ số sau dấu phẩy (độ chính xác ~1-10m).
+Format: số thập phân, **4-6 chữ số sau dấu phân cách thập phân** (độ chính xác ~1-10m là đủ cho radius office).
+
+> ⚠️ **Locale gotcha — dấu thập phân**: Frappe đọc số theo Number Format của System Settings.
+> - Locale **Việt Nam** (`#.###,##`): dấu thập phân là **dấu phẩy**, nhập `10,7769`. Nhập `10.7769` sẽ bị hiểu là `107,769` → ngoài range `-90..90` → throw lỗi *"Vĩ độ phải nằm trong khoảng -90..90"*.
+> - Locale **International** (`#,###.##`): dấu thập phân là **dấu chấm**, nhập `10.7769` bình thường.
+>
+> Check Number Format hiện tại: Desk → search "System Settings" → field `Number Format`.
 
 ### `location_longitude` (Float, **bắt buộc**)
 
-Longitude (kinh độ) của VP. Ví dụ: `106.7009`.
+Longitude (kinh độ) của VP. Ví dụ: `106.7009`. Range hợp lệ: **-180 đến 180**.
+
+Cùng locale gotcha như `location_latitude` ở trên — Việt Nam locale nhập `106,7009` (dấu phẩy), International nhập `106.7009` (dấu chấm).
 
 ### `allowed_radius_m` (Int)
 
@@ -147,9 +155,15 @@ System validate CIDR khi save — sai format throw error.
 
 Cách 3 chính xác nhất nhưng cần đến tận nơi.
 
-**Định dạng nhập vào Settings**: số thập phân thường, **không có ký tự °** hoặc các đơn vị khác.
-- ĐÚNG: `10.7769`
-- SAI: `10°46'37"N` (định dạng DMS)
+**Định dạng nhập vào form**: số thập phân thường, **không có ký tự °** hoặc các đơn vị khác.
+
+| Locale | Đúng | Sai |
+|---|---|---|
+| Việt Nam (`#.###,##`) | `10,7769` | `10.7769` (bị hiểu là 107,769) |
+| International (`#,###.##`) | `10.7769` | `10,7769` |
+| Bất kỳ locale | `10.7769` hoặc `10,7769` | `10°46'37"N` (DMS — không hỗ trợ) |
+
+Google Maps copy ra format `10.7769, 106.7009` (dấu chấm). Khi paste vào form Frappe locale VN, **cần đổi `.` thành `,`**.
 
 ---
 
