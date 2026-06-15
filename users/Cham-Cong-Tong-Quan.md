@@ -54,7 +54,7 @@ bench --site <site_name> migrate
 App này yêu cầu `frappe` + `hrms` đã cài trước. Sau migrate sẽ có:
 - 5 doctype mới trong module **Attendance**
 - 10 custom field thêm vào `Employee Checkin`
-- 1 Single doctype **HR Attendance Settings**
+- 1 doctype **HR Attendance Policy** (per-Company)
 
 ### 2.2. Build & deploy PWA
 
@@ -83,7 +83,7 @@ Sau khi cài, làm theo thứ tự:
 
 ### 3.1. Bật/tắt feature flag toàn cục
 
-Mở Frappe Desk → search **"HR Attendance Settings"**. Bật/tắt từng tính năng theo nhu cầu — chi tiết từng field tại [HR Attendance Settings](HR-Attendance-Settings.html).
+Mở Frappe Desk → search **"HR Attendance Policy"**. Bật/tắt từng tính năng theo nhu cầu — chi tiết từng field tại [HR Attendance Policy](HR-Attendance-Policy.html).
 
 **Mặc định**: tất cả feature optional đều **TẮT**. Chỉ bật khi đã sẵn sàng test.
 
@@ -200,7 +200,7 @@ Distance > 0 nghĩa là phone không sát tâm VP (bình thường < 100m).
 
 ## Liên quan
 
-- [HR Attendance Settings](HR-Attendance-Settings.html) — feature flag
+- [HR Attendance Policy](HR-Attendance-Policy.html) — feature flag
 - [HR Office Location](HR-Office-Location.html) — danh sách VP
 - [HR Checkin Phone Registration](HR-Checkin-Phone-Registration.html)
 - [HR WFH Approval](HR-WFH-Approval.html)

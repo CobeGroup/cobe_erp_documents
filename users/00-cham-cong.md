@@ -23,7 +23,7 @@ Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nh
 │  - HR Office Location   │ ← Multi-office support
 │  - HR Phone Reg         │ ← Mỗi phone duyệt 1 lần
 │  - HR WFH Approval      │ ← Optional (feature flag)
-│  - HR Attendance Setts  │ ← Feature flags toàn cục
+│  - HR Attendance Policy │ ← Feature flags per-Company
 │  - Employee Checkin     │ ← Extend HRMS
 └─────────────────────────┘
 ```
@@ -31,7 +31,7 @@ Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nh
 ## Trang trong nhóm này
 
 - **Tổng quan & Setup** — bắt đầu từ đây
-- **HR Attendance Settings** — feature flag toàn cục
+- **HR Attendance Policy** — feature flag per-Company
 - **HR Office Location** — danh sách văn phòng
 - **HR Checkin Phone Registration** — duyệt phone nhân viên
 - **HR WFH Approval** — quy trình duyệt WFH (optional)

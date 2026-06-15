@@ -1,13 +1,13 @@
 ---
-title: HR Attendance Settings
+title: HR Attendance Policy
 layout: default
 parent: Chấm công & HR
 nav_order: 2
 ---
 
-# HR Attendance Settings — Feature flag per-Company
+# HR Attendance Policy — Feature flag per-Company
 
-> **Mỗi Company 1 record riêng**. Hệ thống tự tạo 1 record với defaults cho mỗi Company hiện có lúc install. Khi tạo Company mới, HR Manager / System Manager tự tạo Settings cho Company đó.
+> **Mỗi Company 1 record riêng**. Hệ thống tự tạo 1 record với defaults cho mỗi Company hiện có lúc install. Khi tạo Company mới, HR Manager / System Manager tự tạo Policy cho Company đó.
 >
 > Permissions: **HR Manager** và **System Manager**.
 
@@ -26,10 +26,10 @@ nav_order: 2
 
 ## 1. Cách mở
 
-- Desk → search bar gõ "HR Attendance Settings"
-- Hoặc URL: `/app/hr-attendance-settings`
+- Desk → search bar gõ "HR Attendance Policy"
+- Hoặc URL: `/app/hr-attendance-policy`
 
-List view hiển thị: `name` (vd `HRAS-Cobegroup`), `company`, `enable_wfh_mode`, `default_radius_m`. Filter theo company để xem record của từng đơn vị.
+List view hiển thị: `name` (vd `HRAP-Cobegroup`), `company`, `enable_wfh_mode`, `default_radius_m`. Filter theo company để xem record của từng đơn vị.
 
 ---
 
@@ -43,8 +43,8 @@ Cobe Group có nhiều Company (vd "THẾ GIỚI ĐIỆN GIẢI", "AKANWA", "DOC
 → Settings per-Company cho phép HR config riêng từng đơn vị, không bị ảnh hưởng lẫn nhau.
 
 **Resolve logic ở server**:
-- Khi nhân viên chấm công → server đọc `Employee.company` → lookup `HR Attendance Settings` của Company đó
-- Nếu Company chưa có Settings → throw lỗi *"Company {X} chưa có HR Attendance Settings"*
+- Khi nhân viên chấm công → server đọc `Employee.company` → lookup `HR Attendance Policy` của Company đó
+- Nếu Company chưa có Settings → throw lỗi *"Company {X} chưa có HR Attendance Policy"*
 
 ---
 
@@ -52,11 +52,11 @@ Cobe Group có nhiều Company (vd "THẾ GIỚI ĐIỆN GIẢI", "AKANWA", "DOC
 
 Khi vừa tạo 1 Company mới (vd "Cobe NewCo"):
 
-1. Desk → **HR Attendance Settings** → **New**
+1. Desk → **HR Attendance Policy** → **New**
 2. Field `company` → chọn "Cobe NewCo"
 3. Các field còn lại Frappe auto-fill defaults (mọi flag = 0, `default_radius_m = 100`, `duplicate_window_seconds = 60`)
 4. Sửa nếu cần
-5. **Save** → tự đặt tên `HRAS-Cobe NewCo`
+5. **Save** → tự đặt tên `HRAP-Cobe NewCo`
 
 Đảm bảo **mỗi Company chỉ 1 record** (DB unique constraint trên field `company`). Cố tạo 2 record cho cùng Company → throw `Duplicate entry`.
 
@@ -189,7 +189,7 @@ enable_face_match: on   (sau khi implement phase 2)
 ## 6. Lưu ý vận hành
 
 - **Mỗi Company 1 record** — server lookup theo `Employee.company`. Employee chưa có Company → throw lỗi *"Employee {X} chưa có Company"*.
-- **Company chưa có Settings** → throw *"Company {X} chưa có HR Attendance Settings"*. HR cần tạo trước khi nhân viên Company đó chấm công.
+- **Company chưa có Settings** → throw *"Company {X} chưa có HR Attendance Policy"*. HR cần tạo trước khi nhân viên Company đó chấm công.
 - **Flag tắt KHÔNG xóa data** — vd tắt `enable_wifi_bssid_check` chỉ làm server bỏ qua check, BSSID list trong office vẫn còn.
 - **Đổi setting có hiệu lực ngay** — không cần restart bench. Cache request-level invalidate ở request tiếp theo.
 - **Không có "audit log" cho việc đổi setting** — recommend chụp screenshot trước/sau khi đổi gửi vào Slack/Telegram nội bộ nếu cần truy vết.

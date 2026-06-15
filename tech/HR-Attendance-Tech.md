@@ -57,7 +57,7 @@ Chi tiết folder + file purpose: xem [Architecture §7](HR-Attendance-Architect
 
 ### 1. Thêm anti-cheat layer mới
 
-1. Thêm field `enable_<feature>` vào `HR Attendance Settings`
+1. Thêm field `enable_<feature>` vào `HR Attendance Policy`
 2. Thêm logic check trong `api/attendance.py::checkin()` (sau các check hiện có, theo thứ tự fail-fast)
 3. Thêm error code mới + Vietnamese message vào [API §6](HR-Attendance-API.html#6-error-codes-chuẩn-hóa)
 4. Cập nhật PWA `src/api/types.ts::ERROR_MESSAGES`

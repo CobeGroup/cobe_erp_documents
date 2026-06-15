@@ -228,10 +228,10 @@ def get_settings_for_company(company: str):
     cache_key = f"_attendance_settings_co_{company}"
     if hasattr(frappe.local, cache_key):
         return getattr(frappe.local, cache_key)
-    name = frappe.db.get_value("HR Attendance Settings", {"company": company}, "name")
+    name = frappe.db.get_value("HR Attendance Policy", {"company": company}, "name")
     if not name:
-        frappe.throw(_("Company {0} chưa có HR Attendance Settings...").format(company))
-    doc = frappe.get_cached_doc("HR Attendance Settings", name)
+        frappe.throw(_("Company {0} chưa có HR Attendance Policy...").format(company))
+    doc = frappe.get_cached_doc("HR Attendance Policy", name)
     setattr(frappe.local, cache_key, doc)
     return doc
 ```

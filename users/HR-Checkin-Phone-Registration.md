@@ -214,5 +214,5 @@ Tận dụng 2 browser khác nhau làm 2 phone:
 ## Liên quan
 
 - [HR Office Location](HR-Office-Location.html)
-- [HR Attendance Settings](HR-Attendance-Settings.html)
+- [HR Attendance Policy](HR-Attendance-Policy.html)
 - [Tổng quan & Setup](Cham-Cong-Tong-Quan.html)
