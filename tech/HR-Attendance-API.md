@@ -15,7 +15,7 @@ nav_order: 3
 
 ## Mục lục
 
-1. [Feature flags (HR Attendance Policy)](#1-feature-flags-hr-attendance-policy)
+1. [Feature flags (HR Policy)](#1-feature-flags-hr-policy)
 2. [Data model](#2-data-model)
 3. [API endpoints](#3-api-endpoints)
 4. [WebRTC local IP detection](#4-webrtc-local-ip-detection)
@@ -25,9 +25,9 @@ nav_order: 3
 
 ---
 
-## 1. Feature flags (HR Attendance Policy — per Company)
+## 1. Feature flags (HR Policy — per Company)
 
-Regular doctype, **1 record per Company** (unique constraint on `company`). Naming `format:HRAP-{company}`. Default off cho tính năng chưa verify.
+Regular doctype, **1 record per Company** (unique constraint on `company`). Naming `format:HRP-{company}`. Default off cho tính năng chưa verify.
 
 | Field | Type | Default | Mô tả |
 |---|---|---|---|
@@ -49,7 +49,7 @@ Permissions: HR Manager + System Manager.
 
 Endpoint nào cần settings → call `get_settings_for_employee(employee.name)`. Lỗi:
 - Employee không có Company → throw *"Employee {X} chưa có Company"*
-- Company chưa có HR Attendance Policy → throw *"Company {X} chưa có HR Attendance Policy"*
+- Company chưa có HR Policy → throw *"Company {X} chưa có HR Policy"*
 
 **Bootstrap**: `after_install` hook + patch `v0_002.migrate_settings_to_per_company` seed 1 record / Company hiện có với defaults. Khi tạo Company mới sau install, HR Manager phải tạo Settings cho Company đó thủ công.
 

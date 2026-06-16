@@ -8,7 +8,7 @@ nav_order: 5
 # HR WFH Approval — Duyệt làm việc từ xa
 
 > Submittable doctype, duyệt từng ngày WFH cho từng nhân viên.
-> **Chỉ hoạt động khi** feature flag `enable_wfh_mode` ON trong [HR Attendance Policy](HR-Attendance-Policy.html).
+> **Chỉ hoạt động khi** feature flag `enable_wfh_mode` ON trong [HR Policy](HR-Policy.html).
 
 ---
 
@@ -170,5 +170,5 @@ Sau cancel, **không thể edit lại** — nếu cần lại WFH cùng ngày, p
 
 ## Liên quan
 
-- [HR Attendance Policy](HR-Attendance-Policy.html) — bật flag enable_wfh_mode
+- [HR Policy](HR-Policy.html) — bật flag enable_wfh_mode
 - [Tổng quan & Setup](Cham-Cong-Tong-Quan.html)

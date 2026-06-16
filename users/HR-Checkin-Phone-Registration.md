@@ -174,8 +174,8 @@ Vui lòng deactivate phone cũ trước khi duyệt phone mới.
 
 Tận dụng 2 browser khác nhau làm 2 phone:
 
-1. Chrome → `/attendance` → đăng ký → HR submit → chấm công OK
-2. Mở **Firefox** (hoặc Chrome Incognito) → `/attendance` → đăng ký lần 2 → Draft mới
+1. Chrome → `/my-workspace` → đăng ký → HR submit → chấm công OK
+2. Mở **Firefox** (hoặc Chrome Incognito) → `/my-workspace` → đăng ký lần 2 → Draft mới
 3. Desk: record Chrome → status=Inactive → Save
 4. Desk: record Firefox → Submit
 5. Firefox refresh → chấm công được
@@ -214,5 +214,5 @@ Tận dụng 2 browser khác nhau làm 2 phone:
 ## Liên quan
 
 - [HR Office Location](HR-Office-Location.html)
-- [HR Attendance Policy](HR-Attendance-Policy.html)
+- [HR Policy](HR-Policy.html)
 - [Tổng quan & Setup](Cham-Cong-Tong-Quan.html)

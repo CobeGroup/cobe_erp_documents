@@ -20,7 +20,7 @@ nav_order: 4
 3. [Vòng đời WFH checkin](#3-vòng-đời-wfh-checkin)
 4. [Anti-cheat layers](#4-anti-cheat-layers)
 5. [Lựa chọn kỹ thuật quan trọng](#5-lựa-chọn-kỹ-thuật-quan-trọng)
-6. [Routing — PWA served at /attendance](#6-routing--pwa-served-at-attendance)
+6. [Routing — PWA served at /my-workspace](#6-routing--pwa-served-at-my-workspace)
 7. [Folder structure](#7-folder-structure)
 8. [Deployment topology](#8-deployment-topology)
 
@@ -228,10 +228,10 @@ def get_settings_for_company(company: str):
     cache_key = f"_attendance_settings_co_{company}"
     if hasattr(frappe.local, cache_key):
         return getattr(frappe.local, cache_key)
-    name = frappe.db.get_value("HR Attendance Policy", {"company": company}, "name")
+    name = frappe.db.get_value("HR Policy", {"company": company}, "name")
     if not name:
-        frappe.throw(_("Company {0} chưa có HR Attendance Policy...").format(company))
-    doc = frappe.get_cached_doc("HR Attendance Policy", name)
+        frappe.throw(_("Company {0} chưa có HR Policy...").format(company))
+    doc = frappe.get_cached_doc("HR Policy", name)
     setattr(frappe.local, cache_key, doc)
     return doc
 ```
@@ -268,27 +268,29 @@ Linear scan OK cho <50 offices. Scale lớn hơn → spatial index (PostGIS ho�
 
 ---
 
-## 6. Routing — PWA served at `/attendance`
+## 6. Routing — PWA served at `/my-workspace`
 
 Mirror fsmnext `/technician` pattern. Same URL ở local lẫn Frappe Cloud, không phải đổi config.
 
 ```
-HTTP request: /attendance hoặc /attendance/<sub-path>
+HTTP request: /my-workspace hoặc /my-workspace/<sub-path>
   ↓
-hooks.py website_route_rules → to_route = "_attendance"
+hooks.py website_route_rules → to_route = "_my_workspace"
   ↓
-www/_attendance.py get_context():
-  - Redirect Guest → /login?redirect-to=/attendance
+www/_my_workspace.py get_context():
+  - Redirect Guest → /login?redirect-to=/my-workspace
   - Resolve Employee from frappe.session.user
   - Inject CSRF token + user info + version_hash
   ↓
-www/_attendance.html render:
+www/_my_workspace.html render:
   - Load /assets/hr_for_cobegroup/attendance-pwa/index.{js,css}?v=<hash>
   - Set window.frappe_csrf_token + window.user + window.employee
-  - <div id="root"> → React mount, basename "/attendance"
+  - <div id="root"> → React mount, basename "/my-workspace"
 ```
 
-PWA build output ở `hr_for_cobegroup/public/attendance-pwa/` được **commit vào git** (mirror fsmnext) — Frappe Cloud chỉ cần `bench build` symlink sang `sites/assets/`, không cần Node.js trên deploy server.
+PWA build output vẫn ở `hr_for_cobegroup/public/attendance-pwa/` (folder không đổi sau khi pivot URL) — được **commit vào git** (mirror fsmnext) — Frappe Cloud chỉ cần `bench build` symlink sang `sites/assets/`, không cần Node.js trên deploy server.
+
+PWA gồm React Router với các sub-route: `/attendance` (Chấm công + Bảng công 2 tab) / `/leave` / `/salary` / `/expense` / `/more` / `/register-device` / `/wfh-request` / `/history` — tất cả chạy dưới basename `/my-workspace`.
 
 ---
 

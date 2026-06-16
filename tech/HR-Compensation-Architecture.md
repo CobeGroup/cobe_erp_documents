@@ -522,7 +522,7 @@ Cả 2 hook không throw, để Salary Slip vẫn save được (chỉ ảnh hư
 
 ## 10. Future work
 
-- [ ] **Per-Company Overtime / WFH Settings** — hiện đang Single, nếu Cobe Group cần policy khác giữa các Company → refactor giống HR Attendance Policy
+- [ ] **Per-Company Overtime / WFH Settings** — hiện đang Single, nếu Cobe Group cần policy khác giữa các Company → refactor giống HR Policy
 - [ ] **PWA UI cho OT Request** — nhân viên xin OT từ phone thay vì Desk
 - [ ] **PWA UI cho KPI Score dashboard** — manager chấm điểm trên phone
 - [ ] **Score curve configurable** — chuyển từ hard-coded sang doctype HR KPI Score Curve, mỗi Company define curve riêng

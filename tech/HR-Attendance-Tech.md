@@ -31,7 +31,7 @@ nav_order: 2
 | PWA Frontend | React 18.3 + TypeScript 5.6 + Vite 5.4 + antd 5.22 + zustand + react-router-dom v6 + vite-plugin-pwa |
 | Browser APIs | Geolocation, MediaDevices (camera), WebRTC (local IP), Service Worker (offline shell) |
 | Auth | Frappe session cookie + X-Frappe-CSRF-Token header |
-| Routing | `/attendance` qua `website_route_rules` → `www/_attendance.html` |
+| Routing | `/my-workspace` qua `website_route_rules` → `www/_my_workspace.html` (PWA shell, React Router basename) |
 
 ---
 
@@ -43,7 +43,7 @@ apps/hr_for_cobegroup/
 │   ├── api/                            # whitelisted endpoints
 │   ├── attendance/doctype/             # 6 doctypes + 2 child tables
 │   ├── utils/{geo,subnet}.py           # haversine + CIDR check
-│   ├── www/_attendance.{py,html}       # SPA shell
+│   ├── www/_my_workspace.{py,html}     # SPA shell
 │   ├── fixtures/custom_field.json      # 10 fields on Employee Checkin
 │   └── hooks.py
 └── frontend/attendance-pwa/            # React + TS + Vite + antd source
@@ -57,7 +57,7 @@ Chi tiết folder + file purpose: xem [Architecture §7](HR-Attendance-Architect
 
 ### 1. Thêm anti-cheat layer mới
 
-1. Thêm field `enable_<feature>` vào `HR Attendance Policy`
+1. Thêm field `enable_<feature>` vào `HR Policy`
 2. Thêm logic check trong `api/attendance.py::checkin()` (sau các check hiện có, theo thứ tự fail-fast)
 3. Thêm error code mới + Vietnamese message vào [API §6](HR-Attendance-API.html#6-error-codes-chuẩn-hóa)
 4. Cập nhật PWA `src/api/types.ts::ERROR_MESSAGES`

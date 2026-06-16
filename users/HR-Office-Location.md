@@ -73,17 +73,17 @@ Cùng locale gotcha như `location_latitude` ở trên — Việt Nam locale nh�
 
 ### `allowed_radius_m` (Int)
 
-Bán kính cho phép GPS check, đơn vị **mét**. Để trống → dùng `default_radius_m` từ HR Attendance Policy (default 100m).
+Bán kính cho phép GPS check, đơn vị **mét**. Để trống → dùng `default_radius_m` từ HR Policy (default 100m).
 
 Override khi VP cần bán kính khác (vd VP campus lớn nhập 300m).
 
 ### `allowed_wifi_bssids` (Table → HR Office Wifi)
 
-Child table chứa danh sách MAC router cho phép. Chỉ có tác dụng khi flag `enable_wifi_bssid_check` ON trong HR Attendance Policy của Company.
+Child table chứa danh sách MAC router cho phép. Chỉ có tác dụng khi flag `enable_wifi_bssid_check` ON trong HR Policy của Company.
 
 ### `allowed_lan_subnets` (Table → HR Office Lan Subnet)
 
-Child table chứa danh sách subnet LAN VP. Chỉ có tác dụng khi flag `enable_webrtc_check` ON trong HR Attendance Policy của Company.
+Child table chứa danh sách subnet LAN VP. Chỉ có tác dụng khi flag `enable_webrtc_check` ON trong HR Policy của Company.
 
 ### `is_active` (Check, default: 1)
 
@@ -220,5 +220,5 @@ Cài [Fing](https://www.fing.com/) → connect wifi → app tự nhận subnet h
 
 ## Liên quan
 
-- [HR Attendance Policy](HR-Attendance-Policy.html) — feature flag
+- [HR Policy](HR-Policy.html) — feature flag
 - [Tổng quan & Setup](Cham-Cong-Tong-Quan.html)

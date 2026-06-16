@@ -54,7 +54,7 @@ bench --site <site_name> migrate
 App này yêu cầu `frappe` + `hrms` đã cài trước. Sau migrate sẽ có:
 - 5 doctype mới trong module **Attendance**
 - 10 custom field thêm vào `Employee Checkin`
-- 1 doctype **HR Attendance Policy** (per-Company)
+- 1 doctype **HR Policy** (per-Company)
 
 ### 2.2. Build & deploy PWA
 
@@ -65,11 +65,11 @@ yarn build   # output sang ../../hr_for_cobegroup/public/attendance-pwa/
 bench build --app hr_for_cobegroup
 ```
 
-PWA truy cập tại `https://working.thegioidiengiai.com/attendance`.
+PWA truy cập tại `https://working.thegioidiengiai.com/my-workspace`.
 
 ### 2.3. Nhân viên cài PWA trên phone
 
-1. Mở Safari (iOS) hoặc Chrome (Android), vào `https://working.thegioidiengiai.com/attendance`
+1. Mở Safari (iOS) hoặc Chrome (Android), vào `https://working.thegioidiengiai.com/my-workspace`
 2. Login bằng tài khoản Frappe của mình
 3. Trên iOS: tap nút **Share** → "Add to Home Screen"
 4. Trên Android: trình duyệt sẽ tự prompt "Install app"
@@ -83,7 +83,7 @@ Sau khi cài, làm theo thứ tự:
 
 ### 3.1. Bật/tắt feature flag toàn cục
 
-Mở Frappe Desk → search **"HR Attendance Policy"**. Bật/tắt từng tính năng theo nhu cầu — chi tiết từng field tại [HR Attendance Policy](HR-Attendance-Policy.html).
+Mở Frappe Desk → search **"HR Policy"**. Bật/tắt từng tính năng theo nhu cầu — chi tiết từng field tại [HR Policy](HR-Policy.html).
 
 **Mặc định**: tất cả feature optional đều **TẮT**. Chỉ bật khi đã sẵn sàng test.
 
@@ -103,11 +103,15 @@ Manager nhận request từ nhân viên qua PWA hoặc Desk, duyệt từng ngà
 
 ## 4. Quy trình chấm công thường ngày
 
+PWA tổ chức thành shell **My Workspace** với 5 mục: **Chấm công** / Đăng ký phép / Lương / Chi phí / More. Trang Chấm công có 2 tab:
+- **Chấm công** — nút check-in/out + danh sách Employee Checkin trong khoảng đã chọn
+- **Bảng công** — danh sách `Attendance` HRMS (status + giờ công + cảnh báo) trong khoảng
+
 ### 4.1. Nhân viên onsite (98% case)
 
 Khi Policy có `enable_selfie_capture = 0` (mặc định):
-1. Đến VP, mở PWA
-2. Tap "Chấm công"
+1. Đến VP, mở PWA → tab **Chấm công**
+2. Tap nút **"Chấm công (Vào)"** hoặc **"Chấm công (Ra)"** (PWA tự detect tiếp theo)
 3. PWA hỏi quyền GPS lần đầu → cho phép
 4. Sau khi có GPS → tap nút "Xác nhận chấm công"
 5. PWA POST checkin → server validate (radius + same-office cho OUT)
@@ -213,7 +217,7 @@ Distance > 0 nghĩa là phone không sát tâm VP (bình thường < 100m).
 
 ## Liên quan
 
-- [HR Attendance Policy](HR-Attendance-Policy.html) — feature flag
+- [HR Policy](HR-Policy.html) — feature flag
 - [HR Office Location](HR-Office-Location.html) — danh sách VP
 - [HR Checkin Phone Registration](HR-Checkin-Phone-Registration.html)
 - [HR WFH Approval](HR-WFH-Approval.html)
