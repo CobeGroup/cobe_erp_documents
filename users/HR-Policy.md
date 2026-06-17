@@ -47,7 +47,7 @@ List view hiển thị: `name` (vd `HRP-Cobegroup`), `company`, `enable_wfh_mode
 | Tab | Section |
 |---|---|
 | **Attendance** | Feature Flags + Defaults + Check-in Whitelist (3 section trong cùng 1 tab) |
-| **Leave** | Auto-Allocation by Working Hours |
+| **Leave** | Auto-Allocation by Attendance |
 
 ---
 
@@ -188,25 +188,27 @@ Add row → Save → hiệu lực ngay request kế tiếp. Xóa: xóa row + Sav
 
 ## 4. Tab Leave
 
-> **Auto-cấp phép tự động theo số giờ làm việc trong tháng.** Chi tiết workflow + audit ở [HR Leave Setup](HR-Leave-Setup.html).
+> **Auto-cấp phép tự động theo số ngày chấm công trong tháng.** Chi tiết workflow + audit ở [HR Leave Setup](HR-Leave-Setup.html).
 
 ### `leave_auto_enabled` (Check, default: 0)
 Bật module auto-cấp phép. Tắt = job không chạy cho Company này.
 
-### `leave_auto_threshold_hours` (Float, default: 96)
-Ngưỡng `working_hours` / tháng để được cấp. 96 = 12 ngày × 8h theo policy mẫu Cobe.
+### `leave_auto_min_attendance_days` (Int, default: 0)
+Số ngày Attendance docstatus=1 tối thiểu trong tháng để được cấp.
+- `0` → mọi NV Active đều được cấp (kể cả NV không có Attendance nào trong tháng — nghỉ phép, công tác, mới join...).
+- `> 0` → chỉ NV có số ngày chấm công ≥ ngưỡng mới được cấp. Vd `12` = phải có ít nhất 12 ngày Attendance trong tháng.
 
 ### `leave_auto_leave_type` (Link → Leave Type, default: Annual Leave)
 Loại phép cộng vào. Mặc định cộng vào "Annual Leave" chuẩn HRMS.
 
 ### `leave_auto_days_granted` (Float, default: 1)
-Số ngày cấp khi đủ ngưỡng. Mặc định 1.
+Số ngày cấp mỗi tháng cho NV đủ điều kiện. Mặc định 1.
 
 ### Job chạy khi nào
 
 - Scheduled job `auto_allocate_leave.run` chạy **monthly** (ngày 1 mỗi tháng)
-- Quét Attendance tháng trước → sum working_hours per Employee
-- ≥ threshold → tạo Leave Allocation (idempotent qua field `custom_auto_allocated_for_period = "YYYY-MM"`)
+- Quét Attendance tháng trước → đếm số ngày Attendance docstatus=1 per Employee Active
+- ≥ `min_attendance_days` → tạo Leave Allocation +`days_granted` ngày (idempotent qua field `custom_auto_allocated_for_period = "YYYY-MM"`)
 
 ### Audit
 

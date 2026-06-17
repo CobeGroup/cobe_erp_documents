@@ -11,14 +11,14 @@ nav_order: 7
 
 Cobe dùng Leave Application chuẩn HRMS + 2 extension:
 1. **Workflow 2 bước**: Manager → HR Manager (Frappe Workflow fixture)
-2. **Auto-cấp phép theo working_hours**: cuối tháng đủ ngưỡng → +1 ngày Annual Leave
+2. **Auto-cấp phép theo số ngày chấm công**: cuối tháng đủ ngưỡng → +1 ngày Annual Leave (ngưỡng = 0 → cấp cho mọi NV Active)
 
 ---
 
 ## Mục lục
 
 1. [Cấu hình lần đầu](#1-cấu-hình-lần-đầu)
-2. [Auto-cấp phép theo working_hours](#2-auto-cấp-phép-theo-working_hours)
+2. [Auto-cấp phép theo số ngày chấm công](#2-auto-cấp-phép-theo-số-ngày-chấm-công)
 3. [Workflow 2 bước Manager → HR](#3-workflow-2-bước-manager--hr)
 4. [HR top-up phép tồn (manual)](#4-hr-top-up-phép-tồn-manual)
 5. [Audit cấp phép tự động](#5-audit-cấp-phép-tự-động)
@@ -46,9 +46,9 @@ Desk → **HR Policy** → mở record của Company → tab **Leave**:
 | Field | Value mẫu | Note |
 |---|---|---|
 | `leave_auto_enabled` | ✓ | Bật module |
-| `leave_auto_threshold_hours` | 96 | Đủ 96h working/tháng → cấp 1 ngày |
+| `leave_auto_min_attendance_days` | 0 | Số ngày Attendance tối thiểu/tháng. **0 = cấp cho mọi NV Active** (không cần check chấm công). Vd 12 = phải có ≥12 ngày chấm công mới được cấp |
 | `leave_auto_leave_type` | Annual Leave | Cộng vào Annual Leave chuẩn |
-| `leave_auto_days_granted` | 1 | Số ngày cấp khi đủ ngưỡng |
+| `leave_auto_days_granted` | 1 | Số ngày cấp mỗi tháng |
 
 Mặc định **TẮT** — phải tự bật khi Company sẵn sàng.
 
@@ -65,28 +65,34 @@ Nếu workflow chưa tồn tại → chạy lại `bench migrate`.
 
 ---
 
-## 2. Auto-cấp phép theo working_hours
+## 2. Auto-cấp phép theo số ngày chấm công
 
 ### Cơ chế
 
 Scheduled job `hr_for_cobegroup.scheduled.auto_allocate_leave.run`:
 - Chạy **monthly** (ngày 1 mỗi tháng) qua Frappe scheduler
 - Quét tháng vừa qua: với mỗi Company có `leave_auto_enabled = 1`:
-  - Query Attendance docstatus=1 + range [tháng trước]
-  - Sum `working_hours` per Employee active
-  - Nếu sum ≥ `leave_auto_threshold_hours` → tạo Leave Allocation +`leave_auto_days_granted` ngày
+  - LEFT JOIN Employee Active ↔ Attendance docstatus=1 (range tháng trước)
+  - Đếm `COUNT(DISTINCT attendance_date)` per Employee
+  - Nếu count ≥ `leave_auto_min_attendance_days` → tạo Leave Allocation +`leave_auto_days_granted` ngày
 - Set `Leave Allocation.custom_auto_allocated_for_period = "YYYY-MM"` để idempotent (chạy lại không double)
+
+> **Khi `min_attendance_days = 0`** → mọi NV Active đều được cấp, kể cả NV không có Attendance nào trong tháng (vẫn vào group qua LEFT JOIN với count=0).
 
 ### Ví dụ
 
-- Tháng 5/2026: NV A có Attendance.working_hours tổng = 168h (21 ngày × 8h)
-- Cuối tháng 5 (ngày 1/6) job chạy → 168 ≥ 96 → tạo Leave Allocation:
-  - `employee = A`
-  - `leave_type = Annual Leave`
-  - `from_date = 2026-06-01`
-  - `to_date = 2027-05-31` (1 năm)
+#### Cấp cho mọi NV Active (ngưỡng = 0)
+- Policy: `min_attendance_days = 0`, `days_granted = 1`
+- Cuối tháng 5 (ngày 1/6) job chạy → mọi NV Active (kể cả NV nghỉ phép cả tháng, mới join) đều được +1 ngày Annual Leave
+
+#### Cấp theo điều kiện chấm công (ngưỡng > 0)
+- Policy: `min_attendance_days = 12`, `days_granted = 1`
+- NV A: 21 ngày Attendance trong tháng 5 → ≥ 12 → cấp +1 ngày
+- NV B: 8 ngày Attendance trong tháng 5 (nghỉ phép nhiều) → < 12 → KHÔNG cấp
+- Allocation A:
+  - `from_date = 2026-06-01`, `to_date = 2027-05-31`
   - `new_leaves_allocated = 1`
-  - `description = "Auto-cấp theo policy (kỳ 2026-05, working_hours=168.0h)"`
+  - `description = "Auto-cấp theo policy (kỳ 2026-05, attendance_days=21)"`
   - `custom_auto_allocated_for_period = "2026-05"`
 
 ### Idempotent
@@ -227,17 +233,19 @@ bench --site cobe.cc execute hr_for_cobegroup.scheduled.auto_allocate_leave.run
 
 ## 6. Edge case + FAQ
 
-### NV nghỉ phép cả tháng → working_hours = 0 → có được cấp không?
+### NV nghỉ phép cả tháng → có được cấp không?
 
-Không. NV phải có working_hours ≥ ngưỡng. Nghỉ phép cả tháng = 0h = không đủ → không cấp.
+**Tùy `min_attendance_days`:**
+- `min_attendance_days = 0` → vẫn được cấp (job dùng LEFT JOIN, NV không có Attendance vẫn vào group với count=0)
+- `min_attendance_days > 0` → KHÔNG cấp (count attendance < ngưỡng)
 
-Workaround: HR top-up manual nếu nội bộ thấy hợp lý.
+Workaround khi cấu hình ngưỡng > 0: HR top-up manual nếu nội bộ thấy hợp lý.
 
-### NV làm OT nhiều → vượt 192h → có được +2 ngày không?
+### NV làm OT nhiều → có được +2 ngày không?
 
-**KHÔNG** (theo config hiện tại). `days_granted = 1` cho dù 96h hay 1000h. Logic đơn giản: đủ ngưỡng = 1 ngày, không hơn.
+**KHÔNG** (theo config hiện tại). `days_granted` cố định cho mỗi tháng đủ điều kiện — không scale theo số ngày làm vượt mức.
 
-Muốn cấp theo tỷ lệ: Cobe cần sửa logic job (thay vì hard-coded 1, tính `floor(hours / threshold)`). Liên hệ dev.
+Muốn cấp theo tỷ lệ (vd `floor(attendance_days / 12)`): liên hệ dev sửa logic job.
 
 ### NV đổi Company giữa tháng — cấp ở Company nào?
 
