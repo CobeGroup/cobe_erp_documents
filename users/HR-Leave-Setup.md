@@ -58,8 +58,8 @@ Sau khi `bench --site <site> migrate`, fixture `HR Leave Approval 2-Step` tự l
 
 - Desk → search "Workflow" → mở `HR Leave Approval 2-Step`
 - `Document Type = Leave Application`, `Is Active = 1`
-- States: `Pending Manager`, `Pending HR`, `Approved`, `Rejected`
-- Transitions: 4 records
+- States: `Pending Manager`, `Manager Approved`, `Submitted`, `Rejected`
+- Transitions: 4 records (Manager Approve / Manager Reject / Submit / HR Reject)
 
 Nếu workflow chưa tồn tại → chạy lại `bench migrate`.
 
@@ -118,24 +118,43 @@ _process_company(policy._as_dict(), date(2026,5,1), date(2026,5,31), "2026-05")
 
 ```
 NV submit Leave Application
-  ↓ workflow_state = "Pending Manager", docstatus = 0
+  ↓ workflow_state = "Pending Manager", docstatus = 0, status = Open
   ↓
 Manager (Leave Approver theo Employee.leave_approver) action:
-  - "Forward to HR" → workflow_state = "Pending HR" (docstatus vẫn 0)
-  - "Manager Reject" → workflow_state = "Rejected" (docstatus = 1, status = Rejected)
+  - "Manager Approve" → workflow_state = "Manager Approved"
+                       docstatus = 0 (vẫn Draft), status = Approved
+                       → NV thấy đã được Manager duyệt nhưng balance phép CHƯA trừ
+  - "Manager Reject"  → workflow_state = "Rejected", docstatus = 1, status = Rejected
   ↓
 HR Manager action:
-  - "HR Approve" → workflow_state = "Approved" (docstatus = 1, status = Approved)
-  - "HR Reject" → workflow_state = "Rejected" (docstatus = 1, status = Rejected)
+  - "Submit"   → workflow_state = "Submitted", docstatus = 1, status = Approved
+                 → HRMS tự tạo Attendance status=On Leave + trừ Leave Balance
+  - "HR Reject"→ workflow_state = "Rejected", docstatus = 1, status = Rejected
 ```
+
+**Khác biệt 2 cấp**:
+- **Manager Approve** → xác nhận duyệt về mặt nghiệp vụ (status field hiện "Approved" cho NV thấy), nhưng đơn vẫn Draft (chưa ghi nhận chính thức, balance phép chưa thay đổi)
+- **HR Submit** → submit chính thức (docstatus=1), HRMS trigger toàn bộ side-effect (Attendance, Balance, Email...)
+
+→ Đây là pattern "Manager nghiệp vụ + HR vận hành" — Manager không cần care side-effect technical, HR chốt sổ cuối.
 
 ### NV submit Leave Application
 
+**Cách 1: Qua PWA `/my-workspace/leave`** (recommend cho NV)
+
+1. Mở PWA → tab "Nghỉ phép" → tap nút **+** (FloatButton)
+2. Modal "Tạo đơn xin nghỉ":
+   - **Loại phép** (Select có hiện balance: vd "Annual Leave (còn 12.5 ngày)")
+   - **Khoảng ngày** (RangePicker DD/MM/YYYY)
+   - **Lý do** (TextArea)
+3. Tap **Gửi đơn** → POST `api/leave.create_leave_application` → workflow_state = "Pending Manager"
+4. Toast "Đã gửi đơn xin nghỉ. Chờ Manager duyệt."
+5. List "Đơn xin nghỉ" refresh hiện đơn mới với badge "Chờ Manager" (gold)
+
+**Cách 2: Qua Desk** (cho HR / Manager tạo hộ)
+
 1. Desk → New → Leave Application
-2. Điền:
-   - `From Date / To Date`
-   - `Leave Type`
-   - `Reason`
+2. Điền `From Date / To Date`, `Leave Type`, `Reason`
 3. Save → workflow_state tự set `Pending Manager`
 
 ### Manager duyệt bước 1
@@ -143,22 +162,22 @@ HR Manager action:
 1. Manager nhận notification (Bell icon)
 2. Mở Leave Application
 3. Top right có button workflow action:
-   - **Forward to HR** → đẩy lên bước 2
-   - **Manager Reject** → đóng đơn ngay
+   - **Manager Approve** → status = Approved (NV thấy đã duyệt), workflow_state = Manager Approved, vẫn Draft
+   - **Manager Reject** → đóng đơn ngay (docstatus=1, status=Rejected)
 
 ### HR Manager duyệt bước 2
 
-1. HR Manager filter Leave Application với `workflow_state = Pending HR`
+1. HR Manager filter Leave Application với `workflow_state = Manager Approved`
 2. Verify policy (vd NV còn phép, kỳ phép hợp lệ)
 3. Click:
-   - **HR Approve** → docstatus=1, status=Approved → HRMS tự tạo Attendance status=On Leave cho khoảng ngày
+   - **Submit** → docstatus=1, status=Approved → HRMS tự tạo Attendance status=On Leave + trừ Leave Balance
    - **HR Reject** → docstatus=1, status=Rejected
 
 ### Permission
 
 Workflow fixture định nghĩa role được phép action:
-- `Forward to HR` / `Manager Reject`: role `Leave Approver`
-- `HR Approve` / `HR Reject`: role `HR Manager`
+- `Manager Approve` / `Manager Reject`: role `Leave Approver`
+- `Submit` / `HR Reject`: role `HR Manager`
 
 Đảm bảo User của Manager có role `Leave Approver` (gán qua User permissions).
 

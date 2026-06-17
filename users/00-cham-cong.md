@@ -37,7 +37,20 @@ Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nh
 - **HR Office Location** — danh sách văn phòng
 - **HR Checkin Phone Registration** — duyệt phone nhân viên
 - **HR WFH Approval** — quy trình duyệt WFH (optional)
-- **HR Leave Setup** — workflow 2 bước + auto-cấp phép theo working_hours
+- **HR Leave Setup** — workflow 2 bước (Manager Approve → Submit) + auto-cấp phép + UI tạo Leave từ PWA
+
+## PWA `/my-workspace` — Cobe self-service
+
+PWA có sẵn các trang chính cho NV:
+
+| URL | Tính năng |
+|---|---|
+| `/my-workspace/attendance` | Chấm công (Tab Chấm công + Bảng công) |
+| `/my-workspace/leave` | Số dư phép + danh sách + form tạo đơn (FAB nút "+") |
+| `/my-workspace/salary` | Lương (Phase 2) |
+| `/my-workspace/expense` | Chi phí |
+| `/my-workspace/more` | Hub |
+| `/my-workspace/notifications` | Bell icon header → list thông báo (chưa đọc highlight, đã đọc mờ, nút "Đọc tất cả") |
 
 ## Tài liệu kỹ thuật
 
