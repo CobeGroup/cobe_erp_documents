@@ -38,6 +38,7 @@ Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nh
 - **HR Checkin Phone Registration** — duyệt phone nhân viên
 - **HR WFH Approval** — quy trình duyệt WFH (optional)
 - **HR Leave Setup** — workflow 2 bước (Manager Approve → Submit) + auto-cấp phép + UI tạo Leave từ PWA
+- **HR Wiki Setup** — tạo Frappe Wiki Space "my-workspace" làm hướng dẫn sử dụng PWA
 
 ## PWA `/my-workspace` — Cobe self-service
 
