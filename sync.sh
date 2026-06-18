@@ -39,7 +39,8 @@ MAP=(
   "QUY_TAC_PHAN_BO_BAO_DUONG.md|$APPS_DIR/service_reminder/service_reminder/sim_management/QUY_TAC_PHAN_BO_BAO_DUONG.md|Dịch vụ & Bảo dưỡng|2|Quy tắc phân bổ bảo dưỡng"
 
   # --- Vận chuyển & Giao nhận ---
-  "Delivery_Partner.md|$APPS_DIR/delivery_partner/USAGE_GUIDE.md|Vận chuyển & Giao nhận|1|Delivery Partner"
+  # Delivery Partner docs (users/Delivery_Partner.md + tech/Delivery_Partner-Tech.md)
+  # đã chuyển hẳn về repo này — biên soạn trực tiếp, không sync từ app source nữa.
   "Delivery_Partner_Extension.md|$APPS_DIR/delivery_partner_extension_for_cobegroup/USAGE_GUIDE.md|Vận chuyển & Giao nhận|2|Delivery Partner Extension (Cobe)"
   "Handover_Minutes_V2.md|$APPS_DIR/custom_for_cobegroup/docs/handover_minutes_v2_guide.md|Vận chuyển & Giao nhận|3|Handover Minutes V2 (Biên bản bàn giao)"
 )

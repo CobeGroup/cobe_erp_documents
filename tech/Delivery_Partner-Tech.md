@@ -1,0 +1,621 @@
+---
+title: Delivery Partner — Tài liệu kỹ thuật
+layout: default
+parent: Tài liệu kỹ thuật
+nav_order: 6
+---
+
+# Delivery Partner — Tài liệu kỹ thuật
+
+## 1. Kiến trúc tổng quan
+
+```
+delivery_partner (standalone)
+├── Doctypes: DP Partner, DP Partner Account, DP Shipment, DP Shipment Item,
+│             DP Shipment Parcel, DP Shipment Parcel Template,
+│             DP Account Param, DP Status Mapping
+├── API Client: base.py (BaseAPIClient) + ghn.py / viettelpost.py / ghtk.py — gọi API carrier
+├── Webhook Handlers: base.py, ghn.py, viettelpost.py, ghtk.py, generic.py
+├── Webhook Endpoint: api/webhook.py (single entry point)
+├── Setup Scripts: setup_all_carriers.py, simulate_webhooks.py
+└── Setup API: api/setup.py (System Manager only)
+```
+
+App này **không phụ thuộc** vào ERPNext ngoài Frappe framework. Không import module ERPNext nào.
+Việc tạo doc ERP (MR/SE/DN/SI/PE) là của app `delivery_partner_extension_for_cobegroup`, hook vào
+doc events của DP Shipment.
+
+---
+
+## 2. Cấu trúc thư mục
+
+```
+delivery_partner/
+├── delivery_partner/
+│   ├── delivery_partner/
+│   │   ├── doctype/
+│   │   │   ├── dp_shipment/
+│   │   │   │   ├── dp_shipment.json          # DocType definition (5 tabs)
+│   │   │   │   ├── dp_shipment.py            # Controller: validate, submit, handle_event
+│   │   │   │   └── dp_shipment.js            # Form: address/contact fetch, auto-calc parcel
+│   │   │   ├── dp_shipment_item/             # Child table
+│   │   │   ├── dp_shipment_parcel/           # Child table
+│   │   │   ├── dp_shipment_parcel_template/  # Mẫu kiện hàng
+│   │   │   ├── dp_partner/                   # ĐVVC config + status mappings
+│   │   │   ├── dp_partner_account/           # Credentials + warehouse + COD account
+│   │   │   ├── dp_account_param/             # Child table (extra API params)
+│   │   │   └── dp_status_mapping/            # Child table (carrier status → event)
+│   │   └── page/                             # (empty)
+│   ├── api/
+│   │   ├── webhook.py                        # POST endpoint nhận webhook từ carrier
+│   │   └── setup.py                          # API setup carriers (System Manager)
+│   ├── api_client/
+│   │   ├── base.py                           # BaseAPIClient (HTTP, auth, token cache)
+│   │   ├── ghn.py                            # GhnClient
+│   │   ├── viettelpost.py                    # ViettelpostClient
+│   │   └── ghtk.py                           # GhtkClient
+│   ├── handlers/
+│   │   ├── base.py                           # BaseWebhookHandler (abstract)
+│   │   ├── ghn.py                            # GHN handler (Token header, OrderCode)
+│   │   ├── viettelpost.py                    # VTP handler (X-VTP-Token, ORDER_NUMBER)
+│   │   ├── ghtk.py                           # GHTK handler (X-Client-Source)
+│   │   └── generic.py                        # Fallback handler
+│   ├── hooks.py                              # CHỈ có app metadata (xem §9)
+│   └── scripts/
+│       ├── setup_all_carriers.py             # Setup 9 carriers + status mappings
+│       ├── setup_ghn_test.py                 # GHN-specific setup (legacy)
+│       ├── simulate_webhooks.py              # Test webhook simulation
+│       └── test_flow_v2.py                   # Test flow helper
+```
+
+---
+
+## 3. Doctypes — Data Model
+
+### 3.1. DP Partner
+
+Cấu hình 1 đơn vị vận chuyển.
+
+```
+DP Partner
+├── partner_name (PK, unique)
+├── partner_code (string, VD: "ghn")
+├── is_active (bool)
+├── auth_method (Select: Static Token / Token Exchange / Signature)
+├── base_url (string, production API)
+├── sandbox_url (string, test API)
+├── token_header_name (string, VD: "Token")
+├── token_endpoint (string, endpoint lấy token cho Token Exchange)
+├── token_ttl (Int, giây — TTL cache token)
+├── webhook_handler (string, Python class path)
+├── webhook_secret (Password, verify webhook signature)
+├── notes (Text)
+└── status_mappings[] → DP Status Mapping (child table)
+      ├── carrier_status (string, raw status từ carrier)
+      ├── normalized_event (Select: 1 trong 8 events cố định)
+      └── description (string)
+```
+
+**8 Normalized Events:**
+
+| Event | Ý nghĩa | DP Shipment Status |
+|-------|---------|-------------------|
+| `picked_up` | Carrier đã lấy hàng | Partner Received |
+| `in_transit` | Đang vận chuyển | In Transit |
+| `delivered` | Giao thành công | Delivered |
+| `delivery_failed` | Giao thất bại | Delivery Failed |
+| `returning` | Đang hoàn hàng | Returning |
+| `returned` | Đã hoàn hàng | Returned |
+| `lost` | Mất hàng | Lost |
+| `cancelled` | Đã hủy | Cancelled |
+
+### 3.2. DP Partner Account
+
+Tài khoản kết nối API cụ thể.
+
+```
+DP Partner Account
+├── account_name (PK, unique)
+├── partner → DP Partner
+├── is_default (bool)
+├── use_sandbox (bool)
+├── warehouse → Warehouse (kho ảo carrier, reqd)
+├── cod_account → Account (tài khoản ảo COD receivable)
+├── Credentials:
+│   ├── api_token (Password, Static Token)
+│   ├── username / password (Token Exchange)
+│   ├── api_key / api_secret (Signature)
+│   └── cached_token / token_expiry (auto-managed)
+├── test_credentials (Button)
+└── extra_params[] → DP Account Param (child table)
+      ├── param_key (string)
+      ├── param_value (string)
+      └── send_as (Select: Header / Query Param / Body)
+```
+
+### 3.3. DP Shipment
+
+Vận đơn chính. Submittable doctype. **5 tabs** (không có Tab Charges).
+
+```
+DP Shipment (autoname: SHIP-DP-{YYYY}-{#####})
+├── Tab Shipment:
+│   ├── partner → DP Partner
+│   ├── partner_account → DP Partner Account
+│   ├── shipment_items[] → DP Shipment Item
+│   ├── value_of_goods (Currency)
+│   ├── cod_amount (Currency)
+│   └── description_of_content (string)
+├── Tab Pickup:
+│   ├── pickup_from_type (Select: Company/Warehouse/Customer/Supplier)
+│   ├── pickup_company / pickup_warehouse / pickup_customer / pickup_supplier
+│   ├── pickup_address_name → Address
+│   ├── pickup_address (display, read-only)
+│   ├── pickup_contact_name → Contact / pickup_contact_person → User
+│   ├── pickup_contact (display: "Name | Phone")
+│   └── pickup_contact_email
+├── Tab Delivery:
+│   ├── delivery_to_type (Select: Company/Customer/Supplier)
+│   ├── delivery_company / delivery_customer / delivery_supplier
+│   ├── delivery_address_name → Address
+│   ├── delivery_address (display)
+│   ├── delivery_contact_name → Contact
+│   ├── delivery_contact (display)
+│   └── delivery_contact_email
+├── Tab Parcels & Details (tab_parcels):
+│   ├── shipment_parcel[] → DP Shipment Parcel
+│   ├── parcel_template → DP Shipment Parcel Template + add_template (Button)
+│   ├── total_weight (Float, auto-calc = Σ weight × count)
+│   ├── pickup_date (Date)
+│   ├── pickup_from / pickup_to (Time)
+│   ├── shipment_type, pickup_type
+│   └── pallets (bool)
+└── Tab Tracking:
+    ├── status (Select — lifecycle bên dưới)
+    ├── external_shipment_id (string, mã vận đơn từ carrier)
+    ├── tracking_status (string, raw status)
+    ├── tracking_status_info (string)
+    └── tracking_url (string)
+```
+
+**Status lifecycle thực tế:**
+
+```
+Draft → Submitted → Partner Received → In Transit → Delivered
+                                                  → Delivery Failed → Returning → Returned
+                                                                                → Lost
+        → Cancelled (on_cancel hoặc webhook event "cancelled")
+```
+
+> `Booked` có trong options Select nhưng **không có code nào set** — app gốc không tự gọi
+> API tạo đơn khi submit. `on_submit` chỉ `db_set("status", "Submitted")`.
+
+### 3.4. DP Shipment Item (child table)
+
+```
+DP Shipment Item
+├── item_code → Item
+├── item_name (fetch)
+├── qty (float)
+└── uom → UOM (fetch)
+```
+
+> Không có field weight/dimensions ở đây. Các field `custom_unit_*` mà JS đọc là **custom field
+> do app extension thêm**, không thuộc app gốc.
+
+### 3.5. DP Shipment Parcel (child table)
+
+```
+DP Shipment Parcel
+├── length (Int, cm)
+├── width (Int, cm)
+├── height (Int, cm)
+├── weight (Float, kg)
+└── count (Int)
+```
+
+(DP Shipment Parcel Template có cấu trúc tương tự — `length/width/height` Int, `weight` Float.)
+
+---
+
+## 4. API Client Framework
+
+### 4.1. BaseAPIClient (`api_client/base.py`)
+
+Base class cho tất cả carrier API integrations. Các client cụ thể (`GhnClient`, `ViettelpostClient`,
+`GhtkClient`) kế thừa và override.
+
+```python
+class BaseAPIClient:
+    REQUEST_TIMEOUT = 15
+
+    def __init__(self, account_name):
+        # Load DP Partner Account + DP Partner config
+
+    @property
+    def base_url(self) -> str:
+        # sandbox vs production theo account.use_sandbox
+
+    def get_auth_headers(self) -> dict:
+        # Static Token   : {token_header_name: api_token}
+        # Token Exchange : {"Authorization": f"Bearer {token}"}  (token cache)
+        # Signature      : {}  → ký per-request trong _sign_request()
+
+    def get_extra_headers() / get_extra_query_params() / get_extra_body_params() -> dict:
+        # đọc extra_params theo send_as
+
+    def _get_or_refresh_token(self) -> str:
+        # trả token cache còn hạn, hoặc gọi _do_token_exchange()
+
+    def _do_token_exchange(self) -> str:
+        # override trong subclass (mặc định throw NotImplemented)
+
+    def _sign_request(self, method, endpoint, kwargs) -> dict:
+        # override cho auth Signature
+
+    def request(self, method, endpoint, **kwargs) -> dict:
+        # HTTP request: auth headers + extra params + sign (nếu Signature) → JSON
+
+    def test_connection(self) -> dict:
+        # override trong subclass — {success, message}
+```
+
+> **Lưu ý tên method:** là `get_auth_headers()` (public, không underscore) và
+> `_get_or_refresh_token()` / `_do_token_exchange()`. **Không** có `_get_auth_headers()` hay
+> `_refresh_token()`. Token Exchange luôn gửi `Authorization: Bearer <token>` (không dùng
+> `token_header_name`).
+
+**Auth Methods:**
+
+| Method | Flow | Carriers |
+|--------|------|----------|
+| Static Token | Token cố định gửi trong header | GHN, GHTK, Best Express, Ahamove |
+| Token Exchange | Login → nhận token (cached theo `token_ttl`) → gửi `Bearer` | Viettel Post, Ninja Van, GrabExpress |
+| Signature | Sign body + secret → gửi signature | J&T Express, SPX |
+
+**Carrier client methods (`api_client/ghn.py`, `viettelpost.py`, `ghtk.py`):**
+`create_shipment`, `cancel_shipment`, `track_shipment` (GHN: `get_shipment_detail`), `calculate_fee`,
+`get_services`, `get_provinces`, `get_districts`, `get_wards` (GHTK ít hơn).
+
+### 4.2. Extra Params
+
+`DP Account Param` rows được inject vào mỗi request:
+
+| send_as | Vị trí |
+|---------|--------|
+| Header | HTTP Header |
+| Query Param | URL query parameter |
+| Body | Request body (JSON) |
+
+---
+
+## 5. Webhook System
+
+### 5.1. Entry Point (`api/webhook.py`)
+
+Single endpoint cho tất cả carriers:
+
+```
+POST /api/method/delivery_partner.api.webhook.handle?partner=<TenPartner>
+```
+
+- `allow_guest=True` (carrier gọi không có Frappe session)
+- Luôn trả HTTP 200 (tránh carrier retry)
+- Set user = Administrator để có permission tạo/update docs
+- Lỗi nội bộ log vào Error Log
+
+### 5.2. BaseWebhookHandler (`handlers/base.py`)
+
+```python
+class BaseWebhookHandler:
+    def __init__(self, request):
+        self.request = request
+        self.payload = parse JSON from request.data
+
+    # --- Subclass phải implement ---
+    def verify_signature(self) -> bool
+    def extract_shipment_id(self) -> str      # external_shipment_id
+    def extract_raw_status(self) -> str        # raw status từ carrier payload
+    def extract_status_info(self) -> str       # human-readable note (optional)
+
+    # --- Common flow ---
+    def process(self):
+        1. verify_signature()  → throw AuthenticationError nếu sai
+        2. extract external_shipment_id  (throw nếu rỗng)
+        3. extract raw_status            (log + return nếu rỗng)
+        4. Lookup DP Shipment by external_shipment_id
+        5. _normalize_status(): query DP Status Mapping
+           → carrier_status → normalized_event
+        6. shipment.handle_event(event, raw_status, info)
+```
+
+### 5.3. Carrier Handlers
+
+**GHN** (`handlers/ghn.py`):
+```
+Payload: {"OrderCode": "...", "Status": "...", "Description": "..."}
+Verify : request.headers["Token"] == DP Partner.webhook_secret
+Status : payload["Status"].lower()
+```
+
+**Viettel Post** (`handlers/viettelpost.py`):
+```
+Payload: {"ORDER_NUMBER": "...", "ORDER_STATUS": 500, "NOTE": "..."}
+Verify : request.headers["X-VTP-Token"] == webhook_secret
+Status : str(payload["ORDER_STATUS"])
+```
+
+**GHTK** (`handlers/ghtk.py`):
+```
+Payload: {"label_id": "...", "partner_id": "...", "status_id": 5, "reason": "..."}
+Verify : request.headers["X-Client-Source"] == webhook_secret
+         (KHÔNG phải HMAC; nếu chưa cấu hình secret → bỏ qua verify)
+Status : str(payload["status_id"])
+ID     : payload["partner_id"] hoặc payload["label_id"]
+```
+
+**Generic** (`handlers/generic.py`):
+```
+Fallback khi DP Partner dùng GenericWebhookHandler.
+Payload: {"shipment_id": "...", "status": "...", "info": "..."}
+Verify : không verify (chỉ dùng mạng nội bộ/tin cậy)
+```
+
+> ⚠️ **Bug đã biết:** `GenericWebhookHandler` định nghĩa `extract_status()` trong khi base gọi
+> `extract_raw_status()`. Vì vậy 6 carrier fallback generic (JT/NJV/BEST/AHAMOVE/SPX/GRAB) sẽ
+> raise `NotImplementedError` khi nhận webhook qua endpoint thật. Cần sửa thành
+> `extract_raw_status()` trong `handlers/generic.py`.
+
+### 5.4. Status Normalization (DB-driven)
+
+```sql
+SELECT normalized_event
+FROM `tabDP Status Mapping`
+WHERE parent = %(partner_name)s
+  AND parenttype = 'DP Partner'
+  AND carrier_status = %(raw_status)s
+```
+
+Thêm carrier mới chỉ cần thêm rows vào DP Status Mapping — không sửa code.
+Raw status không có trong mapping → log warning + bỏ qua.
+
+### 5.5. handle_event (`dp_shipment.py`)
+
+```python
+def handle_event(self, event, raw_status="", info=""):
+    self.db_set("tracking_status", raw_status)
+    if info:
+        self.db_set("tracking_status_info", info)
+    new_status = self.EVENT_STATUS_MAP.get(event)   # "picked_up" → "Partner Received"
+    if new_status:
+        self.db_set("status", new_status)
+    self.add_comment("Info", ...)  # Ghi log
+```
+
+`db_set("status", ...)` trigger Frappe `on_update` → extension app hooks react (tạo SE/DN/SI/PE).
+
+---
+
+## 6. DP Shipment Controller (`dp_shipment.py`)
+
+### 6.1. Validation (trước save)
+
+```python
+def validate(self):
+    self._validate_parcel_weights()   # mỗi parcel weight > 0
+    self._validate_pickup_time()      # pickup_to > pickup_from
+    self._validate_items()            # mỗi item qty > 0
+    self._set_total_weight()          # Σ(weight × count)
+    if self.is_new():
+        self.status = "Draft"
+```
+
+### 6.2. Submit
+
+```python
+def on_submit(self):
+    assert shipment_parcel not empty
+    assert shipment_items not empty
+    assert value_of_goods > 0
+    self._validate_single_warehouse()   # tất cả items cùng 1 warehouse
+    self.db_set("status", "Submitted")   # KHÔNG gọi API carrier
+```
+
+### 6.3. Cancel
+
+```python
+def on_cancel(self):
+    self.db_set("status", "Cancelled")
+```
+
+### 6.4. Single Warehouse Validation
+
+```python
+def _validate_single_warehouse(self):
+    # Lấy warehouse từ item.custom_warehouse hoặc doc.custom_pickup_warehouse
+    # (các custom field này do extension thêm; standalone thường rỗng → bỏ qua)
+    # Nếu > 1 unique warehouse → throw yêu cầu tách shipment
+```
+
+---
+
+## 7. Client-side JS (`dp_shipment.js`)
+
+### 7.1. Address/Contact Auto-fetch
+
+```
+_get_party(frm, side)         → {doctype, name} từ pickup_from_type/delivery_to_type
+_refresh_link_queries(frm)    → set_query cho address_name + contact_name
+_fetch_party_address(frm, side, doctype, name) → get_default_address() → set address_name
+_fetch_party_contact(frm, side, doctype, name) → get_default_contact() → set contact_name
+_load_address_display(frm, side)  → frappe.db.get_doc("Address") → format display
+_load_contact_display(frm, side)  → frappe.db.get_doc("Contact") → format "Name | Phone"
+```
+
+### 7.2. Auto-calculate Parcel
+
+Nút "Auto-calculate Parcel" (chỉ hiện khi Draft + có items):
+
+```javascript
+function _auto_calc_parcel(frm):
+    total_weight = SUM(custom_unit_weight × qty)
+    max_length   = MAX(custom_unit_length)
+    max_width    = MAX(custom_unit_width)
+    sum_height   = SUM(custom_unit_height × qty)
+    → Clear parcels, thêm 1 parcel gợi ý
+```
+
+> `custom_unit_*` chỉ có dữ liệu khi cài app extension (custom field trên DP Shipment Item).
+
+### 7.3. Item Dimension Fetch
+
+Child table event `DP Shipment Item.item_code`:
+
+```javascript
+frappe.db.get_value("Item", item_code, [
+    "weight_per_unit", "custom_parcel_length", "custom_parcel_width", "custom_parcel_height"
+]) → set custom_unit_weight/length/width/height
+```
+
+---
+
+## 8. Setup Scripts
+
+### 8.1. setup_all_carriers.py
+
+Tạo DP Partner + Warehouse + Account cho 9 carriers (idempotent).
+
+```python
+CARRIERS = {
+    "GHN": { partner_name, auth_method, base_url, sandbox_url, webhook_handler, status_mappings[] },
+    "VTP": {...},
+    ...   # 9 carrier: GHN, VTP, GHTK, JT, NJV, BEST, AHAMOVE, SPX, GRAB
+}
+
+def setup(carriers=None):
+    for key in carriers:
+        _ensure_warehouse()      # Kho <Carrier> - {abbr}
+        _ensure_partner()        # DP Partner + status mappings (upsert)
+        _ensure_account()        # DP Partner Account default
+
+def list_carriers():
+    # liệt kê carrier + số mapping
+```
+
+### 8.2. simulate_webhooks.py
+
+Test webhook không cần carrier thật (gọi handler trực tiếp, bypass HTTP).
+
+```python
+handler.verify_signature = lambda: True   # skip verify
+# Predefined flows: GHN_HAPPY_FLOW / GHN_RETURN_FLOW / GHN_CANCEL_FLOW / GHN_LOST_FLOW
+#                   VTP_HAPPY_FLOW / VTP_RETURN_FLOW
+# API: ghn_step_by_step / vtp_step_by_step / ghn_event / vtp_event
+#      ghn_full_flow / vtp_full_flow / print_curl_commands
+```
+
+> Phần `_print_shipment_state` in các field `custom_*` (MR/SE/DN/Fulfillment) — chỉ có dữ liệu
+> khi cài app extension; chạy standalone sẽ hiển thị `-`.
+
+### 8.3. API endpoint (`api/setup.py`)
+
+```python
+@frappe.whitelist()
+def setup_carriers(carriers=None):
+    # Require "System Manager" role (else throw PermissionError)
+    # Gọi setup_all_carriers.setup()
+
+@frappe.whitelist()
+def list_carriers():
+    # Require "System Manager"
+    # Return [{key, name, auth_method, mappings}]
+```
+
+---
+
+## 9. hooks.py & Permissions
+
+### 9.1. hooks.py
+
+`hooks.py` **chỉ chứa app metadata** (app_name, app_title, app_publisher, ...).
+**Không** có `doc_events`, `scheduler_events`, `override_whitelisted_methods`, hay `fixtures`.
+Webhook/setup được whitelist trực tiếp trên function (`@frappe.whitelist`), không qua hooks.
+
+> Phần phản ứng `on_update` (tạo SE/DN/SI/PE) được đăng ký trong `hooks.py` của **app extension**,
+> không phải app này.
+
+### 9.2. Permissions
+
+| DocType | System Manager | Stock Manager |
+|---------|---------------|---------------|
+| DP Shipment | Full (create/read/write/submit/cancel/delete) | Full (create/read/write) |
+
+Setup API yêu cầu **System Manager**.
+
+---
+
+## 10. Thêm carrier mới
+
+### 10.1. Chỉ cần data (dùng GenericWebhookHandler)
+
+1. Thêm entry vào `CARRIERS` dict trong `setup_all_carriers.py`
+2. Chạy setup script
+3. Điền credentials vào DP Partner Account
+
+> Lưu ý bug §5.3: GenericWebhookHandler hiện cần sửa `extract_status` → `extract_raw_status`
+> trước khi dùng cho webhook thật.
+
+### 10.2. Cần custom handler
+
+1. Tạo file `handlers/<carrier>.py`:
+
+```python
+from delivery_partner.handlers.base import BaseWebhookHandler
+
+class MyCarrierHandler(BaseWebhookHandler):
+    def verify_signature(self) -> bool:
+        token = self.request.headers.get("X-Token", "")
+        secret = self._get_partner_secret_for_shipment(self.extract_shipment_id())
+        return token == secret
+
+    def extract_shipment_id(self) -> str:
+        return self.payload.get("order_id", "")
+
+    def extract_raw_status(self) -> str:
+        return str(self.payload.get("status", ""))
+
+    def extract_status_info(self) -> str:
+        return self.payload.get("message", "")
+```
+
+2. Set `webhook_handler` trên DP Partner = `delivery_partner.handlers.<carrier>.MyCarrierHandler`
+3. Thêm status mappings vào DP Partner
+
+### 10.3. Cần custom API client
+
+1. Tạo file `api_client/<carrier>.py`:
+
+```python
+from delivery_partner.api_client.base import BaseAPIClient
+
+class MyCarrierClient(BaseAPIClient):
+    def create_shipment(self, payload: dict) -> dict:
+        return self.request("POST", "/orders/create", json=payload)
+
+    def cancel_shipment(self, order_id: str) -> dict:
+        return self.request("POST", "/orders/cancel", json={"order_id": order_id})
+```
+
+(Theo đúng tên method của các client hiện có: `create_shipment` / `cancel_shipment` /
+`track_shipment` / `calculate_fee`.)
+
+---
+
+## 11. Dependencies
+
+| Package | Mục đích |
+|---------|----------|
+| `frappe` | Framework core |
+| `requests` | HTTP client (API calls) |
+
+Không phụ thuộc `erpnext` — app hoạt động trên bất kỳ Frappe site nào.

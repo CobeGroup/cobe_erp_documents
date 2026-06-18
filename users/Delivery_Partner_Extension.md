@@ -10,7 +10,7 @@ nav_order: 2
 App tích hợp `delivery_partner` với ERPNext: tự động tạo Material Request, Stock Entry,
 Delivery Note, Sales Invoice, Payment Entry theo lifecycle vận đơn.
 
-> **Yêu cầu:** Đọc trước [USAGE_GUIDE.md của delivery_partner](https://github.com/CobeGroup/delivery_partner/blob/main/USAGE_GUIDE.md)
+> **Yêu cầu:** Đọc trước [Hướng dẫn Delivery Partner](Delivery_Partner.md)
 > để hiểu các khái niệm: DP Partner, DP Shipment, Status Mapping, Webhook.
 
 ---
