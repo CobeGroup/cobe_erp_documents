@@ -39,13 +39,17 @@ Ví dụ cụ thể: **Phòng Sales** và **Phòng Bảo dưỡng (kỹ thuật 
 
 **Ai thấy tab gì trên my-workspace:**
 - Tab **"Cần duyệt"**: user có role nằm trong `viewer_roles` của HR Approval Inbox Settings (mặc định **Leave Approver / HR Manager / System Manager**).
-- Tab **"FSM"**: employee có **FS Service Resource** (kỹ thuật viên).
+- Tab **"FSM"**: employee có **FS Service Resource** (kỹ thuật viên). Gate **thuần theo
+  FS Service Resource, KHÔNG theo role** — System Manager cũng **không** thấy tab này nếu
+  employee của họ chưa có FS Service Resource. (Riêng app `/technician` mở URL trực tiếp
+  thì System Manager vào được kể cả không có FS Service Resource.)
 
 ---
 
 ## 1. Setup chung (làm 1 lần cho mỗi Company)
 
 ### 1.1. HR Policy (Desk → **HR Policy**, 1 record / Company)
+
 | Trường | Khuyến nghị | Ý nghĩa |
 |---|---|---|
 | `company` | (chọn công ty) | Mỗi Company 1 record |
