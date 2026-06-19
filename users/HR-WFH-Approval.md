@@ -28,7 +28,7 @@ nav_order: 5
 
 Khi công ty có policy WFH/công tác và muốn track rõ ràng ngày nào nhân viên nào được phép chấm công ngoài VP.
 
-**Cơ chế hiện tại:** mỗi lần đăng ký WFH = tạo 1 **Attendance Request** (`reason = "Work From Home"`) cho **1 ngày**. Khi manager duyệt (submit AR), HRMS tự tạo bản ghi Attendance status `Work From Home` cho ngày đó.
+**Cơ chế hiện tại:** mỗi lần đăng ký WFH = tạo **Attendance Request** (`reason = "Work From Home"`) qua form **"Đề xuất"** (1 hoặc nhiều ngày). Khi manager duyệt (submit AR), HRMS tự tạo bản ghi Attendance status `Work From Home` cho ngày đó.
 
 > doctype cũ **HR WFH Approval** đã bị bỏ — không còn endpoint `approve_wfh` / `reject_wfh` / `get_pending_for_me`. Mọi tham chiếu tới doctype này trong tài liệu/code cũ là lịch sử.
 
@@ -36,11 +36,11 @@ Khi công ty có policy WFH/công tác và muốn track rõ ràng ngày nào nh�
 
 ## 2. Đăng ký WFH (nhân viên)
 
-Nhân viên đăng ký qua PWA → trang **"Đăng ký WFH"**:
+Nhân viên đăng ký qua PWA → tab **"Bảng công"** → nút **"Đề xuất"** → chọn loại **WFH**:
 
-1. Mở PWA → trang **Đăng ký WFH**
+1. Mở PWA → tab **Bảng công** → nút **Đề xuất** → chọn **WFH** (chỉ hiện khi bật `enable_wfh_mode`)
 2. Chọn **ngày** WFH + nhập **địa điểm** (nhãn) + **lý do**
-3. Submit → app gọi `api.wfh.request_wfh`:
+3. Submit → app gọi `api.attendance_request.create_attendance_request` (reason=Work From Home):
    - Tạo Attendance Request 1 ngày (`from_date = to_date = ngày chọn`), `reason = "Work From Home"`, `docstatus = 0`
    - Nếu đã có AR WFH chưa hủy cho đúng ngày đó → trả `status = "exists"` (không tạo trùng)
 4. PWA hiển thị "Đang chờ manager duyệt"

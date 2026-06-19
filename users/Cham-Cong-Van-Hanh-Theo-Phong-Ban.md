@@ -132,8 +132,9 @@ check-in không thành Attendance → **báo cáo tháng (§6) trống**.
 4. **Nhân viên cài app**: mở `https://<domain>/my-workspace` trên điện thoại (đăng nhập Frappe).
 5. **Đăng ký thiết bị**: lần đầu app đẩy sang **"Đăng ký thiết bị"** → bấm *Gửi yêu cầu đăng ký*.
 6. **HR duyệt thiết bị** (xem §5.2) → NV mới chấm công được.
-7. **Hằng ngày**: NV bấm **Chấm công (Vào/Ra)**. Quên chấm → mở trang **Chấm công** → tab **Chấm công bù** → bấm **"+"** tạo đơn.
-   Nghỉ phép → tab **Nghỉ phép**. WFH (nếu bật) → **Thêm → Đăng ký WFH**.
+7. **Hằng ngày**: NV bấm **Chấm công (Vào/Ra)**. Quên chấm / đi công tác / WFH → tab
+   **Bảng công** → nút **"Đề xuất"** → chọn loại (Chấm công bù / WFH) → gửi đơn. Nghỉ phép → tab **Nghỉ phép**.
+   (Đơn duyệt xong hiện ngay trong Bảng công.)
 
 ---
 

@@ -7,7 +7,7 @@ nav_order: 4
 
 # Attendance Request — Xin chấm công bù (On Duty)
 
-> Doctype HRMS chuẩn. Nhân viên tạo đơn **"Chấm công bù"** qua **tab "Chấm công bù"** trong trang **Chấm công** (bấm nút **"+"**). Manager duyệt qua tab **"Cần duyệt"** (api.approval.act → submit Attendance Request → HRMS tự tạo Attendance). Tài liệu này giải thích cách dùng + working_hours được tính ra sao sau khi approve.
+> Doctype HRMS chuẩn. Nhân viên tạo đơn **"Chấm công bù"** qua nút **"Đề xuất"** trong tab **"Bảng công"** (chọn loại: Chấm công bù / WFH). Manager duyệt qua tab **"Cần duyệt"** (api.approval.act → submit Attendance Request → HRMS tự tạo Attendance). Tài liệu này giải thích cách dùng + working_hours được tính ra sao sau khi approve.
 >
 > **WFH có flow riêng** (đăng ký qua trang "Đăng ký WFH", cần check-in GPS) — xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
 
@@ -44,7 +44,7 @@ Khi NV tạo qua PWA (`api.attendance_request.create_attendance_request`), `reas
 Cobe **giữ default HRMS** (không custom Workflow doctype như Leave Application):
 
 ```
-NV tạo "Chấm công bù" (tab Chấm công bù → bấm "+") → docstatus = 0
+NV tạo "Chấm công bù" (tab Bảng công → nút "Đề xuất") → docstatus = 0
   ↓
 Manager → tab "Cần duyệt" → Duyệt (api.approval.act, action="Submit" → docstatus = 1)
   ↓
@@ -58,7 +58,7 @@ Lý do giữ 1 step:
 
 ### Cách NV tạo đơn
 
-1. Mở my-workspace → trang **Chấm công** → tab **"Chấm công bù"** → bấm **"+"**
+1. Mở my-workspace → tab **"Bảng công"** → nút **"Đề xuất"** → chọn loại
 2. Chọn khoảng ngày (`from_date` → `to_date`), nhập lý do (`explanation`)
 3. (Tùy chọn) đánh dấu nửa ngày → `half_day`
 4. Submit → tạo Attendance Request `docstatus = 0` (`reason = On Duty`)
@@ -168,7 +168,7 @@ Desk → Attendance list → filter `hr_warning_type` để thấy:
 
 ### Case A: NV đi công tác 3 ngày liên tục (T2-T4)
 
-1. NV tạo "Chấm công bù" (tab Chấm công bù → bấm "+"):
+1. NV tạo "Chấm công bù" (tab Bảng công → nút "Đề xuất"):
    - from_date = T2, to_date = T4
    - reason = `On Duty`
    - explanation = "Công tác Hà Nội gặp khách hàng"
