@@ -36,6 +36,10 @@ nav_order: 4
   nổi (Đề xuất, + Nghỉ phép, + Chi phí, ? trợ giúp) cùng right/z-index (1001, trên nav
   bar z-1000) + `bottom: calc(... + env(safe-area-inset-bottom))` để không bị nav che
   / nhảy trên iPhone.
+- **Tự cập nhật**: `VersionProvider` (`hooks/useVersionCheck`) poll `version.json` (lúc
+  mount + khi tab visible lại, throttle 5'); hash đổi → `UpdateBanner` hiện notification
+  "Có phiên bản mới" + nút Cập nhật (xóa cache + reload). Giải quyết PWA cài về không tự
+  lấy bản mới khi mở lại (giống cơ chế app technician).
 - **Routing**: PWA served tại `/my-workspace` (không phải `/attendance`).
 
 Chi tiết contract + patch: xem `HR-Attendance-API` §9.
