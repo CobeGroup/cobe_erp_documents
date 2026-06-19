@@ -5,59 +5,43 @@ parent: Tài liệu kỹ thuật
 nav_order: 3
 ---
 
-# HR Attendance — API Contract
+# API Contract — Phone-only Architecture
 
-> Source of truth cho contract giữa **PWA** (React + TS) và **Backend** (Frappe).
->
-> Mọi thay đổi contract phải update file này TRƯỚC khi sửa code. Đối tượng: developer, 3rd party integrator.
+Tài liệu **source of truth** cho contract giữa 2 thành phần (post-pivot, no hardware):
+- **PWA** mobile (phone nhân viên)
+- **Backend** Frappe
 
----
-
-## Mục lục
-
-1. [Feature flags (HR Policy)](#1-feature-flags-hr-policy)
-2. [Data model](#2-data-model)
-3. [API endpoints](#3-api-endpoints)
-4. [WebRTC local IP detection](#4-webrtc-local-ip-detection)
-5. [Device fingerprint](#5-device-fingerprint)
-6. [Error codes](#6-error-codes-chuẩn-hóa)
-7. [Sequence diagrams](#7-sequence-diagrams)
+Mọi thay đổi contract phải update file này TRƯỚC khi sửa code.
 
 ---
+
+> **Nguyên tắc kiến trúc (Cách B):** UI luôn của hr_for_cobegroup (PWA `/my-workspace`),
+> backend ƯU TIÊN gọi HRMS native; chỉ tự code phần mở rộng custom (GPS/selfie/thiết
+> bị/office/whitelist/lunch/warning). Xem §9.
 
 ## 1. Feature flags (HR Policy — per Company)
 
-Regular doctype, **1 record per Company** (unique constraint on `company`). Naming `format:HRP-{company}`. Default off cho tính năng chưa verify.
+Toàn bộ tính năng optional đều có **feature flag** bật/tắt qua doctype `HR Policy`
+(1 record / Company, `name = HRP-<company>`). Default off cho tính năng chưa verify.
+Cấp phép tự động: KHÔNG còn field `leave_auto_*` — dùng **Earned Leave native** của
+HRMS (Leave Type `is_earned_leave`).
 
 | Field | Type | Default | Mô tả |
 |---|---|---|---|
-| `company` | Link → Company, reqd, unique | — | Company áp dụng setting này |
-| `enable_selfie_capture` | Check | 0 | Bật yêu cầu chụp selfie khi chấm công. Tắt = PWA không mở camera, server không reject thiếu selfie |
-| `enable_wfh_mode` | Check | 0 | Bật flow WFH cho nhân viên đã được duyệt WFH theo ngày |
-| `enable_webrtc_check` | Check | 0 | Bật check WebRTC local IP để defend iOS GPS-spoof. Yêu cầu office wifi subnet đã verify |
-| `enable_wifi_bssid_check` | Check | 0 | Bật check Wifi BSSID (Android only). Yêu cầu office wifi BSSID đã enroll |
-| `enable_face_match` | Check | 0 | Phase 2: bật server-side face match selfie ↔ HR Employee photo |
-| `enforce_checkout_same_office` | Check | 1 | Bắt buộc check-out cùng office với check-in (cùng ngày). Tắt = cho phép IN VP A + OUT VP B |
+| `enable_wfh_mode` | Check | 0 (off) | Bật WFH: hiện ca WFH + **thêm lựa chọn "Làm việc tại nhà (WFH)" trong form Đề xuất** (Attendance Request). Tắt → form Đề xuất chỉ có "Chấm công bù / Công tác" |
+| `enable_webrtc_check` | Check | 0 (off) | Bật check WebRTC local IP để defend iOS GPS-spoof. Yêu cầu office wifi subnet đã verify |
+| `enable_wifi_bssid_check` | Check | 0 (off) | Bật check Wifi BSSID (Android only). Yêu cầu office wifi BSSID đã enroll |
+| `enable_face_match` | Check | 0 (off) | Phase 2: bật server-side face match selfie ↔ HR Employee photo |
 | `default_radius_m` | Int | 100 | Bán kính GPS check mặc định nếu Office Location chưa đặt riêng |
 | `duplicate_window_seconds` | Int | 60 | Reject checkin trùng < N giây từ checkin gần nhất của cùng employee |
 
-Permissions: HR Manager + System Manager.
-
-**Server-side lookup**: helpers ở [`hr_for_cobegroup/utils/settings.py`](https://github.com/CobeGroup/hr_for_cobegroup/blob/main/hr_for_cobegroup/utils/settings.py):
-- `get_settings_for_employee(employee_name)` — lookup theo `Employee.company`, cache request-level
-- `get_settings_for_company(company)` — direct lookup, cache request-level
-
-Endpoint nào cần settings → call `get_settings_for_employee(employee.name)`. Lỗi:
-- Employee không có Company → throw *"Employee {X} chưa có Company"*
-- Company chưa có HR Policy → throw *"Company {X} chưa có HR Policy"*
-
-**Bootstrap**: `after_install` hook + patch `v0_002.migrate_settings_to_per_company` seed 1 record / Company hiện có với defaults. Khi tạo Company mới sau install, HR Manager phải tạo Settings cho Company đó thủ công.
+Permissions: HR Manager + System Manager. Không có nút secret_key/enrollment_token (đã bỏ).
 
 ---
 
 ## 2. Data model
 
-### 2.1 `HR Office Location`
+### 2.1 DocType `HR Office Location`
 
 Đại diện 1 chi nhánh/văn phòng. Multiple offices supported — server tìm office gần nhất khi nhân viên chấm công.
 
@@ -74,58 +58,52 @@ Endpoint nào cần settings → call `get_settings_for_employee(employee.name)`
 | `is_active` | Check (default 1) | Tắt office tạm thời mà không xóa |
 | `notes` | Small Text | Ghi chú nội bộ |
 
-#### Child `HR Office Wifi`
+#### Child DocType `HR Office Wifi`
+
 | Field | Type | Note |
 |---|---|---|
 | `bssid` | Data | MAC format lowercase `aa:bb:cc:dd:ee:ff` |
 | `ssid_label` | Data | Optional, vd "Office-2.4GHz" |
 
-#### Child `HR Office Lan Subnet`
+#### Child DocType `HR Office Lan Subnet`
+
 | Field | Type | Note |
 |---|---|---|
 | `subnet_cidr` | Data | CIDR notation, vd `192.168.10.0/24` |
 | `note` | Data | Optional, vd "Wifi nhân viên tầng 3" |
 
-### 2.2 `HR Checkin Phone Registration`
+### 2.2 DocType `HR Checkin Phone Registration` (giữ nguyên từ trước)
 
-Submittable. Random hash naming. Phone cần được duyệt 1 lần trước khi checkin.
+Phone của nhân viên cần được duyệt 1 lần trước khi checkin.
 
 | Field | Type | Note |
 |---|---|---|
+| `name` | Random hash | |
 | `employee` | Link Employee, reqd | |
 | `device_fingerprint` | Data, reqd | SHA256 hex từ browser fingerprint |
 | `user_agent` | Small Text | |
-| `status` | Select (`Active` / `Inactive`) | Có `allow_on_submit=1` |
+| `status` | Select | Active / Inactive |
 | `docstatus` | (built-in) | 0=Draft (chờ duyệt), 1=Approved, 2=Cancelled |
-
-Validation: `before_submit` check không có record Active khác cho cùng employee → throw nếu có.
 
 Permissions: HR Manager + System Manager submit, Employee read own.
 
-### 2.3 `HR WFH Approval` (gated by `enable_wfh_mode`)
+### 2.3 ~~DocType `HR WFH Approval`~~ → DEPRECATED — WFH dùng `Attendance Request` (HRMS)
 
-Submittable. Series `WFH-.YYYY.-.######`.
+> **Đã bỏ dùng.** WFH giờ nguồn từ HRMS `Attendance Request` (reason="Work From Home")
+> theo nguyên tắc Cách B. Doctype `HR WFH Approval` còn lại để tránh mất data cũ, sẽ
+> drop ở patch sau khi xác nhận prod không còn dùng.
 
-| Field | Type | Note |
-|---|---|---|
-| `employee` | Link Employee, reqd | |
-| `wfh_date` | Date, reqd, in_list_view | Ngày WFH |
-| `work_location_label` | Data | Vd "Nhà riêng", "Công tác Hà Nội" |
-| `reason` | Small Text | |
-| `approved_by` | Link User | Manager duyệt |
-| `status` | Select (`Pending` / `Approved` / `Rejected`) | |
-| `docstatus` | (built-in) | 0=Draft, 1=Submitted (= effective), 2=Cancelled |
+WFH model hiện tại:
+- **Đăng ký WFH** = tạo `Attendance Request` (reason="Work From Home", 1 ngày
+  `from_date = to_date`). Nhãn địa điểm lưu ở custom field `custom_work_location_label`.
+- **Duyệt** = submit Attendance Request qua tab "Cần duyệt" (`api.approval.act`). Khi
+  submit, HRMS **tự tạo Attendance status="Work From Home"** cho ngày đó.
+- **Check-in WFH** (GPS audit + selfie) = phần CUSTOM giữ lại, gate vào Attendance
+  Request WFH đã duyệt (docstatus=1) phủ ngày hôm nay.
 
-Constraint: unique `(employee, wfh_date)` — 1 ngày 1 record.
+### 2.4 Custom fields on `Employee Checkin` (HRMS)
 
-Permissions:
-- Employee: create own (status=Pending), read own
-- Manager (Leave Approver hoặc dept manager): write + submit
-- HR Manager: full
-
-### 2.4 Custom fields trên `Employee Checkin`
-
-Exported via fixture `fixtures/custom_field.json`.
+Toàn bộ via fixture `custom_field.json`. Bỏ các field liên quan QR/Device từ trước.
 
 | Field | Type | Note |
 |---|---|---|
@@ -138,18 +116,24 @@ Exported via fixture `fixtures/custom_field.json`.
 | `custom_wifi_bssid` | Data | Optional, phone gửi nếu Android |
 | `custom_webrtc_local_ip` | Data | Optional, PWA gửi nếu enable |
 | `custom_checkin_source` | Select | `Onsite-PWA`, `WFH-PWA`, `Manual-Desk` |
-| `custom_wfh_approval` | Link HR WFH Approval | Set nếu source=WFH-PWA |
+| `custom_wfh_approval` | Link **Attendance Request** | Set nếu source=WFH-PWA (link AR reason=WFH) |
 
-Fixture filter:
-```python
-fixtures = [{
-    "dt": "Custom Field",
-    "filters": [
-        ["dt", "=", "Employee Checkin"],
-        ["fieldname", "in", [<10 fieldnames>]],
-    ],
-}]
-```
+Custom field thêm trên `Attendance Request`: `custom_work_location_label` (Data) — nhãn
+địa điểm WFH set từ PWA.
+
+Bỏ (so với phiên bản cũ): `custom_hr_attendance_device`, `custom_qr_token_used`. Trên
+`Leave Allocation`: đã drop `custom_auto_allocated_for_period` (bỏ auto-allocation theo
+chấm công — xem §9).
+
+### 2.5 DocType `HR Push Settings` (Single)
+
+Cấu hình FCM **riêng** cho my-workspace (xem §3.11). `enable_push_notifications` +
+Firebase web config + `firebase_vapid_key` + `firebase_service_account_json`.
+
+### 2.6 DocType `HR Push Device`
+
+Token FCM theo thiết bị: `user`, `device_id` (fingerprint trình duyệt), `fcm_token`,
+`is_active`, `user_agent`, `last_used`. Upsert theo `(user, device_id)`.
 
 ---
 
@@ -157,11 +141,17 @@ fixtures = [{
 
 Base URL: `/api/method/hr_for_cobegroup.api.<module>.<func>`
 
-Auth: Frappe session cookie + CSRF header (`X-Frappe-CSRF-Token`).
+Auth tất cả endpoints: Frappe session cookie + CSRF header.
 
 ### 3.1 `GET attendance.get_attendance_info`
 
-Lấy thông tin chấm công hôm nay + feature flags hiện tại.
+Lấy thông tin chấm công hôm nay.
+
+Query/body (optional): `device_fingerprint` — PWA gửi để `phone_registered` được tính
+theo ĐÚNG thiết bị hiện tại (khớp registration Active của chính máy này), không phải
+"employee có máy nào đó đã duyệt". Thiếu fingerprint → fallback kiểm tra tồn tại. Nhờ
+vậy máy chưa duyệt sẽ bị redirect sang `/register-device` thay vì cho vào flow rồi mới
+chặn ở bước cuối.
 
 Response:
 ```json
@@ -194,7 +184,7 @@ Response:
 
 PWA dùng `feature_flags` để biết khi nào cần thu thập `wifi_bssid` / `webrtc_local_ip`.
 
-### 3.2 `POST attendance.checkin` (onsite)
+### 3.2 `POST attendance.checkin`
 
 Tạo checkin onsite mới.
 
@@ -203,28 +193,23 @@ Request body:
 {
   "latitude": 10.7769,
   "longitude": 106.7009,
-  "device_fingerprint": "sha256-hash",
-  "selfie_file_url": "/private/files/selfie_xxx.jpg",
   "wifi_bssid": "aa:bb:cc:dd:ee:ff",
-  "webrtc_local_ip": "192.168.10.123"
+  "webrtc_local_ip": "192.168.10.123",
+  "selfie_file_url": "/private/files/selfie_xxx.jpg",
+  "device_fingerprint": "sha256-hash"
 }
 ```
 
-Note: `selfie_file_url`, `wifi_bssid`, `webrtc_local_ip` đều **optional** — chỉ gửi nếu tương ứng feature flag bật + PWA detect được. Backend không required khi flag off.
+Note: `wifi_bssid`, `webrtc_local_ip` là OPTIONAL — chỉ gửi nếu tương ứng feature flag bật + PWA detect được. Backend không required.
 
 Server validation chain (theo thứ tự, fail nhanh):
-1. Resolve employee (cache trong `frappe.local`)
-2. Phone registered (lookup HR Checkin Phone Registration approved)
-3. Duplicate window + log_type determination (IN/OUT từ checkin gần nhất, throw `DUPLICATE_CHECKIN` nếu < `duplicate_window_seconds`)
-4. Resolve target office:
-   - **OUT + `enforce_checkout_same_office` ON**: lock to today's IN office. Nếu phone gần hơn 1 office khác → throw `OFFICE_MISMATCH`
-   - Else: find nearest active HR Office Location
-5. Khoảng cách phải ≤ `allowed_radius_m` (override of office) hoặc `default_radius_m` (fallback) → else `OUT_OF_RANGE`
-6. Nếu `enable_wifi_bssid_check` ON + office có BSSID list → `wifi_bssid` phải khớp → else `WIFI_MISMATCH`
-7. Nếu `enable_webrtc_check` ON + office có subnet list → `webrtc_local_ip` phải nằm trong 1 subnet → else `LAN_MISMATCH`
-8. Nếu `enable_selfie_capture` ON + `selfie_file_url` empty → throw `SELFIE_REQUIRED`
-9. (Stub, nếu `enable_face_match` ON) face match selfie với HR Employee photo → else `FACE_MISMATCH`
-10. Insert `Employee Checkin` với tất cả custom fields
+1. Phone registered (lookup HR Checkin Phone Registration approved)
+2. Find nearest active HR Office Location → khoảng cách phải ≤ `allowed_radius_m`
+3. Nếu `enable_wifi_bssid_check` ON + office có BSSID list → `wifi_bssid` phải khớp
+4. Nếu `enable_webrtc_check` ON + office có subnet list → `webrtc_local_ip` phải nằm trong 1 subnet
+5. Check duplicate: chưa có checkin nào trong `duplicate_window_seconds` gần nhất
+6. (Nếu `enable_face_match` ON) face match selfie với HR Employee photo
+7. Insert `Employee Checkin` với tất cả custom fields
 
 Response success (200):
 ```json
@@ -238,19 +223,17 @@ Response success (200):
 }
 ```
 
-Response error (4xx):
+Response error (4xx) — error codes:
 ```json
 {
   "success": false,
-  "error_code": "OUT_OF_RANGE",
-  "message": "Bạn đang ở ngoài vùng văn phòng (cách 250m)",
+  "error_code": "OUT_OF_RANGE|WIFI_MISMATCH|LAN_MISMATCH|PHONE_NOT_REGISTERED|EMPLOYEE_NOT_FOUND|DUPLICATE_CHECKIN|FACE_MISMATCH|NO_ACTIVE_OFFICE",
+  "message": "<Vietnamese message>",
   "distance_m": 250.5
 }
 ```
 
-Set `frappe.response["error_code"] = "..."` trước `frappe.throw()` để client switch dễ. Xem [§6 error codes](#6-error-codes-chuẩn-hóa).
-
-### 3.3 `POST attendance.checkin_wfh` (gated by `enable_wfh_mode`)
+### 3.3 `POST attendance.checkin_wfh` (chỉ work khi `enable_wfh_mode` ON)
 
 Checkin từ WFH location.
 
@@ -265,44 +248,143 @@ Request:
 ```
 
 Server validation:
-1. `settings.enable_wfh_mode` ON → else `WFH_NOT_ENABLED`
+1. Feature flag `enable_wfh_mode` phải ON
 2. Phone registered
-3. Có HR WFH Approval submitted (docstatus=1) cho hôm nay khớp employee → else `WFH_NOT_APPROVED`
+3. Có **Attendance Request** (reason="Work From Home", docstatus=1) phủ ngày hôm nay của `employee` hiện tại
 4. (Không enforce GPS radius — chỉ lưu để audit)
-5. Check duplicate window
-6. Insert Employee Checkin với `custom_checkin_source = "WFH-PWA"` + `custom_wfh_approval = <approval name>`
+5. Check duplicate
+6. Insert Employee Checkin với `custom_checkin_source = "WFH-PWA"` + `custom_wfh_approval = <attendance request name>`
 
 Response giống `checkin` thường, thêm field `wfh_approval`.
 
-### 3.4 `POST phone_device.register_phone`
+Error codes phụ:
+- `WFH_NOT_ENABLED` — feature flag off
+- `WFH_NOT_APPROVED` — chưa có approval cho hôm nay
 
-Body: `{ "device_fingerprint": "sha256-hash" }`. Tạo HR Checkin Phone Registration draft cho current user.
+### 3.4 Phone registration (device-aware)
 
-### 3.5 `GET phone_device.get_phone_registration_status`
+- `POST phone_device.register_phone` — body `{ "device_fingerprint": "..." }`
+- `GET phone_device.get_phone_registration_status` — body/query optional
+  `device_fingerprint`. Trả `{ active, pending, other_active }` **tính theo đúng thiết
+  bị hiện tại**: `active`/`pending` chỉ ứng với máy có fingerprint khớp; `other_active`
+  = employee có 1 máy ĐÃ duyệt khác (UI nhắc báo HR deactivate máy cũ).
 
-Trả `{ active: {...}|null, pending: {...}|null }`.
+### 3.5 Đề xuất chấm công (Attendance Request — chấm công bù + WFH)
 
-### 3.6 `POST wfh.request_wfh`
+**Một form "Đề xuất" duy nhất** tạo Attendance Request cho cả 2 loại (gộp, không tách):
+- `reason="On Duty"` (chấm công bù / công tác) → khi duyệt HRMS đánh **Present** (half_day → Half Day).
+- `reason="Work From Home"` (WFH) → status **WFH** + lưu `custom_work_location_label` (địa điểm).
 
-Body: `{ "wfh_date": "2026-05-16", "work_location_label": "Nhà", "reason": "..." }`. Employee tạo request status=Draft cho mình.
+Endpoints (`api.attendance_request`):
+- `POST create_attendance_request` — body
+  `{ from_date, to_date, reason="On Duty"|"Work From Home", explanation, half_day?, half_day_date?, work_location_label? }`
+  → tạo Attendance Request (docstatus=0). Trả `{ success, name }`.
+- `GET get_my_attendance_requests?limit=50` — list đơn của NV (**cả On Duty lẫn WFH**),
+  kèm `reason`, `work_location_label`, `status` (Pending/Approved/Rejected từ docstatus).
+- **Duyệt**: tab **"Cần duyệt"** = `api.approval.act` (Submit Attendance Request → HRMS tạo Attendance).
+- **UI**: nút **"Đề xuất"** (FloatButton) trong tab **"Bảng công"** → Modal chọn loại
+  (On Duty / WFH — WFH chỉ hiện khi `enable_wfh_mode`), chọn ngày, lý do, (WFH) địa điểm.
+  Đơn duyệt xong → Attendance hiện ngay trong Bảng công. **Không còn trang/tab riêng.**
+- Tab Bảng công là **MỘT danh sách hợp nhất** (bản ghi `Attendance` + đơn đề xuất chưa
+  duyệt Pending/Rejected — đơn Approved đã thành Attendance nên không lặp), mỗi item có
+  status. **Bấm item → Modal chi tiết** (công: giờ vào/ra, giờ công, ca, cờ trễ/sớm,
+  cảnh báo; đơn: loại, ngày, địa điểm WFH, lý do, trạng thái).
 
-### 3.7 `GET wfh.get_my_requests?limit=20`
+> **Xem chi tiết (toàn app):** mọi item trong list đều **bấm để xem chi tiết** qua Modal
+> in-app — Bảng công, Chấm công (lượt check-in), Nghỉ phép, Thông báo, Cần duyệt.
 
-Employee xem các WFH request của mình (Draft + Approved + recently Rejected/Cancelled).
+> Legacy `api.wfh.request_wfh` / `get_my_requests` vẫn còn nhưng PWA **không dùng** nữa
+> (WFH request đi qua `create_attendance_request` reason=WFH). Check-in WFH (GPS/selfie)
+> + `wfh_today` (§3.1, §3.3) **không đổi** — vẫn gate vào AR WFH đã duyệt.
 
-### 3.8 `GET wfh.get_pending_for_me`
+### 3.7 Leave (backend HRMS native)
 
-Manager xem queue cần duyệt.
+- `GET leave.get_leave_types_for_employee` — gọi HRMS `get_leave_details()` → trả
+  `{ leave_types: [{ name, balance, max_leaves_allowed, leaves_taken, leaves_pending_approval, is_lwp }], employee }`.
+  `balance` = `remaining_leaves` (đã trừ đã dùng + chờ duyệt + carry-forward hết hạn).
+  Liệt kê loại phép có allocation **+ luôn kèm loại nghỉ không lương (LWP, `is_lwp=true`)**
+  để NV chưa được cấp phép vẫn có ít nhất 1 lựa chọn (đơn LWP trừ lương khi duyệt).
+  Gọi trực tiếp với user hiện tại (Employee/ESS đã có read Leave Type) — **KHÔNG**
+  `frappe.set_user("Administrator")` vì set_user phá `session.sid` trong web request →
+  request sau session hỏng → 401 đăng xuất.
+- `GET leave.get_my_leave_applications?limit=50` — list Leave Application của NV (gồm
+  Draft + Submitted, kèm `workflow_state`).
+- `POST leave.create_leave_application` — tạo Leave Application Draft
+  (`workflow_state="Pending Manager"`). Workflow 2 bước Manager→HR chạy server-side.
 
-### 3.9 `POST wfh.approve_wfh` / `wfh.reject_wfh`
+> **Cấp quỹ phép ≠ Đơn xin nghỉ.** Phép năm cấp tự động (+N/kỳ) = **Leave Allocation**
+> qua HRMS Earned Leave — hệ thống tự submit, **cộng số dư ngay, KHÔNG qua duyệt**, không
+> tạo "leave nháp". Workflow 2 bước chỉ áp cho **Leave Application** (lúc NV dùng phép).
+> Earned Leave native cấp phẳng theo lịch — KHÔNG tính thâm niên / prorate ngày lẻ.
 
-Cho manager. Permissions check qua role + employee dept.
-- approve: body `{ "name": "WFH-2026-000123" }` → manager submit
-- reject: body `{ "name": "...", "reason": "..." }`
+### 3.8 Notification (Notification Log)
 
-### 3.10 File upload selfie
+- `GET notification.list_my_notifications?limit=50&only_unread=0`
+- `GET notification.get_unread_count`
+- `POST notification.mark_read` — body `{ name }`
+- `POST notification.mark_all_read`
+
+Raw SQL lọc cứng `for_user = session.user` (an toàn, không rò rỉ). PWA mở detail bằng
+Modal in-app (không mở Desk).
+
+`subject` và `email_content` của Notification Log chứa HTML (vd `<strong>`, `<b class="subject-title">`) → PWA render bằng `dangerouslySetInnerHTML` ở cả list item lẫn modal (không hiển thị thô ra thẻ).
+
+### 3.9 File upload selfie
 
 Dùng endpoint chuẩn Frappe: `POST /api/method/upload_file` với `is_private=1` → response `file_url` → dùng làm `selfie_file_url` trong checkin request.
+
+### 3.10 Session / CSRF
+
+- `GET session.get_csrf_token` → trả CSRF token của session hiện tại (theo cookie
+  `sid`). GET nên KHÔNG bị bắt CSRF → gọi được dù token đang cầm đã stale.
+
+**Cơ chế auto-refresh (frappe.ts):** khi login lại trong iframe FSM (`/technician`)
+tạo session mới, CSRF token ở tab my-workspace (render trước đó) thành **stale** →
+POST API trả 400 "Invalid Request". `frappeCall`/`uploadFile` phát hiện lỗi CSRF →
+gọi `session.get_csrf_token` lấy token mới (cookie `sid` lúc này đã là session mới)
+→ cập nhật `window.frappe_csrf_token` → **retry 1 lần**. Tránh spam lỗi sau khi quay
+về từ FSM.
+
+### 3.11 Push notification (FCM — độc lập với fsmnext)
+
+Web push qua **Firebase Cloud Messaging (FCM)**, stack **riêng hoàn toàn** của
+hr_for_cobegroup (KHÔNG dùng chung FCM Device / FSM Settings của fsmnext).
+
+**Doctype:**
+- `HR Push Settings` (Single) — cấu hình Firebase: `enable_push_notifications`,
+  web config (`firebase_api_key`, `firebase_auth_domain`, `firebase_project_id`,
+  `firebase_messaging_sender_id`, `firebase_app_id`), `firebase_vapid_key`,
+  `firebase_service_account_json` (bí mật, chỉ server). Có thể là Firebase project
+  riêng hoặc dùng lại project của FSM.
+- `HR Push Device` — `user`, `device_id`, `fcm_token`, `is_active`, `user_agent`,
+  `last_used`.
+
+**Endpoint (whitelisted, `hr_for_cobegroup.api.push`):**
+- `GET get_push_config` → `{ enabled, firebase_config{...}, vapid_key }` (không lộ
+  service account). `{enabled:false}` nếu chưa bật.
+- `POST register_fcm_token` — body `{ token, device_id }` → upsert HR Push Device
+  của session user.
+- `POST unregister_fcm_token` — body `{ device_id }` → tắt thiết bị (logout).
+
+**Luồng gửi:** hook `Notification Log.after_insert` → `on_notification_log` enqueue
+`send_notification_push` (queue short, after_commit). Job: strip HTML subject/
+email_content → build FCM **data-only message** (icon/badge my-workspace, `click_action`
+= `/my-workspace/notifications`) → `firebase_admin.messaging.send_each` tới mọi HR
+Push Device active của user. Token chết (`UNREGISTERED`/`NOT_FOUND`/`INVALID_ARGUMENT`)
+→ tự set `is_active=0`. Firebase Admin app cache tên `hr_for_cobegroup_push`.
+
+**Frontend:** `usePushNotifications` + `PushProvider` (auto-register nếu đã cấp
+quyền), SW riêng `firebase-messaging-sw.js` (push event hiển thị notification,
+click điều hướng `/my-workspace`). Nút bật ở MorePage ("Thông báo đẩy"). Dep:
+`firebase` (JS), `firebase-admin` (Python).
+
+> ⚠️ **2 chỗ purge SW** đều phải chừa `firebase-messaging-sw`: `main.tsx` **VÀ**
+> bootstrap trong `www/_my_workspace.html`. SW path chứa `attendance-pwa` nên dễ bị
+> 2 chỗ này unregister nhầm mỗi session → push chập chờn / không đăng ký được token.
+> (Bootstrap HTML chạy trước cả bundle — từng là thủ phạm push không bám trên cloud.)
+
+**Giới hạn:** iOS chỉ hỗ trợ khi PWA "Add to Home Screen" (≥16.4); webview Zalo Mini
+App thường không hỗ trợ web push → chỉ chạy trên trình duyệt thật / PWA đã cài.
 
 ---
 
@@ -354,8 +436,6 @@ const fingerprint = sha256([
 ].join('|'));
 ```
 
-Server lưu vào `HR Checkin Phone Registration.device_fingerprint` lúc đăng ký + `Employee Checkin.custom_phone_device_fingerprint` lúc checkin.
-
 ---
 
 ## 6. Error codes (chuẩn hóa)
@@ -363,13 +443,11 @@ Server lưu vào `HR Checkin Phone Registration.device_fingerprint` lúc đăng 
 | Code | Message (VN) | Hành động PWA |
 |---|---|---|
 | `OUT_OF_RANGE` | Bạn đang ở ngoài vùng văn phòng (cách Xm) | Hiển thị khoảng cách |
-| `OFFICE_MISMATCH` | Check-out phải ở cùng văn phòng đã check-in sáng nay (VP A). Bạn đang gần hơn với VP B. | Đề nghị về VP A check-out |
 | `WIFI_MISMATCH` | Vui lòng kết nối wifi văn phòng | Hướng dẫn |
 | `LAN_MISMATCH` | Phone của bạn không trên mạng văn phòng | Hướng dẫn |
 | `PHONE_NOT_REGISTERED` | Phone chưa được duyệt, chờ HR | Hiện trang đăng ký |
 | `EMPLOYEE_NOT_FOUND` | Không tìm thấy thông tin nhân viên | Liên hệ HR |
 | `DUPLICATE_CHECKIN` | Bạn vừa chấm công cách đây < N giây | Show last checkin |
-| `SELFIE_REQUIRED` | Chấm công yêu cầu chụp ảnh selfie | Mở camera (chỉ khi PWA bị mất sync flag) |
 | `FACE_MISMATCH` | Selfie không khớp với ảnh nhân viên | Chụp lại |
 | `NO_ACTIVE_OFFICE` | Hệ thống chưa cấu hình văn phòng | Liên hệ HR |
 | `WFH_NOT_ENABLED` | Tính năng WFH chưa được bật | - |
@@ -433,8 +511,80 @@ Phone PWA              Frappe Server
 
 ---
 
-## Liên quan
+## 8. Migration notes (từ contract cũ → mới)
 
-- [HR Attendance — Architecture](HR-Attendance-Architecture.html) — system design + lifecycle
-- [HR Attendance — Tech Overview](HR-Attendance-Tech.html) — integrator quick reference
-- [HR Office Location (user guide)](../users/HR-Office-Location.html)
+Đối với code đã scaffold trước đây:
+
+| File cũ | Trạng thái |
+|---|---|
+| `hr_attendance_device/` doctype | XÓA |
+| `hr_attendance_device_wifi/` doctype | XÓA (logic move sang `hr_office_wifi`) |
+| `hr_attendance_settings/` doctype (cũ với enrollment_token) | XÓA + tạo lại với feature flags |
+| `api/device.py` | XÓA |
+| `utils/totp.py` + test | XÓA |
+| `utils/device_auth.py` + test | XÓA |
+| `api/attendance.py` | REFACTOR (xem section 3.2) |
+| `fixtures/custom_field.json` | UPDATE — bỏ `custom_hr_attendance_device`, `custom_qr_token_used`; thêm `custom_office_location`, `custom_webrtc_local_ip`, `custom_wfh_approval` |
+| `hooks.py` fixtures filter | UPDATE — fieldname list mới |
+| PWA `ScanPage.tsx` + `qrParser.ts` + html5-qrcode dep | XÓA |
+| PWA `CheckinFlowProvider.tsx` | SIMPLIFY: bỏ `scanning` state |
+| PWA `api/types.ts` | UPDATE — bỏ QRPayload + qr_payload field + TOKEN_* error codes; thêm webrtc/wfh types |
+| `firmware/` | ĐÃ XÓA |
+
+---
+
+## 9. Tích hợp HRMS & guardrails (Cách B)
+
+App HRMS gốc (`/hrms`) trùng chức năng với my-workspace và cho phép tạo Employee
+Checkin / Attendance Request không qua luật GPS/selfie/thiết bị. Guardrails:
+
+- **Redirect `/hrms` → `/my-workspace`** cho nhân viên thường (`before_request` hook
+  `utils.hrms_gate`). Embed-safe: chỉ chặn top-level (`Sec-Fetch-Dest=document`), bỏ
+  qua iframe + api. HR/Admin (System Manager / HR Manager / HR User) vẫn vào `/hrms`.
+- **Khóa quyền tạo Employee Checkin** của role `Employee` + `Employee Self Service`
+  (`create=0, write=0`, giữ `read=1`) — patch `v0_008`. Endpoint chấm công insert bằng
+  `ignore_permissions` nên vẫn chạy; nút check-in HRMS gốc + POST API trực tiếp → 403.
+- **Backend dùng HRMS native** (Cách B):
+  - Số dư phép → `get_leave_details()` / `get_leave_balance_on()` (không tự SUM SQL).
+  - WFH → `Attendance Request` (reason="Work From Home").
+  - Cấp phép tự động → Earned Leave native (bỏ job theo chấm công + field `leave_auto_*`,
+    patch `v0_009`).
+- **FSM**: `/fsm` nhúng nguyên app `/technician` (fsmnext) dạng FULLSCREEN (iframe cùng
+  origin → chia sẻ session cookie), hiện nav riêng của technician; my-workspace chỉ thêm
+  thanh "← Về My Workspace". Lưu ý: iframe là replaced element → phải set `height` tường
+  minh (`calc(100dvh - bar)`), không dựa `top/bottom` (sẽ về default 150px).
+- **CSRF auto-refresh**: login lại trong iframe FSM xoay session → token tab my-workspace
+  stale → "Invalid Request". frappe.ts tự lấy token mới (`session.get_csrf_token`) + retry
+  (xem §3.10).
+- **Đụng độ device-gating với fsmnext**: fsmnext hook `Employee Checkin.before_insert`
+  (`validate_employee_checkin`) bắt buộc thiết bị đăng ký trong `FS Checkin Device
+  Registration` của nó — KTV (có `FS Service Resource`) chấm công qua my-workspace sẽ bị
+  chặn ("No registered device found"). Fix ở **fsmnext**: skip khi `custom_checkin_source`
+  kết thúc `-PWA` (my-workspace đã tự validate bằng `HR Checkin Phone Registration`).
+  2 hệ đăng ký thiết bị tách biệt; technician app vẫn giữ gating riêng.
+- **Push notification độc lập**: FCM stack của my-workspace (HR Push Settings / HR Push
+  Device / `api/push.py`) **tách hoàn toàn** với FCM của fsmnext (FSM Settings / FCM Device).
+  Đổi 1 bên không ảnh hưởng bên kia. Xem §3.11.
+
+### Tương tác với storage_management (S3 offload)
+
+`storage_management` đẩy file đính kèm lên S3 và **không đọc lại được server-side** qua
+`File.get_content()`. Tính năng đọc file server-side (vd **Prepared Report** render đọc
+`*.json.gz`) sẽ lỗi `a bytes-like object is required, not 'str'` nếu file nằm trên S3.
+
+→ Khắc phục ở `storage_management` (repo riêng): `on_file_before_save` bypass upload S3
+cho file khớp `bypass_extensions` (default `[".json.gz"]`) + bypass theo `attached_to_doctype`
+(`["Repost Item Valuation", "Prepared Report"]`). File report nén giữ **local** → render OK.
+File `.gz` user upload vẫn lên S3. Sửa config tại **S3 Attachments Setting → Bypass File
+Extensions / Bypass DocType List**. Record prepared report CŨ (đã trên S3) phải xoá tay.
+
+Thay thế (không dùng prepared report): set `Report.prepared_report = 0` cho report đó →
+chạy inline, không sinh file `.json.gz`.
+
+### Patches liên quan
+
+| Patch | Việc |
+|---|---|
+| `v0_008.lock_employee_checkin_create` | Khóa create/write Employee Checkin (Employee/ESS) |
+| `v0_009.drop_attendance_auto_leave` | Drop field `leave_auto_*` (HR Policy) + `custom_auto_allocated_for_period` (Leave Allocation) |
+
