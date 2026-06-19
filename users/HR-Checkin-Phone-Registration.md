@@ -5,10 +5,12 @@ parent: Chấm công & HR
 nav_order: 4
 ---
 
-# HR Checkin Phone Registration — Duyệt phone nhân viên
+# HR Checkin Phone Registration — Duyệt thiết bị nhân viên
 
-> Mỗi nhân viên cần được duyệt **1 lần** cho 1 phone trước khi có thể chấm công. Submittable doctype.
-> Tự động được tạo khi nhân viên mở PWA lần đầu.
+> Mỗi nhân viên cần được duyệt **1 thiết bị** (đúng máy đang dùng) trước khi có thể chấm công. Submittable doctype.
+> Tự động được tạo khi nhân viên mở PWA `/my-workspace` lần đầu trên một máy chưa đăng ký.
+>
+> **Device-aware**: việc "đã đăng ký" được tính theo **đúng máy hiện tại** (device fingerprint), không phải "nhân viên có máy nào đó đã duyệt". Đăng nhập trên máy mới chưa duyệt → bị đẩy sang trang đăng ký thiết bị, kể cả khi máy cũ vẫn Active.
 
 ---
 
@@ -27,7 +29,14 @@ nav_order: 4
 
 Để **chống share tài khoản**. Khi 1 nhân viên đã đăng ký phone X → chỉ có phone X mới chấm công được. Nhân viên A login phone B → fingerprint khác → server reject.
 
-Mỗi nhân viên 1 record `HR Checkin Phone Registration` đã submit (status=Active).
+Mỗi nhân viên có **1 thiết bị Active** tại một thời điểm (record `HR Checkin Phone Registration` đã submit, status=Active). Backend chặn không cho có 2 thiết bị Active cùng lúc.
+
+**Device-aware (quan trọng)**: PWA gửi `device_fingerprint` của máy hiện tại (qua arg hoặc header `X-Device-Fingerprint`). API `get_phone_registration_status` / `get_attendance_info` tính `phone_registered` theo **đúng fingerprint của máy đang dùng**:
+- Máy hiện tại có record Active → `phone_registered = true` → chấm công được.
+- Máy hiện tại chưa có record (hoặc còn Draft) → `phone_registered = false` → PWA đẩy sang trang đăng ký thiết bị, **dù** nhân viên có một máy khác đã Active.
+- Khi máy hiện tại chưa duyệt nhưng nhân viên có một máy Active khác → API trả thêm cờ `other_active = true` để UI nhắc người dùng báo HR deactivate máy cũ trước.
+
+(Trường hợp client không gửi được fingerprint → fallback kiểm tra "có máy nào Active không" để tránh khóa nhầm.)
 
 ---
 
@@ -94,10 +103,10 @@ Sau khi submit (docstatus=1), status mặc định = Active. Đổi sang Inactiv
 
 ### Bước 1: Nhân viên tạo (tự động)
 
-1. Nhân viên mở PWA lần đầu → login Frappe
-2. PWA tự gửi `POST phone_device.register_phone` với fingerprint
-3. Server tạo record `HR Checkin Phone Registration` ở status=Draft
-4. PWA hiển thị "Phone đang chờ HR duyệt"
+1. Nhân viên mở PWA `/my-workspace` trên máy chưa đăng ký → login Frappe
+2. PWA tự gửi `POST phone_device.register_phone` với `device_fingerprint` của máy đó
+3. Server tạo record `HR Checkin Phone Registration` ở **Draft** (docstatus=0; field `status` mặc định = Active nhưng record chỉ thực sự có hiệu lực sau khi Submit). Nếu đã có record cùng (employee + fingerprint) đang chờ/đã duyệt → không tạo trùng, trả `status=exists`.
+4. PWA hiển thị "Thiết bị đang chờ HR duyệt"
 
 ### Bước 2: HR Manager duyệt
 
@@ -111,7 +120,7 @@ Sau khi submit (docstatus=1), status mặc định = Active. Đổi sang Inactiv
 
 ### Bước 3: Nhân viên check lại PWA
 
-PWA tự re-check status mỗi lần mở. Khi thấy Active → cho phép tap "Chấm công".
+PWA tự re-check status mỗi lần mở (theo đúng fingerprint máy hiện tại). Khi máy hiện tại thành Active → cho phép tap "Chấm công".
 
 ---
 
@@ -127,9 +136,9 @@ Khi nào dùng:
 
 **Bước 1: Nhân viên đăng ký phone mới (làm trước, không cần đợi HR)**
 
-1. Mở PWA trên phone/browser mới → login Frappe
-2. PWA detect fingerprint khác record cũ → **tự tạo record mới ở status Draft**
-3. PWA hiển thị "Đang chờ HR duyệt"
+1. Mở PWA `/my-workspace` trên phone/browser mới → login Frappe
+2. PWA detect fingerprint khác record cũ → máy mới chưa duyệt → đẩy sang trang đăng ký thiết bị, **tự tạo record mới ở Draft**
+3. PWA hiển thị "Đang chờ HR duyệt". Vì nhân viên còn một máy cũ Active, API trả `other_active = true` → UI nhắc nhân viên báo HR deactivate máy cũ.
 
 → Lúc này tồn tại đồng thời:
 - 1 record CŨ docstatus=1, status=**Active**

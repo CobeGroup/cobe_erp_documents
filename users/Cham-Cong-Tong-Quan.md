@@ -38,6 +38,10 @@ Sau khi pass hết các check, server tạo bản ghi `Employee Checkin` chuẩn
 
 **Nhân viên không cần** mua thiết bị, không đặt máy chấm công vật lý ở cửa, không cần ID card.
 
+**Guardrail `/hrms`**: app HRMS gốc (`/hrms`, Frappe HR mobile) cho phép tạo Employee Checkin / Attendance Request không qua luật GPS/selfie/thiết bị. Vì vậy hook `before_request` (`utils.hrms_gate`) **tự redirect nhân viên thường** mở `/hrms` về `/my-workspace` (embed-safe: chỉ chặn điều hướng top-level, bỏ qua iframe + API). HR/Admin (System Manager / HR Manager / HR User) vẫn vào `/hrms` bình thường. Đồng thời role *Employee* bị **khóa quyền create `Employee Checkin`** ở Desk → mọi check-in của nhân viên thường buộc đi qua endpoint PWA có luật GPS.
+
+**Phép năm**: dùng **HRMS Earned Leave native** (Leave Type `is_earned_leave`), **không** còn tự cấp phép theo số giờ chấm công.
+
 ---
 
 ## 2. Cài đặt app
@@ -95,15 +99,22 @@ Mỗi VP một record. Cần: tọa độ GPS (lấy từ Google Maps right-clic
 
 Nhân viên mở PWA lần đầu → PWA tự tạo `HR Checkin Phone Registration` ở trạng thái **Draft**. HR Manager vào duyệt từng record. Chi tiết tại [HR Checkin Phone Registration](HR-Checkin-Phone-Registration.html).
 
-### 3.4. (Nếu bật WFH) Duyệt WFH Approval
+### 3.4. (Nếu bật WFH) Duyệt WFH qua Attendance Request
 
-Manager nhận request từ nhân viên qua PWA hoặc Desk, duyệt từng ngày. Chi tiết tại [HR WFH Approval](HR-WFH-Approval.html).
+WFH đi qua **HRMS Attendance Request** với `reason = Work From Home` (doctype custom `HR WFH Approval` đã deprecated). Nhân viên tạo đơn (PWA/Desk) → Manager duyệt (Submit). Khi đơn đã duyệt (docstatus=1) phủ ngày hôm nay + Policy bật `enable_wfh_mode`, PWA hiện banner WFH và cho phép chấm công không enforce GPS radius.
 
 ---
 
 ## 4. Quy trình chấm công thường ngày
 
-PWA tổ chức thành shell **My Workspace** với 5 mục: **Chấm công** / Đăng ký phép / Lương / Chi phí / More. Trang Chấm công có 2 tab:
+PWA serve tại **`/my-workspace`** — shell chung React Router, bottom nav thích ứng theo role/employee:
+- **Chấm công** — luôn có
+- **Nghỉ phép** — luôn có (đăng ký + theo dõi đơn phép)
+- **Cần duyệt** — chỉ hiện cho user có quyền trong **HR Approval Inbox Settings** (mặc định role *Leave Approver* / *HR Manager* / *System Manager*); là inbox duyệt đơn (Leave 2 bước + Attendance Request). Xem [§6.5](#65-tab-cần-duyệt--inbox-duyệt-đơn).
+- **FSM** — chỉ hiện cho nhân viên có `FS Service Resource` (KTV fsmnext); nhúng app `/technician` fullscreen.
+- **Thêm** — các mục phụ (hướng dẫn sử dụng, v.v.)
+
+Trang Chấm công có 2 tab:
 - **Chấm công** — nút check-in/out + danh sách Employee Checkin trong khoảng đã chọn
 - **Bảng công** — danh sách `Attendance` HRMS (status + giờ công + cảnh báo) trong khoảng
 
@@ -128,9 +139,9 @@ Khi Policy có `enable_selfie_capture = 1`:
 
 Tổng thời gian: **10-15 giây**.
 
-### 4.2. Nhân viên WFH/công tác (nếu `enable_wfh_mode` ON + có WFH Approval hôm nay)
+### 4.2. Nhân viên WFH/công tác (nếu `enable_wfh_mode` ON + có Attendance Request WFH đã duyệt hôm nay)
 
-1. Manager đã duyệt `HR WFH Approval` cho hôm nay → PWA tự detect
+1. Manager đã duyệt `Attendance Request` (reason=WFH) phủ hôm nay → PWA tự detect
 2. Sáng mở PWA → trang chủ hiện banner "Hôm nay bạn đăng ký WFH"
 3. Tap "Bắt đầu ca WFH"
    - Nếu `enable_selfie_capture = 0`: tap "Xác nhận WFH" → submit
@@ -195,9 +206,23 @@ Distance > 0 nghĩa là phone không sát tâm VP (bình thường < 100m).
 
 ### 6.4. Audit device fingerprint
 
-`custom_phone_device_fingerprint` là SHA256 hash. So sánh với `HR Checkin Phone Registration` của nhân viên đó:
+`custom_phone_device_fingerprint` là SHA256 hash. So sánh với `HR Checkin Phone Registration` (Active) của nhân viên đó:
 - Khớp → phone đúng đã duyệt
 - Khác → nhân viên đã đổi phone (hoặc người khác mượn) — cần điều tra
+
+Lưu ý device-aware: việc "đã đăng ký" tính theo đúng máy hiện tại. Nhân viên đổi máy phải đăng ký lại máy mới và HR deactivate máy cũ (chi tiết tại [HR Checkin Phone Registration](HR-Checkin-Phone-Registration.html)).
+
+### 6.5. Tab "Cần duyệt" — inbox duyệt đơn
+
+Trên `/my-workspace`, user có quyền (theo **HR Approval Inbox Settings**, mặc định role *Leave Approver* / *HR Manager* / *System Manager*) thấy tab **Cần duyệt** — gom đơn đang chờ:
+- **Leave Application** (workflow `HR Leave Approval 2-Step`)
+- **Attendance Request** (gồm WFH / On Duty)
+
+Manager Approve/Reject ngay trên mobile. Manager chỉ thao tác được đơn mình là leave_approver (trừ khi có role HR Manager / System Manager override).
+
+### 6.6. Phép năm — Earned Leave
+
+Phép năm dùng cơ chế **Earned Leave native của HRMS** (Leave Type bật `is_earned_leave`), HRMS tự cộng dồn theo lịch. App **không** tự cấp phép theo số giờ chấm công nữa. Báo cáo/điều chỉnh số dư làm qua HRMS (`Leave Allocation`, `Leave Ledger Entry`).
 
 ---
 
@@ -205,12 +230,13 @@ Distance > 0 nghĩa là phone không sát tâm VP (bình thường < 100m).
 
 | Triệu chứng | Nguyên nhân / khắc phục |
 |---|---|
-| PWA hiện "Phone chưa được duyệt" | HR Manager chưa submit `HR Checkin Phone Registration` của nhân viên đó. Mở Desk → submit. |
+| PWA hiện "Phone chưa được duyệt" / bị đẩy sang trang đăng ký thiết bị | HR Manager chưa submit `HR Checkin Phone Registration` cho **đúng máy** nhân viên đang dùng. Lưu ý device-aware: máy mới chưa duyệt vẫn bị chặn dù máy cũ Active. Mở Desk → submit record của máy đó (deactivate máy cũ trước nếu cần). |
+| Đổi máy nhưng vẫn bị chặn dù máy cũ đang Active | Đúng thiết kế — mỗi nhân viên 1 máy Active. Báo HR deactivate máy cũ rồi submit máy mới (UI nhắc qua cờ `other_active`). |
 | "Bạn đang ở ngoài vùng văn phòng (cách 250m)" | Kiểm tra tọa độ `HR Office Location` đặt đúng chưa. Hoặc tăng `allowed_radius_m`. |
 | "Vui lòng kết nối wifi văn phòng" | Feature `enable_wifi_bssid_check` bật + nhân viên ngoài wifi VP. Hoặc BSSID list chưa enroll wifi này. |
 | Selfie bị quay ngang/lộn | Quay phone về portrait. Một số phone cũ Android có vấn đề camera orientation — đợi phase 2 fix. |
 | Phone iOS không cho mở camera | Vào Settings → Safari → Camera → Allow. PWA nên đã có hướng dẫn trong-app. |
-| Không thấy WFH banner dù đã duyệt | Check feature flag `enable_wfh_mode` đã bật + approval `wfh_date` đúng hôm nay + status=Approved. |
+| Không thấy WFH banner dù đã duyệt | Check feature flag `enable_wfh_mode` đã bật + `Attendance Request` (reason=WFH) đã Submit (docstatus=1) phủ đúng ngày hôm nay. |
 | Báo cáo Attendance Sheet không hiện checkin mới | Bench restart sau migrate. Hoặc clear cache. |
 
 ---
@@ -220,5 +246,5 @@ Distance > 0 nghĩa là phone không sát tâm VP (bình thường < 100m).
 - [HR Policy](HR-Policy.html) — feature flag
 - [HR Office Location](HR-Office-Location.html) — danh sách VP
 - [HR Checkin Phone Registration](HR-Checkin-Phone-Registration.html)
-- [HR WFH Approval](HR-WFH-Approval.html)
+- WFH: dùng HRMS **Attendance Request** (reason = Work From Home) — doctype `HR WFH Approval` đã deprecated
 - [Tài liệu kỹ thuật HR Attendance](../tech/HR-Attendance-Tech.html)

@@ -5,13 +5,15 @@ parent: Chấm công & HR
 nav_order: 2
 ---
 
-# HR Policy — Cấu hình per-Company (Attendance + Leave Auto-Allocation)
+# HR Policy — Cấu hình per-Company (Attendance)
 
 > **Mỗi Company 1 record riêng**. Hệ thống tự tạo 1 record với defaults cho mỗi Company hiện có lúc install. Khi tạo Company mới, HR Manager / System Manager tự tạo Policy cho Company đó.
 >
 > Permissions: **HR Manager** và **System Manager**.
 >
-> Đổi tên từ "HR Attendance Policy" — scope mở rộng (Whitelist + Leave Auto-Allocation). OT / WFH Salary / KPI sẽ thêm tab khi Phase 2 quay lại.
+> Đổi tên từ "HR Attendance Policy" — scope mở rộng (thêm Whitelist). OT / WFH Salary / KPI sẽ thêm tab khi Phase 2 quay lại.
+>
+> **Cấp phép năm**: KHÔNG còn cấp theo chấm công ở HR Policy. Giờ dùng **HRMS Earned Leave native** (Leave Type bật `is_earned_leave` + Leave Policy Assignment). Chi tiết ở [HR Leave Setup](HR-Leave-Setup.html).
 
 ---
 
@@ -25,7 +27,7 @@ nav_order: 2
    - [3.3. Lunch Break](#33-lunch-break)
    - [3.4. Overtime Notification](#34-overtime-notification)
    - [3.5. Check-in Whitelist](#35-check-in-whitelist)
-4. [Tab Leave](#4-tab-leave)
+4. [Cấp phép năm (Earned Leave)](#4-cấp-phép-năm-earned-leave)
 5. [Kịch bản roll-out theo giai đoạn](#5-kịch-bản-roll-out-theo-giai-đoạn)
 6. [Lưu ý vận hành](#6-lưu-ý-vận-hành)
 
@@ -42,12 +44,11 @@ List view hiển thị: `name` (vd `HRP-Cobegroup`), `company`, `enable_wfh_mode
 
 ## 2. Cấu trúc tab
 
-2 tab hiện tại:
+1 tab hiện tại:
 
 | Tab | Section |
 |---|---|
-| **Attendance** | Feature Flags + Defaults + Check-in Whitelist (3 section trong cùng 1 tab) |
-| **Leave** | Auto-Allocation by Attendance |
+| **Attendance** | Feature Flags + Defaults + Lunch Break + Overtime Notification + Check-in Whitelist |
 
 ---
 
@@ -186,34 +187,15 @@ Add row → Save → hiệu lực ngay request kế tiếp. Xóa: xóa row + Sav
 
 ---
 
-## 4. Tab Leave
+## 4. Cấp phép năm (Earned Leave)
 
-> **Auto-cấp phép tự động theo số ngày chấm công trong tháng.** Chi tiết workflow + audit ở [HR Leave Setup](HR-Leave-Setup.html).
+> **HR Policy KHÔNG còn cấu hình cấp phép.** Tab "Leave" + 4 field `leave_auto_*` đã gỡ (patch v0_009). Cấp phép tự động theo chấm công đã ngưng.
 
-### `leave_auto_enabled` (Check, default: 0)
-Bật module auto-cấp phép. Tắt = job không chạy cho Company này.
+Phép năm giờ dùng **HRMS Earned Leave native**:
+- Leave Type bật `is_earned_leave` → HRMS tự tích lũy phép định kỳ.
+- Cấp cho NV qua **Leave Policy Assignment**.
 
-### `leave_auto_min_attendance_days` (Int, default: 0)
-Số ngày Attendance docstatus=1 tối thiểu trong tháng để được cấp.
-- `0` → mọi NV Active đều được cấp (kể cả NV không có Attendance nào trong tháng — nghỉ phép, công tác, mới join...).
-- `> 0` → chỉ NV có số ngày chấm công ≥ ngưỡng mới được cấp. Vd `12` = phải có ít nhất 12 ngày Attendance trong tháng.
-
-### `leave_auto_leave_type` (Link → Leave Type, default: Annual Leave)
-Loại phép cộng vào. Mặc định cộng vào "Annual Leave" chuẩn HRMS.
-
-### `leave_auto_days_granted` (Float, default: 1)
-Số ngày cấp mỗi tháng cho NV đủ điều kiện. Mặc định 1.
-
-### Job chạy khi nào
-
-- Scheduled job `auto_allocate_leave.run` chạy **monthly** (ngày 1 mỗi tháng)
-- Quét Attendance tháng trước → đếm số ngày Attendance docstatus=1 per Employee Active
-- ≥ `min_attendance_days` → tạo Leave Allocation +`days_granted` ngày (idempotent qua field `custom_auto_allocated_for_period = "YYYY-MM"`)
-
-### Audit
-
-- Desk → Leave Allocation → filter `custom_auto_allocated_for_period IS NOT NULL` → xem allocation auto
-- Filter blank → manual top-up của HR
+Chi tiết setup, workflow và audit ở [HR Leave Setup](HR-Leave-Setup.html).
 
 ---
 
@@ -224,8 +206,6 @@ Số ngày cấp mỗi tháng cho NV đủ điều kiện. Mặc định 1.
 Tab Attendance:
   - Feature Flags: tất cả flag = 0 (mặc định OFF), default_radius_m = 100
   - Check-in Whitelist: thêm KTV / Sales của Company
-Tab Leave:
-  - leave_auto_enabled = 0 (chờ verify policy)
 ```
 
 ### Giai đoạn 2 — Bật anti-cheat layer
@@ -234,11 +214,11 @@ enable_wifi_bssid_check: 1   (sau enroll BSSID vào HR Office Location)
 enable_webrtc_check:     1   (sau enroll subnet)
 ```
 
-### Giai đoạn 3 — Bật WFH + Leave auto-allocation
+### Giai đoạn 3 — Bật WFH
 ```
 enable_wfh_mode: 1
-leave_auto_enabled: 1
 ```
+> Phép năm cấu hình riêng qua HRMS Earned Leave — xem [HR Leave Setup](HR-Leave-Setup.html).
 
 ### Phase 2+ (sau này)
 Sẽ thêm tab Overtime / WFH Salary / Exclusions khi release Phase 2.
@@ -252,7 +232,6 @@ Sẽ thêm tab Overtime / WFH Salary / Exclusions khi release Phase 2.
 - **Company chưa có HR Policy** → throw "Company {X} chưa có HR Policy". HR cần tạo trước
 - **Đổi flag có hiệu lực ngay** — cache request-level invalidate ở request tiếp theo
 - **Whitelist hiệu lực ngay** — add row + Save → request kế tiếp đã skip GPS
-- **Leave auto-allocation chỉ chạy ngày 1 tháng** — không real-time. Muốn chạy sớm: bench execute manual
 - **Khẩn cấp chặn check-in toàn Company** — không có flag tắt toàn bộ. Workaround: `is_active = 0` cho tất cả HR Office Location của Company → trả `NO_ACTIVE_OFFICE`
 
 ---

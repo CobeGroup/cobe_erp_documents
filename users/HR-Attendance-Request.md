@@ -1,13 +1,15 @@
 ---
-title: Attendance Request (Xin chấm công bù / WFH / On Duty)
+title: Attendance Request (Xin chấm công bù / On Duty)
 layout: default
 parent: Chấm công & HR
 nav_order: 4
 ---
 
-# Attendance Request — Xin chấm công bù, WFH, On Duty
+# Attendance Request — Xin chấm công bù (On Duty)
 
-> Doctype HRMS chuẩn. Cobe **không custom workflow** — dùng default HRMS (1 step Manager duyệt). Tài liệu này giải thích cách dùng + working_hours được tính ra sao sau khi approve.
+> Doctype HRMS chuẩn. Nhân viên tạo đơn **"Chấm công bù"** qua trang `/attendance-request` (trong menu **"Thêm"** của my-workspace). Manager duyệt qua tab **"Cần duyệt"** (api.approval.act → submit Attendance Request → HRMS tự tạo Attendance). Tài liệu này giải thích cách dùng + working_hours được tính ra sao sau khi approve.
+>
+> **WFH có flow riêng** (đăng ký qua trang "Đăng ký WFH", cần check-in GPS) — xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
 
 ---
 
@@ -23,16 +25,17 @@ nav_order: 4
 
 ## 1. Khi nào dùng
 
-Attendance Request dùng cho các tình huống NV **không có / thiếu Employee Checkin log** nhưng cần Attendance hợp lệ:
+Attendance Request (đơn "Chấm công bù") dùng cho các tình huống NV **không có / thiếu Employee Checkin log** nhưng cần Attendance hợp lệ:
 
 | Case | reason field |
 |---|---|
-| NV quên check-in/out | (Để trống, ghi `explanation`) |
-| NV WFH / công tác — không lên VP | `Work From Home` |
-| NV đi gặp khách hàng cả ngày | `On Duty` |
-| NV bù chấm công vì sự cố hệ thống | (Để trống + `explanation`) |
+| NV quên check-in/out | `On Duty` (mặc định) + ghi `explanation` |
+| NV đi gặp khách hàng / công tác cả ngày | `On Duty` |
+| NV bù chấm công vì sự cố hệ thống | `On Duty` + `explanation` |
 
-Khác với **HR WFH Approval** (doctype riêng của Cobe — dùng kết hợp với PWA WFH flow), `Attendance Request` là cách **bắt buộc** để sửa lại Attendance đã sai/thiếu.
+Khi NV tạo qua PWA (`api.attendance_request.create_attendance_request`), `reason` mặc định = **`On Duty`** → khi manager duyệt, HRMS đánh status **`Present`**. Nếu đơn đánh dấu `half_day` → status `Half Day`.
+
+> **WFH KHÔNG dùng đơn này.** WFH có flow riêng (`reason = "Work From Home"`, đăng ký qua trang "Đăng ký WFH" + check-in GPS) — xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html). Endpoint `get_my_attendance_requests` cũng lọc bỏ các đơn có reason WFH.
 
 ---
 
@@ -41,9 +44,9 @@ Khác với **HR WFH Approval** (doctype riêng của Cobe — dùng kết hợp
 Cobe **giữ default HRMS** (không custom Workflow doctype như Leave Application):
 
 ```
-NV submit Attendance Request (docstatus = 0)
+NV tạo "Chấm công bù" qua trang /attendance-request (docstatus = 0)
   ↓
-Manager (Employee.leave_approver) → Submit (docstatus = 1)
+Manager → tab "Cần duyệt" → Duyệt (api.approval.act, action="Submit" → docstatus = 1)
   ↓
 HRMS tự tạo / update Attendance records cho khoảng ngày
 ```
@@ -53,15 +56,24 @@ Lý do giữ 1 step:
 - HR không cần duyệt từng cái quên check (overhead cao)
 - Leave Application thì 2 step Cobe (vì impact lương + balance phép)
 
+### Cách NV tạo đơn
+
+1. Mở my-workspace → menu **"Thêm"** → **"Chấm công bù"** (route `/attendance-request`)
+2. Chọn khoảng ngày (`from_date` → `to_date`), nhập lý do (`explanation`)
+3. (Tùy chọn) đánh dấu nửa ngày → `half_day`
+4. Submit → tạo Attendance Request `docstatus = 0` (`reason = On Duty`)
+
 ### Cách Manager duyệt
 
-1. Desk → Attendance Request list → filter `docstatus = 0` + `leave_approver = mình`
-2. Mở record → review reason + explanation
-3. Click **Submit** → tạo Attendance hoặc throw error nếu duplicate/conflict
+1. Mở my-workspace → tab **"Cần duyệt"** (đơn hiện qua `api.approval.get_my_pending_approvals`)
+2. Review reason + explanation
+3. **Duyệt** → app gọi `api.approval.act` với `action = "Submit"` → `doc.submit()` → HRMS tạo Attendance (status `Present`, hoặc `Half Day` nếu đánh dấu nửa ngày)
+
+> Phân quyền: nếu config `restrict_to_leave_approver = 1`, chỉ Manager là `Employee.leave_approver` của NV mới duyệt được (trừ HR Manager / System Manager override).
 
 ### Reject
 
-Manager click **Cancel** (docstatus = 2). NV phải tạo Attendance Request mới nếu muốn lại.
+Manager chọn **Cancel** (`api.approval.act`, `action = "Cancel"` → docstatus = 2). NV phải tạo đơn Chấm công bù mới nếu muốn lại.
 
 ---
 
@@ -82,7 +94,7 @@ Khi Attendance Request approve → HRMS tạo/update Attendance records (theo `f
    - reason = (empty), explanation = "Quên check-out"
 4. Manager Submit Attendance Request
 5. HRMS update Attendance:
-   - status = Present (hoặc WFH/On Duty nếu reason set)
+   - status = Present (reason `On Duty` → Present; `half_day` → Half Day)
    - working_hours vẫn = 0 (HRMS không tự re-compute)
 6. Hook `Attendance.before_save` của Cobe chạy:
    - _fill_default_working_hours → working_hours = giờ ca chuẩn (vd 9h cho 8:00-17:00)
@@ -154,20 +166,22 @@ Desk → Attendance list → filter `hr_warning_type` để thấy:
 
 ## 5. Các case thực tế
 
-### Case A: NV WFH 3 ngày liên tục (T2-T4)
+### Case A: NV đi công tác 3 ngày liên tục (T2-T4)
 
-1. NV submit Attendance Request:
+1. NV tạo "Chấm công bù" qua trang `/attendance-request`:
    - from_date = T2, to_date = T4
-   - reason = `Work From Home`
-   - explanation = "Cách ly Covid"
-2. Manager Submit
-3. HRMS tạo 3 Attendance records (T2, T3, T4) với status = Work From Home
+   - reason = `On Duty`
+   - explanation = "Công tác Hà Nội gặp khách hàng"
+2. Manager duyệt qua tab "Cần duyệt" (Submit)
+3. HRMS tạo 3 Attendance records (T2, T3, T4) với status = Present
 4. Hook fill working_hours = 9h (ca 8-17h) - 1h break = 8h cho mỗi ngày
 5. Salary Slip kỳ này tính bình thường — 3 ngày Present tương đương
 
-### Case B: NV đi công tác cả tuần
+> **WFH** (làm tại nhà) thì KHÔNG dùng đơn này — đăng ký qua trang "Đăng ký WFH", xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
 
-Tương tự Case A nhưng `reason = On Duty`.
+### Case B: NV quên check-out
+
+NV tạo "Chấm công bù" cho đúng ngày quên (`from_date = to_date`), `reason = On Duty`, ghi `explanation = "Quên check-out"`. Manager duyệt qua "Cần duyệt" → Attendance status = Present, hook fill working_hours = giờ ca chuẩn - break.
 
 ### Case C: NV làm ca chiều (14:00-22:00) — không bị trừ break trưa
 

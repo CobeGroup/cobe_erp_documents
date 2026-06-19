@@ -5,23 +5,29 @@ parent: Chấm công & HR
 nav_order: 7
 ---
 
-# Phép — Cấu hình + Workflow 2 bước + Auto-cấp + HR tổng phép
+# Phép — Cấu hình + Cấp quỹ phép (Earned Leave) + Workflow 2 bước + HR tổng phép
 
 > Đối tượng: **HR Manager**, **System Manager**, **Manager phòng ban**.
 
-Cobe dùng Leave Application chuẩn HRMS + 2 extension:
-1. **Workflow 2 bước**: Manager → HR Manager (Frappe Workflow fixture)
-2. **Auto-cấp phép theo số ngày chấm công**: cuối tháng đủ ngưỡng → +1 ngày Annual Leave (ngưỡng = 0 → cấp cho mọi NV Active)
+Cobe dùng cơ chế phép chuẩn HRMS, gồm 2 phần TÁCH BIỆT:
+1. **Cấp quỹ phép năm (Leave Allocation)** — cấp số dư phép cho NV. Cobe dùng **HRMS Earned Leave native**: Leave Type bật `is_earned_leave` + Leave Policy Assignment → hệ thống tự cộng số dư cuối mỗi kỳ theo lịch, **KHÔNG qua duyệt**, không tạo "leave nháp".
+2. **Đơn xin nghỉ (Leave Application)** — NV xin nghỉ, trừ vào số dư. Chạy **Workflow 2 bước**: Manager → HR Manager (Frappe Workflow fixture).
+
+> **Lưu ý quan trọng — phân biệt 2 khái niệm:**
+> - **Cấp quỹ phép (Earned Leave)** = cộng số dư, tự động theo lịch, **không có bước duyệt**.
+> - **Đơn xin nghỉ (Leave Application)** = tiêu số dư, **có workflow 2 bước duyệt**.
+>
+> Cơ chế cũ "cấp phép theo số ngày chấm công" (field `leave_auto_*` trên HR Policy + scheduled job `auto_allocate_leave`) **đã được GỠ BỎ** (patch `v0_009`). Không còn dùng nữa.
 
 ---
 
 ## Mục lục
 
 1. [Cấu hình lần đầu](#1-cấu-hình-lần-đầu)
-2. [Auto-cấp phép theo số ngày chấm công](#2-auto-cấp-phép-theo-số-ngày-chấm-công)
+2. [Cấp quỹ phép năm (Earned Leave)](#2-cấp-quỹ-phép-năm-earned-leave)
 3. [Workflow 2 bước Manager → HR](#3-workflow-2-bước-manager--hr)
 4. [HR top-up phép tồn (manual)](#4-hr-top-up-phép-tồn-manual)
-5. [Audit cấp phép tự động](#5-audit-cấp-phép-tự-động)
+5. [Số dư phép & báo cáo](#5-số-dư-phép--báo-cáo)
 6. [Edge case + FAQ](#6-edge-case--faq)
 
 ---
@@ -39,20 +45,9 @@ Nếu chưa có (site mới chưa setup):
 4. `Is Leave Without Pay` = ✗
 5. **Save**.
 
-### 1.2. Bật auto-allocation trong HR Policy
+> Để hệ thống tự cấp quỹ phép năm, bật thêm `Is Earned Leave` — xem [mục 2](#2-cấp-quỹ-phép-năm-earned-leave).
 
-Desk → **HR Policy** → mở record của Company → tab **Leave**:
-
-| Field | Value mẫu | Note |
-|---|---|---|
-| `leave_auto_enabled` | ✓ | Bật module |
-| `leave_auto_min_attendance_days` | 0 | Số ngày Attendance tối thiểu/tháng. **0 = cấp cho mọi NV Active** (không cần check chấm công). Vd 12 = phải có ≥12 ngày chấm công mới được cấp |
-| `leave_auto_leave_type` | Annual Leave | Cộng vào Annual Leave chuẩn |
-| `leave_auto_days_granted` | 1 | Số ngày cấp mỗi tháng |
-
-Mặc định **TẮT** — phải tự bật khi Company sẵn sàng.
-
-### 1.3. Verify Workflow Leave Approval
+### 1.2. Verify Workflow Leave Approval
 
 Sau khi `bench --site <site> migrate`, fixture `HR Leave Approval 2-Step` tự load. Verify:
 
@@ -65,50 +60,35 @@ Nếu workflow chưa tồn tại → chạy lại `bench migrate`.
 
 ---
 
-## 2. Auto-cấp phép theo số ngày chấm công
+## 2. Cấp quỹ phép năm (Earned Leave)
+
+> Đây là cơ chế **cấp số dư phép** cho NV. Hoàn toàn tách biệt với Đơn xin nghỉ — **KHÔNG qua bước duyệt nào**, hệ thống tự cộng số dư theo lịch.
+
+Cobe dùng **HRMS Earned Leave native** (không còn job custom cấp theo chấm công). Hệ thống tự cộng số dư vào cuối mỗi kỳ (phẳng theo lịch, **không tính thâm niên / không prorate**).
 
 ### Cơ chế
 
-Scheduled job `hr_for_cobegroup.scheduled.auto_allocate_leave.run`:
-- Chạy **monthly** (ngày 1 mỗi tháng) qua Frappe scheduler
-- Quét tháng vừa qua: với mỗi Company có `leave_auto_enabled = 1`:
-  - LEFT JOIN Employee Active ↔ Attendance docstatus=1 (range tháng trước)
-  - Đếm `COUNT(DISTINCT attendance_date)` per Employee
-  - Nếu count ≥ `leave_auto_min_attendance_days` → tạo Leave Allocation +`leave_auto_days_granted` ngày
-- Set `Leave Allocation.custom_auto_allocated_for_period = "YYYY-MM"` để idempotent (chạy lại không double)
+- Leave Type bật `Is Earned Leave` → HRMS có scheduler job native cộng dần số dư.
+- Tần suất cộng = `Earned Leave Frequency` (Cobe dùng **Monthly** → cuối mỗi tháng cộng phần phép tương ứng).
+- NV được cấp khi có **Leave Policy Assignment** (gán Leave Policy chứa Leave Type earned đó cho NV trong kỳ).
+- Hệ thống tự cộng `new_leaves_allocated` vào Leave Allocation của NV cuối kỳ — **không tạo bản nháp, không cần ai duyệt**.
 
-> **Khi `min_attendance_days = 0`** → mọi NV Active đều được cấp, kể cả NV không có Attendance nào trong tháng (vẫn vào group qua LEFT JOIN với count=0).
+### Config
 
-### Ví dụ
+1. Desk → **Leave Type** → mở (vd `Annual Leave`):
+   - `Is Earned Leave` = ✓
+   - `Earned Leave Frequency` = **Monthly**
+   - `Max Leaves Allowed` = tổng quỹ năm (vd 12)
+   - (Tùy chọn) `Allocate on Day`, `Rounding` theo nhu cầu
+2. Desk → **Leave Policy** → tạo policy gồm các Leave Type + số ngày/năm.
+3. Desk → **Leave Policy Assignment** → gán Leave Policy cho NV (hoặc bulk theo nhóm) với `Effective From / Effective To` = kỳ phép (vd năm tài chính).
+   - Khi assign, HRMS tạo Leave Allocation gốc cho kỳ; với earned leave, số dư bắt đầu thấp rồi **tự tăng dần theo từng kỳ** (Monthly).
 
-#### Cấp cho mọi NV Active (ngưỡng = 0)
-- Policy: `min_attendance_days = 0`, `days_granted = 1`
-- Cuối tháng 5 (ngày 1/6) job chạy → mọi NV Active (kể cả NV nghỉ phép cả tháng, mới join) đều được +1 ngày Annual Leave
+### Lưu ý
 
-#### Cấp theo điều kiện chấm công (ngưỡng > 0)
-- Policy: `min_attendance_days = 12`, `days_granted = 1`
-- NV A: 21 ngày Attendance trong tháng 5 → ≥ 12 → cấp +1 ngày
-- NV B: 8 ngày Attendance trong tháng 5 (nghỉ phép nhiều) → < 12 → KHÔNG cấp
-- Allocation A:
-  - `from_date = 2026-06-01`, `to_date = 2027-05-31`
-  - `new_leaves_allocated = 1`
-  - `description = "Auto-cấp theo policy (kỳ 2026-05, attendance_days=21)"`
-  - `custom_auto_allocated_for_period = "2026-05"`
-
-### Idempotent
-
-Job chạy lại tháng 6 lần nữa → không tạo allocation thứ 2 cho kỳ 2026-05 (vì đã có row với cùng `custom_auto_allocated_for_period`).
-
-### Chạy thủ công cho 1 tháng đã qua
-
-```python
-# bench --site cobe.cc console
-from hr_for_cobegroup.scheduled.auto_allocate_leave import _process_company
-import frappe
-from datetime import date
-policy = frappe.get_doc("HR Policy", {"company": "Cobegroup"})
-_process_company(policy._as_dict(), date(2026,5,1), date(2026,5,31), "2026-05")
-```
+- Earned Leave native cấp **phẳng theo lịch** — mọi NV có cùng policy nhận như nhau theo tần suất, không phụ thuộc số ngày chấm công, không scale theo thâm niên.
+- **Không có leave nháp / không có bước approve** ở bước cấp quỹ. Side-effect duy nhất là số dư tăng lên.
+- Muốn cấp thêm/bù ngoài lịch → dùng [HR top-up manual](#4-hr-top-up-phép-tồn-manual).
 
 ---
 
@@ -192,7 +172,7 @@ HR Manager có thể tự duyệt đơn của chính mình (`allow_self_approval
 Trường hợp:
 - NV mới join, HR cấp manual phép initial
 - NV chuyển công ty, mang phép tồn từ Company cũ
-- Bù phép thiếu do lỗi job auto-allocation
+- Bù phép ngoài lịch Earned Leave
 - Điều chỉnh cuối năm
 
 ### Cách làm
@@ -203,84 +183,67 @@ Trường hợp:
    - `Leave Type` (vd Annual Leave)
    - `From Date / To Date`: khoảng hiệu lực
    - `New Leaves Allocated`: số ngày cộng (vd 5)
-   - `Description`: lý do (vd "Bù phép thiếu tháng 4/2026 — sự cố scheduled job")
-   - `custom_auto_allocated_for_period`: **để trống** (chỉ job auto fill field này)
+   - `Description`: lý do (vd "Bù phép tháng 4/2026 — điều chỉnh thủ công")
 3. Save → Submit
 
-Allocation cộng dồn — NV nhận tổng new_leaves_allocated từ tất cả allocation active trong kỳ.
+Allocation cộng dồn — NV nhận tổng new_leaves_allocated từ tất cả allocation active trong kỳ. Đây là cấp quỹ phép thủ công, không qua workflow duyệt.
 
 ### Audit ai cấp phép tồn
 
-Leave Allocation có field `Owner` + `Modified By` chuẩn Frappe. Filter:
-- `custom_auto_allocated_for_period IS NULL` → manual allocation
-- `custom_auto_allocated_for_period IS NOT NULL` → từ job auto
+Leave Allocation có field `Owner` + `Modified By` chuẩn Frappe → biết ai tạo allocation. Lọc theo `employee` / `leave_type` / kỳ `from_date` để rà soát.
 
 ---
 
-## 5. Audit cấp phép tự động
+## 5. Số dư phép & báo cáo
 
-### Xem lịch sử cấp phép theo NV
+### Số dư phép tính thế nào
+
+PWA gọi **hàm native HRMS** `get_leave_details()` / `get_leave_balance_on()` — **không tự SUM SQL**.
+- PWA chỉ hiển thị các loại phép NV **được cấp** (có Leave Allocation trong kỳ).
+- `balance` hiển thị = `remaining_leaves`: đã trừ phép đã dùng + đơn đang chờ duyệt + carry-forward hết hạn.
+- Vì dùng đúng hàm native nên số dư hiển thị khớp 100% với validate lúc HRMS submit đơn.
+
+### Xem lịch sử cấp quỹ theo NV
 
 - Desk → Leave Allocation → Filter `employee`
-- Cột mặc định: leave_type, from_date, to_date, new_leaves_allocated, description, custom_auto_allocated_for_period
+- Cột: leave_type, from_date, to_date, new_leaves_allocated, description
 
 ### Báo cáo Leave Balance
 
 - Desk → search "Leave Balance Report" — báo cáo built-in của HRMS
 - Hiển thị tổng phép cấp, đã dùng, còn lại
 
-### Log scheduled job
+### Earned Leave job (native HRMS)
 
-Frappe scheduler log ở:
-- `bench --site cobe.cc logs` (terminal)
-- File `sites/<site>/logs/scheduler.log`
-- Trong Desk → **Scheduled Job Log** (Frappe v15)
-
-### Sự cố job không chạy
-
-Verify scheduler đang chạy:
+Việc cộng số dư Earned Leave do scheduler **native của HRMS** thực hiện (không phải job custom của app). Verify scheduler đang chạy:
 ```bash
 bench --site cobe.cc doctor
 ```
-
-Manual trigger:
-```bash
-bench --site cobe.cc execute hr_for_cobegroup.scheduled.auto_allocate_leave.run
-```
+Log: Desk → **Scheduled Job Log**, hoặc `sites/<site>/logs/scheduler.log`.
 
 ---
 
 ## 6. Edge case + FAQ
 
-### NV nghỉ phép cả tháng → có được cấp không?
+### Cấp quỹ phép có cần duyệt không?
 
-**Tùy `min_attendance_days`:**
-- `min_attendance_days = 0` → vẫn được cấp (job dùng LEFT JOIN, NV không có Attendance vẫn vào group với count=0)
-- `min_attendance_days > 0` → KHÔNG cấp (count attendance < ngưỡng)
+**KHÔNG.** Earned Leave (mục 2) tự cộng số dư theo lịch, không tạo bản nháp, không qua ai duyệt. Chỉ **Đơn xin nghỉ** mới có workflow 2 bước.
 
-Workaround khi cấu hình ngưỡng > 0: HR top-up manual nếu nội bộ thấy hợp lý.
+### NV nghỉ phép cả tháng → kỳ đó có được cộng phép không?
 
-### NV làm OT nhiều → có được +2 ngày không?
+Có. Earned Leave native cấp **phẳng theo lịch**, không phụ thuộc số ngày chấm công. Mọi NV có cùng Leave Policy Assignment đều được cộng như nhau theo tần suất (Monthly).
 
-**KHÔNG** (theo config hiện tại). `days_granted` cố định cho mỗi tháng đủ điều kiện — không scale theo số ngày làm vượt mức.
+### NV làm OT nhiều → có được cộng thêm phép không?
 
-Muốn cấp theo tỷ lệ (vd `floor(attendance_days / 12)`): liên hệ dev sửa logic job.
+**KHÔNG.** Earned Leave không scale theo số ngày làm / OT / thâm niên. Muốn thưởng thêm phép → HR [top-up manual](#4-hr-top-up-phép-tồn-manual).
 
-### NV đổi Company giữa tháng — cấp ở Company nào?
+### Cơ chế cũ "cấp phép theo chấm công" còn dùng không?
 
-Job dùng `Employee.company` hiện tại lúc chạy. Nếu NV đổi Company giữa tháng → cấp ở Company mới (Company cũ không cấp vì NV không còn trong list).
+**KHÔNG.** Field `leave_auto_*` trên HR Policy và job `auto_allocate_leave` đã được gỡ bỏ (patch `v0_009`). Toàn bộ cấp quỹ phép năm nay dùng Earned Leave native.
 
-→ Manager phải manual top-up nếu cần.
+### NV đổi Company / Leave Policy giữa kỳ?
 
-### Bật `leave_auto_enabled` giữa tháng — tháng đó có được cấp không?
-
-Có. Job chạy ngày 1 tháng sau, đọc state lúc đó. Nếu lúc job chạy `enabled = 1` → quét tháng vừa qua.
-
-### Có thể đổi `leave_auto_leave_type` thành Leave Type khác?
-
-Có. Edit HR Policy → tab Leave → đổi link. Lần job chạy kế tiếp cấp vào Leave Type mới.
-
-Allocation đã cấp trước đó (vào Leave Type cũ) vẫn giữ nguyên — không migrate.
+Earned Leave cộng theo Leave Policy Assignment đang hiệu lực. Khi NV đổi policy, tạo Leave Policy Assignment mới với `Effective From` phù hợp; phần đã cộng trước đó giữ nguyên. Lệch lịch → HR top-up manual.
 
 ### Workflow không trigger khi Manager click action
 
