@@ -103,6 +103,15 @@ Nhân viên mở PWA lần đầu → PWA tự tạo `HR Checkin Phone Registrat
 
 WFH đi qua **HRMS Attendance Request** với `reason = Work From Home` (doctype custom `HR WFH Approval` đã deprecated). Nhân viên tạo đơn (PWA/Desk) → Manager duyệt (Submit). Khi đơn đã duyệt (docstatus=1) phủ ngày hôm nay + Policy bật `enable_wfh_mode`, PWA hiện banner WFH và cho phép chấm công không enforce GPS radius.
 
+### 3.5. Holiday List + Shift Type (BẮT BUỘC để có Attendance & báo cáo)
+
+Cấu hình **HRMS chuẩn** quyết định check-in có biến thành bản ghi **Attendance** hay không:
+- **Holiday List** (Desk → Holiday List): khai cuối tuần (`weekly_off` + Get Weekly Off Dates) + ngày lễ → ngày trong list **không bị mark Absent**. Gán Default Holiday List cho Company / Shift / Employee.
+- **Shift Type**: giờ vào–ra, gán Holiday List, bật **`Enable Auto Attendance`**, ngưỡng half-day/absent, grace period.
+- **Shift Assignment / Default Shift**: gán ca cho từng NV — NV **phải có ca** thì check-in mới sinh Attendance + mới vào danh sách "nhắc quên chấm công".
+
+→ Thiếu phần này: check-in vẫn ghi log nhưng **không thành Attendance** → báo cáo tháng trống; cuối tuần/lễ bị tính Absent. Chi tiết: **[HR Holiday & Shift Setup](HR-Holiday-Shift-Setup.html)**.
+
 ---
 
 ## 4. Quy trình chấm công thường ngày

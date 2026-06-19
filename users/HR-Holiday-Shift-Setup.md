@@ -167,5 +167,5 @@ Sau khi cấu hình 2 phần trên, hệ thống Cobe hoạt động:
 ## Liên quan
 
 - [HR Policy](HR-Policy.html) — feature flag + whitelist
-- [HR Leave Setup](HR-Leave-Setup.html) — workflow + auto-cấp phép
+- [HR Leave Setup](HR-Leave-Setup.html) — workflow 2 bước + Earned Leave
 - [Tổng quan Chấm công](Cham-Cong-Tong-Quan.html)

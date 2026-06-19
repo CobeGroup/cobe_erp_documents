@@ -357,6 +357,9 @@ ghn_step_by_step("SHIP-DP-2026-00001", flow="lost")
 
 ### 6.6. Test Viettel Post
 
+> 📘 Cần hướng dẫn riêng cho Viettel Post (setup API → tạo đơn → theo dõi trạng thái, kèm bảng 27 mã)?
+> Xem [Viettel Post — Setup, tạo đơn & theo dõi](Delivery_Partner-Viettel_Post.md).
+
 Tương tự GHN, thay `ghn_` bằng `vtp_`:
 
 ```python

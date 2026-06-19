@@ -86,11 +86,34 @@ Mặc định đã cấu hình 2 dòng (Leave Application + Attendance Request) 
 3. Cuối mỗi tháng HRMS **tự +1 ngày** vào quỹ — **không qua duyệt, không tạo leave nháp**.
    (Earned Leave native cấp phẳng theo lịch; **không** tính thâm niên / prorate ngày lẻ.)
 
-### 1.6. Ca làm + auto-attendance (để báo cáo có dữ liệu)
-- Desk → **Shift Type**: bật `Enable Auto Attendance`.
-- Gán `Default Shift` cho từng Employee.
-→ Job HRMS "Process Auto Attendance" biến Employee Checkin → bản ghi **Attendance** (Present/Absent/...)
-  → báo cáo tháng (§6) mới có số liệu.
+### 1.6. Holiday List + Shift Type + Shift Assignment (HRMS — để có Attendance & báo cáo)
+
+> Đây là cấu hình **HRMS chuẩn**, quyết định check-in có biến thành Attendance hay không.
+> Chi tiết đầy đủ xem doc **HR Holiday & Shift Setup**. Tóm tắt bước tối thiểu:
+
+**a. Holiday List** (Desk → **Holiday List**) — danh sách nghỉ/lễ:
+- `holiday_list_name`, `from_date`/`to_date` (cả năm); chọn **`weekly_off`** (vd "Sunday") rồi
+  bấm **Get Weekly Off Dates** để tự thêm cuối tuần; thêm tay các ngày lễ.
+- Gán làm **Default Holiday List** cho Company (Company → Default Holiday List), hoặc gán riêng
+  ở Shift Type / Employee.
+- → Ngày trong Holiday List **không bị mark Absent**.
+
+**b. Shift Type** (Desk → **Shift Type**) — định nghĩa ca:
+- `start_time` / `end_time` (vd 08:00 / 17:00), gán `holiday_list`.
+- Bật **`Enable Auto Attendance`**.
+- `working_hours_calculation_based_on` (First Check-in & Last Check-out),
+  `working_hours_threshold_for_half_day` / `working_hours_threshold_for_absent` (ngưỡng nửa ngày / vắng).
+- `process_attendance_after` (chỉ xử lý từ ngày này); grace: `late_entry_grace_period` /
+  `early_exit_grace_period`; bật `enable_late_entry_marking` / `enable_early_exit_marking` nếu cần.
+- → Job HRMS **"Process Auto Attendance"** (~15 phút/lần) gom Employee Checkin → tạo **Attendance**
+  (Present / Absent / Half Day...) theo ca.
+
+**c. Shift Assignment / Default Shift** — gán ca cho NV:
+- Nhanh: Employee → `Default Shift`. Hoặc tạo **Shift Assignment** (có bulk assign nhiều NV).
+- → NV **phải có ca** thì check-in mới sinh Attendance + mới vào danh sách "nhắc quên chấm công".
+
+⚠️ Thiếu **Holiday List** → cuối tuần/lễ bị tính Absent. Thiếu **Shift Type/assignment** →
+check-in không thành Attendance → **báo cáo tháng (§6) trống**.
 
 ---
 
@@ -99,7 +122,8 @@ Mặc định đã cấu hình 2 dòng (Leave Application + Attendance Request) 
 **Đặc điểm:** sales hay đi gặp khách ngoài VP → thường **whitelist** (bỏ check GPS) hoặc chấm tại VP.
 
 1. **Tạo Employee** (Desk → Employee): điền tên, `Company`, `Department = Sales`, `Designation`,
-   `user_id` (link tới User), `leave_approver` = manager sales.
+   `user_id` (link tới User), `leave_approver` = manager sales,
+   **`Default Shift`** = ca hành chính (vd 08:00–17:00) + **Holiday List** (xem §1.6).
 2. **Gán role cho User**: tối thiểu **Employee** (để dùng my-workspace).
 3. **(Tuỳ) Whitelist GPS**: nếu sales đi ngoài → Desk → HR Policy (Company tương ứng) →
    bảng `whitelist_employees` → thêm NV này (ghi `reason` = "Sales đi thị trường").
@@ -118,6 +142,8 @@ Mặc định đã cấu hình 2 dòng (Leave Application + Attendance Request) 
 **Đặc điểm:** KTV đi hiện trường khách → **whitelist** (bỏ GPS) + dùng app **FSM** cho lịch/công việc.
 
 1. **Tạo Employee** như §2 (Department = Bảo dưỡng/Kỹ thuật, set `leave_approver`).
+   ⚠️ KTV đi hiện trường **vẫn cần `Default Shift`** thì check-in mới sinh Attendance — có thể
+   tạo **ca riêng "Ca KTV"** (giờ linh hoạt) + Holiday List, gán làm Default Shift (xem §1.6).
 2. **Gán role** cho User: **Employee** (+ role FSM nếu hệ FSM yêu cầu).
 3. **Tạo FS Service Resource** (Desk → FS Service Resource): set cả **`user`** (tài khoản KTV) lẫn
    **`employee`** (hồ sơ KTV) và **`is_active = 1`**.
