@@ -334,7 +334,8 @@ class BaseWebhookHandler:
 **GHN** (`handlers/ghn.py`):
 ```
 Payload: {"OrderCode": "...", "Status": "...", "Description": "..."}
-Verify : request.headers["Token"] == DP Partner.webhook_secret
+Verify : hmac.compare_digest(request.headers["Token"], webhook_secret)  — so sánh hằng-thời-gian
+         (nếu chưa cấu hình secret → log warning + bỏ qua verify)
 Status : payload["Status"].lower()
 ```
 
@@ -342,6 +343,7 @@ Status : payload["Status"].lower()
 ```
 Payload: {"ORDER_NUMBER": "...", "ORDER_STATUS": 500, "NOTE": "..."}
 Verify : request.headers["X-VTP-Token"] == webhook_secret
+         (nếu chưa cấu hình secret → bỏ qua verify)
 Status : str(payload["ORDER_STATUS"])
 ```
 
@@ -349,10 +351,14 @@ Status : str(payload["ORDER_STATUS"])
 ```
 Payload: {"label_id": "...", "partner_id": "...", "status_id": 5, "reason": "..."}
 Verify : request.headers["X-Client-Source"] == webhook_secret
-         (KHÔNG phải HMAC; nếu chưa cấu hình secret → bỏ qua verify)
+         (so sánh chuỗi thường, KHÔNG phải HMAC; nếu chưa cấu hình secret → bỏ qua verify)
 Status : str(payload["status_id"])
 ID     : payload["partner_id"] hoặc payload["label_id"]
 ```
+
+> Cả 3 handler trên đều **bỏ qua verify nếu DP Partner chưa cấu hình `webhook_secret`**
+> (`return True` + log warning). Chỉ GHN dùng `hmac.compare_digest` (so sánh hằng thời gian);
+> VTP/GHTK so sánh `==` thường.
 
 **Generic** (`handlers/generic.py`):
 ```
@@ -361,10 +367,9 @@ Payload: {"shipment_id": "...", "status": "...", "info": "..."}
 Verify : không verify (chỉ dùng mạng nội bộ/tin cậy)
 ```
 
-> ⚠️ **Bug đã biết:** `GenericWebhookHandler` định nghĩa `extract_status()` trong khi base gọi
-> `extract_raw_status()`. Vì vậy 6 carrier fallback generic (JT/NJV/BEST/AHAMOVE/SPX/GRAB) sẽ
-> raise `NotImplementedError` khi nhận webhook qua endpoint thật. Cần sửa thành
-> `extract_raw_status()` trong `handlers/generic.py`.
+> `GenericWebhookHandler` implement đủ interface của base (`verify_signature`,
+> `extract_shipment_id`, `extract_raw_status`, `extract_status_info`) — dùng được cho các
+> carrier fallback (JT/NJV/BEST/AHAMOVE/SPX/GRAB).
 
 ### 5.4. Status Normalization (DB-driven)
 
@@ -562,8 +567,8 @@ Setup API yêu cầu **System Manager**.
 2. Chạy setup script
 3. Điền credentials vào DP Partner Account
 
-> Lưu ý bug §5.3: GenericWebhookHandler hiện cần sửa `extract_status` → `extract_raw_status`
-> trước khi dùng cho webhook thật.
+> GenericWebhookHandler kỳ vọng payload `{shipment_id, status, info}` và không verify chữ ký —
+> nếu carrier gửi format khác hoặc cần xác thực, tạo custom handler (§10.2).
 
 ### 10.2. Cần custom handler
 

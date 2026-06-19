@@ -66,7 +66,7 @@ Script **idempotent**: chạy lại không tạo trùng, chỉ thêm status mapp
 |-----|-----|------|-----------------|
 | GHN | Giao Hàng Nhanh | Static Token | 22 |
 | VTP | Viettel Post | Token Exchange | 27 |
-| GHTK | Giao Hàng Tiết Kiệm | Static Token | 19 |
+| GHTK | Giao Hàng Tiết Kiệm | Static Token | 20 |
 | JT | J&T Express | Signature | 13 |
 | NJV | Ninja Van | Token Exchange | 16 |
 | BEST | Best Express | Static Token | 12 |
@@ -246,6 +246,9 @@ Verify chữ ký mỗi carrier:
 | Viettel Post | Header `X-VTP-Token` == `webhook_secret` |
 | GHTK | Header `X-Client-Source` == `webhook_secret` |
 | Generic (carrier còn lại) | Không verify — chỉ dùng trên mạng nội bộ/tin cậy |
+
+> Với GHN / VTP / GHTK: nếu DP Partner **chưa điền `Webhook Secret`** thì handler **bỏ qua verify**
+> (nhận mọi request) — tiện test nhưng kém an toàn. Điền secret để bật xác thực.
 
 > App gốc khi nhận webhook chỉ cập nhật `status` + `tracking_status` + ghi comment.
 > Nếu cài app extension, sự kiện này sẽ trigger tiếp việc tạo SE / DN / SI / PE
