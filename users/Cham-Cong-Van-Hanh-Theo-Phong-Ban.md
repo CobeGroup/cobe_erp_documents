@@ -1,11 +1,20 @@
 ---
-title: Vận hành theo phòng ban (Sales / KTV)
+title: Ví dụ — Vận hành theo phòng ban (Sales / KTV)
 layout: default
 parent: Chấm công & HR
 nav_order: 9
 ---
 
-# Hướng dẫn vận hành A-Z — Chấm công / Nghỉ phép (HR for Cobegroup)
+# Ví dụ: Vận hành A-Z theo phòng ban (Sales / KTV)
+
+> Đây là **ví dụ cụ thể** áp dụng cho 2 phòng ban điển hình. Tài liệu **generic**
+> (khái niệm + cấu hình chi tiết từng phần) xem:
+> - **Tổng quan & Setup** (vận hành chung A-Z) — `Cham-Cong-Tong-Quan`
+> - Các doc feature: **HR Policy**, **HR Office Location**, **HR Checkin Phone
+>   Registration**, **HR Attendance Request**, **HR Leave Setup**, **HR WFH Approval**...
+>
+> Doc này gói lại thành **kịch bản thực tế** cho Sales (đi thị trường) và KTV
+> (bảo dưỡng hiện trường), kèm luồng duyệt Manager/HR và xem báo cáo.
 
 Tài liệu hướng dẫn HR/Admin **cài đặt một phòng ban từ đầu** + **luồng duyệt** + **xem báo cáo**.
 Ví dụ cụ thể: **Phòng Sales** và **Phòng Bảo dưỡng (kỹ thuật viên)**.
