@@ -38,6 +38,7 @@ Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nh
 - **HR Checkin Phone Registration** — duyệt phone nhân viên
 - **HR WFH Approval** — quy trình duyệt WFH (optional)
 - **HR Leave Setup** — workflow 2 bước (Manager Approve → Submit) + auto-cấp phép + UI tạo Leave từ PWA
+- **HR Push Notification** — bật/cấu hình thông báo đẩy (FCM) cho My Workspace
 - **HR Wiki Setup** — tạo Frappe Wiki Space "my-workspace" làm hướng dẫn sử dụng PWA
 
 ## PWA `/my-workspace` — Cobe self-service
@@ -50,8 +51,8 @@ PWA có sẵn các trang chính cho NV:
 | `/my-workspace/leave` | Số dư phép + danh sách + form tạo đơn (FAB nút "+") |
 | `/my-workspace/salary` | Lương (Phase 2) |
 | `/my-workspace/expense` | Chi phí |
-| `/my-workspace/more` | Hub |
-| `/my-workspace/notifications` | Bell icon header → list thông báo (chưa đọc highlight, đã đọc mờ, nút "Đọc tất cả") |
+| `/my-workspace/more` | Hub (gồm thẻ bật **Thông báo đẩy** — xem HR Push Notification) |
+| `/my-workspace/notifications` | Bell icon header → list thông báo (render HTML, chưa đọc highlight, đã đọc mờ, "Đọc tất cả"); có **push** nếu đã bật |
 
 ## Tài liệu kỹ thuật
 

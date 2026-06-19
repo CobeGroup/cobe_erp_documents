@@ -9,7 +9,10 @@ nav_order: 4
 
 > Doctype HRMS chuẩn. Nhân viên tạo đơn **"Chấm công bù"** qua nút **"Đề xuất"** trong tab **"Bảng công"** (chọn loại: Chấm công bù / WFH). Manager duyệt qua tab **"Cần duyệt"** (api.approval.act → submit Attendance Request → HRMS tự tạo Attendance). Tài liệu này giải thích cách dùng + working_hours được tính ra sao sau khi approve.
 >
-> **WFH có flow riêng** (đăng ký qua trang "Đăng ký WFH", cần check-in GPS) — xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
+> **WFH cũng nằm trong form Đề xuất này**: khi feature flag `enable_wfh_mode` (HR Policy)
+> được BẬT, mục **"Loại đề xuất"** có thêm lựa chọn **"Làm việc tại nhà (WFH)"** (chọn xong
+> nhập thêm địa điểm làm việc). Không còn trang "Đăng ký WFH" riêng. Tắt flag → form chỉ có
+> "Chấm công bù / Công tác". Chi tiết flow WFH: xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
 
 ---
 
@@ -35,7 +38,10 @@ Attendance Request (đơn "Chấm công bù") dùng cho các tình huống NV **
 
 Khi NV tạo qua PWA (`api.attendance_request.create_attendance_request`), `reason` mặc định = **`On Duty`** → khi manager duyệt, HRMS đánh status **`Present`**. Nếu đơn đánh dấu `half_day` → status `Half Day`.
 
-> **WFH KHÔNG dùng đơn này.** WFH có flow riêng (`reason = "Work From Home"`, đăng ký qua trang "Đăng ký WFH" + check-in GPS) — xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html). Endpoint `get_my_attendance_requests` cũng lọc bỏ các đơn có reason WFH.
+> **WFH dùng CHUNG đơn này** với `reason = "Work From Home"` (hiện trong form Đề xuất khi
+> `enable_wfh_mode` bật). `create_attendance_request` cho phép cả `On Duty` lẫn `Work From Home`;
+> `get_my_attendance_requests` trả về mọi reason (kèm `custom_work_location_label`). Flow check-in
+> GPS của ngày WFH: xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
 
 ---
 
@@ -177,7 +183,7 @@ Desk → Attendance list → filter `hr_warning_type` để thấy:
 4. Hook fill working_hours = 9h (ca 8-17h) - 1h break = 8h cho mỗi ngày
 5. Salary Slip kỳ này tính bình thường — 3 ngày Present tương đương
 
-> **WFH** (làm tại nhà) thì KHÔNG dùng đơn này — đăng ký qua trang "Đăng ký WFH", xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
+> **WFH** (làm tại nhà): chọn loại **"Làm việc tại nhà (WFH)"** ngay trong form Đề xuất này (khi `enable_wfh_mode` bật) — xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
 
 ### Case B: NV quên check-out
 
