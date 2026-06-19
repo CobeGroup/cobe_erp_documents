@@ -30,6 +30,12 @@ nav_order: 4
 - **PWA branding**: tên cài home screen = **"TGDG - MyWorkspace"** (manifest
   `short_name`/`name` cho Android + `apple-mobile-web-app-title`/`<title>` trong
   `_my_workspace.html` cho iOS). App icon = biểu tượng giọt nước TGĐG (`icon-192/512`).
+  Header gradient thương hiệu `#299dd8 → #54ab78`; màu primary toàn app + `theme-color`
+  (status bar) = `#299dd8`.
+- **FAB đồng nhất**: `styles/fab.ts` (`FAB_PRIMARY_STYLE` / `FAB_HELP_STYLE`) — mọi nút
+  nổi (Đề xuất, + Nghỉ phép, + Chi phí, ? trợ giúp) cùng right/z-index (1001, trên nav
+  bar z-1000) + `bottom: calc(... + env(safe-area-inset-bottom))` để không bị nav che
+  / nhảy trên iPhone.
 - **Routing**: PWA served tại `/my-workspace` (không phải `/attendance`).
 
 Chi tiết contract + patch: xem `HR-Attendance-API` §9.
