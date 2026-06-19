@@ -125,6 +125,7 @@ PWA serve tại **`/my-workspace`** — shell chung React Router, bottom nav th�
 - **Thêm** — các mục phụ (hướng dẫn sử dụng, v.v.)
 
 > Thứ tự tab: Chấm công · Nghỉ phép · [Cần duyệt] · **Chi phí** · [FSM] · Thêm.
+> **System Manager thấy TẤT CẢ tab** (gồm Cần duyệt + FSM) bất kể điều kiện trên.
 
 Trang Chấm công có 2 tab:
 - **Chấm công** — nút check-in/out + danh sách lượt Employee Checkin trong khoảng đã chọn

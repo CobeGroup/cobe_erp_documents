@@ -38,11 +38,10 @@ Ví dụ cụ thể: **Phòng Sales** và **Phòng Bảo dưỡng (kỹ thuật 
 | **Attendance Request** | Chấm công bù / công tác / WFH — duyệt 1 bước qua tab "Cần duyệt". |
 
 **Ai thấy tab gì trên my-workspace:**
-- Tab **"Cần duyệt"**: user có role nằm trong `viewer_roles` của HR Approval Inbox Settings (mặc định **Leave Approver / HR Manager / System Manager**).
-- Tab **"FSM"**: employee có **FS Service Resource** (kỹ thuật viên). Gate **thuần theo
-  FS Service Resource, KHÔNG theo role** — System Manager cũng **không** thấy tab này nếu
-  employee của họ chưa có FS Service Resource. (Riêng app `/technician` mở URL trực tiếp
-  thì System Manager vào được kể cả không có FS Service Resource.)
+- Tab **"Cần duyệt"**: user có role trong `viewer_roles` của HR Approval Inbox Settings (mặc định **Leave Approver / HR Manager / System Manager**).
+- Tab **"FSM"**: employee có **FS Service Resource** (kỹ thuật viên).
+- Tab **"Chấm công" / "Nghỉ phép" / "Chi phí" / "Thêm"**: luôn hiện.
+- **System Manager**: thấy **TẤT CẢ tab** (gồm Cần duyệt + FSM) bất kể điều kiện trên.
 
 ---
 
