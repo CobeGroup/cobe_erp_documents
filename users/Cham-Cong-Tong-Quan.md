@@ -120,8 +120,11 @@ PWA serve tại **`/my-workspace`** — shell chung React Router, bottom nav th�
 - **Chấm công** — luôn có
 - **Nghỉ phép** — luôn có (đăng ký + theo dõi đơn phép)
 - **Cần duyệt** — chỉ hiện cho user có quyền trong **HR Approval Inbox Settings** (mặc định role *Leave Approver* / *HR Manager* / *System Manager*); là inbox duyệt đơn (Leave 2 bước + Attendance Request). Xem [§6.5](#65-tab-cần-duyệt--inbox-duyệt-đơn).
+- **Chi phí** — luôn có (đề nghị tạm ứng / hoàn ứng / claim chi phí).
 - **FSM** — chỉ hiện cho nhân viên có `FS Service Resource` (KTV fsmnext); nhúng app `/technician` fullscreen.
 - **Thêm** — các mục phụ (hướng dẫn sử dụng, v.v.)
+
+> Thứ tự tab: Chấm công · Nghỉ phép · [Cần duyệt] · **Chi phí** · [FSM] · Thêm.
 
 Trang Chấm công có 2 tab:
 - **Chấm công** — nút check-in/out + danh sách lượt Employee Checkin trong khoảng đã chọn
