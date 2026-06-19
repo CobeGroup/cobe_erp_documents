@@ -128,6 +128,16 @@ HR Manager action:
    - **Khoảng ngày** (RangePicker DD/MM/YYYY)
    - **Lý do** (TextArea)
 3. Tap **Gửi đơn** → POST `api/leave.create_leave_application` → workflow_state = "Pending Manager"
+
+> **Danh sách loại phép trong PWA** = các loại NV **đã được cấp** (có Leave Allocation
+> hiệu lực, kèm số dư) **+ luôn có "Leave Without Pay" (nghỉ không lương)**. LWP không
+> cần cấp phép, không có số dư, hiển thị nhãn **"không lương"** — duyệt xong sẽ **trừ
+> lương** những ngày nghỉ. Nếu NV **chưa được cấp phép nào** thì chỉ thấy LWP → muốn có
+> phép có lương phải cấp **Leave Allocation** (mục 2 hoặc 4).
+>
+> **Bắt buộc có Leave Approver:** mọi đơn (kể cả LWP) cần Employee có field **Leave
+> Approver** (Manager). Thiếu → tạo đơn báo lỗi "Bạn chưa có Manager". Set ở hồ sơ
+> Employee → tab Approval.
 4. Toast "Đã gửi đơn xin nghỉ. Chờ Manager duyệt."
 5. List "Đơn xin nghỉ" refresh hiện đơn mới với badge "Chờ Manager" (gold)
 
