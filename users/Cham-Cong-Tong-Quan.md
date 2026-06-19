@@ -124,8 +124,12 @@ PWA serve tại **`/my-workspace`** — shell chung React Router, bottom nav th�
 - **Thêm** — các mục phụ (hướng dẫn sử dụng, v.v.)
 
 Trang Chấm công có 2 tab:
-- **Chấm công** — nút check-in/out + danh sách Employee Checkin trong khoảng đã chọn
-- **Bảng công** — danh sách `Attendance` HRMS (status + giờ công + cảnh báo) trong khoảng
+- **Chấm công** — nút check-in/out + danh sách lượt Employee Checkin trong khoảng đã chọn
+- **Bảng công** — **một danh sách hợp nhất**: bản ghi `Attendance` HRMS (status + giờ công +
+  cảnh báo) **kèm đơn đề xuất chưa duyệt** (Chấm công bù / WFH); nút **"Đề xuất"** để tạo đơn.
+
+> **Bấm vào item bất kỳ** (Bảng công / Chấm công / Nghỉ phép / Thông báo / Cần duyệt) để
+> **xem chi tiết** qua Modal in-app.
 
 ### 4.1. Nhân viên onsite (98% case)
 

@@ -134,7 +134,8 @@ check-in không thành Attendance → **báo cáo tháng (§6) trống**.
 6. **HR duyệt thiết bị** (xem §5.2) → NV mới chấm công được.
 7. **Hằng ngày**: NV bấm **Chấm công (Vào/Ra)**. Quên chấm / đi công tác / WFH → tab
    **Bảng công** → nút **"Đề xuất"** → chọn loại (Chấm công bù / WFH) → gửi đơn. Nghỉ phép → tab **Nghỉ phép**.
-   (Đơn duyệt xong hiện ngay trong Bảng công.)
+   (Đơn duyệt xong hiện ngay trong Bảng công — đây là **1 danh sách chung** gồm công + đơn đề xuất.)
+   **Bấm item bất kỳ** (công, đơn, lượt chấm, thông báo) để **xem chi tiết**.
 
 ---
 
