@@ -104,7 +104,7 @@ Mặc định đã cấu hình 2 dòng (Leave Application + Attendance Request) 
 4. **Nhân viên cài app**: mở `https://<domain>/my-workspace` trên điện thoại (đăng nhập Frappe).
 5. **Đăng ký thiết bị**: lần đầu app đẩy sang **"Đăng ký thiết bị"** → bấm *Gửi yêu cầu đăng ký*.
 6. **HR duyệt thiết bị** (xem §5.2) → NV mới chấm công được.
-7. **Hằng ngày**: NV bấm **Chấm công (Vào/Ra)**. Quên chấm → **Thêm → Chấm công bù** (đơn duyệt).
+7. **Hằng ngày**: NV bấm **Chấm công (Vào/Ra)**. Quên chấm → mở trang **Chấm công** → tab **Chấm công bù** → bấm **"+"** tạo đơn.
    Nghỉ phép → tab **Nghỉ phép**. WFH (nếu bật) → **Thêm → Đăng ký WFH**.
 
 ---
