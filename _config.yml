@@ -14,3 +14,7 @@ color_scheme: light
 
 # Bật search box
 search_enabled: true
+
+# Bật Mermaid để render flowchart (```mermaid ... ```)
+mermaid:
+  version: "10.9.0"

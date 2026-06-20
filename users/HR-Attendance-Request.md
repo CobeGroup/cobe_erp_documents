@@ -16,6 +16,21 @@ nav_order: 4
 
 ---
 
+## Sơ đồ quy trình đề xuất
+
+```mermaid
+flowchart TD
+  A["Tab Bảng công → nút Đề xuất"] --> B["Chọn loại: Chấm công bù / WFH"]
+  B --> C["Chọn ngày + lý do (WFH: thêm địa điểm)"]
+  C --> D["Gửi → Attendance Request (chờ duyệt)"]
+  D --> E{"Manager duyệt? (tab Cần duyệt)"}
+  E -- "Từ chối" --> X["Trạng thái: Từ chối"]
+  E -- "Duyệt" --> F["Submit Attendance Request"]
+  F --> G["HRMS tự tạo Attendance: Present / WFH / Half Day"]
+```
+
+---
+
 ## Mục lục
 
 1. [Khi nào dùng](#1-khi-nào-dùng)

@@ -14,6 +14,28 @@ Tài liệu đầu-đến-cuối: cài app, setup văn phòng, duyệt phone nh�
 
 ---
 
+## Sơ đồ quy trình chấm công
+
+```mermaid
+flowchart TD
+  A["Mở app → tab Chấm công"] --> B{"Thiết bị đã đăng ký + HR duyệt?"}
+  B -- "Chưa" --> R["Đăng ký thiết bị → chờ HR duyệt"]
+  B -- "Rồi" --> C["Bấm nút Chấm công"]
+  C --> D["Lấy GPS"]
+  D --> E{"Bật selfie / face match?"}
+  E -- "Có" --> F["Chụp ảnh"]
+  E -- "Không" --> G["Xác nhận trong modal"]
+  F --> G
+  G --> H{"WFH hôm nay?"}
+  H -- "Có" --> I["checkin_wfh (GPS chỉ ghi nhận)"]
+  H -- "Không" --> J["checkin: kiểm GPS trong bán kính VP + fingerprint"]
+  I --> K["Tạo Employee Checkin"]
+  J --> K
+  K --> L["Process Auto Attendance tính công cuối ngày"]
+```
+
+---
+
 ## Mục lục
 
 1. [Hệ thống làm gì](#1-hệ-thống-làm-gì)

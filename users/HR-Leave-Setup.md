@@ -21,6 +21,36 @@ Cobe dùng cơ chế phép chuẩn HRMS, gồm 2 phần TÁCH BIỆT:
 
 ---
 
+## Sơ đồ quy trình
+
+**A. Cấp quỹ phép (HR):**
+
+```mermaid
+flowchart TD
+  A["Leave Period (năm)"] --> B["Leave Policy: loại phép + số ngày/năm"]
+  B --> C["Leave Policy Assignment cho NV → Submit"]
+  C --> D["Tự tạo Leave Allocation (số dư)"]
+  C2["Hoặc tạo tay Leave Allocation"] --> D
+  D --> E["NV thấy số dư phép trong app"]
+  F["Set Leave Approver (Manager) trên Employee"] --> E
+```
+
+**B. Đơn xin nghỉ — workflow 2 bước:**
+
+```mermaid
+flowchart TD
+  A["Tab Nghỉ phép → nút +"] --> B["Chọn loại phép + ngày + lý do"]
+  B --> C["Gửi → Leave Application (Pending Manager)"]
+  C --> D{"Manager duyệt?"}
+  D -- "Từ chối" --> X["Rejected"]
+  D -- "Duyệt" --> E["Manager Approved"]
+  E --> F{"HR duyệt?"}
+  F -- "Từ chối" --> X
+  F -- "Duyệt" --> G["Submitted → trừ số dư phép"]
+```
+
+---
+
 ## Mục lục
 
 1. [Cấu hình lần đầu](#1-cấu-hình-lần-đầu)

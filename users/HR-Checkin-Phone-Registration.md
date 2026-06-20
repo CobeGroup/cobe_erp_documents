@@ -14,6 +14,22 @@ nav_order: 4
 
 ---
 
+## Sơ đồ quy trình thiết bị (đăng ký / duyệt / đổi / hủy)
+
+```mermaid
+flowchart TD
+  A["NV: Thêm → Trạng thái thiết bị → Gửi yêu cầu"] --> B["Tạo HR Checkin Phone Registration (chờ duyệt)"]
+  B --> C{"HR duyệt?"}
+  C -- "Duyệt" --> D["Active + Submitted → chấm công được"]
+  C -- "Từ chối / Hủy" --> E["Inactive → không chấm công được"]
+  D --> F{"NV đổi máy mới?"}
+  F -- "Có" --> G["NV đăng ký máy mới"]
+  G --> H["HR hủy máy cũ (Inactive) + duyệt máy mới"]
+  F -- "Không" --> I["Tiếp tục chấm công trên máy hiện tại"]
+```
+
+---
+
 ## Mục lục
 
 1. [Tại sao cần](#1-tại-sao-cần)

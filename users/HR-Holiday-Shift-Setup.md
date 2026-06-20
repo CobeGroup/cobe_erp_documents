@@ -9,6 +9,16 @@ nav_order: 3
 
 > Đối tượng: **HR Manager**, **System Manager**. Cobe **không code** 2 phần này — chỉ cấu hình HRMS chuẩn. Doc dùng cho onboarding HR mới.
 
+## Sơ đồ quy trình setup
+
+```mermaid
+flowchart TD
+  A["Holiday List (năm + ngày nghỉ)"] --> B["Gán Company → Default Holiday List"]
+  C["Shift Type: giờ vào/ra + Holiday List"] --> D["Shift Assignment cho Employee"]
+  B --> E["Process Auto Attendance: dùng Shift + Holiday tính công"]
+  D --> E
+```
+
 ## Mục lục
 
 1. [Tại sao cần cấu hình](#1-tại-sao-cần-cấu-hình)
