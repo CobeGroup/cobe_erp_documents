@@ -17,7 +17,13 @@ nav_order: 4
 ## Sơ đồ quy trình thiết bị (đăng ký / duyệt / đổi / hủy)
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontSize':'16px'},'flowchart':{'nodeSpacing':50,'rankSpacing':55}}}%%
 flowchart TD
+  classDef process fill:#e6f4ff,stroke:#299dd8,stroke-width:1.5px,color:#0b4a6f;
+  classDef decision fill:#fff7e6,stroke:#fa8c16,stroke-width:1.5px,color:#873800;
+  classDef good fill:#f6ffed,stroke:#54ab78,stroke-width:1.5px,color:#135200;
+  classDef bad fill:#fff1f0,stroke:#ff4d4f,stroke-width:1.5px,color:#a8071a;
+
   A["NV: Thêm → Trạng thái thiết bị → Gửi yêu cầu"] --> B["Tạo HR Checkin Phone Registration (chờ duyệt)"]
   B --> C{"HR duyệt?"}
   C -- "Duyệt" --> D["Active + Submitted → chấm công được"]
@@ -26,6 +32,11 @@ flowchart TD
   F -- "Có" --> G["NV đăng ký máy mới"]
   G --> H["HR hủy máy cũ (Inactive) + duyệt máy mới"]
   F -- "Không" --> I["Tiếp tục chấm công trên máy hiện tại"]
+
+  class A,B,G,H process
+  class C,F decision
+  class D,I good
+  class E bad
 ```
 
 ---

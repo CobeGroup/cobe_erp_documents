@@ -26,19 +26,32 @@ Cobe dùng cơ chế phép chuẩn HRMS, gồm 2 phần TÁCH BIỆT:
 **A. Cấp quỹ phép (HR):**
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontSize':'16px'},'flowchart':{'nodeSpacing':50,'rankSpacing':55}}}%%
 flowchart TD
+  classDef process fill:#e6f4ff,stroke:#299dd8,stroke-width:1.5px,color:#0b4a6f;
+  classDef good fill:#f6ffed,stroke:#54ab78,stroke-width:1.5px,color:#135200;
+
   A["Leave Period (năm)"] --> B["Leave Policy: loại phép + số ngày/năm"]
   B --> C["Leave Policy Assignment cho NV → Submit"]
   C --> D["Tự tạo Leave Allocation (số dư)"]
   C2["Hoặc tạo tay Leave Allocation"] --> D
   D --> E["NV thấy số dư phép trong app"]
   F["Set Leave Approver (Manager) trên Employee"] --> E
+
+  class A,B,C,C2,D,F process
+  class E good
 ```
 
 **B. Đơn xin nghỉ — workflow 2 bước:**
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontSize':'16px'},'flowchart':{'nodeSpacing':50,'rankSpacing':55}}}%%
 flowchart TD
+  classDef process fill:#e6f4ff,stroke:#299dd8,stroke-width:1.5px,color:#0b4a6f;
+  classDef decision fill:#fff7e6,stroke:#fa8c16,stroke-width:1.5px,color:#873800;
+  classDef good fill:#f6ffed,stroke:#54ab78,stroke-width:1.5px,color:#135200;
+  classDef bad fill:#fff1f0,stroke:#ff4d4f,stroke-width:1.5px,color:#a8071a;
+
   A["Tab Nghỉ phép → nút +"] --> B["Chọn loại phép + ngày + lý do"]
   B --> C["Gửi → Leave Application (Pending Manager)"]
   C --> D{"Manager duyệt?"}
@@ -47,6 +60,11 @@ flowchart TD
   E --> F{"HR duyệt?"}
   F -- "Từ chối" --> X
   F -- "Duyệt" --> G["Submitted → trừ số dư phép"]
+
+  class A,B,C,E process
+  class D,F decision
+  class G good
+  class X bad
 ```
 
 ---

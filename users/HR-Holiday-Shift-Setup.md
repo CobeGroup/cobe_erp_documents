@@ -12,11 +12,18 @@ nav_order: 3
 ## Sơ đồ quy trình setup
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontSize':'16px'},'flowchart':{'nodeSpacing':50,'rankSpacing':55}}}%%
 flowchart TD
+  classDef process fill:#e6f4ff,stroke:#299dd8,stroke-width:1.5px,color:#0b4a6f;
+  classDef good fill:#f6ffed,stroke:#54ab78,stroke-width:1.5px,color:#135200;
+
   A["Holiday List (năm + ngày nghỉ)"] --> B["Gán Company → Default Holiday List"]
   C["Shift Type: giờ vào/ra + Holiday List"] --> D["Shift Assignment cho Employee"]
   B --> E["Process Auto Attendance: dùng Shift + Holiday tính công"]
   D --> E
+
+  class A,B,C,D process
+  class E good
 ```
 
 ## Mục lục

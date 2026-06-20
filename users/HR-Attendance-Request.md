@@ -19,7 +19,13 @@ nav_order: 4
 ## Sơ đồ quy trình đề xuất
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontSize':'16px'},'flowchart':{'nodeSpacing':50,'rankSpacing':55}}}%%
 flowchart TD
+  classDef process fill:#e6f4ff,stroke:#299dd8,stroke-width:1.5px,color:#0b4a6f;
+  classDef decision fill:#fff7e6,stroke:#fa8c16,stroke-width:1.5px,color:#873800;
+  classDef good fill:#f6ffed,stroke:#54ab78,stroke-width:1.5px,color:#135200;
+  classDef bad fill:#fff1f0,stroke:#ff4d4f,stroke-width:1.5px,color:#a8071a;
+
   A["Tab Bảng công → nút Đề xuất"] --> B["Chọn loại: Chấm công bù / WFH"]
   B --> C["Chọn ngày + lý do (WFH: thêm địa điểm)"]
   C --> D["Gửi → Attendance Request (chờ duyệt)"]
@@ -27,6 +33,11 @@ flowchart TD
   E -- "Từ chối" --> X["Trạng thái: Từ chối"]
   E -- "Duyệt" --> F["Submit Attendance Request"]
   F --> G["HRMS tự tạo Attendance: Present / WFH / Half Day"]
+
+  class A,B,C,D,F process
+  class E decision
+  class G good
+  class X bad
 ```
 
 ---

@@ -17,7 +17,13 @@ Tài liệu đầu-đến-cuối: cài app, setup văn phòng, duyệt phone nh�
 ## Sơ đồ quy trình chấm công
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontSize':'16px'},'flowchart':{'nodeSpacing':50,'rankSpacing':55}}}%%
 flowchart TD
+  classDef process fill:#e6f4ff,stroke:#299dd8,stroke-width:1.5px,color:#0b4a6f;
+  classDef decision fill:#fff7e6,stroke:#fa8c16,stroke-width:1.5px,color:#873800;
+  classDef good fill:#f6ffed,stroke:#54ab78,stroke-width:1.5px,color:#135200;
+  classDef bad fill:#fff1f0,stroke:#ff4d4f,stroke-width:1.5px,color:#a8071a;
+
   A["Mở app → tab Chấm công"] --> B{"Thiết bị đã đăng ký + HR duyệt?"}
   B -- "Chưa" --> R["Đăng ký thiết bị → chờ HR duyệt"]
   B -- "Rồi" --> C["Bấm nút Chấm công"]
@@ -32,6 +38,11 @@ flowchart TD
   I --> K["Tạo Employee Checkin"]
   J --> K
   K --> L["Process Auto Attendance tính công cuối ngày"]
+
+  class A,C,D,F,G,I,J,K process
+  class B,E,H decision
+  class L good
+  class R bad
 ```
 
 ---
