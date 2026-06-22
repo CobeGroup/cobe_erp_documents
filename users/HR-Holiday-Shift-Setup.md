@@ -5,9 +5,18 @@ parent: Chấm công & HR
 nav_order: 3
 ---
 
-# Holiday & Shift Type — Cấu hình HRMS chuẩn
+# Holiday & Shift Type — Cấu hình chấm công (presence-based)
 
-> Đối tượng: **HR Manager**, **System Manager**. Cobe **không code** 2 phần này — chỉ cấu hình HRMS chuẩn. Doc dùng cho onboarding HR mới.
+> Đối tượng: **HR Manager**, **System Manager**. Doc dùng cho onboarding HR mới.
+
+> **Mô hình presence-based (quan trọng):** Cobe **KHÔNG mã hoá ngày nghỉ tuần** vào
+> Holiday List (cuối tuần tùy biến theo từng người/phòng). **Holiday List chỉ chứa
+> ngày lễ.** Dùng **Attendance để ghi nhận ngày ĐI LÀM** (Present/Half tạo từ
+> check-in); ngày không có check-in để **trống = nghỉ**, KHÔNG bị chấm Vắng.
+>
+> Để làm được, Cobe override `Shift Type` (class `CobeShiftType`) **vô hiệu phần tự
+> chấm Vắng** của HRMS. Vắng thật (trốn làm, không xin phép) bắt bằng job "quên chấm
+> công" 21h + xử lý thủ công / Leave. Nửa ngày T7 tự ra theo ngưỡng half-day.
 
 ## Sơ đồ quy trình setup
 
@@ -17,12 +26,11 @@ flowchart TD
   classDef process fill:#e6f4ff,stroke:#299dd8,stroke-width:1.5px,color:#0b4a6f;
   classDef good fill:#f6ffed,stroke:#54ab78,stroke-width:1.5px,color:#135200;
 
-  A["Holiday List (năm + ngày nghỉ)"] --> B["Gán Company → Default Holiday List"]
-  C["Shift Type: giờ vào/ra + Holiday List"] --> D["Shift Assignment cho Employee"]
-  B --> E["Process Auto Attendance: dùng Shift + Holiday tính công"]
-  D --> E
+  A["Holiday List (CHỈ ngày lễ, không weekly-off)"] --> C["Shift Type: giờ vào/ra + Holiday List"]
+  C --> D["Shift Assignment cho Employee"]
+  D --> E["Process Auto Attendance (CobeShiftType):<br/>check-in → Present/Half; KHÔNG tự chấm Vắng"]
 
-  class A,B,C,D process
+  class A,C,D process
   class E good
 ```
 
@@ -43,41 +51,38 @@ Hệ thống chấm công Cobe **phụ thuộc** vào 2 master data chuẩn củ
 
 | Doctype HRMS | Vai trò trong Cobe |
 |---|---|
-| **Holiday List** | Xác định ngày lễ + ngày nghỉ hàng tuần. Auto-attendance bỏ qua không mark Absent. OT request auto-detect `day_type = Holiday` |
-| **Shift Type** | Định nghĩa ca làm việc (giờ start/end). Auto-attendance dùng để tính `working_hours`, late_entry, early_exit. `Attendance.before_save` của Cobe dùng để fill working_hours khi WFH/On Duty không có log |
+| **Holiday List** | **CHỈ ngày lễ** (không weekly-off). Auto-attendance bỏ qua không tính công ngày lễ. OT request auto-detect `day_type = Holiday` |
+| **Shift Type** | Định nghĩa ca làm việc (giờ start/end) + ngưỡng half-day (nửa ngày T7). Auto-attendance tính `working_hours`, late_entry, early_exit. Override `CobeShiftType` chặn tự chấm Vắng. `Attendance.before_save` của Cobe fill working_hours khi WFH/On Duty không có log |
 | **Shift Assignment** | Gán Employee + Shift + khoảng thời gian. Quyết định ngày nào NV có ca → notify quên check chỉ áp dụng cho ngày có Shift |
 
 ---
 
-## 2. Holiday List
+## 2. Holiday List (chỉ lễ — KHÔNG weekly-off)
+
+> ⚠️ **KHÔNG bấm Get Weekly Off Dates.** Mô hình presence-based không mã hoá nghỉ
+> tuần. Holiday List chỉ chứa **ngày lễ**. Chỉ cần **1 list duy nhất** dùng chung 3
+> công ty.
 
 ### Tạo Holiday List
 
 1. Desk → search "Holiday List" → New
 2. Điền:
-   - `Holiday List Name`: vd "Cobe 2026 — Office Vietnam"
+   - `Holiday List Name`: `Cobe 2026 — Lễ VN`
    - `From Date / To Date`: 2026-01-01 → 2026-12-31
-3. Bấm **Get Weekly Off Dates**:
-   - Chọn `Weekly Off = Sunday` (Chủ nhật)
-   - → Tự generate 52 records "Sunday" vào child table Holidays
-4. Add manual các ngày lễ Việt Nam:
-   - 01/01 Tết Dương lịch
-   - Tết Âm lịch (vd 17-23/02/2026)
-   - 30/04 Giải phóng + 01/05 Quốc tế Lao động
-   - 02/09 Quốc khánh
-   - ... (theo Luật LĐ + nội bộ Cobe)
-5. **Save**.
+3. Mục **Add to Holidays**: chọn `Country = Vietnam` → bấm **Get Local Holidays**
+   → tự thêm các ngày lễ VN 2026 (Tết 16–20/02, Giỗ Tổ 26–27/04, 30/04, 01/05,
+   01–02/09).
+4. **Save**.
 
-### Nhiều Holiday List cho từng nhóm
-
-Theo mindmap Cobe: KTV / Office có Holiday List khác nhau nếu cần.
-
-- KTV làm việc 6 ngày/tuần (chỉ nghỉ CN): tạo `Cobe 2026 — KTV` với `Weekly Off = Sunday`
-- Office làm việc 5 ngày/tuần (T7+CN): tạo `Cobe 2026 — Office` với `Weekly Off = Saturday, Sunday`. Frappe support multi-weekly-off qua: tạo 2 lần Get Weekly Off Dates với 2 weekday khác nhau
+> **Seed nhanh không cần bấm tay:** xem `scripts/setup_shifts.py` (chạy qua
+> `bench console`, local) — tạo sẵn list lễ + Shift Type. Trên cloud không shell:
+> tạo Holiday List bằng UI như trên + import Shift Type bằng CSV
+> (`scripts/shift_type_import.csv`).
 
 ### Set Default Holiday List
 
-Setup → Settings → **HR Settings** → `Default Holiday List`: chọn 1 cái phổ biến nhất. Nhân viên không có Holiday List trên hồ sơ sẽ fallback về cái này.
+Setup → Settings → **HR Settings** → `Default Holiday List` = `Cobe 2026 — Lễ VN`.
+Nhân viên không có Holiday List trên hồ sơ sẽ fallback về cái này.
 
 ---
 
@@ -96,9 +101,12 @@ Mỗi nhóm NV (KTV / Office / Tư vấn) cần 1 Shift Type.
    - `Enable Auto Attendance`: ✓
    - `Determine Check-in and Check-out`: chọn `Strictly based on Log Type in Employee Checkin` (vì PWA Cobe set `log_type` rõ ràng)
    - `Working Hours Calculation Based On`: **bắt buộc chọn `First Check-in and Last Check-out`** nếu Company bật lunch break auto-deduction (xem [HR Policy → Lunch Break](HR-Policy.html#33-lunch-break)). Combo `Every Valid` sẽ double-trừ break
-   - `Working Hours Threshold for Half Day`: 4 (giờ)
-   - `Working Hours Threshold for Absent`: 1 (giờ — quá ngắn = Absent)
-   - `Process Attendance After`: dd/mm/yyyy ngày bắt đầu auto-attendance
+   - `Working Hours Threshold for Half Day`: vd **6** (ca 8h–17h30) — ai làm < 6h
+     (vd **sáng T7 ~4h**) → tự thành **Half Day = 0.5 công**; ≥ 6h → Present
+   - `Working Hours Threshold for Absent`: **1** (chỉ áp cho ngày CÓ check-in quá
+     ngắn; ngày KHÔNG check-in **không** bị chấm Vắng nhờ override `CobeShiftType`)
+   - `Holiday List`: `Cobe 2026 — Lễ VN`
+   - `Process Attendance After`: ngày bắt đầu auto-attendance (vd 2026-01-01)
 4. Section **Late Entry / Early Exit** (optional):
    - `Enable Late Entry Marking`: ✓ nếu cần track đi muộn
    - `Late Entry Grace Period`: 10 (phút)
@@ -108,13 +116,28 @@ Mỗi nhóm NV (KTV / Office / Tư vấn) cần 1 Shift Type.
    - Để trống = dùng HR Policy của Company
 6. **Save**.
 
-### Mẫu Shift cho Cobe
+### Mẫu Shift cho Cobe (theo GIỜ)
 
-| Shift Type | Start | End | Use case |
-|---|---|---|---|
-| Office 8h-17h | 08:00 | 17:00 | Văn phòng Office |
-| KTV 8h-17h | 08:00 | 17:00 | KTV làm việc + có Service Appointment chính |
-| Tư vấn 9h-18h | 09:00 | 18:00 | Tư vấn / Sales |
+> Off-day không mã hoá nên **không tách ca theo phòng/chi nhánh** — chỉ theo giờ làm.
+> Nửa ngày T7 tự ra theo ngưỡng half-day, không cần ca riêng.
+
+| Shift Type | Start | End | Half-day < | Lunch | Use case |
+|---|---|---|---|---|---|
+| Văn phòng 8h–17h30 | 08:00 | 17:30 | 6h | 90' | Đa số VP (gồm Marketing, chi nhánh) |
+| Kế toán 8h–17h | 08:00 | 17:00 | 6h | 90' | Kế toán |
+| Migunlife 7h–17h | 07:00 | 17:00 | 5h | 60' | Migunlife |
+| Akanwa ca sáng 8h–14h | 08:00 | 14:00 | 3h | 0' | Akanwa (ca xoay) |
+| Akanwa ca chiều 14h–20h | 14:00 | 20:00 | 3h | 0' | Akanwa (ca xoay) |
+
+### Override chặn tự chấm Vắng (CobeShiftType)
+
+Code: `hr_for_cobegroup/overrides/shift_type.py` + `override_doctype_class` trong
+hooks. Override `mark_absent_for_dates_with_no_attendance` + `mark_absent_for_half_day_dates`
+thành **no-op** → auto attendance vẫn tạo Present/Half từ check-in nhưng **không tự
+chấm Vắng** ngày không có check-in.
+
+> ⚠️ **Thứ tự deploy:** phải deploy override **TRƯỚC** khi Shift Type bật auto
+> attendance chạy lần đầu, kẻo cuối tuần bị chấm Vắng oan.
 
 ---
 
@@ -145,7 +168,7 @@ Mỗi Employee cần:
 1. Mở Employee record
 2. Tab **Attendance & Leave Details**:
    - `Default Shift`: chọn Shift Type chính (HRMS fallback khi không có Shift Assignment cụ thể)
-   - `Holiday List`: chọn Holiday List phù hợp (KTV / Office)
+   - `Holiday List`: `Cobe 2026 — Lễ VN` (dùng chung, vì chỉ chứa ngày lễ)
 3. **Save**.
 
 ---
@@ -169,7 +192,13 @@ Sau khi cấu hình 2 phần trên, hệ thống Cobe hoạt động:
 
 1. NV submit Leave Application (workflow 2-step Cobe — xem [HR-Leave-Setup](HR-Leave-Setup.html))
 2. Sau approve, HRMS tự tạo Attendance status "On Leave" cho khoảng ngày + skip working_hours
-3. Holiday List ngày lễ → HRMS không mark Absent
+3. Holiday List ngày lễ → HRMS không tạo công ngày lễ
+
+### Vắng (Absent) — KHÔNG tự chấm
+
+Mô hình presence-based: ngày không có check-in **để trống = nghỉ** (cuối tuần tùy
+biến), **không** bị chấm Vắng (nhờ override `CobeShiftType`). Bảng công tháng chỉ có
+Present / Half Day / On Leave. Vắng thật bắt qua job "quên chấm công" + xử lý thủ công.
 
 ### Khi notify quên check (job 21:00)
 
@@ -177,7 +206,7 @@ Sau khi cấu hình 2 phần trên, hệ thống Cobe hoạt động:
 2. Không có Employee Checkin nào → notify "Quên chấm công"
 3. Có IN nhưng không có OUT → notify "Quên check-out"
 
-→ Bắt buộc Shift Assignment để NV được vào danh sách quét. NV không có Shift Assignment sẽ bị bỏ qua (không notify, nhưng có thể bị mark Absent nếu Process Auto Attendance config thế).
+→ Bắt buộc Shift Assignment để NV được vào danh sách quét. NV không có Shift Assignment sẽ bị bỏ qua.
 
 ---
 

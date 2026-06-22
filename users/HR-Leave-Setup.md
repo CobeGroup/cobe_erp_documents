@@ -11,7 +11,7 @@ nav_order: 7
 
 Cobe dùng cơ chế phép chuẩn HRMS, gồm 2 phần TÁCH BIỆT:
 1. **Cấp quỹ phép năm (Leave Allocation)** — cấp số dư phép cho NV. Cobe dùng **HRMS Earned Leave native**: Leave Type bật `is_earned_leave` + Leave Policy Assignment → hệ thống tự cộng số dư cuối mỗi kỳ theo lịch, **KHÔNG qua duyệt**, không tạo "leave nháp".
-2. **Đơn xin nghỉ (Leave Application)** — NV xin nghỉ, trừ vào số dư. Chạy **Workflow 2 bước**: Manager → HR Manager (Frappe Workflow fixture).
+2. **Đơn xin nghỉ (Leave Application)** — NV xin nghỉ, trừ vào số dư. Chạy **Workflow 2 bước**: Manager → HR Manager (Frappe Workflow fixture). Mỗi cấp có thể **chuyển duyệt (forward)** ca khó sang người khác — xem [§3](#3-workflow-2-bước-manager--hr).
 
 > **Lưu ý quan trọng — phân biệt 2 khái niệm:**
 > - **Cấp quỹ phép (Earned Leave)** = cộng số dư, tự động theo lịch, **không có bước duyệt**.
@@ -54,14 +54,18 @@ flowchart TD
 
   A["Tab Nghỉ phép → nút +"] --> B["Chọn loại phép + ngày + lý do"]
   B --> C["Gửi → Leave Application (Pending Manager)"]
-  C --> D{"Manager duyệt?"}
+  C --> D{"Manager xử lý?"}
   D -- "Từ chối" --> X["Rejected"]
+  D -- "Chuyển duyệt (ca khó)" --> D2["Giao người duyệt khác cùng phòng<br/>(người cũ mất quyền)"]
+  D2 --> D
   D -- "Duyệt" --> E["Manager Approved"]
-  E --> F{"HR duyệt?"}
+  E --> F{"HR xử lý?"}
   F -- "Từ chối" --> X
+  F -- "Chuyển duyệt (ca khó)" --> F2["Giao HR khác cùng cty<br/>(người cũ mất quyền)"]
+  F2 --> F
   F -- "Duyệt" --> G["Submitted → trừ số dư phép"]
 
-  class A,B,C,E process
+  class A,B,C,E,D2,F2 process
   class D,F decision
   class G good
   class X bad
@@ -222,6 +226,23 @@ Workflow fixture định nghĩa role được phép action:
 ### `allow_self_approval` ở bước HR
 
 HR Manager có thể tự duyệt đơn của chính mình (`allow_self_approval = 1`) — vì HR Manager có thẩm quyền cuối. Manager (Leave Approver) **không** được self-approve (`allow_self_approval = 0`).
+
+### Chuyển duyệt (Forward) — ca khó
+
+Thực tế mỗi cấp duyệt có thể có **người thứ 2**: người duyệt đầu thường tự quyết, gặp **ca khó** thì **chuyển** sang người khác duyệt. Áp dụng cho **cả cấp Manager lẫn cấp HR**.
+
+**Cách dùng (trên PWA, tab "Cần duyệt"):**
+1. Mở đơn → bấm **Chuyển duyệt**.
+2. Chọn người nhận + nhập lý do (tuỳ chọn) → **Chuyển**.
+3. Đơn rời inbox của người chuyển, hiện trong inbox người nhận với nhãn tím **"Chuyển từ X"**.
+
+**Nguyên tắc:**
+- **Chuyển hẳn quyền**: sau khi chuyển, **người cũ chỉ còn xem** (không Approve/Reject được); chỉ người nhận quyết. (System Manager là cửa thoát hiểm admin.)
+- **Danh sách người nhận**: cấp Manager → user có role *Leave Approver* **cùng phòng** (fallback cùng cty nếu NV không có phòng); cấp HR → role *HR Manager* **cùng công ty**.
+- **Qua cấp là reset**: khi Manager duyệt xong (lên cấp HR), chỉ định "chuyển" của cấp Manager được xoá → cấp HR bắt đầu lại với người HR mặc định.
+- **Thông báo**: người nhận được Assignment (ToDo) + push notification.
+
+**Kỹ thuật:** không thêm state workflow — "chuyển" chỉ set field `custom_forwarded_to` trên đơn để đổi người duyệt của cấp hiện tại. Inbox & quyền duyệt (`api/approval.py`) ưu tiên `custom_forwarded_to` nếu có, ngược lại dùng `Employee.leave_approver` (Manager) / role HR (HR). Lịch sử lưu ở `custom_forward_log`.
 
 ---
 

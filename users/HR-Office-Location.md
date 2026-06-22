@@ -30,6 +30,21 @@ nav_order: 3
 - URL: `/app/hr-office-location`
 - Tạo mới: `/app/hr-office-location/new`
 
+### Seed hàng loạt từ Cobe Branch Location
+
+Các văn phòng đã có sẵn ở **Cobe Branch Location** (toạ độ + công ty). Seed sang
+HR Office Location bằng script idempotent:
+
+- **Local / có shell:** `scripts/seed_office_locations.py` (chạy qua `bench console`).
+  Map `location_name → office_label` (tiền tố "VP - "), `latitude/longitude` (strip
+  + float), `company`, `is_active=1`, bán kính mặc định 100m, ghi nguồn CBL vào notes.
+  Bỏ qua bản ghi thiếu toạ độ + bản đã tồn tại (key = office_label).
+- **Cloud / không shell:** import `scripts/office_location_import.csv` qua **Data
+  Import** (Document Type = HR Office Location, Insert New). **Chạy đúng 1 lần** —
+  Data Import không chống trùng.
+
+> Bán kính `allowed_radius_m` mặc định 100m — tinh chỉnh từng văn phòng cho phù hợp.
+
 ---
 
 ## 2. Các field
