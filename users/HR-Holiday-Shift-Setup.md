@@ -120,11 +120,18 @@ Mỗi nhóm NV (KTV / Office / Tư vấn) cần 1 Shift Type.
 
 > Off-day không mã hoá nên **không tách ca theo phòng/chi nhánh** — chỉ theo giờ làm.
 > Nửa ngày T7 tự ra theo ngưỡng half-day, không cần ca riêng.
+>
+> **Ca đặc biệt cần xử tay:**
+> - **Marketing "sáng T7 mặc định 0.5 công"** = được 0.5 công T7 **dù không đi làm** →
+>   presence-based không tạo công khi không check-in → đây là **luật lương riêng**,
+>   HR **cấp tay** (hoặc cần code riêng nếu muốn tự động). Không nhét vào Shift Type được.
+> - **SR tỉnh off T2** (Cần Thơ/VT/BD/ĐN, làm T3–CN): off T2 = ngày không check-in =
+>   tự động nghỉ, không cần ca/holiday riêng.
 
 | Shift Type | Start | End | Half-day < | Lunch | Use case |
 |---|---|---|---|---|---|
-| Văn phòng 8h–17h30 | 08:00 | 17:30 | 6h | 90' | Đa số VP (gồm Marketing, chi nhánh) |
-| Kế toán 8h–17h | 08:00 | 17:00 | 6h | 90' | Kế toán |
+| Văn phòng 8h–17h30 | 08:00 | 17:30 | 6h | 90' | Nhân sự, Bảo dưỡng, Marketing, Kho, Kỹ thuật, TGĐG/TGLT, Fujiiryoki, Team KD |
+| Kế toán 8h–17h | 08:00 | 17:00 | 6h | 60' | Kế toán |
 | Migunlife 7h–17h | 07:00 | 17:00 | 5h | 60' | Migunlife |
 | Akanwa ca sáng 8h–14h | 08:00 | 14:00 | 3h | 0' | Akanwa (ca xoay) |
 | Akanwa ca chiều 14h–20h | 14:00 | 20:00 | 3h | 0' | Akanwa (ca xoay) |
