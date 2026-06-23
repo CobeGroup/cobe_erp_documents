@@ -212,22 +212,26 @@ của người nhận → bấm nút **"Dò mã vùng VTP"** (nhóm nút *VTP*):
   `VTP Province ID / VTP District ID / VTP Wards ID`.
 - Kết quả **chỉnh sửa được**: cấp nào báo "chưa khớp" thì nhập ID tay rồi **Lưu**.
 
-### 4.3. Đẩy đơn bằng nút "Đẩy đơn sang ĐVVC"
+### 4.3. Tạo / gán đơn — menu **Actions**
 
-Sau khi DP Shipment đã **Submit**, trên form xuất hiện nút **"Đẩy đơn sang ĐVVC"** (góc trên phải):
+Sau khi DP Shipment **Submit** và **chưa có** External Shipment ID, trên form có menu **Actions** gồm 2 lựa chọn:
 
-1. Bấm nút → xác nhận.
-2. Hệ thống build payload từ vận đơn (người nhận + mã vùng, items, trọng lượng, COD, người gửi/dịch vụ)
-   → gọi VTP `/v2/order/createOrder`.
-3. VTP trả mã đơn → tự lưu vào **External Shipment ID** (+ phí, link tra cứu) và ghi 1 Comment.
+**a) "Đẩy đơn sang ĐVVC"** — tạo đơn thật qua API:
+1. Bấm → xác nhận.
+2. Hệ thống build payload (người nhận + mã vùng, items, trọng lượng, COD, người gửi/dịch vụ) → gọi VTP `/v2/order/createOrder`.
+3. VTP trả mã đơn → tự lưu **External Shipment ID** (+ phí, link tra cứu), set `Order Source = API`, ghi Comment.
 
-Đặc điểm:
-- **Idempotent:** nút **ẩn** khi vận đơn đã có `External Shipment ID` → không tạo trùng.
-- **Tách khỏi Submit:** lỗi API hiện rõ, vận đơn giữ nguyên, sửa rồi bấm lại được.
-- Thiếu dữ liệu (mã vùng / tên–SĐT người nhận / Extra Params) → báo lỗi cụ thể, **không** gửi request hỏng.
+**b) "Đã tạo đơn ở ngoài"** — gán mã đơn đã tạo nơi khác (cổng VTP / hệ thống khác):
+1. Bấm → nhập **ORDER_NUMBER**.
+2. Hệ thống lưu vào **External Shipment ID**, set `Order Source = External`, ghi Comment.
 
-> Sau bước này `External Shipment ID` = `ORDER_NUMBER` của VTP — chính là mắt xích để webhook khớp đơn
-> và cập nhật trạng thái (mục 5).
+**Chống tạo trùng (rất quan trọng):**
+- `External Shipment ID` là **nguồn sự thật duy nhất**: hễ đã có mã → **cả 2 nút biến mất**. Nên nếu tạo đơn ở cổng VTP thì hãy dùng (b) để nhập mã ngay → khoá luôn nút đẩy.
+- Nút (b) **chặn trùng mã**: nếu ORDER_NUMBER đã gán cho vận đơn khác → báo lỗi.
+- Nút (a) dùng **khoá hàng (claim)**: 2 người bấm cùng lúc thì chỉ 1 request đẩy, người kia bị chặn (`custom_carrier_push_status = Pushing`). Đẩy lỗi → trạng thái `Failed`, đẩy xong → `Pushed`.
+- Tách khỏi Submit: lỗi API hiện rõ, vận đơn giữ nguyên. Thiếu dữ liệu (mã vùng / tên–SĐT / Extra Params) → báo lỗi cụ thể, **không** gửi request hỏng.
+
+> Sau bước này `External Shipment ID` = `ORDER_NUMBER` của VTP — mắt xích để webhook khớp đơn và cập nhật trạng thái (mục 5).
 
 ### 4.4. (Nâng cao) Tạo đơn qua bench console
 
