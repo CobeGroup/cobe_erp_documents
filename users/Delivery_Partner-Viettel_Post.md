@@ -22,6 +22,36 @@ trạng thái đơn.
 
 ---
 
+## Tổng quan luồng
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontSize':'16px'},'flowchart':{'nodeSpacing':50,'rankSpacing':55}}}%%
+flowchart TD
+  classDef process fill:#e6f4ff,stroke:#299dd8,stroke-width:1.5px,color:#0b4a6f;
+  classDef decision fill:#fff7e6,stroke:#fa8c16,stroke-width:1.5px,color:#873800;
+  classDef good fill:#f6ffed,stroke:#54ab78,stroke-width:1.5px,color:#135200;
+  classDef bad fill:#fff1f0,stroke:#ff4d4f,stroke-width:1.5px,color:#a8071a;
+
+  A["Setup carrier VTP<br/>(setup_all_carriers --kwargs VTP)"] --> B["Điền Username/Password<br/>→ Test Credentials"]
+  B --> C{"Login VTP OK?"}
+  C -- "Thất bại" --> C1["Kiểm tra credentials / sandbox / bug /v2"]
+  C1 --> B
+  C -- "Thành công" --> D["Cấu hình Webhook trên cổng VTP<br/>Endpoint + Secret parameter"]
+  D --> E["Tạo DP Shipment<br/>(pickup · delivery · items · parcels)"]
+  E --> F["Submit → status = Submitted"]
+  F --> G["Bấm 'Đẩy đơn sang ĐVVC'<br/>→ VTP trả ORDER_NUMBER"]
+  G --> H["Lưu ORDER_NUMBER vào<br/>External Shipment ID"]
+  H --> I["VTP bắn Webhook theo hành trình"]
+  I --> J["Status + Tracking tự cập nhật"]
+
+  class A,B,D,E,F,G,H,I process
+  class C decision
+  class C1 bad
+  class J good
+```
+
+---
+
 ## 0. Yêu cầu trước khi bắt đầu
 
 - App `delivery_partner` đã cài trên site.
@@ -39,13 +69,64 @@ bench --site <site> execute delivery_partner.scripts.setup_all_carriers.setup \
   --kwargs '{"carriers": ["VTP"]}'
 ```
 
-Script tạo sẵn (idempotent — chạy lại không trùng):
+Script tạo sẵn (idempotent — chạy lại không trùng) cho **công ty mặc định** (Global Defaults):
 
 | Tạo ra | Tên | Ghi chú |
 |--------|-----|---------|
 | DP Partner | `Viettel Post` | Auth Token Exchange, handler VTP, 27 status mapping |
-| Warehouse ảo | Kho VTP | Kho trung chuyển trong ERPNext |
-| DP Partner Account | `Viettel Post Default` | Tài khoản kết nối mặc định |
+| Warehouse ảo | Kho Viettel Post - `<abbr>` | Kho trung chuyển trong ERPNext |
+| DP Partner Account | `Viettel Post Default` | Tài khoản kết nối mặc định (chưa có COD account) |
+
+> Script này **không tạo COD Receivable Account** — phần kế toán do app extension xử lý.
+> Xem mục 1.1 (loại tài khoản) và 1.2 (seed tự động).
+
+### 1.1. Loại Warehouse & COD Account phải dùng
+
+Trên **DP Partner Account** có 2 field gắn với 1 công ty cụ thể:
+
+| Field | Loại / account_type | Group (Balance Sheet) | Ghi chú |
+|---|---|---|---|
+| **Partner Warehouse** | Warehouse leaf (`Is Group = No`) | dưới kho gốc của công ty | kho ảo "hàng đang ở carrier"; mỗi công ty 1 kho |
+| → *Account* trong Warehouse | `Stock` | Assets → Stock Assets | để trống cũng được → dùng *Stock In Hand* mặc định của công ty |
+| **COD Receivable Account** | **`Receivable`** (bắt buộc) | Assets → Accounts Receivable | giữ tiền COD carrier thu hộ |
+
+**Vì sao COD bắt buộc `Receivable`:** app extension dùng nó làm `paid_from` trong Payment Entry kiểu
+**"Receive"** với `party = Customer`. ERPNext bắt buộc tài khoản party của lệnh "Receive" phải là
+`Receivable`, đưa loại khác sẽ báo lỗi *"not a valid Receivable account"*.
+
+> ⚠️ **Đích đến tiền COD (`paid_to`)** trong Payment Entry resolve theo: *SO Bank Account → account của
+> pickup warehouse → Company default cash account*, và **phải là Bank/Cash**. Nên đặt **Bank Account
+> trên Sales Order** hoặc đảm bảo **Company có Default Cash Account**. Đừng để rơi vào fallback "account
+> của warehouse" nếu account đó là `Stock` (sẽ lỗi vì Stock ≠ Bank/Cash).
+
+### 1.2. Seed tự động (khỏi nhập tay) — kể cả nhiều công ty
+
+App extension có script seed tạo sẵn **Warehouse ảo + COD Receivable Account + DP Partner Account đã
+link** cho 1 hoặc nhiều công ty (idempotent):
+
+```bash
+# Tất cả công ty, partner Viettel Post:
+bench --site <site> execute \
+  delivery_partner_extension_for_cobegroup.scripts.seed_accounts.seed
+
+# Chỉ vài công ty:
+bench --site <site> execute \
+  delivery_partner_extension_for_cobegroup.scripts.seed_accounts.seed \
+  --kwargs '{"partner": "Viettel Post", "companies": ["Công ty A", "Công ty B"]}'
+```
+
+Mỗi (carrier × công ty) script tạo: `Kho Viettel Post - <abbr>` (leaf), `COD Viettel Post - <abbr>`
+(account_type Receivable), và DP Partner Account đã gắn sẵn warehouse + cod_account. Với công ty mặc định,
+nó **tái dùng** account `Viettel Post Default` có sẵn và chỉ điền thêm `cod_account`.
+
+> Script **không seed credentials** (username/password là bí mật) — sau khi seed, vào từng DP Partner
+> Account điền credentials rồi Test (mục 2).
+
+### 1.3. Nhiều công ty — cần gì
+
+- **DP Partner** `Viettel Post`: **dùng chung 1 cái** cho mọi công ty (không nhân bản).
+- **DP Partner Account**: **mỗi công ty 1 cái** — vì `warehouse` + `cod_account` (và thường cả credentials/shop)
+  thuộc về 1 công ty. Khi tạo DP Shipment, **tự chọn đúng Partner Account** của công ty tương ứng.
 
 ---
 
@@ -108,38 +189,58 @@ Vào **DP Shipment → New**:
    điền **Pickup Date**.
 6. **Submit** → hệ thống kiểm tra (có parcel, có item, value > 0, items cùng 1 kho) → **status = `Submitted`**.
 
-### 4.2. Đẩy đơn sang Viettel Post & lấy mã vận đơn
+### 4.2. Cấu hình 1 lần để đẩy được đơn
 
-> **Quan trọng:** app `delivery_partner` đứng độc lập **không tự gọi API VTP khi Submit**. Submit chỉ
-> chuyển trạng thái nội bộ sang `Submitted`. Việc tạo đơn thật bên VTP và lấy `ORDER_NUMBER` được làm
-> qua API client (hoặc tích hợp/extension riêng).
+Submit chỉ chuyển trạng thái nội bộ; muốn **đẩy đơn sang VTP** (nút ở mục 4.3) cần cấu hình trước 2 thứ:
 
-Tạo đơn thật qua API VTP bằng client (ví dụ qua bench console — **sau khi đã fix bug `/v2` ở mục 2**):
+**a) Extra Params trên DP Partner Account** (người gửi + dịch vụ) — vào DP Partner Account, thêm các row
+ở bảng *Extra Parameters* (Send As = `Body`):
+
+| Param Key | Ý nghĩa | Ví dụ |
+|---|---|---|
+| `GROUPADDRESS_ID` | ID địa chỉ kho gửi (lấy từ tài khoản VTP) | `12345` |
+| `SENDER_FULLNAME` / `SENDER_PHONE` | Tên / SĐT người gửi | |
+| `SENDER_ADDRESS` | Địa chỉ gửi (chữ) | |
+| `SENDER_PROVINCE` / `SENDER_DISTRICT` / `SENDER_WARDS` | Mã vùng VTP của kho gửi (ID số) | |
+| `ORDER_SERVICE` | Mã dịch vụ VTP | `VCN` |
+| `ORDER_PAYMENT` | Hình thức thanh toán (mặc định `3`) | `3` |
+
+**b) Mã vùng VTP của người nhận** — VTP cần **ID số** tỉnh/huyện/xã, không nhận địa chỉ chữ. Mở **Address**
+của người nhận → bấm nút **"Dò mã vùng VTP"** (nhóm nút *VTP*):
+
+- Hệ thống tra danh mục VTP theo `state / city / county` của Address rồi **tự điền** 3 field
+  `VTP Province ID / VTP District ID / VTP Wards ID`.
+- Kết quả **chỉnh sửa được**: cấp nào báo "chưa khớp" thì nhập ID tay rồi **Lưu**.
+
+### 4.3. Đẩy đơn bằng nút "Đẩy đơn sang ĐVVC"
+
+Sau khi DP Shipment đã **Submit**, trên form xuất hiện nút **"Đẩy đơn sang ĐVVC"** (góc trên phải):
+
+1. Bấm nút → xác nhận.
+2. Hệ thống build payload từ vận đơn (người nhận + mã vùng, items, trọng lượng, COD, người gửi/dịch vụ)
+   → gọi VTP `/v2/order/createOrder`.
+3. VTP trả mã đơn → tự lưu vào **External Shipment ID** (+ phí, link tra cứu) và ghi 1 Comment.
+
+Đặc điểm:
+- **Idempotent:** nút **ẩn** khi vận đơn đã có `External Shipment ID` → không tạo trùng.
+- **Tách khỏi Submit:** lỗi API hiện rõ, vận đơn giữ nguyên, sửa rồi bấm lại được.
+- Thiếu dữ liệu (mã vùng / tên–SĐT người nhận / Extra Params) → báo lỗi cụ thể, **không** gửi request hỏng.
+
+> Sau bước này `External Shipment ID` = `ORDER_NUMBER` của VTP — chính là mắt xích để webhook khớp đơn
+> và cập nhật trạng thái (mục 5).
+
+### 4.4. (Nâng cao) Tạo đơn qua bench console
+
+Khi cần thao tác hàng loạt / debug:
 
 ```python
 from delivery_partner.api_client.viettelpost import ViettelpostClient
-
 c = ViettelpostClient("Viettel Post Default")
-resp = c.create_shipment({
-    # payload theo spec /v2/order/createOrder của VTP
-    # (ORDER_NUMBER, danh sách sản phẩm, kho gửi, người nhận, COD, ...)
-})
-order_number = resp["data"]["ORDER_NUMBER"]
+resp = c.create_order_for_shipment(frappe.get_doc("DP Shipment", "SHIP-DP-2026-00001"))
+# resp = {"external_shipment_id", "fee", "tracking_url", "raw"}
 ```
 
-Sau đó **lưu `ORDER_NUMBER` của VTP vào field `External Shipment ID`** của DP Shipment (Tab Tracking).
-Đây là mắt xích để webhook tìm đúng đơn:
-
-```python
-import frappe
-frappe.db.set_value("DP Shipment", "SHIP-DP-2026-00001", "external_shipment_id", order_number)
-frappe.db.commit()
-```
-
-> Nếu `External Shipment ID` không khớp `ORDER_NUMBER` mà VTP gửi trong webhook → trạng thái sẽ
-> **không** cập nhật được.
-
-Các API VTP khác có sẵn trong client: `cancel_shipment`, `track_shipment`, `calculate_fee`,
+Các API VTP khác trong client: `cancel_shipment`, `track_shipment`, `calculate_fee`,
 `get_services`, `get_provinces`, `get_districts`, `get_wards`.
 
 ---
@@ -162,6 +263,30 @@ Mỗi webhook về còn ghi 1 **Comment** vào DP Shipment để truy vết lị
 
 VTP bắn webhook `{"ORDER_NUMBER": "...", "ORDER_STATUS": <số>, "NOTE": "..."}` → handler tra
 `ORDER_STATUS` trong **DP Status Mapping** của `Viettel Post` → ra event chuẩn hoá → đổi `Status`.
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontSize':'16px'},'flowchart':{'nodeSpacing':45,'rankSpacing':50}}}%%
+flowchart TD
+  classDef process fill:#e6f4ff,stroke:#299dd8,stroke-width:1.5px,color:#0b4a6f;
+  classDef good fill:#f6ffed,stroke:#54ab78,stroke-width:1.5px,color:#135200;
+  classDef bad fill:#fff1f0,stroke:#ff4d4f,stroke-width:1.5px,color:#a8071a;
+  classDef warn fill:#fff7e6,stroke:#fa8c16,stroke-width:1.5px,color:#873800;
+
+  S["Submitted"] --> P["Partner Received<br/>100–105"]
+  P --> T["In Transit<br/>200–202"]
+  T --> D["Delivered<br/>500 · 503 · 504 · 505"]
+  T --> F["Delivery Failed<br/>501 · 502 · 507 · 508 · 509"]
+  F --> R["Returning<br/>300 · 302"]
+  R --> RD["Returned<br/>301 · 550"]
+  T --> L["Lost<br/>106 · 107"]
+  P --> X["Cancelled<br/>-100 · -108 · -109"]
+  T --> X
+
+  class S,P,T process
+  class D good
+  class F,L,X bad
+  class R,RD warn
+```
 
 ### 5.3. Bảng map trạng thái VTP (27 dòng, có sẵn)
 
@@ -241,6 +366,12 @@ curl -s -X POST "https://<domain>/api/method/delivery_partner.api.webhook.handle
 - Kiểm tra Username/Password VTP đúng môi trường (sandbox vs production khớp với **Use Sandbox**).
 - ⚠️ Nếu lỗi kiểu URL `.../v2/v2/...` hoặc 404: dính bug lặp `/v2` ở mục 2 — cần dev sửa `base_url`.
 - Tài khoản dev (sandbox) phải được VTP kích hoạt trước.
+
+### Bấm "Đẩy đơn sang ĐVVC" báo lỗi
+- *Thiếu mã vùng VTP người nhận* → mở Address người nhận, bấm **"Dò mã vùng VTP"** hoặc nhập ID tay (mục 4.2b).
+- *Thiếu Tên/SĐT người nhận* → kiểm tra tab Delivery của vận đơn.
+- *VTP tạo đơn thất bại: ...* → đọc message VTP trả về (sai dịch vụ / GROUPADDRESS_ID / số dư...). Kiểm tra Extra Params (mục 4.2a).
+- Không thấy nút? → vận đơn phải **đã Submit** và **chưa** có External Shipment ID (nút ẩn để chống tạo trùng).
 
 ### Webhook không cập nhật trạng thái
 1. DP Partner `Viettel Post` có `is_active = 1`?
