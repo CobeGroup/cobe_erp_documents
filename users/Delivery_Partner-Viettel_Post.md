@@ -77,8 +77,7 @@ Script tạo sẵn (idempotent — chạy lại không trùng) cho **công ty m�
 | Warehouse ảo | Kho Viettel Post - `<abbr>` | Kho trung chuyển trong ERPNext |
 | DP Partner Account | `Viettel Post Default` | Tài khoản kết nối mặc định (chưa có COD account) |
 
-> Script này **không tạo COD Receivable Account** — phần kế toán do app extension xử lý.
-> Xem mục 1.1 (loại tài khoản) và 1.2 (seed tự động).
+> Script này **không tạo COD Receivable Account** — phần kế toán tạo tay theo loại ở mục 1.1.
 
 ### 1.1. Loại Warehouse & COD Account phải dùng
 
@@ -99,34 +98,15 @@ Trên **DP Partner Account** có 2 field gắn với 1 công ty cụ thể:
 > trên Sales Order** hoặc đảm bảo **Company có Default Cash Account**. Đừng để rơi vào fallback "account
 > của warehouse" nếu account đó là `Stock` (sẽ lỗi vì Stock ≠ Bank/Cash).
 
-### 1.2. Seed tự động (khỏi nhập tay) — kể cả nhiều công ty
-
-App extension có script seed tạo sẵn **Warehouse ảo + COD Receivable Account + DP Partner Account đã
-link** cho 1 hoặc nhiều công ty (idempotent):
-
-```bash
-# Tất cả công ty, partner Viettel Post:
-bench --site <site> execute \
-  delivery_partner_extension_for_cobegroup.scripts.seed_accounts.seed
-
-# Chỉ vài công ty:
-bench --site <site> execute \
-  delivery_partner_extension_for_cobegroup.scripts.seed_accounts.seed \
-  --kwargs '{"partner": "Viettel Post", "companies": ["Công ty A", "Công ty B"]}'
-```
-
-Mỗi (carrier × công ty) script tạo: `Kho Viettel Post - <abbr>` (leaf), `COD Viettel Post - <abbr>`
-(account_type Receivable), và DP Partner Account đã gắn sẵn warehouse + cod_account. Với công ty mặc định,
-nó **tái dùng** account `Viettel Post Default` có sẵn và chỉ điền thêm `cod_account`.
-
-> Script **không seed credentials** (username/password là bí mật) — sau khi seed, vào từng DP Partner
-> Account điền credentials rồi Test (mục 2).
-
-### 1.3. Nhiều công ty — cần gì
+### 1.2. Nhiều công ty — cần tạo gì
 
 - **DP Partner** `Viettel Post`: **dùng chung 1 cái** cho mọi công ty (không nhân bản).
-- **DP Partner Account**: **mỗi công ty 1 cái** — vì `warehouse` + `cod_account` (và thường cả credentials/shop)
-  thuộc về 1 công ty. Khi tạo DP Shipment, **tự chọn đúng Partner Account** của công ty tương ứng.
+- **DP Partner Account**: **mỗi công ty 1 cái** (tạo tay) — vì `warehouse` + `cod_account` (và thường cả
+  credentials/shop) thuộc về 1 công ty. Mỗi account cần:
+  - **Partner Warehouse**: kho ảo của công ty đó (Warehouse leaf — xem 1.1).
+  - **COD Receivable Account**: account `Receivable` của công ty đó (xem 1.1).
+  - Credentials VTP của công ty đó.
+- Khi tạo DP Shipment, **tự chọn đúng Partner Account** của công ty tương ứng.
 
 ---
 
