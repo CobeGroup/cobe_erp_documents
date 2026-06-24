@@ -2,7 +2,7 @@
 title: "Chi phí (tạm ứng / hoàn ứng)"
 layout: default
 parent: Nhân viên
-grand_parent: Hướng dẫn sử dụng
+grand_parent: Chấm công & HR
 nav_order: 3
 ---
 

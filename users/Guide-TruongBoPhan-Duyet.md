@@ -2,7 +2,7 @@
 title: "Phê duyệt đề nghị (+ Chuyển duyệt)"
 layout: default
 parent: Trưởng Bộ Phận
-grand_parent: Hướng dẫn sử dụng
+grand_parent: Chấm công & HR
 nav_order: 1
 ---
 

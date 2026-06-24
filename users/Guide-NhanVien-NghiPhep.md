@@ -2,7 +2,7 @@
 title: "Xin nghỉ phép"
 layout: default
 parent: Nhân viên
-grand_parent: Hướng dẫn sử dụng
+grand_parent: Chấm công & HR
 nav_order: 2
 ---
 

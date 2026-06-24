@@ -1,7 +1,7 @@
 ---
 title: Nhân viên
 layout: default
-parent: Hướng dẫn sử dụng
+parent: Chấm công & HR
 nav_order: 1
 has_children: true
 ---

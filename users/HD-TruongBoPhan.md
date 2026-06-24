@@ -1,7 +1,7 @@
 ---
 title: Trưởng Bộ Phận
 layout: default
-parent: Hướng dẫn sử dụng
+parent: Chấm công & HR
 nav_order: 2
 has_children: true
 ---

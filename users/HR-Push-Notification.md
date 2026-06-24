@@ -1,7 +1,8 @@
 ---
 title: HR Push Notification
 layout: default
-parent: Tài liệu kỹ thuật
+grand_parent: Tài liệu kỹ thuật
+parent: Chấm công & HR (kỹ thuật)
 nav_order: 10
 ---
 
