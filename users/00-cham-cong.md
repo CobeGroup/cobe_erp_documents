@@ -41,6 +41,23 @@ Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nh
 - **HR Push Notification** — bật/cấu hình thông báo đẩy (FCM) cho My Workspace
 - **HR Wiki Setup** — tạo Frappe Wiki Space "my-workspace" làm hướng dẫn sử dụng PWA
 
+## Truy cập & cài đặt my-workspace (QR)
+
+Nhân viên mở my-workspace để **chấm công** bằng điện thoại tại:
+
+**`https://working.thegioidiengiai.com/my-workspace`**
+
+Quét mã QR dưới đây bằng **camera điện thoại** (hoặc dán link vào trình duyệt):
+
+<img src="images/qr-my-workspace.png" alt="QR my-workspace chấm công" width="240">
+
+### Cài như ứng dụng (PWA) để dùng nhanh
+- **iPhone (Safari):** mở link → nút **Chia sẻ** (ô vuông mũi tên) → **Thêm vào MH chính** (Add to Home Screen).
+- **Android (Chrome):** mở link → menu **⋮** → **Cài đặt ứng dụng / Thêm vào màn hình chính**.
+- Sau khi cài, mở app **"TGDG - MyWorkspace"** từ màn hình chính như app thường.
+
+> Lần đầu mở trên 1 máy: app tự gửi **đăng ký thiết bị** → cần **HR duyệt** mới chấm công được (xem [HR Checkin Phone Registration](HR-Checkin-Phone-Registration.html)). Mỗi nhân viên dùng **1 thiết bị** đã duyệt.
+
 ## PWA `/my-workspace` — Cobe self-service
 
 PWA có sẵn các trang chính cho NV:
