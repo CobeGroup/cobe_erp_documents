@@ -70,8 +70,13 @@ Workflow rollout production an toàn xem [§2.1](#21-workflow-rollout-production
      bất ngờ.
 
 2. **Gán Loyalty Program cho từng Customer**.
-   - Cách 1: bulk-update field `Customer.loyalty_program` cho khách hiện có.
-   - Cách 2: set default qua Customer Group / Territory / 1 script import nhỏ.
+   - Cách 1 (khuyên dùng): mở form Loyalty Program → menu **Actions → Assign
+     to Customers** → mở page Loyalty Assignment Tool với filter + table chọn
+     khách. Chi tiết: [§2.2](#22-loyalty-assignment-tool--bulk-gán-program-cho-customer).
+   - Cách 2: Customer list → filter → tick → Actions → Edit → set field
+     `Loyalty Program` (Frappe built-in Bulk Edit, ~500 row/lần).
+   - Cách 3: Data Import → `Customer`, `Update Existing Records`, upload CSV
+     2 cột `ID` + `Loyalty Program`.
    - Customer không có Loyalty Program sẽ **bị skip không cộng điểm** (đây là
      thiết kế cố ý — không báo lỗi).
 
@@ -138,6 +143,65 @@ Bước EMERGENCY: phát hiện bug nghiêm trọng
         - Tắt Master `enabled` → toàn bộ award stop ngay lập tức
         - Hoặc tắt Sync Settings.enabled → ngắt outbound (giữ award local)
 ```
+
+---
+
+## 2.2. Loyalty Assignment Tool — bulk gán program cho Customer
+
+UX kiểu Shift Assignment Tool: filter + bảng khách bên dưới, tick chọn, gán
+một lượt.
+
+**Mở tool**: Form **Loyalty Program** đang xem → menu **Actions → Assign to
+Customers** (chỉ hiện cho System Manager + Sales Manager).
+
+Hoặc vào trực tiếp `/app/loyalty-assignment-tool` rồi chọn program ở field
+*Target Program*.
+
+### Bố cục
+
+- **Bên trái — Target Program**: program sẽ được gán (đã preselect nếu mở từ
+  form Loyalty Program).
+- **Bên trái — Filters**:
+  - `Chỉ Customer chưa có Program` (Check, default ✓) — an toàn cho lần seed
+    đầu. Tắt nếu muốn ghi đè program cũ.
+  - `Tìm (tên / SĐT / email / ID)` — search text.
+  - `Customer Group`, `Territory`, `Default Company`, `Customer Type`,
+    `Sales Partner`, `Industry` — filter advanced. Bộ lọc auto reload sau
+    400ms khi đổi giá trị.
+- **Bên phải — Customer table**: hiển thị danh sách khớp, cột Current Program
+  được highlight:
+  - `—` (xám) = chưa có
+  - `✓ <tên>` (xanh) = đã ở program đích → bị skip
+  - `⚠ <tên>` (cam) = đang ở program khác → skip mặc định trừ khi bật Override
+- **Selection controls**:
+  - `Select All on Page` — tick toàn bộ trang hiện tại
+  - `Select All Matching` — fetch full list (qua API, có confirm nếu > 2000)
+  - `Clear Selection` — bỏ chọn
+
+### Apply
+
+Dưới bảng có:
+- `Override customer đã ở program khác` (Check, default ✗) — bật khi cần ghi
+  đè.
+- Button **Assign to Selected** → confirm → POST → modal kết quả:
+
+  | Counter | Ý nghĩa |
+  |---|---|
+  | Updated | Số customer đã gán thành công |
+  | Skipped (đã ở program đích) | Customer đã ở `loyalty_program = target` |
+  | Skipped (program khác, override OFF) | Customer đang ở program khác và mày không bật override |
+  | Not found | Tên customer không còn trong DB (hiếm — race condition) |
+
+### Lưu ý
+
+- Backend (`loyalty/api/assignment_tool.py`) cũng check role — không bypass
+  được qua REST trực tiếp.
+- `frappe.db.set_value(... update_modified=True)` → có cập nhật `modified` +
+  `modified_by` để audit.
+- Tool **KHÔNG** tạo Loyalty Point Entry — chỉ set field `loyalty_program`.
+  Điểm sẽ tự cộng khi customer có giao dịch tiếp theo (xem §3a/3b).
+- Để seed luôn điểm khởi tạo (đẩy customer lên tier ngay), dùng §3g Set VIP
+  Tier sau khi gán program.
 
 ---
 
@@ -386,7 +450,8 @@ custom_for_cobegroup/custom_for_cobegroup/custom_for_cobegroup/
 │   ├── cobe_loyalty_sync_endpoint/             # Child table (endpoint 3rd party per company)
 │   └── cobe_loyalty_event/                     # Queue 1 record / 1 event outbound
 ├── page/
-│   └── loyalty_migration/                      # Page admin để chạy migration
+│   ├── loyalty_migration/                      # Page admin để chạy migration
+│   └── loyalty_assignment_tool/                # Page bulk gán program cho Customer
 └── loyalty/
     ├── sales_invoice_handlers.py               # hook SI before_submit/on_submit/on_cancel
     ├── emitter.py                              # hook LPE.on_submit → tạo COBE Loyalty Event
@@ -398,7 +463,8 @@ custom_for_cobegroup/custom_for_cobegroup/custom_for_cobegroup/
         ├── backfill_si.py                      # dry_run / apply / reset
         ├── backfill_referral.py                # dry_run / apply / reset
         ├── seed_vip_csv.py                     # run (upload CSV)
-        └── vip_tier.py                         # get_tier_options + seed_vip_tier (button trên Customer)
+        ├── vip_tier.py                         # get_tier_options + seed_vip_tier (button trên Customer)
+        └── assignment_tool.py                  # get_customers + bulk_assign (page Loyalty Assignment Tool)
 ```
 
 Đăng ký hook: `hooks.py` → `doc_events["Sales Invoice"]`.
