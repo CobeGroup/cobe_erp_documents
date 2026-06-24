@@ -1,7 +1,7 @@
 ---
 title: Leave (Phép) — Setup & Workflow
 layout: default
-parent: Chấm công & HR
+parent: Tài liệu kỹ thuật
 nav_order: 7
 ---
 

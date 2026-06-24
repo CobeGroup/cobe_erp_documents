@@ -1,7 +1,7 @@
 ---
 title: Holiday & Shift Setup
 layout: default
-parent: Chấm công & HR
+parent: Tài liệu kỹ thuật
 nav_order: 3
 ---
 

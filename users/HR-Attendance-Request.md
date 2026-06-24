@@ -1,7 +1,7 @@
 ---
 title: Attendance Request (Xin chấm công bù / On Duty)
 layout: default
-parent: Chấm công & HR
+parent: Tài liệu kỹ thuật
 nav_order: 4
 ---
 

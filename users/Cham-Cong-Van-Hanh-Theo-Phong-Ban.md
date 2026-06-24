@@ -1,7 +1,7 @@
 ---
 title: Ví dụ — Vận hành theo phòng ban (Sales / KTV)
 layout: default
-parent: Chấm công & HR
+parent: Tài liệu kỹ thuật
 nav_order: 9
 ---
 

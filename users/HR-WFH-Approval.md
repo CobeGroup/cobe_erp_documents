@@ -1,7 +1,7 @@
 ---
 title: HR WFH Approval
 layout: default
-parent: Chấm công & HR
+parent: Tài liệu kỹ thuật
 nav_order: 5
 ---
 

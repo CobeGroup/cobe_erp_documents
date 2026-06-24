@@ -1,0 +1,7 @@
+# TTS voice model — nặng (~63MB); edge-tts (giọng đọc) không cần file model này
+_tools/tts/
+
+# Preview tạm (local only)
+users/_preview*.html
+users/_idx.html
+users/g_*.html

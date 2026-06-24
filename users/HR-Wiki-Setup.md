@@ -1,7 +1,7 @@
 ---
 title: Wiki "Hướng dẫn sử dụng" cho my-workspace
 layout: default
-parent: Chấm công & HR
+parent: Tài liệu kỹ thuật
 nav_order: 8
 ---
 

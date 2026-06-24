@@ -1,7 +1,7 @@
 ---
 title: HR Checkin Phone Registration
 layout: default
-parent: Chấm công & HR
+parent: Tài liệu kỹ thuật
 nav_order: 4
 ---
 

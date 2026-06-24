@@ -1,13 +1,15 @@
 ---
-title: Chấm công & HR
+title: Tài liệu kỹ thuật
 layout: default
-nav_order: 5
+nav_order: 2
 has_children: true
 ---
 
-# Chấm công & HR
+# 🔧 Tài liệu kỹ thuật — Chấm công & HR
 
-Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nhân viên. Không phụ thuộc thiết bị phần cứng (ESP32, vân tay, máy chấm công vật lý). Chống cheat đa lớp qua GPS + device fingerprint always-on; thêm WiFi BSSID, WebRTC local IP, selfie audit, face match, WFH approval, same-office check-out enforcement — toàn bộ optional, bật/tắt qua feature flag per-Company.
+> Tài liệu **chi tiết kỹ thuật** cho HR / System Manager (cấu hình, field, workflow, kiến trúc). Người dùng cuối xem **[Hướng dẫn sử dụng](HD-Index.html)**.
+
+Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nhân viên. Không phụ thuộc thiết bị phần cứng. Nhiều lớp kiểm soát (GPS + device fingerprint, tuỳ chọn WiFi BSSID, WebRTC local IP, selfie, face match, WFH approval) — bật/tắt qua feature flag per-Company.
 
 ## Mô hình tổng quan
 
@@ -41,22 +43,7 @@ Hệ thống chấm công **phone-only** dùng PWA cài trên điện thoại nh
 - **HR Push Notification** — bật/cấu hình thông báo đẩy (FCM) cho My Workspace
 - **HR Wiki Setup** — tạo Frappe Wiki Space "my-workspace" làm hướng dẫn sử dụng PWA
 
-## Truy cập & cài đặt my-workspace (QR)
-
-Nhân viên mở my-workspace để **chấm công** bằng điện thoại tại:
-
-**`https://working.thegioidiengiai.com/my-workspace`**
-
-Quét mã QR dưới đây bằng **camera điện thoại** (hoặc dán link vào trình duyệt):
-
-<img src="images/qr-my-workspace.png" alt="QR my-workspace chấm công" width="240">
-
-### Cài như ứng dụng (PWA) để dùng nhanh
-- **iPhone (Safari):** mở link → nút **Chia sẻ** (ô vuông mũi tên) → **Thêm vào MH chính** (Add to Home Screen).
-- **Android (Chrome):** mở link → menu **⋮** → **Cài đặt ứng dụng / Thêm vào màn hình chính**.
-- Sau khi cài, mở app **"TGDG - MyWorkspace"** từ màn hình chính như app thường.
-
-> Lần đầu mở trên 1 máy: app tự gửi **đăng ký thiết bị** → cần **HR duyệt** mới chấm công được (xem [HR Checkin Phone Registration](HR-Checkin-Phone-Registration.html)). Mỗi nhân viên dùng **1 thiết bị** đã duyệt.
+> 📱 Cách nhân viên **cài app + quét QR** xem ở **[Hướng dẫn sử dụng → Nhân viên](HD-NhanVien.html)**.
 
 ## PWA `/my-workspace` — Cobe self-service
 

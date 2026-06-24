@@ -1,7 +1,7 @@
 ---
 title: Employee & Department (Approver) — Setup
 layout: default
-parent: Chấm công & HR
+parent: Tài liệu kỹ thuật
 nav_order: 2
 ---
 
