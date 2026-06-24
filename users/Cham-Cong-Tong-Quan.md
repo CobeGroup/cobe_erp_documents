@@ -53,9 +53,8 @@ flowchart TD
 2. [Cài đặt app](#2-cài-đặt-app)
 3. [Cấu hình lần đầu](#3-cấu-hình-lần-đầu)
 4. [Quy trình chấm công thường ngày](#4-quy-trình-chấm-công-thường-ngày)
-5. [Anti-cheat — các lớp bảo vệ](#5-anti-cheat--các-lớp-bảo-vệ)
-6. [Vận hành & audit](#6-vận-hành--audit)
-7. [Sự cố thường gặp](#7-sự-cố-thường-gặp)
+5. [Vận hành & audit](#5-vận-hành--audit)
+6. [Sự cố thường gặp](#6-sự-cố-thường-gặp)
 
 ---
 
@@ -106,11 +105,17 @@ PWA truy cập tại `https://working.thegioidiengiai.com/my-workspace`.
 
 ### 2.3. Nhân viên cài PWA trên phone
 
-1. Mở Safari (iOS) hoặc Chrome (Android), vào `https://working.thegioidiengiai.com/my-workspace`
+Quét QR (hoặc vào link) để mở my-workspace:
+
+<img src="images/qr-my-workspace.png" alt="QR my-workspace chấm công" width="220">
+
+`https://working.thegioidiengiai.com/my-workspace`
+
+1. Mở Safari (iOS) hoặc Chrome (Android), vào link trên (hoặc quét QR)
 2. Login bằng tài khoản Frappe của mình
 3. Trên iOS: tap nút **Share** → "Add to Home Screen"
 4. Trên Android: trình duyệt sẽ tự prompt "Install app"
-5. Sau khi cài, icon hiện như app thường
+5. Sau khi cài, icon **"TGDG - MyWorkspace"** hiện như app thường
 
 ---
 
@@ -152,7 +157,7 @@ Cấu hình **HRMS chuẩn** quyết định check-in có biến thành bản gh
 PWA serve tại **`/my-workspace`** — shell chung React Router, bottom nav thích ứng theo role/employee:
 - **Chấm công** — luôn có
 - **Nghỉ phép** — luôn có (đăng ký + theo dõi đơn phép)
-- **Cần duyệt** — chỉ hiện cho user có quyền trong **HR Approval Inbox Settings** (mặc định role *Leave Approver* / *HR Manager* / *System Manager*); là inbox duyệt đơn (Leave 2 bước + Attendance Request). Xem [§6.5](#65-tab-cần-duyệt--inbox-duyệt-đơn).
+- **Cần duyệt** — chỉ hiện cho user có quyền trong **HR Approval Inbox Settings** (mặc định role *Leave Approver* / *HR Manager* / *System Manager*); là inbox duyệt đơn (Leave 2 bước + Attendance Request). Xem [§5.5](#55-tab-cần-duyệt--inbox-duyệt-đơn).
 - **Chi phí** — luôn có (đề nghị tạm ứng / hoàn ứng / claim chi phí).
 - **FSM** — chỉ hiện cho nhân viên có `FS Service Resource` (KTV fsmnext); nhúng app `/technician` fullscreen.
 - **Thêm** — các mục phụ (hướng dẫn sử dụng, v.v.)
@@ -213,32 +218,13 @@ Trường hợp dùng: phone hỏng, mất internet, nhân viên quên.
 
 ---
 
-## 5. Anti-cheat — các lớp bảo vệ
+## 5. Vận hành & audit
 
-Tổ hợp các lớp tùy theo feature flag bật:
-
-| Lớp | Always-on | Strength | iOS support |
-|---|---|---|---|
-| GPS radius check | ✅ | ⭐⭐⭐ | ✅ |
-| Selfie audit (manual review) | ✅ | ⭐⭐⭐ | ✅ |
-| Device fingerprint binding | ✅ | ⭐⭐⭐ | ✅ |
-| Duplicate check (60s window) | ✅ | ⭐⭐ | ✅ |
-| WiFi BSSID check | Optional flag | ⭐⭐⭐⭐ | ❌ |
-| WebRTC local IP check | Optional flag | ⭐⭐⭐⭐ | ✅ |
-| Face match auto (phase 2) | Optional flag | ⭐⭐⭐⭐⭐ | ✅ |
-
-**Combo recommend cho production**:
-- Always-on (4 lớp cơ bản) + WebRTC check (iOS-friendly) + Face match → đạt 5-6 lớp.
-
----
-
-## 6. Vận hành & audit
-
-### 6.1. Báo cáo chấm công định kỳ
+### 5.1. Báo cáo chấm công định kỳ
 
 Dùng built-in **Monthly Attendance Sheet** của HRMS — đã hoạt động vì ta extend `Employee Checkin` chứ không thay thế.
 
-### 6.2. Audit selfie khi nghi cheat (chỉ khi `enable_selfie_capture` ON)
+### 5.2. Audit selfie khi nghi cheat (chỉ khi `enable_selfie_capture` ON)
 
 1. Mở danh sách `Employee Checkin` của nhân viên đó
 2. Click bản ghi → field `custom_selfie` có ảnh
@@ -246,7 +232,7 @@ Dùng built-in **Monthly Attendance Sheet** của HRMS — đã hoạt động v
 
 Nếu Policy chưa bật `enable_selfie_capture` → field này trống cho mọi record → không có cách audit selfie hồi tố. Cần bật flag trước khi cần audit.
 
-### 6.3. Audit GPS distance
+### 5.3. Audit GPS distance
 
 Mỗi bản ghi `Employee Checkin` lưu:
 - `custom_gps_latitude`, `custom_gps_longitude` — tọa độ phone lúc chấm
@@ -254,7 +240,7 @@ Mỗi bản ghi `Employee Checkin` lưu:
 
 Distance > 0 nghĩa là phone không sát tâm VP (bình thường < 100m).
 
-### 6.4. Audit device fingerprint
+### 5.4. Audit device fingerprint
 
 `custom_phone_device_fingerprint` là SHA256 hash. So sánh với `HR Checkin Phone Registration` (Active) của nhân viên đó:
 - Khớp → phone đúng đã duyệt
@@ -262,7 +248,7 @@ Distance > 0 nghĩa là phone không sát tâm VP (bình thường < 100m).
 
 Lưu ý device-aware: việc "đã đăng ký" tính theo đúng máy hiện tại. Nhân viên đổi máy phải đăng ký lại máy mới và HR deactivate máy cũ (chi tiết tại [HR Checkin Phone Registration](HR-Checkin-Phone-Registration.html)).
 
-### 6.5. Tab "Cần duyệt" — inbox duyệt đơn
+### 5.5. Tab "Cần duyệt" — inbox duyệt đơn
 
 Trên `/my-workspace`, user có quyền (theo **HR Approval Inbox Settings**, mặc định role *Leave Approver* / *HR Manager* / *System Manager*) thấy tab **Cần duyệt** — gom đơn đang chờ:
 - **Leave Application** (workflow `HR Leave Approval 2-Step`)
@@ -270,13 +256,13 @@ Trên `/my-workspace`, user có quyền (theo **HR Approval Inbox Settings**, m�
 
 Manager Approve/Reject ngay trên mobile. Manager chỉ thao tác được đơn mình là leave_approver (trừ khi có role HR Manager / System Manager override).
 
-### 6.6. Phép năm — Earned Leave
+### 5.6. Phép năm — Earned Leave
 
 Phép năm dùng cơ chế **Earned Leave native của HRMS** (Leave Type bật `is_earned_leave`), HRMS tự cộng dồn theo lịch. App **không** tự cấp phép theo số giờ chấm công nữa. Báo cáo/điều chỉnh số dư làm qua HRMS (`Leave Allocation`, `Leave Ledger Entry`).
 
 ---
 
-## 7. Sự cố thường gặp
+## 6. Sự cố thường gặp
 
 | Triệu chứng | Nguyên nhân / khắc phục |
 |---|---|
