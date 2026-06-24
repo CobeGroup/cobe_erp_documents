@@ -208,7 +208,7 @@ Sau khi DP Shipment **Submit** và **chưa có** External Shipment ID, trên for
 **Chống tạo trùng (rất quan trọng):**
 - `External Shipment ID` là **nguồn sự thật duy nhất**: hễ đã có mã → **cả 2 nút biến mất**. Nên nếu tạo đơn ở cổng VTP thì hãy dùng (b) để nhập mã ngay → khoá luôn nút đẩy.
 - Nút (b) **chặn trùng mã**: nếu ORDER_NUMBER đã gán cho vận đơn khác → báo lỗi.
-- Nút (a) dùng **khoá hàng (claim)**: 2 người bấm cùng lúc thì chỉ 1 request đẩy, người kia bị chặn (`custom_carrier_push_status = Pushing`). Đẩy lỗi → trạng thái `Failed`, đẩy xong → `Pushed`.
+- Nút (a) dùng **khoá hàng (claim)**: 2 người bấm cùng lúc thì chỉ 1 request đẩy, người kia bị chặn (`Carrier Push Status = Pushing`). Đẩy lỗi → trạng thái `Failed`, đẩy xong → `Pushed`.
 - Tách khỏi Submit: lỗi API hiện rõ, vận đơn giữ nguyên. Thiếu dữ liệu (mã vùng / tên–SĐT / Extra Params) → báo lỗi cụ thể, **không** gửi request hỏng.
 
 > Sau bước này `External Shipment ID` = `ORDER_NUMBER` của VTP — mắt xích để webhook khớp đơn và cập nhật trạng thái (mục 5).
