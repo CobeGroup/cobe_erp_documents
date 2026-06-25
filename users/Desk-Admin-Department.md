@@ -1,0 +1,54 @@
+---
+title: "Phòng ban & người duyệt (Department)"
+layout: default
+parent: Quản trị (cấu hình)
+grand_parent: Chấm công & HR
+nav_order: 6
+---
+
+# Phòng ban & người duyệt (Department)
+{: .no_toc }
+
+**Dành cho:** HR Manager / System Manager · **Doctype:** Department
+{: .fs-3 .text-grey-dk-000 }
+
+> Cơ cấu phòng ban quyết định **ai duyệt** nghỉ phép / chấm công bù. Đặt **người duyệt theo phòng** một lần → cả phòng dùng chung, khỏi set từng người.
+
+---
+
+## 1. Tạo / sửa Department
+
+1. Mở: Desk → Search **"Department"** · URL `/app/department`.
+2. Tạo phòng (Department Name) + chọn **Company**.
+3. (Tuỳ chọn) chọn **Parent Department** để dựng cây tổ chức.
+
+## 2. Gán người duyệt (Leave Approvers)
+
+1. Trong Department → mục **Approvers** → bảng **Leave Approver** → bấm **Add Row**.
+2. Bấm vào dòng vừa thêm để mở chi tiết (**Editing Row**) → ô **Approver**: gõ tên/email user Manager → chọn.
+3. Bấm **ESC** đóng dòng → **Save**. **Dòng đầu tiên** chính là người duyệt mặc định của phòng.
+
+![Thêm dòng Leave Approver — Editing Row (chọn user Manager)](images/desk/admin-dept-additem.png)
+
+→ Mọi Employee thuộc phòng này dùng người đó làm **Manager mặc định** (trừ khi Employee tự đặt `leave_approver` riêng để đè).
+
+![Department — bảng Leave Approver, dòng đầu là người duyệt mặc định](images/desk/admin-dept-form.png)
+
+> ⚠️ Hệ thống lấy **dòng ĐẦU TIÊN** trong Leave Approvers làm người duyệt mặc định. Các dòng sau chỉ là danh sách approver hợp lệ, không tự luân phiên.
+
+## 3. Liên quan tới forward (chuyển duyệt)
+
+Người được phép **nhận chuyển duyệt** một đơn được lọc theo **role + cùng phòng/công ty**. Dựng phòng ban đúng giúp danh sách chuyển duyệt gợi ý đúng người.
+
+---
+
+## ⚠️ Lỗi thường gặp
+
+| Hiện tượng | Cách xử |
+|---|---|
+| NV gửi đơn báo "Chưa có Manager duyệt phép" | Phòng chưa có Leave Approvers → thêm dòng đầu |
+| Đổi Manager phòng nhưng NV vẫn ra người cũ | NV bị override ở **Employee.leave_approver** |
+| Forward không thấy ai để chọn | Người nhận chưa đúng **role** hoặc khác phòng/công ty |
+
+## Liên quan
+- [Employee & Department (kỹ thuật)](HR-Employee-Department-Setup.html) · [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html)

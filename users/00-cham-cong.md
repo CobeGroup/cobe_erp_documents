@@ -11,9 +11,14 @@ has_children: true
 
 ## Bạn là ai?
 
+**Dùng app điện thoại (`/my-workspace`):**
 - 👤 **[Nhân viên](HD-NhanVien.html)** — cài app, chấm công, xin nghỉ phép, chi phí, thông báo. *(Kỹ thuật viên có thêm tab FSM)*
 - 👔 **[Trưởng Bộ Phận](HD-TruongBoPhan.html)** — phê duyệt đề nghị nghỉ phép / chấm công bù + chuyển duyệt.
 
+**Làm việc trên Desk (`/app`):**
+- 👩‍💼 **[HR (vận hành)](HD-HR.html)** — duyệt thiết bị, cấp phép & gán người duyệt, theo dõi/sửa chấm công, duyệt đơn bước HR.
+- 🛠️ **[Quản trị (cấu hình)](HD-QuanTri.html)** — dựng văn phòng, ca, ngày lễ, phòng ban, chính sách, hồ sơ nhân viên.
+
 ---
 
-> 🔧 Cần **cấu hình hệ thống** (HR Policy, ca làm việc, văn phòng, phân quyền, workflow…)? Xem **Tài liệu kỹ thuật → Chấm công & HR (kỹ thuật)**.
+> 🔧 Cần tra **chi tiết kỹ thuật** (field, doctype, kiến trúc, workflow)? Xem **Tài liệu kỹ thuật → Chấm công & HR (kỹ thuật)**.
