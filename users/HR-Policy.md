@@ -75,6 +75,9 @@ Kiểm tra WiFi BSSID — defend fake GPS trên Android.
 #### `enable_face_match` (Check, default: 0)
 Phase 2 — chưa implement.
 
+#### `enforce_device_signature` (Check, default: 0)
+**Ép chữ ký thiết bị cứng.** Bật → MỌI check-in phải ký challenge hợp lệ; thiết bị legacy chưa có khóa (`public_key`) bị từ chối (`DEVICE_KEY_REQUIRED`) → buộc đăng ký lại. Tắt = grandfather (legacy chấm bằng fingerprint). Chỉ bật khi gần như mọi đăng ký Active đã có key. Chi tiết: [HR Checkin Phone Registration §7](HR-Checkin-Phone-Registration.html#7-cơ-chế-device_id--ký-challenge).
+
 ### 3.2. Defaults
 
 #### `default_radius_m` (Int, default: 100)

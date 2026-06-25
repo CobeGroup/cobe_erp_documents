@@ -266,13 +266,18 @@ máy ký(nonce) bằng private key --(signature)--> server: verify bằng public
 - User mở app bản mới + có **đúng 1 đăng ký Active chưa key** → `get_attendance_info` trả `device_needs_key=true` → PWA gọi `ensure_device_key` → server **gắn key vào đăng ký hiện có tại chỗ** (KHÔNG tạo bản mới, KHÔNG cần HR duyệt lại). Từ đó máy bắt đầu ký challenge.
 - Sau khi đã có key, **máy MỚI về sau vẫn phải qua HR duyệt** (không bypass vĩnh viễn).
 
-### 7.4 (Tùy chọn — sau) Ép chữ ký cứng
+### 7.4 Ép chữ ký cứng (`enforce_device_signature`)
 
-Khi gần như mọi đăng ký Active đã có `public_key`, bật flag **ép cứng**: bắt chữ ký cho **mọi** check-in, kể cả đăng ký chưa key → từ chối + buộc máy sót đăng ký lại → đóng nốt đường giả-bằng-fingerprint. Kiểm độ sẵn sàng:
+Checkbox **Enforce Device Signature** trên **HR Policy** (mỗi Company một flag, tab Attendance → Feature Flags). Mặc định **TẮT** (grandfather).
+
+- **Tắt** (mặc định): đăng ký chưa key vẫn chấm công bằng fingerprint; đăng ký có key thì bắt chữ ký.
+- **Bật**: bắt chữ ký cho **mọi** check-in. Đăng ký nào **chưa có `public_key`** → từ chối (`DEVICE_KEY_REQUIRED`, báo "đăng ký lại thiết bị") → buộc nốt máy sót lên key → đóng đường giả-bằng-fingerprint.
+
+**Khi nào bật:** sau khi theo dõi gần như mọi đăng ký Active đã có key. Kiểm độ sẵn sàng:
 ```
 chưa key = count(HR Checkin Phone Registration WHERE status='Active' AND docstatus=1 AND public_key IS NULL)
 ```
-Về gần 0 → bật. *(Chưa implement — thêm checkbox `enforce_device_signature` ở HR Policy khi cần.)*
+Về gần 0 → bật flag cho Company đó (các máy sót sẽ được nhắc đăng ký lại). Nhờ `ensure_device_key` tự nâng key lúc mở app, đa số máy đã có key trước khi bật nên ít bị chặn.
 
 ### 7.5 Field & endpoint liên quan
 
