@@ -11,7 +11,9 @@ nav_order: 4
 > Mỗi nhân viên cần được duyệt **1 thiết bị** (đúng máy đang dùng) trước khi có thể chấm công. Submittable doctype.
 > Tự động được tạo khi nhân viên mở PWA `/my-workspace` lần đầu trên một máy chưa đăng ký.
 >
-> **Device-aware**: việc "đã đăng ký" được tính theo **đúng máy hiện tại** (device fingerprint), không phải "nhân viên có máy nào đó đã duyệt". Đăng nhập trên máy mới chưa duyệt → bị đẩy sang trang đăng ký thiết bị, kể cả khi máy cũ vẫn Active.
+> **Định danh bằng khóa thiết bị (cập nhật 2026-06):** mỗi máy sinh **cặp khóa ECDSA P-256 non-extractable** trong trình duyệt (IndexedDB); `device_id` = SHA-256(public key) là **khóa ổn định** — thay cho `device_fingerprint` (băm user-agent) vốn dễ đổi khi trình duyệt cập nhật → trước đây gây "1 nhân viên nhiều device ID". Mỗi lần chấm công, máy **ký challenge** của server bằng private key → chống giả mạo & replay. Chi tiết [§7](#7-cơ-chế-device_id--ký-challenge).
+>
+> **Device-aware**: "đã đăng ký" tính theo **đúng máy hiện tại** (device_id, fallback fingerprint cho máy cũ), không phải "nhân viên có máy nào đó đã duyệt". Đăng nhập máy mới chưa duyệt → bị đẩy sang trang đăng ký, kể cả khi máy cũ vẫn Active.
 
 ---
 
@@ -30,8 +32,8 @@ flowchart TD
   C -- "Duyệt" --> D["Active + Submitted → chấm công được"]
   C -- "Từ chối / Hủy" --> E["Inactive → không chấm công được"]
   D --> F{"NV đổi máy mới?"}
-  F -- "Có" --> G["NV đăng ký máy mới"]
-  G --> H["HR hủy máy cũ (Inactive) + duyệt máy mới"]
+  F -- "Có" --> G["NV đăng ký máy mới (Draft)"]
+  G --> H["HR duyệt máy mới → TỰ thu hồi máy cũ"]
   F -- "Không" --> I["Tiếp tục chấm công trên máy hiện tại"]
 
   class A,B,G,H process
@@ -50,21 +52,22 @@ flowchart TD
 4. [Quy trình duyệt](#4-quy-trình-duyệt)
 5. [Đổi phone — re-register](#5-đổi-phone--re-register)
 6. [Audit khi nghi cheat](#6-audit-khi-nghi-cheat)
+7. [Cơ chế device_id + ký challenge](#7-cơ-chế-device_id--ký-challenge)
 
 ---
 
 ## 1. Tại sao cần
 
-Để **chống share tài khoản**. Khi 1 nhân viên đã đăng ký phone X → chỉ có phone X mới chấm công được. Nhân viên A login phone B → fingerprint khác → server reject.
+Để **chống share tài khoản + chấm công hộ**. Nhân viên đã đăng ký máy X → chỉ máy X mới chấm công được. Login máy khác → `device_id` khác → server reject. Quan trọng hơn: mỗi lần chấm công máy phải **ký challenge** bằng private key (không rời máy) → **không thể giả mạo** kể cả khi biết device_id.
 
-Mỗi nhân viên có **1 thiết bị Active** tại một thời điểm (record `HR Checkin Phone Registration` đã submit, status=Active). Backend chặn không cho có 2 thiết bị Active cùng lúc.
+Mỗi nhân viên có **1 thiết bị Active** tại một thời điểm. Khi HR duyệt máy mới, hệ thống **tự thu hồi (cancel) máy Active cũ** (`on_submit`) → không cần thao tác tay, luôn đúng 1 active.
 
-**Device-aware (quan trọng)**: PWA gửi `device_fingerprint` của máy hiện tại (qua arg hoặc header `X-Device-Fingerprint`). API `get_phone_registration_status` / `get_attendance_info` tính `phone_registered` theo **đúng fingerprint của máy đang dùng**:
-- Máy hiện tại có record Active → `phone_registered = true` → chấm công được.
-- Máy hiện tại chưa có record (hoặc còn Draft) → `phone_registered = false` → PWA đẩy sang trang đăng ký thiết bị, **dù** nhân viên có một máy khác đã Active.
-- Khi máy hiện tại chưa duyệt nhưng nhân viên có một máy Active khác → API trả thêm cờ `other_active = true` để UI nhắc người dùng báo HR deactivate máy cũ trước.
+**Device-aware**: PWA gửi `device_id` (+ `device_fingerprint` để audit) qua arg hoặc header `X-Device-Id` / `X-Device-Fingerprint`. API `get_phone_registration_status` / `get_attendance_info` tính `phone_registered` theo **đúng máy hiện tại** — khớp `device_id` **HOẶC** fingerprint (fallback cho máy legacy chưa có key):
+- Máy hiện tại có record Active → `phone_registered = true`.
+- Chưa có (hoặc còn Draft) → `phone_registered = false` → PWA đẩy sang trang đăng ký, **dù** nhân viên có máy khác đang Active.
+- Có máy Active khác → cờ `other_active = true` để UI nhắc.
 
-(Trường hợp client không gửi được fingerprint → fallback kiểm tra "có máy nào Active không" để tránh khóa nhầm.)
+> ⚠️ Match theo "device_id HOẶC fingerprint" là cố ý: user **máy cũ (legacy, chưa key) mở app phiên bản mới** vẫn được nhận là "đã đăng ký" (khớp bằng fingerprint) → **không bị bắt đăng ký lại đồng loạt**. Xem [§7](#7-cơ-chế-device_id--ký-challenge).
 
 ---
 
@@ -88,16 +91,17 @@ Nhân viên đăng ký. Phải link đến `Employee` có `user_id` = user đang
 
 PWA tự fill khi nhân viên mở app lần đầu → user thường không tự sửa field này.
 
-### `device_fingerprint` (Data, **bắt buộc**, read-only)
+### `device_id` (Data, read-only) — **khóa chính nhận diện máy**
 
-SHA256 hex string (64 ký tự) sinh từ browser fingerprint:
-- userAgent
-- screen.width × height
-- screen.colorDepth
-- timezone
-- language
+SHA-256 hex của **public key** (SPKI) của cặp khóa thiết bị. **Ổn định** suốt vòng đời khóa (không đổi khi trình duyệt cập nhật). PWA tự sinh. Server dùng làm khóa get-or-create đăng ký (hết tình trạng tạo trùng do fingerprint đổi). *Trống ở các đăng ký legacy tạo trước 2026-06 → xem [§7](#7-cơ-chế-device_id--ký-challenge).*
 
-PWA tự sinh và gửi. HR Manager không nhập tay.
+### `public_key` (Code, read-only)
+
+Public key (SPKI base64) của thiết bị. Server lưu để **verify chữ ký challenge** khi chấm công. Private key tương ứng **non-extractable**, nằm trong IndexedDB của máy, không bao giờ rời máy. PWA tự sinh, HR không nhập tay.
+
+### `device_fingerprint` (Data, **bắt buộc**, read-only) — *audit*
+
+SHA256 hex (64 ký tự) băm từ thuộc tính trình duyệt (userAgent, screen, timezone, language). **Trước đây là khóa nhận diện** nhưng **không ổn định** (đổi theo bản trình duyệt / cửa mở app) → nay **giáng xuống chỉ để audit + fallback cho máy legacy**. Khóa chính là `device_id`.
 
 ### `user_agent` (Small Text, read-only)
 
@@ -132,8 +136,8 @@ Sau khi submit (docstatus=1), status mặc định = Active. Đổi sang Inactiv
 ### Bước 1: Nhân viên tạo (tự động)
 
 1. Nhân viên mở PWA `/my-workspace` trên máy chưa đăng ký → login Frappe
-2. PWA tự gửi `POST phone_device.register_phone` với `device_fingerprint` của máy đó
-3. Server tạo record `HR Checkin Phone Registration` ở **Draft** (docstatus=0; field `status` mặc định = Active nhưng record chỉ thực sự có hiệu lực sau khi Submit). Nếu đã có record cùng (employee + fingerprint) đang chờ/đã duyệt → không tạo trùng, trả `status=exists`.
+2. PWA sinh cặp khóa (nếu chưa có) → gửi `POST phone_device.register_phone` với `device_id` + `public_key` (+ `device_fingerprint` audit). Server kiểm `device_id == SHA-256(public_key)` (chống ghép bừa).
+3. Server **get-or-create theo `device_id`**: đã có đăng ký cùng device_id (chờ/đã duyệt) → trả `status=exists` (idempotent, **hết tạo trùng do race / fingerprint đổi**); chưa có → tạo record **Draft** (docstatus=0).
 4. PWA hiển thị "Thiết bị đang chờ HR duyệt"
 
 ### Bước 2: HR Manager duyệt
@@ -142,8 +146,8 @@ Sau khi submit (docstatus=1), status mặc định = Active. Đổi sang Inactiv
 2. Click record → kiểm tra:
    - `employee` đúng nhân viên không?
    - `user_agent` có vẻ là phone của nhân viên đó không (iPhone với username Apple, Samsung với username Samsung, etc.)?
-   - Trùng device_fingerprint với người khác không? (filter `device_fingerprint = <value>` xem có record khác — nếu có, **không duyệt** vì có thể share phone)
-3. Nếu OK → click **Submit** (status auto = Active)
+   - Trùng `device_id` (hoặc fingerprint) với nhân viên khác không? (filter xem có record của người khác cùng máy — nếu có, **không duyệt** vì có thể share phone)
+3. Nếu OK → click **Submit** (status auto = Active). Nếu nhân viên đã có máy Active cũ → hệ thống **tự thu hồi máy cũ** (không cần làm tay).
 4. Nếu không OK → click **Delete** (xóa record draft)
 
 ### Bước 3: Nhân viên check lại PWA
@@ -160,62 +164,44 @@ Khi nào dùng:
 - Đổi sang browser khác (Safari → Chrome → fingerprint khác)
 - Đăng ký nhầm thiết bị test
 
-### Quy trình chuẩn (recommend)
+### Quy trình chuẩn
 
-**Bước 1: Nhân viên đăng ký phone mới (làm trước, không cần đợi HR)**
+**Bước 1: Nhân viên đăng ký máy mới (làm trước, không cần đợi HR)**
 
-1. Mở PWA `/my-workspace` trên phone/browser mới → login Frappe
-2. PWA detect fingerprint khác record cũ → máy mới chưa duyệt → đẩy sang trang đăng ký thiết bị, **tự tạo record mới ở Draft**
-3. PWA hiển thị "Đang chờ HR duyệt". Vì nhân viên còn một máy cũ Active, API trả `other_active = true` → UI nhắc nhân viên báo HR deactivate máy cũ.
+1. Mở PWA `/my-workspace` trên máy/browser mới → login Frappe
+2. PWA detect `device_id` khác máy cũ → máy mới chưa duyệt → đẩy sang trang đăng ký, **tự tạo record mới ở Draft**
+3. PWA hiển thị "Đang chờ HR duyệt" (cờ `other_active` báo còn máy cũ Active).
 
-→ Lúc này tồn tại đồng thời:
-- 1 record CŨ docstatus=1, status=**Active**
-- 1 record MỚI docstatus=0 (Draft)
+→ Lúc này: 1 record CŨ Active (docstatus=1) + 1 record MỚI Draft (docstatus=0).
 
-**Bước 2: HR Manager Deactivate record cũ**
+**Bước 2: HR Manager Submit record mới → tự thu hồi máy cũ**
 
-1. Mở record CŨ
-2. Đổi field **Status** từ `Active` → `Inactive`
-3. **Save** (không cần Cancel — field `status` có `allow_on_submit=1` nên edit được dù đã submit)
+1. Mở record MỚI (Draft) → review `user_agent` có vẻ là máy của nhân viên đó không
+2. Click **Submit** → docstatus=1, status=Active
+3. `on_submit` **tự cancel máy Active cũ** (docstatus=2 + status=Inactive). **Không cần deactivate tay.**
 
-**Bước 3: HR Manager Submit record mới**
+**Bước 3: Nhân viên refresh PWA** → thấy Active → chấm công được.
 
-1. Mở record MỚI (Draft)
-2. Review user_agent xem có vẻ là phone của nhân viên đó không
-3. Click **Submit** → docstatus=1, status=Active
-
-**Bước 4: Nhân viên refresh PWA**
-
-PWA tự re-check status sau ~30s. Hoặc nhân viên F5 thủ công. Khi thấy Active → cho phép chấm công.
-
-### Nếu thử Submit record mới khi cũ chưa Inactive
-
-Server throw error:
-```
-Nhân viên HR-EMP-00001 đã có một phone đang Active (PHR-XXXXX).
-Vui lòng deactivate phone cũ trước khi duyệt phone mới.
-```
-
-→ Hệ thống **chặn rõ ràng** không cho có 2 phone Active cùng lúc. Phải làm Bước 2 trước Bước 3.
+> 💡 **Khác bản cũ:** trước đây HR phải tự đổi máy cũ sang Inactive trước, không thì bị chặn (throw "đã có phone Active"). Nay **duyệt máy mới = máy cũ tự thu hồi** — gọn hơn, luôn đảm bảo đúng 1 active/nhân viên.
 
 ### Khi nào Cancel thay vì Inactive?
 
 | Action | Khi nào dùng | Hệ quả |
 |---|---|---|
-| **Set status=Inactive** (recommend) | Đổi phone bình thường | docstatus vẫn = 1, vẫn xuất hiện trong list view với badge Inactive. Audit trail clean — biết phone này từng được duyệt rồi tắt. Có thể reactivate (đổi lại Active) nếu nhân viên dùng lại phone cũ. |
-| **Cancel** (docstatus=2) | Record bị nhập sai nghiêm trọng / cần xóa hẳn khỏi flow active | docstatus=2 = "Cancelled". Khó trace lại, không reactivate được. Chỉ dùng khi muốn xóa. |
+| **(Tự động) Cancel khi duyệt máy mới** | Nhân viên đổi máy | `on_submit` máy mới tự cancel máy cũ (docstatus=2 + Inactive). HR không phải làm gì. |
+| **Set status=Inactive** (tay) | **Tạm khóa** máy mà KHÔNG duyệt máy thay thế (vd NV nghỉ tạm) | docstatus vẫn = 1, badge Inactive. Reactivate lại được (đổi Active). |
+| **Cancel** (tay, docstatus=2) | Record nhập sai cần xóa hẳn | Khó trace lại, không reactivate. |
 
-**Khuyến nghị**: luôn dùng Inactive trừ trường hợp đặc biệt.
+**Khuyến nghị**: đổi máy thì cứ duyệt máy mới (tự thu hồi cũ); chỉ dùng Inactive tay khi muốn tạm khóa mà chưa có máy thay.
 
 ### Test flow này nhanh (dev)
 
 Tận dụng 2 browser khác nhau làm 2 phone:
 
 1. Chrome → `/my-workspace` → đăng ký → HR submit → chấm công OK
-2. Mở **Firefox** (hoặc Chrome Incognito) → `/my-workspace` → đăng ký lần 2 → Draft mới
-3. Desk: record Chrome → status=Inactive → Save
-4. Desk: record Firefox → Submit
-5. Firefox refresh → chấm công được
+2. Mở **Firefox** (hoặc Chrome Incognito) → `/my-workspace` → đăng ký lần 2 → Draft mới (device_id khác)
+3. Desk: record Firefox → **Submit** → record Chrome **tự bị cancel** (Inactive)
+4. Firefox refresh → chấm công được; Chrome → bị đẩy về trang đăng ký
 
 ---
 
@@ -232,8 +218,8 @@ Tận dụng 2 browser khác nhau làm 2 phone:
 
 ### Case 2: Nghi nhân viên share phone
 
-1. Filter danh sách `HR Checkin Phone Registration` theo `device_fingerprint` của nhân viên A
-2. Nếu thấy 2+ record với cùng fingerprint khác nhân viên → **đây là share phone** (hoặc anh em ruột chung phone)
+1. Filter danh sách `HR Checkin Phone Registration` theo `device_id` (hoặc `device_fingerprint`) của nhân viên A
+2. Nếu thấy 2+ record cùng `device_id`/fingerprint khác nhân viên → **đây là share phone** (hoặc anh em ruột chung phone)
 3. Điều tra:
    - Mở các `Employee Checkin` của 2 nhân viên đó
    - So sánh timestamp + GPS + selfie
@@ -245,6 +231,58 @@ Tận dụng 2 browser khác nhau làm 2 phone:
 2. Lấy `custom_phone_device_fingerprint` của bản ghi đó
 3. So sánh với `device_fingerprint` của `HR Checkin Phone Registration` của nhân viên đó
 4. Khác nhau = **chấm từ phone không phải phone đăng ký** → cheat hoặc sự cố kỹ thuật
+
+> 💡 Với cơ chế ký challenge ([§7](#7-cơ-chế-device_id--ký-challenge)), máy đã có key thì check-in giả/replay **bị chặn ngay tại server** (sai chữ ký → reject) → loại gian lận này gần như không còn với máy đã nâng key.
+
+---
+
+---
+
+## 7. Cơ chế device_id + ký challenge
+
+> Cập nhật 2026-06. Vá 2 điểm yếu của cơ chế fingerprint cũ: (1) `device_fingerprint` (băm user-agent) **không ổn định** — đổi khi trình duyệt cập nhật / mở qua Chrome vs in-app browser (Zalo, FB) → 1 nhân viên đẻ nhiều device ID + đăng ký trùng; (2) fingerprint **giả được** — gửi lại chuỗi là qua.
+
+### 7.1 Khóa thiết bị (device-bound key)
+
+- PWA sinh **cặp khóa ECDSA P-256 non-extractable** lưu trong **IndexedDB** (`mw-device`). Private key **không rút ra được** kể cả bằng JS → không clone sang máy khác.
+- `device_id` = **SHA-256(public key SPKI)** — ổn định suốt vòng đời khóa.
+- Public key (SPKI base64) lưu ở field `public_key`.
+- Khóa chỉ mất khi user **xóa dữ liệu site / chế độ ẩn danh** → sinh khóa mới = thiết bị mới, cần HR duyệt (hiếm).
+
+### 7.2 Ký challenge khi chấm công (chống giả & replay)
+
+```
+máy --(xin challenge: get_checkin_challenge)--> server --(nonce ngẫu nhiên)--> máy
+máy ký(nonce) bằng private key --(signature)--> server: verify bằng public_key đã lưu
+```
+
+- Nonce **dùng-một-lần**, hết hạn ~120s (cache). Dùng xong huỷ → chữ ký cũ vô dụng (**chống replay**).
+- `checkin` / `checkin_wfh` → `_require_registered_phone`: tìm đăng ký Active theo `device_id` (fallback fingerprint); nếu đăng ký **có `public_key`** → **bắt buộc** chữ ký hợp lệ mới cho chấm công.
+- Biết `device_id` mà không có private key → **không ký được** → bị chặn. (TLS bảo vệ chữ ký trên đường truyền; nonce one-time chặn replay.)
+
+### 7.3 Grandfather + tự nâng cấp fleet legacy (KHÔNG bắt đăng ký lại)
+
+- Đăng ký **legacy** (trước 2026-06, chưa `public_key`) vẫn chấm công bằng fingerprint (**grandfather**) → deploy không gãy ai.
+- User mở app bản mới + có **đúng 1 đăng ký Active chưa key** → `get_attendance_info` trả `device_needs_key=true` → PWA gọi `ensure_device_key` → server **gắn key vào đăng ký hiện có tại chỗ** (KHÔNG tạo bản mới, KHÔNG cần HR duyệt lại). Từ đó máy bắt đầu ký challenge.
+- Sau khi đã có key, **máy MỚI về sau vẫn phải qua HR duyệt** (không bypass vĩnh viễn).
+
+### 7.4 (Tùy chọn — sau) Ép chữ ký cứng
+
+Khi gần như mọi đăng ký Active đã có `public_key`, bật flag **ép cứng**: bắt chữ ký cho **mọi** check-in, kể cả đăng ký chưa key → từ chối + buộc máy sót đăng ký lại → đóng nốt đường giả-bằng-fingerprint. Kiểm độ sẵn sàng:
+```
+chưa key = count(HR Checkin Phone Registration WHERE status='Active' AND docstatus=1 AND public_key IS NULL)
+```
+Về gần 0 → bật. *(Chưa implement — thêm checkbox `enforce_device_signature` ở HR Policy khi cần.)*
+
+### 7.5 Field & endpoint liên quan
+
+| Field | Vai trò |
+|---|---|
+| `device_id` | Khóa nhận diện máy (ổn định) |
+| `public_key` | Verify chữ ký challenge |
+| `device_fingerprint` | Audit + fallback legacy |
+
+Endpoint: `register_phone(device_fingerprint, device_id, public_key)` · `ensure_device_key(...)` · `get_checkin_challenge(device_id)` · `checkin/checkin_wfh(..., device_id, signature)`.
 
 ---
 

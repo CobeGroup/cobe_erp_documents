@@ -40,9 +40,9 @@ nav_order: 2
 ## 4. Nhân viên đổi điện thoại
 
 1. NV đăng ký **máy mới** (tự sinh yêu cầu Pending mới).
-2. HR **Cancel máy cũ** (cho Inactive) **+ Submit máy mới**.
+2. HR chỉ cần **Submit máy mới** → hệ thống **TỰ thu hồi (cancel) máy cũ**. Không phải Cancel tay.
 
-> ⚠️ Mỗi nhân viên nên chỉ giữ **1 thiết bị Active**. Để 2 máy Active cùng lúc dễ nhầm + khó audit.
+> ⚠️ Mỗi nhân viên chỉ giữ **1 thiết bị Active** — đảm bảo tự động khi duyệt máy mới.
 
 ---
 
@@ -51,7 +51,7 @@ nav_order: 2
 | Hiện tượng | Cách xử |
 |---|---|
 | NV báo "Thiết bị chưa đăng ký" dù đã gửi | Yêu cầu còn **Pending** → vào duyệt (Submit) |
-| NV đổi máy vẫn không chấm được | Còn dính máy cũ Active → Cancel máy cũ |
+| NV đổi máy vẫn không chấm được | Duyệt (Submit) yêu cầu máy mới → máy cũ tự thu hồi |
 | Không thấy yêu cầu nào | NV chưa mở app lần đầu trên máy đó, hoặc đã bị Cancel |
 
 ## Liên quan
