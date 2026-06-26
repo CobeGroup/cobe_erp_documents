@@ -17,6 +17,7 @@ has_children: true
 | Tạo hồ sơ nhân viên mới, gắn user / phòng / ca | **[Tạo & quản lý Employee](Desk-Admin-Employee.html)** |
 | Nhân viên báo đã đăng ký điện thoại, cần duyệt | **[Duyệt đăng ký thiết bị chấm công](Desk-HR-DuyetThietBi.html)** |
 | Cấp ngày phép đầu năm, gán người duyệt cho phòng | **[Cấp phép & gán người duyệt](Desk-HR-CapPhep.html)** |
+| Hiểu loại phép, cấp số dư, cách trừ phép | **[Loại phép & số dư (cấp / trừ)](Desk-HR-LoaiPhep.html)** |
 | Xem ai đi làm, sửa công, xử lý quên chấm | **[Theo dõi & sửa chấm công](Desk-HR-ChamCong.html)** |
 | Duyệt bước HR cho đơn nghỉ phép / WFH / chấm bù | **[Duyệt nghỉ phép / WFH (bước HR)](Desk-HR-DuyetDon.html)** |
 | Xem bảng công tháng, số dư phép, báo cáo nhân sự | **[Báo cáo (HR)](Desk-HR-BaoCao.html)** |
