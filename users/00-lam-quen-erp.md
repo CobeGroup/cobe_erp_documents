@@ -68,27 +68,87 @@ Gõ tên một loại dữ liệu (vd "Leave Type") → gợi ý:
 
 ---
 
-## 5. Mở danh sách → Lọc (Filter) & sắp xếp
+## 5. Lọc dữ liệu (Filter)
 
-1. Mở danh sách (Search → "… List", hoặc `/app/<doctype>`).
-2. Bấm **Filter** (phễu, góc trên phải) → chọn **trường + điều kiện** (vd `Is Carry Forward = Yes`) → danh sách lọc lại + hiện huy hiệu **Filters 1**. Bấm **×** để xoá lọc.
-3. Đổi cột sắp xếp ở nút bên cạnh (vd **Created On**).
+Trong danh sách, bấm **Filter** (phễu, góc trên phải) → **+ Add a Filter**. Mỗi điều kiện gồm **3 phần**: **Trường** · **Điều kiện** · **Giá trị**. Bấm **Apply Filters** để áp.
 
-![Danh sách Leave Type đã lọc — chip "Filters 1"](images/desk/erp-list-filter.png)
+![Bảng lọc — Trường | Điều kiện | Giá trị; thêm nhiều dòng = VÀ](images/desk/erp-filter-panel.png)
 
-> Mở 1 bản ghi: **click vào dòng**. Tạo mới: nút **+ Add …** góc phải.
+- Thêm **nhiều dòng** = các điều kiện phải **CÙNG đúng** (VÀ / AND).
+- **×** xoá 1 điều kiện · **Clear Filters** xoá hết · huy hiệu **Filters N** cho biết đang có N điều kiện.
+
+### Các điều kiện (operator) hay dùng
+
+| Điều kiện | Nghĩa | Ví dụ |
+|---|---|---|
+| **Equals** ( = ) | bằng đúng | Status = Active |
+| **Not Equals** ( ≠ ) | khác | Status ≠ Cancelled |
+| **Like** | **chứa** chuỗi | Tên *like* "Nguyễn" |
+| **Not Like** | **không chứa** | |
+| **In** | thuộc **danh sách** (chọn nhiều giá trị) | Status *in* [Open, Pending] |
+| **Not In** | không thuộc danh sách | |
+| **>**, **<**, **≥**, **≤** | lớn / nhỏ hơn (số, ngày) | Ngày > 01-01-2026 |
+| **Between** | trong **khoảng** (từ–đến) | Ngày *between* 01-01 → 31-01 |
+| **Is Set** | **có** giá trị (khác trống) | Approver *is set* |
+| **Is Not Set** | **trống** | Approver *is not set* |
+| **Timespan** (cho ngày) | mốc thời gian sẵn | Today · This Week · This Month · Last Month… |
+
+> 💡 **Lọc nhanh:** ngay dưới tiêu đề danh sách có ô lọc nhanh (vd **ID**); biểu tượng **≈** = bật/tắt chế độ "chứa" (Like).
+> **Saved Filters:** lưu bộ lọc hay dùng để mở lại nhanh lần sau.
 
 ---
 
-## 6. Tạo mới / Lưu / Gửi duyệt
+## 6. Sắp xếp danh sách (Sort)
 
-- **+ Add / New** → mở form trống → điền → **Save** (Ctrl + S). Bản ghi mới ở trạng thái **Draft (nháp)**.
-- Doctype có duyệt (Submittable) → sau Save có nút **Submit** (chốt). Trạng thái: **Draft → Submitted → Cancelled**.
-- Đa số ô **bắt buộc** có dấu **\***; thiếu sẽ bị viền đỏ khi Save.
+Cạnh nút Filter có nút **sắp xếp** (mặc định hiện **Created On** ▼):
+- Chọn **trường** muốn sắp theo: *Created On* (ngày tạo) · *Last Updated On* (sửa gần nhất) · *Name* · hoặc bất kỳ cột nào.
+- Bấm mũi tên đổi **tăng dần ▲ / giảm dần ▼**.
+- Cuối danh sách: đổi **số dòng/trang** (20 / 100 / 500).
 
 ---
 
-## 7. Tài khoản: hồ sơ · đổi mật khẩu · giao diện · đăng xuất
+## 7. Các ô trong form: bắt buộc · tự điền · chỉ đọc
+
+| Dấu hiệu | Loại ô | Ý nghĩa |
+|---|---|---|
+| **\*** (sao đỏ) cạnh nhãn | **Bắt buộc** | Phải điền; bỏ trống → **viền đỏ**, không Save được |
+| Nhãn thường, **không sao** | **Tuỳ chọn** | Điền hay không tuỳ |
+| Ô **xám / mờ, không gõ được** | **Tự điền / chỉ đọc (read-only)** | Hệ thống tự lấy (vd *Employee Name*, *Department* lấy theo Employee) — không sửa tay |
+
+![Form: ô có dấu * đỏ = bắt buộc; ô xám = tự điền/chỉ đọc](images/desk/erp-submitted-doc.png)
+
+> Sau khi **Submit**, hầu hết ô chuyển **xám (chỉ đọc)** — không sửa trực tiếp được nữa (xem §8).
+
+---
+
+## 8. Vòng đời bản ghi: Lưu · Submit · Cancel · Draft
+
+Có **2 loại doctype:**
+
+**a) Loại chỉ Lưu** (master — vd Employee, Department, Leave Type): chỉ có **Save** (Ctrl + S). Sửa / xoá bất cứ lúc nào. **Không** có Submit.
+
+**b) Loại có duyệt** (submittable — vd Leave Application, Leave Allocation, Attendance): có vòng đời theo **trạng thái (docstatus):**
+
+| Trạng thái | Tới bằng cách | Ý nghĩa |
+|---|---|---|
+| **Draft (nháp)** | bấm **Save** | Đã lưu nhưng **chưa có hiệu lực**, còn sửa được |
+| **Submitted (đã chốt)** | bấm **Submit** | **Chốt + có hiệu lực** (vd đơn nghỉ submit → trừ phép). Form thành **chỉ đọc** |
+| **Cancelled (đã huỷ)** | bấm **Cancel** trên doc đã Submit | **Đảo hiệu lực** (hoàn lại). Bản ghi **vẫn còn** để lưu vết |
+
+```
+Draft  --Submit-->  Submitted  --Cancel-->  Cancelled  --Amend-->  Draft mới
+```
+
+- **Save vs Submit:** Save = lưu nháp; Submit = chốt (chỉ loại b).
+- **Cancel ≠ Delete:** **Cancel** = huỷ hiệu lực doc đã submit (vẫn giữ bản ghi); **Delete** = xoá hẳn khỏi hệ thống (chỉ làm được với **Draft** hoặc loại chỉ-Lưu).
+- **Amend:** từ doc đã **Cancelled** → bấm **Amend** → tạo bản **nháp mới** để sửa + submit lại (gắn "Amended From").
+- **Close ( × ):** chỉ **đóng màn hình**, KHÔNG xoá/huỷ. Còn thay đổi chưa lưu → hỏi xác nhận; badge **"Not Saved"** nhắc bạn chưa Save.
+
+![Bản ghi đã Submit — trạng thái "Submitted" + nút Cancel/Amend](images/desk/erp-submitted-doc.png)
+
+---
+
+## 9. Tài khoản & giao diện (dark mode)
 
 Bấm **avatar (góc phải trên)** → menu:
 
@@ -96,9 +156,9 @@ Bấm **avatar (góc phải trên)** → menu:
 
 | Mục | Để làm gì |
 |---|---|
-| **Edit Profile** | Mở **hồ sơ tài khoản** (My Settings) |
-| **Toggle Theme** | Đổi **giao diện sáng / tối** |
-| **Logout** | **Đăng xuất** |
+| **Edit Profile** | Mở hồ sơ tài khoản (My Settings) |
+| **Toggle Theme** | **Đổi giao diện Sáng / Tối (dark mode)** — bấm để chuyển qua lại |
+| **Logout** | Đăng xuất |
 
 ### Đổi mật khẩu
 
@@ -108,12 +168,28 @@ Bấm **avatar (góc phải trên)** → menu:
 
 ---
 
-## 8. Mẹo điều hướng
+## 10. Phím tắt hữu ích
+
+| Phím | Tác dụng |
+|---|---|
+| **Ctrl/⌘ + K** (hoặc **Ctrl + G**) | Mở **tìm kiếm** (Awesomebar) |
+| **Ctrl/⌘ + S** | **Hành động chính** — Lưu; nếu doc đã save & submittable → **Submit** |
+| **Alt + S** | Mở **Settings** |
+| **? (Shift + /)** | **Hiện bảng phím tắt đầy đủ** |
+| **Alt + H** | Mở Help |
+| **Esc** | Đóng popup / huỷ |
+| **Shift + Ctrl/⌘ + R** | **Clear cache + tải lại** (khi giao diện lỗi) |
+
+> Quên phím? Bấm **?** (Shift + /) bất cứ lúc nào để xem danh sách đầy đủ.
+
+---
+
+## 11. Mẹo điều hướng
 
 - **Ctrl/⌘ + K**: tìm & nhảy nhanh (dùng nhiều nhất).
-- **Breadcrumb** trên cùng (vd `Leaves / Leave Type`): bấm để quay lại.
-- **Esc**: đóng popup/tìm kiếm.
-- Lạc đường → bấm logo góc trái trên để về **Desk home**.
+- **Breadcrumb** trên cùng (vd `Leaves / Leave Type`): bấm để quay lại cấp trên.
+- **Esc**: đóng popup / tìm kiếm.
+- Lạc đường → bấm **logo góc trái trên** để về **Desk home**.
 
 ## Tiếp theo
 Đã quen Desk? Vào hướng dẫn theo vai trò của bạn ở **[Chấm công & HR](00-cham-cong.html)** (👤 Nhân viên · 👔 Trưởng Bộ Phận · 👩‍💼 HR · 🛠️ Quản trị).
