@@ -47,6 +47,8 @@ Workflow duyệt phép **chặn theo role**, không chỉ theo bảng Leave Appr
 
 → Đặt user vào bảng Leave Approvers mà user đó **chưa có role `Leave Approver`** thì **bấm duyệt sẽ bị chặn**. Gán role ở **User → Roles & Permissions** (xem [Tạo User & phân quyền](Desk-Admin-User.html)).
 
+![User → Roles & Permissions — tick Leave Approver + HR Manager](images/desk/admin-user-roles.png)
+
 > 💡 Department còn 2 bảng approver khác — **Shift Request Approver** (đổi ca) + **Expense Approver** (chi phí) — thêm dòng y hệt. Với luồng **nghỉ phép** chỉ **Leave Approver** là bắt buộc.
 
 ## 3. Liên quan tới forward (chuyển duyệt)
