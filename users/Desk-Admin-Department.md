@@ -36,6 +36,19 @@ nav_order: 1.5
 
 > ⚠️ Hệ thống lấy **dòng ĐẦU TIÊN** trong Leave Approvers làm người duyệt mặc định. Các dòng sau chỉ là danh sách approver hợp lệ, không tự luân phiên.
 
+### 🔑 Người duyệt PHẢI có ROLE tương ứng (rất hay quên)
+
+Workflow duyệt phép **chặn theo role**, không chỉ theo bảng Leave Approvers:
+
+| Bước | Người duyệt | **Role bắt buộc** |
+|---|---|---|
+| **Bước 1 — Manager** | dòng đầu Leave Approvers của phòng | **`Leave Approver`** |
+| **Bước 2 — HR** | nhân sự HR | **`HR Manager`** |
+
+→ Đặt user vào bảng Leave Approvers mà user đó **chưa có role `Leave Approver`** thì **bấm duyệt sẽ bị chặn**. Gán role ở **User → Roles & Permissions** (xem [Tạo User & phân quyền](Desk-Admin-User.html)).
+
+> 💡 Department còn 2 bảng approver khác — **Shift Request Approver** (đổi ca) + **Expense Approver** (chi phí) — thêm dòng y hệt. Với luồng **nghỉ phép** chỉ **Leave Approver** là bắt buộc.
+
 ## 3. Liên quan tới forward (chuyển duyệt)
 
 Người được phép **nhận chuyển duyệt** một đơn được lọc theo **role + cùng phòng/công ty**. Dựng phòng ban đúng giúp danh sách chuyển duyệt gợi ý đúng người.
@@ -47,6 +60,7 @@ Người được phép **nhận chuyển duyệt** một đơn được lọc t
 | Hiện tượng | Cách xử |
 |---|---|
 | NV gửi đơn báo "Chưa có Manager duyệt phép" | Phòng chưa có Leave Approvers → thêm dòng đầu |
+| Đã set approver nhưng **bấm duyệt bị chặn** | Approver **thiếu role `Leave Approver`** (bước 2: thiếu `HR Manager`) → gán role |
 | Đổi Manager phòng nhưng NV vẫn ra người cũ | NV bị override ở **Employee.leave_approver** |
 | Forward không thấy ai để chọn | Người nhận chưa đúng **role** hoặc khác phòng/công ty |
 
