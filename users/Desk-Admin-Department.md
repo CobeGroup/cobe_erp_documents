@@ -1,9 +1,9 @@
 ---
 title: "Phòng ban & người duyệt (Department)"
 layout: default
-parent: Quản trị (cấu hình)
+parent: HR (vận hành)
 grand_parent: Chấm công & HR
-nav_order: 6
+nav_order: 1.5
 ---
 
 # Phòng ban & người duyệt (Department)

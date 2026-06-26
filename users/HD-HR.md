@@ -15,6 +15,7 @@ has_children: true
 | Việc | Hướng dẫn |
 |---|---|
 | Tạo hồ sơ nhân viên mới, gắn user / phòng / ca | **[Tạo & quản lý Employee](Desk-Admin-Employee.html)** |
+| Lập cơ cấu phòng ban + gán người duyệt phép | **[Phòng ban & người duyệt (Department)](Desk-Admin-Department.html)** |
 | Nhân viên báo đã đăng ký điện thoại, cần duyệt | **[Duyệt đăng ký thiết bị chấm công](Desk-HR-DuyetThietBi.html)** |
 | Cấp ngày phép đầu năm, gán người duyệt cho phòng | **[Cấp phép & gán người duyệt](Desk-HR-CapPhep.html)** |
 | Hiểu loại phép, cấp số dư, cách trừ phép | **[Loại phép & số dư (cấp / trừ)](Desk-HR-LoaiPhep.html)** |

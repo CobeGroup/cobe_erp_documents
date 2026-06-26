@@ -19,9 +19,8 @@ has_children: true
 | 3 | Ngày lễ trong năm | **[Ngày lễ (Holiday List)](Desk-Admin-Holiday.html)** |
 | 4 | Giờ vào/ra + gán ca cho nhân viên | **[Ca làm việc & gán ca](Desk-Admin-Shift.html)** |
 | 5 | Tạo **tài khoản đăng nhập** + gán quyền (role) | **[Tạo User & phân quyền](Desk-Admin-User.html)** |
-| 6 | Cơ cấu phòng ban + người duyệt | **[Phòng ban & người duyệt (Department)](Desk-Admin-Department.html)** |
 
-> 👉 Dựng xong khung trên thì **tạo hồ sơ nhân viên** (gắn user/phòng/ca) ở **[👩‍💼 HR (vận hành) → Tạo & quản lý Employee](Desk-Admin-Employee.html)**.
+> 👉 Dựng xong khung hệ thống trên thì sang **[👩‍💼 HR (vận hành)](HD-HR.html)** lập **cơ cấu phòng ban (Department)** + **tạo hồ sơ nhân viên (Employee)** + cấp phép.
 
 ---
 
