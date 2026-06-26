@@ -13,4 +13,40 @@
   /* Flowchart Mermaid: căn giữa + chữ to */
   .mermaid { text-align: center; }
   .mermaid svg { max-width: 100%; height: auto; }
+
+  /* Ảnh click để phóng to (lightbox) */
+  .main-content img { cursor: zoom-in; }
+  #mw-lightbox {
+    position: fixed; inset: 0; z-index: 9999; display: none;
+    align-items: center; justify-content: center; padding: 24px;
+    background: rgba(0, 0, 0, .85); cursor: zoom-out;
+  }
+  #mw-lightbox.open { display: flex; }
+  #mw-lightbox img {
+    max-width: 100%; max-height: 100%;
+    border-radius: 6px; box-shadow: 0 6px 40px rgba(0, 0, 0, .6);
+  }
+  #mw-lightbox .mw-close {
+    position: fixed; top: 12px; right: 20px; color: #fff;
+    font-size: 32px; line-height: 1; opacity: .85;
+  }
 </style>
+<script>
+  // Click ảnh trong nội dung → phóng to; click nền / nút × / phím ESC → đóng.
+  document.addEventListener('DOMContentLoaded', function () {
+    var ov = document.createElement('div');
+    ov.id = 'mw-lightbox';
+    ov.innerHTML = '<span class="mw-close" aria-label="Đóng">×</span><img alt="">';
+    document.body.appendChild(ov);
+    var big = ov.querySelector('img');
+    function close() { ov.classList.remove('open'); big.removeAttribute('src'); }
+    ov.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    document.querySelectorAll('.main-content img').forEach(function (img) {
+      img.addEventListener('click', function () {
+        big.src = img.currentSrc || img.src;
+        ov.classList.add('open');
+      });
+    });
+  });
+</script>
