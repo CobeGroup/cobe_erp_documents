@@ -89,6 +89,8 @@ flowchart TD
 
 ### 1.1. Verify Leave Type "Annual Leave"
 
+> 📘 Giải thích đầy đủ các flag của Leave Type (`is_lwp`, `is_earned_leave`, carry forward, compensatory…) xem **[Leave Type — Loại nghỉ phép](HR-Leave-Type.html)**.
+
 Desk → search "Leave Type" → kiểm tra có record `Annual Leave` chưa.
 
 Nếu chưa có (site mới chưa setup):
