@@ -3,7 +3,7 @@ title: HR Policy
 layout: default
 grand_parent: Tài liệu kỹ thuật
 parent: Chấm công & HR (kỹ thuật)
-nav_order: 2
+nav_order: 4
 ---
 
 # HR Policy — Cấu hình per-Company (Attendance)

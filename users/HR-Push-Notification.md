@@ -3,7 +3,7 @@ title: HR Push Notification
 layout: default
 grand_parent: Tài liệu kỹ thuật
 parent: Chấm công & HR (kỹ thuật)
-nav_order: 10
+nav_order: 11
 ---
 
 # Thông báo đẩy (Push Notification) — My Workspace

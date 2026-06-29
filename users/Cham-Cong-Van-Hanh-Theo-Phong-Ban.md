@@ -3,7 +3,7 @@ title: Ví dụ — Vận hành theo phòng ban (Sales / KTV)
 layout: default
 grand_parent: Tài liệu kỹ thuật
 parent: Chấm công & HR (kỹ thuật)
-nav_order: 9
+nav_order: 13
 ---
 
 # Ví dụ: Vận hành A-Z theo phòng ban (Sales / KTV)

@@ -2,7 +2,7 @@
 title: Loyalty — API tích hợp 3rd party
 layout: default
 parent: Tài liệu kỹ thuật
-nav_order: 1
+nav_order: 9
 ---
 
 # COBE Loyalty — Integration Spec cho hệ thống Membership bên thứ 3

@@ -6,17 +6,49 @@ nav_order: 1
 
 # COBE Group — ERP — Tài liệu hướng dẫn
 
-Tài liệu hướng dẫn sử dụng các tính năng của hệ thống COBE Group ERP.
-Chọn nhóm tính năng ở thanh điều hướng bên trái, hoặc xem nhanh bên dưới.
+Tài liệu chia làm **3 phần**. Người mới bắt đầu đọc **Phần 1**, rồi sang **Phần 2**
+theo đúng công việc của mình. **Phần 3** dành cho kỹ thuật / triển khai.
 
-## Nhóm tính năng
+---
 
-- **Marketing & Khách hàng** — Coupon khuyến mãi, Loyalty tích điểm, Zalo Mini App.
-- **Dịch vụ & Bảo dưỡng** — Tự động phân bổ ticket bảo dưỡng cho nhân viên.
-- **Vận chuyển & Giao nhận** — Quản lý vận đơn, tích hợp ERP, biên bản bàn giao.
-- **Chấm công & HR** — PWA chấm công phone-only, multi-office, anti-cheat đa lớp.
-- **Tài liệu kỹ thuật** — API spec, design notes cho developer / 3rd party vendor.
+## 🟢 Phần 1 — Làm quen ERP (căn bản)
 
-> Hướng dẫn người dùng cuối được sinh tự động qua `./sync.sh` (xem nguồn trong
-> source code các app). Tài liệu kỹ thuật trong `tech/` được biên soạn trực
-> tiếp trong repo này.
+Dành cho **người lần đầu dùng ERP**: đăng nhập, giao diện **Desk**, khái niệm
+**doctype · bản ghi · danh sách · form**, **lọc & sắp xếp**, vòng đời bản ghi
+(Draft/Submit/Cancel), phím tắt, dark mode… — có hình minh hoạ trực quan.
+
+→ **[Làm quen ERP (Desk)](users/00-lam-quen-erp.html)**
+
+---
+
+## 🔵 Phần 2 — Hướng dẫn sử dụng các module (end-user)
+
+Giới thiệu từng **module / custom app** và cách dùng trực quan, **bao gồm cả hướng
+dẫn xử lý lỗi & dữ liệu sai**.
+
+| Module | Nội dung chính |
+|---|---|
+| **[Chấm công & HR](users/00-cham-cong.html)** | PWA chấm công phone-only, nghỉ phép (cả nửa ngày), WFH, duyệt đơn, báo cáo — theo vai trò: 👤 Nhân viên · 👔 Trưởng bộ phận · 👩‍💼 HR · 🛠️ Quản trị |
+| **[Marketing & Khách hàng](users/00-marketing.html)** | Coupon khuyến mãi, Loyalty tích điểm, Zalo Mini App · 🔧 *Sửa lỗi liên kết Khách hàng (Lead / Contact / Address)* |
+| **[Vận chuyển & Giao nhận](users/00-van-chuyen.html)** | Vận đơn, đối tác giao hàng (Viettel Post…), biên bản bàn giao |
+| **[Dịch vụ & Bảo dưỡng](users/00-dich-vu.html)** | Tự động phân bổ ticket bảo dưỡng & SIM |
+| **[Lương & Thưởng](users/00-compensation.html)** | Overtime, WFH salary, KPI |
+
+> 🔧 **Xử lý lỗi / thông tin sai** nằm ngay trong module liên quan — ví dụ
+> *[Sửa lỗi liên kết Khách hàng](users/Sua-Loi-Lien-Ket-Khach-Hang.html)* nằm trong
+> **Marketing & Khách hàng**.
+
+---
+
+## 🟣 Phần 3 — Tài liệu kỹ thuật & triển khai
+
+Mô tả sâu **kiến trúc · API · cơ chế · triển khai** của các module/custom app ở
+Phần 2. Dành cho **developer / system integrator / 3rd-party vendor**.
+
+→ **[Tài liệu kỹ thuật](tech/00-tech.html)** — API contract, architecture, device key
+& rebind (chấm công), compensation, delivery partner, loyalty 3rd-party API…
+
+---
+
+> Một phần hướng dẫn end-user được sinh tự động qua `./sync.sh` từ source các app;
+> tài liệu kỹ thuật trong `tech/` biên soạn trực tiếp trong repo này.

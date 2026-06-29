@@ -2,7 +2,7 @@
 title: Delivery Partner — Tài liệu kỹ thuật
 layout: default
 parent: Tài liệu kỹ thuật
-nav_order: 6
+nav_order: 7
 ---
 
 # Delivery Partner — Tài liệu kỹ thuật

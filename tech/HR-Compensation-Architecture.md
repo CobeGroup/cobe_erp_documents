@@ -2,7 +2,7 @@
 title: HR Compensation — Architecture
 layout: default
 parent: Tài liệu kỹ thuật
-nav_order: 5
+nav_order: 6
 ---
 
 # HR Compensation — Architecture

@@ -2,7 +2,7 @@
 title: Delivery Partner — Lifecycle & Doc Events
 layout: default
 parent: Tài liệu kỹ thuật
-nav_order: 7
+nav_order: 8
 ---
 
 # Delivery Partner — Lifecycle & Doc Events (tích hợp ERP)

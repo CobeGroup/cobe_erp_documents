@@ -3,7 +3,7 @@ title: HR WFH Approval
 layout: default
 grand_parent: Tài liệu kỹ thuật
 parent: Chấm công & HR (kỹ thuật)
-nav_order: 5
+nav_order: 8
 ---
 
 # Làm việc từ xa (WFH) — Đăng ký & Duyệt

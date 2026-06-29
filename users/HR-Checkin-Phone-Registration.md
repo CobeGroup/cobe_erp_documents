@@ -3,7 +3,7 @@ title: HR Checkin Phone Registration
 layout: default
 grand_parent: Tài liệu kỹ thuật
 parent: Chấm công & HR (kỹ thuật)
-nav_order: 4
+nav_order: 6
 ---
 
 # HR Checkin Phone Registration — Duyệt thiết bị nhân viên

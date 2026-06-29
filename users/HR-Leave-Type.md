@@ -3,7 +3,7 @@ title: Leave Type — Loại nghỉ phép
 layout: default
 grand_parent: Tài liệu kỹ thuật
 parent: Chấm công & HR (kỹ thuật)
-nav_order: 8
+nav_order: 10
 ---
 
 # Leave Type — Loại nghỉ phép & các flag

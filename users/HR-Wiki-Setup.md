@@ -3,7 +3,7 @@ title: Wiki "Hướng dẫn sử dụng" cho my-workspace
 layout: default
 grand_parent: Tài liệu kỹ thuật
 parent: Chấm công & HR (kỹ thuật)
-nav_order: 8
+nav_order: 12
 ---
 
 # Wiki Hướng dẫn sử dụng PWA my-workspace

@@ -3,7 +3,7 @@ title: Leave (Phép) — Setup & Workflow
 layout: default
 grand_parent: Tài liệu kỹ thuật
 parent: Chấm công & HR (kỹ thuật)
-nav_order: 7
+nav_order: 9
 ---
 
 # Phép — Cấu hình + Cấp quỹ phép (Earned Leave) + Workflow 2 bước + HR tổng phép

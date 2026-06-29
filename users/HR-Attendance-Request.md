@@ -3,7 +3,7 @@ title: Attendance Request (Xin chấm công bù / On Duty)
 layout: default
 grand_parent: Tài liệu kỹ thuật
 parent: Chấm công & HR (kỹ thuật)
-nav_order: 4
+nav_order: 7
 ---
 
 # Attendance Request — Xin chấm công bù (On Duty)
