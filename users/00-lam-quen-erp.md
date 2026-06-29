@@ -66,6 +66,18 @@ Gõ tên một loại dữ liệu (vd "Leave Type") → gợi ý:
 | **List view (danh sách)** | Bảng liệt kê các bản ghi của 1 doctype. |
 | **Form** | Màn hình **xem/sửa 1 bản ghi**. |
 
+> 🧭 **Xem bằng ví dụ** — doctype **Leave Type** (loại nghỉ phép):
+
+**① Danh sách (List view)** — mở `/app/leave-type` thấy **tất cả bản ghi** của doctype này. **Mỗi dòng = một bản ghi** (Annual Leave, Sick Leave, Casual Leave…):
+
+![Danh sách (List view) — các bản ghi của doctype Leave Type; mỗi dòng là 1 bản ghi](images/desk/concept-list.png)
+
+**② Form** — bấm vào một dòng (vd *Annual Leave*) → mở **đúng bản ghi đó** ra để xem/sửa. Đây là **Form**:
+
+![Form — một bản ghi (Annual Leave) mở ra để xem/sửa](images/desk/concept-form.png)
+
+> Tóm: **Doctype** "Leave Type" gom **6 bản ghi**; xem cả 6 ở **Danh sách**; mở 1 cái ra là **Form**. Bấm vào ảnh để phóng to.
+
 ---
 
 ## 5. Lọc dữ liệu (Filter)
