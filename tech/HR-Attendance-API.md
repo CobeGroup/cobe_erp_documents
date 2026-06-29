@@ -311,6 +311,24 @@ Endpoints (`api.attendance_request`):
   Draft + Submitted, kèm `workflow_state`).
 - `POST leave.create_leave_application` — tạo Leave Application Draft
   (`workflow_state="Pending Manager"`). Workflow 2 bước Manager→HR chạy server-side.
+  Tham số: `leave_type, from_date, to_date, description, half_day, half_day_date,
+  half_day_session`.
+
+**Nghỉ nửa ngày (half-day).** Khi `half_day=1`:
+- Backend bắt buộc `from_date == to_date` (luồng PWA chỉ cho nửa ngày khi nghỉ **đúng
+  1 ngày**); tự set `half_day_date = from_date` nếu client không gửi.
+- Số ngày trừ do HRMS `get_number_of_leave_days` tính: nửa ngày → **`total_leave_days
+  = 0.5`** (trừ 0.5 số dư khi đơn được Submit). Sáng hay chiều **không đổi** số trừ.
+- `half_day_session` (`"Sáng"` | `"Chiều"`) chỉ là **nhãn thông tin buổi nghỉ**, lưu ở
+  custom field `Leave Application.custom_half_day_session` (Select, `depends_on
+  half_day`, fixture `custom_field.json`, sở hữu bởi hr_for_cobegroup). KHÔNG ảnh hưởng
+  số phép — buổi còn lại NV vẫn đi làm + chấm công. Validate: chỉ nhận `Sáng`/`Chiều`.
+- `get_my_leave_applications` trả thêm `half_day`, `half_day_date`,
+  `custom_half_day_session` để client hiển thị (vd "· nửa ngày (Sáng)").
+
+> Frappe core chỉ có `half_day` + `half_day_date` (không phân biệt buổi). Cobe thêm
+> `custom_half_day_session` thuần để hiển thị buổi — migrate prod tự tạo field qua sync
+> fixtures, không cần patch riêng.
 
 > **Cấp quỹ phép ≠ Đơn xin nghỉ.** Phép năm cấp tự động (+N/kỳ) = **Leave Allocation**
 > qua HRMS Earned Leave — hệ thống tự submit, **cộng số dư ngay, KHÔNG qua duyệt**, không

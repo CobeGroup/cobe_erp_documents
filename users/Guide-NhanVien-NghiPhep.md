@@ -41,6 +41,29 @@ Bấm nút **+** (góc dưới phải) → điền:
 
 ---
 
+## 3. Nghỉ nửa ngày (sáng / chiều)
+
+Khi chỉ cần nghỉ **một buổi** (vd sáng đi khám, chiều đi làm):
+
+<img src="images/guide/nhanvien/12-leave-halfday.png" width="240" alt="Form nửa ngày — tick Nghỉ nửa ngày + chọn Buổi sáng / Buổi chiều">
+
+1. Ở **Khoảng ngày**, chọn **đúng 1 ngày** (ngày bắt đầu = ngày kết thúc).
+2. Tích ô **Nghỉ nửa ngày**.
+3. Chọn **Buổi sáng** hoặc **Buổi chiều** — đúng buổi bạn nghỉ.
+4. Bấm **Gửi đơn** như thường.
+
+> 💡 **Hệ thống trừ 0.5 ngày phép** cho đơn nửa ngày (không phải 1 ngày). Buổi
+> bạn chọn (sáng/chiều) để Quản lý & HR biết bạn nghỉ buổi nào — **buổi còn lại
+> bạn vẫn đi làm và chấm công bình thường**.
+
+**Lưu ý:**
+- Ô **Nghỉ nửa ngày** chỉ bật được khi bạn chọn **đúng 1 ngày**. Chọn khoảng
+  nhiều ngày thì ô này mờ đi (nửa ngày không áp dụng cho nhiều ngày).
+- Buổi sáng hay chiều **trừ phép như nhau** (đều 0.5 ngày) — chọn cho đúng buổi
+  để Quản lý nắm lịch, không ảnh hưởng số phép.
+
+---
+
 ## ⚠️ Lưu ý
 
 | Tình huống | Cách xử |
