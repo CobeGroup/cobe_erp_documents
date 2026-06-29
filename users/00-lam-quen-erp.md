@@ -112,9 +112,12 @@ Trong danh sách, bấm **Filter** (phễu, góc trên phải) → **+ Add a Fil
 
 ## 6. Sắp xếp danh sách (Sort)
 
-Cạnh nút Filter có nút **sắp xếp** (mặc định hiện **Created On** ▼):
-- Chọn **trường** muốn sắp theo: *Created On* (ngày tạo) · *Last Updated On* (sửa gần nhất) · *Name* · hoặc bất kỳ cột nào.
-- Bấm mũi tên đổi **tăng dần ▲ / giảm dần ▼**.
+Cạnh nút Filter có nút **sắp xếp** (mặc định hiện **Created On** ▼). Bấm vào để chọn **trường sắp xếp**:
+
+![Nút sắp xếp mở ra — chọn trường để sắp (Created On, Last Updated On, Name…)](images/desk/concept-sort.png)
+
+- Chọn **trường** muốn sắp theo: *Created On* (ngày tạo) · *Last Updated On* (sửa gần nhất) · *Name* · hoặc bất kỳ cột nào (vd *Leave Type Name*).
+- Bấm **biểu tượng ⇅** bên trái (nút *descending/ascending*) để đổi **tăng dần ▲ / giảm dần ▼**.
 - Cuối danh sách: đổi **số dòng/trang** (20 / 100 / 500).
 
 ---
