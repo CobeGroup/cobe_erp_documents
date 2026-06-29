@@ -84,7 +84,7 @@ Gõ tên một loại dữ liệu (vd "Leave Type") → gợi ý:
 
 Trong danh sách, bấm **Filter** (phễu, góc trên phải) → **+ Add a Filter**. Mỗi điều kiện gồm **3 phần**: **Trường** · **Điều kiện** · **Giá trị**. Bấm **Apply Filters** để áp.
 
-![Bảng lọc — Trường | Điều kiện | Giá trị; thêm nhiều dòng = VÀ](images/desk/erp-filter-panel.png)
+![Bảng lọc — Trường · Điều kiện · Giá trị; thêm nhiều dòng nghĩa là VÀ](images/desk/erp-filter-panel.png)
 
 - Thêm **nhiều dòng** = các điều kiện phải **CÙNG đúng** (VÀ / AND).
 - **×** xoá 1 điều kiện · **Clear Filters** xoá hết · huy hiệu **Filters N** cho biết đang có N điều kiện.
