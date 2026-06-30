@@ -15,6 +15,8 @@ const SITE = (process.env.SITE || 'http://cobe.cc:8002').replace(/\/$/, '');
 const USER = process.env.FRAPPE_USER || '';
 const PASS = process.env.FRAPPE_PASS || '';
 const LA = process.env.LA || 'HR-LAP-2026-00012';
+const PREFIX = process.env.OUTPREFIX || 'hr-leave-approve';   // tên file: <PREFIX>-form.png / -actions.png
+const SHOOT_LIST = process.env.LIST === '1';                  // chỉ chụp list khi LIST=1
 
 if (!USER || !PASS) { console.error('Thiếu FRAPPE_USER / FRAPPE_PASS'); process.exit(1); }
 fs.mkdirSync(OUT, { recursive: true });
@@ -66,17 +68,19 @@ const HIDE_CSS = `
   // cuộn lên đầu cho thấy header + nút workflow
   await page.evaluate(() => window.scrollTo(0, 0)).catch(()=>{});
   await page.waitForTimeout(800);
-  await shot('hr-leave-approve-form.png');
-  // 1b) mở dropdown "Actions" để lộ các lựa chọn workflow (Submit / HR Reject)
+  await shot(PREFIX + '-form.png');
+  // 1b) mở dropdown "Actions" để lộ các lựa chọn workflow (Manager Approve/Reject hoặc Submit/HR Reject)
   await page.locator('.page-head button:has-text("Actions"), .page-actions .actions-btn-group button').first().click({ timeout: 4000 }).catch(()=>{});
   await page.waitForSelector('.dropdown-menu.show, .actions-btn-group .dropdown-menu', { timeout: 4000 }).catch(()=>{});
   await page.waitForTimeout(700);
-  await shot('hr-leave-approve-actions.png');
+  await shot(PREFIX + '-actions.png');
 
   // 2) List view — LỌC theo nhân viên demo (tránh lộ tên NV thật), thấy đủ màu trạng thái
-  console.log('• List view Leave Application (lọc demo employee)');
-  await open('/app/leave-application/view/list?employee=' + enc(process.env.EMP || 'HR-EMP-00160'));
-  await shot('hr-leave-list.png');
+  if (SHOOT_LIST) {
+    console.log('• List view Leave Application (lọc demo employee)');
+    await open('/app/leave-application/view/list?employee=' + enc(process.env.EMP || 'HR-EMP-00160'));
+    await shot('hr-leave-list.png');
+  }
 
   await browser.close();
   console.log('\nXong. Ảnh ở:', OUT);

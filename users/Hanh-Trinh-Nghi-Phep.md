@@ -80,6 +80,10 @@ Người duyệt nhận **thông báo đẩy** + badge đỏ trên tab **Cần d
 - **Từ chối** → đơn bị đóng.
 - **Chuyển duyệt** → giao cho người khác (ca khó / đi vắng).
 
+💻 **Trên Desk:** mở đơn (trạng thái *Pending Manager*) → bấm **Actions** → chọn **Manager Approve** (hoặc *Manager Reject*).
+
+![Manager duyệt trên Desk — Actions → Manager Approve / Manager Reject](images/desk/hr-leave-manager-actions.png)
+
 > 📘 Chi tiết: [Trưởng Bộ Phận — Phê duyệt](Guide-TruongBoPhan-Duyet.html) ·
 > [Duyệt nghỉ phép (Manager + HR)](Duyet-Nghi-Phep.html).
 
@@ -95,9 +99,11 @@ Người duyệt nhận **thông báo đẩy** + badge đỏ trên tab **Cần d
 - **Submit (HR)** → đơn **chính thức được duyệt** và **trừ số dư phép**.
 - **Từ chối** → đơn bị đóng.
 
-> 💻 HR thích làm trên **Desk** (xem chi tiết, lọc trạng thái, xử lý hàng loạt)? Mở
-> `/app/leave-application` → đơn ở **Manager Approved** → **Actions → Submit**.
-> Xem [Duyệt nghỉ phép (Manager + HR) → phần B](Duyet-Nghi-Phep.html#b-hr-duyệt-trên-desk-app).
+💻 **Trên Desk** (xem chi tiết, lọc trạng thái, xử lý hàng loạt): mở `/app/leave-application` → đơn ở *Manager Approved* → bấm **Actions** → chọn **Submit** (hoặc *HR Reject*).
+
+![HR duyệt trên Desk — Actions → Submit / HR Reject](images/desk/hr-leave-approve-actions.png)
+
+> 📘 Lọc danh sách + cột trạng thái workflow trên Desk: xem [Duyệt nghỉ phép (Manager + HR) → phần B](Duyet-Nghi-Phep.html#b-hr-duyệt-trên-desk-app).
 
 ---
 
