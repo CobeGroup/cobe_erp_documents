@@ -14,6 +14,8 @@ nav_order: 1
 
 > Duyệt **đơn nghỉ phép** và **đề xuất chấm công bù** của nhân viên trong phòng, ngay trên điện thoại. Ca khó có thể **chuyển** cho người khác duyệt.
 
+> 📘 Cần **quy trình đầy đủ 2 bước (Manager → HR)** kèm bước HR và duyệt trên Desk? Xem **[Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html)**.
+
 ```mermaid
 %%{init:{'theme':'base','themeVariables':{'fontSize':'15px'}}}%%
 flowchart LR

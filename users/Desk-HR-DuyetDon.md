@@ -14,6 +14,8 @@ nav_order: 5
 
 > Đơn nghỉ phép chạy **workflow 2 bước: Manager → HR**. HR là **bước cuối** mới khiến đơn chính thức. Có thể duyệt trên **app (tab Cần duyệt)** hoặc trên **Desk**.
 
+> 📘 Xem **hướng dẫn đầy đủ kèm hình** (cả bước Manager, bước HR trên app & Desk, chuyển duyệt): **[Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html)**.
+
 ---
 
 ## 1. Đơn nghỉ phép (Leave Application)

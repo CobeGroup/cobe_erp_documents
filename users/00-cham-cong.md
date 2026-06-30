@@ -9,6 +9,8 @@ has_children: true
 
 > Hướng dẫn ngắn gọn, nhiều hình, cho **người dùng cuối** (PWA my-workspace). Chọn đúng vai trò của bạn ở menu bên trái, hoặc bên dưới:
 
+> 📌 **Nghỉ phép?** Xem toàn cảnh **[Hành trình một đơn nghỉ phép (NV → Manager → HR)](Hanh-Trinh-Nghi-Phep.html)** — đi theo 1 đơn từ lúc tạo đến lúc được duyệt. Cần thao tác duyệt chi tiết (kèm Desk): **[Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html)**.
+
 ## Bạn là ai?
 
 **Dùng app điện thoại (`/my-workspace`):**

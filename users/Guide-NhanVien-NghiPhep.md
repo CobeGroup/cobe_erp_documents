@@ -75,4 +75,5 @@ Khi chỉ cần nghỉ **một buổi** (vd sáng đi khám, chiều đi làm):
 ---
 
 ## Liên quan
+- 🗺️ [Hành trình một đơn nghỉ phép (NV → Manager → HR)](Hanh-Trinh-Nghi-Phep.html) — đơn của bạn được duyệt thế nào
 - [Cài app & Chấm công](Guide-NhanVien-ChamCong.html) · [Chi phí](Guide-NhanVien-ChiPhi.html)
