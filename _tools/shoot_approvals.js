@@ -51,7 +51,11 @@ async function setup(browser) {
   await page.route('**/*', async (route) => {
     const u = new URL(route.request().url()); const p = u.pathname;
     if (u.hostname==='localhost') {
-      if (p.startsWith('/api/method/')) { for (const k in MOCKS) if (p.includes(k)) return route.fulfill(api(MOCKS[k])); return route.fulfill(api(null)); }
+      if (p.startsWith('/api/method/')) {
+        // act chạy chậm 2s để chụp được toast "Đang xử lý…" lúc đang gửi
+        if (p.includes('approval.act')) { await new Promise(r=>setTimeout(r,2000)); return route.fulfill(api({success:true})); }
+        for (const k in MOCKS) if (p.includes(k)) return route.fulfill(api(MOCKS[k])); return route.fulfill(api(null));
+      }
       if (p.startsWith('/assets/hr_for_cobegroup/')) { const f=path.join(PUBLIC,p.replace('/assets/hr_for_cobegroup/','')); return fs.existsSync(f)?route.fulfill({path:f}):route.fulfill({status:404,body:''}); }
       if (p.startsWith('/my-workspace')) return route.fulfill({ contentType:'text/html', body:indexHtml });
       return route.fulfill({ status:204, body:'' });
@@ -117,6 +121,26 @@ async function openCard(page, name) {
     await openCard(page, 'Phạm Thị Dung');
     await page.screenshot({ path: path.join(OUT, '05-attendance.png') });
     console.log('shot 05-attendance'); await ctx.close();
+  }
+  // 06 — TỪ CHỐI: hộp xác nhận trước khi từ chối
+  {
+    const { ctx, page } = await setup(browser);
+    await openCard(page, 'Lê Văn Cường');
+    await page.locator('.ant-modal button', { hasText:'Từ chối' }).first().click().catch(()=>{});
+    await page.waitForSelector('.ant-modal-confirm', { timeout:5000 }).catch(()=>{});
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: path.join(OUT, '06-reject-confirm.png') });
+    console.log('shot 06-reject-confirm'); await ctx.close();
+  }
+  // 07 — PHẢN HỒI: toast "Đang xử lý…" hiện ngay khi bấm (đợi server)
+  {
+    const { ctx, page } = await setup(browser);
+    await openCard(page, 'Trần Thị Bình');
+    await page.locator('.ant-modal button', { hasText:'Duyệt (Manager)' }).first().click().catch(()=>{});
+    await page.waitForSelector('.ant-message-notice', { timeout:4000 }).catch(()=>{});
+    await page.waitForTimeout(450);
+    await page.screenshot({ path: path.join(OUT, '07-processing.png') });
+    console.log('shot 07-processing'); await ctx.close();
   }
 
   await browser.close();

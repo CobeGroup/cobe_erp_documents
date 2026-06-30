@@ -77,8 +77,11 @@ Người duyệt nhận **thông báo đẩy** + badge đỏ trên tab **Cần d
 <img src="images/guide/hanhtrinh/j3-manager-duyet.png" width="260" alt="Trưởng Bộ Phận duyệt — nút Duyệt (Manager)">
 
 - **Duyệt (Manager)** → đơn chuyển sang **Chờ HR submit**.
-- **Từ chối** → đơn bị đóng.
+- **Từ chối** → đơn bị đóng (hiện hộp **Xác nhận** trước khi chốt).
 - **Chuyển duyệt** → giao cho người khác (ca khó / đi vắng).
+
+> ⏳ **Bấm 1 lần rồi đợi**: màn hiện **"Đang xử lý…"** rồi báo kết quả. Đừng bấm nhiều lần — lỡ bấm
+> lại chỉ báo *"Đơn này đã được xử lý"*, không duyệt/từ chối hai lần. *(Áp dụng cho cả bước HR.)*
 
 💻 **Trên Desk:** mở đơn (trạng thái *Pending Manager*) → bấm **Actions** → chọn **Manager Approve** (hoặc *Manager Reject*).
 

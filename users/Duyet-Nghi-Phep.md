@@ -56,6 +56,12 @@ flowchart LR
 
 Cả Manager lẫn HR đều dùng **chung một màn hình** này — nút bấm tự đổi theo bước của đơn.
 
+> ⏳ **Bấm 1 lần rồi đợi.** Khi bấm **Duyệt / Từ chối / Chuyển duyệt**, màn hình hiện ngay
+> **"Đang xử lý…"** rồi tự báo kết quả (✓ thành công). **Đừng bấm lại nhiều lần** — nếu lỡ bấm
+> lại, hệ thống chỉ báo *"Đơn này đã được xử lý"* chứ **không** duyệt/từ chối hai lần.
+>
+> <img src="images/guide/duyet/07-processing.png" width="240" alt="Phản hồi Đang xử lý ngay khi bấm">
+
 ### A.1 — Mở tab "Cần duyệt"
 
 Thanh dưới có tab **Cần duyệt** kèm **badge đỏ** = số đơn đang chờ bạn. Mở lên thấy danh sách
@@ -74,8 +80,13 @@ Bấm vào đơn đang **"Chờ Manager duyệt"** để xem chi tiết, rồi c
 <img src="images/guide/duyet/02-detail-manager.png" width="260" alt="Chi tiết đơn — nút Duyệt (Manager) / Từ chối / Chuyển duyệt">
 
 - **Duyệt (Manager)** → đơn chuyển sang **Chờ HR submit** (bước 2).
-- **Từ chối** → đơn bị **đóng** (Rejected). Hệ thống hỏi xác nhận trước khi từ chối.
+- **Từ chối** → đơn bị **đóng** (Rejected).
 - **Chuyển duyệt** → giao cho người khác duyệt (xem [mục A.4](#a4--chuyển-duyệt-ca-khó)).
+
+Bấm **Từ chối** sẽ hiện **hộp xác nhận** (kèm tên nhân viên + nội dung đơn) — bấm **Xác nhận** để
+chốt, hoặc **Hủy** để thôi. *(HR từ chối ở bước 2 cũng xác nhận y như vậy.)*
+
+<img src="images/guide/duyet/06-reject-confirm.png" width="260" alt="Hộp xác nhận trước khi từ chối đơn">
 
 ### A.3 — Bước 2: HR duyệt
 
@@ -84,7 +95,7 @@ Bấm vào đơn đang **"Chờ Manager duyệt"** để xem chi tiết, rồi c
 <img src="images/guide/duyet/03-detail-hr.png" width="260" alt="Chi tiết đơn — nút Submit (HR) / Từ chối / Chuyển duyệt">
 
 - **Submit (HR)** → đơn **chính thức được duyệt** (Submitted) và **trừ số dư phép** của nhân viên.
-- **Từ chối** → đơn bị đóng (Rejected).
+- **Từ chối** → đơn bị đóng (Rejected) — có **hộp xác nhận** như [bước Manager](#a2--bước-1-trưởng-bộ-phận-duyệt).
 - **Chuyển duyệt** → giao cho HR khác.
 
 > ✅ Đây là **bước cuối**. Sau khi Submit, nhân viên thấy đơn ở trạng thái "Đã duyệt" và số dư phép giảm tương ứng.
@@ -151,6 +162,8 @@ Mở đơn cần duyệt (đang **Manager Approved**) → bấm nút **Actions**
 
 | Tình huống | Cách xử |
 |---|---|
+| Bấm Duyệt/Từ chối **lâu không thấy gì** | Mạng chậm — màn đang hiện **"Đang xử lý…"**, **chờ vài giây**, đừng bấm lại |
+| Bấm lại thấy báo **"Đơn này đã được xử lý"** | Bình thường — lần bấm trước **đã xong rồi**; kéo làm mới danh sách là đơn biến mất khỏi inbox |
 | Không thấy tab **Cần duyệt** trên app | Bạn chưa được cấp quyền duyệt — báo HR thêm role/cấu hình ở **HR Approval Inbox Settings** |
 | Duyệt xong (Manager) đơn **vẫn "chờ"** | Đúng — đó là **bước 1**; đơn còn chờ **HR Submit bước 2** mới trừ phép |
 | Trên Desk không thấy nút **Submit / HR Reject** | Tài khoản thiếu role **HR Manager**, hoặc đơn chưa ở trạng thái **Manager Approved** |
