@@ -64,6 +64,33 @@ Khi chỉ cần nghỉ **một buổi** (vd sáng đi khám, chiều đi làm):
 
 ---
 
+## 4. Nghỉ bù (sau ngày làm thêm / làm khuya)
+
+Hôm trước **làm thêm giờ / làm khuya** (hay gặp ở kỹ thuật viên đi lắp máy đêm)? Bạn được xin
+**Nghỉ bù** — tạo đơn y như nghỉ phép thường, chỉ khác **Loại phép**:
+
+<img src="images/guide/nhanvien/13-leave-comp.png" width="240" alt="Form Nghỉ bù — Ngày làm thêm để bù + khoảng ngày nghỉ">
+
+1. Bấm **+** → **Loại phép** chọn **"Nghỉ bù"**.
+2. Form hiện thêm ô **"Ngày làm thêm để bù"** (bắt buộc) — chọn **hôm bạn đã làm thêm/làm khuya**.
+3. **Khoảng ngày** = ngày muốn nghỉ (thường là hôm sau).
+4. **Lý do:** ghi rõ **làm gì, tới mấy giờ** — vd *"Làm khuya lắp máy tới 23h đêm 02/07"*.
+   Quản lý duyệt trên app chỉ thấy **lý do**, nên ghi càng rõ duyệt càng nhanh.
+5. **Gửi đơn** → duyệt **2 bước như nghỉ phép thường** (Quản lý → HR).
+
+<img src="images/guide/nhanvien/14-leave-comp-list.png" width="240" alt="Đơn Nghỉ bù chờ Manager duyệt">
+
+Điểm khác nghỉ phép thường:
+
+| | Phép năm | **Nghỉ bù** |
+|---|---|---|
+| Trừ quỹ phép? | Có (hết quỹ là không xin được) | **Không** — không cần số dư |
+| Trừ lương? | Không | **Không** |
+| Cần khai gì thêm? | — | **Ngày làm thêm để bù** |
+| Ai xác nhận làm thêm là có thật? | — | **Quản lý trực tiếp** khi duyệt |
+
+---
+
 ## ⚠️ Lưu ý
 
 | Tình huống | Cách xử |
@@ -71,6 +98,8 @@ Khi chỉ cần nghỉ **một buổi** (vd sáng đi khám, chiều đi làm):
 | Chỉ thấy "Leave Without Pay" | Bạn chưa được cấp loại phép nào có lương → báo HR cấp **Leave Allocation** |
 | "Chưa có Manager duyệt phép" | HR chưa gán người duyệt cho phòng bạn → báo HR |
 | Đơn vẫn "Chờ" sau khi Quản lý duyệt | Còn chờ **HR duyệt bước 2** mới chính thức |
+| Không thấy loại **"Nghỉ bù"** | Công ty chưa bật Leave Type Nghỉ bù → báo HR |
+| Xin Nghỉ bù mà app đòi "Ngày làm thêm để bù" | Ô này **bắt buộc** với Nghỉ bù — chọn đúng hôm đã làm thêm |
 
 ---
 

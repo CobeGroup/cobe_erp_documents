@@ -56,6 +56,7 @@ flowchart TB
 | **Ngày thường** — sáng ghé VP lấy đồ/nhận việc, chiều làm xong ở khách | Check-in **tại VP**, check-out **tại hiện trường** (app tự cho qua) | Theo **giờ thật** từ lúc vào đến lúc ra |
 | **Ngày đi thẳng hiện trường** — job xa, đi sớm, không ghé VP | Tạo **Đề xuất chấm công bù / Công tác** cho ngày đó (trước hoặc trong ngày) | Đơn duyệt → **ca chuẩn** cả ngày (Có mặt) |
 | **Quên check-in / check-out** | Tạo **Đề xuất chấm công bù** cho ngày quên | Đơn duyệt → **ca chuẩn** (Có mặt) |
+| **Làm khuya hôm trước** — muốn nghỉ hôm sau | Tạo đơn **Nghỉ bù** (tab Nghỉ phép — xem mục E) | Ngày nghỉ tính **On Leave**, không trừ phép năm |
 
 ---
 
@@ -168,7 +169,25 @@ Mỗi lần bấm chấm công, hệ thống xét theo thứ tự — khớp dò
 
 ---
 
-## E. Quản lý duyệt ở đâu?
+## E. Làm khuya hôm trước → xin Nghỉ bù hôm sau
+
+Lắp máy / sửa chữa tới khuya thì hôm sau được **nghỉ bù**. Đây là **đơn nghỉ phép** (không phải
+Đề xuất chấm công), tạo ở tab **Nghỉ phép**:
+
+<img src="images/guide/nhanvien/13-leave-comp.png" width="240" alt="Form Nghỉ bù — khai ngày làm khuya + ngày nghỉ">
+
+1. Tab **Nghỉ phép** → bấm **+** → **Loại phép** chọn **"Nghỉ bù"**.
+2. **Ngày làm thêm để bù** = hôm làm khuya (vd 02/07). **Khoảng ngày** = hôm muốn nghỉ (vd 03/07).
+3. **Lý do** ghi rõ *làm gì, tới mấy giờ* — quản lý duyệt trên app chỉ nhìn thấy lý do.
+4. Gửi → duyệt **2 bước** (Quản lý → HR) như nghỉ phép thường.
+
+> 💡 **Nghỉ bù không trừ phép năm, không trừ lương** và không cần số dư. Chốt chặn duy nhất là
+> **quản lý xác nhận hôm đó có làm khuya thật** — nên khai ngày + giờ cho chuẩn.
+> Chi tiết: [Xin nghỉ phép §4](Guide-NhanVien-NghiPhep.html).
+
+---
+
+## F. Quản lý duyệt ở đâu?
 
 Đơn của bạn đến **quản lý trực tiếp** (người được gán duyệt cho bạn trong hồ sơ nhân viên). Quản lý
 nhận **thông báo đẩy**, mở tab **Cần duyệt** trên my-workspace, bấm **Duyệt** hoặc **Từ chối** —
