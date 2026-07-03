@@ -174,6 +174,7 @@ Mở đơn cần duyệt (đang **Manager Approved**) → bấm nút **Actions**
 
 ## Liên quan
 - 🗺️ [Hành trình một đơn nghỉ phép (NV → Manager → HR)](Hanh-Trinh-Nghi-Phep.html) — toàn cảnh, theo chân 1 đơn
+- ✅ [Duyệt chấm công bù — từng phiếu & hàng loạt](Duyet-Cham-Cong-Bu.html) — Attendance Request 1 bước + bulk trên Desk
 - 👤 [Nhân viên: Xin nghỉ phép](Guide-NhanVien-NghiPhep.html)
 - 👔 [Trưởng Bộ Phận: Phê duyệt](Guide-TruongBoPhan-Duyet.html) · 👩‍💼 [HR: Duyệt bước HR](Desk-HR-DuyetDon.html)
 - ⚙️ [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html) · [Loại phép & số dư](Desk-HR-LoaiPhep.html)
