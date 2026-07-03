@@ -50,6 +50,10 @@ flowchart LR
 
 ## B. Đăng ký thiết bị (lần đầu)
 
+> ⚠️ **Đăng ký bằng app đã cài (icon màn hình chính) hoặc trình duyệt Chrome / Safari — ĐỪNG đăng ký khi đang mở link trong Zalo / Messenger.**
+> Khi bạn bấm link my-workspace **từ trong Zalo**, máy mở bằng **trình duyệt nội bộ của Zalo**. Bộ nhớ của trình duyệt nội bộ này **không bền** — nên bạn dễ bị **bắt đăng ký lại nhiều lần** và HR thấy **trùng đăng ký**, thậm chí phải duyệt lại thiết bị.
+> ✅ Cách đúng: làm xong **[Bước 2 — Thêm vào màn hình chính](#a-cài--mở-app-làm-1-lần)** rồi **mở app từ icon** đó để đăng ký. (Nếu lỡ đăng ký trong Zalo, chỉ cần mở lại bằng app/Chrome rồi đăng ký lại — bản trùng cũ sẽ được dọn tự động.)
+
 **Bước 3** — Lần đầu mở app, bấm **Gửi yêu cầu đăng ký**. Mỗi nhân viên dùng **1 điện thoại** đã duyệt.
 
 <img src="images/guide/nhanvien/01-register-new.png" width="240" alt="Gửi yêu cầu đăng ký thiết bị">
