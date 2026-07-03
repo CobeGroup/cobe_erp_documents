@@ -20,13 +20,15 @@ nav_order: 6
 
 | Báo cáo | Cho biết |
 |---|---|
-| **Monthly Attendance Sheet** | Bảng công **cả tháng** từng nhân viên: mỗi ngày là **P** (Present) / **A** (Absent) / **HD** (Half Day) / **L** (On Leave) / **WFH** / **H** (Holiday) / **WO** (Weekly Off). Lọc theo tháng/năm/company/nhân viên. |
+| **[Monthly Attendance Sheet](Desk-HR-BangCongThang.html)** | Bảng công **cả tháng** từng nhân viên: mỗi ngày là **P** (Present) / **A** (Absent) / **HD** (Half Day) / **L** (On Leave) / **WFH** / **H** (Holiday) / **WO** (Weekly Off). Lọc theo tháng/năm/company/nhân viên. → **[Hướng dẫn chi tiết](Desk-HR-BangCongThang.html)** |
 | **Shift Attendance** | Chấm công **theo ca** (giờ vào/ra thực tế vs ca), phát hiện đi trễ/về sớm. |
 | **Employees working on a holiday** | Ai **đi làm vào ngày lễ** (để tính bù/OT). |
 
 ![Monthly Attendance Sheet — bảng công tháng theo ngày](images/desk/hr-report-attendance.png)
 
 > ⚙️ **Monthly Attendance Sheet là "prepared report"** (chạy nền cho nhẹ): bấm **Generate New Report** rồi **chờ vài giây** kết quả hiện ra. Đổi filter thì generate lại.
+>
+> 📘 **Giải thích đầy đủ từng mã (P/A/HD/L/WFH…), cách chấm công bù & nghỉ bù hiện trên bảng, và đặc thù presence-based:** xem [Bảng công tháng — hướng dẫn chi tiết](Desk-HR-BangCongThang.html).
 
 ## Nghỉ phép
 
