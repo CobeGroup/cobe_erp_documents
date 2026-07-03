@@ -11,6 +11,8 @@ has_children: true
 
 > 📌 **Nghỉ phép?** Xem toàn cảnh **[Hành trình một đơn nghỉ phép (NV → Manager → HR)](Hanh-Trinh-Nghi-Phep.html)** — đi theo 1 đơn từ lúc tạo đến lúc được duyệt. Cần thao tác duyệt chi tiết (kèm Desk): **[Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html)**.
 
+> 📌 **Chi phí / tạm ứng?** Xem **[Hành trình một yêu cầu chi phí (NV → Duyệt → Kế toán)](Hanh-Trinh-Chi-Phi.html)** — tạm ứng → claim → hoàn ứng, ai duyệt bước nào (lưu ý: chi phí duyệt trên **Desk**, không qua tab "Cần duyệt" của app).
+
 ## Bạn là ai?
 
 **Dùng app điện thoại (`/my-workspace`):**
