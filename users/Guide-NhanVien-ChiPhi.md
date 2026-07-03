@@ -30,9 +30,10 @@ nav_order: 3
 
 ## Tab Chi phí — 3 mục
 
-Mở tab **Chi phí** ở thanh dưới:
+Mở tab **Chi phí** ở thanh dưới. Banner **"KTV đang giữ"** trên cùng là tổng tiền ứng bạn đang cầm
+chưa quyết toán:
 
-<img src="images/guide/nhanvien/12-expense.png" width="240" alt="Tab Chi phí: Tạm ứng / Claim / Hoàn ứng">
+<img src="images/guide/expense/01-advance-tab.png" width="240" alt="Tab Chi phí — Tạm ứng: Draft chờ duyệt, Paid với nút Claim / Hoàn ứng">
 
 | Mục | Dùng khi | Phiếu đi đâu sau khi gửi |
 |---|---|---|
@@ -47,6 +48,8 @@ Nút **➕** góc dưới phải mở nhanh cả 3 loại: **Tạm ứng / Claim
 ## A. Tạo Tạm ứng
 
 **➕ → Tạm ứng** → form **"Tạo yêu cầu tạm ứng"**:
+
+<img src="images/guide/expense/02-advance-form.png" width="240" alt="Form Tạo yêu cầu tạm ứng — số tiền, mục đích, Work Order, Service Appointment">
 
 - **Số tiền đề nghị (đ)** — vd 500.000.
 - **Mục đích** — ghi rõ, vd *"Mua vật tư sửa chữa máy lạnh"*.
@@ -76,12 +79,23 @@ Gửi xong phiếu hiện ở tab **Tạm ứng**, nhãn `Draft`. Theo dõi nhã
 
 Form **"Tạo yêu cầu chi phí"**:
 
-1. **Thêm từng dòng chi phí**: chọn **Loại chi phí** → nhập **Số tiền (đ)** → mô tả (tuỳ chọn).
-   Nhiều hoá đơn = nhiều dòng.
-2. **Chụp / tải ảnh hoá đơn** đính kèm — đủ chứng từ thì duyệt mới nhanh.
-3. *(Tuỳ chọn)* gắn **Work Order / Service Appointment**.
-4. Gửi. App **tự trừ vào các khoản ứng còn dư** (khoản cũ trừ trước) và hiện phần phân bổ — không
-   phải chọn tay.
+<img src="images/guide/expense/03-claim-form.png" width="240" alt="Form Tạo yêu cầu chi phí — Work Order, dòng chi phí, chứng từ">
+
+1. **Work Order** — **bắt buộc**; chọn thêm **Service Appointment** nếu Work Order có lịch hẹn.
+2. **Thêm từng dòng chi phí**: chọn **Loại chi phí** → nhập **Số tiền (đ)** → mô tả (tuỳ chọn).
+   Nhiều hoá đơn = nhiều dòng (nút **Thêm dòng**).
+3. **Tài liệu, chứng từ** — **bắt buộc ít nhất 1 tệp** (ảnh hoá đơn / PDF, tối đa 10 tệp).
+4. Bấm **Preview phân bổ** — app tính **trừ tự động vào các khoản ứng còn dư** (khoản cũ trừ trước)
+   và hiện bảng phân bổ + phần **"Còn lại"** (số công ty phải trả thêm). **Phải preview xong nút
+   "Gửi yêu cầu" mới bấm được** (khi bạn đang có tạm ứng khả dụng).
+
+   <img src="images/guide/expense/04-claim-allocation.png" width="240" alt="Preview phân bổ — trừ ứng FIFO tự động, tổng chi phí / trừ ứng / còn lại">
+
+5. Bấm **Gửi yêu cầu**.
+
+Danh sách tab **Claim** hiển thị đủ trạng thái:
+
+<img src="images/guide/expense/06-claim-tab.png" width="240" alt="Tab Claim — Draft, Unpaid, Paid, Từ chối">
 
 | Nhãn trên tab Claim | Nghĩa |
 |---|---|
@@ -96,8 +110,11 @@ Form **"Tạo yêu cầu chi phí"**:
 
 Khi khoản ứng còn dư sau claim, dòng phiếu hiện **"Cần hoàn: …đ"** (cam):
 
-1. Bấm **Hoàn ứng** ngay trên dòng đó (hoặc **➕ → Hoàn ứng** rồi chọn khoản ứng trong danh sách).
-2. Nhập **Số tiền hoàn** — không vượt được số dư.
+<img src="images/guide/expense/05-return-form.png" width="240" alt="Form Hoàn ứng — chọn khoản ứng, số tiền tự điền bằng số dư, hình thức hoàn">
+
+1. Bấm **Hoàn ứng** ngay trên dòng đó (hoặc **➕ → Hoàn ứng** rồi chọn khoản ứng trong danh sách) —
+   app hiện tóm tắt *Đã ứng / Đã claim / Còn dư* và **tự điền số tiền = số dư**.
+2. Sửa **Số tiền hoàn** nếu cần — không vượt được số dư.
 3. Chọn **Hình thức hoàn**: **Tiền mặt** / **Chuyển khoản**.
 4. Gửi → phiếu Draft nằm ở tab **Hoàn ứng**. **Đưa tiền/chuyển khoản cho công ty** → kế toán xác
    nhận trên Desk thì khoản ứng mới hết treo "Cần hoàn".
@@ -112,6 +129,7 @@ Khi khoản ứng còn dư sau claim, dòng phiếu hiện **"Cần hoàn: …đ
 | Phiếu nằm `Draft` lâu | Người duyệt xử lý trên **Desk**, không thấy trong tab Cần duyệt của app — nhắc trực tiếp quản lý/kế toán |
 | `Unpaid` mãi chưa có tiền | Kế toán chưa làm lệnh chi — hỏi kế toán |
 | Không claim được | Khoản ứng phải đang `Paid` và còn *"Có thể claim"*; không có khoản ứng nào thì claim vẫn tạo được — toàn bộ thành khoản công ty trả thêm |
+| Nút **"Gửi yêu cầu"** của Claim bị mờ | Chưa bấm **Preview phân bổ** — bấm preview xong mới gửi được. Cũng kiểm tra đã chọn **Work Order** + đính kèm **chứng từ** chưa |
 | Claim bị **Từ chối** | Bổ sung hoá đơn / sửa loại chi phí rồi gửi claim mới |
 | Hoàn rồi vẫn hiện "Cần hoàn" | Kế toán chưa xác nhận nhận tiền — nhắc kế toán Submit phiếu |
 

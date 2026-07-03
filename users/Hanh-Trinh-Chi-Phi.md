@@ -64,7 +64,7 @@ flowchart TB
 
 Tab **Chi phí** → nút **➕** góc dưới phải → **Tạm ứng** → form **"Tạo yêu cầu tạm ứng"**:
 
-<img src="images/guide/nhanvien/12-expense.png" width="240" alt="Tab Chi phí">
+<img src="images/guide/expense/02-advance-form.png" width="240" alt="Form Tạo yêu cầu tạm ứng đã điền đủ">
 
 | Trường | Ghi gì |
 |---|---|
@@ -85,6 +85,11 @@ tiền đi đâu cả**, phiếu chỉ mới là đề nghị.
 | `Claimed` | Đã kê claim hết số ứng | — (xong) |
 | `Returned` | Đã hoàn lại toàn bộ | — (xong) |
 | `Partly Claimed and Returned` | Vừa claim một phần, vừa hoàn phần dư | — (xong) |
+
+Tab **Tạm ứng** trong app nhìn thế này — banner **"KTV đang giữ"** = tổng tiền ứng chưa quyết toán;
+khoản `Paid` còn dư hiện luôn 2 nút **Claim** / **Hoàn ứng**:
+
+<img src="images/guide/expense/01-advance-tab.png" width="240" alt="Tab Tạm ứng — Draft chờ duyệt + Paid với Có thể claim / Cần hoàn">
 
 > 💡 Người duyệt có thể **hạ số tiền** so với đề nghị (app lưu riêng "số xin" và "số duyệt") — nhận
 > được bao nhiêu nhìn dòng *"Đã nhận"*.
@@ -113,14 +118,19 @@ Sau khi chi tiêu, NV kê lại để quyết toán. Có 2 lối vào:
 
 Form **"Tạo yêu cầu chi phí"**:
 
+<img src="images/guide/expense/03-claim-form.png" width="240" alt="Form Tạo yêu cầu chi phí — Work Order bắt buộc, dòng chi phí, chứng từ">
+
 | Trường | Ghi gì |
 |---|---|
+| **Work Order** | **Bắt buộc** — chọn job liên quan; có lịch hẹn thì chọn thêm **Service Appointment** |
 | **Các dòng chi phí** | Mỗi dòng = **Loại chi phí** (chọn từ danh mục) + **Số tiền** + mô tả. Thêm được nhiều dòng |
-| **Ảnh hoá đơn** | Chụp / tải ảnh hoá đơn đính kèm — nên có đủ để duyệt nhanh |
-| **Work Order / Service Appointment** *(tuỳ chọn)* | Gắn đúng job như lúc ứng |
+| **Tài liệu, chứng từ** | **Bắt buộc ≥ 1 tệp** (ảnh hoá đơn / PDF) — thiếu là không gửi được |
 
-App **tự động trừ claim vào các khoản ứng còn dư** (khoản ứng cũ trừ trước — không phải chọn tay) và
-hiện trước phần phân bổ. Claim vượt tổng ứng → phần chênh thành **công ty phải trả thêm** cho bạn.
+Trước khi gửi phải bấm **Preview phân bổ**: app **tự trừ claim vào các khoản ứng còn dư** (khoản ứng
+cũ trừ trước — không phải chọn tay) và hiện bảng phân bổ + dòng **"Còn lại"**. Claim vượt tổng ứng →
+phần chênh thành **công ty phải trả thêm** cho bạn. Preview xong nút **Gửi yêu cầu** mới sáng.
+
+<img src="images/guide/expense/04-claim-allocation.png" width="240" alt="Preview phân bổ FIFO — tổng chi phí, trừ ứng, còn lại">
 
 ### Trạng thái Claim (nhãn trên app)
 
@@ -130,6 +140,8 @@ hiện trước phần phân bổ. Claim vượt tổng ứng → phần chênh 
 | `Unpaid` | Đã duyệt — còn phần công ty phải trả thêm (chờ kế toán chi) |
 | `Paid` | Đã duyệt và thanh toán xong |
 | `Từ chối` (đỏ) | Người duyệt Reject — xem lại hoá đơn/lý do, tạo claim mới nếu cần |
+
+<img src="images/guide/expense/06-claim-tab.png" width="240" alt="Tab Claim — 4 trạng thái Draft / Unpaid / Paid / Từ chối">
 
 **Phía Desk:** người duyệt chi phí mở **Expense Claim** → xem hoá đơn đính kèm → set
 **Approval Status = Approved** (hoặc Rejected) → **Submit**. Có phần phải trả thêm thì kế toán tạo
@@ -141,9 +153,12 @@ hiện trước phần phân bổ. Claim vượt tổng ứng → phần chênh 
 
 Khi tiền ứng còn dư sau khi claim (dòng khoản ứng hiện **"Cần hoàn: …đ"** màu cam):
 
-1. Bấm nút **Hoàn ứng** ngay trên dòng đó (hoặc **➕ → Hoàn ứng** rồi chọn khoản ứng).
-2. Điền **Số tiền hoàn** (app chặn không cho hoàn quá số dư) + **Hình thức hoàn**: **Tiền mặt**
-   hoặc **Chuyển khoản**.
+<img src="images/guide/expense/05-return-form.png" width="240" alt="Form Hoàn ứng — tóm tắt Đã ứng / Đã claim / Còn dư, số tiền tự điền">
+
+1. Bấm nút **Hoàn ứng** ngay trên dòng đó (hoặc **➕ → Hoàn ứng** rồi chọn khoản ứng) — app hiện
+   tóm tắt *Đã ứng / Đã claim / Còn dư* và **tự điền số tiền hoàn = số dư**.
+2. Sửa **Số tiền hoàn** nếu cần (app chặn không cho hoàn quá số dư) + chọn **Hình thức hoàn**:
+   **Tiền mặt** hoặc **Chuyển khoản**.
 3. Gửi → sinh **phiếu hoàn ứng (Draft)** nằm ở tab **Hoàn ứng**.
 4. NV **đưa tiền / chuyển khoản** cho công ty; kế toán nhận đủ tiền → mở phiếu (Journal Entry) trên
    Desk → **Submit** → khoản ứng chuyển `Returned` / `Partly Claimed and Returned`.
@@ -174,6 +189,7 @@ Khi tiền ứng còn dư sau khi claim (dòng khoản ứng hiện **"Cần ho�
 | `Unpaid` mãi không thấy tiền | Đã duyệt nhưng kế toán chưa làm Payment Entry — hỏi kế toán |
 | Claim bị **Từ chối** | Xem lại hoá đơn / loại chi phí / mô tả; tạo claim mới đầy đủ chứng từ hơn |
 | Không claim được vào khoản ứng | Khoản ứng phải đang `Paid` và còn số dư *"Có thể claim"*; ứng `Draft`/`Unpaid` chưa trừ được |
+| Nút **"Gửi yêu cầu"** của Claim bị mờ | Phải bấm **Preview phân bổ** trước; kiểm tra thêm đã chọn **Work Order** + đính kèm **chứng từ** chưa |
 | Hoàn ứng rồi mà vẫn hiện "Cần hoàn" | Kế toán chưa Submit phiếu nhận tiền — đưa tiền xong nhắc kế toán xác nhận |
 | Số nhận được ít hơn số xin | Người duyệt hạ số tiền khi duyệt — xem dòng *"Đã nhận"* trên khoản ứng |
 
