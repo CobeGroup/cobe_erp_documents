@@ -26,6 +26,15 @@ nav_order: 1.7
 
 ---
 
+## 🎬 Video hướng dẫn (1 phút)
+
+Xem nhanh cả 5 tình huống — check-in tại VP, check-out ở hiện trường, bị chặn khi vào ngoài VP,
+tạo Đề xuất, và ngày được duyệt (bật tiếng để nghe thuyết minh):
+
+<video src="images/guide/ktv/cham-cong-ktv.mp4" width="260" controls playsinline poster="images/guide/ktv/video-poster.png"></video>
+
+---
+
 ## Toàn cảnh — 3 tình huống của KTV
 
 ```mermaid
