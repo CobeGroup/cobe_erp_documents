@@ -30,6 +30,7 @@ dẫn xử lý lỗi & dữ liệu sai**.
 |---|---|
 | **[Chấm công & HR](users/00-cham-cong.html)** | PWA chấm công phone-only, nghỉ phép (cả nửa ngày), WFH, duyệt đơn, báo cáo — theo vai trò: 👤 Nhân viên · 👔 Trưởng bộ phận · 👩‍💼 HR · 🛠️ Quản trị |
 | **[Marketing & Khách hàng](users/00-marketing.html)** | Coupon khuyến mãi, Loyalty tích điểm, Zalo Mini App · 🔧 *Sửa lỗi liên kết Khách hàng (Lead / Contact / Address)* |
+| **[Bán hàng & Đơn hàng](users/00-ban-hang.html)** | Sales Order: vòng đời đơn, 🔧 *các tình huống sửa đơn theo trạng thái* (Update Items, Amend, Close), ràng buộc kho/thanh toán |
 | **[Vận chuyển & Giao nhận](users/00-van-chuyen.html)** | Vận đơn, đối tác giao hàng (Viettel Post…), biên bản bàn giao |
 | **[Dịch vụ & Bảo dưỡng](users/00-dich-vu.html)** | Tự động phân bổ ticket bảo dưỡng & SIM |
 | **[Lương & Thưởng](users/00-compensation.html)** | Overtime, WFH salary, KPI |
