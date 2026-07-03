@@ -160,14 +160,19 @@ Notification text khác nhau theo type:
 
 ### 3.5. Check-in Whitelist
 
-> **Mục đích**: KTV / Sales làm việc ngoài VP — không thể chấm công gần office radius. Whitelist cho phép họ check-in/out ở bất kỳ đâu.
+> **Mục đích**: KTV / Sales làm việc ngoài VP — không thể chấm công gần office radius. Whitelist cho phép bỏ kiểm tra vị trí theo **phạm vi** (`scope`): cả 2 chiều hoặc chỉ chiều RA.
 
 #### Hoạt động
 
-NV có mặt trong `whitelist_employees`:
-- **Skip GPS radius / WiFi / WebRTC** (không cần ở gần VP)
-- **Vẫn enforce**: duplicate window, phone fingerprint, selfie (nếu flag ON)
-- **Server thêm warning** trong response checkin nếu hôm đó không có FS Service Appointment
+NV có mặt trong `whitelist_employees`, tuỳ `scope`:
+- **`ALL`** — skip GPS radius / WiFi / WebRTC **cả IN lẫn OUT** (full remote: Sales thị trường, NV không bao giờ ghé VP).
+- **`OUT_ONLY`** — **IN ép đúng VP**, chỉ **OUT** skip geofence (+ skip `enforce_checkout_same_office`). Mặc định khuyến nghị cho **KTV**: sáng ghé VP, làm xong ở khách check-out tại chỗ. Ngày KTV đi thẳng hiện trường → dùng **Attendance Request** (xem dưới).
+- Cả 2 scope: **vẫn enforce** duplicate window, phone fingerprint, selfie (nếu flag ON); công tính theo **giờ thật** (không đụng `skip_auto_attendance`).
+- **Server thêm warning** trong response checkin nếu hôm đó không có FS Service Appointment.
+
+> ⚠️ Bản ghi cũ thiếu `scope` (NULL) được coi là `ALL` (tương thích ngược, patch v0_013 đã backfill).
+
+> 🔁 **Quan hệ với Attendance Request**: đơn On Duty / WFH phủ ngày hôm nay (docstatus < 2, kể cả draft chờ duyệt) **thắng whitelist** — bỏ geofence cả 2 chiều và set `skip_auto_attendance=1` (công do đơn quyết, log chỉ để audit). Thứ tự: AR → scope ALL → scope OUT_ONLY (chỉ OUT) → enforce. Xem [Guide KTV](Guide-KTV-ChamCong.html) + [Attendance Request](HR-Attendance-Request.html).
 
 #### Field `whitelist_employees` (Child Table)
 
@@ -176,6 +181,7 @@ NV có mặt trong `whitelist_employees`:
 | `employee` | Link → Employee | reqd |
 | `employee_name` | Data | fetch_from, read-only |
 | `designation` | Data | fetch_from, read-only |
+| `scope` | Select `ALL` / `OUT_ONLY` | Phạm vi bỏ geofence — xem "Hoạt động" ở trên. NULL = `ALL` |
 | `reason` | Small Text | "KTV đi field", "Sales gặp khách"... |
 
 #### Tích hợp FS Service Appointment
