@@ -8,7 +8,7 @@ nav_order: 7
 
 # Attendance Request — Xin chấm công bù (On Duty)
 
-> Doctype HRMS chuẩn. Nhân viên tạo đơn **"Chấm công bù"** qua nút **"Đề xuất"** trong tab **"Bảng công"** (chọn loại: Chấm công bù / WFH). Manager duyệt qua tab **"Cần duyệt"** (api.approval.act → submit Attendance Request → HRMS tự tạo Attendance). Tài liệu này giải thích cách dùng + working_hours được tính ra sao sau khi approve.
+> Doctype HRMS chuẩn. Nhân viên tạo đơn **"Chấm công bù"** qua form **"Đề xuất"** (chọn loại: Chấm công bù / WFH). Form mở từ **3 lối** — cùng component `AttendanceRequestModal`: (1) FAB **"Đề xuất"** trong tab **"Bảng công"**; (2) link **"Đi công tác / làm ngoài? Đề xuất chấm công bù"** dưới nút chấm công ở tab **"Chấm công"**; (3) hộp thoại **"Ngoài vùng văn phòng"** khi check-in bị chặn `OUT_OF_RANGE` (nút **"Tạo đề xuất"**). Manager duyệt qua tab **"Cần duyệt"** (api.approval.act → submit Attendance Request → HRMS tự tạo Attendance). Tài liệu này giải thích cách dùng + working_hours được tính ra sao sau khi approve.
 >
 > **WFH cũng nằm trong form Đề xuất này**: khi feature flag `enable_wfh_mode` (HR Policy)
 > được BẬT, mục **"Loại đề xuất"** có thêm lựa chọn **"Làm việc tại nhà (WFH)"** (chọn xong
@@ -27,7 +27,7 @@ flowchart TD
   classDef good fill:#f6ffed,stroke:#54ab78,stroke-width:1.5px,color:#135200;
   classDef bad fill:#fff1f0,stroke:#ff4d4f,stroke-width:1.5px,color:#a8071a;
 
-  A["Tab Bảng công → nút Đề xuất"] --> B["Chọn loại: Chấm công bù / WFH"]
+  A["Mở form Đề xuất<br/>(Bảng công FAB / Chấm công link / lỗi Ngoài vùng)"] --> B["Chọn loại: Chấm công bù / WFH"]
   B --> C["Chọn ngày + lý do (WFH: thêm địa điểm)"]
   C --> D["Gửi → Attendance Request (chờ duyệt)"]
   D --> E{"Manager duyệt? (tab Cần duyệt)"}
@@ -77,7 +77,7 @@ Khi NV tạo qua PWA (`api.attendance_request.create_attendance_request`), `reas
 Cobe **giữ default HRMS** (không custom Workflow doctype như Leave Application):
 
 ```
-NV tạo "Chấm công bù" (tab Bảng công → nút "Đề xuất") → docstatus = 0
+NV tạo "Chấm công bù" (Bảng công FAB / Chấm công link / hộp thoại "Ngoài vùng") → docstatus = 0
   ↓
 Manager → tab "Cần duyệt" → Duyệt (api.approval.act, action="Submit" → docstatus = 1)
   ↓
@@ -91,7 +91,7 @@ Lý do giữ 1 step:
 
 ### Cách NV tạo đơn
 
-1. Mở my-workspace → tab **"Bảng công"** → nút **"Đề xuất"** → chọn loại
+1. Mở form **"Đề xuất"** (FAB tab Bảng công / link tab Chấm công / hộp thoại "Ngoài vùng văn phòng") → chọn loại
 2. Chọn khoảng ngày (`from_date` → `to_date`), nhập lý do (`explanation`)
 3. (Tùy chọn) đánh dấu nửa ngày → `half_day`
 4. Submit → tạo Attendance Request `docstatus = 0` (`reason = On Duty`)

@@ -105,8 +105,13 @@ Ngày có job xa / đi sớm / không ghé VP → cần **"giấy phép" cho ng�
 
 ### Bước 1 — Tạo Đề xuất trên app
 
-1. Mở **my-workspace → Chấm công** → chuyển sang tab **Bảng công**.
-2. Bấm nút tròn **➕ Đề xuất** ở góc dưới phải.
+Có **2 lối vào** cùng mở 1 form:
+
+- **Ngay tab Chấm công** (nhanh nhất): dưới nút chấm công có dòng
+  **"Đi công tác / làm ngoài? Đề xuất chấm công bù"** — bấm là mở thẳng form. Ngoài ra khi bạn
+  **bấm Check-in mà bị chặn *"Ngoài vùng văn phòng"***, app hỏi luôn *"Tạo đề xuất?"* → bấm
+  **Tạo đề xuất** để mở form tại chỗ.
+- **Tab Bảng công:** chuyển sang tab **Bảng công** → bấm nút tròn **➕ Đề xuất** ở góc dưới phải.
 
    <img src="images/guide/dexuat/01-fab.png" width="240" alt="Tab Bảng công — nút Đề xuất">
 
@@ -203,7 +208,7 @@ nhận **thông báo đẩy**, mở tab **Cần duyệt** trên my-workspace, b�
 
 | Tình huống | Cách xử |
 |---|---|
-| Sáng ở hiện trường, **check-in bị chặn** "Ngoài vùng văn phòng" | Đúng cơ chế (VÀO phải tại VP). Tạo **Đề xuất chấm công bù** cho hôm nay (mục C) rồi chấm lại |
+| Sáng ở hiện trường, **check-in bị chặn** "Ngoài vùng văn phòng" | Đúng cơ chế (VÀO phải tại VP). App hỏi luôn *"Tạo đề xuất?"* — bấm **Tạo đề xuất** ngay tại chỗ (hoặc dùng dòng "Đề xuất chấm công bù" dưới nút chấm công), làm theo mục C rồi chấm lại |
 | **Check-out ở khách cũng bị chặn** | Bạn chưa được HR đưa vào Whitelist (hoặc phạm vi sai) — báo HR kiểm tra **HR Policy → Check-in Whitelist** |
 | Đã chấm ngoài VP cả ngày nhưng đơn **bị từ chối** | Ngày đó vắng. Gửi lại đơn mới kèm bằng chứng (lịch hẹn, ảnh nghiệm thu) hoặc nhờ HR chỉnh tay |
 | App báo **"No registered device found"** / lỗi thiết bị | Điện thoại chưa đăng ký hoặc bị đổi máy — đăng ký lại thiết bị, HR duyệt (xem [Cài app & Chấm công](Guide-NhanVien-ChamCong.html)) |

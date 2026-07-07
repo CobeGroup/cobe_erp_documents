@@ -37,9 +37,9 @@ Khi công ty có policy WFH/công tác và muốn track rõ ràng ngày nào nh�
 
 ## 2. Đăng ký WFH (nhân viên)
 
-Nhân viên đăng ký qua PWA → tab **"Bảng công"** → nút **"Đề xuất"** → chọn loại **WFH**:
+Nhân viên đăng ký qua PWA → mở form **"Đề xuất"** → chọn loại **WFH**:
 
-1. Mở PWA → tab **Bảng công** → nút **Đề xuất** → chọn **WFH** (chỉ hiện khi bật `enable_wfh_mode`)
+1. Mở form **Đề xuất** (FAB tab **Bảng công**, hoặc link "Đề xuất chấm công bù" dưới nút chấm công tab **Chấm công**) → chọn **WFH** (chỉ hiện khi bật `enable_wfh_mode`)
 2. Chọn **ngày** WFH + nhập **địa điểm** (nhãn) + **lý do**
 3. Submit → app gọi `api.attendance_request.create_attendance_request` (reason=Work From Home):
    - Tạo Attendance Request 1 ngày (`from_date = to_date = ngày chọn`), `reason = "Work From Home"`, `docstatus = 0`

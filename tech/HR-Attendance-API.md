@@ -282,8 +282,10 @@ Endpoints (`api.attendance_request`):
 - `GET get_my_attendance_requests?limit=50` — list đơn của NV (**cả On Duty lẫn WFH**),
   kèm `reason`, `work_location_label`, `status` (Pending/Approved/Rejected từ docstatus).
 - **Duyệt**: tab **"Cần duyệt"** = `api.approval.act` (Submit Attendance Request → HRMS tạo Attendance).
-- **UI**: nút **"Đề xuất"** (FloatButton) trong tab **"Bảng công"** → Modal chọn loại
-  (On Duty / WFH — WFH chỉ hiện khi `enable_wfh_mode`), chọn ngày, lý do, (WFH) địa điểm.
+- **UI**: component chung `AttendanceRequestModal` mở từ **3 lối** — FAB **"Đề xuất"** tab **"Bảng công"**;
+  link **"Đi công tác / làm ngoài? Đề xuất chấm công bù"** dưới nút chấm công tab **"Chấm công"**;
+  hộp thoại **"Ngoài vùng văn phòng"** (nút "Tạo đề xuất") khi check-in bị chặn `OUT_OF_RANGE`.
+  Modal chọn loại (On Duty / WFH — WFH chỉ hiện khi `enable_wfh_mode`), chọn ngày, lý do, (WFH) địa điểm.
   Đơn duyệt xong → Attendance hiện ngay trong Bảng công. **Không còn trang/tab riêng.**
 - Tab Bảng công là **MỘT danh sách hợp nhất** (bản ghi `Attendance` + đơn đề xuất chưa
   duyệt Pending/Rejected — đơn Approved đã thành Attendance nên không lặp), mỗi item có

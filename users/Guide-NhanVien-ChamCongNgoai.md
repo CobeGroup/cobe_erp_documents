@@ -79,8 +79,11 @@ Nếu bạn **không thuộc 2 nhóm sau** mà đứng ngoài VP bấm chấm c�
 
 ## B. Tạo Đề xuất chấm công bù (trên app)
 
-**Bước 1 —** Mở app **my-workspace** → tab **Bảng công** (lịch sử công của bạn) → bấm nút tròn
-**➕ Đề xuất** ở góc dưới phải.
+**Bước 1 —** Mở form **Đề xuất chấm công** bằng **1 trong 2 lối** (cùng 1 form):
+
+- **Ngay tab Chấm công:** dưới nút chấm công có dòng **"Đi công tác / làm ngoài? Đề xuất chấm công bù"** —
+  bấm là mở thẳng. Khi bấm Check-in **bị chặn *"Ngoài vùng văn phòng"***, app cũng hỏi luôn *"Tạo đề xuất?"*.
+- **Tab Bảng công** (lịch sử công): bấm nút tròn **➕ Đề xuất** ở góc dưới phải.
 
 <img src="images/guide/dexuat/01-fab.png" width="240" alt="Tab Bảng công — nút Đề xuất">
 
@@ -166,7 +169,7 @@ Quản lý nhận **thông báo đẩy** + thấy đơn trong tab **Cần duyệ
 
 | Tình huống | Cách xử |
 |---|---|
-| Đứng ngoài VP, app báo **"Ngoài vùng văn phòng"** | Đúng cơ chế. Đi công tác → tạo **Đề xuất chấm công bù** cho ngày đó |
+| Đứng ngoài VP, app báo **"Ngoài vùng văn phòng"** | Đúng cơ chế. Đi công tác → bấm **Tạo đề xuất** ngay trên hộp thoại báo lỗi (hoặc dòng "Đề xuất chấm công bù" dưới nút chấm công) để tạo đơn cho ngày đó |
 | Đã gửi đơn nhưng **chưa thấy duyệt** | Quản lý có thể chưa mở app — chờ chút hoặc nhắc quản lý; đơn vẫn nằm ở *Chờ duyệt* |
 | Đơn **Đã duyệt** mà Bảng công vẫn trống | Kéo **làm mới** danh sách; đơn duyệt xong sẽ chuyển thành dòng công **Có mặt** |
 | Quên **cả check-in lẫn check-out** | Tạo **1 đơn** cho cả ngày là đủ — không cần check-in nữa, duyệt là có công |
