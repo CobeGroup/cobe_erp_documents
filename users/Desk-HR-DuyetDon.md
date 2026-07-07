@@ -14,7 +14,7 @@ nav_order: 5
 
 > Đơn nghỉ phép chạy **workflow 2 bước: Manager → HR**. HR là **bước cuối** mới khiến đơn chính thức. Có thể duyệt trên **app (tab Cần duyệt)** hoặc trên **Desk**.
 
-> 📘 Xem **hướng dẫn đầy đủ kèm hình** (cả bước Manager, bước HR trên app & Desk, chuyển duyệt): **[Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html)**.
+> 📘 Xem **hướng dẫn đầy đủ kèm hình** (cả bước Manager, bước HR trên app & Desk, chuyển duyệt): **[Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html)**.
 
 ---
 
@@ -30,7 +30,7 @@ nav_order: 5
 
 **Trên app:** tab **Cần duyệt** cũng hiện đơn ở bước của bạn — duyệt nhanh tại đó.
 
-> 💡 **Chuyển duyệt (forward):** ca khó / đi vắng → mở đơn bấm **Chuyển duyệt** chọn người khác cùng quyền. Khi đơn lên cấp HR, thông tin forward được reset. Xem [Trưởng Bộ Phận → Phê duyệt](HD-TruongBoPhan.html).
+> 💡 **Chuyển duyệt (forward):** ca khó / đi vắng → mở đơn bấm **Chuyển duyệt** chọn người khác cùng quyền. Khi đơn lên cấp HR, thông tin forward được reset. Xem [Phê duyệt](HD-TruongBoPhan.html).
 
 ## 2. WFH / Chấm công bù (Attendance Request)
 

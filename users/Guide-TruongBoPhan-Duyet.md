@@ -1,7 +1,7 @@
 ---
 title: "Phê duyệt đề nghị (+ Chuyển duyệt)"
 layout: default
-parent: Trưởng Bộ Phận
+parent: Phê duyệt
 grand_parent: Chấm công & HR
 nav_order: 1
 ---
@@ -14,7 +14,7 @@ nav_order: 1
 
 > Duyệt **đơn nghỉ phép** và **đề xuất chấm công bù** của nhân viên trong phòng, ngay trên điện thoại. Ca khó có thể **chuyển** cho người khác duyệt.
 
-> 📘 Cần **quy trình đầy đủ 2 bước (Manager → HR)** kèm bước HR và duyệt trên Desk? Xem **[Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html)**.
+> 📘 Cần **quy trình đầy đủ 2 bước (Manager → HR)** kèm bước HR và duyệt trên Desk? Xem **[Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html)** — trang đó có 🎬 **video hướng dẫn 1 phút** quay đủ các thao tác duyệt.
 
 ```mermaid
 %%{init:{'theme':'base','themeVariables':{'fontSize':'15px'}}}%%

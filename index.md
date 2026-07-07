@@ -28,7 +28,8 @@ dẫn xử lý lỗi & dữ liệu sai**.
 
 | Module | Nội dung chính |
 |---|---|
-| **[Chấm công & HR](users/00-cham-cong.html)** | PWA chấm công phone-only, nghỉ phép (cả nửa ngày), WFH, duyệt đơn, báo cáo — theo vai trò: 👤 Nhân viên · 👔 Trưởng bộ phận · 👩‍💼 HR · 🛠️ Quản trị |
+| **[Chấm công & HR](users/00-cham-cong.html)** | PWA chấm công phone-only, nghỉ phép & nghỉ bù (cả nửa ngày), WFH, duyệt đơn, báo cáo — theo chủ đề: ⏰ Chấm công · 🌴 Nghỉ phép & Nghỉ bù · ✅ Phê duyệt · 👩‍💼 HR · 🛠️ Quản trị — kèm 🎬 video hướng dẫn |
+| **[Chi phí & Tạm ứng](users/00-chi-phi.html)** | Tạm ứng → claim (kèm hoá đơn) → hoàn ứng: nhân viên tạo trên app, duyệt & chi tiền trên Desk |
 | **[Marketing & Khách hàng](users/00-marketing.html)** | Coupon khuyến mãi, Loyalty tích điểm, Zalo Mini App · 🔧 *Sửa lỗi liên kết Khách hàng (Lead / Contact / Address)* |
 | **[Bán hàng & Đơn hàng](users/00-ban-hang.html)** | Sales Order: vòng đời đơn, 🔧 *các tình huống sửa đơn theo trạng thái* (Update Items, Amend, Close), ràng buộc kho/thanh toán |
 | **[Vận chuyển & Giao nhận](users/00-van-chuyen.html)** | Vận đơn, đối tác giao hàng (Viettel Post…), biên bản bàn giao |

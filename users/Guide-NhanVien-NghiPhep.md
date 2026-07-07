@@ -1,18 +1,27 @@
 ---
-title: "Xin nghỉ phép"
+title: "Xin nghỉ phép & nghỉ bù"
 layout: default
-parent: Nhân viên
+parent: Nghỉ phép & Nghỉ bù
 grand_parent: Chấm công & HR
-nav_order: 2
+nav_order: 1
 ---
 
-# Xin nghỉ phép
+# Xin nghỉ phép & nghỉ bù
 {: .no_toc }
 
 **Dành cho:** Nhân viên · **Thời lượng:** ~1 phút
 {: .fs-3 .text-grey-dk-000 }
 
 > Xem số ngày phép còn lại và gửi đơn xin nghỉ ngay trên điện thoại.
+
+---
+
+## 🎬 Video hướng dẫn (1 phút)
+
+Xem nhanh cả 4 thao tác — xem số dư, tạo đơn thường, nghỉ nửa ngày, và xin Nghỉ bù sau ngày làm
+thêm (bật tiếng để nghe thuyết minh):
+
+<video src="images/guide/nhanvien/nghi-phep.mp4" width="260" controls playsinline poster="images/guide/nhanvien/nghi-phep-poster.png"></video>
 
 ---
 

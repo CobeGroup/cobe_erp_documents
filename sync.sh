@@ -70,32 +70,11 @@ strip_front_matter() {
 }
 
 # ---------------------------------------------------------------------------
-# Tạo trang chủ + các trang nhóm (parent)
+# Tạo các trang nhóm (parent)
 build_shell() {
-  # Trang chủ
-  cat > "$REPO_DIR/index.md" <<'EOF'
----
-title: Trang chủ
-layout: default
-nav_order: 1
----
-
-# COBE Group — ERP — Tài liệu hướng dẫn
-
-Tài liệu hướng dẫn sử dụng các tính năng của hệ thống COBE Group ERP.
-Chọn nhóm tính năng ở thanh điều hướng bên trái, hoặc xem nhanh bên dưới.
-
-## Nhóm tính năng
-
-- **Marketing & Khách hàng** — Coupon khuyến mãi, Loyalty tích điểm, Zalo Mini App.
-- **Dịch vụ & Bảo dưỡng** — Tự động phân bổ ticket bảo dưỡng cho nhân viên.
-- **Vận chuyển & Giao nhận** — Quản lý vận đơn, tích hợp ERP, biên bản bàn giao.
-- **Tài liệu kỹ thuật** — API spec, design notes cho developer / 3rd party vendor.
-
-> Hướng dẫn người dùng cuối được sinh tự động qua `./sync.sh` (xem nguồn trong
-> source code các app). Tài liệu kỹ thuật trong `tech/` được biên soạn trực
-> tiếp trong repo này.
-EOF
+  # LƯU Ý: index.md giờ biên soạn TAY trong repo (mục lục 3 phần + bảng module,
+  # gồm cả Chấm công & HR / Chi phí & Tạm ứng / Bán hàng / Lương & Thưởng).
+  # KHÔNG ghi đè index.md ở đây nữa — thêm nhóm mới thì sửa thẳng index.md.
 
   # Trang nhóm
   write_parent "00-marketing.md"   "Marketing & Khách hàng" 2 \
@@ -135,7 +114,7 @@ for s in "${STALE[@]}"; do
 done
 
 build_shell
-echo "  wrote: index.md + 3 trang nhóm"
+echo "  wrote: 3 trang nhóm (index.md biên soạn tay — không ghi đè)"
 echo
 
 missing=0

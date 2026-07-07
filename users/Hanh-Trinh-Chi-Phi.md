@@ -1,8 +1,8 @@
 ---
 title: "Hành trình một yêu cầu chi phí (NV → Duyệt → Kế toán)"
 layout: default
-parent: Chấm công & HR
-nav_order: 5.5
+parent: Chi phí & Tạm ứng
+nav_order: 2
 ---
 
 # Hành trình một yêu cầu chi phí

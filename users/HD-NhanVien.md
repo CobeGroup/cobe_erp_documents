@@ -1,17 +1,18 @@
 ---
-title: Nhân viên
+title: Chấm công
 layout: default
 parent: Chấm công & HR
 nav_order: 1
 has_children: true
 ---
 
-# 👤 Nhân viên
+# ⏰ Chấm công
 
-Hướng dẫn cho nhân viên dùng my-workspace trên điện thoại:
+Cài app my-workspace và chấm công hằng ngày — cho **nhân viên văn phòng** lẫn **KTV hiện trường**:
 
-1. **[Cài app & Chấm công](Guide-NhanVien-ChamCong.html)** — cài đặt, đăng ký thiết bị, chấm công vào/ra *(KTV: tab FSM)*
+1. **[Cài app & Chấm công](Guide-NhanVien-ChamCong.html)** — cài đặt, đăng ký thiết bị, chấm công vào/ra 🎬 *(có video)*
 2. **[Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html)** — đi công tác / quên check-in → xin công bù
-3. **[Xin nghỉ phép](Guide-NhanVien-NghiPhep.html)** — xem số dư + gửi đơn
-4. **[Chi phí](Guide-NhanVien-ChiPhi.html)** — tạm ứng / hoàn ứng / claim
-5. **[Thông báo & Tài khoản](Guide-NhanVien-Taikhoan.html)** — bật thông báo, thiết bị, đăng xuất
+3. **[KTV hiện trường: Chấm công ngoài VP](Guide-KTV-ChamCong.html)** — check-out tại nhà khách, ngày đi thẳng công trình 🎬 *(có video)*
+4. **[Thông báo & Tài khoản](Guide-NhanVien-Taikhoan.html)** — bật thông báo đẩy, thiết bị, đăng xuất
+
+> 🌴 Xin nghỉ xem **[Nghỉ phép & Nghỉ bù](HD-NghiPhep.html)** · 💸 Tạm ứng/hoàn ứng xem **[Chi phí & Tạm ứng](00-chi-phi.html)**.

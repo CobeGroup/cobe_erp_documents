@@ -1,8 +1,9 @@
 ---
 title: "Duyệt chấm công bù — từng phiếu & hàng loạt"
 layout: default
-parent: Chấm công & HR
-nav_order: 6.2
+parent: Phê duyệt
+grand_parent: Chấm công & HR
+nav_order: 3
 ---
 
 # Duyệt chấm công bù (Attendance Request) — từng phiếu & hàng loạt
@@ -108,7 +109,7 @@ nào lỗi sẽ báo riêng, các phiếu còn lại vẫn được duyệt:
 
 ## Liên quan
 
-- 👔 [Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html) — flow duyệt từng phiếu đầy đủ
+- 👔 [Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html) — flow duyệt từng phiếu đầy đủ
 - 🔧 [KTV hiện trường: Chấm công ngoài VP](Guide-KTV-ChamCong.html) — vì sao KTV tạo các đơn này
 - 👤 [Chấm công ngoài VP & Đề xuất chấm công bù (NV)](Guide-NhanVien-ChamCongNgoai.html) — phía người gửi đơn
 - 👩‍💼 [Bảng công tháng](Desk-HR-BangCongThang.html) — kiểm tra kết quả công sau duyệt

@@ -1,11 +1,12 @@
 ---
-title: "Duyệt nghỉ phép & chấm công bù (Manager + HR)"
+title: "Duyệt nghỉ phép & nghỉ bù (Manager + HR)"
 layout: default
-parent: Chấm công & HR
-nav_order: 6
+parent: Phê duyệt
+grand_parent: Chấm công & HR
+nav_order: 2
 ---
 
-# Duyệt nghỉ phép & chấm công bù
+# Duyệt nghỉ phép & nghỉ bù
 {: .no_toc }
 
 **Dành cho:** Trưởng Bộ Phận (Leave Approver) · HR (HR Manager) · **Thời lượng:** ~4 phút
@@ -21,6 +22,15 @@ nav_order: 6
 1. TOC
 {:toc}
 </details>
+
+---
+
+## 🎬 Video hướng dẫn (1 phút)
+
+Xem nhanh cả 5 thao tác — inbox Cần duyệt, Manager duyệt bước 1, HR submit bước 2, duyệt chấm công
+bù 1 bước, và chuyển duyệt ca khó (bật tiếng để nghe thuyết minh):
+
+<video src="images/guide/duyet/duyet-don.mp4" width="260" controls playsinline poster="images/guide/duyet/duyet-don-poster.png"></video>
 
 ---
 

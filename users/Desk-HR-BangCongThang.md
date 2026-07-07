@@ -124,6 +124,6 @@ check-in và không có đơn** sẽ để **ô trống** chứ **không** tự 
 
 ## Liên quan
 - 👩‍💼 [Báo cáo (HR) — danh mục đầy đủ](Desk-HR-BaoCao.html) · [Theo dõi & sửa chấm công](Desk-HR-ChamCong.html)
-- ⚙️ [Loại phép & số dư (gồm Nghỉ bù)](Desk-HR-LoaiPhep.html) · [Duyệt nghỉ phép & chấm công bù](Duyet-Nghi-Phep.html)
+- ⚙️ [Loại phép & số dư (gồm Nghỉ bù)](Desk-HR-LoaiPhep.html) · [Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html)
 - 👤 [Nhân viên: Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html)
 - 📊 [Tổng quan chấm công (presence-based)](Cham-Cong-Tong-Quan.html)

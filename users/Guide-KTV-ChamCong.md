@@ -1,9 +1,9 @@
 ---
 title: "KTV hiện trường: Chấm công ngoài VP"
 layout: default
-parent: Nhân viên
+parent: Chấm công
 grand_parent: Chấm công & HR
-nav_order: 1.7
+nav_order: 3
 ---
 
 # KTV hiện trường: Chấm công ngoài văn phòng & Đề xuất công tác
@@ -200,7 +200,7 @@ nhận **thông báo đẩy**, mở tab **Cần duyệt** trên my-workspace, b�
 
 <img src="images/guide/duyet/05-attendance.png" width="240" alt="Quản lý duyệt đơn chấm công bù">
 
-> 📘 Chi tiết phía người duyệt: [Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html).
+> 📘 Chi tiết phía người duyệt: [Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html).
 
 ---
 
@@ -222,6 +222,6 @@ nhận **thông báo đẩy**, mở tab **Cần duyệt** trên my-workspace, b�
 
 - 👤 [Cài app & Chấm công](Guide-NhanVien-ChamCong.html) — đăng ký thiết bị, chấm công hằng ngày
 - 👤 [Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html) — bản đầy đủ cho mọi nhân viên
-- 👔 [Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html)
+- 👔 [Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html)
 - 👩‍💼 HR: [HR Policy & Whitelist](HR-Policy.html) · [Vận hành theo phòng ban (Sales / KTV)](Cham-Cong-Van-Hanh-Theo-Phong-Ban.html)
 - 🔧 Kỹ thuật: [Attendance Request](HR-Attendance-Request.html)

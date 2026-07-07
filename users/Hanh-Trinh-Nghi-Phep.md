@@ -1,8 +1,9 @@
 ---
 title: "Hành trình một đơn nghỉ phép (NV → Manager → HR)"
 layout: default
-parent: Chấm công & HR
-nav_order: 5
+parent: Nghỉ phép & Nghỉ bù
+grand_parent: Chấm công & HR
+nav_order: 2
 ---
 
 # Hành trình một đơn nghỉ phép
@@ -132,5 +133,5 @@ Nhân viên thấy đơn chuyển nhãn **Đã được duyệt** (xanh) và **s
 
 ## Liên quan
 - 👤 [Nhân viên: Xin nghỉ phép](Guide-NhanVien-NghiPhep.html)
-- ✅ [Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html) — hướng dẫn duyệt đầy đủ + Desk
+- ✅ [Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html) — hướng dẫn duyệt đầy đủ + Desk
 - ⚙️ [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html) · 🔧 [Leave Setup & Workflow (kỹ thuật)](HR-Leave-Setup.html)

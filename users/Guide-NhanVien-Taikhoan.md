@@ -1,7 +1,7 @@
 ---
 title: "Thông báo & Tài khoản"
 layout: default
-parent: Nhân viên
+parent: Chấm công
 grand_parent: Chấm công & HR
 nav_order: 4
 ---

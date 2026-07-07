@@ -1,7 +1,7 @@
 ---
 title: "Cài app & Chấm công"
 layout: default
-parent: Nhân viên
+parent: Chấm công
 grand_parent: Chấm công & HR
 nav_order: 1
 ---

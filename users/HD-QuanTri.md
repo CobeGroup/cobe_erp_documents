@@ -2,7 +2,7 @@
 title: Quản trị (cấu hình)
 layout: default
 parent: Chấm công & HR
-nav_order: 4
+nav_order: 5
 has_children: true
 ---
 

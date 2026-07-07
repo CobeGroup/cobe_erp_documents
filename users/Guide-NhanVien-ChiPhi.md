@@ -1,9 +1,8 @@
 ---
 title: "Chi phí (tạm ứng / hoàn ứng)"
 layout: default
-parent: Nhân viên
-grand_parent: Chấm công & HR
-nav_order: 3
+parent: Chi phí & Tạm ứng
+nav_order: 1
 ---
 
 # Chi phí: tạm ứng / hoàn ứng / claim
@@ -18,6 +17,15 @@ nav_order: 3
 >
 > 🗺️ Muốn hiểu cả vòng đời tiền đi đâu về đâu, ai duyệt bước nào: xem
 > **[Hành trình một yêu cầu chi phí](Hanh-Trinh-Chi-Phi.html)**.
+
+---
+
+## 🎬 Video hướng dẫn (1,5 phút)
+
+Xem nhanh cả 3 loại phiếu — tạo Tạm ứng, kê Claim kèm hoá đơn + preview phân bổ, và Hoàn ứng
+phần dư (bật tiếng để nghe thuyết minh):
+
+<video src="images/guide/expense/chi-phi.mp4" width="260" controls playsinline poster="images/guide/expense/chi-phi-poster.png"></video>
 
 <details open markdown="block">
   <summary>Mục lục</summary>

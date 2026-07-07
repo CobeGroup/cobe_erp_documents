@@ -7,21 +7,30 @@ has_children: true
 
 # Chấm công & HR — Hướng dẫn sử dụng
 
-> Hướng dẫn ngắn gọn, nhiều hình, cho **người dùng cuối** (PWA my-workspace). Chọn đúng vai trò của bạn ở menu bên trái, hoặc bên dưới:
+> Hướng dẫn ngắn gọn, nhiều hình + video, cho **người dùng cuối** (PWA my-workspace + Desk).
+> Tài liệu chia theo **chủ đề** — chọn đúng việc bạn cần làm:
 
-> 📌 **Nghỉ phép?** Xem toàn cảnh **[Hành trình một đơn nghỉ phép (NV → Manager → HR)](Hanh-Trinh-Nghi-Phep.html)** — đi theo 1 đơn từ lúc tạo đến lúc được duyệt. Cần thao tác duyệt chi tiết (kèm Desk): **[Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html)**.
+## Bạn cần làm gì?
 
-> 📌 **Chi phí / tạm ứng?** Xem **[Hành trình một yêu cầu chi phí (NV → Duyệt → Kế toán)](Hanh-Trinh-Chi-Phi.html)** — tạm ứng → claim → hoàn ứng, ai duyệt bước nào (lưu ý: chi phí duyệt trên **Desk**, không qua tab "Cần duyệt" của app).
+| Chủ đề | Dành cho | Nội dung |
+|---|---|---|
+| ⏰ **[Chấm công](HD-NhanVien.html)** | Nhân viên · KTV | Cài app, đăng ký thiết bị, chấm công vào/ra, chấm công ngoài VP, đề xuất chấm công bù, thông báo & tài khoản |
+| 🌴 **[Nghỉ phép & Nghỉ bù](HD-NghiPhep.html)** | Nhân viên | Xem số dư, xin nghỉ (cả nửa ngày), xin **nghỉ bù** sau ngày làm thêm/làm khuya + hành trình một đơn nghỉ phép |
+| ✅ **[Phê duyệt](HD-TruongBoPhan.html)** | Trưởng Bộ Phận · HR | Duyệt nghỉ phép (2 bước Manager → HR), duyệt chấm công bù (1 bước, từng phiếu & hàng loạt), chuyển duyệt |
+| 👩‍💼 **[HR (vận hành)](HD-HR.html)** | HR Manager | Duyệt thiết bị, cấp phép & gán người duyệt, theo dõi/sửa chấm công, bảng công tháng, báo cáo |
+| 🛠️ **[Quản trị (cấu hình)](HD-QuanTri.html)** | HR / System Manager | Dựng văn phòng, chính sách, ngày lễ, ca làm việc, user & phân quyền |
 
-## Bạn là ai?
+> 💸 **Chi phí (tạm ứng / claim / hoàn ứng)** đã có mục riêng: **[Chi phí & Tạm ứng](00-chi-phi.html)** — phiếu chi phí duyệt trên **Desk**, không qua tab "Cần duyệt" của app.
 
-**Dùng app điện thoại (`/my-workspace`):**
-- 👤 **[Nhân viên](HD-NhanVien.html)** — cài app, chấm công, xin nghỉ phép, chi phí, thông báo. *(Kỹ thuật viên có thêm tab FSM)*
-- 👔 **[Trưởng Bộ Phận](HD-TruongBoPhan.html)** — phê duyệt đề nghị nghỉ phép / chấm công bù + chuyển duyệt.
+---
 
-**Làm việc trên Desk (`/app`):**
-- 👩‍💼 **[HR (vận hành)](HD-HR.html)** — duyệt thiết bị, cấp phép & gán người duyệt, theo dõi/sửa chấm công, duyệt đơn bước HR.
-- 🛠️ **[Quản trị (cấu hình)](HD-QuanTri.html)** — dựng văn phòng, ca, ngày lễ, phòng ban, chính sách, hồ sơ nhân viên.
+## Vào nhanh theo tình huống
+
+- 📱 Mới vào công ty, cần chấm công → **[Cài app & Chấm công](Guide-NhanVien-ChamCong.html)**
+- 🚗 Đi công tác / KTV làm hiện trường → **[Chấm công ngoài VP](Guide-NhanVien-ChamCongNgoai.html)** · **[KTV hiện trường](Guide-KTV-ChamCong.html)**
+- 🌴 Muốn xin nghỉ / nghỉ bù → **[Xin nghỉ phép & nghỉ bù](Guide-NhanVien-NghiPhep.html)**
+- 🗺️ Muốn hiểu đơn nghỉ được duyệt thế nào → **[Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html)**
+- ✅ Là người duyệt, có đơn chờ → **[Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html)** · **[Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html)**
 
 ---
 

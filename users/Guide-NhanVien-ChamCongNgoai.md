@@ -1,9 +1,9 @@
 ---
 title: "Chấm công ngoài VP & Đề xuất chấm công bù"
 layout: default
-parent: Nhân viên
+parent: Chấm công
 grand_parent: Chấm công & HR
-nav_order: 1.5
+nav_order: 2
 ---
 
 # Nhân viên: Chấm công ngoài văn phòng & Đề xuất chấm công bù
@@ -113,7 +113,7 @@ trên **Bảng công** với nhãn **"Đề xuất chấm bù"** + trạng thái
 ## C. Vòng đời một Đề xuất & tác động lên bạn
 
 Đơn đề xuất đi qua các trạng thái sau. **Quản lý trực tiếp** của bạn là người duyệt
-(xem [Duyệt nghỉ phép & chấm công bù](Duyet-Nghi-Phep.html)).
+(xem [Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html)).
 
 ```mermaid
 %%{init:{'theme':'base','themeVariables':{'fontSize':'14px'}}}%%
@@ -161,7 +161,7 @@ Quản lý nhận **thông báo đẩy** + thấy đơn trong tab **Cần duyệ
 - **Duyệt** → hệ thống tự tạo công **Có mặt** cho bạn.
 - **Hủy / Từ chối** → đơn bị đóng, bạn không có công ngày đó.
 
-> 📘 Chi tiết phía người duyệt: [Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html).
+> 📘 Chi tiết phía người duyệt: [Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html).
 
 ---
 
@@ -183,6 +183,6 @@ Quản lý nhận **thông báo đẩy** + thấy đơn trong tab **Cần duyệ
 - 🔧 [KTV hiện trường: Chấm công ngoài VP](Guide-KTV-ChamCong.html) — bản riêng cho kỹ thuật viên (OUT tự do + đề xuất ngày đi thẳng hiện trường)
 - 👤 [Cài app & Chấm công](Guide-NhanVien-ChamCong.html) — chấm công vào/ra hằng ngày
 - 👤 [Xin nghỉ phép](Guide-NhanVien-NghiPhep.html) · 🗺️ [Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html)
-- 👔 [Duyệt nghỉ phép & chấm công bù (Manager + HR)](Duyet-Nghi-Phep.html)
+- 👔 [Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html)
 - 👩‍💼 HR: [Bảng công tháng (Monthly Attendance Sheet)](Desk-HR-BangCongThang.html) · [Theo dõi & sửa chấm công](Desk-HR-ChamCong.html)
 - 🔧 Kỹ thuật: [Attendance Request](HR-Attendance-Request.html) · [HR Policy & Whitelist](HR-Policy.html)
