@@ -112,8 +112,9 @@ trên **Bảng công** với nhãn **"Đề xuất chấm bù"** + trạng thái
 
 ## C. Vòng đời một Đề xuất & tác động lên bạn
 
-Đơn đề xuất đi qua các trạng thái sau. **Quản lý trực tiếp** của bạn là người duyệt
-(xem [Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html)).
+Đơn đề xuất đi qua các trạng thái sau. Người duyệt là **người duyệt chấm công** của bạn — do HR gán
+riêng (Shift Request Approver), **có thể khác** người duyệt đơn nghỉ phép
+(xem [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html)).
 
 ```mermaid
 %%{init:{'theme':'base','themeVariables':{'fontSize':'14px'}}}%%

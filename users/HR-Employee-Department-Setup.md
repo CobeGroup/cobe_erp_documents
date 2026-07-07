@@ -92,7 +92,11 @@ thừa hưởng — khỏi gán 124 NV từng người. Chỉ set `Employee.leav
 ### Cách set
 1. Desk → **Department** → mở phòng.
 2. Mục **Leave Approvers** → thêm user **Trưởng Bộ Phận** (TBP) của phòng → **Save**.
-3. (Tương tự có `Expense Approvers`, `Shift Request Approver` nếu cần.)
+3. Bảng **`Shift Request Approver`** — người duyệt **Attendance Request** (chấm công bù / On Duty /
+   WFH). Từ 07/2026 **tách hẳn khỏi `leave_approver`**: API đọc `Employee.shift_request_approver`
+   **hợp với** mọi dòng `Department.shift_request_approver` (không phải chỉ dòng đầu, không override).
+   Người duyệt cần role **`Attendance Request Approver`** (đã thêm vào HR Approval Inbox Settings)
+   hoặc `Leave Approver`. (Tương tự có `Expense Approvers` cho chi phí.)
 
 > Người được chọn làm approver **phải có role `Leave Approver`** + **đúng
 > Department** thì mới: duyệt được + xuất hiện trong danh sách **Forward** cấp

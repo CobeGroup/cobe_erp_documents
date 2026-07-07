@@ -34,15 +34,19 @@ nav_order: 3
 | Duyệt xong | HR chốt bước cuối | Hệ thống **tự tạo công "Có mặt"** theo ca chuẩn |
 | Lỡ duyệt sai | HR từ chối ở bước 2 | HR **Cancel** đơn trên Desk → công tự gỡ (đảo ngược sạch) |
 
-Chốt chặn là **quản lý trực tiếp** (người được gán duyệt trong hồ sơ NV). HR Manager luôn có quyền
+Chốt chặn là **người duyệt chấm công** — gán qua khe **Shift Request Approver** (field trên hồ sơ
+Employee, hoặc bảng **Shift Request Approver** của Department). Khe này **tách riêng khỏi người
+duyệt nghỉ phép** (Leave Approver): công ty có thể để **cùng một người**, hoặc tách — vd đơn nghỉ
+phép về trưởng phòng, còn đơn chấm công bù/công tác về điều phối vận hành. HR Manager luôn có quyền
 **can thiệp/duyệt thay/hủy** — nên 1 bước vẫn an toàn, đơn giản và nhanh cho hiện trường.
 
 ---
 
 ## B. Quản lý duyệt TỪNG PHIẾU trên app
 
-Mở **my-workspace → tab Cần duyệt**. Bạn chỉ thấy đơn của **nhân viên do mình duyệt**; đơn chấm công
-bù hiện loại "Chấm công bù / Công tác" kèm khoảng ngày + lý do:
+Mở **my-workspace → tab Cần duyệt**. Bạn chỉ thấy đơn của **nhân viên do mình duyệt chấm công**
+(được gán là Shift Request Approver của NV hoặc của phòng); đơn chấm công bù hiện loại
+"Chấm công bù / Công tác" kèm khoảng ngày + lý do:
 
 <img src="images/guide/duyet/05-attendance.png" width="240" alt="Đơn chấm công bù trong tab Cần duyệt — nút Duyệt / Từ chối">
 
@@ -101,7 +105,8 @@ nào lỗi sẽ báo riêng, các phiếu còn lại vẫn được duyệt:
 |---|---|
 | Không thấy nút **Submit** trong Actions | Tài khoản thiếu role **HR User / HR Manager** — báo quản trị cấp role |
 | Bulk submit báo lỗi vài phiếu | Mở từng phiếu lỗi xem message (vd ngày đã có công, trùng đơn) — các phiếu khác vẫn duyệt bình thường |
-| Quản lý bộ phận không thấy đơn trên app | Kiểm tra hồ sơ NV đã gán đúng **người duyệt** chưa (Desk → Employee → Approvers) |
+| Quản lý bộ phận không thấy đơn trên app | Kiểm tra đã gán **Shift Request Approver** chưa — field trên **Employee** (Approvers) hoặc bảng **Shift Request Approver** của **Department**. Lưu ý khe này **tách khỏi Leave Approver** (duyệt nghỉ phép) — gán duyệt phép thôi là **chưa đủ** |
+| Người duyệt không thấy tab **Cần duyệt** | Thiếu role **Attendance Request Approver** (hoặc Leave Approver nếu kiêm duyệt phép) — báo quản trị cấp role |
 | Duyệt rồi mà NV chưa thấy "Có mặt" | Bảo NV kéo làm mới Bảng công; vẫn thiếu → xem đơn đã Submitted chưa |
 | Duyệt nhầm người / nhầm ngày | Desk → mở đơn → **Cancel** — công tự gỡ, không cần sửa tay |
 

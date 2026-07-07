@@ -131,6 +131,11 @@ với nhãn **"Chấm công bù"**. Khác nghỉ phép, loại này **duyệt 1 
 - **Duyệt** → hệ thống **tự tạo Attendance** cho ngày đó (Work From Home / Present / Half Day).
 - **Hủy** → từ chối đơn.
 
+> 👥 **Người duyệt loại này KHÁC người duyệt nghỉ phép.** Đơn chấm công bù/WFH về
+> **Shift Request Approver** (gán trên Employee hoặc Department) — tách khỏi **Leave Approver**.
+> Cùng một người kiêm cả hai vai thì thấy cả hai loại đơn chung inbox; tách vai thì mỗi người chỉ
+> thấy loại đơn của mình. Chi tiết gán: [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html).
+
 > 💡 Muốn nhân viên thấy lựa chọn **WFH** trong app: bật `enable_wfh_mode` ở
 > [HR Policy](Desk-Admin-Policy.html). Chi tiết: [WFH (kỹ thuật)](HR-WFH-Approval.html).
 

@@ -34,7 +34,9 @@ nav_order: 5
 
 ## 2. WFH / Chấm công bù (Attendance Request)
 
-WFH và "chấm công bù / On Duty" đều là **Attendance Request** (1 doctype).
+WFH và "chấm công bù / On Duty" đều là **Attendance Request** (1 doctype). Trên app, loại đơn này
+về **Shift Request Approver** (tách khỏi Leave Approver — xem
+[Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html)); HR luôn duyệt thay được trên Desk như dưới.
 
 1. `/app/attendance-request` → mở đơn chờ duyệt (`reason = Work From Home` hoặc On Duty).
 2. Kiểm ngày + lý do (WFH có thêm **địa điểm làm việc**).

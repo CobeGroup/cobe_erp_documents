@@ -49,7 +49,11 @@ Workflow duyệt phép **chặn theo role**, không chỉ theo bảng Leave Appr
 
 ![User → Roles & Permissions — tick Leave Approver + HR Manager](images/desk/admin-user-roles.png)
 
-> 💡 Department còn 2 bảng approver khác — **Shift Request Approver** (đổi ca) + **Expense Approver** (chi phí) — thêm dòng y hệt. Với luồng **nghỉ phép** chỉ **Leave Approver** là bắt buộc.
+> 💡 Department còn 2 bảng approver khác, thêm dòng y hệt:
+> - **Shift Request Approver** — người duyệt **chấm công bù / đề xuất công tác / WFH** (Attendance Request). **Tách riêng khỏi Leave Approver** — phòng có nhân viên hay làm ngoài (KTV, Sales) thì **bắt buộc gán**, không thì đơn chấm công bù không ai thấy. Khác Leave: **mọi dòng trong bảng đều duyệt được** (không chỉ dòng đầu); người duyệt cần role **Attendance Request Approver** (hoặc Leave Approver). Xem [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html).
+> - **Expense Approver** — chi phí.
+>
+> Với luồng **nghỉ phép** chỉ **Leave Approver** là bắt buộc.
 
 ## 3. Liên quan tới forward (chuyển duyệt)
 

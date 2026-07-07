@@ -70,7 +70,8 @@ Gặp ca khó / không thuộc thẩm quyền? Bấm **Chuyển duyệt** → ch
 
 | Tình huống | Cách xử |
 |---|---|
-| Không thấy tab "Cần duyệt" | Bạn chưa có quyền duyệt — báo HR cấp role **Leave Approver** + đúng phòng |
+| Không thấy tab "Cần duyệt" | Bạn chưa có quyền duyệt — báo HR cấp role **Leave Approver** (duyệt nghỉ phép) / **Attendance Request Approver** (duyệt chấm công bù) + gán đúng phòng |
+| Thấy đơn nghỉ phép mà không thấy đơn chấm công bù (hoặc ngược lại) | Hai loại đơn về **hai người duyệt khác nhau**: nghỉ phép → **Leave Approver**, chấm công bù → **Shift Request Approver**. Kiểm tra bạn được gán khe nào |
 | Forward không thấy ai để chọn | Người nhận phải có role **Leave Approver** + **cùng phòng** với nhân viên |
 | Duyệt xong đề nghị vẫn "chờ" | Đó là **bước 1**; đề nghị còn chờ **HR duyệt bước 2** mới chính thức trừ phép |
 

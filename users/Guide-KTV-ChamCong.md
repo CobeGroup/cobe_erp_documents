@@ -194,9 +194,10 @@ Lắp máy / sửa chữa tới khuya thì hôm sau được **nghỉ bù**. Đ�
 
 ## F. Quản lý duyệt ở đâu?
 
-Đơn của bạn đến **quản lý trực tiếp** (người được gán duyệt cho bạn trong hồ sơ nhân viên). Quản lý
-nhận **thông báo đẩy**, mở tab **Cần duyệt** trên my-workspace, bấm **Duyệt** hoặc **Từ chối** —
-đơn chấm công bù **duyệt 1 bước** (không qua bước HR như nghỉ phép).
+Đơn của bạn đến **người duyệt chấm công** (Shift Request Approver — HR gán trong hồ sơ nhân viên
+hoặc theo phòng ban; **có thể khác** người duyệt nghỉ phép). Người duyệt nhận **thông báo đẩy**,
+mở tab **Cần duyệt** trên my-workspace, bấm **Duyệt** hoặc **Từ chối** — đơn chấm công bù
+**duyệt 1 bước** (không qua bước HR như nghỉ phép).
 
 <img src="images/guide/duyet/05-attendance.png" width="240" alt="Quản lý duyệt đơn chấm công bù">
 

@@ -49,6 +49,22 @@ Chuỗi ưu tiên: **Employee.leave_approver** (đặt riêng) → fallback **ng
 
 > ⚠️ Hệ thống chỉ lấy **dòng ĐẦU TIÊN** trong Leave Approvers của phòng làm người duyệt mặc định. Thêm nhiều dòng chỉ là "danh sách approver hợp lệ", không tự luân phiên.
 
+## B2. Gán người duyệt CHẤM CÔNG BÙ (Shift Request Approver)
+
+Đơn **chấm công bù / công tác / WFH** (Attendance Request) **không dùng Leave Approver** — nó về khe
+**Shift Request Approver**, gán tương tự nhưng luật hơi khác:
+
+1. **Theo phòng:** Department → bảng **Shift Request Approver** → thêm user. Khác Leave: **mọi dòng
+   trong bảng đều duyệt được** (không phải chỉ dòng đầu).
+2. **Theo nhân viên:** Employee → field **Shift Request Approver**. Khác Leave: field này **cộng thêm**
+   vào danh sách của phòng, không phải override.
+3. Cấp role **Attendance Request Approver** cho user đó (nếu chưa có role Leave Approver) để tab
+   **Cần duyệt** hiện trên app.
+
+> 💡 Muốn **cùng một người** duyệt cả nghỉ phép lẫn chấm công bù: gán user đó vào **cả hai khe**.
+> Tách vai (vd nghỉ phép → trưởng phòng, chấm công bù → điều phối vận hành) thì mỗi khe một người.
+> HR Manager luôn duyệt thay được cả hai loại.
+
 ---
 
 ## ⚠️ Lỗi thường gặp
@@ -58,6 +74,7 @@ Chuỗi ưu tiên: **Employee.leave_approver** (đặt riêng) → fallback **ng
 | NV gửi đơn báo "Chưa có Manager duyệt phép" | Phòng chưa có Leave Approver → làm mục **B** |
 | NV chỉ thấy "Leave Without Pay" | Chưa có Leave Allocation loại có lương → làm mục **A** |
 | Đặt approver Department nhưng NV vẫn nhầm người | NV bị override ở Employee.leave_approver → kiểm field đó |
+| Quản lý duyệt được nghỉ phép nhưng **không thấy đơn chấm công bù** | Chưa gán khe **Shift Request Approver** (tách khỏi Leave Approver) → làm mục **B2** |
 
 ## Liên quan
 - [Leave — Setup & Workflow (kỹ thuật)](HR-Leave-Setup.html) · [Employee & Department (kỹ thuật)](HR-Employee-Department-Setup.html)

@@ -145,6 +145,9 @@ check-in không thành Attendance → **báo cáo tháng (§6) trống**.
 **Đặc điểm:** KTV đi hiện trường khách → **whitelist** (bỏ GPS) + dùng app **FSM** cho lịch/công việc.
 
 1. **Tạo Employee** như §2 (Department = Bảo dưỡng/Kỹ thuật, set `leave_approver`).
+   ⚠️ KTV tạo đơn **chấm công bù / công tác** thường xuyên → nhớ gán thêm **`shift_request_approver`**
+   (field Employee hoặc bảng của Department) — khe duyệt AR **tách khỏi leave_approver**; người duyệt
+   cần role **Attendance Request Approver**. Xem [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html).
    ⚠️ KTV đi hiện trường **vẫn cần `Default Shift`** thì check-in mới sinh Attendance — có thể
    tạo **ca riêng "Ca KTV"** (giờ linh hoạt) + Holiday List, gán làm Default Shift (xem §1.6).
 2. **Gán role** cho User: **Employee** (+ role FSM nếu hệ FSM yêu cầu).
@@ -218,10 +221,11 @@ Desk → **Monthly Attendance Sheet** (`/app/query-report/Monthly Attendance She
 
 ## 7. Checklist nhanh
 
-**Setup 1 NV mới:** Employee (+ user_id + department + leave_approver) → role Employee →
-(KTV: + FS Service Resource) → (đi ngoài: + whitelist) → NV cài app + đăng ký thiết bị →
+**Setup 1 NV mới:** Employee (+ user_id + department + leave_approver; đi ngoài: + shift_request_approver)
+→ role Employee → (KTV: + FS Service Resource) → (đi ngoài: + whitelist) → NV cài app + đăng ký thiết bị →
 HR duyệt thiết bị → xong.
 
-**Mỗi ngày:** NV chấm công / xin nghỉ / chấm công bù → Manager duyệt (bước 1) → HR submit (bước 2 cho phép).
+**Mỗi ngày:** NV chấm công / xin nghỉ / chấm công bù → người duyệt xử lý trên app: nghỉ phép về
+**leave_approver** (bước 1) rồi HR submit (bước 2); chấm công bù về **shift_request_approver** (1 bước).
 
 **Cuối tháng:** Earned Leave tự +1 quỹ phép · HR xem Monthly Attendance Sheet.

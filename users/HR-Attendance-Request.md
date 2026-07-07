@@ -102,7 +102,12 @@ Lý do giữ 1 step:
 2. Review reason + explanation
 3. **Duyệt** → app gọi `api.approval.act` với `action = "Submit"` → `doc.submit()` → HRMS tạo Attendance (status `Present`, hoặc `Half Day` nếu đánh dấu nửa ngày)
 
-> Phân quyền: nếu config `restrict_to_leave_approver = 1`, chỉ Manager là `Employee.leave_approver` của NV mới duyệt được (trừ HR Manager / System Manager override).
+> Phân quyền (từ 07/2026 — commit `6010839`): nếu config `restrict_to_leave_approver = 1`, người
+> duyệt AR = **`shift_request_approver`** — helper `_ar_approver_users()` hợp `Employee.shift_request_approver`
+> với mọi dòng child table `Department Approver` (`parentfield = shift_request_approver`) của phòng.
+> **TÁCH hẳn khỏi `leave_approver`** (nghỉ phép không đổi). HR Manager / System Manager luôn override.
+> Tab "Cần duyệt" hiện theo role trong **HR Approval Inbox Settings** — dòng AR đã thêm role
+> **`Attendance Request Approver`**.
 
 ### Reject
 

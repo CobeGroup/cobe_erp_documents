@@ -22,8 +22,11 @@ nav_order: 1
 2. Điền họ tên, ngày vào làm, **Company**.
 3. **User ID** — gắn **đúng 1 tài khoản login** của người này. → Tài khoản (User) này phải **do Quản trị tạo trước** + gán role; xem **[Tạo User & phân quyền](Desk-Admin-User.html)**. Chưa có thì báo Quản trị tạo rồi mới link.
 4. **Department** — chọn phòng (quyết định người duyệt mặc định).
-5. (Tuỳ chọn) **Leave Approver** — chỉ đặt khi cần **đè** người duyệt của phòng.
-6. Lưu.
+5. (Tuỳ chọn) **Leave Approver** — chỉ đặt khi cần **đè** người duyệt nghỉ phép của phòng.
+6. (Tuỳ chọn) **Shift Request Approver** — người duyệt **chấm công bù / công tác** riêng cho NV này
+   (cộng thêm vào danh sách của phòng, không phải override). Tách khỏi Leave Approver — xem
+   [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html).
+7. Lưu.
 
 ![Form Employee — company, department, user, leave approver](images/desk/admin-employee-form.png)
 
