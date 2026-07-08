@@ -28,6 +28,7 @@ has_children: true
 
 - 📱 Mới vào công ty, cần chấm công → **[Cài app & Chấm công](Guide-NhanVien-ChamCong.html)**
 - 🚗 Đi công tác / KTV làm hiện trường → **[Chấm công ngoài VP](Guide-NhanVien-ChamCongNgoai.html)** · **[KTV hiện trường](Guide-KTV-ChamCong.html)**
+- 🗺️ Muốn hiểu đề xuất chấm công bù được duyệt thế nào → **[Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html)**
 - 🌴 Muốn xin nghỉ / nghỉ bù → **[Xin nghỉ phép & nghỉ bù](Guide-NhanVien-NghiPhep.html)**
 - 🗺️ Muốn hiểu đơn nghỉ được duyệt thế nào → **[Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html)**
 - ✅ Là người duyệt, có đơn chờ → **[Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html)** · **[Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html)**

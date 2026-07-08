@@ -114,6 +114,7 @@ nào lỗi sẽ báo riêng, các phiếu còn lại vẫn được duyệt:
 
 ## Liên quan
 
+- 🗺️ [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) — toàn cảnh, theo chân 1 đề xuất
 - 👔 [Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html) — flow duyệt từng phiếu đầy đủ
 - 🔧 [KTV hiện trường: Chấm công ngoài VP](Guide-KTV-ChamCong.html) — vì sao KTV tạo các đơn này
 - 👤 [Chấm công ngoài VP & Đề xuất chấm công bù (NV)](Guide-NhanVien-ChamCongNgoai.html) — phía người gửi đơn

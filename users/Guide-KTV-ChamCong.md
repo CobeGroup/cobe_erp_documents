@@ -223,6 +223,7 @@ mở tab **Cần duyệt** trên my-workspace, bấm **Duyệt** hoặc **Từ c
 
 - 👤 [Cài app & Chấm công](Guide-NhanVien-ChamCong.html) — đăng ký thiết bị, chấm công hằng ngày
 - 👤 [Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html) — bản đầy đủ cho mọi nhân viên
+- 🗺️ [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) — toàn cảnh, theo chân 1 đề xuất
 - 👔 [Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html)
 - 👩‍💼 HR: [HR Policy & Whitelist](HR-Policy.html) · [Vận hành theo phòng ban (Sales / KTV)](Cham-Cong-Van-Hanh-Theo-Phong-Ban.html)
 - 🔧 Kỹ thuật: [Attendance Request](HR-Attendance-Request.html)

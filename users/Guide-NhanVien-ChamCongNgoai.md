@@ -181,6 +181,7 @@ Quản lý nhận **thông báo đẩy** + thấy đơn trong tab **Cần duyệ
 ---
 
 ## Liên quan
+- 🗺️ [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) — toàn cảnh, theo chân 1 đề xuất
 - 🔧 [KTV hiện trường: Chấm công ngoài VP](Guide-KTV-ChamCong.html) — bản riêng cho kỹ thuật viên (OUT tự do + đề xuất ngày đi thẳng hiện trường)
 - 👤 [Cài app & Chấm công](Guide-NhanVien-ChamCong.html) — chấm công vào/ra hằng ngày
 - 👤 [Xin nghỉ phép](Guide-NhanVien-NghiPhep.html) · 🗺️ [Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html)
