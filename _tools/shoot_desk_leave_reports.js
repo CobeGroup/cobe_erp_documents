@@ -3,18 +3,23 @@
    Ảnh ra: images/desk/hr-report-leave-{balance,ledger,balance-summary}.png
    → nhúng bổ sung vào users/Desk-HR-KiemTraPhep.md (trang đang dùng ảnh cũ hr-leave-balance.png).
 
-   CHUẨN BỊ (DB local 07/2026 bị restore nên demo data + user demo có thể đã mất — dựng lại bằng
-   bench console):
-   1. User demo-hr@tgdg.com (role HR Manager): enabled=1 + update_password(...).
-   2. Demo data cho EMP (mặc định HR-EMP-00043):
-      - Leave Allocation "Annual Leave" 01/01–31/12 năm hiện tại, 12 ngày, Submit
-        (nếu Leave Type dính is_lwp=1 thì bỏ tick trước).
-      - 1 Leave Application "Nghỉ bù" 1 ngày đã Submitted (đi qua apply_workflow
-        Manager Approve → Submit) để minh hoạ số dư âm allow_negative.
-   3. Web: redis 13002/11002 + `bench serve --port 8002` (KHÔNG --nothreading — report call sẽ treo).
+   CHUẨN BỊ (demo data đã dựng 08/07/2026 trên DB local; DB restore lại thì dựng lại bằng console):
+   1. User demo-hr@tgdg.com: enabled=1 + update_password + roles HR Manager, HR User, Leave
+      Approver và **Employee** (DB prod-copy: Company chỉ đọc được bởi role Employee/Sales User/…;
+      thiếu là report chết 417 "You do not have permission to access Company". Lưu ý User.save()
+      hay rơi role Employee → nhét thẳng Has Role rồi frappe.clear_cache).
+   2. Employee "Demo Nhân Viên" (mặc định HR-EMP-00168, company THẾ GIỚI ĐIỆN GIẢI,
+      holiday_list HL - Lễ VN - 2026):
+      - Leave Allocation "Annual Leave" 01/01–31/12, 12 ngày, Submit (Annual Leave đang dính
+        is_lwp=1 trong DB → set is_lwp=0 trước).
+      - 2 Leave Application đã Submitted qua apply_workflow (Manager Approve → Submit):
+        Phép năm 15/05 + Nghỉ bù 11/05 (custom_comp_worked_date 09/05) → minh hoạ số dư âm.
+      - Attendance tháng 5: 04 P · 05 P · 06 A · 07 HD · 08 WFH (cho shoot_desk_mas.js).
+   3. Stack: redis 13002/11002 + `bench serve --port 8002` (KHÔNG --nothreading — report call treo)
+      + worker (`bench_helper frappe worker`) cho prepared report.
    Chạy:
      SITE=http://cobe.cc:8002 FRAPPE_USER=demo-hr@tgdg.com FRAPPE_PASS='<mật-khẩu>' \
-       node help/cobe_erp_documents/_tools/shoot_desk_leave_reports.js
+       EMP=HR-EMP-00168 node help/cobe_erp_documents/_tools/shoot_desk_leave_reports.js
    Chụp xong: disable lại demo-hr.
 */
 const PW = '/home/Volumes/ws/thegioidiengiai.com/dev/erps/v3/cobe.cc/apps/wiki/node_modules/playwright';
@@ -26,7 +31,7 @@ const OUT = ROOT + '/help/cobe_erp_documents/users/images/desk';
 const SITE = (process.env.SITE || 'http://cobe.cc:8002').replace(/\/$/, '');
 const USER = process.env.FRAPPE_USER || '';
 const PASS = process.env.FRAPPE_PASS || '';
-const EMP = process.env.EMP || 'HR-EMP-00043';
+const EMP = process.env.EMP || 'HR-EMP-00168';
 const COMPANY = process.env.COMPANY || 'THẾ GIỚI ĐIỆN GIẢI';
 
 if (!USER || !PASS) { console.error('Thiếu FRAPPE_USER / FRAPPE_PASS'); process.exit(1); }

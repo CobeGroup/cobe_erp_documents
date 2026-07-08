@@ -38,6 +38,8 @@ nav_order: 6
 | **Employee Leave Balance Summary** | **Tổng hợp** số dư phép toàn phòng/công ty (1 dòng/nhân viên). |
 | **Leave Ledger** | **Sổ cái phép**: từng giao dịch cấp (+) / trừ (−) phép, truy vết số dư. |
 
+![Employee Leave Balance — chart số dư theo loại (Nghỉ bù âm là bình thường) + bảng cấp/nghỉ/còn](images/desk/hr-report-leave-balance.png)
+
 > 📘 **Hướng dẫn chi tiết cách dùng 3 báo cáo này** (kiểm số dư 1 NV, ai đang nghỉ hôm nay, truy vết
 > số dư sai): xem **[Kiểm tra phép & báo cáo phép](Desk-HR-KiemTraPhep.html)**.
 
@@ -49,6 +51,8 @@ nav_order: 6
 | **Employee Analytics** | Phân tích số lượng nhân sự theo **phòng / chức danh / giới / loại NV**. |
 | **Employee Birthday** | Danh sách **sinh nhật** nhân viên theo tháng. |
 | **Employee Exits** | Nhân viên **nghỉ việc** + thông tin exit interview. |
+
+![Employee Analytics — cơ cấu nhân sự theo phòng ban (donut + số lượng)](images/desk/hr-report-employee-analytics.png)
 
 ## Chi phí / Tạm ứng
 
@@ -66,7 +70,10 @@ nav_order: 6
 1. Mở báo cáo (Search tên, hoặc menu **Reports**).
 2. Đặt **filter** ở thanh trên (tháng/năm, company, phòng, nhân viên…).
 3. Báo cáo nặng → bấm **Generate New Report** rồi chờ.
-4. **Xuất**: nút **⋮ (Menu)** → **Export** (Excel/CSV) để gửi/đối chiếu.
+4. **Xuất**: nút **⋮ (Menu)** → **Export** (Excel/CSV) để gửi/đối chiếu — cùng menu có
+   **Setup Auto Email** để gửi báo cáo định kỳ tự động.
+
+![Menu ⋮ của mọi report — Print / PDF / Export / Setup Auto Email](images/desk/hr-mas-export.png)
 
 ## Liên quan
 - [Theo dõi & sửa chấm công](Desk-HR-ChamCong.html) · [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html)

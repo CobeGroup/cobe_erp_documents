@@ -37,10 +37,11 @@ Leaves → Reports → Leave Balance):
    đặt sai kỳ là số sai*.
 2. Chọn **Company**; muốn soi 1 người thì chọn thêm **Employee** (bỏ trống = cả công ty).
 
-![Employee Leave Balance — cấp 12, đã nghỉ 2, còn 10](images/desk/hr-leave-balance.png)
+![Employee Leave Balance — cấp 12, đã nghỉ 1; Nghỉ bù −1 hiện cột đỏ dưới trục](images/desk/hr-report-leave-balance.png)
 
 Đọc cột: **Opening Balance** (đầu kỳ) → **New Leave(s) Allocated** (cấp trong kỳ) → **Leave(s)
-Taken** (đã nghỉ) → **Leave(s) Expired** (hết hạn) → **Closing Balance** (còn lại).
+Taken** (đã nghỉ) → **Leave(s) Expired** (hết hạn) → **Closing Balance** (còn lại). Chart trên đầu
+vẽ số dư theo loại — cột **đỏ dưới trục 0** chính là loại Nghỉ bù âm.
 
 > 🔁 **Loại "Nghỉ bù" không có quỹ** — số dư **âm là bình thường**: âm N = đã nghỉ bù N ngày
 > (thống kê), không phải lỗi. Đừng "cấp bù" cho hết âm. Xem [Loại phép & số dư](Desk-HR-LoaiPhep.html).
@@ -88,6 +89,8 @@ hôm đó ai nghỉ.
 Cách dùng chung: Search tên report → đặt filter (kỳ ngày, Company, Employee/Department) → nút
 **⋮ → Export** ra Excel khi cần gửi/đối chiếu. (Danh mục report khác: [Báo cáo (HR)](Desk-HR-BaoCao.html).)
 
+![Employee Leave Balance Summary — mỗi NV 1 dòng, số dư các loại tại 1 ngày](images/desk/hr-report-leave-balance-summary.png)
+
 ---
 
 ## 5. Số dư sai? Truy vết bằng Leave Ledger
@@ -95,6 +98,8 @@ Cách dùng chung: Search tên report → đặt filter (kỳ ngày, Company, Em
 Mở report **Leave Ledger** → filter **Employee** + kỳ ngày → dò từng dòng: khởi điểm là dòng
 **Leave Allocation (+N)**, mỗi đơn nghỉ là một dòng **Leave Application (−n)** — cộng dồn xuống
 tới dòng cuối phải ra đúng số dư hiện tại. Lệch ở đâu, chứng từ gốc nằm ngay cột Transaction.
+
+![Leave Ledger — dòng cấp +12 (Allocation) và 2 dòng trừ −1 (Phép năm, Nghỉ bù) kèm mã chứng từ](images/desk/hr-report-leave-ledger.png)
 
 Nguyên nhân hay gặp:
 

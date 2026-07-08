@@ -34,6 +34,11 @@ nav_order: 6.5
 
 ![Monthly Attendance Sheet — bảng công tháng theo ngày](images/desk/hr-report-attendance.png)
 
+Lần đầu mở (hoặc đổi bộ lọc sang tháng chưa chạy), bảng trống và góc phải hiện nút
+**Generate New Report** — bấm nó rồi chờ:
+
+![Trạng thái chờ generate — nút Generate New Report ở góc phải](images/desk/hr-mas-generate.png)
+
 > ⚙️ Nếu thấy bảng **trống / cũ**, bấm **Generate New Report** lần nữa — bảng được tạo theo **bộ lọc
 > hiện tại** chứ không tự cập nhật khi bạn đổi tháng.
 
@@ -49,6 +54,12 @@ nav_order: 6.5
 | **Group By** | Gom nhóm theo **Department / Designation / Branch** (tuỳ chọn). |
 | **Summarized View** | Tích để xem **chỉ phần tổng** (không có lưới ngày) — gọn, hợp đối chiếu nhanh. |
 | **Include Company Descendants** | Gộp cả các công ty con. |
+
+Tích **Summarized View** → mỗi nhân viên còn 1 dòng tổng: Total Present / Leaves / Absent /
+Holidays / Unmarked Days, và **tách cột theo từng loại phép** (ảnh dưới: cột **Nghỉ bù** và
+**Annual Leave** riêng nhau):
+
+![Summarized View — cột tổng + tách từng loại phép, Nghỉ bù riêng cột](images/desk/hr-mas-summary.png)
 
 ---
 
@@ -66,6 +77,11 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 | **H** | Holiday | Ngày lễ (theo Holiday List) | nghỉ lễ |
 | **WO** | Weekly Off | Ngày nghỉ tuần (vd Chủ nhật) | nghỉ tuần |
 | *(trống)* | — | **Chưa có công** ngày đó (không chấm, không đơn) | chưa tính |
+
+Ví dụ một dòng đủ mã — **1/5 = H** (Quốc tế Lao động), **4-5 = P**, **6 = A**, **7 = HD/A** (nửa
+ngày), **8 = WFH**, **11 = L** (đơn Nghỉ bù đã duyệt), cuối tuần & ngày chưa chấm để **trống**:
+
+![Lưới tháng 5 — đủ các mã H / P / A / HD / WFH / L và ô trống](images/desk/hr-mas-grid.png)
 
 > 🔢 **Cột tổng** (bên phải lưới): **Total Present**, **Total Leaves**, **Total Absent**, **Total
 > Holidays**… cộng nhanh số ngày từng loại. Phần **chi tiết phép** tách theo **từng loại phép**
@@ -118,7 +134,13 @@ check-in và không có đơn** sẽ để **ô trống** chứ **không** tự 
 1. Đặt **Month / Year / Company** → **Generate New Report**.
 2. Soát các **ô trống ngày thường** → xử lý (nhắc NV / thêm công tay).
 3. Bấm **⋮ (Menu)** → **Export** → chọn **Excel / CSV** để gửi kế toán / lưu hồ sơ.
+
+![Menu ⋮ — Print / PDF / Export / Setup Auto Email](images/desk/hr-mas-export.png)
+
 4. Cần xem **giờ công chi tiết** từng buổi → mở **Employee Checkin** hoặc báo cáo **Shift Attendance**.
+
+> 📬 Mẹo: **Setup Auto Email** (cùng menu ⋮) đặt lịch gửi bảng công tự động hằng tháng vào mail
+> HR/kế toán — khỏi phải nhớ export tay.
 
 ---
 
