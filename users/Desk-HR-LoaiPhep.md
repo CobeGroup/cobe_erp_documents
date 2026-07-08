@@ -93,4 +93,4 @@ Xem số dư + đã trừ: report **Employee Leave Balance** (Search → "Employ
 | Cần cấp cho cả phòng/công ty | Dùng **Leave Policy Assignment** thay vì cấp tay từng người |
 
 ## Liên quan
-- [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html) · [Leave Type (kỹ thuật)](HR-Leave-Type.html) · [Leave Setup & Workflow (kỹ thuật)](HR-Leave-Setup.html)
+- [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html) · [Kiểm tra phép & báo cáo phép](Desk-HR-KiemTraPhep.html) · [Leave Type (kỹ thuật)](HR-Leave-Type.html) · [Leave Setup & Workflow (kỹ thuật)](HR-Leave-Setup.html)
