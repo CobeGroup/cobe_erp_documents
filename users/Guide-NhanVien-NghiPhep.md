@@ -76,15 +76,21 @@ Khi chỉ cần nghỉ **một buổi** (vd sáng đi khám, chiều đi làm):
 ## 4. Nghỉ bù (sau ngày làm thêm / làm khuya)
 
 Hôm trước **làm thêm giờ / làm khuya** (hay gặp ở kỹ thuật viên đi lắp máy đêm)? Bạn được xin
-**Nghỉ bù** — tạo đơn y như nghỉ phép thường, chỉ khác **Loại phép**:
+**Nghỉ bù** — nhưng nhớ điều kiện tiên quyết:
+
+> ⚠️ **Bước 0 (làm TRƯỚC khi làm thêm):** tạo đơn **Làm thêm giờ** với quy đổi
+> **"Nghỉ bù"** và được Quản lý duyệt — xem [Xin làm thêm giờ](Guide-NhanVien-LamThem.html).
+> Không có đơn này, hệ thống sẽ **từ chối đơn Nghỉ bù ngay khi gửi**.
+
+Có đơn làm thêm đã duyệt rồi thì tạo đơn nghỉ y như nghỉ phép thường, chỉ khác **Loại phép**:
 
 <img src="images/guide/nhanvien/13-leave-comp.png" width="240" alt="Form Nghỉ bù — Ngày làm thêm để bù + khoảng ngày nghỉ">
 
 1. Bấm **+** → **Loại phép** chọn **"Nghỉ bù"**.
-2. Form hiện thêm ô **"Ngày làm thêm để bù"** (bắt buộc) — chọn **hôm bạn đã làm thêm/làm khuya**.
+2. Form hiện thêm ô **"Ngày làm thêm để bù"** (bắt buộc) — chọn **đúng ngày trong đơn
+   Làm thêm giờ đã duyệt**.
 3. **Khoảng ngày** = ngày muốn nghỉ (thường là hôm sau).
 4. **Lý do:** ghi rõ **làm gì, tới mấy giờ** — vd *"Làm khuya lắp máy tới 23h đêm 02/07"*.
-   Quản lý duyệt trên app chỉ thấy **lý do**, nên ghi càng rõ duyệt càng nhanh.
 5. **Gửi đơn** → duyệt **2 bước như nghỉ phép thường** (Quản lý → HR).
 
 <img src="images/guide/nhanvien/14-leave-comp-list.png" width="240" alt="Đơn Nghỉ bù chờ Manager duyệt">
@@ -96,7 +102,8 @@ Hôm trước **làm thêm giờ / làm khuya** (hay gặp ở kỹ thuật viê
 | Trừ quỹ phép? | Có (hết quỹ là không xin được) | **Không** — không cần số dư |
 | Trừ lương? | Không | **Không** |
 | Cần khai gì thêm? | — | **Ngày làm thêm để bù** |
-| Ai xác nhận làm thêm là có thật? | — | **Quản lý trực tiếp** khi duyệt |
+| Ai xác nhận làm thêm là có thật? | — | **Hệ thống tự kiểm**: phải có đơn Làm thêm giờ đã duyệt cho đúng ngày đó |
+| Dùng lại được không? | — | Mỗi ngày làm thêm chỉ bù **1 lần** |
 
 ---
 
@@ -109,9 +116,12 @@ Hôm trước **làm thêm giờ / làm khuya** (hay gặp ở kỹ thuật viê
 | Đơn vẫn "Chờ" sau khi Quản lý duyệt | Còn chờ **HR duyệt bước 2** mới chính thức |
 | Không thấy loại **"Nghỉ bù"** | Công ty chưa bật Leave Type Nghỉ bù → báo HR |
 | Xin Nghỉ bù mà app đòi "Ngày làm thêm để bù" | Ô này **bắt buộc** với Nghỉ bù — chọn đúng hôm đã làm thêm |
+| "Ngày … không có đơn Làm thêm giờ đã duyệt…" | Ngày đó thiếu đơn Làm thêm (quy đổi Nghỉ bù) đã duyệt → [tạo đơn làm thêm](Guide-NhanVien-LamThem.html) trước (khai bổ sung được trong 7 ngày) |
+| "Ngày làm thêm … đã được dùng cho đơn Nghỉ bù …" | Ngày làm thêm đó đã bù rồi — mỗi ngày chỉ bù 1 lần |
 
 ---
 
 ## Liên quan
+- ⏱️ [Xin làm thêm giờ (OT)](Guide-NhanVien-LamThem.html) — điều kiện tiên quyết của Nghỉ bù
 - 🗺️ [Hành trình một đơn nghỉ phép (NV → Manager → HR)](Hanh-Trinh-Nghi-Phep.html) — đơn của bạn được duyệt thế nào
 - [Cài app & Chấm công](Guide-NhanVien-ChamCong.html) · [Chi phí](Guide-NhanVien-ChiPhi.html)

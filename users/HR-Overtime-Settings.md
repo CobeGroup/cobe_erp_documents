@@ -1,13 +1,15 @@
 ---
-title: HR Overtime Settings
+title: Cấu hình Overtime
 layout: default
 parent: Lương & Thưởng
 nav_order: 2
 ---
 
-# HR Overtime Settings — Cấu hình tăng ca
+# Cấu hình Overtime (làm thêm giờ)
 
-> Single doctype. Toàn hệ thống 1 record. Quy định cách tính OT cho mọi Company.
+> Không có doctype "HR Overtime Settings" riêng — cấu hình OT nằm ở **3 chỗ**:
+> **Overtime Type** (HRMS native — cách tính tiền), **HR Policy** (chọn Overtime Type
+> cho từng Company), và **Payroll Settings** (bật auto tạo Overtime Slip khi chạy lương).
 >
 > Permissions: **HR Manager**, **System Manager**.
 
@@ -15,188 +17,99 @@ nav_order: 2
 
 ## Mục lục
 
-1. [Cách mở](#1-cách-mở)
-2. [Các field chính](#2-các-field-chính)
-3. [Multiplier rules (Hệ số)](#3-multiplier-rules-hệ-số)
-4. [Loại trừ (Exclusions)](#4-loại-trừ-exclusions)
-5. [Logic tính amount](#5-logic-tính-amount)
-6. [Auto-approve](#6-auto-approve)
-7. [Kịch bản cấu hình mẫu](#7-kịch-bản-cấu-hình-mẫu)
+1. [Sơ đồ cấu hình](#1-sơ-đồ-cấu-hình)
+2. [Overtime Type — cách tính tiền](#2-overtime-type--cách-tính-tiền)
+3. [HR Policy — Default Overtime Type](#3-hr-policy--default-overtime-type)
+4. [Payroll Settings & chạy lương có OT](#4-payroll-settings--chạy-lương-có-ot)
+5. [Checklist trước kỳ lương đầu tiên có OT](#5-checklist-trước-kỳ-lương-đầu-tiên-có-ot)
 
 ---
 
-## 1. Cách mở
+## 1. Sơ đồ cấu hình
 
-- Desk → search "HR Overtime Settings"
-- URL: `/app/hr-overtime-settings`
+Hệ thống đã **seed sẵn** khi cài đặt (patch `v0_016`):
 
----
-
-## 2. Các field chính
-
-### `enabled` (Check)
-
-Bật/tắt toàn module OT. Khi tắt:
-- OT Request validate sẽ throw `"Overtime is disabled"`
-- Người dùng không tạo được record mới
-
-Default: **0** (tắt). Bật khi đã config xong tất cả setting + multiplier.
-
-### `salary_component` (Link → Salary Component, bắt buộc khi enabled)
-
-Component dùng cho Additional Salary tạo từ OT Request. Mặc định auto-set "Overtime" lúc install.
-
-### `min_overtime_minutes` (Int, default 30)
-
-Mỗi OT Request phải có duration tối thiểu (phút). Dưới ngưỡng → validate throw.
-
-VD: 30 → OT 10 phút không tạo được.
-
-### `round_to_minutes` (Int, default 15)
-
-Round DOWN duration về bội số của field này. VD: 1h 47m, round_to=15 → 1h 45m.
-
-### `auto_approve_below_hours` (Float, default 0)
-
-Nếu OT duration ≤ ngưỡng này → auto approved (không cần manager duyệt). VD: 2 → OT ≤ 2h auto duyệt.
-
-Set 0 để **TẮT auto-approve** (tất cả OT phải manager duyệt).
-
-### `max_overtime_hours_per_day` (Float, default 4)
-
-Cap số giờ OT 1 ngày 1 nhân viên. Vượt → throw `"Exceeds max OT per day"`.
-
-### `max_overtime_hours_per_month` (Float, default 40)
-
-Cap số giờ OT 1 tháng. Tính tổng cộng dồn từ tất cả OT Request docstatus=0 và 1 trong cùng tháng calendar.
-
----
-
-## 3. Multiplier rules (Hệ số)
-
-Child table `multipliers` (doctype HR Overtime Multiplier Rule):
-
-| day_type | multiplier | description |
+| Thành phần | Bản ghi seed sẵn | Vai trò |
 |---|---|---|
-| Weekday | 1.5 | Tăng ca ngày thường (1.5x lương giờ) |
-| Weekend | 2.0 | Tăng ca thứ 7 / Chủ nhật (2x) |
-| Holiday | 3.0 | Tăng ca ngày lễ (3x theo luật LĐ) |
+| Salary Component | **Lương làm thêm giờ** (Earning) | Dòng lương nhận tiền OT trên Salary Slip |
+| Overtime Type | **Làm thêm giờ** | Cách tính đơn giá + hệ số nhân |
+| HR Policy (mỗi Company) | `default_overtime_type` = "Làm thêm giờ" | Company này áp Overtime Type nào |
+| Payroll Settings | `create_overtime_slip` = **TẮT** | Payroll có tự tạo Overtime Slip không |
 
-3 row trên được seed sẵn lúc install. **Bắt buộc đủ 3 row** — validate sẽ throw nếu thiếu.
-
-Adjust theo quy định công ty:
-- Cobe muốn Weekend chỉ 1.8x → sửa row Weekend.multiplier = 1.8
-- Có thể thêm row mới với day_type khác **không** — chỉ accept 3 giá trị enum Weekday/Weekend/Holiday
-
-### Cách xác định day_type
-
-Tự động ở OT Request.validate:
-1. Check Employee.holiday_list, nếu OT date ∈ Holiday List → `Holiday`
-2. Nếu không, check weekday: Saturday/Sunday → `Weekend`
-3. Còn lại → `Weekday`
-
-Override thủ công: user có thể edit `day_type` trên OT Request (vd ngày làm bù).
+Chỉ cần **rà lại Overtime Type** (mục 2) và **bật Payroll Settings** (mục 4) là chạy được.
 
 ---
 
-## 4. Loại trừ (Exclusions)
+## 2. Overtime Type — cách tính tiền
 
-### Tab "Exclusions" có 2 child table:
+Desk → search **Overtime Type** → mở **"Làm thêm giờ"**. Các field quan trọng:
 
-**`excluded_designations`** (HR Compensation Excluded Designation):
-- `designation` (Link → Designation)
-- `reason` (Text)
+| Field | Seed sẵn | Ý nghĩa |
+|---|---|---|
+| Overtime Salary Component | Lương làm thêm giờ | Tiền OT đổ vào component này |
+| Overtime Calculation Method | Salary Component Based (trên **Basic**) | Đơn giá giờ = lương Basic ÷ số ngày công ÷ giờ chuẩn/ngày |
+| Standard Multiplier | **1.5** | Hệ số ngày thường (150% — luật VN) |
+| Applicable for Weekend + Weekend Multiplier | ✓ / **2.0** | Cuối tuần 200% |
+| Applicable for Public Holiday + Holiday Multiplier | ✓ / **3.0** | Ngày lễ 300% (theo Holiday List) |
+| Maximum Overtime Hours Allowed | 0 (không trần) | Trần giờ OT/ngày khi tính tiền — set nếu công ty muốn cap |
 
-Khi OT Request validate, nếu employee.designation ∈ list này → throw `"Designation excluded from overtime"`.
+> 💡 **Rà lại 2 điểm trước khi tin số tiền:**
+> 1. Component **"Basic"** có đúng là lương cơ bản trong Salary Structure của công ty
+>    không — nếu công ty dùng tên khác (vd "Lương cơ bản") thì sửa danh sách
+>    *Applicable Salary Component*.
+> 2. Muốn đơn giá cố định (vd 50.000đ/giờ) → đổi method sang **Fixed Hourly Rate** +
+>    điền `hourly_rate`.
 
-Use case: C-level (CEO, CTO, Director) không được tính OT theo policy công ty.
-
-**`excluded_employees`** (HR Compensation Excluded Employee):
-- `employee` (Link → Employee)
-- `employee_name` (Data, auto-fill)
-- `reason` (Text)
-
-Exclude từng nhân viên cụ thể. Ưu tiên cao hơn designation. Use case: chủ tịch HĐQT, cố vấn ngoài.
-
----
-
-## 5. Logic tính amount
-
-Khi OT Request validate:
-
-```python
-duration_hours = (to_time - from_time - break_minutes) / 60
-# round down về bội số round_to_minutes
-duration_hours = floor(duration_hours * 60 / round_to_minutes) * round_to_minutes / 60
-
-# Lookup hourly_rate
-base = SalaryStructureAssignment.base if exists else Employee.ctc / 12
-hourly_rate = base / 220  # 220h tiêu chuẩn 1 tháng
-
-# Multiplier
-multiplier = multipliers[day_type].multiplier
-
-# Amount
-amount = duration_hours * hourly_rate * multiplier
-```
-
-Tất cả các trường intermediate (`duration_hours`, `hourly_rate`, `multiplier`, `amount`) đều save vào OT Request — audit dễ.
+Có thể tạo **nhiều Overtime Type** (vd riêng cho khối kỹ thuật) rồi gán per-company
+qua HR Policy (mục 3).
 
 ---
 
-## 6. Auto-approve
+## 3. HR Policy — Default Overtime Type
 
-Khi OT Request submit:
-- Nếu `duration_hours ≤ auto_approve_below_hours` → `approval_status = "Approved"`, `approved_by = "Administrator"`, tự tạo Additional Salary ngay
-- Nếu vượt → `approval_status = "Pending Manager"`, chờ manager duyệt thủ công
+Desk → **HR Policy** (mỗi Company 1 bản ghi) → section **Overtime Notification**:
 
-Set `auto_approve_below_hours = 0` để tắt hoàn toàn.
+| Field | Ý nghĩa |
+|---|---|
+| **Default Overtime Type** | Giờ OT đã duyệt của Company này tính theo Overtime Type nào |
+| Notify OT Threshold (minutes) | NV check-out muộn quá N phút **mà không có đơn OT** → nhắc NV tạo đơn (0 = tắt nhắc) |
+
+Không set Default Overtime Type → hệ thống fallback nếu toàn site chỉ có đúng 1
+Overtime Type; nhiều hơn thì **giờ OT không được ghi vào Attendance** (có log lỗi).
 
 ---
 
-## 7. Kịch bản cấu hình mẫu
+## 4. Payroll Settings & chạy lương có OT
 
-### Cobe Group default (chuẩn LĐ VN)
+Giờ OT đã duyệt nằm trên Attendance — muốn ra tiền phải có **Overtime Slip** gom
+theo kỳ lương:
 
-```
-enabled = ✓
-salary_component = Overtime
-min_overtime_minutes = 30
-round_to_minutes = 15
-auto_approve_below_hours = 2     # OT ≤ 2h tự duyệt cho nhanh
-max_overtime_hours_per_day = 4   # luật LĐ tối đa 4h/ngày
-max_overtime_hours_per_month = 40  # luật LĐ tối đa 40h/tháng
+- **Cách tự động (khuyên dùng):** Desk → **Payroll Settings** → tick
+  **`create_overtime_slip`**. Từ đó mỗi lần chạy **Payroll Entry**, hệ thống tự tạo +
+  submit Overtime Slip cho các NV có giờ OT → Additional Salary → vào Salary Slip.
+- **Cách tay:** Desk → **Overtime Slip** → New → chọn Employee + kỳ → hệ thống tự
+  nạp các Attendance có OT trong kỳ → Submit.
 
-multipliers:
-  Weekday → 1.5
-  Weekend → 2.0
-  Holiday → 3.0
+> ⚠️ Mặc định sau deploy `create_overtime_slip` đang **TẮT** — chưa bật thì duyệt
+> bao nhiêu đơn tiền cũng chưa vào lương.
 
-excluded_designations:
-  CEO, CTO, Director, VP
+---
 
-excluded_employees: (empty)
-```
+## 5. Checklist trước kỳ lương đầu tiên có OT
 
-### Strict mode (tất cả phải duyệt)
-
-```
-auto_approve_below_hours = 0
-```
-
-### Relax cap (thử nghiệm)
-
-```
-max_overtime_hours_per_day = 6
-max_overtime_hours_per_month = 60
-```
-
-(Lưu ý: vi phạm luật LĐ nếu áp dụng dài hạn)
+1. ☐ Mở **Overtime Type "Làm thêm giờ"** — xác nhận component tính đơn giá đúng với
+   Salary Structure thực tế (mục 2).
+2. ☐ Mỗi **HR Policy** có `default_overtime_type` (patch đã fill, check company mới).
+3. ☐ **Payroll Settings → create_overtime_slip** = ✓.
+4. ☐ Chạy thử 1 NV: tạo đơn OT → duyệt → check-out muộn → xem Attendance có
+   `actual_overtime_duration` → chạy payroll nháp → Salary Slip có dòng
+   **"Lương làm thêm giờ"** với số tiền hợp lý.
+5. ☐ **Holiday List** đã gán cho Company/Employee — thiếu thì hệ số lễ (×3.0)
+   không nhận diện được ngày lễ.
 
 ---
 
 ## Liên quan
-
-- [HR Overtime Request](HR-Overtime-Request.html) — workflow xin OT
-- [HR Compensation — Tổng quan](Compensation-Tong-Quan.html)
-- [HR Compensation — Architecture (tech)](../tech/HR-Compensation-Architecture.html)
+- [HR Overtime Request — luồng dữ liệu chi tiết](HR-Overtime-Request.html)
+- End-user: [Xin làm thêm giờ](Guide-NhanVien-LamThem.html) · [Duyệt đơn làm thêm](Duyet-Lam-Them.html)
+- [HR Policy](HR-Policy.html) · [Tổng quan Lương & Thưởng](Compensation-Tong-Quan.html)

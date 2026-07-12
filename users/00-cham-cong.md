@@ -15,8 +15,8 @@ has_children: true
 | Chủ đề | Dành cho | Nội dung |
 |---|---|---|
 | ⏰ **[Chấm công](HD-NhanVien.html)** | Nhân viên · KTV | Cài app, đăng ký thiết bị, chấm công vào/ra, chấm công ngoài VP, đề xuất chấm công bù, thông báo & tài khoản |
-| 🌴 **[Nghỉ phép & Nghỉ bù](HD-NghiPhep.html)** | Nhân viên | Xem số dư, xin nghỉ (cả nửa ngày), xin **nghỉ bù** sau ngày làm thêm/làm khuya + hành trình một đơn nghỉ phép |
-| ✅ **[Phê duyệt](HD-TruongBoPhan.html)** | Trưởng Bộ Phận · HR | Duyệt nghỉ phép (2 bước Manager → HR), duyệt chấm công bù (1 bước, từng phiếu & hàng loạt), chuyển duyệt |
+| 🌴 **[Nghỉ phép & Nghỉ bù](HD-NghiPhep.html)** | Nhân viên | Xem số dư, xin nghỉ (cả nửa ngày), xin **làm thêm giờ (OT)** quy đổi tiền/nghỉ bù, xin **nghỉ bù** + hành trình một đơn nghỉ phép |
+| ✅ **[Phê duyệt](HD-TruongBoPhan.html)** | Trưởng Bộ Phận · HR | Duyệt nghỉ phép (2 bước Manager → HR), duyệt chấm công bù (từng phiếu & hàng loạt), duyệt **làm thêm giờ**, chuyển duyệt, **cài đặt thông báo** |
 | 👩‍💼 **[HR (vận hành)](HD-HR.html)** | HR Manager | Duyệt thiết bị, cấp phép & gán người duyệt, theo dõi/sửa chấm công, bảng công tháng, báo cáo |
 | 🛠️ **[Quản trị (cấu hình)](HD-QuanTri.html)** | HR / System Manager | Dựng văn phòng, chính sách, ngày lễ, ca làm việc, user & phân quyền |
 

@@ -3,7 +3,7 @@ title: "Hành trình một đơn nghỉ phép (NV → Manager → HR)"
 layout: default
 parent: Nghỉ phép & Nghỉ bù
 grand_parent: Chấm công & HR
-nav_order: 2
+nav_order: 3
 ---
 
 # Hành trình một đơn nghỉ phép

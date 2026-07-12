@@ -144,11 +144,12 @@ với nhãn **"Chấm công bù"**. Khác nghỉ phép, loại này **duyệt 1 
 Đơn **Nghỉ bù** là **Leave Application bình thường** (duyệt **2 bước** Quản lý → HR như phép năm),
 nhưng khi duyệt cần để ý mấy điểm riêng:
 
-- **Căn cứ duyệt = ngày làm thêm.** Nhân viên phải khai **"Ngày làm thêm để bù"** khi tạo đơn —
-  quản lý là người **xác nhận hôm đó có làm thêm/làm khuya thật** (hệ thống không tự kiểm tra).
-- **Trên app chỉ thấy Lý do**, không thấy ô ngày làm thêm — nên yêu cầu nhân viên ghi rõ trong lý do
-  (vd *"làm khuya tới 23h đêm 02/07"*). Cần đối chiếu chính xác: mở đơn trên **Desk**, xem field
-  **"Ngày làm thêm để bù"**.
+- **Căn cứ duyệt = đơn Làm thêm giờ đã duyệt.** Hệ thống **tự kiểm tra**: ngày khai
+  trong ô **"Ngày làm thêm để bù"** phải có [HR Overtime Request](Duyet-Lam-Them.html)
+  (quy đổi **Nghỉ bù**) đã được duyệt, và mỗi ngày làm thêm chỉ bù **1 lần** — nhân viên
+  không gửi được đơn "khống". Bạn chỉ cần cân nhắc **ngày nghỉ có hợp lý** không.
+- **Trên app chỉ thấy Lý do**, không thấy ô ngày làm thêm — cần đối chiếu chính xác: mở đơn
+  trên **Desk**, xem field **"Ngày làm thêm để bù"** (hoặc mở HR Overtime Request tương ứng).
 - **Không trừ quỹ phép, không trừ lương** — số dư loại "Nghỉ bù" âm là **bình thường** (âm bao nhiêu
   = đã nghỉ bù bấy nhiêu ngày, mang tính thống kê). Đừng từ chối đơn chỉ vì "hết số dư".
 - **Duyệt nhầm?** HR **Cancel** đơn trên Desk — ngày công "On Leave" tự gỡ, đảo ngược sạch.

@@ -55,12 +55,19 @@ async function setup(browser, mocks) {
 }
 
 const pickDate = async (page, pickerIdx, title, twice=false) => {
+  // Đóng dropdown của picker trước bằng cách click vào title modal (Escape sẽ
+  // đóng nhầm cả Modal) — dropdown cũ còn treo sẽ che cell của dropdown mới.
+  await page.locator('.ant-modal-title').first().click();
+  await page.waitForTimeout(400);
   await page.locator('.ant-modal .ant-picker').nth(pickerIdx).click();
   await page.waitForSelector('.ant-picker-dropdown:not(.ant-picker-dropdown-hidden)', { timeout:4000 });
-  await page.waitForTimeout(300);
-  const cell = page.locator(`.ant-picker-dropdown:visible .ant-picker-cell[title="${title}"] .ant-picker-cell-inner`).first();
-  await cell.click();
-  if (twice) { await page.waitForTimeout(200); await cell.click(); }
+  await page.waitForTimeout(400);
+  const dd = page.locator('.ant-picker-dropdown:not(.ant-picker-dropdown-hidden)').last();
+  const cell = dd.locator(`.ant-picker-cell[title="${title}"] .ant-picker-cell-inner`).first();
+  // dispatchEvent thay vì click chuột thật: dropdown range trên màn hẹp hay lật
+  // lên trên và tràn khỏi viewport (top âm) → click thật báo "outside viewport".
+  await cell.dispatchEvent('click');
+  if (twice) { await page.waitForTimeout(300); await cell.dispatchEvent('click'); }
   await page.waitForTimeout(400);
 };
 

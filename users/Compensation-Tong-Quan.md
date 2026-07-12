@@ -11,6 +11,12 @@ nav_order: 1
 
 Tài liệu đầu-đến-cuối: cài đặt 3 module compensation (OT / WFH Salary / KPI), cấu hình lần đầu, quy trình vận hành định kỳ, audit khi cần.
 
+> ⚠️ **Trạng thái triển khai (07/2026):** module **Overtime đã chạy** theo thiết kế
+> "duyệt trước – đối chiếu sau" (xem [Cấu hình Overtime](HR-Overtime-Settings.html) và
+> [HR Overtime Request](HR-Overtime-Request.html)). Các phần **WFH Salary** và **KPI Bonus**
+> trong trang này là **thiết kế dự kiến, CHƯA triển khai** — các doctype `HR WFH Salary
+> Settings`, `HR KPI Period/Score` chưa tồn tại trên hệ thống.
+
 ---
 
 ## Mục lục
@@ -32,7 +38,7 @@ Sau khi cài app `hr_for_cobegroup`, ngoài chấm công đã có ở [Chấm c�
 
 | Module | Cách dùng |
 |---|---|
-| **Overtime** | Nhân viên tự tạo OT Request → manager duyệt → tự cộng `Additional Salary` vào kỳ lương |
+| **Overtime** | NV tạo đơn **HR Overtime Request** trên PWA (xin duyệt **trước** khi làm) → manager duyệt → hệ thống đối chiếu chấm công → **Overtime Slip** (HRMS native) → `Additional Salary` vào kỳ lương. Quy đổi được **tiền** hoặc **nghỉ bù** |
 | **WFH Salary** | Đếm ngày chấm công WFH → trừ % lương Basic / Allowance theo cấu hình |
 | **KPI Bonus** | Manager chấm điểm 0-100 mỗi kỳ → thưởng tự gộp vào Salary Slip |
 
@@ -46,13 +52,13 @@ Khi `bench install-app hr_for_cobegroup` chạy `after_install`, hệ thống t�
 
 | Tên | Type | Mặc định gắn vào |
 |---|---|---|
-| `Overtime` | Earning | HR Overtime Settings → `salary_component` |
+| `Lương làm thêm giờ` | Earning | Overtime Type "Làm thêm giờ" → `overtime_salary_component` (seed bởi patch v0_016) |
 | `WFH Deduction` | Deduction | HR WFH Salary Settings → `adjustment_component` |
 | `KPI Bonus` | Earning | salary_slip_hooks (hard-coded tên) |
 
 Nếu Cobe muốn dùng tên khác (vd "Tăng ca", "Trừ lương WFH", "Thưởng KPI"):
 1. Tạo Salary Component mới với tên muốn
-2. Sửa lại link trong HR Overtime Settings / HR WFH Salary Settings
+2. OT: sửa link trong **Overtime Type** ([Cấu hình Overtime](HR-Overtime-Settings.html)); WFH: (chưa triển khai)
 3. KPI Bonus: hiện hard-coded tên "KPI Bonus" — đổi cần sửa code (xem [tech doc](../tech/HR-Compensation-Architecture.html))
 
 ---
@@ -65,20 +71,19 @@ Làm tuần tự sau khi cài app:
 
 | Module | Doctype | Field |
 |---|---|---|
-| Overtime | HR Overtime Settings | `enabled` |
+| Overtime | Không có flag bật/tắt — chạy khi có Overtime Type + HR Policy `default_overtime_type` (seed sẵn). Payroll tự gom cần bật **Payroll Settings → `create_overtime_slip`** | — |
 | WFH Salary | HR WFH Salary Settings | `enabled` |
 | KPI Bonus | (Không có flag global, chỉ cần tạo KPI Period và Score) | — |
 
 Mặc định mới cài: **TẮT hết**. Bật từng cái khi đã chuẩn bị xong.
 
-### Bước 2: Cấu hình HR Overtime Settings
+### Bước 2: Cấu hình Overtime
 
-Xem [HR Overtime Settings](HR-Overtime-Settings.html). Cần cấu hình:
-- `enabled = ✓`
-- 3 multiplier rules (Weekday/Weekend/Holiday) đã được seed sẵn — adjust nếu Cobe có quy định khác
-- Caps daily/monthly
-- `auto_approve_below_hours` — số giờ auto duyệt
-- Excluded designations (C-level, Director thường exclude)
+Xem [Cấu hình Overtime](HR-Overtime-Settings.html). Tóm tắt:
+- **Overtime Type "Làm thêm giờ"** (seed sẵn): hệ số 1.5 / 2.0 cuối tuần / 3.0 lễ,
+  đơn giá theo component **Basic** — rà lại cho khớp Salary Structure thực tế
+- **HR Policy** mỗi Company: `default_overtime_type` (patch đã fill)
+- **Payroll Settings**: bật `create_overtime_slip` để payroll tự tạo Overtime Slip
 
 ### Bước 3: Cấu hình HR WFH Salary Settings
 
@@ -99,7 +104,7 @@ Xem [HR KPI Period](HR-KPI-Period.html). Mỗi tháng/quý/năm tạo 1 record:
 
 ### Bước 5: Verify Holiday List của Employee
 
-Mỗi Employee phải có `holiday_list` để OT Request tự detect day_type (Weekday/Weekend/Holiday). Nếu thiếu, day_type fallback theo lịch tuần (Thứ 7-CN = Weekend).
+Mỗi Employee phải có `holiday_list` để Overtime Slip nhận diện ngày lễ khi áp hệ số (×3.0). Thiếu Holiday List thì ngày lễ bị tính như ngày thường/cuối tuần.
 
 ### Bước 6: Verify Salary Structure Assignment
 
@@ -117,8 +122,8 @@ Khuyến nghị: mỗi Employee có 1 Salary Structure Assignment chuẩn trư�
 
 | Việc | Ai làm | Tần suất |
 |---|---|---|
-| Tạo OT Request | Nhân viên | Ngày làm OT |
-| Duyệt OT Request | Manager | Trong ngày hoặc cuối tuần |
+| Tạo HR Overtime Request (PWA) | Nhân viên | **Trước** khi làm thêm (khai bổ sung được trong 7 ngày) |
+| Duyệt HR Overtime Request | Manager (Shift Request Approver) | Ngay khi nhận thông báo — duyệt muộn hệ thống vẫn đối chiếu ngược |
 | Đăng ký WFH Approval | Nhân viên | Hôm trước hoặc sáng |
 | Duyệt WFH Approval | Manager | Trong ngày |
 | Chấm công WFH (PWA) | Nhân viên | Khi bắt đầu ca |
@@ -129,7 +134,7 @@ Khuyến nghị: mỗi Employee có 1 Salary Structure Assignment chuẩn trư�
 |---|---|---|
 | Chấm KPI Score cho từng nhân viên | Manager | Trước khi chạy payroll |
 | Đóng KPI Period (status=Closed) | HR Manager | Sau khi đã chấm hết |
-| Verify OT Request đã duyệt hết | HR Manager | Trước payroll |
+| Verify đơn OT đã duyệt hết + Overtime Slip đã gom đủ | HR Manager | Trước payroll |
 | Chạy Salary Slip | Payroll Officer | Cuối tháng |
 | Submit Salary Slip | Payroll Officer / HR Manager | Sau khi review |
 
@@ -139,11 +144,12 @@ Khuyến nghị: mỗi Employee có 1 Salary Structure Assignment chuẩn trư�
 
 Khi chạy Salary Slip (Process Payroll), hệ thống:
 
-### 5.1. Cộng OT (Additional Salary)
+### 5.1. Cộng OT (Overtime Slip → Additional Salary)
 
-- HRMS quét tất cả `Additional Salary` cho Employee trong kỳ
-- Gộp vào Earnings tự động (đây là cơ chế chuẩn của HRMS)
-- Không cần hook riêng — hr_for_cobegroup chỉ tạo Additional Salary
+- **Overtime Slip** (tự tạo khi chạy Payroll Entry nếu bật `create_overtime_slip`, hoặc tạo tay)
+  quét Attendance đã submit có `overtime_type` + `actual_overtime_duration` trong kỳ
+- Submit slip → HRMS tự tạo `Additional Salary` (component "Lương làm thêm giờ") đã nhân hệ số
+- Salary Slip gộp Additional Salary vào Earnings theo cơ chế chuẩn HRMS — không hook riêng
 
 ### 5.2. Trừ WFH Deduction (hook `apply_wfh_adjustment`)
 
@@ -189,7 +195,11 @@ Dùng cho báo cáo / audit / export.
 
 ## 6. Loại trừ (Exclusion)
 
-Có 2 cấp exclusion, **shared giữa OT và WFH** (cùng child table type):
+> ⚠️ Phần exclusion dưới đây thuộc thiết kế **WFH Salary (chưa triển khai)**.
+> **Overtime hiện KHÔNG có cơ chế exclusion** — kiểm soát bằng khâu duyệt đơn: ai
+> không thuộc diện tính OT thì Manager từ chối đơn.
+
+Có 2 cấp exclusion (thiết kế dự kiến):
 
 ### 6.1. Exclude theo Designation
 
@@ -219,8 +229,9 @@ Khi tạo OT Request hoặc khi Salary Slip validate WFH:
 ### 7.1. Báo cáo OT
 
 - Desk → **Report Builder** → từ `HR Overtime Request`
-- Filter: docstatus=1, date range, approval_status=Approved
-- Columns: employee, date, duration_hours, amount, multiplier, day_type
+- Filter: `status = Approved`, khoảng `ot_date`
+- Columns: employee, ot_date, expected_hours, **granted_hours** (giờ thực nhận), payout_type
+- Tiền chi tiết theo hệ số: xem **Overtime Slip** của kỳ (child table Overtime Details)
 
 ### 7.2. Báo cáo KPI
 
@@ -235,7 +246,7 @@ Khi tạo OT Request hoặc khi Salary Slip validate WFH:
 
 ### 7.4. Truy nguyên Additional Salary
 
-Mỗi OT Request đã duyệt có link `additional_salary`. Click để xem record được tạo trong payroll.
+Additional Salary của OT có `ref_doctype = Overtime Slip`. Từ đơn HR Overtime Request: xem link `attendance` → Attendance → kỳ lương → Overtime Slip → Additional Salary.
 
 ---
 
@@ -243,21 +254,22 @@ Mỗi OT Request đã duyệt có link `additional_salary`. Click để xem reco
 
 | Triệu chứng | Nguyên nhân / khắc phục |
 |---|---|
-| "Overtime is disabled" khi tạo OT Request | Bật `enabled` trong HR Overtime Settings |
-| `hourly_rate = 0` ở OT Request | Employee chưa có Salary Structure Assignment hoặc CTC. Tạo Salary Structure Assignment chuẩn |
-| OT duyệt rồi nhưng không thấy trong Salary Slip | Check `payroll_date` của Additional Salary có trong kỳ slip không. Hoặc Salary Slip submit rồi cần edit-cancel-amend |
+| Đơn OT duyệt rồi nhưng `granted_hours = 0` | NV quên check-out hoặc check-out trước giờ tan ca → không có bằng chứng giờ dôi |
+| Giờ OT có trên Attendance nhưng không vào lương | Chưa bật `create_overtime_slip` (Payroll Settings) và cũng chưa tạo Overtime Slip tay |
+| Tiền OT = 0 dù có giờ | Overtime Type tính trên component không có trong Salary Structure của NV (hoặc Fixed Hourly Rate = 0) → xem [Cấu hình Overtime](HR-Overtime-Settings.html) |
 | KPI Bonus = 0 dù đã chấm | Check `payout_date` của KPI Score có trong kỳ slip không. Check `paid_in_salary_slip` chưa bị mark trước đó |
 | WFH Deduction = 0 dù có WFH | Check `apply_to_components` có row nào không. Check chấm công WFH có `custom_checkin_source='WFH-PWA'` không |
 | Duplicate KPI Score | Hệ thống enforce 1 record / employee / period. Sửa record cũ thay vì tạo mới |
-| Multiplier rules không đầy đủ | HR Overtime Settings phải có cả 3 row Weekday/Weekend/Holiday. Validate sẽ throw nếu thiếu |
+| Hệ số cuối tuần/lễ không áp | Overtime Type chưa tick `applicable_for_weekend` / `applicable_for_public_holiday`, hoặc Employee thiếu Holiday List |
 | Day type sai cho ngày lễ | Check Employee.holiday_list có gắn Holiday List đúng năm không |
 
 ---
 
 ## Liên quan
 
-- [HR Overtime Settings](HR-Overtime-Settings.html)
+- [Cấu hình Overtime](HR-Overtime-Settings.html)
 - [HR Overtime Request](HR-Overtime-Request.html)
+- End-user: [Xin làm thêm giờ](Guide-NhanVien-LamThem.html) · [Duyệt đơn làm thêm](Duyet-Lam-Them.html)
 - [HR WFH Salary Settings](HR-WFH-Salary-Settings.html)
 - [HR KPI Period](HR-KPI-Period.html)
 - [HR KPI Score](HR-KPI-Score.html)
