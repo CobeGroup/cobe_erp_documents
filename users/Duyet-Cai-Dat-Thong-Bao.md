@@ -43,6 +43,16 @@ Gạt công tắc là lưu ngay, không cần bấm gì thêm:
 - **Tổng hợp chấm công cuối ngày** — bản tin 21:10. Tắt nếu bạn không muốn theo dõi chấm công của team qua thông báo.
 - **Cảnh báo chấm công tức thì** — bật lại nếu bạn thích nhận từng cái ngay (chấp nhận nhiều thông báo).
 
+Tắt công tắc = loại đó **không sinh thông báo nữa** (cả thông báo đẩy lẫn trong
+chuông 🔔). Kể cả tắt hết, bạn **vẫn luôn nhận**: thông báo khi có người
+**chuyển duyệt đích danh** đơn cho bạn, các thông báo **cá nhân** của chính bạn
+(cảnh báo chấm công của mình, kết quả đơn mình gửi), và **badge đỏ tab Cần duyệt**
+(đếm đơn chờ mỗi khi mở app — không tắt được, để không sót đơn).
+
+> 👩‍💼 **HR/Admin set hộ được:** mở **Desk → HR Notification Preference** → New →
+> chọn user + tick 3 ô tương ứng. User chưa có bản ghi nào = đang chạy mặc định
+> (Đơn mới ✅ · Tổng hợp ✅ · Tức thì ❌), chỉ cần tạo cho ai muốn khác mặc định.
+
 ---
 
 ## ⚠️ Lưu ý
@@ -51,7 +61,8 @@ Gạt công tắc là lưu ngay, không cần bấm gì thêm:
 |---|---|
 | Không thấy nút **Cài đặt** | Bạn không phải người duyệt (không có tab Cần duyệt) — nhân viên thường không có gì để chỉnh |
 | Không nhận được push nào cả | Kiểm tra đã bật **Thông báo đẩy** trong tab **Thêm** chưa ([hướng dẫn](Guide-NhanVien-Taikhoan.html)) — cài đặt ở đây chỉ chọn LOẠI, còn quyền nhận push là của thiết bị |
-| Tắt hết 3 công tắc rồi vẫn thấy badge đỏ tab Cần duyệt | Đúng thiết kế — cài đặt chỉ tắt **thông báo đẩy**, đơn chờ duyệt vẫn nằm trong app |
+| Tắt hết 3 công tắc rồi vẫn thấy badge đỏ tab Cần duyệt | Đúng thiết kế — badge là đếm đơn chờ khi mở app, không phải thông báo; đơn không bao giờ bị "mất" vì tắt thông báo |
+| Tắt rồi mà vẫn nhận thông báo "đơn ... được chuyển cho bạn duyệt" | Đúng thiết kế — **chuyển duyệt đích danh** luôn báo (người ta chỉ định thẳng bạn thì phải biết) |
 | Muốn nhận bản tin cuối ngày sớm/muộn hơn 21:10 | Giờ chạy là cấu hình hệ thống — báo quản trị nếu cả công ty muốn đổi |
 
 ---
