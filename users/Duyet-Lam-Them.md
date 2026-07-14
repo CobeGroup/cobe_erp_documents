@@ -94,6 +94,7 @@ hệ thống **đối chiếu ngược ngay lúc duyệt** — giờ OT vẫn đ
 ---
 
 ## Liên quan
+- 🗺️ [Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html) — toàn cảnh cả quy trình, dùng để giải thích cho nhân viên
 - 🔔 [Cài đặt thông báo cho người duyệt](Duyet-Cai-Dat-Thong-Bao.html) — nhận đơn mới, tắt bớt cảnh báo
 - [Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html) · [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html)
 - Nhân viên của bạn cần hướng dẫn? Gửi họ [Xin làm thêm giờ](Guide-NhanVien-LamThem.html)

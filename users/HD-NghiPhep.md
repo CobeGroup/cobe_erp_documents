@@ -13,6 +13,7 @@ Xin nghỉ phép (cả **nửa ngày**), **làm thêm giờ (OT)** và **nghỉ 
 1. **[Xin nghỉ phép & nghỉ bù](Guide-NhanVien-NghiPhep.html)** — xem số dư, gửi đơn, nửa ngày, nghỉ bù 🎬 *(có video)*
 2. **[Xin làm thêm giờ (OT)](Guide-NhanVien-LamThem.html)** — xin duyệt **trước** khi làm, quy đổi **tiền lương** hoặc **nghỉ bù** 🎬 *(có video)*
 3. **[Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html)** — toàn cảnh: theo chân 1 đơn từ lúc tạo đến lúc được duyệt
+4. **[Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html)** — toàn cảnh: xin → duyệt → **đối chiếu chấm công** → thành tiền hoặc ngày nghỉ bù
 
 > ⚠️ Muốn xin **Nghỉ bù** thì ngày làm thêm phải có **đơn Làm thêm giờ (quy đổi Nghỉ bù) đã được duyệt** — nhớ xin duyệt trước khi làm thêm.
 

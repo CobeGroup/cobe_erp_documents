@@ -116,6 +116,7 @@ Khi đơn được duyệt / từ chối, bạn nhận **thông báo đẩy** tr
 ---
 
 ## Liên quan
+- 🗺️ [Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html) — toàn cảnh: xin → duyệt → đối chiếu chấm công → thành tiền / nghỉ bù
 - 🌴 [Xin nghỉ phép & nghỉ bù](Guide-NhanVien-NghiPhep.html) — dùng đơn làm thêm (Nghỉ bù) để xin nghỉ
 - ✅ Bạn là **người duyệt**? Xem [Duyệt đơn làm thêm giờ](Duyet-Lam-Them.html)
 - [Cài app & Chấm công](Guide-NhanVien-ChamCong.html)

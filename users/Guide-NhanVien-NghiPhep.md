@@ -35,6 +35,22 @@ Mở tab **Nghỉ phép**:
 
 ---
 
+### Các loại phép trong danh sách nghĩa là gì?
+
+Khi bấm tạo đơn, ô **Loại phép** có thể hiện mấy loại sau — khác nhau ở chỗ *trừ vào đâu*:
+
+| Loại | Khi nào dùng | Cần HR cấp phép trước? | Trừ gì |
+|---|---|---|---|
+| **Phép năm** (Annual Leave), Nghỉ ốm… | Nghỉ có lương thông thường | **Có** — HR phải cấp số ngày phép | Trừ **quỹ phép** của bạn |
+| **Nghỉ không lương** (Leave Without Pay) | Hết phép / chưa được cấp phép mà vẫn cần nghỉ | Không | **Trừ lương** ngày nghỉ đó |
+| **Nghỉ bù** | Bù lại ngày đã làm thêm giờ | Không | **Không trừ gì** — nhưng phải có [phiếu làm thêm đã duyệt](Guide-NhanVien-LamThem.html) |
+
+> ❓ **Chỉ thấy "Nghỉ không lương" và "Nghỉ bù", không thấy Phép năm?**
+> Nghĩa là bạn **chưa được cấp phép năm** (chưa có Leave Allocation). Hai loại kia luôn
+> hiện vì không cần cấp trước. Báo HR cấp phép năm cho bạn.
+
+---
+
 ## 2. Tạo đơn xin nghỉ
 
 Bấm nút **+** (góc dưới phải) → điền:
