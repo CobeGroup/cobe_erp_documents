@@ -14,6 +14,8 @@ nav_order: 5
 
 > Mỗi người dùng hệ thống cần **1 User (tài khoản đăng nhập)** trước. **Quản trị** tạo User + gán **role** (quyền). Sau đó **HR** mới tạo **Employee** và link tới User này. Người duyệt (approver ở Department/Employee) cũng phải trỏ tới **User đã có**.
 
+> 💡 **Cách nhanh cho nhân viên mới:** dùng **[Tạo nhân sự nhanh (Admin Console)](Desk-Admin-Onboarding.html)** — 1 form tạo User + Employee + gán ca (+ bộ KTV) cùng lúc. Trang này chỉ cần khi tạo tay từng tài khoản hoặc chỉnh role sau này.
+
 ---
 
 ## 1. Tạo User

@@ -14,6 +14,8 @@ nav_order: 1
 
 > Hồ sơ nhân viên là **gốc** của chấm công, nghỉ phép, ca, thiết bị. Nguyên tắc vàng: **mỗi người = 1 Employee chính + 1 user (login) chính.**
 
+> 💡 **Cách nhanh cho nhân viên mới:** dùng **[Tạo nhân sự nhanh (Admin Console)](Desk-Admin-Onboarding.html)** — 1 form tạo User + Employee + gán ca (+ bộ KTV) cùng lúc, khỏi tạo tay từng bước bên dưới.
+
 ---
 
 ## 1. Tạo Employee
