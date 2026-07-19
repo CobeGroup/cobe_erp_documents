@@ -403,6 +403,7 @@ curl -s -X POST "https://<domain>/api/method/delivery_partner.api.webhook.handle
 - Password trên site vừa restore từ backup có thể **chưa nhập lại** → gõ lại rồi Save.
 
 ### Bấm "Đẩy đơn" báo lỗi
+
 | Lỗi | Nguyên nhân & cách xử lý |
 |---|---|
 | *"chưa đặt điểm gửi mặc định"* | Vào DP Pickup Point tick **Is Default** cho 1 kho (mục 3.2) |
