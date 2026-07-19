@@ -9,12 +9,16 @@ nav_order: 6.5
 # Bảng công tháng — Monthly Attendance Sheet
 {: .no_toc }
 
-**Dành cho:** HR Manager · Trưởng bộ phận · **Nơi xem:** Desk → Search **"Monthly Attendance Sheet"**
+**Dành cho:** HR Manager · Trưởng bộ phận · **Nơi xem:** Desk → Search **"Monthly Attendance Sheet Cobe"**
 {: .fs-3 .text-grey-dk-000 }
 
 > Báo cáo **một bảng = cả tháng**: mỗi dòng là **một nhân viên**, mỗi cột là **một ngày**, mỗi ô là
 > **trạng thái công** ngày đó (P / A / HD / L / WFH / H / WO). Dùng để **đối chiếu công cuối tháng**,
 > xuất Excel gửi kế toán.
+
+> 🟢 **Dùng bản Cobe: `Monthly Attendance Sheet Cobe`** (KHÔNG phải bản gốc HRMS "Monthly
+> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Công ty trực thuộc**, **Tổng giờ**, và mỗi ô hiện
+> **giờ thực tế** cạnh ký hiệu (vd `P 8.3`) + **ký hiệu tiếng Việt theo loại phép** — xem [mục 0](#0-bản-cobe--khác-gì-bản-gốc).
 
 <details open markdown="block">
   <summary>Mục lục</summary>
@@ -25,12 +29,36 @@ nav_order: 6.5
 
 ---
 
+## 0. Bản Cobe — khác gì bản gốc
+
+Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
+
+| | **Monthly Attendance Sheet Cobe** *(khuyên dùng)* | Monthly Attendance Sheet *(gốc HRMS)* |
+|---|---|---|
+| Cột đầu | Employee · **Mã NV** · Tên · **Công ty trực thuộc** · Shift · **Tổng giờ** | Employee · Tên · Shift |
+| Ô mỗi ngày | Ký hiệu **+ giờ thực tế**: `P 8.3`, `HD 4.0` | Chỉ ký hiệu: `P`, `HD` |
+| Ký hiệu nghỉ | **Theo loại phép** (tiếng Việt): `L` `L/2` `NB` `KL` `WFH` `CĐ` `BH` `H` `WO` | Gộp chung `L` (On Leave) |
+| Lọc Company | **Bỏ trống = gộp MỌI công ty** | Bắt buộc chọn |
+| Cách chạy | **Chạy thẳng** (bấm là ra) | "Prepared report" — phải **Generate New Report** rồi chờ |
+| Summarized View | Dùng chung phần tổng của bản gốc | *(bản gốc)* |
+
+> 💡 **Tổng giờ** = cộng `working_hours` mọi ngày trong kỳ — số giờ làm thực tế cả tháng của mỗi
+> người, khỏi tính tay. **Công ty trực thuộc** chỉ có với NV đã **gộp công ty** (lưu công ty gốc);
+> NV khác để trống là bình thường.
+
+> ⚠️ Mở đúng tên **`Monthly Attendance Sheet Cobe`**. Bản gốc "Monthly Attendance Sheet" **không**
+> có Mã NV / Công ty trực thuộc / Tổng giờ. Các phần dưới (bộ lọc, mã trạng thái, presence-based,
+> xuất Excel) áp dụng cho **cả hai** bản.
+
+---
+
 ## 1. Mở báo cáo
 
-1. Vào Desk (`/app`) → bấm **Search** (Ctrl/⌘ + K) → gõ **Monthly Attendance Sheet** → Enter.
+1. Vào Desk (`/app`) → bấm **Search** (Ctrl/⌘ + K) → gõ **Monthly Attendance Sheet Cobe** → Enter.
    (Hoặc workspace **Shift & Attendance / People** → mục **Reports**.)
-2. Báo cáo này là **"prepared report"** (chạy nền cho nhẹ): bấm **Generate New Report** rồi **chờ
-   vài giây** kết quả hiện ra. Đổi filter → **generate lại**.
+2. **Bản Cobe chạy thẳng** — đặt bộ lọc là bảng hiện ngay (không cần Generate). *(Riêng bản gốc
+   HRMS là "prepared report": phải bấm **Generate New Report** rồi chờ vài giây, đổi filter →
+   generate lại.)*
 
 ![Monthly Attendance Sheet — bảng công tháng theo ngày](images/desk/hr-report-attendance.png)
 
@@ -49,7 +77,7 @@ Lần đầu mở (hoặc đổi bộ lọc sang tháng chưa chạy), bảng tr
 | Bộ lọc | Ý nghĩa |
 |---|---|
 | **Month / Year** | Tháng & năm cần xem (bắt buộc). |
-| **Company** | Lọc theo công ty. |
+| **Company** | Lọc theo công ty. **Bản Cobe: bỏ trống = gộp TẤT CẢ công ty.** *(Bản gốc bắt buộc chọn.)* |
 | **Employee** | Để trống = **tất cả** nhân viên; chọn 1 người = chỉ người đó. |
 | **Group By** | Gom nhóm theo **Department / Designation / Branch** (tuỳ chọn). |
 | **Summarized View** | Tích để xem **chỉ phần tổng** (không có lưới ngày) — gọn, hợp đối chiếu nhanh. |
@@ -66,6 +94,11 @@ Holidays / Unmarked Days, và **tách cột theo từng loại phép** (ảnh d�
 ## 3. Đọc lưới ngày — các mã trạng thái
 
 Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
+
+> 🟢 **Bản Cobe** hiện thêm **giờ thực tế** cạnh mã (`P 8.3`, `HD 4.0`) và **tách ký hiệu theo loại
+> phép**: `L` Phép năm · `L/2` Phép năm nửa ngày · `NB` Nghỉ bù · `KL` Không lương · `CĐ` Chế độ có
+> lương · `BH` Chế độ BHXH · `WFH` · `H` Lễ · `WO` Nghỉ tuần · `A` Vắng · `HD/A` nửa ngày còn lại
+> vắng. (Bản gốc gộp tất cả loại nghỉ thành `L`.)
 
 | Mã | Đầy đủ | Nghĩa | Tính công |
 |---|---|---|---|
