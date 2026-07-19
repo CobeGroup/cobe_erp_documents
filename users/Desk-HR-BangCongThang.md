@@ -42,6 +42,8 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | Cách chạy | **Chạy thẳng** (bấm là ra) | "Prepared report" — phải **Generate New Report** rồi chờ |
 | Summarized View | Dùng chung phần tổng của bản gốc | *(bản gốc)* |
 
+![Monthly Attendance Sheet Cobe — Mã NV · Công ty trực thuộc · Tổng giờ · giờ thực tế trong ô (P 8.2), ký hiệu WO/HD/L/L2](images/desk/hr-mas-cobe-grid.png)
+
 > 💡 **Tổng giờ** = cộng `working_hours` mọi ngày trong kỳ — số giờ làm thực tế cả tháng của mỗi
 > người, khỏi tính tay. **Công ty trực thuộc** chỉ có với NV đã **gộp công ty** (lưu công ty gốc);
 > NV khác để trống là bình thường.
