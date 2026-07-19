@@ -115,11 +115,85 @@ Company default cash). Vì vậy:
 - `cod_account` **bắt buộc** `account_type = "Receivable"`.
 - `paid_to` **phải** Bank/Cash → đảm bảo SO có Bank Account hoặc Company có Default Cash Account.
 
-Chi tiết loại tài khoản & kho ảo: [Hướng dẫn Viettel Post §1.1](../users/Delivery_Partner-Viettel_Post.html).
+Chi tiết loại tài khoản & kho ảo: [Viettel Post — Tham chiếu kỹ thuật §9](Delivery_Partner-Viettel_Post-Tech.html#9-kế-toán-cod).
+
+---
+
+---
+
+## 6. Cài đặt & setup bổ sung (ngoài app gốc)
+
+```bash
+# delivery_partner phải cài trước
+bench get-app https://github.com/CobeGroup/delivery_partner_extension_for_cobegroup.git
+bench --site <site> install-app delivery_partner_extension_for_cobegroup
+bench --site <site> migrate
+bench build --app delivery_partner_extension_for_cobegroup
+```
+
+| Cần setup | Chi tiết |
+|---|---|
+| **SO custom field** `custom_delivery_method` (Select) | `Đơn vị vận chuyển` / `Nội bộ giao/lắp` / `Khác (Đơn cũ)`. Nút **Create > DP Shipment** trên SO chỉ hiện khi = "Đơn vị vận chuyển" + SO đã submit |
+| **COD Receivable Account** | Chart of Accounts → tạo account (VD `VTP Receivable`, loại Current Asset / **Receivable**) → điền vào DP Partner Account |
+| **Warehouse Address + Contact** | Mỗi kho pickup: Address link `Warehouse`; Contact (optional); Warehouse.`Account` (fallback đích COD PE) |
+| **Item dimensions** (optional) | `Weight Per Unit` (kg) + `custom_parcel_length/width/height` (cm) — phục vụ Auto-calculate Parcel |
+| **Mode of Payment `Cash`** | Có `Default Account` cho company (Settings → Mode of Payment → Cash) |
+
+---
+
+## 7. Hooks (doc_events) — bảng tóm tắt
+
+| Event | Trigger | Action |
+|-------|---------|--------|
+| `before_save` | Save DP Shipment | Auto-calc `custom_total_cost` |
+| `on_submit` | Submit DP Shipment | Tạo + submit MR |
+| `on_update` | Status = `Partner Received` | Tạo + submit SE (pickup) |
+| `on_update` | Status = `Delivered` | Tạo DN + (SI + PE nếu COD) |
+| `on_update` | Status = `Returned` / `Lost` | Tạo Return SE |
+| `before_cancel` | Cancel DP Shipment | Cancel MR + tạo Return SE nếu cần |
+
+> ⚠️ `on_update` **không fire** từ webhook (`db_set` chỉ chạy `on_change`) — xem [§3 GAP](#3--gap-đã-biết-on_update-không-fire-từ-webhook).
+
+---
+
+## 8. Custom fields được tạo (fixtures)
+
+### Trên DP Shipment
+
+| Field | Type | Tab | Mô tả |
+|-------|------|-----|-------|
+| custom_sales_order | Link → SO | Shipment | SO nguồn |
+| custom_fulfillment_status | Select | Tracking | Pending MR / Transferred / ... |
+| custom_pickup_warehouse | Link → Warehouse | Pickup | Kho xuất mặc định |
+| custom_shipping_fee / custom_cod_fee / custom_insurance_fee / custom_return_fee / custom_other_charges | Currency | Charges | Các loại cước |
+| custom_total_cost | Currency (RO) | Charges | Tổng (auto) |
+| custom_charges_paid_by | Select | Charges | Sender / Receiver / Third Party |
+| custom_cod_collected | Currency (RO) | Charges | COD thực nhận từ webhook |
+| custom_material_request / custom_stock_entry / custom_delivery_note / custom_sales_invoice / custom_payment_entry / custom_return_stock_entry | Link | Tracking | Chứng từ ERP sinh theo lifecycle |
+
+### Trên DP Shipment Item
+
+| Field | Mô tả |
+|-------|-------|
+| custom_warehouse | Source Warehouse |
+| custom_sales_order_item | Link tracing về SO item |
+| custom_ordered_qty / custom_already_shipped | Qty gốc / đã ship trước |
+| custom_so_qty | Parent SO units consumed (bundle) |
+| custom_picked_qty | Qty carrier thực lấy (default = qty) |
+| custom_pick_status | Pending / Picked / Partial / Missing |
+| custom_unit_weight / custom_unit_length/width/height | Trọng lượng (kg) / kích thước (cm) từ Item |
+
+### Trên Item / Material Request Item
+
+| Doctype | Field | Mô tả |
+|---|---|---|
+| Item | custom_parcel_length/width/height, custom_dimension_uom | Kích thước đóng gói |
+| Material Request Item | custom_dp_shipment | DP Shipment name (Data, tránh circular link) |
 
 ---
 
 ## Liên quan
 
 - [Quy trình vận đơn (end-user)](../users/Delivery_Partner-Quy-Trinh.html)
+- [Vận đơn từ Sales Order — kho & kế toán (end-user)](../users/Delivery_Partner_Extension.html)
 - [Delivery Partner — Tài liệu kỹ thuật (app gốc)](Delivery_Partner-Tech.html)

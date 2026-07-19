@@ -2,7 +2,7 @@
 title: Quy trình vận đơn & giao nhận
 layout: default
 parent: Vận chuyển & Giao nhận
-nav_order: 5
+nav_order: 1
 ---
 
 # Quy trình vận đơn — từ đơn hàng đến giao nhận & COD
@@ -68,7 +68,7 @@ theo hành trình mà ĐVVC báo về.
 - **Vận hành**: theo dõi trạng thái giao nhận của từng đơn.
 
 > Trạng thái vận đơn được ĐVVC đẩy về tự động qua **webhook** (xem
-> [Hướng dẫn Viettel Post](Delivery_Partner-Viettel_Post.html) để cấu hình).
+> [Viettel Post — Cài đặt & sử dụng](Delivery_Partner-Viettel_Post-Cai-Dat.html) để cấu hình).
 
 ---
 
@@ -78,8 +78,8 @@ Hai cách:
 
 - **Từ Sales Order** (khuyến nghị): mở SO → tạo DP Shipment → hệ thống tự điền hàng hoá, khách hàng,
   giá trị. Vận đơn giữ liên kết về SO để sau này khớp số lượng giao + hoá đơn.
-- **Thủ công**: vào **DP Shipment → New**, tự chọn ĐVVC, người nhận, hàng hoá. (Chi tiết thao tác form:
-  [Hướng dẫn Delivery Partner](Delivery_Partner.html).)
+- **Thủ công**: vào **DP Shipment → New**, tự chọn ĐVVC, người nhận, hàng hoá. (Chi tiết thao tác form
+  có ảnh: [Viettel Post — Cài đặt & sử dụng, Phần B](Delivery_Partner-Viettel_Post-Cai-Dat.html#phần-b--tạo-đơn-hàng-ngày).)
 
 Cần điền: **Partner** (ĐVVC) + **Partner Account**, **người nhận** (tab Delivery), **hàng hoá** + **Value of
 Goods**, **COD Amount** (nếu thu hộ), **kiện hàng** (tab Parcels).
@@ -177,16 +177,16 @@ Khi trạng thái về **Delivered**, hệ thống tự sinh (nếu vận đơn 
 | Triệu chứng | Khắc phục |
 |---|---|
 | Submit xong nhưng tồn kho chưa đổi | Đúng — Submit chỉ tạo **Đề nghị xuất kho**. Kho phải xuất hàng (Phiếu xuất kho) ở bước 4. |
-| Trạng thái không tự cập nhật khi ĐVVC giao | Vận đơn chưa có/đúng **External Shipment ID** khớp mã ĐVVC, hoặc webhook chưa kết nối. Xem [Hướng dẫn Viettel Post §7](Delivery_Partner-Viettel_Post.html). |
+| Trạng thái không tự cập nhật khi ĐVVC giao | Vận đơn chưa có/đúng **External Shipment ID** khớp mã ĐVVC, hoặc webhook chưa kết nối. Xem [Viettel Post — Cài đặt, Bước 5](Delivery_Partner-Viettel_Post-Cai-Dat.html#bước-5--bật-cập-nhật-trạng-thái-tự-động). |
 | Đơn "Delivered" nhưng **không thấy Phiếu giao / Hoá đơn / Phiếu thu COD** | Vận đơn không gắn Sales Order, hoặc tích hợp tự-sinh-chứng-từ chưa bật/đang hoàn thiện — báo bộ phận kỹ thuật (xem [Tài liệu kỹ thuật](../tech/Delivery_Partner-Lifecycle.html)). |
 | Không thấy nút "Đẩy đơn" / "Đã tạo đơn ở ngoài" | Vận đơn phải **đã Submit** và **chưa** có External Shipment ID (nút ẩn để chống tạo trùng). |
-| Bấm "Đẩy đơn" báo thiếu mã vùng / thông tin người nhận | Bổ sung theo hướng dẫn [Viettel Post §4](Delivery_Partner-Viettel_Post.html). |
+| Bấm "Đẩy đơn" báo thiếu mã vùng / thông tin người nhận | Bổ sung theo [Viettel Post — Cài đặt, Bước 2 & 4](Delivery_Partner-Viettel_Post-Cai-Dat.html). |
 
 ---
 
 ## Liên quan
 
-- [Hướng dẫn Delivery Partner](Delivery_Partner.html) — thao tác form vận đơn, webhook, test
-- [Hướng dẫn Viettel Post](Delivery_Partner-Viettel_Post.html) — setup ĐVVC, đẩy đơn, mã vùng
-- [Delivery Partner Extension (Cobe)](Delivery_Partner_Extension.html) — tích hợp ERP
-- [Tài liệu kỹ thuật — Lifecycle & doc events](../tech/Delivery_Partner-Lifecycle.html)
+- [Viettel Post — Cài đặt & sử dụng](Delivery_Partner-Viettel_Post-Cai-Dat.html) — kết nối ĐVVC, đẩy đơn, mã vùng (có ảnh)
+- [Vận đơn từ Sales Order (kho & kế toán)](Delivery_Partner_Extension.html) — luồng SO → kho → hoá đơn → COD
+- [Delivery Partner — Tài liệu kỹ thuật (app gốc)](../tech/Delivery_Partner-Tech.html) — kiến trúc, doctype, webhook, test
+- [Lifecycle & Doc Events](../tech/Delivery_Partner-Lifecycle.html) — tích hợp ERP

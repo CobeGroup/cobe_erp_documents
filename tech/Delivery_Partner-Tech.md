@@ -624,3 +624,150 @@ class MyCarrierClient(BaseAPIClient):
 | `requests` | HTTP client (API calls) |
 
 Không phụ thuộc `erpnext` — app hoạt động trên bất kỳ Frappe site nào.
+
+---
+
+## Phụ lục A — Cài đặt & Carriers hỗ trợ
+
+### A.1. Cài đặt
+
+```bash
+bench get-app https://github.com/CobeGroup/delivery_partner.git
+bench --site <site> install-app delivery_partner
+bench --site <site> migrate
+bench build --app delivery_partner
+```
+
+### A.2. Setup carriers (1 lần)
+
+```bash
+# Tất cả 9 carriers
+bench --site <site> execute delivery_partner.scripts.setup_all_carriers.setup
+
+# Chỉ vài carrier
+bench --site <site> execute delivery_partner.scripts.setup_all_carriers.setup \
+  --kwargs '{"carriers": ["GHN", "VTP", "GHTK"]}'
+```
+
+Hoặc qua API (login System Manager):
+
+```python
+frappe.call({ method: "delivery_partner.api.setup.setup_carriers", callback: (r) => console.log(r) });
+```
+
+Script **idempotent** — chạy lại không tạo trùng, chỉ thêm status mapping mới. Mỗi carrier tạo:
+DP Partner (auth + status mappings + webhook handler) · Warehouse ảo · DP Partner Account mặc định.
+
+### A.3. Ma trận carriers
+
+| Key | Tên | Auth | Status Mappings | API client tạo đơn |
+|-----|-----|------|-----------------|--------------------|
+| GHN | Giao Hàng Nhanh | Static Token | 22 | ✅ `ghn.py` |
+| VTP | Viettel Post | Token Exchange | 27 | ✅ `viettelpost.py` |
+| GHTK | Giao Hàng Tiết Kiệm | Static Token | 20 | ✅ `ghtk.py` |
+| JT | J&T Express | Signature | 13 | — (Generic webhook) |
+| NJV | Ninja Van | Token Exchange | 16 | — |
+| BEST | Best Express | Static Token | 12 | — |
+| AHAMOVE | Ahamove | Static Token | 8 | — |
+| SPX | Shopee Express | Signature | 11 | — |
+| GRAB | GrabExpress | Token Exchange | 8 | — |
+
+> Cả 9 carrier đều có **status mapping + webhook**. Chỉ **GHN / VTP / GHTK** có **API client gọi tạo đơn**.
+> 6 carrier còn lại nhận webhook qua `GenericWebhookHandler`, chưa có client tạo đơn.
+
+### A.4. Điền credentials theo Auth Method
+
+| Auth Method | Field cần điền |
+|---|---|
+| Static Token | `API Token` |
+| Token Exchange | `Username` + `Password` |
+| Signature | `API Key` + `API Secret` |
+
+Extra Params nếu carrier cần (VD GHN: `ShopId`, `send_as = Header`). Bấm **Test Credentials** để xác nhận.
+
+---
+
+## Phụ lục B — Test không cần đơn thật (simulate_webhooks)
+
+Chuẩn bị: tạo 1 DP Shipment + **Submit**, ghi tên (VD `SHIP-DP-2026-00001`), mở console:
+
+```python
+bench --site <site> console
+from delivery_partner.scripts.simulate_webhooks import *
+```
+
+Script tự gán `external_shipment_id = TEST-<name>` nếu chưa có, và override `verify_signature` = bỏ qua.
+
+### B.1. GHN — các flow (cột status là kết quả **app gốc**)
+
+```python
+ghn_step_by_step("SHIP-DP-2026-00001", flow="happy")   # dừng từng bước, Enter để tiếp, 'q' dừng
+ghn_full_flow("SHIP-DP-2026-00001", flow="happy")        # chạy nhanh không dừng
+```
+
+| Flow | Chuỗi raw status GHN → DP Shipment status |
+|---|---|
+| `happy` | ready_to_pick / picking / picked / storing → **Partner Received**; transporting / sorting / delivering → **In Transit**; delivered → **Delivered** |
+| `return` | … → delivery_fail → **Delivery Failed** → waiting_to_return / return / return_transporting → **Returning** → returned → **Returned** |
+| `cancel` | ready_to_pick → **Partner Received**; cancel → **Cancelled** |
+| `lost` | … → transporting → **In Transit**; lost → **Lost** |
+
+> **MR / SE / DN / PE** chỉ tạo khi cài **app extension**; chạy app gốc đứng một mình → các dòng này hiện `-`.
+
+### B.2. VTP — flow happy
+
+```python
+vtp_full_flow("SHIP-DP-2026-00002", flow="happy")
+```
+
+| VTP status | Event | Mô tả |
+|---|---|---|
+| 100 / 102 / 104 / 105 | `picked_up` | Mới tạo → duyệt → nhận hàng → nhập kho → **Partner Received** |
+| 200 / 201 | `in_transit` | Đang vận chuyển / giao → **In Transit** |
+| 500 / 503 | `delivered` | Giao thành công / đối soát → **Delivered** |
+
+### B.3. Fire 1 event / curl
+
+```python
+ghn_event("GHN-TEST-001", "delivered", "Da giao thanh cong")
+vtp_event("VTP-TEST-001", 500, "Giao thanh cong")   # VTP dùng status code (số)
+print_curl_commands("GHN-TEST-001", "VTP-TEST-001", "http://localhost:8000")
+```
+
+```bash
+curl -s -X POST "http://localhost:8000/api/method/delivery_partner.api.webhook.handle?partner=GHN" \
+  -H "Content-Type: application/json" \
+  -d '{"OrderCode": "GHN-TEST-001", "Status": "picked", "Description": "Da lay hang"}'
+```
+
+**Lưu ý:** shipment phải `docstatus = 1`; mỗi shipment chỉ test 1 flow (sau Delivered/Returned/Lost tạo cái mới);
+chỉ GHN + VTP có flow giả lập sẵn; signature bị skip trong simulate mode.
+
+### B.4. URL webhook theo carrier
+
+```
+POST https://<domain>/api/method/delivery_partner.api.webhook.handle?partner=<TenPartner>
+```
+
+| Carrier | `?partner=` | Carrier | `?partner=` |
+|---|---|---|---|
+| GHN | `GHN` | Ninja Van | `Ninja+Van` |
+| Viettel Post | `Viettel+Post` | Best Express | `Best+Express` |
+| GHTK | `GHTK` | Ahamove | `Ahamove` |
+| J&T Express | `J%26T+Express` | Shopee Express | `Shopee+Express` |
+| GrabExpress | `GrabExpress` | | |
+
+---
+
+## Phụ lục C — Troubleshooting
+
+| Triệu chứng | Xử lý |
+|---|---|
+| Pickup address "Not found" khi chọn | Address thiếu Dynamic Link đúng: Link Type = `Warehouse`/`Company`, Link Name = tên kho/company |
+| "All items must ship from the same warehouse" | DP Shipment chỉ 1 source warehouse — tách items nhiều kho thành nhiều shipment |
+| Webhook không cập nhật status | DP Partner `is_active = 1`? Status mapping có raw status? `external_shipment_id` khớp payload? Xem Error Log |
+| Test Credentials báo lỗi token (GHN) | Token `khachhang.ghn.vn` là production — tắt `Use Sandbox` hoặc lấy token sandbox riêng |
+| Test Credentials báo lỗi token (VTP) | Tài khoản Development cần được VTP kích hoạt trước |
+
+> Troubleshooting riêng cho tích hợp ERP (MR/SE/DN/SI/PE) xem [Lifecycle & Doc Events](Delivery_Partner-Lifecycle.html).
+> Riêng Viettel Post (đẩy đơn, mã vùng, webhook, COD) xem [Viettel Post — Tham chiếu kỹ thuật](Delivery_Partner-Viettel_Post-Tech.html).

@@ -10,8 +10,8 @@ nav_order: 2
 Hướng dẫn từng bước **có hình minh hoạ** để kết nối Viettel Post và tạo đơn giao hàng.
 Làm theo đúng thứ tự là chạy được — không cần biết kỹ thuật.
 
-> Cần chi tiết sâu (mã trạng thái, webhook, xử lý lỗi nâng cao)? Xem
-> [Viettel Post — Setup, tạo đơn & theo dõi](Delivery_Partner-Viettel_Post.md).
+> Cần chi tiết sâu (mã trạng thái, webhook, payload, xử lý lỗi nâng cao)? Xem
+> [Viettel Post — Tham chiếu kỹ thuật](../tech/Delivery_Partner-Viettel_Post-Tech.html).
 
 Toàn bộ chỉ có **2 phần**:
 
@@ -196,7 +196,7 @@ Viettel Post đối soát và chuyển tiền COD về. Trạng thái cuối v�
 tiền thu hộ.
 
 > Xem hành trình đầy đủ (kèm mã trạng thái từng bước) trong
-> [tài liệu chi tiết](Delivery_Partner-Viettel_Post.md#7-hành-trình-một-đơn--không-cod).
+> [tài liệu kỹ thuật](../tech/Delivery_Partner-Viettel_Post-Tech.html#4-hành-trình-một-đơn--không-cod).
 
 ---
 
@@ -211,4 +211,4 @@ tiền thu hộ.
 | "Không xác định được mã vùng" | Làm bước 2 (đồng bộ danh mục), rồi "Dò mã vùng VTP" trên Address |
 | Đơn không tự cập nhật trạng thái | Kiểm cấu hình webhook (bước 5) |
 
-Chi tiết hơn xem [tài liệu kỹ thuật](Delivery_Partner-Viettel_Post.md#11-troubleshooting).
+Chi tiết hơn xem [tài liệu kỹ thuật](../tech/Delivery_Partner-Viettel_Post-Tech.html#8-troubleshooting-kỹ-thuật).
