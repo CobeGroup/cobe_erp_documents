@@ -30,15 +30,18 @@ nav_order: 3
 
 ## 1. Nguyên tắc thiết kế
 
-**Duyệt trước — đối chiếu sau.** Check-out muộn KHÔNG tự thành OT (auto-attendance
-vẫn cap `working_hours` về giờ ca chuẩn). Chỉ ngày có đơn **Approved** thì phần giờ
-dôi sau ca mới được công nhận, và không bao giờ vượt số giờ đã xin:
+**Khai sau — đối chiếu khi duyệt.** NV làm thêm xong, check-out như thường, RỒI mới
+khai đơn (app chặn khai cho ngày trong tương lai). Check-out muộn KHÔNG tự thành OT
+(auto-attendance vẫn cap `working_hours` về giờ ca chuẩn). Chỉ ngày có đơn
+**Approved** thì phần giờ dôi sau ca mới được công nhận, và không bao giờ vượt số giờ
+đã khai — cũng không vượt **trần cứng** (ngày thường 4h / ngày lễ 8h):
 
 ```
-granted_hours = min(giờ check-out thực tế sau shift_end, expected_hours của đơn)
+granted_hours = min(giờ check-out thực tế sau shift_end, expected_hours của đơn, trần 4h/8h)
 ```
 
-Điều này chặn 2 kiểu lạm dụng: *nấn ná ở lại thành OT* (không đơn → 0h) và *xin ít
+Vì đơn khai sau, việc đối chiếu xảy ra **ngay lúc duyệt** (Attendance đã tồn tại).
+Điều này chặn 2 kiểu lạm dụng: *nấn ná ở lại thành OT* (không đơn → 0h) và *khai ít
 làm nhiều tính nhiều* (cap theo đơn).
 
 ---
@@ -50,7 +53,7 @@ làm nhiều tính nhiều* (cap theo đơn).
 | `employee` / `employee_name` / `company` | Link/fetch | NV xin làm thêm |
 | `ot_date` | Date | Ngày làm thêm — **unique per employee** (đơn Pending/Approved) |
 | `from_time` / `to_time` | Time | Khung giờ dự kiến; cho phép vắt qua nửa đêm |
-| `expected_hours` | Float | Tự tính từ khung giờ; tối đa **12h/ngày** |
+| `expected_hours` | Float | Tự tính từ khung giờ; **12h/ngày** chỉ là ngưỡng validate đầu vào (chặn nhập vô lý). TRẦN thực tế áp lên đơn là **4h ngày thường / 8h ngày lễ** — `cap_ot_hours` cắt giờ về trần lúc tạo đơn (cấu hình `HR Policy.overtime_max_hours_normal` / `overtime_max_hours_holiday`) |
 | `payout_type` | Select | **Tiền lương** \| **Nghỉ bù** |
 | `reason` | Small Text | Nội dung công việc (bắt buộc) |
 | `status` | Select | **Pending** → **Approved** / **Rejected** (không dùng docstatus) |
@@ -75,7 +78,8 @@ NV tạo trên PWA (status=Pending, notify người duyệt)
 ```
 
 - NV tự **huỷ** được đơn khi còn Pending (thành Rejected).
-- Đơn cho **ngày quá khứ** chỉ nhận trong **7 ngày** (khai bổ sung khi quên xin trước).
+- Đơn cho **ngày quá khứ** chỉ nhận trong **1 ngày** (mặc định — cấu hình
+  `HR Policy.overtime_declaration_deadline_days`); app **chặn khai cho ngày tương lai**.
 - Tối đa **10 đơn Pending**/NV (chống spam).
 
 ---
@@ -136,7 +140,7 @@ HR Manager mở **Desk → HR Overtime Request** khi cần:
 | Việc | Cách làm |
 |---|---|
 | Duyệt thay / sửa duyệt nhầm | Sửa field `status` (Pending/Approved/Rejected) — doctype không submittable nên sửa trực tiếp được |
-| Đơn quá hạn 7 ngày | HR tạo đơn hộ trên Desk (điền employee, ngày, giờ, payout) rồi set Approved — hook đối chiếu chạy khi có Attendance; nếu Attendance đã có thì sửa `status` qua PWA-approve không được, chạy đối chiếu bằng cách mở đơn và lưu lại hoặc nhờ dev gọi `apply_to_existing_attendance` |
+| Đơn quá hạn 1 ngày | HR tạo đơn hộ trên Desk (điền employee, ngày, giờ, payout) rồi set Approved — hook đối chiếu chạy khi có Attendance; nếu Attendance đã có thì sửa `status` qua PWA-approve không được, chạy đối chiếu bằng cách mở đơn và lưu lại hoặc nhờ dev gọi `apply_to_existing_attendance` |
 | Kiểm tra giờ đã ghi nhận | Xem `granted_hours` + link `attendance` trên đơn; hoặc mở Attendance xem section **Overtime** |
 | Báo cáo OT tháng | List view HR Overtime Request lọc `status=Approved` + khoảng `ot_date`, tổng `granted_hours` |
 

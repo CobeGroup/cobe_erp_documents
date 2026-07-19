@@ -68,7 +68,7 @@ Gõ tên một loại dữ liệu (vd "Leave Type") → gợi ý:
 
 > 🧭 **Xem bằng ví dụ** — doctype **Leave Type** (loại nghỉ phép):
 
-**① Danh sách (List view)** — mở `/app/leave-type` thấy **tất cả bản ghi** của doctype này. **Mỗi dòng = một bản ghi** (Annual Leave, Sick Leave, Casual Leave…):
+**① Danh sách (List view)** — mở `/app/leave-type` thấy **tất cả bản ghi** của doctype này. **Mỗi dòng = một bản ghi** (Phép năm, Nghỉ ốm, Nghỉ việc riêng…):
 
 ![Danh sách (List view) — các bản ghi của doctype Leave Type; mỗi dòng là 1 bản ghi](images/desk/concept-list.png)
 

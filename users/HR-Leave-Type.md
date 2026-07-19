@@ -20,8 +20,9 @@ PWA (tab Nghỉ phép → tạo đơn) lấy loại phép từ `get_leave_types_
 
 - **Loại NV có Leave Allocation** (đã được cấp số dư) → hiện kèm số dư.
 - **+ loại bật `is_lwp`** (nghỉ không lương) → **luôn hiện**, không cần allocation.
+- **+ loại bật `is_compensatory`** (Nghỉ bù) → **luôn hiện** (fallback trong code), không cần allocation — dùng `allow_negative` nên số dư có thể âm.
 
-> ⚠️ **Dropdown trống = NV chưa có Leave Allocation NÀO + không có loại nào bật `is_lwp`** (hoặc loại đó bị Disabled). → Tạo [Leave Allocation](HR-Leave-Setup.html) cho phép có lương, và/hoặc bật 1 loại `is_lwp` làm lưới an toàn.
+> ⚠️ **Dropdown trống = NV chưa có Leave Allocation NÀO + không có loại nào bật `is_lwp` HAY `is_compensatory`** (hoặc các loại đó bị Disabled). → Tạo [Leave Allocation](HR-Leave-Setup.html) cho phép có lương, và/hoặc bật 1 loại `is_lwp` làm lưới an toàn.
 
 ---
 
@@ -32,7 +33,7 @@ PWA (tab Nghỉ phép → tạo đơn) lấy loại phép từ `get_leave_types_
 | **`is_lwp`** (Is Leave Without Pay) | **Nghỉ KHÔNG LƯƠNG.** Luôn chọn được, **không cần allocation**, không có số dư; khi duyệt → trừ lương ngày nghỉ. Nên có **ít nhất 1 loại** (vd "Leave Without Pay") làm lưới an toàn để NV chưa được cấp phép vẫn tạo được đơn. |
 | **`is_earned_leave`** (Is Earned Leave) | Cấp **dần theo kỳ** (HRMS native), không cấp 1 cục. Đi kèm `earned_leave_frequency` (Cobe dùng **Monthly**). Chi tiết: [Leave Setup §2](HR-Leave-Setup.html#2-cấp-quỹ-phép-năm-earned-leave). |
 | **`is_carry_forward`** (Is Carry Forward) | Số dư cuối kỳ **chuyển sang kỳ sau**. Đi kèm `maximum_carry_forwarded_leaves` (trần chuyển) + `expire_carry_forwarded_leaves_after_days` (hết hạn sau N ngày). |
-| **`is_compensatory`** (Is Compensatory) | **Phép bù** — số dư đến từ **Compensatory Leave Request** (đi làm ngày nghỉ → xin bù). Vd "Compensatory Off". |
+| **`is_compensatory`** (Is Compensatory) | **Nghỉ bù** — **KHÔNG** có Leave Allocation, số dư **âm là bình thường** (dùng chung `allow_negative`). Căn cứ hợp lệ = **HR Overtime Request đã duyệt**, quy đổi payout **"Nghỉ bù"**, đúng ngày khai trong ô "Ngày làm thêm để bù" (validate `_validate_comp_ot_request`), mỗi ngày OT chỉ bù 1 lần. Loại này **luôn hiện trong dropdown** của NV (fallback trong code). Vd "Nghỉ bù". |
 | **`is_optional_leave`** (Is Optional Leave) | Nghỉ lễ **tuỳ chọn** theo Optional Holiday List (NV tự chọn ngày lễ muốn nghỉ). |
 | **`allow_negative`** (Allow Negative Balance) | Cho phép số dư **âm** (nghỉ vượt quỹ). Mặc định tắt. |
 | **`allow_over_allocation`** | Cho cấp **vượt** `max_leaves_allowed`. |
@@ -59,9 +60,9 @@ PWA (tab Nghỉ phép → tạo đơn) lấy loại phép từ `get_leave_types_
 | Leave Type | Flag chính |
 |---|---|
 | **Annual Leave** | `is_earned_leave` + Monthly (phép năm cấp dần) |
-| **Sick Leave** | (cấp cố định qua Allocation/Policy) |
-| **Casual Leave** | (cấp cố định) |
-| **Compensatory Off** | `is_compensatory` (bù ngày đi làm dịp nghỉ) |
+| **Nghỉ ốm** | (cấp cố định qua Allocation/Policy) |
+| **Nghỉ việc riêng** | (cấp cố định) |
+| **Nghỉ bù** | `is_compensatory` (căn cứ HR Overtime Request quy đổi Nghỉ bù, số dư âm bình thường) |
 | **Leave Without Pay** | `is_lwp` ✓ — **lưới an toàn, luôn để bật 1 loại** |
 
 > 💡 Sau khi tạo/sửa Leave Type, muốn NV có số dư phải gắn qua **Leave Allocation** hoặc **Leave Policy Assignment** — `is_lwp` là ngoại lệ duy nhất không cần.

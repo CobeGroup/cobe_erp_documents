@@ -26,9 +26,9 @@ Các loại thường dùng:
 
 | Loại | Có lương? | Số dư từ đâu |
 |---|---|---|
-| **Casual Leave** / **Sick Leave** / **Privilege Leave** | ✅ Có | Cấp qua **Leave Allocation** |
+| **Nghỉ việc riêng** / **Nghỉ ốm** | ✅ Có | Cấp qua **Leave Allocation** |
 | **Annual Leave** *(nếu bật Earned)* | ✅ Có | Tự cộng **dần hàng tháng** (earned) |
-| **Compensatory Off** | ✅ Có | Phép **bù** — từ đơn đi làm ngày nghỉ |
+| **Nghỉ bù** (`is_compensatory`) | ✅ Có | **Không** cấp qua Allocation — căn cứ là **HR Overtime Request** (quy đổi **Nghỉ bù**) đã duyệt; số dư **âm là bình thường** (`allow_negative`) |
 | **Leave Without Pay** (`is_lwp`) | ❌ Không | **Không cần cấp** — luôn chọn được, duyệt thì trừ lương |
 
 Mở 1 loại để xem/chỉnh **thông số**:

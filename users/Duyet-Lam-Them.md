@@ -12,7 +12,7 @@ nav_order: 4
 **Dành cho:** Trưởng Bộ Phận (người duyệt chấm công) · HR · **Thời lượng:** ~1 phút
 {: .fs-3 .text-grey-dk-000 }
 
-> Nhân viên xin làm thêm **trước khi làm** → bạn duyệt trên tab **Cần duyệt** như
+> Nhân viên **khai phiếu SAU khi đã làm thêm** → bạn duyệt trên tab **Cần duyệt** như
 > mọi loại đơn khác. Duyệt xong hệ thống tự lo phần còn lại: đối chiếu chấm công,
 > tính tiền theo hệ số, hoặc làm căn cứ nghỉ bù.
 
@@ -57,6 +57,10 @@ Bấm vào đơn để xem chi tiết rồi **Duyệt** hoặc **Từ chối**:
 
 Nhân viên nhận thông báo ngay khi bạn duyệt / từ chối.
 
+> ✍️ **Từ chối phải nêu lý do.** Bấm **Từ chối** → hệ thống bắt nhập lý do trước khi
+> xác nhận. Lý do này đi kèm thông báo gửi về cho nhân viên, để họ biết vì sao đơn
+> bị từ chối và khai lại cho đúng nếu cần.
+
 ---
 
 ## 3. Sau khi duyệt — hệ thống tự làm gì?
@@ -77,8 +81,9 @@ Bạn **không phải theo dõi gì thêm**. Hôm nhân viên làm thêm:
 
 ## 4. Duyệt muộn có sao không?
 
-Không sao. Nếu nhân viên đã làm thêm xong rồi bạn mới duyệt (trong vòng 7 ngày),
-hệ thống **đối chiếu ngược ngay lúc duyệt** — giờ OT vẫn được ghi nhận đầy đủ.
+Không sao. Nhân viên vốn đã làm thêm xong mới khai đơn; khi bạn duyệt (trong hạn
+**1 ngày** mặc định kể từ ngày làm thêm), hệ thống **đối chiếu ngược ngay lúc duyệt**
+— giờ OT vẫn được ghi nhận đầy đủ.
 
 ---
 

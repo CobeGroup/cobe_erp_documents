@@ -51,7 +51,7 @@ Bấm vào 1 đề nghị để xem chi tiết (nhân viên, loại, ngày, lý 
 <img src="images/guide/truongbophan/02-detail.png" width="240" alt="Chi tiết đề nghị + nút duyệt">
 
 - **Duyệt (Manager)** → đề nghị lên **HR duyệt bước 2**.
-- **Từ chối** → đóng đề nghị.
+- **Từ chối** → đóng đề nghị; **bắt buộc nhập lý do** mới từ chối được (bỏ trống bị chặn), và **nhân viên nhận được lý do** kèm thông báo.
 - **Chuyển duyệt** → giao cho người khác (xem mục 3).
 
 ---

@@ -88,6 +88,13 @@ flowchart LR
 
 <img src="images/guide/nhanvien/07-checkout-confirm.png" width="240" alt="Xác nhận Check-out lúc 17:30">
 
+> ⏰ **Check-out sau giờ tan ca?** Nếu bạn bấm Ra khi **đã qua giờ tan ca**, app hỏi lại
+> *"Đã qua giờ tan ca (17:30). Bạn vẫn muốn check-out?"* — tránh lỡ tay bấm sớm/muộn.
+> Đúng ý thì bấm **"Vẫn check-out"**.
+>
+> 💡 Ở lại **làm thêm** thì check-out muộn **không tự thành giờ OT** — phải
+> [khai phiếu Làm thêm giờ](Guide-NhanVien-LamThem.html) cho ngày đã làm mới được tính.
+
 ---
 
 ## D. Nếu bạn là Kỹ thuật viên (KTV)

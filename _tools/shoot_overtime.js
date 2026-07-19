@@ -113,7 +113,7 @@ async function fillOtForm(page, payout) {
   await page.locator('[title="Tạo đơn làm thêm"]').click();
   await page.waitForSelector('.ant-modal', { timeout:8000 });
   await page.waitForTimeout(1000);
-  await pickDate(page, '2026-07-15');
+  await pickDate(page, '2026-07-11');   // khai SAU: ngày đã làm (clock=12/07, trong hạn 1 ngày)
   await page.locator('.ant-modal .ant-picker').nth(1).click();       // TimePicker range
   await pickTime(page, '17', '30');
   await pickTime(page, '19', '30');

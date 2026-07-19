@@ -51,8 +51,10 @@ Mở **my-workspace → tab Cần duyệt**. Bạn chỉ thấy đơn của **nh
 <img src="images/guide/duyet/05-attendance.png" width="240" alt="Đơn chấm công bù trong tab Cần duyệt — nút Duyệt / Từ chối">
 
 - **Duyệt** → xong ngay: hệ thống tự tạo công **Có mặt** cho (các) ngày trong đơn.
-- **Từ chối** → đơn đóng; ngày đó nhân viên **không có công** (kể cả khi đã check-in ngoài VP dựa
-  trên đơn — với KTV hiện trường, xem [Guide KTV](Guide-KTV-ChamCong.html)).
+- **Từ chối** → đơn đóng; **bắt buộc nhập lý do** mới từ chối được (bỏ trống, hệ thống báo *"Vui lòng
+  nhập lý do từ chối."*), và **nhân viên nhận được lý do** kèm thông báo. Ngày đó nhân viên **không có
+  công** (kể cả khi đã check-in ngoài VP dựa trên đơn — với KTV hiện trường, xem
+  [Guide KTV](Guide-KTV-ChamCong.html)).
 
 > 📱 App duyệt **từng phiếu một** — phù hợp nhịp hằng ngày (1-2 đơn lẻ tẻ). Cuối tuần/cuối tháng dồn
 > nhiều phiếu → dùng Desk bên dưới.

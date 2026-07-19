@@ -111,7 +111,15 @@ Lý do giữ 1 step:
 
 ### Reject
 
-Manager chọn **Cancel** (`api.approval.act`, `action = "Cancel"` → docstatus = 2). NV phải tạo đơn Chấm công bù mới nếu muốn lại.
+Manager chọn **Cancel** (`api.approval.act`, `action = "Cancel"`). Xử lý tuỳ docstatus của đơn:
+- Đơn **Draft** (`docstatus == 0`, trường hợp thường gặp — đơn còn chờ duyệt) → code gọi **`doc.delete()`**
+  → **XOÁ hẳn** đơn (không set docstatus = 2; `cancel()` một draft sẽ lỗi *"Cannot cancel a draft"*).
+- Đơn **đã submit** (`docstatus == 1`, duyệt nhầm rồi mới thu hồi) → **`doc.cancel()`** → native revert
+  Attendance đã tạo.
+
+**Reject bắt buộc kèm lý do** (mục 13): `Cancel`/`Reject` nằm trong `REJECT_ACTIONS` → thiếu `reason`
+thì `frappe.throw("Vui lòng nhập lý do từ chối.")`. Lý do được **báo cho nhân viên** kèm thông báo
+(dòng *"Lý do: …"*). NV phải tạo đơn Chấm công bù mới nếu muốn lại.
 
 ---
 

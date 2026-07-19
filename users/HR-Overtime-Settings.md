@@ -51,7 +51,7 @@ Desk → search **Overtime Type** → mở **"Làm thêm giờ"**. Các field qu
 | Standard Multiplier | **1.5** | Hệ số ngày thường (150% — luật VN) |
 | Applicable for Weekend + Weekend Multiplier | ✓ / **2.0** | Cuối tuần 200% |
 | Applicable for Public Holiday + Holiday Multiplier | ✓ / **3.0** | Ngày lễ 300% (theo Holiday List) |
-| Maximum Overtime Hours Allowed | 0 (không trần) | Trần giờ OT/ngày khi tính tiền — set nếu công ty muốn cap |
+| Maximum Overtime Hours Allowed | 0 | Trần giờ OT/ngày **ở khâu Overtime Type khi tính tiền** — set nếu muốn cap thêm ở tầng này. **Lưu ý:** dù để 0, hệ thống **vẫn cắt giờ cứng lúc tạo đơn** theo HR Policy (4h ngày thường / 8h ngày lễ — xem mục 3), nên đây không phải "không trần" |
 
 > 💡 **Rà lại 2 điểm trước khi tin số tiền:**
 > 1. Component **"Basic"** có đúng là lương cơ bản trong Salary Structure của công ty
@@ -73,6 +73,13 @@ Desk → **HR Policy** (mỗi Company 1 bản ghi) → section **Overtime Notifi
 |---|---|
 | **Default Overtime Type** | Giờ OT đã duyệt của Company này tính theo Overtime Type nào |
 | Notify OT Threshold (minutes) | NV check-out muộn quá N phút **mà không có đơn OT** → nhắc NV tạo đơn (0 = tắt nhắc) |
+| **`overtime_max_hours_normal`** | Trần giờ OT **ngày thường** (mặc định **4**). Khai vượt bị cắt về trần ngay lúc tạo đơn (`cap_ot_hours`) |
+| **`overtime_max_hours_holiday`** | Trần giờ OT **ngày lễ/nghỉ** (mặc định **8**). Cắt cứng như trên |
+| **`overtime_declaration_deadline_days`** | Số ngày được khai bổ sung sau khi làm thêm (mặc định **1**). Quá hạn → app chặn, phải nhờ HR khai tay |
+
+> ⚠️ Đây là **trần cứng thực thi ở tầng đơn** (khi NV tạo/HR tạo hộ HR Overtime
+> Request), khác với "Maximum Overtime Hours Allowed" của Overtime Type (mục 2) chỉ
+> áp lúc tính tiền. Giờ được ghi nhận cuối cùng = min(giờ thực tế, giờ khai, trần này).
 
 Không set Default Overtime Type → hệ thống fallback nếu toàn site chỉ có đúng 1
 Overtime Type; nhiều hơn thì **giờ OT không được ghi vào Attendance** (có log lỗi).

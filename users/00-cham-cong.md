@@ -31,6 +31,7 @@ has_children: true
 - 🗺️ Muốn hiểu đề xuất chấm công bù được duyệt thế nào → **[Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html)**
 - 🌴 Muốn xin nghỉ / nghỉ bù → **[Xin nghỉ phép & nghỉ bù](Guide-NhanVien-NghiPhep.html)**
 - 🗺️ Muốn hiểu đơn nghỉ được duyệt thế nào → **[Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html)**
+- ⏱️ Làm thêm giờ, đổi tiền/nghỉ bù → **[Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html)** · **[Hành trình một ngày Nghỉ bù](Hanh-Trinh-Nghi-Bu.html)**
 - ✅ Là người duyệt, có đơn chờ → **[Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html)** · **[Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html)**
 
 ---

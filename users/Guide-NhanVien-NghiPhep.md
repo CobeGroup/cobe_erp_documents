@@ -28,7 +28,7 @@ thêm (bật tiếng để nghe thuyết minh):
 ## 1. Xem số dư & đơn đã gửi
 
 Mở tab **Nghỉ phép**:
-- **Số dư phép**: các chip hiện số ngày còn lại từng loại (Annual Leave, Sick Leave…).
+- **Số dư phép**: các chip hiện số ngày còn lại từng loại (Phép năm, Nghỉ ốm…).
 - **Đơn xin nghỉ**: danh sách đơn đã gửi + trạng thái (Chờ Manager / Đã được duyệt / Từ chối).
 
 <img src="images/guide/nhanvien/10-leave-list.png" width="240" alt="Số dư phép + danh sách đơn">
@@ -63,6 +63,13 @@ Bấm nút **+** (góc dưới phải) → điền:
 4. Bấm **Gửi đơn**.
 
 > 💡 Đơn đi qua **2 bước duyệt: Quản lý → HR**. Theo dõi trạng thái ở danh sách mục 1.
+> *(Riêng phép **chế độ / BHXH / WFH** và đơn của **quản lý** đi thẳng HR — xem mục 5.)*
+
+> ✏️ **Điền sai vẫn sửa được** khi đơn còn **"Chờ Manager"**: mở đơn → **Sửa đơn** → gửi lại.
+> Qua bước Manager duyệt rồi thì không sửa nữa.
+>
+> ✍️ **Bị từ chối** thì mở đơn ra là thấy **Lý do từ chối** (người duyệt bắt buộc ghi) — biết
+> đường chỉnh rồi gửi đơn mới.
 
 ---
 
@@ -94,9 +101,10 @@ Khi chỉ cần nghỉ **một buổi** (vd sáng đi khám, chiều đi làm):
 Hôm trước **làm thêm giờ / làm khuya** (hay gặp ở kỹ thuật viên đi lắp máy đêm)? Bạn được xin
 **Nghỉ bù** — nhưng nhớ điều kiện tiên quyết:
 
-> ⚠️ **Bước 0 (làm TRƯỚC khi làm thêm):** tạo đơn **Làm thêm giờ** với quy đổi
-> **"Nghỉ bù"** và được Quản lý duyệt — xem [Xin làm thêm giờ](Guide-NhanVien-LamThem.html).
-> Không có đơn này, hệ thống sẽ **từ chối đơn Nghỉ bù ngay khi gửi**.
+> ⚠️ **Bước 0 (khai SAU khi đã làm thêm):** khai đơn **Làm thêm giờ** với quy đổi
+> **"Nghỉ bù"** cho **ngày đã làm** (trong hạn — mặc định 1 ngày) và được Quản lý duyệt — xem
+> [Xin làm thêm giờ](Guide-NhanVien-LamThem.html). Không có đơn này, hệ thống sẽ
+> **từ chối đơn Nghỉ bù ngay khi gửi**.
 
 Có đơn làm thêm đã duyệt rồi thì tạo đơn nghỉ y như nghỉ phép thường, chỉ khác **Loại phép**:
 
@@ -123,6 +131,23 @@ Có đơn làm thêm đã duyệt rồi thì tạo đơn nghỉ y như nghỉ ph
 
 ---
 
+## 5. Phép chế độ / BHXH / WFH — gửi thẳng HR
+
+Vài loại phép **không qua Quản lý** mà vào **thẳng HR** (nhanh hơn, nhưng cần chứng từ). Bạn không
+phải chọn gì — **chọn đúng loại phép là form tự đổi**:
+
+<img src="images/guide/nhanvien/15-leave-skipmanager.png" width="240" alt="Loại phép gửi thẳng HR — banner + ô đính kèm hình bắt buộc">
+
+- Form báo **"gửi THẲNG lên HR (bỏ qua Quản lý)"**.
+- Xuất hiện ô **Hình đính kèm** có dấu **\*** (bắt buộc) — chụp **giấy chế độ / đơn thuốc / xác nhận**
+  làm căn cứ cho HR. Chưa đính kèm thì **không gửi được**.
+- Gửi xong hiện **"Đã gửi đơn. Chờ HR duyệt."** — chỉ còn **1 bước** (HR).
+
+> 💡 Nếu bạn **là quản lý** (đang duyệt đơn cho người khác), **mọi đơn** của bạn cũng đi thẳng HR —
+> nhưng **không cần đính kèm**.
+
+---
+
 ## ⚠️ Lưu ý
 
 | Tình huống | Cách xử |
@@ -132,7 +157,7 @@ Có đơn làm thêm đã duyệt rồi thì tạo đơn nghỉ y như nghỉ ph
 | Đơn vẫn "Chờ" sau khi Quản lý duyệt | Còn chờ **HR duyệt bước 2** mới chính thức |
 | Không thấy loại **"Nghỉ bù"** | Công ty chưa bật Leave Type Nghỉ bù → báo HR |
 | Xin Nghỉ bù mà app đòi "Ngày làm thêm để bù" | Ô này **bắt buộc** với Nghỉ bù — chọn đúng hôm đã làm thêm |
-| "Ngày … không có đơn Làm thêm giờ đã duyệt…" | Ngày đó thiếu đơn Làm thêm (quy đổi Nghỉ bù) đã duyệt → [tạo đơn làm thêm](Guide-NhanVien-LamThem.html) trước (khai bổ sung được trong 7 ngày) |
+| "Ngày … không có đơn Làm thêm giờ đã duyệt…" | Ngày đó thiếu đơn Làm thêm (quy đổi Nghỉ bù) đã duyệt → [khai đơn làm thêm](Guide-NhanVien-LamThem.html) cho ngày đã làm (trong hạn — mặc định 1 ngày) |
 | "Ngày làm thêm … đã được dùng cho đơn Nghỉ bù …" | Ngày làm thêm đó đã bù rồi — mỗi ngày chỉ bù 1 lần |
 
 ---
@@ -140,4 +165,5 @@ Có đơn làm thêm đã duyệt rồi thì tạo đơn nghỉ y như nghỉ ph
 ## Liên quan
 - ⏱️ [Xin làm thêm giờ (OT)](Guide-NhanVien-LamThem.html) — điều kiện tiên quyết của Nghỉ bù
 - 🗺️ [Hành trình một đơn nghỉ phép (NV → Manager → HR)](Hanh-Trinh-Nghi-Phep.html) — đơn của bạn được duyệt thế nào
+- 🔁 [Hành trình một ngày Nghỉ bù](Hanh-Trinh-Nghi-Bu.html) — kiếm giờ làm thêm → đổi ngày nghỉ
 - [Cài app & Chấm công](Guide-NhanVien-ChamCong.html) · [Chi phí](Guide-NhanVien-ChiPhi.html)

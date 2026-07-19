@@ -93,8 +93,10 @@ Bấm vào đơn đang **"Chờ Manager duyệt"** để xem chi tiết, rồi c
 - **Từ chối** → đơn bị **đóng** (Rejected).
 - **Chuyển duyệt** → giao cho người khác duyệt (xem [mục A.4](#a4--chuyển-duyệt-ca-khó)).
 
-Bấm **Từ chối** sẽ hiện **hộp xác nhận** (kèm tên nhân viên + nội dung đơn) — bấm **Xác nhận** để
-chốt, hoặc **Hủy** để thôi. *(HR từ chối ở bước 2 cũng xác nhận y như vậy.)*
+Bấm **Từ chối** sẽ hiện hộp nhập **lý do từ chối** (kèm tên nhân viên + nội dung đơn). **Bắt buộc
+nhập lý do** mới từ chối được — bỏ trống, hệ thống báo *"Vui lòng nhập lý do từ chối."* và không cho
+chốt. Nhập xong bấm **Xác nhận** để chốt, hoặc **Hủy** để thôi. **Lý do được gửi cho nhân viên** kèm
+thông báo (dòng *"Lý do: …"*). *(HR từ chối ở bước 2 cũng bắt buộc nhập lý do y như vậy.)*
 
 <img src="images/guide/duyet/06-reject-confirm.png" width="260" alt="Hộp xác nhận trước khi từ chối đơn">
 
@@ -105,7 +107,7 @@ chốt, hoặc **Hủy** để thôi. *(HR từ chối ở bước 2 cũng xác 
 <img src="images/guide/duyet/03-detail-hr.png" width="260" alt="Chi tiết đơn — nút Submit (HR) / Từ chối / Chuyển duyệt">
 
 - **Submit (HR)** → đơn **chính thức được duyệt** (Submitted) và **trừ số dư phép** của nhân viên.
-- **Từ chối** → đơn bị đóng (Rejected) — có **hộp xác nhận** như [bước Manager](#a2--bước-1-trưởng-bộ-phận-duyệt).
+- **Từ chối** → đơn bị đóng (Rejected) — **bắt buộc nhập lý do** như [bước Manager](#a2--bước-1-trưởng-bộ-phận-duyệt); lý do gửi cho nhân viên.
 - **Chuyển duyệt** → giao cho HR khác.
 
 > ✅ Đây là **bước cuối**. Sau khi Submit, nhân viên thấy đơn ở trạng thái "Đã duyệt" và số dư phép giảm tương ứng.
@@ -129,7 +131,7 @@ với nhãn **"Chấm công bù"**. Khác nghỉ phép, loại này **duyệt 1 
 <img src="images/guide/duyet/05-attendance.png" width="260" alt="Chi tiết Chấm công bù — nút Duyệt / Hủy">
 
 - **Duyệt** → hệ thống **tự tạo Attendance** cho ngày đó (Work From Home / Present / Half Day).
-- **Hủy** → từ chối đơn.
+- **Hủy** → từ chối đơn; **bắt buộc nhập lý do** (bỏ trống bị chặn) và **lý do gửi cho nhân viên** kèm thông báo.
 
 > 👥 **Người duyệt loại này KHÁC người duyệt nghỉ phép.** Đơn chấm công bù/WFH về
 > **Shift Request Approver** (gán trên Employee hoặc Department) — tách khỏi **Leave Approver**.
@@ -152,6 +154,8 @@ nhưng khi duyệt cần để ý mấy điểm riêng:
   trên **Desk**, xem field **"Ngày làm thêm để bù"** (hoặc mở HR Overtime Request tương ứng).
 - **Không trừ quỹ phép, không trừ lương** — số dư loại "Nghỉ bù" âm là **bình thường** (âm bao nhiêu
   = đã nghỉ bù bấy nhiêu ngày, mang tính thống kê). Đừng từ chối đơn chỉ vì "hết số dư".
+- **Từ chối đơn Nghỉ bù** cũng **bắt buộc nhập lý do** (bỏ trống bị chặn) và **lý do gửi cho nhân
+  viên** kèm thông báo — như mọi đơn nghỉ phép.
 - **Duyệt nhầm?** HR **Cancel** đơn trên Desk — ngày công "On Leave" tự gỡ, đảo ngược sạch.
 
 ---

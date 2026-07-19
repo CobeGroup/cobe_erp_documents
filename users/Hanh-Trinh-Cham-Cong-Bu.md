@@ -89,7 +89,8 @@ badge đỏ trên tab **Cần duyệt**. Mở đơn thấy đủ: tên, loại, 
 <img src="images/guide/hanhtrinh/ar-duyet.png" width="260" alt="Người duyệt mở đơn chấm công bù — nút Duyệt / Hủy">
 
 - **Duyệt** → xong ngay, **không có bước 2**.
-- **Hủy** → từ chối; ngày đó không có công.
+- **Hủy / Từ chối** → ngày đó không có công. **Bắt buộc nhập lý do** mới từ chối được; nhân viên
+  **nhận được lý do** đó để biết đường gửi lại đơn.
 
 💻 **Trên Desk** (dồn nhiều phiếu cuối tuần/cuối tháng): HR lọc **Attendance Request · Draft** → tick
 chọn → **Actions → Submit** — duyệt hàng loạt một phát. Chi tiết:
