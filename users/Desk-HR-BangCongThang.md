@@ -17,9 +17,9 @@ nav_order: 6.5
 > xuất Excel gửi kế toán.
 
 > 🟢 **Dùng bản Cobe: `Monthly Attendance Sheet Cobe`** (KHÔNG phải bản gốc HRMS "Monthly
-> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Công ty trực thuộc**, **Tổng giờ**, **mỗi ngày tách
-> 2 cột** (ký hiệu + **số giờ** riêng, xuất Excel cộng được) + **ký hiệu tiếng Việt theo loại phép**
-> — xem [mục 0](#0-bản-cobe--khác-gì-bản-gốc).
+> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Công ty trực thuộc**, **Tổng giờ**, **mỗi ngày là 1
+> ô ghép chia đôi** (nửa trái ký hiệu, nửa phải **số giờ**; xuất Excel tách 2 cột cộng được) + **ký
+> hiệu tiếng Việt theo loại phép** — xem [mục 0](#0-bản-cobe--khác-gì-bản-gốc).
 
 <details open markdown="block">
   <summary>Mục lục</summary>
@@ -37,19 +37,21 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | | **Monthly Attendance Sheet Cobe** *(khuyên dùng)* | Monthly Attendance Sheet *(gốc HRMS)* |
 |---|---|---|
 | Cột đầu | Employee · **Mã NV** · Tên · **Công ty trực thuộc** · Shift · **Tổng giờ** | Employee · Tên · Shift |
-| Ô mỗi ngày | **2 cột/ngày**: cột ký hiệu (`1 T4` → `P`) + cột **số giờ** riêng (`1·g` → `8.3`) | 1 cột: chỉ ký hiệu `P`, `HD` |
+| Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`) **chia đôi**: nửa trái ký hiệu (`P`) + nửa phải **số giờ** (`8.3`) | 1 ô: chỉ ký hiệu `P`, `HD` |
 | Ký hiệu nghỉ | **Theo loại phép** (tiếng Việt): `L` `L/2` `NB` `KL` `WFH` `CĐ` `BH` `H` `WO` | Gộp chung `L` (On Leave) |
 | Lọc Company | **Bỏ trống = gộp MỌI công ty** | Bắt buộc chọn |
 | Cách chạy | **Chạy thẳng** (bấm là ra) | "Prepared report" — phải **Generate New Report** rồi chờ |
 | Summarized View | Dùng chung phần tổng của bản gốc | *(bản gốc)* |
 
-![Monthly Attendance Sheet Cobe — Mã NV · Công ty trực thuộc · Tổng giờ · mỗi ngày 2 cột (ký hiệu P + số giờ 8.2 riêng), ngày nghỉ/WO để trống cột giờ](images/desk/hr-mas-cobe-grid.png)
+![Monthly Attendance Sheet Cobe — Mã NV · Công ty trực thuộc · Tổng giờ · mỗi ngày 1 ô ghép (1 T4) chia đôi: ký hiệu P + số giờ 8.2, ngày nghỉ/WO để trống nửa giờ](images/desk/hr-mas-cobe-grid.png)
 
-> 💡 **Mỗi ngày = 2 cột**: cột trái `<ngày> <thứ>` (vd `1 T4`) là **ký hiệu** (`P`/`HD`/`L`/`WO`…),
-> cột phải `<ngày>·g` (vd `1·g`) là **số giờ thực tế**. Ngày **được tính công** (`P`, `HD`, `WFH`) **luôn có số giờ** ở cột phải (kể cả `0.0` khi
-> máy chấm chưa ghi được giờ — để HR biết mà rà); ngày **nghỉ/lễ/WO/vắng** để **trống** cột giờ. Tách
-> vậy để **xuất Excel** cộng/lọc theo cột giờ từng ngày được (dồn giờ + ký hiệu trong 1 ô thì Excel
-> không cộng nổi).
+> 💡 **Mỗi ngày = 1 ô ghép** (tiêu đề `<ngày> <thứ>`, vd `1 T4`) **chia đôi**: nửa **trái** là **ký
+> hiệu** (`P`/`HD`/`L`/`WO`…), nửa **phải** là **số giờ thực tế**. Ngày **được tính công** (`P`, `HD`,
+> `WFH`) **luôn có số giờ** ở nửa phải (kể cả `0.0` khi máy chấm chưa ghi được giờ — để HR biết mà
+> rà); ngày **nghỉ/lễ/WO/vắng** để **trống** nửa giờ.
+>
+> 💡 **Xuất Excel** thì mỗi ngày ra **2 cột** riêng (`1 T4` = ký hiệu, `1·g` = số giờ) nên cộng/lọc
+> theo cột giờ từng ngày được — trên màn gộp lại 1 ô cho gọn, nhưng dữ liệu vẫn tách.
 >
 > 💡 **Tổng giờ** = cộng số giờ mọi ngày trong kỳ — số giờ làm thực tế cả tháng của mỗi người, khỏi
 > tính tay. **Công ty trực thuộc** chỉ có với NV đã **gộp công ty** (lưu công ty gốc); NV khác để
@@ -104,8 +106,8 @@ Holidays / Unmarked Days, và **tách cột theo từng loại phép** (ảnh d�
 
 Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 
-> 🟢 **Bản Cobe** tách **mỗi ngày thành 2 cột** — cột mã (`P`, `HD`…) và cột **số giờ thực tế** riêng
-> (`…·g`) — và **tách ký hiệu theo loại
+> 🟢 **Bản Cobe** để **mỗi ngày là 1 ô ghép chia đôi** — nửa trái mã (`P`, `HD`…), nửa phải **số giờ
+> thực tế** — và **tách ký hiệu theo loại
 > phép**: `L` Phép năm · `L/2` Phép năm nửa ngày · `NB` Nghỉ bù · `KL` Không lương · `CĐ` Chế độ có
 > lương · `BH` Chế độ BHXH · `WFH` · `H` Lễ · `WO` Nghỉ tuần · `A` Vắng · `HD/A` nửa ngày còn lại
 > vắng. (Bản gốc gộp tất cả loại nghỉ thành `L`.)

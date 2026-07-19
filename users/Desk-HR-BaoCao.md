@@ -20,7 +20,7 @@ nav_order: 6
 
 | Báo cáo | Cho biết |
 |---|---|
-| **[Monthly Attendance Sheet **Cobe**](Desk-HR-BangCongThang.html)** *(dùng bản này)* | Bảng công **cả tháng** từng nhân viên, thêm **Mã NV · Công ty trực thuộc · Tổng giờ**; **mỗi ngày tách 2 cột** (ký hiệu + **số giờ** riêng, xuất Excel cộng được), ký hiệu theo loại phép (L/L2/NB/KL/CĐ/BH/WFH/H/WO). **Bỏ trống Company = mọi công ty.** → **[Hướng dẫn chi tiết](Desk-HR-BangCongThang.html)** |
+| **[Monthly Attendance Sheet **Cobe**](Desk-HR-BangCongThang.html)** *(dùng bản này)* | Bảng công **cả tháng** từng nhân viên, thêm **Mã NV · Công ty trực thuộc · Tổng giờ**; **mỗi ngày là 1 ô ghép chia đôi** (nửa ký hiệu + nửa **số giờ**; xuất Excel tách 2 cột cộng được), ký hiệu theo loại phép (L/L2/NB/KL/CĐ/BH/WFH/H/WO). **Bỏ trống Company = mọi công ty.** → **[Hướng dẫn chi tiết](Desk-HR-BangCongThang.html)** |
 | Monthly Attendance Sheet *(bản gốc HRMS)* | Bản đơn giản: mỗi ngày **P / A / HD / L / WFH / H / WO**, bắt buộc chọn company, là "prepared report". Ưu tiên dùng **bản Cobe** ở trên. |
 | **Shift Attendance** | Chấm công **theo ca** (giờ vào/ra thực tế vs ca), phát hiện đi trễ/về sớm. |
 | **Employees working on a holiday** | Ai **đi làm vào ngày lễ** (để tính bù/OT). |
