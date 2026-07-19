@@ -274,7 +274,7 @@ Khi SI bị cancel (`Sales Invoice.on_cancel`):
   refactor 2026-06-05) link qua `invoice_type=Sales Invoice, invoice=<SI này>`
   + customer != si.customer → cộng theo từng referrer, tạo entry âm bù trừ.
 - **Event lên 3rd party**: mỗi LPE âm vừa tạo ra sẽ tự emit
-  `loyalty.points_decreased` qua hook `Loyalty Point Entry.on_submit` (xem §10).
+  `loyalty.points_decreased` qua hook `Loyalty Point Entry.after_insert` (xem §10).
 
 Entry bù trừ có `discretionary_reason` bắt đầu bằng `[REVERSE]` để dễ filter
 trong báo cáo.
@@ -454,7 +454,7 @@ custom_for_cobegroup/custom_for_cobegroup/custom_for_cobegroup/
 │   └── loyalty_assignment_tool/                # Page bulk gán program cho Customer
 └── loyalty/
     ├── sales_invoice_handlers.py               # hook SI before_submit/on_submit/on_cancel
-    ├── emitter.py                              # hook LPE.on_submit → tạo COBE Loyalty Event
+    ├── emitter.py                              # hook LPE.after_insert → tạo COBE Loyalty Event
     ├── sync_worker.py                          # scheduler all: gửi event Pending lên 3rd party
     ├── odoo_matcher.py                         # matcher 5 chiến lược
     └── api/
@@ -510,7 +510,7 @@ theo điểm vs ngưỡng tier); `null` nếu customer chưa thuộc tier nào.
 
 ## 10. Outbound event — báo 3rd party mỗi khi điểm thay đổi
 
-Mỗi `Loyalty Point Entry` khi được submit (built-in award, SO/referral award,
+Mỗi `Loyalty Point Entry` khi được tạo (built-in award, SO/referral award,
 VIP seed, manual adjustment, return/cancel compensation) đều phát **đúng 1**
 event lên hệ thống bên ngoài:
 
@@ -519,8 +519,9 @@ event lên hệ thống bên ngoài:
 
 ### 10a. Kiến trúc
 
-- Hook `Loyalty Point Entry.on_submit` → `loyalty/emitter.py::emit_lpe_event`
+- Hook `Loyalty Point Entry.after_insert` → `loyalty/emitter.py::emit_lpe_event`
   → tạo 1 record `COBE Loyalty Event` (status=Pending, ghi `company` + `event_type` lấy từ LPE).
+  (LPE không phải doctype submittable — chỉ được insert — nên emit chạy ở `after_insert`, không phải `on_submit`.)
 - Scheduler `all` (~4 phút/lần) → `loyalty/sync_worker.py::flush_pending_events`:
   1. Pick các event `Pending` + `Failed` chưa quá `max_retry_attempts`.
   2. Với mỗi event: resolve endpoint theo `(event.company, event.event_type)`

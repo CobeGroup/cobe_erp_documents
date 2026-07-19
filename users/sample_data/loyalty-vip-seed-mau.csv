@@ -1,0 +1,5 @@
+customer,points,reason,adjustment_type,expiry_date,company,loyalty_program
+CUST-2026-00001,5000,"Khach VIP chuyen tu he thong cu",Add,,,
+CUST-2026-00002,10000,"Thuong khai truong chi nhanh",Add,2027-12-31,THẾ GIỚI ĐIỆN GIẢI,
+CUST-2026-00003,2000,"Dieu chinh giam do nhap nham truoc do",Deduct,,,
+CUST-2026-00004,8000,"Seed diem VIP theo chuong trinh rieng",Add,,THẾ GIỚI ĐIỆN GIẢI,COBE Loyalty TGDG
