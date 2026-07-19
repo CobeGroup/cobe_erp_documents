@@ -71,26 +71,24 @@ toán/kho; webhook chạy dưới `Administrator`.
 
 ---
 
-## 3. ⚠️ GAP đã biết: on_update KHÔNG fire từ webhook
+## 3. ✅ ĐÃ VÁ — webhook giờ sinh chứng từ (on_change) {#status-reactor-fix}
 
-**Triệu chứng:** webhook đổi status → tab Tracking cập nhật, nhưng **SE/DN/SI/PE auto KHÔNG sinh**.
+**Gap gốc (đã sửa):** `DPShipment.handle_event()` (app gốc) đổi status bằng `self.db_set("status", ...)`.
+Trong Frappe `db_set` chỉ chạy `run_method("on_change")` — **không** chạy `on_update`. Extension trước
+hook `on_update` nên **không bao giờ fire từ webhook** → "Delivered" không tự tạo DN/SI/PE, "Partner
+Received" không tự tạo SE.
 
-**Nguyên nhân:** `DPShipment.handle_event()` (app gốc) đổi status bằng **`self.db_set("status", ...)`**.
-Trong Frappe, `db_set` chạy `run_method("on_change")` — **không** chạy `on_update`
-(`frappe/model/document.py`). Extension lại hook **`on_update`** → không kích hoạt.
+**Bản vá (Cách B):** đổi hook `DP Shipment` từ `on_update` → `on_change` trong extension. Guard idempotent
+sẵn có (`not custom_*`) + thêm cờ chống đệ quy `_dp_ext_status_reacting` (db_set trong các hàm `_create_*`
+lại fire on_change → cờ khiến fire lồng return ngay, outer chạy tuần tự). **Đã test local trọn chuỗi
+SE→DN→SI→PE + idempotent** (fire lại không tạo trùng).
 
-→ Hệ quả production: đơn "Delivered" hiển thị đúng nhưng **không tự tạo DN/SI/PE**; "Partner Received"
-không tự tạo SE (trừ khi kho đã đi Đường A — tạo SE từ MR tay).
+> **Kèm bản vá:** sửa bug COD — SI trước ghi vào `Debtors` nhưng PE cấn từ COD account → lệch, PE chết.
+> Nay `si.debit_to = cod_account`. **Yêu cầu bắt buộc:** COD account phải là **`account_type = Receivable`**
+> (setup hay tạo nhầm `Cash` → phải sửa trên prod, xem §5).
 
-**Hướng xử lý:**
-- **Cách B (khuyến nghị, ở extension):** đổi hook `DP Shipment` từ `on_update` → `on_change`. Guard
-  idempotent sẵn có (`not custom_*`) chịu được on_change fire nhiều lần / nhiều db_set trong 1 webhook.
-  Cần test 1 sự kiện thật.
-- **Cách A (ở app gốc):** sau `db_set("status")` trong `handle_event`, gọi `self.run_method("on_update")`
-  — nhưng phá nguyên tắc "app gốc không biết ERP" và side-effect rộng hơn.
-
-> Đường A (kho tạo SE từ MR) **không** dính gap này (vì `Stock Entry.on_submit` là submit thật).
-> Nên bước trừ kho vẫn có thể vận hành thủ công trong khi chờ fix.
+> Đường A (kho tạo SE từ MR tay) **không** dính gap này (`Stock Entry.on_submit` là submit thật) — vẫn chạy
+> song song, dùng khi chưa deploy bản vá.
 
 ---
 
@@ -134,7 +132,7 @@ bench build --app delivery_partner_extension_for_cobegroup
 | Cần setup | Chi tiết |
 |---|---|
 | **SO custom field** `custom_delivery_method` (Select) | `Đơn vị vận chuyển` / `Nội bộ giao/lắp` / `Khác (Đơn cũ)`. Nút **Create > DP Shipment** trên SO chỉ hiện khi = "Đơn vị vận chuyển" + SO đã submit |
-| **COD Receivable Account** | Chart of Accounts → tạo account (VD `VTP Receivable`, loại Current Asset / **Receivable**) → điền vào DP Partner Account |
+| **COD Receivable Account** | Chart of Accounts → tạo account (VD `COD Viettel Post`) với **`account_type = Receivable`** (BẮT BUỘC — để `Cash`/khác là đơn COD chết ở SI/PE) → điền vào DP Partner Account |
 | **Warehouse Address + Contact** | Mỗi kho pickup: Address link `Warehouse`; Contact (optional); Warehouse.`Account` (fallback đích COD PE) |
 | **Item dimensions** (optional) | `Weight Per Unit` (kg) + `custom_parcel_length/width/height` (cm) — phục vụ Auto-calculate Parcel |
 | **Mode of Payment `Cash`** | Có `Default Account` cho company (Settings → Mode of Payment → Cash) |
@@ -152,7 +150,7 @@ bench build --app delivery_partner_extension_for_cobegroup
 | `on_update` | Status = `Returned` / `Lost` | Tạo Return SE |
 | `before_cancel` | Cancel DP Shipment | Cancel MR + tạo Return SE nếu cần |
 
-> ⚠️ `on_update` **không fire** từ webhook (`db_set` chỉ chạy `on_change`) — xem [§3 GAP](#3--gap-đã-biết-on_update-không-fire-từ-webhook).
+> ℹ️ Hook thực tế là **`on_change`** (không phải on_update): base app đổi status bằng `db_set` → chỉ chạy on_change. Xem [§3](#status-reactor-fix).
 
 ---
 

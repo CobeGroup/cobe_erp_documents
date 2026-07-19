@@ -140,7 +140,7 @@ trong bundle bị bỏ qua.
 
 | Triệu chứng | Khắc phục |
 |---|---|
-| Đơn "Delivered" nhưng **không thấy** Phiếu giao / Hoá đơn / Phiếu thu | Vận đơn không gắn SO, hoặc tích hợp tự-sinh-chứng-từ chưa bật — báo kỹ thuật ([GAP on_update](../tech/Delivery_Partner-Lifecycle.html#3--gap-đã-biết-on_update-không-fire-từ-webhook)) |
+| Đơn "Delivered" nhưng **không thấy** Phiếu giao / Hoá đơn / Phiếu thu | Vận đơn không gắn SO, chưa deploy bản vá, hoặc COD account chưa đúng loại — báo kỹ thuật ([§3](../tech/Delivery_Partner-Lifecycle.html#status-reactor-fix)) |
 | DN qty không khớp SO | DN dùng **qty thực ĐVVC lấy** (picked qty), không phải qty khai — giao 1 phần thì nhỏ hơn |
 | SO không tự Completed sau giao | SO chỉ complete khi **tất cả** item đã giao đủ — còn item chưa ship |
 | "Partner Account has no warehouse" | DP Partner Account thiếu **Partner Warehouse** — báo quản trị |
