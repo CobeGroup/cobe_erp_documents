@@ -337,10 +337,16 @@ Với đơn có COD, VTP thu tiền hộ rồi đối soát trả về. Cấu h�
 | Field | Loại account | Ghi chú |
 |---|---|---|
 | **Partner Warehouse** | Warehouse leaf (kho ảo "hàng đang ở carrier") | mỗi công ty 1 kho |
-| **COD Receivable Account** | **`Receivable`** (bắt buộc) | giữ tiền COD carrier thu hộ |
+| **COD Receivable Account** | **`account_type = Receivable`** (BẮT BUỘC) | giữ tiền COD carrier thu hộ |
 
-**Vì sao COD phải là `Receivable`:** app extension dùng nó làm `paid_from` trong Payment Entry kiểu
-**"Receive"** với `party = Customer`. ERPNext bắt buộc account party của lệnh "Receive" là `Receivable`.
+> 🔴 **BẪY prod:** script setup / tạo tay hay để COD account thành **`Cash`**. Khi giao COD, extension
+> tạo Sales Invoice với `debit_to = cod_account` rồi Payment Entry cấn trừ — nếu account **không phải
+> `Receivable`** → ValidationError, **đơn COD chết ở bước hoá đơn/thu tiền**. Kiểm Chart of Accounts,
+> đảm bảo `account_type = Receivable` trước khi chạy đơn COD thật.
+
+**Vì sao COD phải là `Receivable`:** extension đặt `si.debit_to = cod_account` (SI ghi thẳng vào COD
+receivable thay vì Debtors) để Payment Entry kiểu **"Receive"** (`paid_from = cod_account`, `party = Customer`)
+cấn trừ được — 2 lệnh phải cùng account, mà account party của "Receive" bắt buộc `Receivable`.
 
 > ⚠️ **Đích đến tiền COD** (`paid_to`) resolve theo: *Bank Account trên Sales Order → account của
 > pickup warehouse → Company default cash account*, và **phải là Bank/Cash**. Đặt **Bank Account

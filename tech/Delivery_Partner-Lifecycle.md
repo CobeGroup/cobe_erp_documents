@@ -127,7 +127,12 @@ bench get-app https://github.com/CobeGroup/delivery_partner_extension_for_cobegr
 bench --site <site> install-app delivery_partner_extension_for_cobegroup
 bench --site <site> migrate
 bench build --app delivery_partner_extension_for_cobegroup
+bench --site <site> clear-cache   # BẮT BUỘC — hook doc_events cache trong redis, không clear thì bản mới không nạp
 ```
+
+> ⚠️ **Bẫy deploy:** đổi `doc_events` (hooks.py) mà **không `clear-cache`** → tiến trình vẫn chạy hook
+> cũ (app_hooks cache redis). Triệu chứng: webhook đổi status nhưng chứng từ không sinh. Luôn clear-cache
+> (hoặc restart) sau khi deploy bản đổi hook.
 
 | Cần setup | Chi tiết |
 |---|---|
