@@ -59,8 +59,9 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 > trống là bình thường.
 
 > ⚠️ Mở đúng tên **`Monthly Attendance Sheet Cobe`**. Bản gốc "Monthly Attendance Sheet" **không**
-> có Mã NV / Công ty trực thuộc / Tổng giờ. Các phần dưới (bộ lọc, mã trạng thái, presence-based,
-> xuất Excel) áp dụng cho **cả hai** bản.
+> có Mã NV / Công ty trực thuộc / Tổng giờ, **bộ lọc & ký hiệu cũng khác** (bản gốc dùng `P`/`A`/`HD`,
+> có *Group By*, bắt buộc chọn Company, phải Generate). Tài liệu này mô tả **bản Cobe**; chỉ phần
+> **presence-based** (mục 5) và **xuất Excel** là chung cho cả hai.
 
 ---
 
@@ -81,16 +82,18 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 
 | Bộ lọc | Ý nghĩa |
 |---|---|
-| **Month / Year** | Tháng & năm cần xem (bắt buộc). |
-| **Company** | Lọc theo công ty. **Bản Cobe: bỏ trống = gộp TẤT CẢ công ty.** *(Bản gốc bắt buộc chọn.)* |
+| **Filter Based On** | Lọc theo **Month** (tháng) hay **Date Range** (khoảng ngày). Mặc định **Month**. |
+| **Month / Year** | Tháng & năm — hiện khi *Filter Based On = Month*. |
+| **Start Date / End Date** | Khoảng ngày (≤ 90 ngày) — hiện khi *Filter Based On = Date Range*. |
 | **Employee** | Để trống = **tất cả** nhân viên; chọn 1 người = chỉ người đó. |
-| **Group By** | Gom nhóm theo **Department / Designation / Branch** (tuỳ chọn). |
-| **Summarized View** | Tích để xem **chỉ phần tổng** (không có lưới ngày) — gọn, hợp đối chiếu nhanh. |
-| **Include Company Descendants** | Gộp cả các công ty con. |
+| **Company** | Công ty pháp lý. **Bỏ trống = gộp TẤT CẢ công ty.** |
+| **Cty Trực Thuộc** | Lọc theo **nhóm gốc** (công ty trước khi gộp), **độc lập** với Company. Bỏ trống = mọi nhóm. |
+| **Include Company Descendants** | Gộp cả các công ty con (mặc định bật). |
+| **Summarized View** | Tích để xem **chỉ phần tổng** (biểu đồ + bảng đếm), không có lưới ngày. |
 
 Tích **Summarized View** → mỗi nhân viên còn 1 dòng tổng: Total Present / Leaves / Absent /
-Holidays / Unmarked Days, và **tách cột theo từng loại phép** (ảnh dưới: cột **Nghỉ bù** và
-**Annual Leave** riêng nhau):
+Holidays / Unmarked Days, và **tách cột theo từng loại phép** (ảnh dưới: cột **Nghỉ bù**, **Phép
+Năm**, **Nghỉ Không Lương** riêng nhau):
 
 ![Summarized View (bản Cobe) — biểu đồ + bảng tổng: Total Present / Leaves / Absent / Holidays / Unmarked, tách cột Nghỉ bù · Phép Năm · Nghỉ Không Lương riêng](images/desk/hr-mas-cobe-summary.png)
 
@@ -121,9 +124,9 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 
 > 📊 Xem **ảnh lưới Cobe thực tế** (đủ mã HR + số giờ) ở **[mục 0](#0-bản-cobe--khác-gì-bản-gốc)** phía trên.
 
-> 🔢 **Cột tổng** (bên phải lưới): **Total Present**, **Total Leaves**, **Total Absent**, **Total
-> Holidays**… cộng nhanh số ngày từng loại. Phần **chi tiết phép** tách theo **từng loại phép**
-> (Phép năm, **Nghỉ bù**, Không lương…).
+> 🔢 Muốn **cộng nhanh số ngày từng loại** (Total Present / Leaves / Absent / Holidays + tách theo
+> từng loại phép: Phép năm · **Nghỉ bù** · Không lương…) thì bật **Summarized View** ([mục 2](#2-bộ-lọc-thanh-trên)).
+> Lưới chi tiết này chỉ có cột **Tổng giờ** (số giờ công cả tháng), không có cột đếm theo loại.
 
 ---
 
@@ -151,17 +154,17 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 
 ## 5. Đặc thù cobe — chấm công "presence-based"
 
-Hệ thống cobe **không tự đóng dấu Vắng (A)**. Khác bản ERPNext mặc định, một ngày **không có
-check-in và không có đơn** sẽ để **ô trống** chứ **không** tự thành "A".
+Hệ thống cobe **không tự đóng dấu Vắng**. Khác bản ERPNext mặc định, một ngày **không có
+check-in và không có đơn** sẽ hiện **`-`** (0 công) chứ **không** tự thành vắng có bản ghi.
 
 | Bạn thấy | Nghĩa thật |
 |---|---|
-| Ô **trống** ở ngày làm việc | Nhân viên **chưa có công** ngày đó (quên chấm / chưa có đơn) → cần xác minh, **không** mặc nhiên là vắng |
-| Ô **A** (Absent) | Có bản ghi công **Absent** thật (HR tạo tay, hoặc đơn xin công bị từ chối rồi HR đánh vắng) |
+| Ô **`-`** ở ngày làm việc | 0 công ngày đó. **Hầu hết là "chưa có dữ liệu"** (quên chấm / chưa có đơn) — Cobe không tự đánh vắng nên **đừng** mặc nhiên là vắng, cần **xác minh** |
+| Ô **`-`** kèm bản ghi Absent thật | Trường hợp HR **tạo công Absent tay** (hoặc đơn xin công bị từ chối rồi đánh vắng). Nhìn giống hệt ô `-` trên bảng — muốn phân biệt phải mở Attendance ngày đó |
 
-> ⚠️ **Vì sao quan trọng:** cuối tháng đừng đọc ô trống = "đi làm đủ". Ô trống = **chưa có dữ liệu**.
-> Hãy soát các ô trống ngày thường: nhắc nhân viên **tạo Đề xuất chấm công bù**, hoặc HR **thêm công
-> tay** ([Theo dõi & sửa chấm công](Desk-HR-ChamCong.html)).
+> ⚠️ **Vì sao quan trọng:** cuối tháng đừng đọc ô `-` = "đi làm đủ" hay "chắc chắn vắng". Ô `-` =
+> **0 công / chưa xác minh**. Hãy soát các ô `-` ngày thường: nhắc nhân viên **tạo Đề xuất chấm công
+> bù**, hoặc HR **thêm công tay** ([Theo dõi & sửa chấm công](Desk-HR-ChamCong.html)).
 
 > 📘 Vì sao cobe tắt auto-Vắng: xem [Tổng quan chấm công](Cham-Cong-Tong-Quan.html).
 
@@ -169,8 +172,8 @@ check-in và không có đơn** sẽ để **ô trống** chứ **không** tự 
 
 ## 6. Xuất & đối chiếu
 
-1. Đặt **Month / Year / Company** → **Generate New Report**.
-2. Soát các **ô trống ngày thường** → xử lý (nhắc NV / thêm công tay).
+1. Đặt bộ lọc **Month / Year** (và Company / Cty Trực Thuộc nếu cần) — bảng **hiện ngay** (bản Cobe không cần Generate).
+2. Soát các ô **`-`** ngày thường (0 công / chưa xác minh) → xử lý (nhắc NV / thêm công tay).
 3. Bấm **⋮ (Menu)** → **Export** → chọn **Excel / CSV** để gửi kế toán / lưu hồ sơ.
 
 ![Menu ⋮ — Print / PDF / Export / Setup Auto Email](images/desk/hr-mas-export.png)
