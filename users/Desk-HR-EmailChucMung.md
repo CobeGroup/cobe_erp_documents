@@ -55,6 +55,8 @@ Biến dùng được trong tiêu đề & nội dung (cú pháp `{% raw %}{{ ...
 | `{% raw %}{{ designation }}{% endraw %}` · `{% raw %}{{ department }}{% endraw %}` | Chức danh · phòng ban |
 | `{% raw %}{{ date_of_joining }}{% endraw %}` · `{% raw %}{{ date_of_birth }}{% endraw %}` | Ngày vào làm · ngày sinh (dd/MM/yyyy) |
 
+![Email Template sinh nhật — sửa Subject + Response HTML, biến {{ ... }} đổ dữ liệu nhân viên](images/desk/hr-congrats-template.png)
+
 ### 3. Cấu hình — Cobe Congrats Settings
 Vào `/app/cobe-congrats-settings`:
 
@@ -67,11 +69,17 @@ Vào `/app/cobe-congrats-settings`:
   - **Thông báo cả phòng ban / công ty** — BCC mọi NV đang làm việc trong phạm vi để cùng chúc mừng. Chọn *Không* nếu chỉ gửi riêng.
 - **Người gửi**: điền **Email người gửi** khớp Email Account ở bước 1 (để trống = tài khoản mặc định) + **Tên người gửi**.
 
+![Form Cobe Congrats Settings — công tắc tổng, 3 loại email + mẫu, cửa sổ bù, người nhận thêm; góc phải có 2 nút Xem trước / Gửi test](images/desk/hr-congrats-settings.png)
+
 ### 4. Gửi test trước khi bật
 Trong form Settings:
 1. Điền **Email nhận test** (hộp của bạn).
 2. Bấm nút **Gửi test** → chọn loại → gửi. Email sẽ về hộp test để duyệt nội dung.
 3. Bấm **Xem trước hôm nay** để coi hôm nay ai sẽ được gửi gì.
+
+![Dialog Gửi test — chọn loại email + NV mẫu, email chuyển hướng về hộp test](images/desk/hr-congrats-test.png)
+
+![Dialog Xem trước hôm nay — danh sách ai sẽ nhận gì, gồm cả cửa sổ bù, kèm ngày sự kiện](images/desk/hr-congrats-preview.png)
 
 > Khi **Email nhận test** còn giá trị, **mọi** email (kể cả cron thật) đều chuyển hướng về hộp test — dùng để chạy thử an toàn. **Xoá trống ô này** khi muốn chạy thật.
 
@@ -93,6 +101,8 @@ Hệ thống ship với **2 lớp khoá an toàn**: công tắc tổng **TẮT**
 ## Tra cứu & xử lý sự cố
 
 - **Đã gửi cho ai**: `/app/cobe-congrats-log` — lọc theo loại/ngày/trạng thái (Sent / Dry Run / Skipped / Failed).
+
+![Danh sách Cobe Congrats Log — nhật ký từng email theo nhân viên, loại, ngày sự kiện, trạng thái](images/desk/hr-congrats-log.png)
 - **Không nhận được email**:
   - Trạng thái *Skipped "Không có company_email"* → nhân viên thiếu email → điền `company_email` trong hồ sơ Employee.
   - Trạng thái *Failed* → xem cột lỗi. Thường do Email Account/SMTP chưa cấu hình đúng (bước 1) hoặc email người gửi không khớp tài khoản outgoing.
