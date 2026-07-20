@@ -53,5 +53,6 @@ async function shoot(name, filters, w) {
 (async () => {
   // Lưới Cobe — DEMO 1 NV (Nguyễn Văn Demo) tháng 7/2026: đủ ký hiệu + Company Note, KHÔNG PII.
   await shoot('hr-mas-cobe-grid.png',
-    { filter_based_on: 'Month', month: 7, year: '2026', company: 'THẾ GIỚI ĐIỆN GIẢI', employee: 'HR-EMP-0990' });
+    { filter_based_on: 'Month', month: 7, year: '2026', company: 'THẾ GIỚI ĐIỆN GIẢI', employee: 'HR-EMP-0990' },
+    2200);  // rộng để hiện nhiều ngày (đủ bộ mã 8/số-giờ/4/L/L2/NB/KL/5,6/-/WO)
 })().catch(e => { console.error('ERR', e.message); process.exit(1); });

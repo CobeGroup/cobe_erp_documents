@@ -68,19 +68,12 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 
 1. Vào Desk (`/app`) → bấm **Search** (Ctrl/⌘ + K) → gõ **Monthly Attendance Sheet Cobe** → Enter.
    (Hoặc workspace **Shift & Attendance / People** → mục **Reports**.)
-2. **Bản Cobe chạy thẳng** — đặt bộ lọc là bảng hiện ngay (không cần Generate). *(Riêng bản gốc
-   HRMS là "prepared report": phải bấm **Generate New Report** rồi chờ vài giây, đổi filter →
-   generate lại.)*
+2. **Bản Cobe chạy thẳng** — đặt bộ lọc xong là bảng **hiện ngay**, KHÔNG cần bấm Generate.
 
-![Monthly Attendance Sheet — bảng công tháng theo ngày](images/desk/hr-report-attendance.png)
+> ⚙️ *Chỉ bản gốc HRMS "Monthly Attendance Sheet" mới là "prepared report" (phải bấm **Generate New
+> Report** rồi chờ). Bản Cobe không cần — cứ đổi bộ lọc là bảng tự cập nhật.*
 
-Lần đầu mở (hoặc đổi bộ lọc sang tháng chưa chạy), bảng trống và góc phải hiện nút
-**Generate New Report** — bấm nó rồi chờ:
-
-![Trạng thái chờ generate — nút Generate New Report ở góc phải](images/desk/hr-mas-generate.png)
-
-> ⚙️ Nếu thấy bảng **trống / cũ**, bấm **Generate New Report** lần nữa — bảng được tạo theo **bộ lọc
-> hiện tại** chứ không tự cập nhật khi bạn đổi tháng.
+*(Ảnh lưới Cobe đầy đủ — Mã NV · Cty Trực Thuộc · Tổng giờ · mã HR + số giờ — xem ở [mục 0](#0-bản-cobe--khác-gì-bản-gốc) phía trên.)*
 
 ---
 
@@ -126,10 +119,7 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 | **-** | **Không có dữ liệu chấm công / vắng** (0 công) | — | mục 12 |
 | **WO** | Nghỉ tuần (vd Chủ nhật) | — | — |
 
-> 📊 Xem ảnh lưới Cobe thực tế (mã HR + số giờ) ở **[mục 0](#0-bản-cobe--khác-gì-bản-gốc)**. Ảnh dưới
-> là **bản gốc HRMS** (ký hiệu cũ P/A/HD) để đối chiếu:
-
-![Lưới bản gốc HRMS — ký hiệu cũ P / A / HD / WFH / L (bản Cobe nay dùng mã HR ở bảng trên)](images/desk/hr-mas-grid.png)
+> 📊 Xem **ảnh lưới Cobe thực tế** (đủ mã HR + số giờ) ở **[mục 0](#0-bản-cobe--khác-gì-bản-gốc)** phía trên.
 
 > 🔢 **Cột tổng** (bên phải lưới): **Total Present**, **Total Leaves**, **Total Absent**, **Total
 > Holidays**… cộng nhanh số ngày từng loại. Phần **chi tiết phép** tách theo **từng loại phép**
