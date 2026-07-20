@@ -40,6 +40,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`) **chia đôi**: nửa trái ký hiệu (`P`) + nửa phải **số giờ** (`8.3`) | 1 ô: chỉ ký hiệu `P`, `HD` |
 | Ký hiệu nghỉ | **Theo loại phép** (tiếng Việt): `L` `L/2` `NB` `KL` `WFH` `CĐ` `BH` `H` `WO` | Gộp chung `L` (On Leave) |
 | Lọc Company | **Bỏ trống = gộp MỌI công ty** | Bắt buộc chọn |
+| Lọc **Cty Trực Thuộc** | **Có** — lọc theo nhóm gốc (trước gộp công ty), độc lập với Company | Không có |
 | Cách chạy | **Chạy thẳng** (bấm là ra) | "Prepared report" — phải **Generate New Report** rồi chờ |
 | Summarized View | Dùng chung phần tổng của bản gốc | *(bản gốc)* |
 
