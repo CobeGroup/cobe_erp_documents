@@ -15,9 +15,9 @@ nav_order: 12
 > Hệ thống **tự gửi email** chúc mừng, HR **không phải lên lịch tay hàng tháng** nữa. 3 loại: **chào nhân viên mới** (ngày nhận việc), **sinh nhật**, **tri ân cống hiến** (mốc năm làm việc). Cron chạy **08:00 mỗi sáng**, tự tìm ai có sự kiện hôm nay rồi gửi.
 
 <details open markdown="block">
-<summary>Mục lục</summary>
+  <summary>Mục lục</summary>
 {: .text-delta }
-- TOC
+1. TOC
 {:toc}
 </details>
 
