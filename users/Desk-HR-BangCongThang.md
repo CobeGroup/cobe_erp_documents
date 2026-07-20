@@ -13,7 +13,7 @@ nav_order: 6.5
 {: .fs-3 .text-grey-dk-000 }
 
 > Báo cáo **một bảng = cả tháng**: mỗi dòng là **một nhân viên**, mỗi cột là **một ngày**, mỗi ô là
-> **trạng thái công** ngày đó theo **mã HR** (số giờ đi làm / `5,6` WFH / `L` `NB` `H` nghỉ / `-` không dữ liệu…). Dùng để **đối chiếu công cuối tháng**,
+> **trạng thái công** ngày đó theo **mã HR** (`8` công đủ / `4` nửa / số giờ nếu thiếu / `5,6` WFH / `L` `NB` `H` nghỉ / `-` không dữ liệu…). Dùng để **đối chiếu công cuối tháng**,
 > xuất Excel gửi kế toán.
 
 > 🟢 **Dùng bản Cobe: `Monthly Attendance Sheet Cobe`** (KHÔNG phải bản gốc HRMS "Monthly
@@ -37,20 +37,19 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | | **Monthly Attendance Sheet Cobe** *(khuyên dùng)* | Monthly Attendance Sheet *(gốc HRMS)* |
 |---|---|---|
 | Cột đầu | Employee · **Mã NV** · Tên · **Công ty trực thuộc** · Shift · **Tổng giờ** | Employee · Tên · Shift |
-| Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`) **chia đôi**: nửa trái **mã HR** (nghỉ/WFH/`-`), nửa phải **số giờ công thực tế** (`8.3`). Ngày đi làm: mã trống, chỉ hiện số giờ | 1 ô: chỉ ký hiệu `P`, `HD` |
-| Ký hiệu (theo bảng HR) | Đi làm = **số giờ thực**; `5,6` WFH; nghỉ = `L` `L/2` `NB` `KL` `CĐ` `BH` `H`; `WO` nghỉ tuần; `-` không dữ liệu/vắng | Gộp chung `L` (On Leave) |
+| Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`) **chia đôi**: nửa trái **mã HR** (`8`/`4`/số-giờ/`5,6`/`L`…/`-`), nửa phải **số giờ công thực tế** (`8,2`) | 1 ô: chỉ ký hiệu `P`, `HD` |
+| Ký hiệu (theo bảng HR) | Công đủ `8` · nửa `4` · thiếu = số giờ · WFH `5,6` · nghỉ `L`/`L/2`/`NB`/`KL`/`CĐ`/`BH`/`H` · `WO` · `-` không dữ liệu | Gộp chung `L` (On Leave) |
 | Lọc Company | **Bỏ trống = gộp MỌI công ty** | Bắt buộc chọn |
 | Lọc **Cty Trực Thuộc** | **Có** — lọc theo nhóm gốc (trước gộp công ty), độc lập với Company | Không có |
 | Cách chạy | **Chạy thẳng** (bấm là ra) | "Prepared report" — phải **Generate New Report** rồi chờ |
 | Summarized View | Dùng chung phần tổng của bản gốc | *(bản gốc)* |
 
-![Monthly Attendance Sheet Cobe — Mã NV · Công ty trực thuộc · Tổng giờ · mỗi ngày 1 ô ghép (1 T4) chia đôi: nửa trái mã HR, nửa phải số giờ công thực tế; ngày công mã trống + giờ xanh, không dữ liệu = -, WO = nghỉ tuần](images/desk/hr-mas-cobe-grid.png)
+![Monthly Attendance Sheet Cobe — Mã NV · Công ty trực thuộc · Tổng giờ · mỗi ngày 1 ô ghép (1 T4) chia đôi: nửa trái mã HR (8 công đủ / 4 nửa / số giờ nếu thiếu / 5,6 WFH / L·NB nghỉ / -), nửa phải số giờ thực tế xanh](images/desk/hr-mas-cobe-grid.png)
 
 > 💡 **Mỗi ngày = 1 ô ghép** (tiêu đề `<ngày> <thứ>`, vd `1 T4`) **chia đôi**: nửa **trái** là **mã
-> HR** (chỉ hiện cho ca đặc biệt: nghỉ / `5,6` WFH / `-` không-dữ-liệu), nửa **phải** là **số giờ
-> công thực tế** (xanh). **Ngày đi làm bình thường: mã để trống, chỉ hiện số giờ** (đủ/nửa/thiếu đều
-> ghi giờ thực — kể cả `0.0` khi máy chấm chưa ghi được giờ, để HR rà); ngày **nghỉ/lễ/WO** để
-> **trống** nửa giờ.
+> HR** (`8` công đủ · `4` nửa ngày · **số giờ** nếu công thiếu đi trễ/về sớm · `5,6` WFH · `L`/`NB`/…
+> nghỉ · `-` không-dữ-liệu), nửa **phải** là **số giờ công thực tế** (xanh, nếu có). Ngày
+> **nghỉ/lễ/WO** để **trống** nửa giờ.
 >
 > 💡 **Xuất Excel** thì mỗi ngày ra **2 cột** riêng (`1 T4` = ký hiệu, `1·g` = số giờ) nên cộng/lọc
 > theo cột giờ từng ngày được — trên màn gộp lại 1 ô cho gọn, nhưng dữ liệu vẫn tách.
@@ -109,23 +108,23 @@ Holidays / Unmarked Days, và **tách cột theo từng loại phép** (ảnh d�
 Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 
 > 🟢 **Bản Cobe dùng KÝ HIỆU HR** (theo bảng quy chuẩn của HR). **Mỗi ngày = 1 ô ghép chia đôi**:
-> nửa **TRÁI** = **mã** (chỉ hiện cho ca ĐẶC BIỆT: nghỉ / WFH / không-dữ-liệu), nửa **PHẢI** = **số
-> giờ công thực tế** (xanh). **Ngày đi làm bình thường: mã để trống, chỉ hiện số giờ** — HR bỏ quy
-> ước "8 = đủ / 4 = nửa", mọi ngày đi làm (đủ / nửa / thiếu) đều ghi **số giờ thực tế**.
+> nửa **TRÁI** = **mã HR** (đúng bảng), nửa **PHẢI** = **số giờ công thực tế** (xanh, nếu có).
 
-| Mã (ô trái) | Nghĩa | Ô giờ (phải) | Ghi chú |
+| Mã (ô trái) | Nghĩa | Ô giờ (phải) | HR |
 |---|---|---|---|
-| *(trống)* | **Ngày công** (đủ / nửa / thiếu) — đi làm | **số giờ thực tế** (xanh) | HR mục 1·2·3 |
-| **5,6** | **Làm việc ở nhà (WFH)** — hưởng 70%/ngày thường | — | HR mục 4 |
-| **L** | Phép năm (đã duyệt) | — | HR mục 6 |
-| **L/2** | Phép năm nửa ngày | giờ nửa đã làm (nếu có) | HR mục 7 |
-| **NB** | Nghỉ bù | — | HR mục 5 |
-| **KL** | Nghỉ không lương | — | HR mục 9 |
-| **CĐ** | Nghỉ chế độ có lương (ma chay/cưới hỏi/sinh con…) | — | HR mục 10 |
-| **BH** | Nghỉ chế độ BHXH | — | HR mục 11 |
-| **H** | Nghỉ lễ (theo Holiday List) | — | HR mục 8 |
+| **8** | **Ngày công đủ** — đúng giờ (check-in ≤ đầu ca) & không về sớm | số giờ thực (8,2) | mục 1 |
+| **4** | **Nửa ngày công** | số giờ thực (4,0) | mục 2 |
+| **số giờ** (vd 6,5) | **Ngày công thiếu** — đi trễ **hoặc** về sớm | số giờ thực (=ô trái) | mục 3 |
+| **5,6** | **Làm việc ở nhà (WFH)** — hưởng 70%/ngày thường | giờ thực (nếu có) | mục 4 |
+| **NB** | Nghỉ bù | — | mục 5 |
+| **L** | Phép năm (đã duyệt) | — | mục 6 |
+| **L/2** | Phép năm nửa ngày | giờ nửa đã làm (nếu có) | mục 7 |
+| **H** | Nghỉ lễ (theo Holiday List) | — | mục 8 |
+| **KL** | Nghỉ không lương | — | mục 9 |
+| **CĐ** | Nghỉ chế độ có lương (ma chay/cưới hỏi/sinh con…) | — | mục 10 |
+| **BH** | Nghỉ chế độ BHXH | — | mục 11 |
+| **-** | **Không có dữ liệu chấm công / vắng** (0 công) | — | mục 12 |
 | **WO** | Nghỉ tuần (vd Chủ nhật) | — | — |
-| **-** | **Không có dữ liệu chấm công / vắng** (0 công) | — | HR mục 12 |
 
 > 📊 Xem ảnh lưới Cobe thực tế (mã HR + số giờ) ở **[mục 0](#0-bản-cobe--khác-gì-bản-gốc)**. Ảnh dưới
 > là **bản gốc HRMS** (ký hiệu cũ P/A/HD) để đối chiếu:
@@ -144,13 +143,13 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 
 | Việc nhân viên làm | Trạng thái Attendance | Ô trên bảng |
 |---|---|---|
-| **Đề xuất chấm công bù / Công tác** được duyệt | Present | **số giờ** (mã trống) |
-| **Check-in ngoài VP** hợp lệ (KTV/Sales whitelist, hoặc ngày có đơn duyệt) | Present | **số giờ** (mã trống) |
+| **Đề xuất chấm công bù / Công tác** được duyệt | Present | **8** (đơn cấp công đủ ca) |
+| **Check-in ngoài VP** hợp lệ (KTV/Sales whitelist, hoặc ngày có đơn duyệt) | Present | **8** hoặc số giờ (nếu trễ/sớm) |
 | **Đề xuất WFH** được duyệt | Work From Home | **5,6** |
 | **Nghỉ bù** (Leave Application loại "Nghỉ bù") được duyệt | On Leave | **NB** |
 | Nghỉ phép năm / không lương được duyệt | On Leave | **L** / **KL** |
 
-> 💡 **Ngày công không phân biệt** chấm tại VP hay ngoài VP — cả hai đều hiện **số giờ** (mã trống).
+> 💡 **Đơn chấm công bù** cấp **công đủ ca → "8"** (không có giờ check-in thực nên không tính trễ/sớm).
 > Muốn xem **giờ vào/ra thực tế** và **đi trễ/về sớm**, dùng báo cáo **Shift Attendance** hoặc mở
 > **Employee Checkin** ([Theo dõi & sửa chấm công](Desk-HR-ChamCong.html)).
 
