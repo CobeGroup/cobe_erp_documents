@@ -26,9 +26,10 @@ const BLUR = `() => {
   document.querySelectorAll('.form-sidebar, .navbar .dropdown-notifications').forEach(el => { el.style.filter = 'blur(6px)'; });
 }`;
 
-async function shoot(name, filters, w) {
+async function shoot(name, filters, w, clipH) {
   const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox'] });
-  const ctx = await browser.newContext({ viewport: { width: w || 1560, height: 940 }, deviceScaleFactor: 2, locale: 'vi-VN' });
+  const vw = w || 1560;
+  const ctx = await browser.newContext({ viewport: { width: vw, height: 940 }, deviceScaleFactor: 2, locale: 'vi-VN' });
   await ctx.addCookies([{ name: 'sid', value: SID, domain: HOST, path: '/' }]);
   const page = await ctx.newPage();
   await page.goto(BASE + '/app/query-report/' + REPORT, { waitUntil: 'networkidle' }).catch(() => {});
@@ -45,14 +46,20 @@ async function shoot(name, filters, w) {
   await page.waitForTimeout(2500);
   await page.evaluate(BLUR).catch(() => {});
   await page.waitForTimeout(400);
-  await page.screenshot({ path: path.join(OUT, name) });
+  // clipH: cắt bớt khoảng trắng dưới (báo cáo 1 dòng demo) cho ảnh gọn.
+  const opts = { path: path.join(OUT, name) };
+  if (clipH) opts.clip = { x: 0, y: 0, width: vw, height: clipH };
+  await page.screenshot(opts);
   console.log('  ✓ shot', name);
   await browser.close();
 }
 
 (async () => {
-  // Lưới Cobe — DEMO 1 NV (Nguyễn Văn Demo) tháng 7/2026: đủ ký hiệu + Company Note, KHÔNG PII.
-  await shoot('hr-mas-cobe-grid.png',
-    { filter_based_on: 'Month', month: 7, year: '2026', company: 'THẾ GIỚI ĐIỆN GIẢI', employee: 'HR-EMP-0990' },
-    2200);  // rộng để hiện nhiều ngày (đủ bộ mã 8/số-giờ/4/L/L2/NB/KL/5,6/-/WO)
+  const BASE_F = { filter_based_on: 'Month', month: 7, year: '2026', company: 'THẾ GIỚI ĐIỆN GIẢI', employee: 'HR-EMP-0990' };
+  // Lưới Cobe đầy đủ (mục 0) — DEMO 1 NV, tháng 7/2026: đủ ký hiệu + Company Note, KHÔNG PII.
+  await shoot('hr-mas-cobe-grid.png', BASE_F, 2200);  // rộng: đủ mã 8/số-giờ/4/L/L2/NB/KL/5,6/-/WO
+  // Mục 1 "Mở báo cáo" — bảng Cobe vừa mở (chạy thẳng), thấy thanh lọc + 1 dòng demo.
+  await shoot('hr-mas-cobe-open.png', BASE_F, 1560, 360);
+  // Mục 2 "Bộ lọc" — Summarized View của BẢN COBE (chart + bảng tổng), không phải ảnh gốc.
+  await shoot('hr-mas-cobe-summary.png', { ...BASE_F, summarized_view: 1 }, 1560, 660);
 })().catch(e => { console.error('ERR', e.message); process.exit(1); });

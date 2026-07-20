@@ -70,10 +70,10 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
    (Hoặc workspace **Shift & Attendance / People** → mục **Reports**.)
 2. **Bản Cobe chạy thẳng** — đặt bộ lọc xong là bảng **hiện ngay**, KHÔNG cần bấm Generate.
 
+![Monthly Attendance Sheet Cobe vừa mở — thanh lọc trên cùng + dòng chú thích mã HR + lưới ngày](images/desk/hr-mas-cobe-open.png)
+
 > ⚙️ *Chỉ bản gốc HRMS "Monthly Attendance Sheet" mới là "prepared report" (phải bấm **Generate New
 > Report** rồi chờ). Bản Cobe không cần — cứ đổi bộ lọc là bảng tự cập nhật.*
-
-*(Ảnh lưới Cobe đầy đủ — Mã NV · Cty Trực Thuộc · Tổng giờ · mã HR + số giờ — xem ở [mục 0](#0-bản-cobe--khác-gì-bản-gốc) phía trên.)*
 
 ---
 
@@ -92,7 +92,7 @@ Tích **Summarized View** → mỗi nhân viên còn 1 dòng tổng: Total Prese
 Holidays / Unmarked Days, và **tách cột theo từng loại phép** (ảnh dưới: cột **Nghỉ bù** và
 **Annual Leave** riêng nhau):
 
-![Summarized View — cột tổng + tách từng loại phép, Nghỉ bù riêng cột](images/desk/hr-mas-summary.png)
+![Summarized View (bản Cobe) — biểu đồ + bảng tổng: Total Present / Leaves / Absent / Holidays / Unmarked, tách cột Nghỉ bù · Phép Năm · Nghỉ Không Lương riêng](images/desk/hr-mas-cobe-summary.png)
 
 ---
 
