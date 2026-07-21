@@ -180,6 +180,7 @@ Khi trạng thái về **Delivered**, hệ thống tự sinh (nếu vận đơn 
 | Trạng thái không tự cập nhật khi ĐVVC giao | Vận đơn chưa có/đúng **External Shipment ID** khớp mã ĐVVC, hoặc webhook chưa kết nối. Xem [Viettel Post — Cài đặt, Bước 5](Delivery_Partner-Viettel_Post-Cai-Dat.html#bước-5--bật-cập-nhật-trạng-thái-tự-động). |
 | Đơn "Delivered" nhưng **không thấy Phiếu giao / Hoá đơn / Phiếu thu COD** | Vận đơn không gắn Sales Order, chưa deploy bản vá webhook, hoặc COD account sai loại — báo bộ phận kỹ thuật (xem [Tài liệu kỹ thuật](../tech/Delivery_Partner-Lifecycle.html#status-reactor-fix)). |
 | Không thấy nút "Đẩy đơn" / "Đã tạo đơn ở ngoài" | Vận đơn phải **đã Submit** và **chưa** có External Shipment ID (nút ẩn để chống tạo trùng). |
+| Đơn bị **ĐVVC huỷ** mà hàng **đã lấy đi** — có nên Cancel? | ❌ **CHƯA** — chờ kho nhận lại hàng thật rồi mới Cancel, không thì sổ kho lệch. Xem [quy tắc Cancel](Delivery_Partner_Extension.html#cancel-khi-hang-da-di). |
 | Bấm "Đẩy đơn" báo thiếu mã vùng / thông tin người nhận | Bổ sung theo [Viettel Post — Cài đặt, Bước 2 & 4](Delivery_Partner-Viettel_Post-Cai-Dat.html). |
 
 ---

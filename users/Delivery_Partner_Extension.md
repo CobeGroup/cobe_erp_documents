@@ -133,10 +133,46 @@ trạng thái `Cancelled`** (qua webhook), không cần bạn làm gì. Muốn d
 > ĐVVC huỷ → ĐVVC báo không huỷ được → bị chặn 1 lần. Chờ ít phút cho trạng thái tự nhảy `Cancelled`
 > rồi bấm Cancel lại là được.
 
-> **Tồn kho khi huỷ:** trong luồng bình thường, tồn chỉ đảo (kho ảo ĐVVC → kho nguồn) khi hàng
-> **về kho thật** — trạng thái **Returned**. Riêng khi bạn bấm **Cancel** một vận đơn mà **hàng đã lấy đi**
-> (đã có Phiếu xuất kho), hệ thống tạo **Phiếu xuất kho đảo ngay lúc huỷ** — vì vậy với đơn bị ĐVVC huỷ
-> mà hàng chưa về: **đợi kho nhận lại hàng thật rồi mới bấm Cancel**, để sổ kho khớp thực tế.
+### 🔴 QUAN TRỌNG — Đơn bị ĐVVC huỷ mà HÀNG ĐÃ LẤY ĐI: đừng Cancel vội! {#cancel-khi-hang-da-di}
+
+**Quy tắc một câu: hàng chưa nằm trong tay kho mình → CHƯA bấm Cancel.**
+
+**Vì sao?** Khi bạn bấm **Cancel** một vận đơn mà hàng đã rời kho (đã có Phiếu xuất kho sang kho ảo ĐVVC),
+hệ thống sẽ tạo **Phiếu xuất kho đảo NGAY LẬP TỨC** — sổ kho ghi nhận *"hàng đã về kho"* trong khi
+**hàng thật vẫn còn ở ĐVVC**. Hậu quả: tồn kho trên hệ thống **cao hơn thực tế**, kho soạn hàng theo số
+ảo, kiểm kê lệch.
+
+**Làm ĐÚNG theo thứ tự:**
+
+1. Thấy vận đơn nhảy trạng thái **`Cancelled`** (ĐVVC huỷ) mà hàng **đã lấy đi** → **để yên vận đơn đó**.
+2. Liên hệ ĐVVC / theo dõi hành trình để **nhận hàng về**.
+3. Kho **nhận đủ hàng thật, kiểm đếm xong** → lúc đó mới mở vận đơn → bấm **Cancel**.
+4. Phiếu xuất kho đảo sinh ra tại thời điểm này → **sổ kho khớp đúng thực tế**.
+
+| Tình huống | Được bấm Cancel chưa? |
+|---|---|
+| ĐVVC huỷ, hàng **chưa từng lấy đi** (chưa có Phiếu xuất kho) | ✅ Bấm được ngay |
+| ĐVVC huỷ, hàng đã lấy đi, **chưa về tới kho** | ❌ **CHƯA** — chờ hàng về |
+| ĐVVC huỷ, hàng đã lấy đi, **kho đã nhận lại đủ hàng** | ✅ Bấm được — sổ kho sẽ khớp |
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontSize':'14px'}}}%%
+flowchart LR
+  classDef ok fill:#f6ffed,stroke:#54ab78,color:#135200;
+  classDef no fill:#fff1f0,stroke:#ff4d4f,color:#a8071a;
+  classDef q fill:#fff7e6,stroke:#fa8c16,color:#873800;
+  A["Vận đơn bị ĐVVC huỷ"] --> B{"Hàng đã lấy đi chưa?<br/>(có Phiếu xuất kho?)"}
+  B -- "Chưa" --> C["✅ Cancel ngay được"]
+  B -- "Rồi" --> D{"Kho đã nhận lại<br/>hàng thật chưa?"}
+  D -- "Chưa" --> E["❌ ĐỪNG Cancel<br/>chờ hàng về"]
+  D -- "Rồi, kiểm đủ" --> F["✅ Cancel<br/>sổ kho khớp thực tế"]
+  class B,D q
+  class C,F ok
+  class E no
+```
+
+> Trong luồng bình thường (không huỷ), tồn kho chỉ đảo khi ĐVVC trả hàng về — trạng thái **Returned**.
+> Quy tắc trên chỉ áp dụng cho ca **Cancel tay** vận đơn có hàng đã đi.
 
 ### Giao nhiều lần cho 1 SO (tách đơn)
 SO 10 sản phẩm, muốn giao 2 lần: **Lần 1** tạo vận đơn → giảm qty còn 5 → Submit. **Lần 2** tạo lại →
