@@ -114,15 +114,23 @@ xuất kho đảo** (kho ảo ĐVVC → kho nguồn), tồn hoàn về; items qu
 định giao lại hay đóng SO.
 
 ### Huỷ vận đơn
-Mở DP Shipment → **Cancel**. Nếu vận đơn **đã đẩy sang ĐVVC** (có mã vận đơn), hệ thống **tự huỷ đơn
-bên ĐVVC trước**:
-- ĐVVC **cho huỷ** → huỷ cả 2 phía; rồi xử lý kho: stock chưa chuyển → huỷ Đề nghị xuất kho; stock đã ở
-  kho ảo ĐVVC → tạo Phiếu xuất kho đảo + huỷ Đề nghị. Items quay về pool.
-- ĐVVC **từ chối huỷ** (đơn đã lấy hàng / đang giao / đã giao) → hệ thống **CHẶN Cancel**, báo lỗi rõ.
-  Vận đơn vẫn giữ nguyên. Hàng đã đi mà cần thu về → dùng **luồng hoàn hàng** (đợi trạng thái
-  Returning/Returned), đừng Cancel.
 
-> Vận đơn **chưa đẩy** sang ĐVVC (không có mã) → Cancel bình thường, chỉ xử lý nội bộ.
+Huỷ có **2 chiều** — bạn huỷ trên ERP, hoặc ĐVVC huỷ và ERP tự cập nhật.
+
+**① Bạn huỷ trên ERP** — mở DP Shipment → **Cancel**:
+
+- Vận đơn **chưa đẩy** sang ĐVVC (chưa có mã) → huỷ bình thường, chỉ void nội bộ (Đề nghị xuất kho).
+- Vận đơn **đã đẩy** (có mã) → hệ thống **tự gọi ĐVVC huỷ đơn trước khi huỷ nội bộ**:
+  - ĐVVC **cho huỷ** (thường là khi **chưa lấy hàng**) → huỷ cả 2 phía + void Đề nghị xuất kho. Items quay về pool.
+  - ĐVVC **từ chối** (đã lấy hàng / đang giao / đã giao) → **CHẶN Cancel**, báo lỗi rõ; vận đơn giữ nguyên.
+    Hàng đã đi thì **đừng huỷ** — để nó chạy **luồng hoàn hàng** (Returning → Returned).
+
+**② ĐVVC tự huỷ** (không lấy được hàng, huỷ trên cổng ĐVVC, ĐVVC huỷ hệ thống...) → vận đơn **tự chuyển
+trạng thái `Cancelled`** (qua webhook), không cần bạn làm gì. Muốn dọn hẳn tài liệu thì mở vận đơn bấm
+**Cancel** — lúc này hệ thống biết ĐVVC đã huỷ nên cho huỷ luôn (không gọi lại ĐVVC).
+
+> **Tồn kho khi huỷ:** huỷ đơn **KHÔNG** tự đảo kho. Tồn chỉ đảo (kho ảo ĐVVC → kho nguồn) khi ĐVVC
+> **trả hàng thật về** — tức khi trạng thái về **Returned** — đúng lúc hàng về kho, không sớm hơn.
 
 ### Giao nhiều lần cho 1 SO (tách đơn)
 SO 10 sản phẩm, muốn giao 2 lần: **Lần 1** tạo vận đơn → giảm qty còn 5 → Submit. **Lần 2** tạo lại →
