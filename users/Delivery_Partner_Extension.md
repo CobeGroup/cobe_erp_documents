@@ -129,8 +129,14 @@ Huỷ có **2 chiều** — bạn huỷ trên ERP, hoặc ĐVVC huỷ và ERP t�
 trạng thái `Cancelled`** (qua webhook), không cần bạn làm gì. Muốn dọn hẳn tài liệu thì mở vận đơn bấm
 **Cancel** — lúc này hệ thống biết ĐVVC đã huỷ nên cho huỷ luôn (không gọi lại ĐVVC).
 
-> **Tồn kho khi huỷ:** huỷ đơn **KHÔNG** tự đảo kho. Tồn chỉ đảo (kho ảo ĐVVC → kho nguồn) khi ĐVVC
-> **trả hàng thật về** — tức khi trạng thái về **Returned** — đúng lúc hàng về kho, không sớm hơn.
+> **Nếu bạn bấm Cancel NGAY TRƯỚC khi tín hiệu huỷ về tới ERP** (trạng thái chưa kịp đổi): hệ thống gọi
+> ĐVVC huỷ → ĐVVC báo không huỷ được → bị chặn 1 lần. Chờ ít phút cho trạng thái tự nhảy `Cancelled`
+> rồi bấm Cancel lại là được.
+
+> **Tồn kho khi huỷ:** trong luồng bình thường, tồn chỉ đảo (kho ảo ĐVVC → kho nguồn) khi hàng
+> **về kho thật** — trạng thái **Returned**. Riêng khi bạn bấm **Cancel** một vận đơn mà **hàng đã lấy đi**
+> (đã có Phiếu xuất kho), hệ thống tạo **Phiếu xuất kho đảo ngay lúc huỷ** — vì vậy với đơn bị ĐVVC huỷ
+> mà hàng chưa về: **đợi kho nhận lại hàng thật rồi mới bấm Cancel**, để sổ kho khớp thực tế.
 
 ### Giao nhiều lần cho 1 SO (tách đơn)
 SO 10 sản phẩm, muốn giao 2 lần: **Lần 1** tạo vận đơn → giảm qty còn 5 → Submit. **Lần 2** tạo lại →
