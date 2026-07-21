@@ -17,7 +17,7 @@ nav_order: 6.5
 > xuất Excel gửi kế toán.
 
 > 🟢 **Dùng bản Cobe: `Monthly Attendance Sheet Cobe`** (KHÔNG phải bản gốc HRMS "Monthly
-> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Công ty trực thuộc**, **Tổng giờ**, **mỗi ngày là 1
+> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Company Note** (công ty trực thuộc), **Tổng giờ thực** + **Tổng giờ chuẩn**, **mỗi ngày là 1
 > ô ghép chia đôi** (nửa trái ký hiệu, nửa phải **số giờ**; xuất Excel tách 2 cột cộng được) + **ký
 > hiệu tiếng Việt theo loại phép** — xem [mục 0](#0-bản-cobe--khác-gì-bản-gốc).
 
@@ -36,11 +36,11 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 
 | | **Monthly Attendance Sheet Cobe** *(khuyên dùng)* | Monthly Attendance Sheet *(gốc HRMS)* |
 |---|---|---|
-| Cột đầu | Employee · **Mã NV** · Tên · **Công ty trực thuộc** · Shift · **Tổng giờ** | Employee · Tên · Shift |
+| Cột đầu | Employee · **Mã NV** · Tên · **Company Note** · Shift · **Tổng giờ thực** · **Tổng giờ chuẩn** | Employee · Tên · Shift |
 | Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`) **chia đôi**: nửa trái **mã HR** (`8`/`4`/số-giờ/`5,6`/`L`…/`-`), nửa phải **số giờ công thực tế** (`8,2`) | 1 ô: chỉ ký hiệu `P`, `HD` |
 | Ký hiệu (theo bảng HR) | Công đủ `8` · nửa `4` · thiếu = số giờ · WFH `5,6` · nghỉ `L`/`L/2`/`NB`/`KL`/`CĐ`/`BH`/`H` · `WO` · `-` không dữ liệu | Gộp chung `L` (On Leave) |
 | Lọc Company | **Bỏ trống = gộp MỌI công ty** | Bắt buộc chọn |
-| Lọc **Cty Trực Thuộc** | **Có** — lọc theo nhóm gốc (trước gộp công ty), độc lập với Company | Không có |
+| Lọc **Company Note** | **Có** — lọc theo nhóm gốc/công ty trực thuộc (trước gộp công ty), độc lập với Company | Không có |
 | Cách chạy | **Chạy thẳng** (bấm là ra) | "Prepared report" — phải **Generate New Report** rồi chờ |
 | Summarized View | Dùng chung phần tổng của bản gốc | *(bản gốc)* |
 
@@ -54,12 +54,16 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 > 💡 **Xuất Excel** thì mỗi ngày ra **2 cột** riêng (`1 T4` = ký hiệu, `1·g` = số giờ) nên cộng/lọc
 > theo cột giờ từng ngày được — trên màn gộp lại 1 ô cho gọn, nhưng dữ liệu vẫn tách.
 >
-> 💡 **Tổng giờ** = cộng số giờ mọi ngày trong kỳ — số giờ làm thực tế cả tháng của mỗi người, khỏi
-> tính tay. **Công ty trực thuộc** chỉ có với NV đã **gộp công ty** (lưu công ty gốc); NV khác để
-> trống là bình thường.
+> 💡 **Hai cột tổng giờ** — đừng nhầm:
+> - **Tổng giờ thực** = cộng **số giờ bấm máy** thực tế mọi ngày trong kỳ (đúng những gì check-in/out ghi lại).
+> - **Tổng giờ chuẩn** = cộng theo **công chuẩn của CA**: mỗi ngày công đủ (P / WFH) = **giờ chuẩn của ca đó**, nửa ngày (HD) = **½ giờ chuẩn ca**; nghỉ/vắng không cộng. Giờ chuẩn ca = *(giờ ra − giờ vào) − nghỉ trưa*, suy động từ cấu hình Shift Type (Office 8h, AKW 6h, Migunlife/kỹ thuật 9h, lắp đặt 3h…). Đổi giờ ca thì cột này **tự đúng theo**.
+>
+> Dùng **Tổng giờ chuẩn** để tính công/lương theo trạng thái (không phụ thuộc NV bấm sớm/muộn); dùng **Tổng giờ thực** để soi giờ hiện diện thật.
+>
+> 💡 **Company Note** (công ty trực thuộc) chỉ có với NV đã **gộp công ty** (lưu công ty gốc); NV khác để trống là bình thường.
 
 > ⚠️ Mở đúng tên **`Monthly Attendance Sheet Cobe`**. Bản gốc "Monthly Attendance Sheet" **không**
-> có Mã NV / Công ty trực thuộc / Tổng giờ, **bộ lọc & ký hiệu cũng khác** (bản gốc dùng `P`/`A`/`HD`,
+> có Mã NV / Company Note / Tổng giờ thực + chuẩn, **bộ lọc & ký hiệu cũng khác** (bản gốc dùng `P`/`A`/`HD`,
 > có *Group By*, bắt buộc chọn Company, phải Generate). Tài liệu này mô tả **bản Cobe**; chỉ phần
 > **presence-based** (mục 5) và **xuất Excel** là chung cho cả hai.
 
@@ -87,7 +91,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | **Start Date / End Date** | Khoảng ngày (≤ 90 ngày) — hiện khi *Filter Based On = Date Range*. |
 | **Employee** | Để trống = **tất cả** nhân viên; chọn 1 người = chỉ người đó. |
 | **Company** | Công ty pháp lý. **Bỏ trống = gộp TẤT CẢ công ty.** |
-| **Cty Trực Thuộc** | Lọc theo **nhóm gốc** (công ty trước khi gộp), **độc lập** với Company. Bỏ trống = mọi nhóm. |
+| **Company Note** | Lọc theo **nhóm gốc / công ty trực thuộc** (công ty trước khi gộp), **độc lập** với Company. Bỏ trống = mọi nhóm. |
 | **Include Company Descendants** | Gộp cả các công ty con (mặc định bật). |
 | **Summarized View** | Tích để xem **chỉ phần tổng** (biểu đồ + bảng đếm), không có lưới ngày. |
 
@@ -126,7 +130,7 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 
 > 🔢 Muốn **cộng nhanh số ngày từng loại** (Total Present / Leaves / Absent / Holidays + tách theo
 > từng loại phép: Phép năm · **Nghỉ bù** · Không lương…) thì bật **Summarized View** ([mục 2](#2-bộ-lọc-thanh-trên)).
-> Lưới chi tiết này chỉ có cột **Tổng giờ** (số giờ công cả tháng), không có cột đếm theo loại.
+> Lưới chi tiết này có 2 cột tổng: **Tổng giờ thực** (giờ bấm máy) và **Tổng giờ chuẩn** (theo công chuẩn của ca), không có cột đếm theo loại.
 
 ---
 
@@ -172,7 +176,7 @@ check-in và không có đơn** sẽ hiện **`-`** (0 công) chứ **không** t
 
 ## 6. Xuất & đối chiếu
 
-1. Đặt bộ lọc **Month / Year** (và Company / Cty Trực Thuộc nếu cần) — bảng **hiện ngay** (bản Cobe không cần Generate).
+1. Đặt bộ lọc **Month / Year** (và Company / Company Note nếu cần) — bảng **hiện ngay** (bản Cobe không cần Generate).
 2. Soát các ô **`-`** ngày thường (0 công / chưa xác minh) → xử lý (nhắc NV / thêm công tay).
 3. Bấm **⋮ (Menu)** → **Export** → chọn **Excel / CSV** để gửi kế toán / lưu hồ sơ.
 
