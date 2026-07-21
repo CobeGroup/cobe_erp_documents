@@ -28,10 +28,19 @@ thêm (bật tiếng để nghe thuyết minh):
 ## 1. Xem số dư & đơn đã gửi
 
 Mở tab **Nghỉ phép**:
-- **Số dư phép**: các chip hiện số ngày còn lại từng loại (Phép năm, Nghỉ ốm…).
+- **Số dư phép**: ngay đầu trang, mỗi loại phép là **một chip riêng** hiện số ngày **còn lại theo từng loại** (vd `Phép năm: 6,0 ngày`). Chip **xanh** = còn phép, **xám** = đã hết (0).
 - **Đơn xin nghỉ**: danh sách đơn đã gửi + trạng thái (Chờ Manager / Đã được duyệt / Từ chối).
 
 <img src="images/guide/nhanvien/10-leave-list.png" width="240" alt="Số dư phép + danh sách đơn">
+
+> 💡 **Số dư trên chip là số THỰC còn dùng được** — đã tự trừ: phép đã nghỉ + **đơn đang chờ duyệt** + phép chuyển kỳ đã hết hạn. Không cần tính tay.
+>
+> Lưu ý theo loại:
+> - Chỉ loại **được HR cấp** (có quỹ phép, vd Phép năm) mới hiện **con số**.
+> - **Nghỉ bù** hiện chip **không có số** — vì nó không dùng quỹ phép cố định; số ngày bù thật nằm ở [phiếu làm thêm đã duyệt](Guide-NhanVien-LamThem.html), không phải ở đây.
+> - **Nghỉ không lương** hiện `0,0` (không có quỹ; nghỉ loại này bị trừ lương).
+>
+> Chip chỉ hiện **số còn lại**, chưa tách riêng "đã dùng / đang chờ duyệt". Muốn xem chi tiết đã nghỉ bao nhiêu thì mở **danh sách đơn** bên dưới.
 
 ---
 
