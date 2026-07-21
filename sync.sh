@@ -80,7 +80,14 @@ build_shell() {
   write_parent "00-marketing.md"   "Marketing & Khách hàng" 2 \
     "Các tính năng phục vụ marketing và chăm sóc khách hàng: chương trình khuyến mãi bằng coupon, hệ thống tích điểm loyalty, và ứng dụng Zalo Mini App cho khách hàng."
   write_parent "00-dich-vu.md"     "Dịch vụ & Bảo dưỡng"   3 \
-    "Quản lý và tự động phân bổ ticket bảo dưỡng/CSKH cho nhân viên phụ trách."
+"Quản lý dịch vụ hiện trường (FSMNext) và tự động phân bổ ticket bảo dưỡng/CSKH cho nhân viên phụ trách.
+
+**Nội dung:**
+
+- **[Quy trình dịch vụ hiện trường (FSMNext)](FSMNext-Quy-Trinh-Dich-Vu.html)** — vòng đời Phiếu công việc (Work Order) & Lịch hẹn (Service Appointment), tạo/hoàn thành phiếu, trả vật tư, thu tiền hiện trường, huỷ & tạo lại phiếu.
+- 🔧 **[Tự xử lý sự cố dịch vụ (FSMNext)](FSMNext-Xu-Ly-Su-Co.html)** — cây quyết định *\"WO vẫn New dù SO/SA đã Completed\"*, tra lỗi theo triệu chứng, cách đọc FS Scheduler Log.
+- **[Auto-Assign Ticket & SIM](Service_Reminder_Auto_Assign.html)** — tự động phân bổ ticket bảo dưỡng & SIM.
+- **[Quy tắc phân bổ bảo dưỡng](QUY_TAC_PHAN_BO_BAO_DUONG.html)** — thuật toán chọn kỹ thuật viên."
   write_parent "00-van-chuyen.md"  "Vận chuyển & Giao nhận" 4 \
     "Quản lý vận đơn, kết nối đơn vị vận chuyển, tích hợp ERP và biên bản bàn giao/nghiệm thu."
 }
