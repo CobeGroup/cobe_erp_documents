@@ -60,7 +60,8 @@ Bảng dưới tóm tắt **cơ chế + nơi lưu** cho từng phần.
 | Bước | Cơ chế kỹ thuật | Nơi lưu / API |
 |---|---|---|
 | **Credential** | `POST /v2/user/Login` (username/password) → JWT, cache theo `token_ttl`, gửi `Authorization: Bearer <token>` các request sau | DP Partner Account · `test_connection()` |
-| **Đồng bộ vùng** | Kéo `listProvinceById` / `listDistrict` / `listWards` (**API công khai, không cần token**) → chuẩn hoá tên + alias → `DP Carrier Region` (~16.000 bản ghi: 63 tỉnh · 746 huyện · 15.660 xã) | `api/region.py` · doctype **DP Carrier Region** |
+| **Đồng bộ vùng** | Kéo `listProvinceById` / `listDistrict` / `listWards` (**API công khai, không cần token**) → chuẩn hoá tên + alias → `DP Carrier Region` (~16.000 bản ghi: 63 tỉnh · 746 huyện · 15.660 xã). **Toàn cục, 1 lần** — địa chỉ mới KHÔNG cần sync lại. Quyền: System Manager / **Stock Manager** | `api/region.py` · doctype **DP Carrier Region** |
+| **Tự dò mã vùng Address** | `doc_events Address.validate → autofill_address_region`: lưu Address là tự dò + điền `vtp_*_id` (êm — lỗi chỉ log, không chặn lưu). Re-resolve chỉ khi 3 Link tỉnh/huyện/xã **đổi** (so thẳng DB); chỉ ghi cấp dò RA → override tay được bảo toàn. Lúc đẩy đơn còn thiếu thì dò lại lần nữa | `api/region.py` · hook trong `hooks.py` (**deploy nhớ clear-cache**) |
 | **Đồng bộ điểm gửi** | `listInventory` (cần token) → tạo **DP Pickup Point** (mã `GROUPADDRESS_ID` + `CUS_ID`) | `api/pickup_point.py` |
 | **Điểm gửi mặc định** | Nếu account >1 điểm gửi mà không tick `Is Default` → đẩy đơn báo lỗi. 1 điểm gửi → auto dùng | DP Pickup Point · `get_default_pickup_point()` |
 | **ORDER_SERVICE** | Mã dịch vụ **cấp theo hợp đồng account** + **đổi theo tuyến**. Đặt vào Extra Params (`send_as = Body`) | DP Account Param |
@@ -317,7 +318,7 @@ curl -s -X POST "https://<domain>/api/method/delivery_partner.api.webhook.handle
 | *"chưa đặt điểm gửi mặc định"* | Vào DP Pickup Point tick **Is Default** cho 1 kho |
 | *"chưa cấu hình ORDER_SERVICE"* | Thêm Extra Param `ORDER_SERVICE` |
 | *"Mã dịch vụ X không khả dụng… Mã hợp lệ: …"* | Đổi `ORDER_SERVICE` sang 1 mã trong danh sách gợi ý |
-| *"Không xác định được mã vùng người nhận"* | Address → "Dò mã vùng VTP" hoặc nhập ID tay; danh mục chưa sync → đồng bộ vùng trước |
+| *"Không xác định được mã vùng người nhận"* | Address thiếu/không khớp Tỉnh-Huyện → chọn đúng Tỉnh/Huyện rồi Lưu (tự dò lại); địa chỉ sáp nhập (Quận 2/9) → "Dò mã vùng VTP" + nhập ID tay. **KHÔNG cần re-sync danh mục** — chỉ sync khi danh mục rỗng (có message riêng) |
 | *"đơn CÓ THỂ đã được tạo…"* | Lỗi mạng/timeout — **kiểm cổng VTP** xem đơn đã tạo chưa TRƯỚC khi đẩy lại |
 | Không thấy nút | Vận đơn phải **đã Submit** và **chưa** có External Shipment ID |
 | *"Price does not apply to this itinerary"* | Thiếu `ORDER_NUMBER` trong payload, hoặc sai `ORDER_PAYMENT` / thiếu `LIST_ITEM` |

@@ -54,7 +54,10 @@ Vào **DP Partner → Viettel Post** → bấm nút **"Đồng bộ danh mục v
 ![Màn hình DP Partner — nút Đồng bộ danh mục vùng](images/vtp/01-dp-partner.png)
 
 - Chạy nền khoảng **5 phút** (tải hơn 16.000 địa danh). Cứ để đó, làm việc khác.
-- Chỉ cần làm **một lần cho cả hệ thống**. Sau này VTP đổi danh mục thì bấm lại để cập nhật.
+- Chỉ cần làm **MỘT LẦN cho cả hệ thống** — danh mục này là của VTP, dùng chung cho mọi đơn.
+  **Có khách mới / địa chỉ mới KHÔNG cần đồng bộ lại** — hệ thống tự dò mã vùng cho từng địa chỉ
+  ngay khi lưu. Chỉ bấm lại khi VTP thay đổi danh mục hành chính (hiếm, vài lần một năm).
+- Quyền bấm nút: **System Manager** hoặc **Stock Manager** (quản lý kho).
 
 ---
 
@@ -139,8 +142,14 @@ Xong bấm **Submit**.
 
 ## Bước 2 · (Nếu cần) Kiểm mã vùng người nhận
 
-Thường hệ thống **tự dò** mã vùng người nhận từ địa chỉ. Nếu muốn kiểm hoặc địa chỉ lạ, mở
-**Address** người nhận → bấm nút **"Dò mã vùng VTP"** (nhóm *VTP* ở góc trên).
+**Bình thường bạn KHÔNG phải làm gì ở bước này.** Mã vùng VTP được hệ thống **tự dò và điền sẵn
+ngay khi lưu địa chỉ** (và tự dò lại lần nữa lúc đẩy đơn nếu còn thiếu). Địa chỉ mới của khách
+mới cũng vậy — không cần "đồng bộ" gì thêm.
+
+Chỉ khi đẩy đơn báo *"Không xác định được mã vùng"* (thường là địa chỉ thiếu Tỉnh/Huyện, hoặc địa
+chỉ cũ đã sáp nhập kiểu Quận 2/Quận 9): mở **Address** người nhận → chọn đúng **Tỉnh/Thành +
+Quận/Huyện** → Lưu (hệ thống tự dò lại). Vẫn chưa ra thì bấm nút **"Dò mã vùng VTP"** (nhóm *VTP*
+ở góc trên) để xem cấp nào trượt rồi điền tay.
 
 ![Address — nút Dò mã vùng VTP](images/vtp/06-address-toolbar.png)
 
