@@ -99,6 +99,9 @@ Khi ĐVVC báo **đã giao** (webhook), hệ thống tự sinh:
 | **Hoá đơn** (Sales Invoice) | Chỉ khi COD > 0 | Doanh thu + công nợ khách |
 | **Phiếu thu COD** (Payment Entry) | Chỉ khi COD > 0 | Ghi tiền ĐVVC thu hộ, cấn trừ hoá đơn |
 
+> **COD thu một phần** (COD nhỏ hơn tổng hoá đơn): Phiếu thu chỉ ghi đúng số thu hộ — hoá đơn thành
+> **"Partly Paid"**, phần còn lại khách vẫn nợ. Bình thường COD = tổng đơn thì hoá đơn tất toán luôn.
+
 **Kết quả:** SO tự chuyển **Completed** khi mọi item đã giao đủ.
 
 ---

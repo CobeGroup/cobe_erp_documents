@@ -354,6 +354,11 @@ Với đơn có COD, VTP thu tiền hộ rồi đối soát trả về. Cấu h�
 receivable thay vì Debtors) để Payment Entry kiểu **"Receive"** (`paid_from = cod_account`, `party = Customer`)
 cấn trừ được — 2 lệnh phải cùng account, mà account party của "Receive" bắt buộc `Receivable`.
 
+**COD một phần (COD < tổng SI):** PE chỉ cấn đúng số COD → SI thành **"Partly Paid"**,
+`outstanding = tổng − COD` — đúng kế toán (verify bằng test 21/07). Lưu ý: phần khách còn nợ khi đó
+**treo trên COD account** (vì `debit_to` là COD account, không phải Debtors) — hiếm gặp vì COD thường
+= tổng đơn; kế toán cần biết khi đối chiếu công nợ.
+
 > ⚠️ **Đích đến tiền COD** (`paid_to`) resolve theo: *Bank Account trên Sales Order → account của
 > pickup warehouse → Company default cash account*, và **phải là Bank/Cash**. Đặt **Bank Account
 > trên Sales Order** hoặc đảm bảo **Company có Default Cash Account**, tránh rơi vào account `Stock`

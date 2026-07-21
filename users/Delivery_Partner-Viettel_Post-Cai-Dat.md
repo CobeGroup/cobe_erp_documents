@@ -217,7 +217,7 @@ tiền thu hộ.
 | "Chưa đặt điểm gửi mặc định" | Làm bước 3.2 — tick Is Default cho một kho |
 | "Chưa cấu hình dịch vụ" | Làm bước 4 — thêm `ORDER_SERVICE` |
 | "Mã dịch vụ không khả dụng" | Đổi sang một mã trong danh sách hệ thống gợi ý |
-| "Không xác định được mã vùng" | Làm bước 2 (đồng bộ danh mục), rồi "Dò mã vùng VTP" trên Address |
+| "Không xác định được mã vùng" | Mở Address người nhận → chọn đúng **Tỉnh/Thành + Quận/Huyện** → Lưu (hệ thống tự dò). Địa chỉ sáp nhập (Quận 2/9...) → "Dò mã vùng VTP" + điền tay ô trống. **Không cần** đồng bộ danh mục lại — chỉ khi hệ thống báo rõ *"Chưa có danh mục vùng"* mới làm bước 2 |
 | Đơn không tự cập nhật trạng thái | Kiểm cấu hình webhook (bước 5) |
 
 Chi tiết hơn xem [tài liệu kỹ thuật](../tech/Delivery_Partner-Viettel_Post-Tech.html#8-troubleshooting-kỹ-thuật).
