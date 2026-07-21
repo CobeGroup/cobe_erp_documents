@@ -429,9 +429,17 @@ def on_submit(self):
 ### 6.3. Cancel
 
 ```python
+def before_cancel(self):
+    self._cancel_on_carrier()   # huỷ đơn bên ĐVVC TRƯỚC khi huỷ nội bộ
+
 def on_cancel(self):
     self.db_set("status", "Cancelled")
 ```
+
+`_cancel_on_carrier`: nếu có `external_shipment_id` → `get_client(partner_account).cancel_order_for_shipment(self)`.
+Chạy trong `before_cancel` (trước `on_cancel` + trước `before_cancel` của extension) nên **ĐVVC từ chối
+huỷ → throw → abort sạch toàn bộ** (không huỷ MR/kho/nội bộ), giữ ERP ↔ ĐVVC khớp. Carrier chưa có
+method `cancel_order_for_shipment` (VD chưa impl GHN/GHTK) → chỉ cảnh báo, không chặn.
 
 ### 6.4. Single Warehouse Validation
 

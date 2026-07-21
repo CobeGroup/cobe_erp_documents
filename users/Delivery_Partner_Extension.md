@@ -114,11 +114,15 @@ xuất kho đảo** (kho ảo ĐVVC → kho nguồn), tồn hoàn về; items qu
 định giao lại hay đóng SO.
 
 ### Huỷ vận đơn
-Mở DP Shipment → **Cancel**:
-- Stock **chưa** chuyển → chỉ huỷ Đề nghị xuất kho.
-- Stock **đã** ở kho ảo ĐVVC → tạo Phiếu xuất kho đảo + huỷ Đề nghị.
+Mở DP Shipment → **Cancel**. Nếu vận đơn **đã đẩy sang ĐVVC** (có mã vận đơn), hệ thống **tự huỷ đơn
+bên ĐVVC trước**:
+- ĐVVC **cho huỷ** → huỷ cả 2 phía; rồi xử lý kho: stock chưa chuyển → huỷ Đề nghị xuất kho; stock đã ở
+  kho ảo ĐVVC → tạo Phiếu xuất kho đảo + huỷ Đề nghị. Items quay về pool.
+- ĐVVC **từ chối huỷ** (đơn đã lấy hàng / đang giao / đã giao) → hệ thống **CHẶN Cancel**, báo lỗi rõ.
+  Vận đơn vẫn giữ nguyên. Hàng đã đi mà cần thu về → dùng **luồng hoàn hàng** (đợi trạng thái
+  Returning/Returned), đừng Cancel.
 
-Items quay về pool sau khi huỷ.
+> Vận đơn **chưa đẩy** sang ĐVVC (không có mã) → Cancel bình thường, chỉ xử lý nội bộ.
 
 ### Giao nhiều lần cho 1 SO (tách đơn)
 SO 10 sản phẩm, muốn giao 2 lần: **Lần 1** tạo vận đơn → giảm qty còn 5 → Submit. **Lần 2** tạo lại →

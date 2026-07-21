@@ -143,7 +143,12 @@ flowchart LR
 **Chống trùng:** hễ đã có External Shipment ID → cả 2 nút **biến mất**.
 
 **Huỷ đơn:** `UpdateOrder` với `TYPE=4` (không phải `STATUS:4`). VTP có **độ trễ propagation** →
-code retry ~8 lần (thường thành công ở lần 2, ~3s sau).
+`cancel_order_for_shipment` retry (thường thành công ở lần 2, ~3s sau).
+
+> **Tự động khi Cancel vận đơn:** bấm **Cancel** trên DP Shipment → `DPShipment.before_cancel` gọi
+> `cancel_order_for_shipment` huỷ đơn VTP TRƯỚC. **VTP từ chối** (đơn đã lấy hàng / đang giao / đã giao)
+> → **CHẶN Cancel**, báo lỗi rõ (đơn ERP vẫn Submitted, ERP ↔ VTP luôn khớp). Hàng đã đi mà cần huỷ →
+> dùng luồng **hoàn hàng** thay vì Cancel.
 
 ---
 
