@@ -82,7 +82,15 @@ Hai cách:
   có ảnh: [Viettel Post — Cài đặt & sử dụng, Phần B](Delivery_Partner-Viettel_Post-Cai-Dat.html#phần-b--tạo-đơn-hàng-ngày).)
 
 Cần điền: **Partner** (ĐVVC) + **Partner Account**, **người nhận** (tab Delivery), **hàng hoá** + **Value of
-Goods**, **COD Amount** (nếu thu hộ), **kiện hàng** (tab Parcels).
+Goods**, **COD Amount** (nếu thu hộ), **kiện hàng** (tab Parcels), **người trả cước** (tab Charges).
+
+> ⚠️ 3 ô quyết định đơn bên ĐVVC đúng hay sai — nhập theo **thực tế đóng gói**, không phải theo số lượng bán:
+>
+> | Ô | Vì sao quan trọng |
+> |---|---|
+> | Tab **Parcels** — kích thước (dài×rộng×cao) + cột **Count** | Đây là **số kiện** và kích thước gửi sang ĐVVC để **tính cước** (theo khối lượng quy đổi). Bán 10 sản phẩm đóng chung 1 thùng → Count = **1** |
+> | Tab **Charges** — **Charges Paid By** | *Sender* = mình trả cước, *Receiver* = người nhận trả khi giao. Chọn sai thì ĐVVC thu cước sai người |
+> | Tab **Delivery** — SĐT người nhận | Giao cho **Company / không có người liên hệ** → phải có **Phone trên Address** giao hàng, không thì đẩy đơn báo thiếu |
 
 ---
 
@@ -181,7 +189,8 @@ Khi trạng thái về **Delivered**, hệ thống tự sinh (nếu vận đơn 
 | Đơn "Delivered" nhưng **không thấy Phiếu giao / Hoá đơn / Phiếu thu COD** | Vận đơn không gắn Sales Order, chưa deploy bản vá webhook, hoặc COD account sai loại — báo bộ phận kỹ thuật (xem [Tài liệu kỹ thuật](../tech/Delivery_Partner-Lifecycle.html#status-reactor-fix)). |
 | Không thấy nút "Đẩy đơn" / "Đã tạo đơn ở ngoài" | Vận đơn phải **đã Submit** và **chưa** có External Shipment ID (nút ẩn để chống tạo trùng). |
 | Đơn bị **ĐVVC huỷ** mà hàng **đã lấy đi** — có nên Cancel? | ❌ **CHƯA** — chờ kho nhận lại hàng thật rồi mới Cancel, không thì sổ kho lệch. Xem [quy tắc Cancel](Delivery_Partner_Extension.html#cancel-khi-hang-da-di). |
-| Bấm "Đẩy đơn" báo thiếu mã vùng / thông tin người nhận | Mở Address người nhận → chọn đúng Tỉnh/Huyện → Lưu (hệ thống tự dò mã vùng). Chi tiết: [Viettel Post — Cài đặt, Phần B Bước 2](Delivery_Partner-Viettel_Post-Cai-Dat.html). |
+| Bấm "Đẩy đơn" báo thiếu mã vùng / thông tin người nhận | Mở Address người nhận → chọn đúng Tỉnh/Huyện → Lưu (hệ thống tự dò mã vùng). Giao cho Company: điền **Phone trên Address**. Chi tiết: [Viettel Post — Cài đặt, Phần B Bước 2](Delivery_Partner-Viettel_Post-Cai-Dat.html). |
+| ĐVVC hiện **sai kích thước / số kiện / người trả cước / cước lệch** | Kiểm tab **Parcels** (kích thước + Count = số kiện thật) và tab **Charges** (Charges Paid By) **trước khi đẩy đơn**. Xem [bảng xử lý ở doc Viettel Post](Delivery_Partner-Viettel_Post-Cai-Dat.html#gặp-trục-trặc). |
 
 ---
 

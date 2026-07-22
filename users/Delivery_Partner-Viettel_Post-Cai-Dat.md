@@ -221,5 +221,9 @@ tiền thu hộ.
 | "Mã dịch vụ không khả dụng" | Đổi sang một mã trong danh sách hệ thống gợi ý |
 | "Không xác định được mã vùng" | Mở Address người nhận → chọn đúng **Tỉnh/Thành + Quận/Huyện** → Lưu (hệ thống tự dò). Địa chỉ sáp nhập (Quận 2/9...) → "Dò mã vùng VTP" + điền tay ô trống. **Không cần** đồng bộ danh mục lại — chỉ khi hệ thống báo rõ *"Chưa có danh mục vùng"* mới làm bước 2 |
 | Đơn không tự cập nhật trạng thái | Kiểm cấu hình webhook (bước 5) |
+| Giao cho **Company** báo *"Thiếu Tên hoặc SĐT người nhận"* | Mở **Address** giao hàng → điền ô **Phone** → Lưu → đẩy đơn lại. (Giao cho Company không có Contact thì hệ thống lấy SĐT từ Address) |
+| VTP hiện **kích thước 10×10×10** / **số kiện sai** | Kiểm tab **Parcels**: kích thước dài×rộng×cao và cột **Count** ở đây là thứ gửi sang VTP. Số VTP hiển thị = **số kiện**, không phải số lượng sản phẩm |
+| VTP hiện **người trả cước** không đúng lựa chọn | Kiểm tab **Charges** → **Charges Paid By** trước khi đẩy đơn. Đổi sau khi đã đẩy thì phải sửa trực tiếp trên cổng VTP |
+| **Cước** trên VTP khác cước ERP báo lúc đẩy đơn | Thường do kích thước/số kiện tab Parcels sai thực tế (VTP tính cước theo **khối lượng quy đổi** dài×rộng×cao). Nhập đúng kích thước rồi so lại |
 
 Chi tiết hơn xem [tài liệu kỹ thuật](../tech/Delivery_Partner-Viettel_Post-Tech.html#8-troubleshooting-kỹ-thuật).
