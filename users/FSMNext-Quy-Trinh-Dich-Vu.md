@@ -76,6 +76,14 @@ flowchart TD
 
 ## 1. Vòng đời Phiếu công việc (WO)
 
+Danh sách Phiếu công việc — cột **Status** cho biết phiếu đang ở đâu:
+
+![Danh sách FS Work Order với các trạng thái New / In Progress](images/fsm/01-wo-list.png)
+
+Mở một phiếu ra, trạng thái nằm ở ô **Status** và **Status Category**; các nút thao tác nằm góc trên bên phải (**Status**, **Create**, **Actions**):
+
+![Form Phiếu công việc đang ở trạng thái New](images/fsm/02-wo-form-new.png)
+
 WO có **7 nhóm trạng thái** (status category). Chuyển giữa các nhóm phải theo đúng luồng cho phép (hệ thống chặn bước nhảy sai).
 
 ```mermaid
@@ -130,6 +138,11 @@ stateDiagram-v2
 
 ## 2. Vòng đời Lịch hẹn dịch vụ (SA)
 
+Một Lịch hẹn đã hoàn thành. Chú ý ô **Parent Record** — Lịch hẹn luôn gắn về một Phiếu công việc cha:
+
+![Form Lịch hẹn dịch vụ đã Completed](images/fsm/04-sa-form.png)
+
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'fontSize':'15px'}}}%%
 stateDiagram-v2
@@ -163,6 +176,11 @@ flowchart LR
 
 **Nút trên Desk (một SA):**
 - Nhóm **Change Status** — hệ thống hiện đúng các trạng thái được phép đi tiếp; chọn *Canceled* sẽ hỏi **Lý do huỷ**.
+
+  Ví dụ Lịch hẹn đã **Completed** thì lựa chọn duy nhất là quay về *In Progress*. Để ý 2 ô **Parent Record Type / Parent Record** — đây là chỗ Lịch hẹn gắn về Phiếu công việc cha:
+
+  ![Lịch hẹn Completed, nút Change Status chỉ hiện In Progress](images/fsm/05-sa-change-status.png)
+
 - Bảng KTV (Assigned Resource): action **Cancel** một KTV → mở hộp thoại phân bổ lại **% đóng góp** (tổng phải đúng **100%**) và thêm KTV thay thế.
 
 > 🔒 **Khoá theo trạng thái:** khi SA ở **Completed / Cannot Complete / Canceled** thì không đổi được KTV; khi ở **In Progress** trở đi thì không đổi được lịch. (Ngưỡng khoá cấu hình trong FS Settings — xem [§10](#10-cấu-hình-quyết-định-hành-vi-fs-settings).)
@@ -238,7 +256,17 @@ flowchart TD
 | **P5** | Mọi **Sales Order** liên kết ở Completed/Closed | `wo_require_so_complete` — **TẮT** |
 | **P6** | Yêu cầu riêng theo **Work Type** (giao hàng / thu tiền / ảnh...) | Theo cấu hình từng Work Type |
 
-> ⏳ **Cron còn có "thời gian ân hạn" (grace period, mặc định 3 ngày)** tính từ SA cuối cùng — WO chưa đủ số ngày này thì cron **bỏ qua** (ghi *"Grace period: x/3 days"* vào Scheduler Log), kể cả khi đã đủ mọi điều kiện khác. Đây là lý do phổ biến nhất khiến "SA/SO xong rồi mà WO vẫn New" — xem [Tự xử lý sự cố §1](FSMNext-Xu-Ly-Su-Co.html).
+Chính màn hình cấu hình cũng liệt kê đúng bộ điều kiện này (**FSM Settings → tab Operations**):
+
+![FSM Settings — mục Work Order Auto Complete & Validators](images/fsm/07-fsm-settings.png)
+
+> ⏳ **Cron còn có "thời gian ân hạn" (grace period)** tính từ SA cuối cùng — WO chưa đủ số ngày này thì cron **bỏ qua** (ghi *"Grace period: x/n days"* vào Scheduler Log), kể cả khi đã đủ mọi điều kiện khác. Mặc định gốc là 3 ngày; **hệ thống hiện đặt 2 ngày** — số thật xem ở ô *Grace Days* trong ảnh trên.
+
+**Nếu bị chặn, hệ thống nói rõ thiếu gì:**
+
+![Thông báo chặn hoàn thành WO](images/fsm/03-wo-blocker.png)
+
+> 🔧 Gặp cảnh "SA/SO xong rồi mà WO vẫn New"? Xem **[Tự xử lý sự cố §1](FSMNext-Xu-Ly-Su-Co.html#1--wo-vẫn-new-dù-đơn-hàng-và-lịch-hẹn-đã-xong)** — có quy trình 6 bước kèm ảnh.
 
 ---
 
