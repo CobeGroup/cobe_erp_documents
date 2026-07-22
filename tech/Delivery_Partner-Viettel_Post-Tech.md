@@ -60,7 +60,7 @@ Bảng dưới tóm tắt **cơ chế + nơi lưu** cho từng phần.
 | Bước | Cơ chế kỹ thuật | Nơi lưu / API |
 |---|---|---|
 | **Credential** | `POST /v2/user/Login` (username/password) → JWT, cache theo `token_ttl`, gửi `Authorization: Bearer <token>` các request sau | DP Partner Account · `test_connection()` |
-| **Đồng bộ vùng** | Kéo `listProvinceById` / `listDistrict` / `listWards` (**API công khai, không cần token**) → chuẩn hoá tên + alias → `DP Carrier Region` (~16.000 bản ghi: 63 tỉnh · 746 huyện · 15.660 xã). **Toàn cục, 1 lần** — địa chỉ mới KHÔNG cần sync lại. Quyền: System Manager / **Stock Manager** | `api/region.py` · doctype **DP Carrier Region** |
+| **Đồng bộ vùng** | Kéo `listProvinceById` / `listDistrict` / `listWards` (**API công khai, không cần token**) → chuẩn hoá tên + alias → `DP Carrier Region` (~16.000 bản ghi: 63 tỉnh · 746 huyện · 15.660 xã). **Toàn cục, 1 lần** — địa chỉ mới KHÔNG cần sync lại. Quyền theo **DocPerm Create trên DP Carrier Region** (mặc định SM/Stock Manager/DP Manager, chỉnh qua Role Permission Manager) | `api/region.py` · doctype **DP Carrier Region** |
 | **Tự dò mã vùng Address** | `doc_events Address.validate → autofill_address_region`: lưu Address là tự dò + điền `vtp_*_id` (êm — lỗi chỉ log, không chặn lưu). Re-resolve chỉ khi 3 Link tỉnh/huyện/xã **đổi** (so thẳng DB); chỉ ghi cấp dò RA → override tay được bảo toàn. Lúc đẩy đơn còn thiếu thì dò lại lần nữa | `api/region.py` · hook trong `hooks.py` (**deploy nhớ clear-cache**) |
 | **Đồng bộ điểm gửi** | `listInventory` (cần token) → tạo **DP Pickup Point** (mã `GROUPADDRESS_ID` + `CUS_ID`) | `api/pickup_point.py` |
 | **Điểm gửi mặc định** | Nếu account >1 điểm gửi mà không tick `Is Default` → đẩy đơn báo lỗi. 1 điểm gửi → auto dùng | DP Pickup Point · `get_default_pickup_point()` |
@@ -127,10 +127,11 @@ flowchart LR
 | `ORDER_NUMBER` | = `shipment.name` — **bắt buộc**, thiếu → VTP báo *"Price does not apply to this itinerary"* |
 | `GROUPADDRESS_ID` / `CUS_ID` | Từ điểm gửi mặc định (DP Pickup Point) |
 | `SENDER_WARD` / `RECEIVER_WARD` | Mã vùng (RECEIVER_WARD tuỳ chọn) |
-| `ORDER_PAYMENT` | `1` = không thu (COD=0) · `3` = thu hộ tiền hàng (COD>0) |
+| `ORDER_PAYMENT` | Map từ COD + **Charges Paid By**: `1` không thu · `2` người nhận trả cước · `3` COD (cước người gửi) · `4` COD + người nhận trả cước. Extra Params override được |
 | `ORDER_SERVICE` | Mã dịch vụ (Extra Param) |
 | `MONEY_COLLECTION` | = COD Amount khi có COD |
-| `PRODUCT_LENGTH/WIDTH/HEIGHT` | Kích thước kiện (default 10cm) |
+| `PRODUCT_QUANTITY` | **SỐ KIỆN** = tổng `count` tab Parcels (KHÔNG phải tổng qty item — gửi qty là cổng VTP hiểu nhầm số kiện) |
+| `PRODUCT_LENGTH/WIDTH/HEIGHT` | Từ **tab Parcels**: max dài/rộng + cộng dồn cao×count (thể tích quy đổi); fallback Extra Params/10cm khi trống. Cũng gửi kèm ở getPriceAll pre-check để giá sát thật |
 | `LIST_ITEM` | Danh sách hàng |
 
 **Trình tự & an toàn:**
@@ -155,7 +156,7 @@ flowchart LR
 
 ## 4. Hành trình một đơn — KHÔNG COD
 
-`COD Amount = 0` → `ORDER_PAYMENT = 1`.
+`COD Amount = 0` → `ORDER_PAYMENT = 1` (hoặc `2` nếu Charges Paid By = Receiver).
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'fontSize':'14px'}}}%%
@@ -192,7 +193,7 @@ sequenceDiagram
 
 ## 5. Hành trình một đơn — CÓ COD
 
-`COD Amount > 0` → `ORDER_PAYMENT = 3`, `MONEY_COLLECTION = COD`.
+`COD Amount > 0` → `ORDER_PAYMENT = 3` (hoặc `4` nếu Charges Paid By = Receiver), `MONEY_COLLECTION = COD`.
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'fontSize':'14px'}}}%%
@@ -222,7 +223,7 @@ sequenceDiagram
 | Điểm | Không COD | Có COD |
 |---|---|---|
 | `COD Amount` | 0 | > 0 (VD 500.000) |
-| `ORDER_PAYMENT` (tự set) | `1` (không thu) | `3` (thu hộ tiền hàng) |
+| `ORDER_PAYMENT` (tự set) | `1` (·`2` nếu Receiver trả cước) | `3` (·`4` nếu Receiver trả cước) |
 | VTP thu tiền khách | Không | Có, khi giao |
 | Phí thu hộ | 0 | VTP tính thêm |
 | Trạng thái cuối | `Delivered` (500) | `Delivered` (500) → **503/505** khi đối soát COD |

@@ -57,7 +57,8 @@ Vào **DP Partner → Viettel Post** → bấm nút **"Đồng bộ danh mục v
 - Chỉ cần làm **MỘT LẦN cho cả hệ thống** — danh mục này là của VTP, dùng chung cho mọi đơn.
   **Có khách mới / địa chỉ mới KHÔNG cần đồng bộ lại** — hệ thống tự dò mã vùng cho từng địa chỉ
   ngay khi lưu. Chỉ bấm lại khi VTP thay đổi danh mục hành chính (hiếm, vài lần một năm).
-- Quyền bấm nút: **System Manager** hoặc **Stock Manager** (quản lý kho).
+- Quyền bấm nút: mặc định **System Manager / Stock Manager / DP Manager** — cấp/thu thêm cho role khác
+  qua **Role Permission Manager** (quyền *Create* trên DP Carrier Region / DP Pickup Point), không cần deploy.
 
 ---
 
@@ -133,8 +134,9 @@ Vào **DP Shipment → New** và điền theo các tab:
 |---|---|
 | **Shipment** | Partner = *Viettel Post*, chọn Partner Account; thêm sản phẩm; **Value of Goods**; **COD Amount** (tiền thu hộ — để **0** nếu không thu) |
 | **Pickup** | Kho xuất hàng |
-| **Delivery** | Khách nhận (địa chỉ, SĐT tự điền theo khách) |
-| **Parcels** | Bấm **Auto-calculate Parcel** hoặc thêm tay — mỗi kiện phải có cân nặng |
+| **Delivery** | Khách nhận (địa chỉ, SĐT tự điền theo khách). Giao cho **Company/không có người liên hệ** → cần **Phone trên Address** giao hàng |
+| **Parcels** | Bấm **Auto-calculate Parcel** hoặc thêm tay — mỗi kiện phải có cân nặng. **Kích thước (dài×rộng×cao) và số kiện ở tab này là thứ gửi sang VTP** để tính cước — nhập đúng thực tế |
+| **Charges** | **Charges Paid By** = ai trả cước: *Sender* (mình trả) hay *Receiver* (người nhận trả khi giao) — sang VTP đúng theo lựa chọn này |
 
 Xong bấm **Submit**.
 
