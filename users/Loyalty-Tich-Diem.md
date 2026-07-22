@@ -229,7 +229,11 @@ Fire ở `Sales Invoice.on_submit` (sau bước SO award ở trên). Quy tắc n
 **trọn SO đầu tiên** của khách được giới thiệu, không phải SI đầu — để chính
 xác khi 1 SO chia thành nhiều SI thanh toán.
 
-1. Resolve người giới thiệu: `customer.lead_name → Lead.source == "Existing Customer" → Lead.customer`.
+1. Resolve người giới thiệu (`loyalty/referral.py::resolve_referrer` — dùng chung cho
+   cả runtime lẫn backfill): `customer.lead_name → Lead → Lead.customer`, với điều kiện
+   Lead được đánh dấu là referral qua **`utm_source` ∈ {Reference, Existing Customer,
+   Khách giới thiệu}** (field Sales thực sự điền), HOẶC cột legacy `source == "Existing
+   Customer"` (dữ liệu do `lead_source_fix` seed từ Odoo). Tự giới thiệu chính mình → bỏ qua.
    Không resolve được → bỏ qua.
 2. Đọc `COBE Loyalty Settings` cho `SI.company`. Không có row hoặc `enabled = 0` → bỏ qua.
 3. Loop từng SO được SI tham chiếu. Với mỗi SO:
@@ -420,10 +424,15 @@ của Loyalty Program / `referral_conversion_factor` của settings → Reset �
 - **Customer không có Loyalty Program** sẽ không tích điểm và không báo lỗi.
   Đây là thiết kế cố ý — nhưng nếu mày thấy "tại sao không có điểm?" thì cách
   fix là gán program, không phải debug hook.
-- **Field `Lead.source`**: field cũ `source` (Select) là cái mà
-  `Lead.customer.depends_on` đang check. Field mới `utm_source` (Link đến
-  UTM Source) là field khác. Code mình đọc/ghi `lead.source` — đảm bảo
-  Customize Form của Lead vẫn để field này hiển thị/dùng được.
+- **Field `Lead.source` vs `utm_source`** — bẫy đã từng làm referral sót ~99,8%:
+  ERPNext đời mới đã **gỡ field `source` khỏi DocType Lead** (chỉ còn lại cột DB mồ côi,
+  đọc được nhưng không sửa được từ form); `utm_source` (Link → UTM Source, label hiển thị
+  là "Source") là field thay thế mà Sales thực sự điền. Ô **"From Customer"**
+  (`Lead.customer`) hiện ra nhờ **Property Setter** `Lead-customer-depends_on` =
+  `eval:doc.utm_source == 'Existing Customer' || doc.utm_source == 'Reference'` — nên
+  **phải đọc runtime meta (`frappe.get_meta`), đọc thẳng `tabDocField` sẽ ra kết luận sai**.
+  Từ 22/07/2026 code đọc **cả hai** field (xem §3c). Property Setter này chưa nằm trong
+  `fixtures` — dựng site mới nhớ tạo lại.
 - **Match theo thứ tự**; cái match đầu tiên thắng. Nếu strategy 4 (clean name)
   trùng tên giữa 2 customer khác nhau, cái nào được index trước sẽ thắng. Output
   sample của Dry-run là công cụ để mày soi case kiểu này.

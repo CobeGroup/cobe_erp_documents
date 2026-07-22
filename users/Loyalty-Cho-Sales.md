@@ -30,7 +30,7 @@ Sales chỉ cần nhớ **3 việc**:
 | # | Việc | Làm ở đâu | Nếu quên thì sao |
 |---|---|---|---|
 | 1 | Khách phải có **Chương trình tích điểm** | Customer → tab *Loyalty Points* | Khách **không được điểm nào**, hệ thống **không báo lỗi** |
-| 2 | Khai **người giới thiệu** ngay khi tạo Lead | Lead → *Nguồn* = **Existing Customer** → ô *From Customer* | Người giới thiệu **mất thưởng**, sửa sau rất phiền |
+| 2 | Khai **người giới thiệu** ngay khi tạo Lead | Lead → *Source* = **Reference** → ô *From Customer* | Người giới thiệu **mất thưởng**, sửa sau rất phiền |
 | 3 | Đơn phải có **Sales Order** và **xuất hoá đơn đủ 100%** | Sales Order → Sales Invoice | Chưa đủ 100% thì **chưa có điểm** |
 
 ---
@@ -71,10 +71,13 @@ Hệ thống **không tự đoán** ai giới thiệu ai. Sales phải khai, và
 ### Cách khai (làm ngay khi tạo Lead)
 
 1. Mở **Lead** của khách mới.
-2. Trường **Nguồn (Source)** → chọn **`Existing Customer`**.
-3. Ngay khi chọn xong, một ô mới hiện ra: **From Customer**.
+2. Trường **Source** → chọn **`Reference`**.
+   *(Giá trị `Existing Customer` cũng được hệ thống chấp nhận, nhưng thực tế toàn công ty đang dùng `Reference` — hãy dùng cho thống nhất.)*
+3. Ngay khi chọn xong, một ô mới hiện ra: **From Customer** — và ô này **bắt buộc phải điền**.
 4. Ở ô đó, chọn **khách hàng cũ đã giới thiệu** người này.
 5. Lưu.
+
+> Nếu chọn Source khác (Hotline, Facebook, Cộng tác viên…) thì ô *From Customer* **không hiện**, và hệ thống hiểu là khách **không đến từ giới thiệu** → không có thưởng.
 
 > ⏰ **Phải khai ở giai đoạn Lead, TRƯỚC khi chuyển thành Customer.** Hệ thống truy vết
 > người giới thiệu theo đường: *Khách hàng → Lead gốc → Người giới thiệu*. Khai sau khi đã
@@ -86,7 +89,7 @@ Hệ thống **không tự đoán** ai giới thiệu ai. Sales phải khai, và
 
 | # | Điều kiện |
 |---|---|
-| 1 | Lead đã khai đúng *Nguồn = Existing Customer* + *From Customer* |
+| 1 | Lead đã khai đúng *Source = Reference* (hoặc *Existing Customer*) + *From Customer* |
 | 2 | Khách mới có **Sales Order** (không phải bán tiền mặt) |
 | 3 | Đó là **Đơn hàng ĐẦU TIÊN** của khách mới đó |
 | 4 | Đơn đã xuất hoá đơn **đủ 100%**, và đạt **giá trị tối thiểu** công ty quy định |
@@ -176,7 +179,7 @@ Kiểm tra theo **đúng thứ tự** này, 90% trường hợp dừng ở bư�
 ### Riêng khiếu nại "Người giới thiệu không được thưởng"
 
 Kiểm tra lần lượt:
-1. Lead của khách mới có khai *Nguồn = Existing Customer* + *From Customer* không? (thiếu ⇒ nguyên nhân)
+1. Lead của khách mới có khai *Source = Reference* + *From Customer* không? (thiếu ⇒ nguyên nhân phổ biến nhất)
 2. Khách mới có **Sales Order** không, hay chỉ bán tiền mặt? (bán tiền mặt ⇒ không có thưởng)
 3. Đó có phải **đơn đầu tiên** của khách mới không? (đơn thứ 2 trở đi ⇒ không có thưởng)
 4. Đơn đã xuất hoá đơn đủ 100% và đạt giá trị tối thiểu chưa?
@@ -187,7 +190,7 @@ Kiểm tra lần lượt:
 
 ```
 1. Tạo LEAD
-   └─ Nguồn = "Existing Customer"
+   └─ Source = "Reference"
    └─ From Customer = <khách đã giới thiệu>        ← BẮT BUỘC, làm ngay
 
 2. Chuyển đổi thành CUSTOMER
