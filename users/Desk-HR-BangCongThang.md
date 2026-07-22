@@ -56,10 +56,22 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 >
 > 💡 **Hai cột tổng giờ** — đừng nhầm:
 > - **Tổng giờ chuẩn** = cộng theo **công chuẩn của CA**: mỗi ngày công đủ (P / WFH) = **giờ chuẩn của ca đó**, nửa ngày (HD) = **½ giờ chuẩn ca**; nghỉ/vắng không cộng. Giờ chuẩn ca = *(giờ ra − giờ vào) − nghỉ trưa*, suy động từ cấu hình Shift Type (Office 8h, AKW 6h, Migunlife/kỹ thuật 9h, lắp đặt 3h…). Đổi giờ ca thì cột này **tự đúng theo**.
+>   **Ngày nghỉ nửa buổi** (Thứ 7 của khối văn phòng — xem dưới) chỉ tính **½ giờ chuẩn**, vì ngày đó ca chỉ có nửa buổi.
 > - **Tổng giờ thực** = cộng **số giờ bấm máy** thực tế mọi ngày trong kỳ (đúng những gì check-in/out ghi lại).
 >
 > Dùng **Tổng giờ chuẩn** để tính công/lương theo trạng thái (không phụ thuộc NV bấm sớm/muộn); dùng **Tổng giờ thực** để soi giờ hiện diện thật.
 >
+> 💡 **Thứ 7 nghỉ nửa buổi** — áp dụng cho ca **Office**, **Office Kế Toán**, **Management**.
+> Ngày đó ca chỉ có nửa buổi nên:
+> - **Tổng giờ chuẩn** cộng **½ ca** (Office: **4h** thay vì 8h)
+> - **Ngưỡng giờ công cũng chia đôi** → NV làm buổi sáng ~4h vẫn là **`P`** (công đủ),
+>   không bị rớt xuống `HD` như trước
+>
+> Các ca còn lại (KTV, Kho, AKW, Migunlife…) Thứ 7 vẫn là **ngày làm bình thường, cả ngày**.
+>
+> Nguồn: Holiday List gắn trên từng **Shift Type** — HR đổi ở đó thì báo cáo tự theo,
+> không cần sửa báo cáo.
+
 > 💡 **Company Note** (công ty trực thuộc) chỉ có với NV đã **gộp công ty** (lưu công ty gốc); NV khác để trống là bình thường.
 
 > ⚠️ Mở đúng tên **`Monthly Attendance Sheet Cobe`**. Bản gốc "Monthly Attendance Sheet" **không**
