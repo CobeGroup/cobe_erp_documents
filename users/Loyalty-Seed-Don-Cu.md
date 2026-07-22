@@ -342,3 +342,114 @@ Apply lại. Lặp tới khi số đẹp.
 > Khoá 2 công tắc (Award + Sync) → gán Program → Dry-run rồi Apply lần lượt *Lead Source
 > Fix · SI Backfill · Referral Backfill · VIP Seed* → chốt mốc → bật Award → (sau) bật
 > Sync. **Không bao giờ bật Award trước khi seed xong.**
+
+---
+
+# Phụ lục — Checklist go-live đợt 07/2026
+
+Thông số **đã chốt** cho lần triển khai đầu tiên (công ty **THẾ GIỚI ĐIỆN GIẢI**). Làm
+đúng thứ tự, tick từng dòng.
+
+## Bước 0 — Kiểm tra ngay sau khi deploy
+
+- [ ] **COBE Loyalty Settings** → `Loyalty Award Enabled (Master)` vẫn **BỎ TICK**
+- [ ] **COBE Loyalty Sync Settings** → `Sync Enabled` vẫn **BỎ TICK**
+- [ ] **Loyalty Point Entry** (list) → vẫn **0 dòng**
+
+> Nếu thấy có bản ghi điểm tự nhiên xuất hiện ⇒ **dừng lại**, có gì đó đang award ngoài ý muốn.
+
+## Bước 0b — Xác minh cơ chế đẩy điểm *(2 phút, nên làm)*
+
+Mục đích: chứng minh mỗi bút toán điểm có sinh ra `COBE Loyalty Event` — mà **không** gửi gì
+sang bên thứ 3.
+
+1. **COBE Loyalty Sync Settings**: tick `Sync Enabled` + `Emit LPE Events`, nhưng ở bảng
+   **Endpoints** **BỎ TICK** `enabled` của dòng company → **Save**.
+2. Tạo **COBE Loyalty Adjustment**: khách bất kỳ (đã có Program), Type = **Add**,
+   Points = **1**, Reason Category = *Other*, Reason = "test" → **Submit**.
+3. Mở list **COBE Loyalty Event** → phải thấy **1 dòng mới** (`loyalty.points_increased`,
+   trạng thái *Pending*, sau đó thành *Skipped* vì endpoint đang tắt) ⇒ ✅ đạt.
+4. **Dọn**: Cancel phiếu Adjustment vừa tạo → quay lại Sync Settings **BỎ TICK cả 2** công
+   tắc, tick lại `enabled` cho endpoint.
+
+> Không thấy dòng event nào ⇒ chưa `bench restart` sau deploy.
+
+## Bước 1 — Cấu hình (4 ô)
+
+| # | Màn hình | Ô | Giá trị |
+|---|---|---|---|
+| 1 | Loyalty Program *"Chương Trình Tích Điểm Khách Hàng - TGDG"* | `From Date` | **01/01/2023** |
+| 2 | COBE Loyalty Settings → bảng **Companies**, dòng TGĐG | `Enabled` | **✔ tick** |
+| 3 | ⟳ cùng dòng | `Referral Conversion Factor` | **10.000** |
+| 4 | ⟳ cùng dòng | `Referral Minimum Invoice Amount` | **1.000.000** |
+
+Giữ nguyên: `collection_factor` = **1.000** · `Referral Max Points` = **0** (không cap, vì đã
+giảm bằng factor) · `Loyalty Program Type` = **Single Tier** (phân hạng để sau).
+
+> ⚠️ `Loyalty Award Enabled (Master)` **vẫn để TẮT** ở bước này. Tick dòng company **không**
+> làm hệ thống award, vì award cần **cả hai**.
+
+## Bước 2 — Gán Loyalty Program cho khách
+
+Vào **Loyalty Assignment Tool** → `Target Program` = *Chương Trình Tích Điểm Khách Hàng - TGDG*
+→ giữ tick **"Chỉ Customer chưa có Program"** → chọn khách → **Assign to Selected**.
+
+> 🔴 **Cẩn thận với ~25.000 khách.** Nút *Assign to Selected* xử lý **đồng bộ** trong 1 request.
+> Gán cả 25.000 một lượt rất dễ **timeout giữa chừng**. Hãy **chia lô**:
+> - Đặt page size **500**, dùng **Select All on Page** → Assign → sang trang kế; **hoặc**
+> - Lọc theo `Customer Group` / `Territory` để mỗi lô vài nghìn.
+>
+> Tool **idempotent** — chạy lại không hỏng gì, khách đã gán sẽ bị bỏ qua. Cứ lặp tới khi hết.
+
+- [ ] Kiểm tra lại: số Customer có `Loyalty Program` ≈ **24.933**
+
+## Bước 3 — Dry-run *(an toàn, chạy được trong giờ hành chính)*
+
+Trang **Loyalty Migration** (`/app/loyalty-migration`). Không ghi gì, chỉ đọc.
+
+- [ ] **Lead Source Fix** · Mode **Analyze** → xem tỉ lệ khớp *(cần Odoo Connect sống)*
+- [ ] **SI Backfill** · Mode **Dry-run** → ghi lại: `would_create_entries`,
+      `would_total_points`, `skipped_no_loyalty_program`
+- [ ] **Referral Backfill** · Mode **Dry-run** → ghi lại: `would_create_adjustments`
+
+**Số kỳ vọng** (đo trên dữ liệu ngày 22/07/2026):
+
+| Chỉ số | Kỳ vọng |
+|---|---|
+| Hoá đơn được quét | ~18.431 |
+| `skipped_no_loyalty_program` | **≈ 0** — nếu còn lớn ⇒ bước 2 chưa xong |
+| Tổng điểm mua hàng | ~160 triệu |
+| Ứng viên referral | ~490 |
+
+> Lệch nhiều so với bảng trên ⇒ dừng lại, soi trước khi Apply.
+
+## Bước 4 — Apply *(NGOÀI GIỜ hành chính)*
+
+Làm gọn trong **một cửa sổ liên tục**, vì trong lúc này hoá đơn phát sinh sẽ không được tính điểm.
+
+- [ ] **Lead Source Fix** → Dry-run → **Apply** *(nếu seed referral từ Odoo)*
+- [ ] **SI Backfill** → **Apply**
+- [ ] **Referral Backfill** → **Apply**
+- [ ] Kiểm tra: list **Loyalty Point Entry** đã có bản ghi, số điểm khớp Dry-run
+- [ ] **Ghi lại mốc thời gian** bật hệ thống
+
+## Bước 5 — Bật hệ thống
+
+- [ ] **COBE Loyalty Settings** → tick `Loyalty Award Enabled (Master)` → **Save**
+- [ ] Kiểm tra dòng company TGĐG vẫn `Enabled` ✔
+
+Từ đây đơn hàng mới hoàn tất sẽ tự cộng điểm.
+
+## Bước 6 — Bật đồng bộ 3rd party *(làm sau, khi bên Zalo sẵn sàng)*
+
+- [ ] Bên Zalo đã lấy xong **số dư điểm ban đầu**
+- [ ] **COBE Loyalty Sync Settings** → tick `Sync Enabled` + `Emit LPE Events`
+- [ ] Bảng **Endpoints** → dòng company `Enabled` ✔, đủ `url_increase` / `url_decrease` + token
+- [ ] Theo dõi list **COBE Loyalty Event**: trạng thái phải chuyển *Pending → Sent*
+
+> Điểm lịch sử đã seed **không** bị đẩy sang bên thứ 3 (seed lúc sync đang tắt) — đúng thiết kế.
+
+## Nếu cần làm lại từ đầu
+
+Chạy **Reset** theo thứ tự **ngược**: *Referral Backfill* → *SI Backfill*. Sau đó chỉnh tham số
+rồi Dry-run → Apply lại.
