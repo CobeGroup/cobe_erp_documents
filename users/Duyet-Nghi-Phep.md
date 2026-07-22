@@ -203,6 +203,7 @@ Mở đơn cần duyệt (đang **Manager Approved**) → bấm nút **Actions**
 | Trên Desk không thấy nút **Submit / HR Reject** | Tài khoản thiếu role **HR Manager**, hoặc đơn chưa ở trạng thái **Manager Approved** |
 | **Chuyển duyệt** không thấy ai để chọn | Người nhận phải có quyền duyệt **cùng cấp + cùng phòng** với nhân viên |
 | Đã Submit nhưng số dư phép **không giảm** | Kiểm nhân viên đã được **cấp phép (Leave Allocation)** chưa — xem [Cấp phép](Desk-HR-CapPhep.html) |
+| Bấm duyệt thì báo *"Attendance … is already marked for the following dates …"* | Đơn xin nghỉ **cả ngày** nhưng nhân viên **đã chấm công** hôm đó (kiểm tra được ngay: bấm vào ngày trong thông báo là mở bản chấm công). Hệ thống kiểm lại mỗi lần duyệt, nên đơn lúc gửi còn hợp lệ vẫn có thể vướng nếu sau đó họ đi làm. Cách xử: bảo nhân viên gửi lại đơn **nửa ngày** (loại này duyệt được bình thường), hoặc HR sửa/huỷ bản chấm công ngày đó nếu nó sai |
 
 ---
 

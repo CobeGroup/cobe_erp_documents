@@ -97,11 +97,22 @@ Khi chỉ cần nghỉ **một buổi** (vd sáng đi khám, chiều đi làm):
 > bạn chọn (sáng/chiều) để Quản lý & HR biết bạn nghỉ buổi nào — **buổi còn lại
 > bạn vẫn đi làm và chấm công bình thường**.
 
+> ✅ **Đi làm buổi sáng rồi trưa mới xin nghỉ buổi chiều — được.** Dù sáng bạn
+> đã chấm công (ngày đó đã có công), đơn **nửa ngày** vẫn gửi được như thường.
+> Buổi đã làm **vẫn được tính công**, buổi nghỉ trừ 0.5 ngày phép.
+
 **Lưu ý:**
 - Ô **Nghỉ nửa ngày** chỉ bật được khi bạn chọn **đúng 1 ngày**. Chọn khoảng
   nhiều ngày thì ô này mờ đi (nửa ngày không áp dụng cho nhiều ngày).
 - Buổi sáng hay chiều **trừ phép như nhau** (đều 0.5 ngày) — chọn cho đúng buổi
   để Quản lý nắm lịch, không ảnh hưởng số phép.
+- Ngày bạn **đã đi làm** thì chỉ xin được **nửa ngày**. Xin **nghỉ cả ngày** cho
+  hôm đó app sẽ chặn (đã có công rồi mà lại nghỉ trọn ngày là mâu thuẫn) — cần
+  sửa thì báo HR.
+- **Ngày nghỉ (Chủ Nhật / lễ) không xin nửa ngày được** — hôm đó vốn đã nghỉ,
+  và nếu bạn có đi làm thì đó là **làm thêm**, khai [đơn Làm thêm giờ](Guide-NhanVien-LamThem.html)
+  chứ không phải đơn nghỉ.
+- Mỗi ngày chỉ **1 đơn nửa ngày**. Cần nghỉ nốt buổi còn lại thì báo HR, đừng gửi đơn thứ hai.
 
 ---
 
@@ -168,6 +179,7 @@ phải chọn gì — **chọn đúng loại phép là form tự đổi**:
 | Xin Nghỉ bù mà app đòi "Ngày làm thêm để bù" | Ô này **bắt buộc** với Nghỉ bù — chọn đúng hôm đã làm thêm |
 | "Ngày … không có đơn Làm thêm giờ đã duyệt…" | Ngày đó thiếu đơn Làm thêm (quy đổi Nghỉ bù) đã duyệt → [khai đơn làm thêm](Guide-NhanVien-LamThem.html) cho ngày đã làm (trong hạn — mặc định 1 ngày) |
 | "Ngày làm thêm … đã được dùng cho đơn Nghỉ bù …" | Ngày làm thêm đó đã bù rồi — mỗi ngày chỉ bù 1 lần |
+| *"Attendance … is already marked for the following dates …"* | Hôm đó bạn **đã chấm công** rồi. Muốn nghỉ một buổi thì tích **Nghỉ nửa ngày** (được, kể cả khi sáng đã đi làm). Còn nếu bạn định nghỉ **cả ngày** — hoặc ngày đó là **Chủ Nhật / lễ** — thì app chặn, báo HR xử |
 
 ---
 

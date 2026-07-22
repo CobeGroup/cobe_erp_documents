@@ -128,6 +128,7 @@ Duyệt xong, ngày 18/07 tính **On Leave** (nghỉ có phép). Trên danh sác
 | *"đã dùng để bù rồi"* | Mỗi ngày làm thêm chỉ đổi **1 ngày nghỉ** — dùng ngày làm thêm khác |
 | Số dư Nghỉ bù bỗng về 0 / mất | Đã qua **cuối kỳ** — phiếu chưa dùng bị **Hết hạn**. Lần sau xin nghỉ trong kỳ |
 | Số dư âm, tưởng bị phạt | Âm là **đúng thiết kế** — không trừ lương, không trừ quỹ phép |
+| *"Attendance … is already marked …"* khi xin nghỉ bù | Hôm đó **đã chấm công**. Rất hay gặp vì nghỉ bù thường xin ngay trong ngày: làm sáng → trưa xin nghỉ chiều. Tích **Nghỉ nửa ngày** là gửi được (buổi đã làm vẫn tính công). Xin **cả ngày** cho hôm đã đi làm thì không được |
 
 ---
 
