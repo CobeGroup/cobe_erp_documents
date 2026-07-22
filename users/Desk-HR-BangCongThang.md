@@ -1,22 +1,22 @@
 ---
-title: "Bảng công tháng (Monthly Attendance Sheet)"
+title: "Bảng công tháng (COBE HR Attendance Sheet)"
 layout: default
 parent: HR (vận hành)
 grand_parent: Chấm công & HR
 nav_order: 6.5
 ---
 
-# Bảng công tháng — Monthly Attendance Sheet
+# Bảng công tháng — COBE HR Attendance Sheet
 {: .no_toc }
 
-**Dành cho:** HR Manager · Trưởng bộ phận · **Nơi xem:** Desk → Search **"Monthly Attendance Sheet Cobe"**
+**Dành cho:** HR Manager · Trưởng bộ phận · **Nơi xem:** Desk → Search **"COBE HR Attendance Sheet"**
 {: .fs-3 .text-grey-dk-000 }
 
 > Báo cáo **một bảng = cả tháng**: mỗi dòng là **một nhân viên**, mỗi cột là **một ngày**, mỗi ô là
 > **trạng thái công** ngày đó theo **mã** (`P` công / `HD` nửa ngày / `WFH` làm ở nhà / `L` `NB` `H` nghỉ / `-` không dữ liệu…). Dùng để **đối chiếu công cuối tháng**,
 > xuất Excel gửi kế toán.
 
-> 🟢 **Dùng bản Cobe: `Monthly Attendance Sheet Cobe`** (KHÔNG phải bản gốc HRMS "Monthly
+> 🟢 **Dùng bản Cobe: `COBE HR Attendance Sheet`** (KHÔNG phải bản gốc HRMS "Monthly
 > Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Cty Trực Thuộc** (công ty trực thuộc), **Tổng giờ chuẩn** + **Tổng giờ thực**, **mỗi ngày là 1
 > ô ghép chia đôi** (nửa trái ký hiệu, nửa phải **số giờ**; xuất Excel tách 2 cột cộng được) + **ký
 > hiệu tiếng Việt theo loại phép** — xem [mục 0](#0-bản-cobe--khác-gì-bản-gốc).
@@ -34,7 +34,7 @@ nav_order: 6.5
 
 Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 
-| | **Monthly Attendance Sheet Cobe** *(khuyên dùng)* | Monthly Attendance Sheet *(gốc HRMS)* |
+| | **COBE HR Attendance Sheet** *(khuyên dùng)* | Monthly Attendance Sheet *(gốc HRMS)* |
 |---|---|---|
 | Cột đầu | Employee · **Mã NV** · Tên · **Cty Trực Thuộc** · Shift · **Tổng giờ chuẩn** · **Tổng giờ thực** | Employee · Tên · Shift |
 | Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`) **chia đôi**: nửa trái **mã** (`P`/`HD`/`WFH`/`L`…/`-`), nửa phải **số giờ công thực tế** (`8,2`) | 1 ô: chỉ ký hiệu `P`, `HD` |
@@ -44,7 +44,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | Cách chạy | **Chạy thẳng** (bấm là ra) | "Prepared report" — phải **Generate New Report** rồi chờ |
 | Summarized View | Dùng chung phần tổng của bản gốc | *(bản gốc)* |
 
-![Monthly Attendance Sheet Cobe — Mã NV · Công ty trực thuộc · Tổng giờ · mỗi ngày 1 ô ghép (1 T4) chia đôi: nửa trái mã (P công / HD nửa ngày / WFH làm ở nhà / L·NB nghỉ / -), nửa phải số giờ thực tế xanh](images/desk/hr-mas-cobe-grid.png)
+![COBE HR Attendance Sheet — Mã NV · Công ty trực thuộc · Tổng giờ · mỗi ngày 1 ô ghép (1 T4) chia đôi: nửa trái mã (P công / HD nửa ngày / WFH làm ở nhà / L·NB nghỉ / -), nửa phải số giờ thực tế xanh](images/desk/hr-mas-cobe-grid.png)
 
 > 💡 **Mỗi ngày = 1 ô ghép** (tiêu đề `<ngày> <thứ>`, vd `1 T4`) **chia đôi**: nửa **trái** là **mã**
 > (`P` công đủ/thiếu — ô giờ cho biết · `HD` nửa ngày · `WFH` làm ở nhà · `L`/`NB`/…
@@ -74,7 +74,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 
 > 💡 **Cty Trực Thuộc** (công ty trực thuộc) chỉ có với NV đã **gộp công ty** (lưu công ty gốc); NV khác để trống là bình thường.
 
-> ⚠️ Mở đúng tên **`Monthly Attendance Sheet Cobe`**. Bản gốc "Monthly Attendance Sheet" **không**
+> ⚠️ Mở đúng tên **`COBE HR Attendance Sheet`**. Bản gốc "Monthly Attendance Sheet" **không**
 > có Mã NV / Cty Trực Thuộc / Tổng giờ chuẩn + thực, **bộ lọc & ký hiệu cũng khác** (bản gốc dùng `P`/`A`/`HD`,
 > có *Group By*, bắt buộc chọn Company, phải Generate). Tài liệu này mô tả **bản Cobe**; chỉ phần
 > **presence-based** (mục 5) và **xuất Excel** là chung cho cả hai.
@@ -83,11 +83,11 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 
 ## 1. Mở báo cáo
 
-1. Vào Desk (`/app`) → bấm **Search** (Ctrl/⌘ + K) → gõ **Monthly Attendance Sheet Cobe** → Enter.
+1. Vào Desk (`/app`) → bấm **Search** (Ctrl/⌘ + K) → gõ **COBE HR Attendance Sheet** → Enter.
    (Hoặc workspace **Shift & Attendance / People** → mục **Reports**.)
 2. **Bản Cobe chạy thẳng** — đặt bộ lọc xong là bảng **hiện ngay**, KHÔNG cần bấm Generate.
 
-![Monthly Attendance Sheet Cobe vừa mở — thanh lọc trên cùng + dòng chú thích mã HR + lưới ngày](images/desk/hr-mas-cobe-open.png)
+![COBE HR Attendance Sheet vừa mở — thanh lọc trên cùng + dòng chú thích mã HR + lưới ngày](images/desk/hr-mas-cobe-open.png)
 
 > ⚙️ *Chỉ bản gốc HRMS "Monthly Attendance Sheet" mới là "prepared report" (phải bấm **Generate New
 > Report** rồi chờ). Bản Cobe không cần — cứ đổi bộ lọc là bảng tự cập nhật.*
@@ -148,7 +148,7 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 
 ## 4. Các tính năng mới hiện ở đâu trên bảng?
 
-Đây là cách 3 điều chỉnh chấm công mới **đổ vào** Monthly Attendance Sheet:
+Đây là cách 3 điều chỉnh chấm công mới **đổ vào** bảng công tháng:
 
 | Việc nhân viên làm | Trạng thái Attendance | Ô trên bảng |
 |---|---|---|
