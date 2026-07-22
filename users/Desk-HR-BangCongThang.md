@@ -17,7 +17,7 @@ nav_order: 6.5
 > xuất Excel gửi kế toán.
 
 > 🟢 **Dùng bản Cobe: `Monthly Attendance Sheet Cobe`** (KHÔNG phải bản gốc HRMS "Monthly
-> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Company Note** (công ty trực thuộc), **Tổng giờ chuẩn** + **Tổng giờ thực**, **mỗi ngày là 1
+> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Cty Trực Thuộc** (công ty trực thuộc), **Tổng giờ chuẩn** + **Tổng giờ thực**, **mỗi ngày là 1
 > ô ghép chia đôi** (nửa trái ký hiệu, nửa phải **số giờ**; xuất Excel tách 2 cột cộng được) + **ký
 > hiệu tiếng Việt theo loại phép** — xem [mục 0](#0-bản-cobe--khác-gì-bản-gốc).
 
@@ -36,11 +36,11 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 
 | | **Monthly Attendance Sheet Cobe** *(khuyên dùng)* | Monthly Attendance Sheet *(gốc HRMS)* |
 |---|---|---|
-| Cột đầu | Employee · **Mã NV** · Tên · **Company Note** · Shift · **Tổng giờ chuẩn** · **Tổng giờ thực** | Employee · Tên · Shift |
+| Cột đầu | Employee · **Mã NV** · Tên · **Cty Trực Thuộc** · Shift · **Tổng giờ chuẩn** · **Tổng giờ thực** | Employee · Tên · Shift |
 | Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`) **chia đôi**: nửa trái **mã** (`P`/`HD`/`WFH`/`L`…/`-`), nửa phải **số giờ công thực tế** (`8,2`) | 1 ô: chỉ ký hiệu `P`, `HD` |
 | Ký hiệu | Công `P` · nửa `HD` · WFH `WFH` · nghỉ `L`/`L/2`/`NB`/`KL`/`CĐ`/`BH`/`H` · `WO` · `-` không dữ liệu | Gộp chung `L` (On Leave) |
 | Lọc Company | **Bỏ trống = gộp MỌI công ty** | Bắt buộc chọn |
-| Lọc **Company Note** | **Có** — lọc theo nhóm gốc/công ty trực thuộc (trước gộp công ty), độc lập với Company | Không có |
+| Lọc **Cty Trực Thuộc** | **Có** — lọc theo nhóm gốc/công ty trực thuộc (trước gộp công ty), độc lập với Company | Không có |
 | Cách chạy | **Chạy thẳng** (bấm là ra) | "Prepared report" — phải **Generate New Report** rồi chờ |
 | Summarized View | Dùng chung phần tổng của bản gốc | *(bản gốc)* |
 
@@ -72,10 +72,10 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 > Nguồn: Holiday List gắn trên từng **Shift Type** — HR đổi ở đó thì báo cáo tự theo,
 > không cần sửa báo cáo.
 
-> 💡 **Company Note** (công ty trực thuộc) chỉ có với NV đã **gộp công ty** (lưu công ty gốc); NV khác để trống là bình thường.
+> 💡 **Cty Trực Thuộc** (công ty trực thuộc) chỉ có với NV đã **gộp công ty** (lưu công ty gốc); NV khác để trống là bình thường.
 
 > ⚠️ Mở đúng tên **`Monthly Attendance Sheet Cobe`**. Bản gốc "Monthly Attendance Sheet" **không**
-> có Mã NV / Company Note / Tổng giờ chuẩn + thực, **bộ lọc & ký hiệu cũng khác** (bản gốc dùng `P`/`A`/`HD`,
+> có Mã NV / Cty Trực Thuộc / Tổng giờ chuẩn + thực, **bộ lọc & ký hiệu cũng khác** (bản gốc dùng `P`/`A`/`HD`,
 > có *Group By*, bắt buộc chọn Company, phải Generate). Tài liệu này mô tả **bản Cobe**; chỉ phần
 > **presence-based** (mục 5) và **xuất Excel** là chung cho cả hai.
 
@@ -103,7 +103,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | **Start Date / End Date** | Khoảng ngày (≤ 90 ngày) — hiện khi *Filter Based On = Date Range*. |
 | **Employee** | Để trống = **tất cả** nhân viên; chọn 1 người = chỉ người đó. |
 | **Company** | Công ty pháp lý. **Bỏ trống = gộp TẤT CẢ công ty.** |
-| **Company Note** | Lọc theo **nhóm gốc / công ty trực thuộc** (công ty trước khi gộp), **độc lập** với Company. Bỏ trống = mọi nhóm. |
+| **Cty Trực Thuộc** | Lọc theo **nhóm gốc / công ty trực thuộc** (công ty trước khi gộp), **độc lập** với Company. Bỏ trống = mọi nhóm. |
 | **Include Company Descendants** | Gộp cả các công ty con (mặc định bật). |
 | **Summarized View** | Tích để xem **chỉ phần tổng** (biểu đồ + bảng đếm), không có lưới ngày. |
 
@@ -188,7 +188,7 @@ check-in và không có đơn** sẽ hiện **`-`** (0 công) chứ **không** t
 
 ## 6. Xuất & đối chiếu
 
-1. Đặt bộ lọc **Month / Year** (và Company / Company Note nếu cần) — bảng **hiện ngay** (bản Cobe không cần Generate).
+1. Đặt bộ lọc **Month / Year** (và Company / Cty Trực Thuộc nếu cần) — bảng **hiện ngay** (bản Cobe không cần Generate).
 2. Soát các ô **`-`** ngày thường (0 công / chưa xác minh) → xử lý (nhắc NV / thêm công tay).
 3. Bấm **⋮ (Menu)** → **Export** → chọn **Excel / CSV** để gửi kế toán / lưu hồ sơ.
 
