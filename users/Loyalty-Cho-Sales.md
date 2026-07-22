@@ -13,6 +13,9 @@ nav_order: 4
 Tài liệu này chỉ nói **những việc Sales cần làm** để khách hàng nhận đúng điểm và
 người giới thiệu nhận đúng thưởng. Phần cấu hình hệ thống không thuộc phạm vi tài liệu này.
 
+> 📚 Tài liệu liên quan: [Tổng quan & vận hành](Loyalty-Tich-Diem.html) *(quản trị)* ·
+> [Seed điểm cho đơn cũ](Loyalty-Seed-Don-Cu.html) *(go-live)*
+
 <details markdown="1">
 <summary>Mục lục</summary>
 
@@ -29,7 +32,7 @@ Sales chỉ cần nhớ **3 việc**:
 
 | # | Việc | Làm ở đâu | Nếu quên thì sao |
 |---|---|---|---|
-| 1 | Khách phải có **Chương trình tích điểm** | Customer → tab *Loyalty Points* | Khách **không được điểm nào**, hệ thống **không báo lỗi** |
+| 1 | Khách phải có **Chương trình tích điểm** | Customer list → Report view → cột *Loyalty Program* | Khách **không được điểm nào**, hệ thống **không báo lỗi** |
 | 2 | Khai **người giới thiệu** ngay khi tạo Lead | Lead → *Source* = **Reference** → ô *From Customer* | Người giới thiệu **mất thưởng**, sửa sau rất phiền |
 | 3 | Đơn phải có **Sales Order** và **xuất hoá đơn đủ 100%** | Sales Order → Sales Invoice | Chưa đủ 100% thì **chưa có điểm** |
 
@@ -77,7 +80,16 @@ Hệ thống **không tự đoán** ai giới thiệu ai. Sales phải khai, và
 4. Ở ô đó, chọn **khách hàng cũ đã giới thiệu** người này.
 5. Lưu.
 
+Màn hình sau khi chọn `Source = Reference` — ô **From Customer** hiện ra ở cột phải, viền
+đỏ nghĩa là bắt buộc:
+
+![Lead — khai người giới thiệu](images/loyalty/lead-referral-fields.png)
+
 > Nếu chọn Source khác (Hotline, Facebook, Cộng tác viên…) thì ô *From Customer* **không hiện**, và hệ thống hiểu là khách **không đến từ giới thiệu** → không có thưởng.
+
+> 🔎 **Không thấy ô From Customer?** Kiểm tra lại mày đã chọn đúng `Reference` chưa — ô
+> này chỉ hiện với 2 giá trị `Reference` và `Existing Customer`. Chọn xong mà vẫn không
+> hiện thì báo quản trị (thiếu cấu hình hiển thị của ô đó).
 
 > ⏰ **Phải khai ở giai đoạn Lead, TRƯỚC khi chuyển thành Customer.** Hệ thống truy vết
 > người giới thiệu theo đường: *Khách hàng → Lead gốc → Người giới thiệu*. Khai sau khi đã
@@ -104,12 +116,23 @@ của khách đó **không** phát sinh thưởng thêm cho người giới thi�
 Khách **không được gán Chương trình tích điểm** sẽ **không nhận điểm**, và hệ thống
 **không báo lỗi gì cả**. Đây là nguyên nhân số 1 của khiếu nại "sao tôi không có điểm".
 
-**Cách kiểm tra:** mở **Customer** → tab **Loyalty Points** → xem 2 ô:
-- **Loyalty Program** — nếu **trống** ⇒ khách chưa được gán, sẽ không có điểm.
-- **Loyalty Program Tier** — hạng hiện tại của khách (ô này hệ thống tự tính, không sửa được).
+> ⚠️ **Lưu ý về giao diện:** hai ô `Loyalty Program` / `Loyalty Program Tier` nằm trong
+> khu vực *Loyalty Points* thuộc tab **Accounting** — mà tab này đang được **ẩn** trên form
+> Customer. Nghĩa là **mở form khách ra sẽ KHÔNG thấy 2 ô đó**. Dùng 1 trong 2 cách dưới.
+
+**Cách 1 — xem hàng loạt (khuyến nghị):** mở danh sách **Customer** → đổi sang **Report
+view** → bấm nút thêm cột → chọn **Loyalty Program**. Giờ mày thấy ngay khách nào có,
+khách nào trống, và lọc/sắp xếp được theo cột đó.
+
+**Cách 2 — xem 1 khách:** mở danh sách **Loyalty Point Entry**, lọc theo tên khách. Có
+dòng ⇒ khách đang được tích điểm. Không có dòng nào ⇒ hoặc chưa được gán chương trình,
+hoặc chưa phát sinh đơn nào đủ điều kiện.
 
 **Nếu trống:** báo quản trị viên gán chương trình cho khách (có công cụ gán hàng loạt).
 Sau khi gán, các đơn **phát sinh sau đó** mới được tính điểm.
+
+> 📌 **Gửi quản trị:** nếu Sales cần tra thường xuyên, nên đưa 2 ô này ra một tab đang
+> hiện (hoặc bỏ ẩn tab Accounting) để khỏi phải qua Report view.
 
 ---
 
@@ -117,7 +140,7 @@ Sau khi gán, các đơn **phát sinh sau đó** mới được tính điểm.
 
 | Muốn xem gì | Xem ở đâu |
 |---|---|
-| Khách đang ở **hạng** nào, thuộc **chương trình** nào | Customer → tab **Loyalty Points** |
+| Khách đang ở **hạng** nào, thuộc **chương trình** nào | Customer list → **Report view** → thêm cột *Loyalty Program* / *Loyalty Program Tier* |
 | **Lịch sử** từng lần cộng/trừ điểm | Danh sách **Loyalty Point Entry**, lọc theo tên khách |
 | Khách **tự tra** điểm của mình | **Zalo Mini App** (tra bằng số điện thoại) |
 
@@ -163,7 +186,7 @@ quản trị viên kèm: tên khách, mã đơn, lý do.
 Kiểm tra theo **đúng thứ tự** này, 90% trường hợp dừng ở bước 1 hoặc 2:
 
 1. **Khách có Chương trình tích điểm chưa?**
-   Customer → tab *Loyalty Points* → ô *Loyalty Program* có trống không? → Trống thì báo quản trị gán.
+   Khách đã có *Loyalty Program* chưa? (cách xem ở §4) → Trống thì báo quản trị gán.
 
 2. **Đơn đã xuất hoá đơn ĐỦ 100% chưa?**
    Mở Sales Order → xem tỉ lệ đã xuất hoá đơn. Chưa đủ 100% ⇒ **chưa tới lúc cộng điểm**, không phải lỗi.
@@ -194,7 +217,7 @@ Kiểm tra lần lượt:
    └─ From Customer = <khách đã giới thiệu>        ← BẮT BUỘC, làm ngay
 
 2. Chuyển đổi thành CUSTOMER
-   └─ Kiểm tra tab Loyalty Points có Chương trình chưa
+   └─ Kiểm tra khách đã có Chương trình tích điểm chưa
        └─ Trống → báo quản trị gán
 
 3. Tạo SALES ORDER                                  ← đừng bán thẳng hoá đơn tiền mặt

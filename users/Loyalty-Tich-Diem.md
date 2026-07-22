@@ -1,11 +1,11 @@
 ---
-title: Loyalty — Tích điểm
+title: "Loyalty — Tổng quan & vận hành"
 layout: default
 parent: Marketing & Khách hàng
 nav_order: 2
 ---
 
-# COBE Loyalty — Hướng dẫn vận hành
+# COBE Loyalty — Tổng quan & vận hành
 
 Tài liệu đầu-đến-cuối cho hệ thống loyalty xây trên `Loyalty Program` mặc định
 của ERPNext. Mô tả phần nào dùng built-in, phần nào custom, cách setup, cách
@@ -14,6 +14,18 @@ go-live.
 
 Đối tượng: System Manager / Accounts Manager. Mọi đường dẫn nằm trong
 `apps/custom_for_cobegroup/custom_for_cobegroup/custom_for_cobegroup/`.
+
+## 📚 Bộ tài liệu Loyalty — đọc cái nào?
+
+| Bạn là ai / cần gì | Đọc tài liệu |
+|---|---|
+| **Nhân viên kinh doanh** — khai người giới thiệu, trả lời khiếu nại "sao không có điểm" | [Loyalty — Hướng dẫn cho Sales](Loyalty-Cho-Sales.html) |
+| **Người chạy go-live** — seed điểm cho đơn cũ, bật hệ thống lần đầu | [Loyalty — Seed điểm cho đơn cũ](Loyalty-Seed-Don-Cu.html) |
+| **Quản trị hệ thống** — hiểu kiến trúc, đổi rule, xử lý sự cố, đấu nối 3rd party | **Tài liệu này** |
+
+> 🔎 **Đang chuẩn bị go-live?** Đi thẳng tới
+> [Phụ lục — Checklist go-live](Loyalty-Seed-Don-Cu.html#phụ-lục--checklist-go-live-đợt-072026),
+> nó có bảng số kỳ vọng đo trên dữ liệu thật để đối chiếu từng bước.
 
 
 ---
@@ -157,6 +169,11 @@ Customers** (chỉ hiện cho System Manager + Sales Manager).
 Hoặc vào trực tiếp `/app/loyalty-assignment-tool` rồi chọn program ở field
 *Target Program*.
 
+![Loyalty Assignment Tool sau khi chọn Target Program](images/loyalty/assignment-tool-results.png)
+
+Số **"Khớp: N"** ở góc phải là tổng customer thoả bộ lọc (toàn bộ, không phải
+riêng trang hiện tại) — dùng nó để biết `Select All Matching` sẽ chọn bao nhiêu.
+
 ### Bố cục
 
 - **Bên trái — Target Program**: program sẽ được gán (đã preselect nếu mở từ
@@ -165,9 +182,13 @@ Hoặc vào trực tiếp `/app/loyalty-assignment-tool` rồi chọn program �
   - `Chỉ Customer chưa có Program` (Check, default ✓) — an toàn cho lần seed
     đầu. Tắt nếu muốn ghi đè program cũ.
   - `Tìm (tên / SĐT / email / ID)` — search text.
-  - `Customer Group`, `Territory`, `Default Company`, `Customer Type`,
-    `Sales Partner`, `Industry` — filter advanced. Bộ lọc auto reload sau
-    400ms khi đổi giá trị.
+  - `Customer Group`, `Territory`, `Customer Type`, `Sales Partner`,
+    `Industry` — filter advanced. Bộ lọc auto reload sau 400ms khi đổi giá trị.
+
+    > Trước đây tool có thêm filter *Default Company*. Đã **gỡ** — `Customer`
+    > không hề có field `default_company` (chỉ có `represents_company`, mang
+    > nghĩa khác hẳn), nên filter đó làm cả trang crash với lỗi
+    > `Unknown column 'default_company'`.
 - **Bên phải — Customer table**: hiển thị danh sách khớp, cột Current Program
   được highlight:
   - `—` (xám) = chưa có
@@ -377,11 +398,32 @@ Sửa `Lead.source` / `Lead.customer` để chain referral resolve đúng.
 
 ### 5.2. Backfill điểm cho Sales Invoice cũ
 - **Dry-run** — đếm số SI sẽ được tạo Loyalty Point Entry, tổng điểm,
-  top 10 customer có điểm nhiều nhất.
+  top 10 customer có điểm nhiều nhất. Trên ~18.400 hoá đơn mất ~30 giây.
 - **Apply** — tạo 1 `Loyalty Point Entry` cho mỗi SI đủ điều kiện. Mỗi entry
   có `discretionary_reason` chứa marker `[MIGRATED:SI:<tên SI>]`.
 - **Reset Migrated** — xoá **chỉ** các entry có marker. Dùng khi mày muốn đổi
   config rồi chạy lại.
+
+**Đọc kết quả** — mỗi SI rơi vào đúng 1 rổ, và `reconciles` phải là `true`:
+
+![Result Summary của một Dry-run thật](images/loyalty/migration-run-summary.png)
+
+| Rổ | Nguyên nhân | Cách sửa |
+|---|---|---|
+| `would_create_entries` | sẽ tạo entry | — |
+| `skipped_already_has_entry` | đã seed rồi | bình thường khi chạy lại |
+| `skipped_no_loyalty_program` | `Customer.loyalty_program` trống | Assignment Tool (§2.2) |
+| `skipped_invoice_before_program_from_date` | `posting_date` < `Loyalty Program.from_date` | lùi `from_date` |
+| `skipped_invoice_after_program_to_date` | `posting_date` > `to_date` | nới/xoá `to_date` |
+| `skipped_program_lookup_failed` | ERPNext không resolve được program | soi Error Log |
+| `skipped_amount_too_small_for_one_point` | `eligible / collection_factor` < 1 | bình thường |
+| `skipped_si_missing` | SI biến mất giữa chừng | hiếm, race condition |
+
+> ⚠️ **Hai rổ đầu tiên rất dễ nhầm nhau.** `skipped_no_loyalty_program` là
+> *chưa gán khách*; `skipped_invoice_before_program_from_date` là *sai khoảng
+> ngày*. Đo trên dữ liệu Cobe: gán đủ program nhưng để `from_date=2026-06-01`
+> thì **14.658/18.431** hoá đơn rơi vào rổ thứ hai — lùi về `2023-01-01` thì
+> số entry tạo được nhảy từ **3.611 → 17.526**.
 
 ### 5.3. Backfill điểm giới thiệu
 - Match logic runtime: chỉ tính các referrer có khách được giới thiệu đã có
@@ -393,12 +435,37 @@ Sửa `Lead.source` / `Lead.customer` để chain referral resolve đúng.
 - **Reset Migrated** — cancel các Adjustment đó. Cancel sẽ tự sinh entry bù
   trừ → số điểm của customer rollback sạch.
 
+Dry-run và Apply dùng **chung một hàm đánh giá** (`_evaluate`) nên preview không
+bao giờ lệch kết quả thật, và **Apply cũng trả về đủ các rổ lý do**:
+
+| Rổ | Nguyên nhân | Cách sửa |
+|---|---|---|
+| `skipped_no_referral_config` | row company trong `COBE Loyalty Settings` chưa `enabled` | tick enabled + set `referral_conversion_factor > 0` |
+| `skipped_no_loyalty_program_for_referrer` | **người giới thiệu** chưa có program | Assignment Tool |
+| `skipped_below_min_invoice` | SO đầu < `referral_min_invoice_amount` | hạ ngưỡng nếu muốn |
+| `skipped_amount_too_small_for_one_point` | `grand_total / factor` < 1 | bình thường |
+| `skipped_already_migrated` | đã seed cặp này rồi | bình thường khi chạy lại |
+
+> 🔎 **Resolver người giới thiệu** (`loyalty/referral.py`) nhận **cả hai** tín
+> hiệu: `Lead.utm_source ∈ {Reference, Existing Customer, Khách giới thiệu}`
+> **hoặc** cột legacy `Lead.source == 'Existing Customer'`. Thực tế Sales khai
+> bằng `utm_source = Reference`; cột `source` chỉ còn là **cột DB mồ côi** do
+> ERPNext đã gỡ field đó khỏi DocType, và chỉ `lead_source_fix` (migrate từ
+> Odoo) còn ghi vào. Code cũ chỉ đọc `source` nên bắt đúng **1/669** ca.
+
 ### 5.4. Seed VIP
 - Upload file CSV có header.
 - Cột bắt buộc: `customer`, `points`, `reason`.
 - Cột tùy chọn: `adjustment_type` (default `Add`), `expiry_date` (YYYY-MM-DD),
-  `company` (fallback theo Default Company của Console, rồi đến company đầu
-  tiên của customer), `loyalty_program` (fallback theo program của customer).
+  `company`, `loyalty_program` (fallback theo program của customer).
+- **Thứ tự fallback của `company`** khi dòng CSV bỏ trống:
+  `Party Account` của customer → **company của Loyalty Program** → default của
+  session. Không resolve được thì **báo lỗi dòng đó**, không đoán bừa.
+
+  > Trên site Cobe bảng `Party Account` **rỗng hoàn toàn**, nên nhánh thứ hai
+  > (company của Loyalty Program) mới là nhánh thực sự được dùng. Trước đây
+  > code nhảy thẳng vào default của session ⇒ company của phiếu phụ thuộc vào
+  > **ai bấm chạy job**. Cứ điền sẵn cột `company` trong CSV cho chắc.
 - Mỗi row → 1 `COBE Loyalty Adjustment` được submit, reason_category = `VIP Seed`.
 
 **Tip lặp lại**: nếu dry-run cho ra số không ưng ý, đổi `collection_factor`
@@ -561,7 +628,17 @@ Mỗi company có 2 endpoint 3rd party RIÊNG: 1 cho cộng điểm, 1 cho trừ
 | `request_timeout_seconds` | Default timeout HTTP (giây), default 30. Endpoint row có thể override. |
 | `max_retry_attempts` | Default số lần thử tối đa, default 10. Endpoint row có thể override. |
 
-**Endpoints** (child table — 1 row / company):
+> ⚠️ `enabled` và `event_emit_enabled` là **AND**, không phải OR. Tắt bất kỳ
+> cái nào ⇒ không có event nào được sinh ra. Đây là cách tắt an toàn khi seed.
+
+**Endpoints** (child table — 1 row / company). Lưới chỉ hiện vài cột, bấm bút
+chì ✏️ để mở đầy đủ — phần đầu là 2 URL + 2 token:
+
+![Dòng endpoint mở rộng — URL cộng/trừ điểm](images/loyalty/sync-endpoint-expanded.png)
+
+Kéo tiếp xuống cuối dialog là nhóm **Optional Payload Fields**:
+
+![Nhóm Optional Payload Fields](images/loyalty/sync-endpoint-includes.png)
 
 | Field | Ý nghĩa |
 |---|---|
@@ -660,3 +737,20 @@ hoặc bỏ qua tuỳ ý.
   khác KHÔNG bị ảnh hưởng. Các event của company bị tắt sẽ Skipped.
 - **Tắt toàn bộ outbound**: vào General → bỏ tick `Sync Enabled`. Worker
   không pick event nào (tất cả nằm Pending chờ bật lại).
+
+### 10e. Trạng thái thực tế — kiểm chứng 22/07/2026
+
+Kết quả chạy thật trên bản sao dữ liệu production. **Đọc trước khi bật sync.**
+
+| Hạng mục | Trạng thái đo được | Việc cần làm |
+|---|---|---|
+| Đường emit `after_insert` | ✅ **Đã kiểm chứng** — submit 1 Adjustment sinh đúng 1 event `points_increased`, cancel sinh thêm 1 `points_decreased` | — |
+| Endpoint 3rd party | 🔴 trả `HTTP 400` — `{"status":0,"message":"Workflow chưa ở trạng thái published."}` | Chờ đối tác publish workflow rồi mới bật `Sync Enabled` |
+| Các ô `include_*` | 🟡 **tất cả đang tắt** → payload chỉ có `customer.phone` làm định danh | Tick tối thiểu `Include Customer ID` |
+| Độ phủ số điện thoại | 🟡 **20.792 / 24.933** khách có SĐT — **16,6% không có** | Event của nhóm này bay đi với `phone: null` ⇒ bên kia không khớp được |
+| `current_rank` | 🟡 luôn `null` vì chương trình đang **Single Tier** | Báo đối tác đừng chờ giá trị này |
+
+> ⛔ **Đừng bật `Sync Enabled` khi endpoint còn trả 4xx.** Worker sẽ retry mỗi
+> event theo backoff tới 24h/lần cho đủ `max_retry_attempts` (mặc định 10),
+> tạo một đống record `Failed` phải dọn tay. Cứ để `Sync Enabled` tắt — event
+> **không mất**, chúng nằm `Pending` chờ mày bật.

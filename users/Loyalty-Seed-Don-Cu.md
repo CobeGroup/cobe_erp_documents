@@ -15,8 +15,13 @@ Tài liệu này hướng dẫn **từng bước** cách nạp (seed) điểm lo
 thống chính thức chạy. Kèm phần **go-live** (bật tích điểm tự động) và các **bẫy phải
 tránh**.
 
-> Tài liệu này là phần *thực hành*. Muốn hiểu sâu mô hình (điểm cộng/trừ khi nào,
-> tier, outbound event…) xem [Loyalty — Tích điểm](Loyalty-Tich-Diem.html).
+> 📚 Tài liệu này là phần *thực hành*. Muốn hiểu sâu mô hình (điểm cộng/trừ khi nào,
+> tier, outbound event…) xem [Tổng quan & vận hành](Loyalty-Tich-Diem.html). Hướng dẫn
+> cho nhân viên kinh doanh: [Loyalty — cho Sales](Loyalty-Cho-Sales.html).
+
+> ⏱️ **Chuẩn bị go-live đợt này?** Nhảy thẳng xuống
+> [Phụ lục — Checklist go-live](#phụ-lục--checklist-go-live-đợt-072026): thông số đã chốt,
+> thứ tự làm, và **bảng số kỳ vọng đo trên dữ liệu thật** để đối chiếu từng bước.
 
 <details markdown="1">
 <summary>Mục lục</summary>
@@ -114,11 +119,40 @@ Trước khi seed, khách phải có **Loyalty Program** thì mới tính đư�
 
 ### 3.1. Tạo Loyalty Program
 
-Mỗi Company 1 **Loyalty Program** (doctype chuẩn ERPNext). Trong đó set:
-- `Collection Rules`: mỗi hạng (tier) 1 dòng — `min_spent` (ngưỡng lên hạng),
-  `collection_factor` (**bao nhiêu VND = 1 điểm**), tên tier.
-- `expiry_duration` (số ngày điểm còn hiệu lực). Để trống → mặc định 10 năm.
-- `from_date` (để trống `to_date` cho chương trình đang chạy).
+Mỗi Company 1 **Loyalty Program** (doctype chuẩn ERPNext) — mở tại `/app/loyalty-program`.
+
+![Form Loyalty Program](images/loyalty/loyalty-program-form.png)
+
+Các ô cần set:
+
+| Ô | Ý nghĩa | Lưu ý |
+|---|---|---|
+| **From Date** | hoá đơn **trước ngày này bị bỏ qua** khi seed | ⚠️ ô nguy hiểm nhất — xem cảnh báo dưới |
+| **To Date** | ngày kết thúc | để trống nếu chương trình đang chạy |
+| **Expiry Duration** | số ngày điểm còn hiệu lực | để trống → mặc định 10 năm |
+| **Conversion Factor** | 1 điểm = bao nhiêu VND khi **đổi quà** | để `0` = chỉ tích, chưa cho đổi |
+| **Collection Rules** | bảng hạng | xem dưới |
+
+Bảng **Collection Rules** — mỗi hạng 1 dòng:
+
+![Bảng Collection Rules](images/loyalty/loyalty-program-rules.png)
+
+- `Tier Name` — tên hạng.
+- `Minimum Total Spent` — ngưỡng tiền tích luỹ để vào hạng này.
+- `Collection Factor` — **bao nhiêu VND = 1 điểm**. Ví dụ `1.000` nghĩa là mua 1.000đ được
+  1 điểm, tức hoá đơn 47,9 triệu → 47.900 điểm.
+
+> ⛔ **From Date quyết định seed được bao nhiêu.** Đây là chỗ hay sai nhất. Ví dụ thật đo
+> trên dữ liệu Cobe: cùng 18.431 hoá đơn, cùng đã gán Program cho khách —
+>
+> | From Date | Bút toán tạo được | Tổng điểm |
+> |---|---|---|
+> | `2026-06-01` | 3.611 | 26,2 triệu |
+> | `2023-01-01` | **17.526** | **160,4 triệu** |
+>
+> Chênh nhau **14.658 hoá đơn** mà hệ thống **không báo lỗi gì cả** — chỉ đếm vào ô
+> `skipped_invoice_before_program_from_date` ở kết quả Dry-run. Nên **luôn Dry-run và đọc
+> ô đó** trước khi Apply.
 
 > **Muốn đổi tỉ lệ sau này:** ĐỪNG sửa Program đang chạy. Hãy set `to_date` cho cái cũ
 > rồi tạo Program mới `from_date` = ngày kế. Điểm đã cộng không bao giờ bị tính lại.
@@ -131,12 +165,21 @@ hàng loạt.
 ![Loyalty Assignment Tool](images/loyalty/assignment-tool.png)
 
 Cách dùng:
-1. **Target Program**: chọn Loyalty Program muốn gán.
-2. **Filters**: lọc khách theo `Customer Group`, `Territory`, `Default Company`… Ô
-   **"Chỉ Customer chưa có Program"** (mặc định ✔) an toàn cho lần gán đầu.
-3. Danh sách khách khớp hiện bên phải. Bấm **Select All on Page** / **Select All
-   Matching** để chọn, hoặc tick từng khách.
+1. **Target Program**: chọn Loyalty Program muốn gán. **Chọn xong danh sách mới hiện ra.**
+2. **Filters**: lọc khách theo `Customer Group`, `Territory`, `Customer Type`,
+   `Sales Partner`, `Industry`. Ô **"Chỉ Customer chưa có Program"** (mặc định ✔) an toàn
+   cho lần gán đầu.
+3. Danh sách khách khớp hiện bên phải, kèm **số khớp tổng** ở góc phải:
+
+   ![Assignment Tool sau khi chọn Program](images/loyalty/assignment-tool-results.png)
+
+   Con số **"Khớp: 24931"** là tổng khách thoả bộ lọc (không phải chỉ trang này). Bấm
+   **Select All on Page** (chọn trang hiện tại) / **Select All Matching** (chọn **toàn
+   bộ** số khớp), hoặc tick từng khách.
 4. Bấm **Assign to Selected** → xác nhận → hiện bảng kết quả (đã gán / bỏ qua…).
+
+> 💡 **Gán theo lô 500** cho nhẹ. Với ~25.000 khách thì lặp lại thao tác này khoảng 50
+> lượt — hoặc dùng **Select All Matching** một phát nếu máy chủ đang rảnh.
 
 > Khách **không có** Loyalty Program sẽ bị **bỏ qua** khi seed (không báo lỗi). Nếu sau
 > seed thấy "sao khách này không có điểm?", 90% là do chưa gán Program.
@@ -144,8 +187,20 @@ Cách dùng:
 ### 3.3. Cấu hình referral (nếu seed referral)
 
 Quay lại **COBE Loyalty Settings** ([ảnh §2.1](#21-tắt-tích-điểm-tự-động-award)), ở bảng
-**Companies**: tick `Enabled`, điền `Referral Conversion Factor` (> 0). Đây là điều kiện
-để **Referral Backfill** ([§5.3](#53-referral-backfill--thưởng-người-giới-thiệu)) chạy.
+**Companies**. Lưới chỉ hiện vài cột — phải **bấm bút chì ✏️ ở cuối dòng** mới thấy đủ ô:
+
+![Dòng company mở rộng](images/loyalty/settings-company-expanded.png)
+
+| Ô | Ý nghĩa |
+|---|---|
+| **Enabled** | ⚠️ **bắt buộc tick**, không tick thì Referral Backfill bỏ qua sạch |
+| **Referral Conversion Factor** | bao nhiêu VND đơn đầu của người được giới thiệu = 1 điểm thưởng. Phải **> 0** |
+| **Referral Max Points** | trần điểm mỗi lượt giới thiệu. `0` = không giới hạn |
+| **Referral Minimum Invoice Amount** | đơn phải đạt mức này mới thưởng. `0` = không chặn |
+
+> 💡 **Hệ số giới thiệu nên đặt lớn hơn hệ số mua hàng.** Nếu để bằng nhau (cùng 1.000)
+> thì người giới thiệu nhận **đúng bằng** người mua — tức phát điểm gấp đôi trên cùng một
+> đơn. Đặt `10.000` nghĩa là người giới thiệu hưởng **10%** so với người mua.
 
 ### 3.4. Kiểm tra kết nối Odoo (nếu seed referral)
 
@@ -199,25 +254,60 @@ Trên trang Loyalty Migration, chọn **Action = Lead Source Fix**, rồi chạy
 
 Quét **mọi Sales Invoice đã submit** (không phải đơn trả hàng), tạo điểm cho khách.
 
-1. **Action = SI Backfill · Mode = Dry-run** → Enqueue Run. Mở dòng kết quả ở Recent Runs,
-   đọc:
-   - `would_create_entries` — số bản ghi điểm sẽ tạo.
-   - `would_total_points` — tổng điểm.
-   - `top_10_customers_by_points` — top khách (soi xem có bất thường không).
-   - `skipped_no_loyalty_program` — số hoá đơn bị bỏ vì khách chưa có Program (nếu lớn →
-     quay lại [§3.2](#32-gán-program-cho-khách--loyalty-assignment-tool) gán thêm).
-2. Số hợp lý → đổi **Mode = Apply** → Enqueue Run. Mỗi hoá đơn được tạo 1 bản ghi điểm có
+1. **Action = SI Backfill · Mode = Dry-run** → Enqueue Run. Chạy hết ~18.400 hoá đơn mất
+   khoảng **30 giây** — cứ chạy thoải mái trong giờ hành chính, nó chỉ đọc.
+
+2. Mở dòng kết quả ở Recent Runs. Đầu form là thông tin lần chạy — `Status` phải
+   **Completed**, `Processed` phải bằng `Total`:
+
+   ![Bản ghi COBE Loyalty Migration Run](images/loyalty/migration-run-detail.png)
+
+   Kéo tiếp xuống ô **Result Summary**:
+
+   ![Kết quả Dry-run SI Backfill](images/loyalty/migration-run-summary.png)
+
+   Đọc theo thứ tự này:
+
+   | Ô | Nghĩa | Nếu số lớn thì làm gì |
+   |---|---|---|
+   | `would_create_entries` | số bản ghi điểm sẽ tạo | — |
+   | `would_total_points` | tổng điểm sẽ phát | soi xem có vượt dự kiến không |
+   | `skipped_no_loyalty_program` | khách **chưa được gán** Program | quay lại [§3.2](#32-gán-program-cho-khách--loyalty-assignment-tool) gán thêm |
+   | `skipped_invoice_before_program_from_date` | hoá đơn **cũ hơn** ngày `From Date` của Program | lùi `From Date` ([§3.1](#31-tạo-loyalty-program)) nếu muốn phủ hết |
+   | `skipped_invoice_after_program_to_date` | hoá đơn mới hơn ngày `To Date` | xoá/nới `To Date` |
+   | `skipped_amount_too_small_for_one_point` | hoá đơn quá nhỏ, chia ra chưa nổi 1 điểm | bình thường, bỏ qua |
+   | `skipped_already_has_entry` | đã seed rồi | bình thường khi chạy lại |
+   | `reconciles` | phải luôn là `true` | `false` = báo cáo sai, **dừng lại** |
+
+   > 💡 **Hai ô dễ nhầm nhất** là `skipped_no_loyalty_program` và
+   > `skipped_invoice_before_program_from_date`. Cái đầu = *chưa gán khách*, cái sau =
+   > *sai khoảng ngày*. Hai nguyên nhân khác hẳn nhau, cách sửa cũng khác. Trước đây
+   > hệ thống gộp chung 1 nhãn nên rất dễ đi sửa nhầm chỗ.
+
+3. Số hợp lý → đổi **Mode = Apply** → Enqueue Run. Mỗi hoá đơn được tạo 1 bản ghi điểm có
    đánh dấu `[MIGRATED:SI:...]`.
-3. Muốn làm lại từ đầu → **Mode = Reset** (chỉ xoá đúng các bản ghi do backfill tạo).
+4. Muốn làm lại từ đầu → **Mode = Reset** (chỉ xoá đúng các bản ghi do backfill tạo).
 
 ### 5.3. Referral Backfill — thưởng người giới thiệu *(chỉ khi seed referral)*
 
 Với mỗi khách được giới thiệu (đã có đơn hoàn tất), thưởng điểm cho người giới thiệu.
 
 1. **Action = Referral Backfill · Mode = Dry-run** → xem `would_create_adjustments`,
-   `top_10_referrers`.
+   `would_total_points`, `top_10_referrers`. Chạy mất ~30 giây.
+
+   Các ô lý do bỏ qua:
+
+   | Ô | Nghĩa | Cách sửa |
+   |---|---|---|
+   | `skipped_no_referral_config` | dòng company trong COBE Loyalty Settings **đang tắt** | tick `Enabled` cho dòng company ([§3.3](#33-cấu-hình-referral-nếu-seed-referral)) |
+   | `skipped_no_loyalty_program_for_referrer` | **người giới thiệu** chưa được gán Program | gán thêm bằng Assignment Tool |
+   | `skipped_below_min_invoice` | đơn nhỏ hơn `Referral Minimum Invoice Amount` | chỉnh ngưỡng nếu muốn nới |
+   | `skipped_amount_too_small_for_one_point` | đơn chia cho hệ số ra chưa nổi 1 điểm | bình thường |
+   | `skipped_already_migrated` | đã seed rồi | bình thường khi chạy lại |
+
 2. **Mode = Apply** → tạo phiếu **COBE Loyalty Adjustment** (loại *Referral Migration*)
-   cho từng người giới thiệu.
+   cho từng người giới thiệu. Apply cũng trả về **đúng bộ ô lý do như Dry-run** — nếu ra
+   `adjustments_created: 0` thì nhìn ngay ô nào đang giữ toàn bộ số lượng để biết vì sao.
 3. **Mode = Reset** → huỷ các phiếu đó (tự sinh bút toán bù, điểm rollback sạch).
 
 ### 5.4. VIP Seed — nhập tay từ CSV *(tuỳ chọn)*
@@ -277,6 +367,41 @@ company cần chạy cũng `Enabled` → **Save**. Từ giờ đơn mới hoàn 
 Khi bên Zalo/đối tác đã lấy xong **số dư điểm ban đầu** (bằng snapshot/API riêng), mới
 vào **COBE Loyalty Sync Settings** → TICK `Sync Enabled` + `Emit LPE Events` → cấu hình
 bảng **Endpoints** (mỗi company: `url_increase`, `url_decrease` + token) → **Save**.
+
+> ⚠️ **Cần CẢ HAI công tắc.** `Sync Enabled` tắt thì dù `Emit LPE Events` có tick, hệ
+> thống vẫn **không sinh event nào**. Đây là cách tắt an toàn khi seed.
+
+#### 3 việc phải xong TRƯỚC khi bật
+
+**1. Endpoint bên kia phải đã publish.** Bấm nút gửi thử; nếu nhận về
+
+```
+HTTP 400  {"status":0,"message":"Workflow chưa ở trạng thái published."}
+```
+
+thì workflow bên đối tác **chưa bật**. Bật sync lúc này = **100% event fail**, mỗi event
+còn retry tới 10 lần theo lịch giãn dần (1 phút → 5 phút → 30 phút → 2h → 12h → 24h).
+
+**2. Chọn field cho payload.** Mở dòng endpoint (bút chì ✏️) → kéo xuống nhóm
+**Optional Payload Fields**:
+
+![Nhóm ô Optional Payload Fields](images/loyalty/sync-endpoint-includes.png)
+
+Mặc định **tất cả đều chưa tick**, nghĩa là bên thứ 3 chỉ nhận được:
+
+```
+event_type, occurred_at, customer.phone, company,
+delta_points, current_balance, current_rank
+```
+
+Tức **định danh khách duy nhất là số điện thoại**. Trên dữ liệu Cobe hiện có
+**4.141/24.933 khách (16,6%) không có số điện thoại** → event của họ bay đi với
+`phone: null`, bên kia **không khớp được vào ai**. Nên **tick `Include Customer ID`** để
+có thêm mã khách làm mốc đối chiếu.
+
+**3. Biết trước `current_rank` sẽ là rỗng.** Chương trình đang là **Single Tier** (1 hạng
+duy nhất) nên ô hạng luôn trả `null`. Đúng thiết kế — chỉ cần báo bên đối tác đừng chờ
+giá trị đó. Khi nào thêm hạng thì ô này tự có dữ liệu.
 
 Từ đây **chỉ các thay đổi mới** mới được đẩy đi; điểm lịch sử đã seed **không** bị đẩy lại
 — đúng như thiết kế.
@@ -408,18 +533,37 @@ Vào **Loyalty Assignment Tool** → `Target Program` = *Chương Trình Tích �
 Trang **Loyalty Migration** (`/app/loyalty-migration`). Không ghi gì, chỉ đọc.
 
 - [ ] **Lead Source Fix** · Mode **Analyze** → xem tỉ lệ khớp *(cần Odoo Connect sống)*
-- [ ] **SI Backfill** · Mode **Dry-run** → ghi lại: `would_create_entries`,
-      `would_total_points`, `skipped_no_loyalty_program`
-- [ ] **Referral Backfill** · Mode **Dry-run** → ghi lại: `would_create_adjustments`
+- [ ] **SI Backfill** · Mode **Dry-run** *(~30 giây)*
+- [ ] **Referral Backfill** · Mode **Dry-run** *(~30 giây)*
 
-**Số kỳ vọng** (đo trên dữ liệu ngày 22/07/2026):
+**Số kỳ vọng** — đây là kết quả **chạy thật** trên bản sao dữ liệu prod ngày 22/07/2026,
+với đúng bộ tham số ở Bước 1. Số của mày phải khớp gần bằng:
 
-| Chỉ số | Kỳ vọng |
-|---|---|
-| Hoá đơn được quét | ~18.431 |
-| `skipped_no_loyalty_program` | **≈ 0** — nếu còn lớn ⇒ bước 2 chưa xong |
-| Tổng điểm mua hàng | ~160 triệu |
-| Ứng viên referral | ~490 |
+**SI Backfill**
+
+| Ô | Kỳ vọng | Nếu lệch |
+|---|---|---|
+| `inspected` | **18.431** | — |
+| `would_create_entries` | **17.526** | — |
+| `would_total_points` | **~160,4 triệu** | — |
+| `skipped_no_loyalty_program` | **0** | còn lớn ⇒ **Bước 2 chưa xong** |
+| `skipped_invoice_before_program_from_date` | **0** | còn lớn ⇒ **`From Date` chưa lùi** (Bước 1 dòng 1) |
+| `skipped_amount_too_small_for_one_point` | ~905 | bình thường, hoá đơn quá nhỏ |
+| `reconciles` | **true** | `false` ⇒ dừng lại |
+
+**Referral Backfill**
+
+| Ô | Kỳ vọng | Nếu lệch |
+|---|---|---|
+| `customers_inspected` | **504** | — |
+| `would_create_adjustments` | **444** | — |
+| `would_total_points` | **~1,78 triệu** | — |
+| `skipped_no_referral_config` | **0** | còn 504 ⇒ **dòng company chưa tick Enabled** |
+| `skipped_below_min_invoice` | ~49 | đúng — đây là các đơn đầu dưới 1 triệu |
+| `skipped_no_loyalty_program_for_referrer` | ~11 | người giới thiệu bị disabled, bỏ qua được |
+
+> 💡 Ngưỡng **1.000.000** chặn 49 lượt giới thiệu nhưng chỉ làm giảm ~2.000 điểm
+> (0,1%) — vì các đơn bị chặn đều rất nhỏ. Muốn thưởng cả các đơn nhỏ thì để ô đó = `0`.
 
 > Lệch nhiều so với bảng trên ⇒ dừng lại, soi trước khi Apply.
 
@@ -443,9 +587,18 @@ Từ đây đơn hàng mới hoàn tất sẽ tự cộng điểm.
 ## Bước 6 — Bật đồng bộ 3rd party *(làm sau, khi bên Zalo sẵn sàng)*
 
 - [ ] Bên Zalo đã lấy xong **số dư điểm ban đầu**
+- [ ] 🔴 **Endpoint bên đối tác đã publish** — kiểm chứng bằng 1 event thử. Ngày 22/07/2026
+      endpoint gads.vn còn trả `HTTP 400 — "Workflow chưa ở trạng thái published."`, tức
+      **chưa sẵn sàng**. Bật lúc này thì mọi event đều fail rồi retry tới 24h/lần.
+- [ ] Bên Zalo đã lấy xong **số dư điểm ban đầu**
+- [ ] Bảng **Endpoints** → mở dòng company (bút chì ✏️) → tick **`Include Customer ID`**
+      *(nếu không, bên kia chỉ có SĐT để nhận diện — mà 16,6% khách không có SĐT)*
+- [ ] Báo đối tác: `current_rank` sẽ luôn **rỗng** khi chương trình còn Single Tier
 - [ ] **COBE Loyalty Sync Settings** → tick `Sync Enabled` + `Emit LPE Events`
 - [ ] Bảng **Endpoints** → dòng company `Enabled` ✔, đủ `url_increase` / `url_decrease` + token
-- [ ] Theo dõi list **COBE Loyalty Event**: trạng thái phải chuyển *Pending → Sent*
+- [ ] Theo dõi list **COBE Loyalty Event**: trạng thái phải chuyển *Pending → Sent*.
+      Nếu thấy *Failed* kèm `error_log` = `HTTP 4xx` ⇒ **tắt `Sync Enabled` lại ngay**,
+      xử lý phía đối tác xong mới bật lại (event vẫn nằm đó, không mất).
 
 > Điểm lịch sử đã seed **không** bị đẩy sang bên thứ 3 (seed lúc sync đang tắt) — đúng thiết kế.
 
