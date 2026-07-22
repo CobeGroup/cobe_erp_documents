@@ -17,7 +17,7 @@ nav_order: 6.5
 > xuất Excel gửi kế toán.
 
 > 🟢 **Dùng bản Cobe: `Monthly Attendance Sheet Cobe`** (KHÔNG phải bản gốc HRMS "Monthly
-> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Company Note** (công ty trực thuộc), **Tổng giờ thực** + **Tổng giờ chuẩn**, **mỗi ngày là 1
+> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Company Note** (công ty trực thuộc), **Tổng giờ chuẩn** + **Tổng giờ thực**, **mỗi ngày là 1
 > ô ghép chia đôi** (nửa trái ký hiệu, nửa phải **số giờ**; xuất Excel tách 2 cột cộng được) + **ký
 > hiệu tiếng Việt theo loại phép** — xem [mục 0](#0-bản-cobe--khác-gì-bản-gốc).
 
@@ -36,7 +36,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 
 | | **Monthly Attendance Sheet Cobe** *(khuyên dùng)* | Monthly Attendance Sheet *(gốc HRMS)* |
 |---|---|---|
-| Cột đầu | Employee · **Mã NV** · Tên · **Company Note** · Shift · **Tổng giờ thực** · **Tổng giờ chuẩn** | Employee · Tên · Shift |
+| Cột đầu | Employee · **Mã NV** · Tên · **Company Note** · Shift · **Tổng giờ chuẩn** · **Tổng giờ thực** | Employee · Tên · Shift |
 | Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`) **chia đôi**: nửa trái **mã** (`P`/`HD`/`WFH`/`L`…/`-`), nửa phải **số giờ công thực tế** (`8,2`) | 1 ô: chỉ ký hiệu `P`, `HD` |
 | Ký hiệu | Công `P` · nửa `HD` · WFH `WFH` · nghỉ `L`/`L/2`/`NB`/`KL`/`CĐ`/`BH`/`H` · `WO` · `-` không dữ liệu | Gộp chung `L` (On Leave) |
 | Lọc Company | **Bỏ trống = gộp MỌI công ty** | Bắt buộc chọn |
@@ -55,15 +55,15 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 > theo cột giờ từng ngày được — trên màn gộp lại 1 ô cho gọn, nhưng dữ liệu vẫn tách.
 >
 > 💡 **Hai cột tổng giờ** — đừng nhầm:
-> - **Tổng giờ thực** = cộng **số giờ bấm máy** thực tế mọi ngày trong kỳ (đúng những gì check-in/out ghi lại).
 > - **Tổng giờ chuẩn** = cộng theo **công chuẩn của CA**: mỗi ngày công đủ (P / WFH) = **giờ chuẩn của ca đó**, nửa ngày (HD) = **½ giờ chuẩn ca**; nghỉ/vắng không cộng. Giờ chuẩn ca = *(giờ ra − giờ vào) − nghỉ trưa*, suy động từ cấu hình Shift Type (Office 8h, AKW 6h, Migunlife/kỹ thuật 9h, lắp đặt 3h…). Đổi giờ ca thì cột này **tự đúng theo**.
+> - **Tổng giờ thực** = cộng **số giờ bấm máy** thực tế mọi ngày trong kỳ (đúng những gì check-in/out ghi lại).
 >
 > Dùng **Tổng giờ chuẩn** để tính công/lương theo trạng thái (không phụ thuộc NV bấm sớm/muộn); dùng **Tổng giờ thực** để soi giờ hiện diện thật.
 >
 > 💡 **Company Note** (công ty trực thuộc) chỉ có với NV đã **gộp công ty** (lưu công ty gốc); NV khác để trống là bình thường.
 
 > ⚠️ Mở đúng tên **`Monthly Attendance Sheet Cobe`**. Bản gốc "Monthly Attendance Sheet" **không**
-> có Mã NV / Company Note / Tổng giờ thực + chuẩn, **bộ lọc & ký hiệu cũng khác** (bản gốc dùng `P`/`A`/`HD`,
+> có Mã NV / Company Note / Tổng giờ chuẩn + thực, **bộ lọc & ký hiệu cũng khác** (bản gốc dùng `P`/`A`/`HD`,
 > có *Group By*, bắt buộc chọn Company, phải Generate). Tài liệu này mô tả **bản Cobe**; chỉ phần
 > **presence-based** (mục 5) và **xuất Excel** là chung cho cả hai.
 
@@ -130,7 +130,7 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 
 > 🔢 Muốn **cộng nhanh số ngày từng loại** (Total Present / Leaves / Absent / Holidays + tách theo
 > từng loại phép: Phép năm · **Nghỉ bù** · Không lương…) thì bật **Summarized View** ([mục 2](#2-bộ-lọc-thanh-trên)).
-> Lưới chi tiết này có 2 cột tổng: **Tổng giờ thực** (giờ bấm máy) và **Tổng giờ chuẩn** (theo công chuẩn của ca), không có cột đếm theo loại.
+> Lưới chi tiết này có 2 cột tổng: **Tổng giờ chuẩn** (theo công chuẩn của ca) và **Tổng giờ thực** (giờ bấm máy), không có cột đếm theo loại.
 
 ---
 
