@@ -319,7 +319,7 @@ curl -s -X POST "https://<domain>/api/method/delivery_partner.api.webhook.handle
 | *"chưa đặt điểm gửi mặc định"* | Vào DP Pickup Point tick **Is Default** cho 1 kho |
 | *"chưa cấu hình ORDER_SERVICE"* | Thêm Extra Param `ORDER_SERVICE` |
 | *"Mã dịch vụ X không khả dụng… Mã hợp lệ: …"* | Đổi `ORDER_SERVICE` sang 1 mã trong danh sách gợi ý |
-| *"Không xác định được mã vùng người nhận"* | Address thiếu/không khớp Tỉnh-Huyện → chọn đúng Tỉnh/Huyện rồi Lưu (tự dò lại); địa chỉ sáp nhập (Quận 2/9) → "Dò mã vùng VTP" + nhập ID tay. **KHÔNG cần re-sync danh mục** — chỉ sync khi danh mục rỗng (có message riêng) |
+| *"Không xác định được mã vùng người nhận"* | Address thiếu/không khớp Tỉnh-Huyện → chọn đúng Tỉnh/Huyện/Phường rồi Lưu (tự dò lại). Quận sáp nhập (Quận 2/9 → Thủ Đức) resolver tự suy quận mới từ phường (`_district_via_ward`: phường khớp duy nhất trong tỉnh, loại quận-giả "Bỏ qua - địa chỉ 2 cấp" id ≥ 100000000; phường trùng tên nhiều quận thì không đoán). Chỉ còn trượt khi phường mơ hồ → "Dò mã vùng VTP" + nhập ID tay. **KHÔNG cần re-sync danh mục** — chỉ sync khi danh mục rỗng (có message riêng) |
 | *"đơn CÓ THỂ đã được tạo…"* | Lỗi mạng/timeout — **kiểm cổng VTP** xem đơn đã tạo chưa TRƯỚC khi đẩy lại |
 | Không thấy nút | Vận đơn phải **đã Submit** và **chưa** có External Shipment ID |
 | *"Price does not apply to this itinerary"* | Thiếu `ORDER_NUMBER` trong payload, hoặc sai `ORDER_PAYMENT` / thiếu `LIST_ITEM` |

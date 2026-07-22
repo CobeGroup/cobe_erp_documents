@@ -148,15 +148,18 @@ Xong bấm **Submit**.
 ngay khi lưu địa chỉ** (và tự dò lại lần nữa lúc đẩy đơn nếu còn thiếu). Địa chỉ mới của khách
 mới cũng vậy — không cần "đồng bộ" gì thêm.
 
-Chỉ khi đẩy đơn báo *"Không xác định được mã vùng"* (thường là địa chỉ thiếu Tỉnh/Huyện, hoặc địa
-chỉ cũ đã sáp nhập kiểu Quận 2/Quận 9): mở **Address** người nhận → chọn đúng **Tỉnh/Thành +
-Quận/Huyện** → Lưu (hệ thống tự dò lại). Vẫn chưa ra thì bấm nút **"Dò mã vùng VTP"** (nhóm *VTP*
-ở góc trên) để xem cấp nào trượt rồi điền tay.
+Địa chỉ cũ đã sáp nhập (Quận 2/Quận 9 → TP Thủ Đức...) hệ thống cũng **tự xử lý**: tên quận cũ
+không còn trong danh mục VTP thì tự suy quận mới từ **phường** (phường cũ vẫn nằm dưới quận mới).
+
+Chỉ khi đẩy đơn báo *"Không xác định được mã vùng"* (địa chỉ thiếu Tỉnh/Huyện, hoặc tên phường
+trùng ở nhiều quận kiểu "Phường 1" nên không dám đoán): mở **Address** người nhận → chọn đúng
+**Tỉnh/Thành + Quận/Huyện + Phường/Xã** → Lưu (hệ thống tự dò lại). Vẫn chưa ra thì bấm nút
+**"Dò mã vùng VTP"** (nhóm *VTP* ở góc trên) để xem cấp nào trượt rồi điền tay.
 
 ![Address — nút Dò mã vùng VTP](images/vtp/06-address-toolbar.png)
 
-Hệ thống tự điền 3 ô mã vùng. Ô nào báo "chưa khớp" (thường là địa chỉ cũ đã sáp nhập) thì
-**nhập tay** rồi Lưu.
+Hệ thống tự điền 3 ô mã vùng. Ô nào báo "chưa khớp" (thường là tên phường trùng ở nhiều quận)
+thì **nhập tay** rồi Lưu.
 
 ![Address — 3 ô mã vùng Viettel Post](images/vtp/07-address-vtp-fields.png)
 
@@ -219,7 +222,7 @@ tiền thu hộ.
 | "Chưa đặt điểm gửi mặc định" | Làm bước 3.2 — tick Is Default cho một kho |
 | "Chưa cấu hình dịch vụ" | Làm bước 4 — thêm `ORDER_SERVICE` |
 | "Mã dịch vụ không khả dụng" | Đổi sang một mã trong danh sách hệ thống gợi ý |
-| "Không xác định được mã vùng" | Mở Address người nhận → chọn đúng **Tỉnh/Thành + Quận/Huyện** → Lưu (hệ thống tự dò). Địa chỉ sáp nhập (Quận 2/9...) → "Dò mã vùng VTP" + điền tay ô trống. **Không cần** đồng bộ danh mục lại — chỉ khi hệ thống báo rõ *"Chưa có danh mục vùng"* mới làm bước 2 |
+| "Không xác định được mã vùng" | Mở Address người nhận → chọn đúng **Tỉnh/Thành + Quận/Huyện + Phường/Xã** → Lưu (hệ thống tự dò; quận sáp nhập kiểu Quận 2/9 tự suy từ phường). Vẫn trượt (phường trùng tên nhiều quận) → "Dò mã vùng VTP" + điền tay ô trống. **Không cần** đồng bộ danh mục lại — chỉ khi hệ thống báo rõ *"Chưa có danh mục vùng"* mới làm bước 2 |
 | Đơn không tự cập nhật trạng thái | Kiểm cấu hình webhook (bước 5) |
 | Giao cho **Company** báo *"Thiếu Tên hoặc SĐT người nhận"* | Mở **Address** giao hàng → điền ô **Phone** → Lưu → đẩy đơn lại. (Giao cho Company không có Contact thì hệ thống lấy SĐT từ Address) |
 | VTP hiện **kích thước 10×10×10** / **số kiện sai** | Kiểm tab **Parcels**: kích thước dài×rộng×cao và cột **Count** ở đây là thứ gửi sang VTP. Số VTP hiển thị = **số kiện**, không phải số lượng sản phẩm |
