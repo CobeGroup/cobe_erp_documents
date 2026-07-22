@@ -223,7 +223,8 @@ Trường hợp dùng: phone hỏng, mất internet, nhân viên quên.
 
 ### 5.1. Báo cáo chấm công định kỳ
 
-Dùng built-in **Monthly Attendance Sheet** của HRMS — đã hoạt động vì ta extend `Employee Checkin` chứ không thay thế.
+Dùng **COBE HR Attendance Sheet** (mở rộng từ báo cáo built-in của HRMS) — hoạt động được vì ta
+extend `Employee Checkin` chứ không thay thế. Xem [hướng dẫn](Desk-HR-BangCongThang.html).
 
 ### 5.2. Audit selfie khi nghi cheat (chỉ khi `enable_selfie_capture` ON)
 

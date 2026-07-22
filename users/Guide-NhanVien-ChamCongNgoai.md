@@ -141,7 +141,7 @@ flowchart TB
 
 > ✅ **Đã duyệt = xong.** Hệ thống **tự tạo bảng công "Có mặt"** cho đúng ca làm của bạn — bạn **không
 > cần** làm thêm gì. Ngày này sẽ hiện **P** (hoặc **WFH**) trên báo cáo
-> [Bảng công tháng (Monthly Attendance Sheet)](Desk-HR-BangCongThang.html).
+> [Bảng công tháng (COBE HR Attendance Sheet)](Desk-HR-BangCongThang.html).
 
 > ❌ **Bị từ chối thì sao?** Ngày đó **không được tính công** — trên bảng công ô ngày để **trống**
 > (coi như vắng). Nếu thực tế bạn **có đi làm** mà bị từ chối nhầm, báo **quản lý / HR** — HR có thể
@@ -186,5 +186,5 @@ Quản lý nhận **thông báo đẩy** + thấy đơn trong tab **Cần duyệ
 - 👤 [Cài app & Chấm công](Guide-NhanVien-ChamCong.html) — chấm công vào/ra hằng ngày
 - 👤 [Xin nghỉ phép](Guide-NhanVien-NghiPhep.html) · 🗺️ [Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html)
 - 👔 [Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html)
-- 👩‍💼 HR: [Bảng công tháng (Monthly Attendance Sheet)](Desk-HR-BangCongThang.html) · [Theo dõi & sửa chấm công](Desk-HR-ChamCong.html)
+- 👩‍💼 HR: [Bảng công tháng (COBE HR Attendance Sheet)](Desk-HR-BangCongThang.html) · [Theo dõi & sửa chấm công](Desk-HR-ChamCong.html)
 - 🔧 Kỹ thuật: [Attendance Request](HR-Attendance-Request.html) · [HR Policy & Whitelist](HR-Policy.html)

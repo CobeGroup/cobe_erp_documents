@@ -1,4 +1,4 @@
-/* shoot_desk_mas_cobe.js — chụp report "Monthly Attendance Sheet Cobe" (Desk thật)
+/* shoot_desk_mas_cobe.js — chụp report "COBE HR Attendance Sheet" (Desk thật)
    cho Desk-HR-BangCongThang.md: lưới có Mã NV · Công ty trực thuộc · Tổng giờ · giờ trong ô (P 8.3).
    Auth bằng SID cookie (khỏi mật khẩu). Che PII: blur cột "Employee Name".
    BẪY desk-shot: fullPage→trắng (chụp viewport); mỗi ảnh browser MỚI; KHÔNG Escape; blur (KHÔNG remove).
@@ -15,7 +15,7 @@ const SID = process.env.SID || '';
 if (!SID) { console.error('Thiếu SID. Lấy: bench --site cobe.cc browse --user Administrator'); process.exit(1); }
 fs.mkdirSync(OUT, { recursive: true });
 
-const REPORT = 'Monthly Attendance Sheet Cobe';
+const REPORT = 'COBE HR Attendance Sheet';
 // PII: blur cột "Employee Name" (tên thật). Giữ Mã NV/Company Note/Tổng giờ/giờ (feature).
 const BLUR = `() => {
   const hdr = [...document.querySelectorAll('.dt-header .dt-cell')];

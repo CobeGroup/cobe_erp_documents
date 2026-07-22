@@ -72,7 +72,7 @@ Mở `/app/leave-application` — cột **Status** tô màu theo trạng thái w
 **To Date ≥ hôm nay**, Status = **Submitted** → ra đúng danh sách người đang nghỉ (đổi mốc ngày để
 xem tuần/tháng).
 
-**Cách 2 — nhìn cả tháng:** [Bảng công tháng (Monthly Attendance Sheet)](Desk-HR-BangCongThang.html)
+**Cách 2 — nhìn cả tháng:** [Bảng công tháng (COBE HR Attendance Sheet)](Desk-HR-BangCongThang.html)
 — ngày nghỉ phép hiện mã **L** (On Leave), nửa ngày hiện **HD**; quét dọc 1 cột là biết cả công ty
 hôm đó ai nghỉ.
 

@@ -27,7 +27,7 @@ nav_order: 4
 ## 2. Xem bảng công (Attendance)
 
 - `/app/attendance` — trạng thái từng ngày: **Present / Half Day / Work From Home / On Leave / Absent**.
-- Báo cáo tổng: **[Monthly Attendance Sheet](Desk-HR-BangCongThang.html)** (Report) để xem cả tháng/phòng.
+- Báo cáo tổng: **[COBE HR Attendance Sheet](Desk-HR-BangCongThang.html)** (Report) để xem cả tháng/phòng.
 - Attendance **Present/Half tự sinh** từ check-in qua **Process Auto Attendance** (CobeShiftType — không tự chấm Vắng).
 
 Lọc theo **Employee** (ô filter trên đầu list) để soi công 1 người — cột **Status** tô màu theo

@@ -203,7 +203,9 @@ mỗi NV có **Leave Policy Assignment**.
 
 ## 6. HR xem báo cáo tháng ở đâu
 
-Desk → **Monthly Attendance Sheet** (`/app/query-report/Monthly Attendance Sheet`).
+Desk → **COBE HR Attendance Sheet** (`/app/query-report/COBE HR Attendance Sheet`) — bản Cobe,
+có thêm Mã NV · Cty Trực Thuộc · 2 cột tổng giờ, và **chạy thẳng** không phải bấm Generate.
+Xem [hướng dẫn chi tiết](Desk-HR-BangCongThang.html).
 - Filter: **Month + Year + Company** → chạy.
 - Layout: **mỗi nhân viên 1 dòng**, **mỗi cột 1 ngày** trong tháng; ô là trạng thái viết tắt:
   `P` (Present) · `A` (Absent) · `HD/P`·`HD/A` (nửa ngày) · `WFH` · `L` (On Leave).
@@ -228,4 +230,4 @@ HR duyệt thiết bị → xong.
 **Mỗi ngày:** NV chấm công / xin nghỉ / chấm công bù → người duyệt xử lý trên app: nghỉ phép về
 **leave_approver** (bước 1) rồi HR submit (bước 2); chấm công bù về **shift_request_approver** (1 bước).
 
-**Cuối tháng:** Earned Leave tự +1 quỹ phép · HR xem Monthly Attendance Sheet.
+**Cuối tháng:** Earned Leave tự +1 quỹ phép · HR xem COBE HR Attendance Sheet.
