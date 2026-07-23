@@ -150,6 +150,18 @@ Cuối tháng tạo Salary Slip:
 
 Pre-requisite: Employee phải có `Default Shift` (Shift Type) assigned, và `Shift Type.Enable Auto Attendance = 1`. Nếu thiếu, log vẫn ghi nhưng Attendance không tạo tự động.
 
+**Guard chống tách nhóm IN/OUT** (`overrides/shift_type.py` — `CobeShiftType.get_employee_checkins`,
+thêm 23/07/2026): HRMS gom log theo `(employee, shift_start)` nhưng lọc đủ-điều-kiện theo
+`shift_actual_end` đóng dấu trên TỪNG log. Nếu cửa sổ ca (begin check-in / allow check-out) bị đổi
+**giữa ngày** — qua UI, `db.set_value` hay script — thì log IN sáng và OUT chiều cùng ngày mang stamp
+khác nhau → được xử lý ở 2 run khác nhau → run đầu tạo Attendance chỉ có IN (Half Day 0h), run sau
+đụng "already marked" → HRMS set `skip_auto_attendance=1` **vĩnh viễn** cho log OUT (sự cố
+22/07/2026, ~96 NV). Override giữ CẢ NHÓM lại khi còn bất kỳ log nào trong nhóm chưa đóng cửa sổ
+(`shift_actual_end >= last_sync_of_checkin`) — nhóm chỉ chờ tới run kế sau stamp muộn nhất, không kẹt
+vĩnh viễn; ngày quên chấm OUT xử lý ngay như HRMS gốc. Sửa data sai hàng loạt: Server Script
+`cobe_fix_attendance` (bản gốc ở `scripts/fix_attendance_serverscript.py`) — chạy ngoài giờ làm,
+`end` ≤ hôm qua.
+
 ### Tại sao feature flag không enforce default?
 
 - WFH chưa test giờ chính sách → để admin enable khi sẵn sàng

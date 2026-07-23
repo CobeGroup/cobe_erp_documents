@@ -58,8 +58,14 @@ Chuỗi ưu tiên: **Employee.leave_approver** (đặt riêng) → fallback **ng
    trong bảng đều duyệt được** (không phải chỉ dòng đầu).
 2. **Theo nhân viên:** Employee → field **Shift Request Approver**. Khác Leave: field này **cộng thêm**
    vào danh sách của phòng, không phải override.
-3. Cấp role **Attendance Request Approver** cho user đó (nếu chưa có role Leave Approver) để tab
-   **Cần duyệt** hiện trên app.
+3. Cấp role **Attendance Request Approver** cho user đó — bước này **BẮT BUỘC**, không bỏ được.
+   Role này cấp quyền duyệt (submit/huỷ) trên đơn; gán khe approver mà quên cấp role thì người duyệt
+   **vẫn thấy đơn nhưng bấm Duyệt là báo lỗi** *"does not have doctype access via role permission"*.
+   Có sẵn role **Leave Approver** cũng **không thay được** — Leave Approver chỉ làm tab **Cần duyệt**
+   hiện ra, không đủ quyền duyệt chấm công bù.
+
+> ⚠️ Khác với Leave Approver (HRMS tự cấp role khi gán khe), khe Shift Request Approver **không
+> tự cấp role** — phải nhớ làm tay bước 3. Quên bước này là lỗi phổ biến nhất khi thêm người duyệt mới.
 
 > 💡 Muốn **cùng một người** duyệt cả nghỉ phép lẫn chấm công bù: gán user đó vào **cả hai khe**.
 > Tách vai (vd nghỉ phép → trưởng phòng, chấm công bù → điều phối vận hành) thì mỗi khe một người.

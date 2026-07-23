@@ -46,7 +46,8 @@ phép về trưởng phòng, còn đơn chấm công bù/công tác về điều
 
 Mở **my-workspace → tab Cần duyệt**. Bạn chỉ thấy đơn của **nhân viên do mình duyệt chấm công**
 (được gán là Shift Request Approver của NV hoặc của phòng); đơn chấm công bù hiện loại
-"Chấm công bù / Công tác" kèm khoảng ngày + lý do:
+"Chấm công bù / Công tác" kèm tên + **Mã NV** (mã nhân viên chính; mã hệ thống HR-EMP hiện phụ
+bên cạnh trong màn chi tiết), khoảng ngày + lý do:
 
 <img src="images/guide/duyet/05-attendance.png" width="240" alt="Đơn chấm công bù trong tab Cần duyệt — nút Duyệt / Từ chối">
 
@@ -109,6 +110,7 @@ nào lỗi sẽ báo riêng, các phiếu còn lại vẫn được duyệt:
 | Bulk submit báo lỗi vài phiếu | Mở từng phiếu lỗi xem message (vd ngày đã có công, trùng đơn) — các phiếu khác vẫn duyệt bình thường |
 | Quản lý bộ phận không thấy đơn trên app | Kiểm tra đã gán **Shift Request Approver** chưa — field trên **Employee** (Approvers) hoặc bảng **Shift Request Approver** của **Department**. Lưu ý khe này **tách khỏi Leave Approver** (duyệt nghỉ phép) — gán duyệt phép thôi là **chưa đủ** |
 | Người duyệt không thấy tab **Cần duyệt** | Thiếu role **Attendance Request Approver** (hoặc Leave Approver nếu kiêm duyệt phép) — báo quản trị cấp role |
+| Bấm **Duyệt** báo *"does not have doctype access via role permission"* | Thấy được đơn nhưng thiếu quyền duyệt: user chưa có role **Attendance Request Approver**. Leave Approver chỉ đủ để **thấy** tab, không đủ để duyệt chấm công bù — báo quản trị cấp role (xem [Cấp phép](Desk-HR-CapPhep.html), mục B2 bước 3) |
 | Duyệt rồi mà NV chưa thấy "Có mặt" | Bảo NV kéo làm mới Bảng công; vẫn thiếu → xem đơn đã Submitted chưa |
 | Duyệt nhầm người / nhầm ngày | Desk → mở đơn → **Cancel** — công tự gỡ, không cần sửa tay |
 
