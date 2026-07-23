@@ -93,6 +93,8 @@ phải gõ tay; chọn lại mã đã có thì dùng dòng cũ, không sinh trù
    dịch vụ** → chọn dịch vụ muốn làm mặc định (bước này tự sinh dòng danh mục).
 2. Vào danh sách **DP Account Service** → mở dòng vừa sinh → tick **Is Default** → Save
    (mỗi tài khoản một dòng mặc định — tick dòng mới là dòng cũ tự bỏ tick).
+
+   ![DP Account Service — tick Is Default cho dịch vụ mặc định](images/vtp/11-account-service-default.png)
 3. Vào DP Partner Account → xoá dòng `ORDER_SERVICE` trong **Extra Parameters** (nguồn
    mặc định kiểu cũ — bước 3 làm SAU bước 2, không thì đơn bỏ trống dịch vụ sẽ báo lỗi).
 
@@ -151,7 +153,11 @@ Vào **DP Shipment → New** và điền theo các tab:
 
 **Nút "Xem cước theo dịch vụ" hoạt động thế nào** (menu **Actions**):
 
+![Ô Dịch vụ giao trên DP Shipment](images/vtp/09-shipment-service-field.png)
+
 1. Hệ thống hỏi Viettel Post đúng tuyến của đơn này → hiện danh sách **mã + tên + phí thật**.
+
+   ![Dialog Xem cước theo dịch vụ — mã, tên, phí thật của tuyến](images/vtp/10-service-fee-dialog.png)
 2. Chọn một dòng → bấm **"Chọn dịch vụ này"** → hệ thống **tự điền vào ô Dịch vụ giao và
    tự Lưu đơn luôn** — không phải bấm Save thêm (có thông báo xanh *"Đã chọn dịch vụ ..."*).
 3. Lựa chọn chỉ áp cho **đơn này**, không đổi mặc định của tài khoản, không ảnh hưởng đơn khác.
