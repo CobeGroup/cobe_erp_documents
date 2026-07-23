@@ -81,8 +81,10 @@ Hai cách:
 - **Thủ công**: vào **DP Shipment → New**, tự chọn ĐVVC, người nhận, hàng hoá. (Chi tiết thao tác form
   có ảnh: [Viettel Post — Cài đặt & sử dụng, Phần B](Delivery_Partner-Viettel_Post-Cai-Dat.html#phần-b--tạo-đơn-hàng-ngày).)
 
-Cần điền: **Partner** (ĐVVC) + **Partner Account**, **người nhận** (tab Delivery), **hàng hoá** + **Value of
-Goods**, **COD Amount** (nếu thu hộ), **kiện hàng** (tab Parcels), **người trả cước** (tab Charges).
+Cần điền: **Partner** (ĐVVC) + **Partner Account**, **Dịch vụ giao** (trống = mặc định của tài khoản;
+menu **Actions → "Xem cước theo dịch vụ"** hiện mã + phí thật của tuyến để chọn), **người nhận**
+(tab Delivery), **hàng hoá** + **Value of Goods**, **COD Amount** (nếu thu hộ), **kiện hàng**
+(tab Parcels), **người trả cước** (tab Charges).
 
 > ⚠️ 3 ô quyết định đơn bên ĐVVC đúng hay sai — nhập theo **thực tế đóng gói**, không phải theo số lượng bán:
 >
@@ -191,6 +193,7 @@ Khi trạng thái về **Delivered**, hệ thống tự sinh (nếu vận đơn 
 | Đơn bị **ĐVVC huỷ** mà hàng **đã lấy đi** — có nên Cancel? | ❌ **CHƯA** — chờ kho nhận lại hàng thật rồi mới Cancel, không thì sổ kho lệch. Xem [quy tắc Cancel](Delivery_Partner_Extension.html#cancel-khi-hang-da-di). |
 | Bấm "Đẩy đơn" báo thiếu mã vùng / thông tin người nhận | Mở Address người nhận → chọn đúng Tỉnh/Huyện → Lưu (hệ thống tự dò mã vùng). Giao cho Company: điền **Phone trên Address**. Chi tiết: [Viettel Post — Cài đặt, Phần B Bước 2](Delivery_Partner-Viettel_Post-Cai-Dat.html). |
 | ĐVVC hiện **sai kích thước / số kiện / người trả cước / cước lệch** | Kiểm tab **Parcels** (kích thước + Count = số kiện thật) và tab **Charges** (Charges Paid By) **trước khi đẩy đơn**. Xem [bảng xử lý ở doc Viettel Post](Delivery_Partner-Viettel_Post-Cai-Dat.html#gặp-trục-trặc). |
+| Báo **"Chưa chọn dịch vụ giao"** / **"Mã dịch vụ không khả dụng"** khi đẩy đơn | **Actions → "Xem cước theo dịch vụ"** → chọn một dịch vụ trong danh sách thật của tuyến (kèm phí). Muốn khỏi chọn từng đơn: đặt dịch vụ mặc định — xem [Viettel Post — Cài đặt, Bước 4](Delivery_Partner-Viettel_Post-Cai-Dat.html#bước-4--chọn-dịch-vụ-giao-hàng). |
 
 ---
 

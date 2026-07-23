@@ -83,11 +83,21 @@ Hệ thống tạo danh sách kho trong **DP Pickup Point**.
 
 Dịch vụ giao (nhanh, tiêu chuẩn, tiết kiệm...) chọn được **theo từng vận đơn** ở ô
 **Dịch vụ giao** trên DP Shipment — xem Phần B Bước 1. Không cần cài gì trước:
-danh mục dịch vụ của tài khoản **tự hình thành** từ những lần bấm *"Xem cước theo dịch vụ"*
-trên vận đơn (mã + tên lấy thẳng từ Viettel Post, không ai phải gõ tay).
+danh mục dịch vụ của tài khoản **tự hình thành** từ những lần bấm menu **Actions →
+"Xem cước theo dịch vụ"** trên vận đơn (mã + tên lấy thẳng từ Viettel Post, không ai
+phải gõ tay; chọn lại mã đã có thì dùng dòng cũ, không sinh trùng).
 
-**Đặt dịch vụ mặc định** (dùng khi vận đơn không chọn gì): vào **DP Account Service**,
-mở dòng dịch vụ muốn làm mặc định → tick **Is Default** (mỗi tài khoản một dòng mặc định).
+**Đặt dịch vụ mặc định** (dùng khi vận đơn không chọn gì) — làm 1 lần theo đúng thứ tự:
+
+1. Mở một vận đơn bất kỳ (đã có tài khoản + địa chỉ giao) → **Actions → Xem cước theo
+   dịch vụ** → chọn dịch vụ muốn làm mặc định (bước này tự sinh dòng danh mục).
+2. Vào danh sách **DP Account Service** → mở dòng vừa sinh → tick **Is Default** → Save
+   (mỗi tài khoản một dòng mặc định — tick dòng mới là dòng cũ tự bỏ tick).
+3. Vào DP Partner Account → xoá dòng `ORDER_SERVICE` trong **Extra Parameters** (nguồn
+   mặc định kiểu cũ — bước 3 làm SAU bước 2, không thì đơn bỏ trống dịch vụ sẽ báo lỗi).
+
+Trong danh mục, cột **Service Name** sửa thoải mái thành chú thích dễ hiểu ("Nhanh ~36h —
+đơn gấp"), mã không đổi; dịch vụ không dùng thì bỏ tick **Enabled** để ẩn khỏi danh sách chọn.
 
 **Các mã dịch vụ thường dùng:**
 
@@ -100,7 +110,7 @@ mở dòng dịch vụ muốn làm mặc định → tick **Is Default** (mỗi 
 | `SHT` | Hỏa tốc | ~24h |
 
 > Mã khả dụng phụ thuộc **hợp đồng tài khoản + từng tuyến** (có tuyến không có VTK/SCN).
-> Nút *"Xem cước theo dịch vụ"* trên vận đơn luôn hiện đúng mã + phí của tuyến đó.
+> **Actions → "Xem cước theo dịch vụ"** trên vận đơn luôn hiện đúng mã + phí của tuyến đó.
 
 > **Cách cũ vẫn chạy:** dòng `ORDER_SERVICE` trong **Extra Parameters** của tài khoản
 > (![Extra Parameters](images/vtp/03-extra-params.png)) giờ là mặc định *dự phòng* — chỉ được
@@ -133,7 +143,7 @@ Vào **DP Shipment → New** và điền theo các tab:
 
 | Tab | Điền gì |
 |---|---|
-| **Shipment** | Partner = *Viettel Post*, chọn Partner Account; **Dịch vụ giao** (trống = mặc định tài khoản — bấm nút **"Xem cước theo dịch vụ"** để xem mã + phí thật của tuyến rồi chọn luôn); thêm sản phẩm; **Value of Goods**; **COD Amount** (tiền thu hộ — để **0** nếu không thu) |
+| **Shipment** | Partner = *Viettel Post*, chọn Partner Account; **Dịch vụ giao** (trống = mặc định tài khoản; chọn thẳng từ danh sách, hoặc **Actions → "Xem cước theo dịch vụ"** để xem mã + phí thật của tuyến rồi chọn luôn — đổi được tới khi đơn đã đẩy sang ĐVVC); thêm sản phẩm; **Value of Goods**; **COD Amount** (tiền thu hộ — để **0** nếu không thu) |
 | **Pickup** | Kho xuất hàng |
 | **Delivery** | Khách nhận (địa chỉ, SĐT tự điền theo khách). Giao cho **Company/không có người liên hệ** → cần **Phone trên Address** giao hàng |
 | **Parcels** | Bấm **Auto-calculate Parcel** hoặc thêm tay — mỗi kiện phải có cân nặng. **Kích thước (dài×rộng×cao) và số kiện ở tab này là thứ gửi sang VTP** để tính cước — nhập đúng thực tế |
