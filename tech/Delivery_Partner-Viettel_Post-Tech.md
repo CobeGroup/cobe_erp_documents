@@ -34,7 +34,7 @@ flowchart TD
   subgraph SETUP["CÀI ĐẶT (1 lần) — chi tiết ở doc Cài đặt"]
     A["Credential VTP<br/>→ Test Credentials"] --> B["Đồng bộ danh mục vùng"]
     B --> C["Đồng bộ điểm gửi"]
-    C --> D["Điểm gửi mặc định<br/>+ ORDER_SERVICE"]
+    C --> D["Điểm gửi mặc định<br/>+ dịch vụ giao"]
     D --> E["Webhook trên cổng VTP"]
   end
 
@@ -64,7 +64,7 @@ Bảng dưới tóm tắt **cơ chế + nơi lưu** cho từng phần.
 | **Tự dò mã vùng Address** | `doc_events Address.validate → autofill_address_region`: lưu Address là tự dò + điền `vtp_*_id` (êm — lỗi chỉ log, không chặn lưu). Re-resolve chỉ khi 3 Link tỉnh/huyện/xã **đổi** (so thẳng DB); chỉ ghi cấp dò RA → override tay được bảo toàn. Lúc đẩy đơn còn thiếu thì dò lại lần nữa | `api/region.py` · hook trong `hooks.py` (**deploy nhớ clear-cache**) |
 | **Đồng bộ điểm gửi** | `listInventory` (cần token) → tạo **DP Pickup Point** (mã `GROUPADDRESS_ID` + `CUS_ID`) | `api/pickup_point.py` |
 | **Điểm gửi mặc định** | Nếu account >1 điểm gửi mà không tick `Is Default` → đẩy đơn báo lỗi. 1 điểm gửi → auto dùng | DP Pickup Point · `get_default_pickup_point()` |
-| **ORDER_SERVICE** | Mã dịch vụ **cấp theo hợp đồng account** + **đổi theo tuyến**. Đặt vào Extra Params (`send_as = Body`) | DP Account Param |
+| **Dịch vụ giao** | Mã dịch vụ **cấp theo hợp đồng account** + **đổi theo tuyến**. `_resolve_service` ưu tiên: ô **Dịch vụ giao** trên vận đơn (Link **DP Account Service**) → dòng `is_default` của account → Extra Params `ORDER_SERVICE` (tương thích ngược). Danh mục DP Account Service **tự học** từ dialog "Xem cước theo dịch vụ" (get-or-create từ response getPriceAll, `ignore_permissions` sau khi check quyền write trên vận đơn) | doctype **DP Account Service** · `api/shipment.py: list_route_services / ensure_account_service` |
 | **Webhook** | Cổng VTP bắn `POST` về endpoint; verify header `X-VTP-Token == webhook_secret` | `handlers/viettelpost.py` |
 
 ### 2.1. Mã dịch vụ (ORDER_SERVICE)
@@ -81,8 +81,12 @@ Bảng dưới tóm tắt **cơ chế + nơi lưu** cho từng phần.
 | `VHT` | Hỏa tốc thỏa thuận | ~24h |
 | `PHS` | Nội tỉnh tiết kiệm | Chỉ dùng nội tỉnh |
 
-> **Không chắc account có mã nào?** Bấm "Đẩy đơn" — nếu mã sai, bước kiểm giá (`getPriceAll`, §3)
-> trả về **danh sách mã hợp lệ cho đúng tuyến** đó.
+> **Không chắc account có mã nào?** Bấm **"Xem cước theo dịch vụ"** trên vận đơn — dialog liệt kê
+> mã + tên + phí đúng tuyến (cùng `getPriceAll`, §3); chọn 1 dòng là tự ghi vào danh mục
+> DP Account Service + set vào đơn. Đẩy đơn với mã sai vẫn bị chặn kèm danh sách mã hợp lệ.
+>
+> Ô Dịch vụ giao `allow_on_submit` (đổi được sau Submit tới khi có mã đơn), khoá khi đã đẩy
+> (`external_shipment_id`); server chặn chọn chéo account + chặn đổi sau khi đẩy.
 
 Param tuỳ chọn: `ORDER_SERVICE_ADD` (dịch vụ cộng thêm), `PRODUCT_LENGTH/WIDTH/HEIGHT` (kích thước
 kiện mặc định, cm). **Không** cần khai `GROUPADDRESS_ID`/`SENDER_*` — lấy tự động từ điểm gửi mặc định.
@@ -128,7 +132,7 @@ flowchart LR
 | `GROUPADDRESS_ID` / `CUS_ID` | Từ điểm gửi mặc định (DP Pickup Point) |
 | `SENDER_WARD` / `RECEIVER_WARD` | Mã vùng (RECEIVER_WARD tuỳ chọn) |
 | `ORDER_PAYMENT` | Map từ COD + **Charges Paid By**: `1` không thu · `2` người nhận trả cước · `3` COD (cước người gửi) · `4` COD + người nhận trả cước. Extra Params override được |
-| `ORDER_SERVICE` | Mã dịch vụ (Extra Param) |
+| `ORDER_SERVICE` | Mã dịch vụ — `_resolve_service`: đơn → default account → Extra Params |
 | `MONEY_COLLECTION` | = COD Amount khi có COD |
 | `PRODUCT_QUANTITY` | **SỐ KIỆN** = tổng `count` tab Parcels (KHÔNG phải tổng qty item — gửi qty là cổng VTP hiểu nhầm số kiện) |
 | `PRODUCT_LENGTH/WIDTH/HEIGHT` | Từ **tab Parcels**: max dài/rộng + cộng dồn cao×count (thể tích quy đổi); fallback Extra Params/10cm khi trống. Cũng gửi kèm ở getPriceAll pre-check để giá sát thật |
@@ -317,8 +321,8 @@ curl -s -X POST "https://<domain>/api/method/delivery_partner.api.webhook.handle
 | Lỗi | Nguyên nhân & cách xử lý |
 |---|---|
 | *"chưa đặt điểm gửi mặc định"* | Vào DP Pickup Point tick **Is Default** cho 1 kho |
-| *"chưa cấu hình ORDER_SERVICE"* | Thêm Extra Param `ORDER_SERVICE` |
-| *"Mã dịch vụ X không khả dụng… Mã hợp lệ: …"* | Đổi `ORDER_SERVICE` sang 1 mã trong danh sách gợi ý |
+| *"Chưa chọn dịch vụ giao"* | Chọn ô **Dịch vụ giao** trên vận đơn (nút "Xem cước theo dịch vụ"), hoặc đặt `is_default` trong DP Account Service của account |
+| *"Mã dịch vụ X không khả dụng… Mã hợp lệ: …"* | Tuyến không có mã đó — "Xem cước theo dịch vụ" chọn lại; mặc định account/Extra Params chỉ là fallback |
 | *"Không xác định được mã vùng người nhận"* | Address thiếu/không khớp Tỉnh-Huyện → chọn đúng Tỉnh/Huyện/Phường rồi Lưu (tự dò lại). Quận sáp nhập (Quận 2/9 → Thủ Đức) resolver tự suy quận mới từ phường (`_district_via_ward`: phường khớp duy nhất trong tỉnh, loại quận-giả "Bỏ qua - địa chỉ 2 cấp" id ≥ 100000000; phường trùng tên nhiều quận thì không đoán). Chỉ còn trượt khi phường mơ hồ → "Dò mã vùng VTP" + nhập ID tay. **KHÔNG cần re-sync danh mục** — chỉ sync khi danh mục rỗng (có message riêng) |
 | *"đơn CÓ THỂ đã được tạo…"* | Lỗi mạng/timeout — **kiểm cổng VTP** xem đơn đã tạo chưa TRƯỚC khi đẩy lại |
 | Không thấy nút | Vận đơn phải **đã Submit** và **chưa** có External Shipment ID |

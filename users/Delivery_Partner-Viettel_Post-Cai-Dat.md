@@ -81,17 +81,13 @@ Hệ thống tạo danh sách kho trong **DP Pickup Point**.
 
 ## Bước 4 · Chọn dịch vụ giao hàng
 
-Chọn loại dịch vụ Viettel Post mặc định (nhanh, tiêu chuẩn, tiết kiệm...).
+Dịch vụ giao (nhanh, tiêu chuẩn, tiết kiệm...) chọn được **theo từng vận đơn** ở ô
+**Dịch vụ giao** trên DP Shipment — xem Phần B Bước 1. Không cần cài gì trước:
+danh mục dịch vụ của tài khoản **tự hình thành** từ những lần bấm *"Xem cước theo dịch vụ"*
+trên vận đơn (mã + tên lấy thẳng từ Viettel Post, không ai phải gõ tay).
 
-Vào **DP Partner Account → mục Extra Parameters** → thêm một dòng:
-
-| Ô | Điền |
-|---|---|
-| **Param Key** | `ORDER_SERVICE` |
-| **Param Value** | mã dịch vụ (xem gợi ý bên dưới) |
-| **Send As** | `Body` |
-
-![Mục Extra Parameters — thêm ORDER_SERVICE](images/vtp/03-extra-params.png)
+**Đặt dịch vụ mặc định** (dùng khi vận đơn không chọn gì): vào **DP Account Service**,
+mở dòng dịch vụ muốn làm mặc định → tick **Is Default** (mỗi tài khoản một dòng mặc định).
 
 **Các mã dịch vụ thường dùng:**
 
@@ -103,8 +99,13 @@ Vào **DP Partner Account → mục Extra Parameters** → thêm một dòng:
 | `VCN` | Nhanh (thoả thuận) | ~36h |
 | `SHT` | Hỏa tốc | ~24h |
 
-> **Không chắc dùng mã nào?** Cứ chọn tạm một mã rồi thử tạo đơn (Phần B). Nếu mã không hợp,
-> hệ thống sẽ báo ngay **danh sách mã đúng cho tuyến đó** để bạn chọn lại.
+> Mã khả dụng phụ thuộc **hợp đồng tài khoản + từng tuyến** (có tuyến không có VTK/SCN).
+> Nút *"Xem cước theo dịch vụ"* trên vận đơn luôn hiện đúng mã + phí của tuyến đó.
+
+> **Cách cũ vẫn chạy:** dòng `ORDER_SERVICE` trong **Extra Parameters** của tài khoản
+> (![Extra Parameters](images/vtp/03-extra-params.png)) giờ là mặc định *dự phòng* — chỉ được
+> dùng khi vận đơn không chọn và danh mục chưa có dòng mặc định. Khi đã đặt Is Default trong
+> DP Account Service thì nên xoá dòng này để khỏi có 2 nguồn mặc định.
 
 ---
 
@@ -132,7 +133,7 @@ Vào **DP Shipment → New** và điền theo các tab:
 
 | Tab | Điền gì |
 |---|---|
-| **Shipment** | Partner = *Viettel Post*, chọn Partner Account; thêm sản phẩm; **Value of Goods**; **COD Amount** (tiền thu hộ — để **0** nếu không thu) |
+| **Shipment** | Partner = *Viettel Post*, chọn Partner Account; **Dịch vụ giao** (trống = mặc định tài khoản — bấm nút **"Xem cước theo dịch vụ"** để xem mã + phí thật của tuyến rồi chọn luôn); thêm sản phẩm; **Value of Goods**; **COD Amount** (tiền thu hộ — để **0** nếu không thu) |
 | **Pickup** | Kho xuất hàng |
 | **Delivery** | Khách nhận (địa chỉ, SĐT tự điền theo khách). Giao cho **Company/không có người liên hệ** → cần **Phone trên Address** giao hàng |
 | **Parcels** | Bấm **Auto-calculate Parcel** hoặc thêm tay — mỗi kiện phải có cân nặng. **Kích thước (dài×rộng×cao) và số kiện ở tab này là thứ gửi sang VTP** để tính cước — nhập đúng thực tế |
@@ -220,8 +221,8 @@ tiền thu hộ.
 |---|---|
 | Test Credentials đỏ | Kiểm lại mật khẩu; tắt **Use Sandbox** nếu dùng tài khoản thật |
 | "Chưa đặt điểm gửi mặc định" | Làm bước 3.2 — tick Is Default cho một kho |
-| "Chưa cấu hình dịch vụ" | Làm bước 4 — thêm `ORDER_SERVICE` |
-| "Mã dịch vụ không khả dụng" | Đổi sang một mã trong danh sách hệ thống gợi ý |
+| "Chưa chọn dịch vụ giao" | Chọn ở ô **Dịch vụ giao** trên vận đơn (nút "Xem cước theo dịch vụ"), hoặc đặt Is Default trong DP Account Service — xem bước 4 |
+| "Mã dịch vụ không khả dụng" | Tuyến này không có mã đó — bấm **"Xem cước theo dịch vụ"** chọn lại theo danh sách thật của tuyến |
 | "Không xác định được mã vùng" | Mở Address người nhận → chọn đúng **Tỉnh/Thành + Quận/Huyện + Phường/Xã** → Lưu (hệ thống tự dò; quận sáp nhập kiểu Quận 2/9 tự suy từ phường). Vẫn trượt (phường trùng tên nhiều quận) → "Dò mã vùng VTP" + điền tay ô trống. **Không cần** đồng bộ danh mục lại — chỉ khi hệ thống báo rõ *"Chưa có danh mục vùng"* mới làm bước 2 |
 | Đơn không tự cập nhật trạng thái | Kiểm cấu hình webhook (bước 5) |
 | Giao cho **Company** báo *"Thiếu Tên hoặc SĐT người nhận"* | Mở **Address** giao hàng → điền ô **Phone** → Lưu → đẩy đơn lại. (Giao cho Company không có Contact thì hệ thống lấy SĐT từ Address) |
