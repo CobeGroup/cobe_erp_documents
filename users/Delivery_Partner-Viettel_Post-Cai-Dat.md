@@ -149,6 +149,19 @@ Vào **DP Shipment → New** và điền theo các tab:
 | **Parcels** | Bấm **Auto-calculate Parcel** hoặc thêm tay — mỗi kiện phải có cân nặng. **Kích thước (dài×rộng×cao) và số kiện ở tab này là thứ gửi sang VTP** để tính cước — nhập đúng thực tế |
 | **Charges** | **Charges Paid By** = ai trả cước: *Sender* (mình trả) hay *Receiver* (người nhận trả khi giao) — sang VTP đúng theo lựa chọn này |
 
+**Nút "Xem cước theo dịch vụ" hoạt động thế nào** (menu **Actions**):
+
+1. Hệ thống hỏi Viettel Post đúng tuyến của đơn này → hiện danh sách **mã + tên + phí thật**.
+2. Chọn một dòng → bấm **"Chọn dịch vụ này"** → hệ thống **tự điền vào ô Dịch vụ giao và
+   tự Lưu đơn luôn** — không phải bấm Save thêm (có thông báo xanh *"Đã chọn dịch vụ ..."*).
+3. Lựa chọn chỉ áp cho **đơn này**, không đổi mặc định của tài khoản, không ảnh hưởng đơn khác.
+
+> - Đơn đang có sửa đổi chưa lưu → nút bắt **Lưu trước** rồi mới tra cước (giá tính theo
+>   dữ liệu đã lưu — cân nặng, kiện, địa chỉ).
+> - Đổi ý? Bấm lại Xem cước chọn mã khác, hoặc sửa thẳng ô **Dịch vụ giao** — được cả
+>   **sau khi Submit**, cho tới khi đơn **đã đẩy sang ĐVVC** thì ô khoá (đổi lúc đó VTP
+>   không nhận nữa).
+
 Xong bấm **Submit**.
 
 ---
