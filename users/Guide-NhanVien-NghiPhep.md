@@ -84,13 +84,16 @@ ngày nghỉ sẵn thì **không tính là phép**:
 | Ngày làm bình thường | ✅ trừ 1 ngày |
 | **Chủ Nhật** | ❌ không trừ |
 | **Ngày lễ** (Tết, 30/4, Quốc khánh…) | ❌ không trừ |
-| **Thứ 7** — ca **Office / Kế Toán / Management** | ❌ không trừ *(ngày nghỉ nửa buổi)* |
-| **Thứ 7** — các ca còn lại (KTV, Kho, AKW…) | ✅ trừ 1 ngày |
+| **Thứ 7** — nếu ca của bạn **nghỉ nửa buổi Thứ 7** (khối văn phòng) | ❌ không trừ |
+| **Thứ 7** — nếu ca của bạn **làm cả ngày Thứ 7** | ✅ trừ 1 ngày |
+
+> Ca của bạn có nghỉ nửa buổi Thứ 7 hay không là do **cấu hình ca** — không chắc thì
+> cứ nhìn con số ngày thực trừ (xem ô 💡 bên dưới) hoặc hỏi HR.
 
 **Ví dụ** — xin nghỉ **Thứ 6 24/07 → Thứ 2 27/07** (4 ngày lịch):
 
-- NV ca **Office**: trừ **2 ngày** (T7 và CN không tính)
-- NV ca **KTV**: trừ **3 ngày** (chỉ CN không tính)
+- NV có **nghỉ nửa buổi Thứ 7**: trừ **2 ngày** (Thứ 7 và Chủ Nhật không tính)
+- NV **làm cả ngày Thứ 7**: trừ **3 ngày** (chỉ Chủ Nhật không tính)
 
 > 💡 Form tạo đơn **chưa hiện** con số này. Gửi xong, mở **danh sách đơn** (mục 1) là thấy
 > `… (2 ngày)` bên cạnh khoảng ngày — đó mới là số ngày thực trừ. Thấy ít hơn số ngày
@@ -203,7 +206,7 @@ phải chọn gì — **chọn đúng loại phép là form tự đổi**:
 | Xin Nghỉ bù mà app đòi "Ngày làm thêm để bù" | Ô này **bắt buộc** với Nghỉ bù — chọn đúng hôm đã làm thêm |
 | "Ngày … không có đơn Làm thêm giờ đã duyệt…" | Ngày đó thiếu đơn Làm thêm (quy đổi Nghỉ bù) đã duyệt → [khai đơn làm thêm](Guide-NhanVien-LamThem.html) cho ngày đã làm (trong hạn — mặc định 1 ngày) |
 | "Ngày làm thêm … đã được dùng cho đơn Nghỉ bù …" | Ngày làm thêm đó đã bù rồi — mỗi ngày chỉ bù 1 lần |
-| Đơn trừ **ít ngày hơn** số ngày mình chọn | **Đúng, không phải lỗi** — Chủ Nhật, ngày lễ, và Thứ 7 (ca Office/Kế Toán/Management) không bị trừ phép. Xem bảng ở mục 2 |
+| Đơn trừ **ít ngày hơn** số ngày mình chọn | **Đúng, không phải lỗi** — Chủ Nhật, ngày lễ, và Thứ 7 (với ca nghỉ nửa buổi Thứ 7) không bị trừ phép. Xem bảng ở mục 2 |
 | *"Attendance … is already marked for the following dates …"* | Hôm đó bạn **đã chấm công** rồi. Muốn nghỉ một buổi thì tích **Nghỉ nửa ngày** (được, kể cả khi sáng đã đi làm). Còn nếu bạn định nghỉ **cả ngày** — hoặc ngày đó là **Chủ Nhật / lễ** — thì app chặn, báo HR xử |
 
 ---

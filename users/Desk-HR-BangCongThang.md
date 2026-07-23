@@ -55,22 +55,23 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 > theo cột giờ từng ngày được — trên màn gộp lại 1 ô cho gọn, nhưng dữ liệu vẫn tách.
 >
 > 💡 **Hai cột tổng giờ** — đừng nhầm:
-> - **Tổng giờ chuẩn** = cộng theo **công chuẩn của CA**: mỗi ngày công đủ (P / WFH) = **giờ chuẩn của ca đó**, nửa ngày (HD) = **½ giờ chuẩn ca**; nghỉ/vắng không cộng. Giờ chuẩn ca = *(giờ ra − giờ vào) − nghỉ trưa*, suy động từ cấu hình Shift Type (Office 8h, AKW 6h, Migunlife/kỹ thuật 9h, lắp đặt 3h…). Đổi giờ ca thì cột này **tự đúng theo**.
+> - **Tổng giờ chuẩn** = cộng theo **công chuẩn của CA**: mỗi ngày công đủ (P / WFH) = **giờ chuẩn của ca đó**, nửa ngày (HD) = **½ giờ chuẩn ca**; nghỉ/vắng không cộng. Giờ chuẩn ca = *(giờ ra − giờ vào) − nghỉ trưa*, **suy động từ cấu hình mỗi Shift Type** — ca khác nhau có giờ chuẩn khác nhau. Đổi giờ ca trong cấu hình thì cột này **tự đúng theo**.
 >   **Ngày nghỉ nửa buổi** (Thứ 7 của khối văn phòng — xem dưới) chỉ tính **½ giờ chuẩn**, vì ngày đó ca chỉ có nửa buổi.
 > - **Tổng giờ thực** = cộng **số giờ bấm máy** thực tế mọi ngày trong kỳ (đúng những gì check-in/out ghi lại).
 >
 > Dùng **Tổng giờ chuẩn** để tính công/lương theo trạng thái (không phụ thuộc NV bấm sớm/muộn); dùng **Tổng giờ thực** để soi giờ hiện diện thật.
 >
-> 💡 **Thứ 7 nghỉ nửa buổi** — áp dụng cho ca **Office**, **Office Kế Toán**, **Management**.
-> Ngày đó ca chỉ có nửa buổi nên:
-> - **Tổng giờ chuẩn** cộng **½ ca** (Office: **4h** thay vì 8h)
-> - **Ngưỡng giờ công cũng chia đôi** → NV làm buổi sáng ~4h vẫn là **`P`** (công đủ),
->   không bị rớt xuống `HD` như trước
+> 💡 **Thứ 7 nghỉ nửa buổi** — áp dụng cho **các ca được cấu hình nghỉ nửa buổi Thứ 7**
+> (thường là **khối văn phòng**). Với những ca này, ngày Thứ 7 chỉ có nửa buổi nên:
+> - **Tổng giờ chuẩn** cộng **½ ca** (vd ca 8h → tính **4h** cho ngày Thứ 7)
+> - **Ngưỡng giờ công cũng chia đôi** → NV làm buổi sáng vẫn là **`P`** (công đủ),
+>   không bị rớt xuống `HD`
 >
-> Các ca còn lại (KTV, Kho, AKW, Migunlife…) Thứ 7 vẫn là **ngày làm bình thường, cả ngày**.
+> Các ca **làm cả ngày Thứ 7** (thường là khối hiện trường/kho) thì Thứ 7 vẫn tính
+> **nguyên ngày** như bình thường.
 >
-> Nguồn: Holiday List gắn trên từng **Shift Type** — HR đổi ở đó thì báo cáo tự theo,
-> không cần sửa báo cáo.
+> Ai thuộc nhóm nào là do **Holiday List gắn trên từng Shift Type** quyết định — HR chỉnh
+> ở phần cấu hình ca, báo cáo tự theo, không cần sửa báo cáo.
 
 > 💡 **Cty Trực Thuộc** (công ty trực thuộc) chỉ có với NV đã **gộp công ty** (lưu công ty gốc); NV khác để trống là bình thường.
 
