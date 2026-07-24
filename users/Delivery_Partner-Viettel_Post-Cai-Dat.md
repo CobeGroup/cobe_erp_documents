@@ -87,7 +87,12 @@ danh mục dịch vụ của tài khoản **tự hình thành** từ những l�
 "Xem cước theo dịch vụ"** trên vận đơn (mã + tên lấy thẳng từ Viettel Post, không ai
 phải gõ tay; chọn lại mã đã có thì dùng dòng cũ, không sinh trùng).
 
-**Đặt dịch vụ mặc định** (dùng khi vận đơn không chọn gì) — làm 1 lần theo đúng thứ tự:
+**Quên chọn cũng không sao:** bấm **"Đẩy đơn sang ĐVVC"** khi đơn chưa chọn dịch vụ →
+hộp thoại xem cước **tự bật lên** cho chọn (thấy phí thật từng dịch vụ của tuyến),
+chọn xong hệ thống **tự đẩy đơn tiếp** — không phải bấm lại.
+
+**Đặt dịch vụ mặc định** (tuỳ chọn — chỉ dành cho luồng tự động/API muốn bỏ trống ô
+Dịch vụ giao; trên màn hình thì hộp thoại luôn bắt chọn tường minh) — làm 1 lần:
 
 1. Mở một vận đơn bất kỳ (đã có tài khoản + địa chỉ giao) → **Actions → Xem cước theo
    dịch vụ** → chọn dịch vụ muốn làm mặc định (bước này tự sinh dòng danh mục).
@@ -95,8 +100,6 @@ phải gõ tay; chọn lại mã đã có thì dùng dòng cũ, không sinh trù
    (mỗi tài khoản một dòng mặc định — tick dòng mới là dòng cũ tự bỏ tick).
 
    ![DP Account Service — tick Is Default cho dịch vụ mặc định](images/vtp/11-account-service-default.png)
-3. Vào DP Partner Account → xoá dòng `ORDER_SERVICE` trong **Extra Parameters** (nguồn
-   mặc định kiểu cũ — bước 3 làm SAU bước 2, không thì đơn bỏ trống dịch vụ sẽ báo lỗi).
 
 Trong danh mục, cột **Service Name** sửa thoải mái thành chú thích dễ hiểu ("Nhanh ~36h —
 đơn gấp"), mã không đổi; dịch vụ không dùng thì bỏ tick **Enabled** để ẩn khỏi danh sách chọn.
@@ -110,14 +113,18 @@ Trong danh mục, cột **Service Name** sửa thoải mái thành chú thích d
 | `SCN` | Nhanh | ~36h |
 | `VCN` | Nhanh (thoả thuận) | ~36h |
 | `SHT` | Hỏa tốc | ~24h |
+| `BTK` | Hàng nặng tiết kiệm | ~48h |
 
-> Mã khả dụng phụ thuộc **hợp đồng tài khoản + từng tuyến** (có tuyến không có VTK/SCN).
-> **Actions → "Xem cước theo dịch vụ"** trên vận đơn luôn hiện đúng mã + phí của tuyến đó.
+> Mã khả dụng phụ thuộc **hợp đồng tài khoản + từng tuyến + cân nặng** — mỗi dịch vụ có
+> **khung cân** riêng: `STK`/`SCN`... chỉ nhận tới ~10–15kg, `BTK` (hàng nặng) ngược lại
+> phải từ ~15kg trở lên. Chọn sai khung là VTP báo *"Price does not apply to this itinerary!"*.
+> **Actions → "Xem cước theo dịch vụ"** trên vận đơn luôn hiện đúng mã + phí áp được cho
+> tuyến + cân nặng của đơn đó — cứ chọn từ danh sách này là không sai.
 
-> **Cách cũ vẫn chạy:** dòng `ORDER_SERVICE` trong **Extra Parameters** của tài khoản
-> (![Extra Parameters](images/vtp/03-extra-params.png)) giờ là mặc định *dự phòng* — chỉ được
-> dùng khi vận đơn không chọn và danh mục chưa có dòng mặc định. Khi đã đặt Is Default trong
-> DP Account Service thì nên xoá dòng này để khỏi có 2 nguồn mặc định.
+> **Cách cũ đã bị gỡ hẳn:** dòng `ORDER_SERVICE` trong **Extra Parameters** của tài khoản
+> **không còn tác dụng** — hệ thống không đọc Extra Parameters kiểu Body nữa (trước đây dòng
+> này còn âm thầm **đè** dịch vụ đã chọn trên đơn, gây lỗi *"Price does not apply to this
+> itinerary!"* với đơn nặng). Còn thấy dòng này trong tài khoản thì **xoá đi** cho sạch.
 
 ---
 
@@ -145,7 +152,7 @@ Vào **DP Shipment → New** và điền theo các tab:
 
 | Tab | Điền gì |
 |---|---|
-| **Shipment** | Partner = *Viettel Post*, chọn Partner Account; **Dịch vụ giao** (trống = mặc định tài khoản; chọn thẳng từ danh sách, hoặc **Actions → "Xem cước theo dịch vụ"** để xem mã + phí thật của tuyến rồi chọn luôn — đổi được tới khi đơn đã đẩy sang ĐVVC); thêm sản phẩm; **Value of Goods**; **COD Amount** (tiền thu hộ — để **0** nếu không thu) |
+| **Shipment** | Partner = *Viettel Post*, chọn Partner Account; **Dịch vụ giao** — chọn thẳng từ danh sách, hoặc **Actions → "Xem cước theo dịch vụ"** để xem mã + phí thật của tuyến rồi chọn luôn (đổi được tới khi đơn đã đẩy sang ĐVVC; bỏ trống thì lúc bấm Đẩy đơn hộp thoại chọn **tự bật lên**); thêm sản phẩm; **Value of Goods**; **COD Amount** (tiền thu hộ — để **0** nếu không thu) |
 | **Pickup** | Kho xuất hàng |
 | **Delivery** | Khách nhận (địa chỉ, SĐT tự điền theo khách). Giao cho **Company/không có người liên hệ** → cần **Phone trên Address** giao hàng |
 | **Parcels** | Bấm **Auto-calculate Parcel** hoặc thêm tay — mỗi kiện phải có cân nặng. **Kích thước (dài×rộng×cao) và số kiện ở tab này là thứ gửi sang VTP** để tính cước — nhập đúng thực tế |
@@ -215,6 +222,12 @@ flowchart LR
 Hệ thống **kiểm tra trước** (mã vùng, dịch vụ, cân nặng): sai thì báo lỗi rõ ràng và **không tạo đơn**.
 Đúng thì tạo đơn thật và tự lưu **mã vận đơn** — từ đó trạng thái sẽ tự cập nhật.
 
+- Đơn **chưa chọn dịch vụ giao** → hộp thoại xem cước **tự bật** cho chọn (thấy phí thật
+  từng dịch vụ), chọn xong hệ thống đẩy đơn tiếp luôn.
+- **Shipping Fee** lưu về là **tổng phải trả** (cước + phụ phí + VAT) — khớp đúng con số
+  trong hộp thoại xem cước và trên cổng VTP. Cấu phần chi tiết (cước gốc, phụ phí, VAT)
+  ghi trong dòng **Activity** *"Đã tạo đơn Viettel Post..."* của vận đơn.
+
 > Đã có mã vận đơn thì nút "Đẩy đơn" **biến mất** để tránh tạo trùng.
 
 ---
@@ -250,8 +263,9 @@ tiền thu hộ.
 |---|---|
 | Test Credentials đỏ | Kiểm lại mật khẩu; tắt **Use Sandbox** nếu dùng tài khoản thật |
 | "Chưa đặt điểm gửi mặc định" | Làm bước 3.2 — tick Is Default cho một kho |
-| "Chưa chọn dịch vụ giao" | Chọn ở ô **Dịch vụ giao** trên vận đơn (nút "Xem cước theo dịch vụ"), hoặc đặt Is Default trong DP Account Service — xem bước 4 |
-| "Mã dịch vụ không khả dụng" | Tuyến này không có mã đó — bấm **"Xem cước theo dịch vụ"** chọn lại theo danh sách thật của tuyến |
+| "Chưa chọn dịch vụ giao" | Bình thường hộp thoại chọn **tự bật** khi bấm Đẩy đơn — chọn một dịch vụ là xong. Thấy message này tức là gọi qua API/form cũ: chọn ở ô **Dịch vụ giao**, hoặc đặt Is Default trong DP Account Service — xem bước 4 |
+| "Mã dịch vụ không khả dụng" | Tuyến/cân nặng này không áp mã đó (mỗi dịch vụ có **khung cân** — VD `STK` chỉ tới ~10–15kg, `BTK` hàng nặng phải từ ~15kg) — bấm **"Xem cước theo dịch vụ"** chọn lại theo danh sách thật |
+| "Price does not apply to this itinerary!" | VTP không áp được giá cho bộ (tuyến + dịch vụ + cân nặng) — thường do dịch vụ không hợp khung cân (xem dòng trên). Bấm **"Xem cước theo dịch vụ"** chọn dịch vụ có trong danh sách rồi đẩy lại |
 | "Không xác định được mã vùng" | Mở Address người nhận → chọn đúng **Tỉnh/Thành + Quận/Huyện + Phường/Xã** → Lưu (hệ thống tự dò; quận sáp nhập kiểu Quận 2/9 tự suy từ phường). Vẫn trượt (phường trùng tên nhiều quận) → "Dò mã vùng VTP" + điền tay ô trống. **Không cần** đồng bộ danh mục lại — chỉ khi hệ thống báo rõ *"Chưa có danh mục vùng"* mới làm bước 2 |
 | Đơn không tự cập nhật trạng thái | Kiểm cấu hình webhook (bước 5) |
 | Giao cho **Company** báo *"Thiếu Tên hoặc SĐT người nhận"* | Mở **Address** giao hàng → điền ô **Phone** → Lưu → đẩy đơn lại. (Giao cho Company không có Contact thì hệ thống lấy SĐT từ Address) |

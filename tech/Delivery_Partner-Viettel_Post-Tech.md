@@ -64,7 +64,7 @@ Bảng dưới tóm tắt **cơ chế + nơi lưu** cho từng phần.
 | **Tự dò mã vùng Address** | `doc_events Address.validate → autofill_address_region`: lưu Address là tự dò + điền `vtp_*_id` (êm — lỗi chỉ log, không chặn lưu). Re-resolve chỉ khi 3 Link tỉnh/huyện/xã **đổi** (so thẳng DB); chỉ ghi cấp dò RA → override tay được bảo toàn. Lúc đẩy đơn còn thiếu thì dò lại lần nữa | `api/region.py` · hook trong `hooks.py` (**deploy nhớ clear-cache**) |
 | **Đồng bộ điểm gửi** | `listInventory` (cần token) → tạo **DP Pickup Point** (mã `GROUPADDRESS_ID` + `CUS_ID`) | `api/pickup_point.py` |
 | **Điểm gửi mặc định** | Nếu account >1 điểm gửi mà không tick `Is Default` → đẩy đơn báo lỗi. 1 điểm gửi → auto dùng | DP Pickup Point · `get_default_pickup_point()` |
-| **Dịch vụ giao** | Mã dịch vụ **cấp theo hợp đồng account** + **đổi theo tuyến**. `_resolve_service` ưu tiên: ô **Dịch vụ giao** trên vận đơn (Link **DP Account Service**) → dòng `is_default` của account → Extra Params `ORDER_SERVICE` (tương thích ngược). Danh mục DP Account Service **tự học** từ dialog "Xem cước theo dịch vụ" (get-or-create từ response getPriceAll, `ignore_permissions` sau khi check quyền write trên vận đơn) | doctype **DP Account Service** · `api/shipment.py: list_route_services / ensure_account_service` |
+| **Dịch vụ giao** | Mã dịch vụ **cấp theo hợp đồng account** + **đổi theo tuyến** + **khung cân riêng từng mã** (`STK`/`SCN`... max ~10–15kg; `BTK` hàng nặng min ~15kg — sai khung là VTP báo *"Price does not apply to this itinerary!"*). `_resolve_service` ưu tiên: ô **Dịch vụ giao** trên vận đơn (Link **DP Account Service**) → dòng `is_default` của account → **hết** (Extra Params `ORDER_SERVICE` ĐÃ GỠ — param Body từng bị merge đè lên payload, tráo dịch vụ user chọn). Cả hai trống → server throw; UI guard (`_ensure_service_then` + `route_services_supported`) **tự mở dialog xem cước** cho chọn rồi đẩy tiếp. Danh mục DP Account Service **tự học** từ dialog "Xem cước theo dịch vụ" (get-or-create từ response getPriceAll, `ignore_permissions` sau khi check quyền write trên vận đơn) | doctype **DP Account Service** · `api/shipment.py: list_route_services / ensure_account_service / route_services_supported` |
 | **Webhook** | Cổng VTP bắn `POST` về endpoint; verify header `X-VTP-Token == webhook_secret` | `handlers/viettelpost.py` |
 
 ### 2.1. Mã dịch vụ (ORDER_SERVICE)
@@ -88,8 +88,13 @@ Bảng dưới tóm tắt **cơ chế + nơi lưu** cho từng phần.
 > Ô Dịch vụ giao `allow_on_submit` (đổi được sau Submit tới khi có mã đơn), khoá khi đã đẩy
 > (`external_shipment_id`); server chặn chọn chéo account + chặn đổi sau khi đẩy.
 
-Param tuỳ chọn: `ORDER_SERVICE_ADD` (dịch vụ cộng thêm), `PRODUCT_LENGTH/WIDTH/HEIGHT` (kích thước
-kiện mặc định, cm). **Không** cần khai `GROUPADDRESS_ID`/`SENDER_*` — lấy tự động từ điểm gửi mặc định.
+> ⚠️ **Extra Parameters kiểu Body đã bị gỡ toàn bộ** (kể cả `ORDER_SERVICE`, `ORDER_PAYMENT`,
+> `ORDER_SERVICE_ADD`, `SENDER_*`, `PRODUCT_LENGTH/WIDTH/HEIGHT`): trước đây chúng bị merge
+> `dict.update()` **đè lên payload** — dòng `ORDER_SERVICE=STK` từng âm thầm tráo dịch vụ user
+> chọn, làm đơn nặng chết *"Price does not apply to this itinerary!"* trong khi pre-validate pass.
+> Payload giờ build 100% từ dữ liệu có chủ đích (điểm gửi sync, ô Dịch vụ giao, tab Parcels/Charges).
+> Extra Params chỉ còn dùng cho **Header/Query** (VD ShopId của GHN sau này). Thấy dòng
+> `ORDER_SERVICE` còn sót trong account thì xoá.
 
 ### 2.2. Webhook
 
@@ -131,12 +136,18 @@ flowchart LR
 | `ORDER_NUMBER` | = `shipment.name` — **bắt buộc**, thiếu → VTP báo *"Price does not apply to this itinerary"* |
 | `GROUPADDRESS_ID` / `CUS_ID` | Từ điểm gửi mặc định (DP Pickup Point) |
 | `SENDER_WARD` / `RECEIVER_WARD` | Mã vùng (RECEIVER_WARD tuỳ chọn) |
-| `ORDER_PAYMENT` | Map từ COD + **Charges Paid By**: `1` không thu · `2` người nhận trả cước · `3` COD (cước người gửi) · `4` COD + người nhận trả cước. Extra Params override được |
-| `ORDER_SERVICE` | Mã dịch vụ — `_resolve_service`: đơn → default account → Extra Params |
+| `ORDER_PAYMENT` | Map từ COD + **Charges Paid By**: `1` không thu · `2` người nhận trả cước · `3` COD (cước người gửi) · `4` COD + người nhận trả cước |
+| `ORDER_SERVICE` | Mã dịch vụ — `_resolve_service`: đơn → default account (hết — Extra Params đã gỡ) |
 | `MONEY_COLLECTION` | = COD Amount khi có COD |
 | `PRODUCT_QUANTITY` | **SỐ KIỆN** = tổng `count` tab Parcels (KHÔNG phải tổng qty item — gửi qty là cổng VTP hiểu nhầm số kiện) |
-| `PRODUCT_LENGTH/WIDTH/HEIGHT` | Từ **tab Parcels**: max dài/rộng + cộng dồn cao×count (thể tích quy đổi); fallback Extra Params/10cm khi trống. Cũng gửi kèm ở getPriceAll pre-check để giá sát thật |
+| `PRODUCT_LENGTH/WIDTH/HEIGHT` | Từ **tab Parcels**: max dài/rộng + cộng dồn cao×count (thể tích quy đổi); mặc định 10cm khi trống. Cũng gửi kèm ở getPriceAll pre-check để giá sát thật |
 | `LIST_ITEM` | Danh sách hàng |
+
+**Phí trả về (`createOrder` response)** — lưu `MONEY_TOTAL` (**tổng phải trả** = cước gốc
+`MONEY_TOTAL_FEE` + phụ phí `MONEY_FEE`/`MONEY_OTHER_FEE`/`MONEY_VAS` + `MONEY_VAT`) vào
+**Shipping Fee** — trùng đúng `GIA_CUOC` mà getPriceAll/dialog xem cước hiển thị (đo thật:
+15.278 + 764 + 1.283 = 17.325). Cấu phần ghi vào comment Activity (`_fee_breakdown`).
+Đừng lưu `MONEY_TOTAL_FEE` — chưa VAT/phụ phí, sẽ lệch với giá đã báo user.
 
 **Trình tự & an toàn:**
 
@@ -326,7 +337,7 @@ curl -s -X POST "https://<domain>/api/method/delivery_partner.api.webhook.handle
 | *"Không xác định được mã vùng người nhận"* | Address thiếu/không khớp Tỉnh-Huyện → chọn đúng Tỉnh/Huyện/Phường rồi Lưu (tự dò lại). Quận sáp nhập (Quận 2/9 → Thủ Đức) resolver tự suy quận mới từ phường (`_district_via_ward`: phường khớp duy nhất trong tỉnh, loại quận-giả "Bỏ qua - địa chỉ 2 cấp" id ≥ 100000000; phường trùng tên nhiều quận thì không đoán). Chỉ còn trượt khi phường mơ hồ → "Dò mã vùng VTP" + nhập ID tay. **KHÔNG cần re-sync danh mục** — chỉ sync khi danh mục rỗng (có message riêng) |
 | *"đơn CÓ THỂ đã được tạo…"* | Lỗi mạng/timeout — **kiểm cổng VTP** xem đơn đã tạo chưa TRƯỚC khi đẩy lại |
 | Không thấy nút | Vận đơn phải **đã Submit** và **chưa** có External Shipment ID |
-| *"Price does not apply to this itinerary"* | Thiếu `ORDER_NUMBER` trong payload, hoặc sai `ORDER_PAYMENT` / thiếu `LIST_ITEM` |
+| *"Price does not apply to this itinerary"* | Lỗi catch-all của VTP = "không tra được giá cho bộ (tuyến + dịch vụ + cân nặng + payload)". Các nguyên nhân đã gặp thật: **(1) dịch vụ sai khung cân** — mỗi mã có khung riêng (`STK` max ~10–15kg, `BTK` min ~15kg; đo bằng `getPrice` public); **(2)** dịch vụ bị **Extra Param Body `ORDER_SERVICE` đè** (bug đã gỡ 24/07 — pre-validate pass mã user chọn nhưng payload gửi mã khác); **(3)** thiếu `ORDER_NUMBER` / sai `ORDER_PAYMENT` / thiếu `LIST_ITEM`. Debug: gọi `POST /v2/order/getPrice` (public) với đúng SENDER/RECEIVER + ORDER_SERVICE + PRODUCT_WEIGHT của đơn — tái hiện được ngay mã nào áp/không áp |
 
 ### Webhook không cập nhật trạng thái
 1. Webhook trên cổng VTP đúng endpoint (`?partner=Viettel+Post`)?

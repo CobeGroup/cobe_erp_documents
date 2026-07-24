@@ -285,7 +285,13 @@ class BaseAPIClient:
 |---------|--------|
 | Header | HTTP Header |
 | Query Param | URL query parameter |
-| Body | Request body (JSON) |
+| Body | ⚠️ **ĐÃ GỠ (24/07/2026)** — không còn inject vào JSON body |
+
+> **Vì sao gỡ Body:** merge bằng `dict.update()` **đè lên payload** client đã build — dòng
+> `ORDER_SERVICE=STK` của account VTP từng âm thầm tráo dịch vụ user chọn trên đơn, gây
+> *"Price does not apply to this itinerary!"* với đơn nặng (pre-validate check mã user chọn
+> nên vẫn pass). Payload body giờ do client từng carrier build đầy đủ, có chủ đích; carrier
+> nào cần giá trị account-level trong body thì client đọc tường minh, không inject ngầm.
 
 ---
 
