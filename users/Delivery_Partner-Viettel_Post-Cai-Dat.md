@@ -91,6 +91,8 @@ phải gõ tay; chọn lại mã đã có thì dùng dòng cũ, không sinh trù
 hộp thoại xem cước **tự bật lên** cho chọn (thấy phí thật từng dịch vụ của tuyến),
 chọn xong hệ thống **tự đẩy đơn tiếp** — không phải bấm lại.
 
+![Bấm Đẩy đơn khi chưa chọn dịch vụ — hộp thoại xem cước tự bật kèm nhắc chọn](images/vtp/12-push-auto-dialog.png)
+
 **Đặt dịch vụ mặc định** (tuỳ chọn — chỉ dành cho luồng tự động/API muốn bỏ trống ô
 Dịch vụ giao; trên màn hình thì hộp thoại luôn bắt chọn tường minh) — làm 1 lần:
 
