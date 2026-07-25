@@ -794,3 +794,48 @@ Kết quả chạy thật trên bản sao dữ liệu production. **Đọc trư�
 > event theo backoff tới 24h/lần cho đủ `max_retry_attempts` (mặc định 10),
 > tạo một đống record `Failed` phải dọn tay. Cứ để `Sync Enabled` tắt — event
 > **không mất**, chúng nằm `Pending` chờ mày bật.
+
+---
+
+## 11. Phân quyền — ai được làm gì
+
+Loyalty **không tạo role riêng**, mà gắn vào các role có sẵn của ERPNext. Bảng
+dưới là quyền được cấu hình trong doctype/page (`permissions` + `roles`).
+
+### 11a. Tóm tắt theo vai trò
+
+| Vai trò | Được làm gì trong Loyalty |
+|---|---|
+| **System Manager** | **Toàn quyền.** Cả 2 page (Loyalty Migration + Assignment Tool); chạy seed/backfill/reset; cấu hình Sync + xem `COBE Loyalty Event` / `Migration Run`; mọi doctype loyalty. |
+| **Accounts Manager** | Cấu hình rule thưởng giới thiệu (`COBE Loyalty Settings`); **cộng/trừ điểm thủ công** — tạo/duyệt/huỷ `COBE Loyalty Adjustment` (VIP seed, sửa sai, thưởng sự kiện). |
+| **Sales Master Manager** | Xem/sửa `COBE Loyalty Settings` (rule referral). Không có quyền tạo Adjustment. |
+| **Sales Manager** | Dùng **Loyalty Assignment Tool** — bulk gán Loyalty Program cho khách. |
+| **Bất kỳ ai submit được Sales Invoice** | Kích hoạt **tích điểm tự động** (SO complete / SI cash / referral) khi submit SI — chạy dưới quyền chính user đó qua hook, **không cần role loyalty nào**. Master switch mới là cái quyết định có award hay không. |
+| **Khách / hệ thống ngoài** | Tra điểm qua webhook (xem §9) — xác thực bằng **API key**, không phải role. |
+
+### 11b. Quyền chi tiết theo doctype
+
+| Doctype | Role có quyền | Ghi chú |
+|---|---|---|
+| `COBE Loyalty Settings` (rule referral + gói VIP) | System Manager, Accounts Manager, Sales Master Manager | full CRUD |
+| `COBE Loyalty Adjustment` (cộng/trừ điểm thủ công) | System Manager, Accounts Manager | có **submit / cancel / amend** — đây là chỗ duy nhất cấp/rút điểm bằng tay |
+| `COBE Loyalty Sync Settings` (outbound 3rd party) | System Manager | chỉ SM |
+| `COBE Loyalty Migration Run` (log job seed) | System Manager | read/delete/report — bản ghi do job nền tạo, người dùng không tự tạo |
+| `COBE Loyalty Event` (queue outbound) | System Manager | read/delete/report |
+| `Loyalty Program`, `Loyalty Point Entry` | theo **mặc định ERPNext** | Program do Accounts Manager quản; LPE gần như chỉ-đọc (hệ thống tự tạo), đừng sửa tay |
+
+### 11c. Quyền theo màn hình (page)
+
+| Page | Role mở được | Dùng để |
+|---|---|---|
+| `/app/loyalty-migration` | **chỉ System Manager** | seed đơn cũ, backfill, reset — nút bấm nguy hiểm nên khoá chặt |
+| `/app/loyalty-assignment-tool` | System Manager, **Sales Manager** | bulk gán Program cho khách |
+
+> ⚙️ **Ghi chú kỹ thuật (dành cho dev/quản trị):** Các hàm API của page Migration
+> và của Sync worker đều chốt `frappe.only_for("System Manager")` ở backend nên
+> an toàn kể cả khi gọi thẳng API. Riêng nhóm hàm của **Assignment Tool**
+> (`get_customers`, `bulk_assign`, `enqueue_bulk_assign_matching`) và
+> **VIP tier** (`get_tier_options`, `seed_vip_tier`) hiện **chỉ chặn ở tầng page**
+> (role mở màn hình), **chưa** chốt role trong hàm whitelisted — tức user đăng
+> nhập biết đường dẫn API vẫn gọi được. Nên bổ sung `frappe.only_for(...)` cho
+> 5 hàm này để khoá bằng tầng backend.
