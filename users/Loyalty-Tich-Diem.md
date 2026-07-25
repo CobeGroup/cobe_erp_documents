@@ -246,6 +246,38 @@ Dưới bảng có:
 
 ### 3c. Giới thiệu (referral)
 
+#### Tiêu chí để một lượt referral được tính
+
+Một lượt referral **chỉ được phát điểm khi hội đủ TẤT CẢ** các điều kiện sau (thiếu
+1 mắt là không tính). Áp dụng như nhau cho cả runtime lẫn backfill đơn cũ:
+
+1. **Người được giới thiệu đã là Customer** — Lead đã convert thành khách
+   (`Customer.lead_name` trỏ về Lead gốc). Lead chưa convert → không xét.
+2. **Lead mang cờ referral + có người giới thiệu** — Lead có `utm_source ∈
+   {Reference, Existing Customer, Khách giới thiệu}` HOẶC cột legacy `source =
+   "Existing Customer"`, VÀ `Lead.customer` = người giới thiệu. Tự giới thiệu
+   chính mình (referrer = chính khách đó) → bỏ qua.
+3. **Khách được giới thiệu có đơn hoàn tất** — tồn tại ít nhất 1 Sales Order đã
+   submit đạt **`per_billed = 100`** (đã xuất hoá đơn đủ 100%). Khách chỉ mua
+   tiền mặt lẻ / chưa có SO bill đủ → **KHÔNG** phát referral.
+4. **Company bật referral** — row của `SI.company` trong `COBE Loyalty Settings`
+   có `enabled = 1` và `referral_conversion_factor > 0`.
+5. **Qua ngưỡng + ra điểm** — `SO.grand_total ≥ referral_min_invoice_amount` và
+   `points = floor(grand_total / referral_conversion_factor) > 0`. Người giới
+   thiệu phải đang có `loyalty_program`.
+
+> **Điểm tính thế nào:** lấy **SO hoàn tất ĐẦU TIÊN** của người được giới thiệu →
+> `points = floor(SO.grand_total / referral_conversion_factor)` (cap bởi
+> `referral_max_points` nếu > 0). Điểm cộng cho **NGƯỜI GIỚI THIỆU**, không phải
+> người được giới thiệu. Mỗi khách được giới thiệu chỉ phát **1 lần** (theo đơn
+> hoàn tất đầu tiên).
+
+> **Vì sao neo vào `per_billed = 100`:** để khớp đúng luật runtime — referral
+> kích hoạt đúng lúc đơn của người-được-giới-thiệu bill đủ 100%. Backfill mô
+> phỏng lại y hệt mốc đó cho đơn cũ, nên số liệu hai bên không lệch.
+
+#### Luồng kỹ thuật
+
 Fire ở `Sales Invoice.on_submit` (sau bước SO award ở trên). Quy tắc neo vào
 **trọn SO đầu tiên** của khách được giới thiệu, không phải SI đầu — để chính
 xác khi 1 SO chia thành nhiều SI thanh toán.
@@ -394,7 +426,15 @@ Sửa `Lead.source` / `Lead.customer` để chain referral resolve đúng.
   `no_lead_match`, `no_referrer_customer_match`, `skip_customer_differs`,
   `set_source_and_customer`, `set_customer_only`.
 - **Apply** — ghi `Lead.source` / `Lead.customer`. Không bao giờ đè Lead đang
-  có giá trị customer **khác** với referrer.
+  có giá trị customer **khác** với referrer. **Trước khi ghi dòng đầu tiên**,
+  chụp snapshot (source + customer cũ của mọi Lead sắp đụng) ra file riêng trong
+  `private/files` và trả `rollback_file` trong kết quả run — job đứt giữa chừng
+  vẫn còn đủ snapshot để hoàn tác. Ghi lại đường dẫn `rollback_file` này.
+- **Reset** — hoàn tác lần Apply gần nhất: khôi phục `source` + `customer` của
+  từng Lead đã đụng về đúng giá trị cũ (tự lấy snapshot mới nhất theo thời gian,
+  hoặc chỉ định `file_url`). Vì ghi đè `source` là mất giá trị cũ, **đây là công
+  cụ duy nhất** đưa Lead về nguyên trạng — không có snapshot thì không lùi được.
+  Reset chỉ sửa metadata Lead, **không đụng điểm**.
 
 ### 5.2. Backfill điểm cho Sales Invoice cũ
 - **Dry-run** — đếm số SI sẽ được tạo Loyalty Point Entry, tổng điểm,

@@ -249,6 +249,9 @@ Trên trang Loyalty Migration, chọn **Action = Lead Source Fix**, rồi chạy
 1. **Mode = Analyze** → Enqueue Run. Xem báo cáo tỉ lệ match được (theo SĐT, tên, email…).
 2. **Mode = Dry-run** → xem trước từng thay đổi sẽ ghi (mẫu các nhóm).
 3. **Mode = Apply** → ghi thật. **Không bao giờ đè** Lead đang trỏ tới người giới thiệu khác.
+   Mở kết quả run, **ghi lại `rollback_file`** phòng khi cần hoàn tác.
+4. **Mode = Reset** *(chỉ khi cần lùi)* → khôi phục `source`/`customer` của mọi Lead đã đụng
+   về nguyên trạng (tự lấy snapshot mới nhất). Chỉ sửa metadata, không đụng điểm.
 
 ### 5.2. SI Backfill — điểm mua hàng *(cốt lõi)*
 
@@ -448,14 +451,18 @@ Muốn kiểm tra nhanh điểm 1 khách như phía Zalo thấy: gọi API
 
 ## 9. Hoàn tác (nếu seed sai)
 
-Mỗi công cụ có **Reset** riêng, chỉ đụng phần nó tạo. Chạy Reset **theo thứ tự NGƯỢC** với
-lúc Apply:
+Mỗi công cụ có **Reset** riêng, chỉ đụng phần nó tạo. Với 2 công cụ tạo điểm, chạy Reset
+**theo thứ tự NGƯỢC** với lúc Apply:
 
 ```
-1. Referral Backfill → Reset      (huỷ trước)
-2. SI Backfill       → Reset
-3. Lead Source Fix   → (không có Reset — chỉ sửa Lead, không tạo điểm)
+1. Referral Backfill → Reset      (huỷ trước — huỷ phiếu điểm, tự sinh bút toán bù)
+2. SI Backfill       → Reset      (xoá LPE nó đã tạo)
+3. Lead Source Fix   → Reset      (khôi phục Lead.source/customer từ snapshot lúc Apply;
+                                   metadata thôi, KHÔNG đụng điểm — reset lúc nào cũng được)
 ```
+
+> ⚠️ **VIP Seed KHÔNG có Reset.** Muốn hoàn tác thì mở từng phiếu **COBE Loyalty Adjustment**
+> loại *VIP Seed* rồi **Cancel** (on_cancel tự sinh bút toán bù, trừ điểm lại).
 
 Sau khi Reset, chỉnh lại `collection_factor` / `referral_conversion_factor` rồi Dry-run →
 Apply lại. Lặp tới khi số đẹp.
