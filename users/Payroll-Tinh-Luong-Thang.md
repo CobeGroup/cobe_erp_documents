@@ -47,6 +47,7 @@ flowchart LR
 | Vai trò | Quyền |
 |---|---|
 | **Payroll Officer** | Toàn quyền mọi chứng từ lương + Cobe Payroll Settings + report; đọc-only Employee/Attendance/Leave để chạy lương. |
+| **System Manager** | Chỉ phần **cấu hình** (Salary Component, Salary Structure, Cobe Payroll Settings — không chứa tiền cá nhân). KHÔNG mở được phiếu lương/Assignment/Payroll Entry/report; cần vào thật thì tự gán thêm role Payroll Officer (có log). |
 | **HR Manager / HR User** | KHÔNG mở được bất kỳ chứng từ lương nào; vẫn quản hồ sơ Employee nhưng mục "Lương & Thuế (Cobe)" bị ẩn. |
 | **Nhân viên** | Chỉ xem được phiếu lương **của chính mình** (+ email phiếu lương). |
 

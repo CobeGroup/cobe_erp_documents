@@ -48,7 +48,16 @@ Payroll Period.
 - Guard seed settings phải đếm row child trong DB — `get_single` áp default
   value lên Single chưa lưu nên check field sẽ luôn truthy.
 
-## Phân quyền (patch v0_022)
+## Phân quyền (patch v0_022 → v0_024)
+
+Chốt cuối (v0_024): **chỉ Payroll Officer thấy tiền cá nhân**. System Manager
+giữ phần cấu hình (Salary Component/Structure, Cobe Payroll Settings) nhưng bị
+gỡ khỏi Salary Slip/SSA/Payroll Entry/Additional Salary/Overtime Slip +
+permlevel-2 Employee + report; trong `cobe_payroll/permissions.py` SM cũng KHÔNG
+privileged (SM thường kiêm role Employee → nếu privileged là list được phiếu cả
+công ty). Admin cần vào → tự gán role Payroll Officer (có Version log). Đây
+không phải rào tuyệt đối với SM (SM tự cấp quyền được) — mục tiêu là mặc-định-
+không-thấy + có dấu vết.
 
 - Role **Payroll Officer** (tạo bởi patch): full trên 7 doctype lương (Salary
   Slip/Structure/Assignment, Payroll Entry, Additional Salary, Salary Component,
