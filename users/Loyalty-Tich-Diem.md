@@ -831,11 +831,18 @@ dưới là quyền được cấu hình trong doctype/page (`permissions` + `ro
 | `/app/loyalty-migration` | **chỉ System Manager** | seed đơn cũ, backfill, reset — nút bấm nguy hiểm nên khoá chặt |
 | `/app/loyalty-assignment-tool` | System Manager, **Sales Manager** | bulk gán Program cho khách |
 
-> ⚙️ **Ghi chú kỹ thuật (dành cho dev/quản trị):** Các hàm API của page Migration
-> và của Sync worker đều chốt `frappe.only_for("System Manager")` ở backend nên
-> an toàn kể cả khi gọi thẳng API. Riêng nhóm hàm của **Assignment Tool**
-> (`get_customers`, `bulk_assign`, `enqueue_bulk_assign_matching`) và
-> **VIP tier** (`get_tier_options`, `seed_vip_tier`) hiện **chỉ chặn ở tầng page**
-> (role mở màn hình), **chưa** chốt role trong hàm whitelisted — tức user đăng
-> nhập biết đường dẫn API vẫn gọi được. Nên bổ sung `frappe.only_for(...)` cho
-> 5 hàm này để khoá bằng tầng backend.
+> ⚙️ **Ghi chú kỹ thuật (dành cho dev/quản trị):** Mọi hàm API loyalty đều chốt
+> role ở **backend**, an toàn kể cả khi gọi thẳng `/api/method/...` (không chỉ
+> dựa vào role mở page):
+> - Page **Migration** + **Sync worker**: `frappe.only_for("System Manager")`.
+> - **Assignment Tool** (`get_customers`, `bulk_assign`,
+>   `enqueue_bulk_assign_matching`) và **VIP tier** (`get_tier_options`,
+>   `seed_vip_tier`): helper `_require_role()` chặn ngoài {System Manager, Sales
+>   Manager} → `PermissionError`. Các hàm ghi data (`bulk_assign`,
+>   `seed_vip_tier`) chỉ dùng `ignore_permissions` **sau khi** đã qua
+>   `_require_role()` — pattern chuẩn "gate ở cửa rồi mới elevate".
+>
+> ⚠️ Một điểm lệch nhỏ có chủ ý: `seed_vip_tier` cho phép **Sales Manager** tạo
+> phiếu `COBE Loyalty Adjustment` (loại *VIP Seed*) **qua công cụ tier**, dù tạo
+> Adjustment trực tiếp trên doctype thì cần Accounts Manager. Tức Sales Manager
+> bơm VIP tier được qua tool, nhưng không mở/sửa Adjustment tuỳ ý ở list được.
