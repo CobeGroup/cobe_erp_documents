@@ -92,6 +92,30 @@ doc_events = {
 
 Tận dụng Frappe Query Report — Employee Checkin có sẵn fields cơ bản + custom fields ta thêm. Tạo report mới trong Desk → Report Builder, filter theo `custom_checkin_source` để tách onsite vs WFH.
 
+### 5. Lưới ngày của COBE HR Attendance Sheet — bẫy khi chỉnh giao diện
+
+`cobe_hr_attendance_sheet.js` giả lập "1 ô ngày gộp" bằng **2 cột phẳng** (mã + giờ, cùng
+width) rồi sinh CSS theo **chỉ số cột** (`.dt-cell--col-N` — class này có ở cả header lẫn
+body, kể cả dòng datatable render lại khi cuộn). Sửa phần này thì nhớ:
+
+- **KHÔNG dùng `margin` / `width`** để nới hộp nhãn header. frappe-datatable đặt width lên
+  chính `.dt-cell__content--header-N` (`columnmanager.setColumnHeaderWidth`), còn `.dt-cell`
+  là **flex-item tự co theo content** → `margin-right` âm **bóp ô header lại**, header dồn 2
+  ngày vào 1 trong khi body vẫn đúng. Dùng `transform: translateX()` — không đụng layout.
+- **`text-indent` cũng không dùng được**: khi chữ tràn hộp, vị trí phụ thuộc **độ dài nhãn**
+  nên mỗi ngày lệch một kiểu.
+- `transform` trên content div **kéo theo nút resize + dropdown** (2 thứ này `position:absolute`
+  *bên trong* content) → phải đẩy ngược lại.
+- Cột Float bị `frappe.format()` bọc trong `<div style="text-align:right">` → muốn đổi căn lề
+  phải đè bằng `!important` lên `div` bên trong.
+- Nhận diện cột ngày theo **fieldname** (`dd-mm-yyyy`), đừng theo `colIndex` — `colIndex` của
+  datatable có tính cả cột số thứ tự nên dễ dính nhầm cột tổng.
+
+Verify không cần đăng nhập được: dựng harness tĩnh nạp `frappe-datatable.css` + **file report
+thật** (stub `frappe`), gán width lên `.dt-cell__content--{header-,col-}N` **đúng như
+datatable**, rồi đo `getBoundingClientRect` của text node. Gán width sai chỗ (lên `.dt-cell`)
+là không bắt được lỗi bóp ô nói trên.
+
 ---
 
 ## Quick start (developer)

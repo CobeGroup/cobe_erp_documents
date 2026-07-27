@@ -127,7 +127,7 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 | Mã (ô trái) | Nghĩa | Ô giờ (phải) | HR |
 |---|---|---|---|
 | **P** | **Ngày công** (Present) — đủ hay thiếu (trễ/về sớm) đều `P`; **ô giờ bên phải** cho biết đủ/thiếu | số giờ thực (8,2 / 6,5) | mục 1,3 |
-| **HD** | **Nửa ngày công** (Half Day) | số giờ thực (4,0) | mục 2 |
+| **HD** | **Nửa ngày công** (Half Day) | số giờ thực (4,0) — nếu là **`0,0`** thì **quên bấm giờ RA**, xem ghi chú dưới bảng | mục 2 |
 | **WFH** | **Làm việc ở nhà** — hưởng 70%/ngày thường | giờ thực (nếu có) | mục 4 |
 | **NB** | Nghỉ bù | — | mục 5 |
 | **L** | Phép năm (đã duyệt) | — | mục 6 |
@@ -138,6 +138,16 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 | **BH** | Nghỉ chế độ BHXH | — | mục 11 |
 | **-** | **Không có dữ liệu chấm công / vắng** (0 công) | — | mục 12 |
 | **WO** | Nghỉ tuần (vd Chủ nhật) | — | — |
+
+> ⚠️ **`HD` kèm ô giờ `0,0` = NV chỉ bấm giờ VÀO, không bấm giờ RA** — không phải nghỉ nửa ngày.
+> Giờ công tính bằng *giờ ra − giờ vào*, thiếu vế RA thì bằng **0**; mà 0 giờ thì dưới ngưỡng
+> công đủ của ca nên hệ thống hạ xuống **nửa ngày**. Nhân viên vì vậy **mất trắng giờ hôm đó
+> và chỉ được tính ½ công** — kiểm tra trên bảng thấy `HD 0,0` thì đối chiếu Employee Checkin
+> rồi **bổ sung log RA / sửa Attendance tay** trước khi chốt công.
+>
+> Phân biệt: `HD` mà ô giờ **> 0** là đi làm thật nhưng **vào trễ** (chính sách Cobe: trễ là
+> nửa ngày) hoặc giờ công không đủ ngưỡng. Còn **nghỉ phép nửa ngày** hiện `L/2`, `NB`, `KL`…
+> theo đúng loại phép, **không** hiện `HD`.
 
 > 📊 Xem **ảnh lưới Cobe thực tế** (đủ mã + số giờ) ở **[mục 0](#0-bản-cobe--khác-gì-bản-gốc)** phía trên.
 
