@@ -544,7 +544,7 @@ Trang **Loyalty Migration** (`/app/loyalty-migration`). Không ghi gì, chỉ đ
 - [ ] **Referral Backfill** · Mode **Dry-run** *(~30 giây)*
 
 **Số kỳ vọng** — đây là kết quả **chạy thật** trên bản sao dữ liệu prod ngày 22/07/2026,
-với đúng bộ tham số ở Bước 1. Số của mày phải khớp gần bằng:
+với đúng bộ tham số ở Bước 1. Số thực tế phải khớp gần bằng:
 
 **SI Backfill**
 

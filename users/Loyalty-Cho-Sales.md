@@ -87,7 +87,7 @@ Màn hình sau khi chọn `Source = Reference` — ô **From Customer** hiện r
 
 > Nếu chọn Source khác (Hotline, Facebook, Cộng tác viên…) thì ô *From Customer* **không hiện**, và hệ thống hiểu là khách **không đến từ giới thiệu** → không có thưởng.
 
-> 🔎 **Không thấy ô From Customer?** Kiểm tra lại mày đã chọn đúng `Reference` chưa — ô
+> 🔎 **Không thấy ô From Customer?** Kiểm tra lại đã chọn đúng `Reference` chưa — ô
 > này chỉ hiện với 2 giá trị `Reference` và `Existing Customer`. Chọn xong mà vẫn không
 > hiện thì báo quản trị (thiếu cấu hình hiển thị của ô đó).
 
@@ -121,7 +121,7 @@ Khách **không được gán Chương trình tích điểm** sẽ **không nh�
 > Customer. Nghĩa là **mở form khách ra sẽ KHÔNG thấy 2 ô đó**. Dùng 1 trong 2 cách dưới.
 
 **Cách 1 — xem hàng loạt (khuyến nghị):** mở danh sách **Customer** → đổi sang **Report
-view** → bấm nút thêm cột → chọn **Loyalty Program**. Giờ mày thấy ngay khách nào có,
+view** → bấm nút thêm cột → chọn **Loyalty Program**. Giờ sẽ thấy ngay khách nào có,
 khách nào trống, và lọc/sắp xếp được theo cột đó.
 
 **Cách 2 — xem 1 khách:** mở danh sách **Loyalty Point Entry**, lọc theo tên khách. Có

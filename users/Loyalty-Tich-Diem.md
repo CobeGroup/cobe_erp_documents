@@ -210,7 +210,7 @@ Dưới bảng có:
   |---|---|
   | Updated | Số customer đã gán thành công |
   | Skipped (đã ở program đích) | Customer đã ở `loyalty_program = target` |
-  | Skipped (program khác, override OFF) | Customer đang ở program khác và mày không bật override |
+  | Skipped (program khác, override OFF) | Customer đang ở program khác và không bật override |
   | Not found | Tên customer không còn trong DB (hiếm — race condition) |
 
 ### Lưu ý
@@ -378,7 +378,7 @@ như mọi LPE khác.
 
 **Không** sửa trực tiếp collection rules của Loyalty Program đang dùng. Thay vào đó:
 
-1. Mở Loyalty Program đang active → set `to_date` = hôm nay (hoặc ngày cắt mày muốn).
+1. Mở Loyalty Program đang active → set `to_date` = hôm nay (hoặc ngày cắt mong muốn).
 2. Tạo Loyalty Program mới với `from_date` = ngày mai và rule mới.
 3. Gán program mới cho customer (theo nhu cầu).
 
@@ -441,7 +441,7 @@ Sửa `Lead.source` / `Lead.customer` để chain referral resolve đúng.
   top 10 customer có điểm nhiều nhất. Trên ~18.400 hoá đơn mất ~30 giây.
 - **Apply** — tạo 1 `Loyalty Point Entry` cho mỗi SI đủ điều kiện. Mỗi entry
   có `discretionary_reason` chứa marker `[MIGRATED:SI:<tên SI>]`.
-- **Reset Migrated** — xoá **chỉ** các entry có marker. Dùng khi mày muốn đổi
+- **Reset Migrated** — xoá **chỉ** các entry có marker. Dùng khi muốn đổi
   config rồi chạy lại.
 
 **Đọc kết quả** — mỗi SI rơi vào đúng 1 rổ, và `reconciles` phải là `true`:
@@ -529,7 +529,7 @@ của Loyalty Program / `referral_conversion_factor` của settings → Reset �
 ## 7. Lưu ý quan trọng (Gotchas)
 
 - **Customer không có Loyalty Program** sẽ không tích điểm và không báo lỗi.
-  Đây là thiết kế cố ý — nhưng nếu mày thấy "tại sao không có điểm?" thì cách
+  Đây là thiết kế cố ý — nhưng nếu thấy "tại sao không có điểm?" thì cách
   fix là gán program, không phải debug hook.
 - **Field `Lead.source` vs `utm_source`** — bẫy đã từng làm referral sót ~99,8%:
   ERPNext đời mới đã **gỡ field `source` khỏi DocType Lead** (chỉ còn lại cột DB mồ côi,
@@ -542,7 +542,7 @@ của Loyalty Program / `referral_conversion_factor` của settings → Reset �
   `fixtures` — dựng site mới nhớ tạo lại.
 - **Match theo thứ tự**; cái match đầu tiên thắng. Nếu strategy 4 (clean name)
   trùng tên giữa 2 customer khác nhau, cái nào được index trước sẽ thắng. Output
-  sample của Dry-run là công cụ để mày soi case kiểu này.
+  sample của Dry-run là công cụ để soi case kiểu này.
 - **Nhiều SI cho 1 SO**: theo thiết kế, điểm chỉ cộng 1 lần khi SO đạt
   `per_billed = 100`, không phải mỗi SI. Nếu SO bị over-billed hoặc có return
   làm `per_billed` xuống dưới 100 sau khi đã cộng điểm, **entry đã cộng không
@@ -793,7 +793,7 @@ Kết quả chạy thật trên bản sao dữ liệu production. **Đọc trư�
 > ⛔ **Đừng bật `Sync Enabled` khi endpoint còn trả 4xx.** Worker sẽ retry mỗi
 > event theo backoff tới 24h/lần cho đủ `max_retry_attempts` (mặc định 10),
 > tạo một đống record `Failed` phải dọn tay. Cứ để `Sync Enabled` tắt — event
-> **không mất**, chúng nằm `Pending` chờ mày bật.
+> **không mất**, chúng nằm `Pending` chờ bật lại.
 
 ---
 
