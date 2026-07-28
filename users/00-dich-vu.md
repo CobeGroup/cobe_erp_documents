@@ -15,3 +15,4 @@ Quản lý dịch vụ hiện trường (FSMNext) và tự động phân bổ ti
 - 🔧 **[Tự xử lý sự cố dịch vụ (FSMNext)](FSMNext-Xu-Ly-Su-Co.html)** — cây quyết định *"WO vẫn New dù SO/SA đã Completed"*, tra lỗi theo triệu chứng, cách đọc FS Scheduler Log.
 - **[Auto-Assign Ticket & SIM](Service_Reminder_Auto_Assign.html)** — tự động phân bổ ticket bảo dưỡng & SIM.
 - **[Quy tắc phân bổ bảo dưỡng](QUY_TAC_PHAN_BO_BAO_DUONG.html)** — thuật toán chọn kỹ thuật viên.
+- 🔍 **[Lọc ticket bảo dưỡng](Loc-Ticket-Bao-Duong.html)** — lọc theo tháng/khoảng ngày, theo người phụ trách, ca quá hạn, ticket chưa gán; sắp xếp và lưu bộ lọc dùng lại.
