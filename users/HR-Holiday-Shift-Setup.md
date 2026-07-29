@@ -76,11 +76,9 @@ Ba nguồn phải luôn trỏ về **cùng một Holiday List** cho mỗi nhân 
 > công (`ShiftType.get_holiday_list` ưu tiên ô trên ca) trong khi nghỉ phép và lương
 > vẫn đọc HLA → hai nhánh tính theo hai lịch khác nhau, sai âm thầm tới kỳ lương.
 
-> 🐞 **Vấn đề đã biết — cột *Tổng giờ chuẩn* trên report.** Report *Bảng chấm công
-> Cobe* vẫn đang lấy danh sách thứ 7 nửa ngày từ `Shift Type.holiday_list`
-> (`_shift_half_holiday_dates`). Ô đó nay trống nên cột này **cộng nguyên ca cho thứ 7**
-> của khối văn phòng — cao hơn thực tế khoảng **4h/tuần/người**. Đang chờ vá sang đọc
-> theo HLA. Trong lúc chờ, đối chiếu lương thì dùng cột *Tổng giờ thực*.
+> ✅ Report *Bảng chấm công Cobe* đã đọc theo HLA từ 29/07/2026 — cột *Tổng giờ chuẩn*
+> và ký hiệu H/WO tra list của **từng nhân viên theo từng ngày**, nên hai người cùng ca
+> mà khác lịch nghỉ vẫn ra đúng, và report không lệch với bảng công.
 
 ---
 

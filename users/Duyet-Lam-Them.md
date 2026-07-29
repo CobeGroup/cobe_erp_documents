@@ -90,10 +90,13 @@ Không sao. Nhân viên vốn đã làm thêm xong mới khai đơn; khi bạn d
 ## 5. Lỡ duyệt nhầm — huỷ duyệt
 
 Hay gặp nhất là **duyệt nhầm hình thức quy đổi** (Tiền lương ↔ Nghỉ bù). Đơn đã duyệt
-thì tab *Cần duyệt* không còn thấy nữa, nhưng có nút huỷ trên **Desk**.
+thì tab *Cần duyệt* không còn thấy nữa, nhưng huỷ được ở hai chỗ:
 
-Mở Desk → tìm **HR Overtime Request** → mở đơn đó → bấm nút đỏ **"Huỷ duyệt"**
-(chỉ hiện khi đơn đang ở trạng thái *Approved*).
+- **Trên app** — vào **Cần duyệt** → chọn tab **"Đã duyệt · OT"** (liệt kê đơn bạn đã
+  duyệt trong 45 ngày gần đây) → bấm **Huỷ duyệt** ở đơn cần sửa.
+- **Trên Desk** — tìm **HR Overtime Request** → mở đơn → bấm nút đỏ **"Huỷ duyệt"**.
+
+Nút chỉ hiện khi đơn đang ở trạng thái *Approved*.
 
 **Ai bấm được:** đúng người duyệt được thì huỷ được — bạn huỷ được đơn của nhân viên
 mình phụ trách; HR Manager / System Manager huỷ được mọi đơn.
@@ -121,7 +124,7 @@ mình phụ trách; HR Manager / System Manager huỷ được mọi đơn.
 |---|---|
 | Không thấy đơn làm thêm trong Cần duyệt | Bạn chưa được gán làm **Shift Request Approver** của nhân viên đó → báo HR |
 | Nhân viên kêu "duyệt rồi mà 0 giờ" | Kiểm tra hôm đó có check-out không, check-out có sau giờ tan ca không |
-| Duyệt nhầm | Bấm **Huỷ duyệt** trên Desk — xem [mục 5](#5-lỡ-duyệt-nhầm--huỷ-duyệt). Trên app chưa có nút này |
+| Duyệt nhầm | Tab **Đã duyệt · OT** trong Cần duyệt → **Huỷ duyệt**; hoặc làm trên Desk — xem [mục 5](#5-lỡ-duyệt-nhầm--huỷ-duyệt) |
 | Đơn quy đổi Nghỉ bù — duyệt xong còn phải duyệt gì nữa? | Còn **đơn Nghỉ bù** (2 bước Quản lý → HR) khi nhân viên xin nghỉ — xem [Duyệt nghỉ phép](Duyet-Nghi-Phep.html) |
 
 ---
