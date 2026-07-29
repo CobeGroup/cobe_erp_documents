@@ -87,13 +87,41 @@ Không sao. Nhân viên vốn đã làm thêm xong mới khai đơn; khi bạn d
 
 ---
 
+## 5. Lỡ duyệt nhầm — huỷ duyệt
+
+Hay gặp nhất là **duyệt nhầm hình thức quy đổi** (Tiền lương ↔ Nghỉ bù). Đơn đã duyệt
+thì tab *Cần duyệt* không còn thấy nữa, nhưng có nút huỷ trên **Desk**.
+
+Mở Desk → tìm **HR Overtime Request** → mở đơn đó → bấm nút đỏ **"Huỷ duyệt"**
+(chỉ hiện khi đơn đang ở trạng thái *Approved*).
+
+**Ai bấm được:** đúng người duyệt được thì huỷ được — bạn huỷ được đơn của nhân viên
+mình phụ trách; HR Manager / System Manager huỷ được mọi đơn.
+
+**Hệ thống làm gì khi bạn bấm:**
+
+1. Kiểm tra trước, vướng thì báo đỏ và **không cho huỷ**:
+   - Giờ OT đã nằm trong **Overtime Slip đã duyệt** → phải huỷ slip đó trước.
+   - **Phiếu lương đã duyệt** phủ ngày đó → tiền có thể đã trả, xử lý phiếu lương trước.
+   - Đơn quy đổi Nghỉ bù mà nhân viên **đã dùng ngày đó để xin Nghỉ bù** → huỷ đơn nghỉ bù trước.
+2. Qua được thì bắt **nhập lý do** (bắt buộc), rồi:
+   - Gỡ giờ OT khỏi bản chấm công ngày đó → kỳ lương **không** còn tính khoản này.
+   - Đơn chuyển sang trạng thái **Cancelled** (đóng hẳn), ghi lý do + lưu vết ai huỷ.
+   - Nhân viên nhận **thông báo** kèm lý do.
+
+> Đơn *Cancelled* **không chiếm chỗ** — cần ghi nhận lại thì khai đơn mới cho đúng
+> ngày đó, không bị báo trùng. Nhân viên tự khai lại được trong hạn 1 ngày; quá hạn
+> thì HR tạo tay trên Desk.
+
+---
+
 ## ⚠️ Lưu ý
 
 | Tình huống | Cách xử |
 |---|---|
 | Không thấy đơn làm thêm trong Cần duyệt | Bạn chưa được gán làm **Shift Request Approver** của nhân viên đó → báo HR |
 | Nhân viên kêu "duyệt rồi mà 0 giờ" | Kiểm tra hôm đó có check-out không, check-out có sau giờ tan ca không |
-| Duyệt nhầm | Báo HR sửa trên Desk (mở HR Overtime Request → đổi status) — chưa có nút hoàn tác trên app |
+| Duyệt nhầm | Bấm **Huỷ duyệt** trên Desk — xem [mục 5](#5-lỡ-duyệt-nhầm--huỷ-duyệt). Trên app chưa có nút này |
 | Đơn quy đổi Nghỉ bù — duyệt xong còn phải duyệt gì nữa? | Còn **đơn Nghỉ bù** (2 bước Quản lý → HR) khi nhân viên xin nghỉ — xem [Duyệt nghỉ phép](Duyet-Nghi-Phep.html) |
 
 ---
