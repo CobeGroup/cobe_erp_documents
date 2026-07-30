@@ -67,13 +67,22 @@ công ty** (mỗi company một record HR Policy).
 > Bảng này chỉ **THU HẸP** trong số HR Manager — **không cấp quyền** cho ai. Muốn ai đó
 > duyệt được thì phải **vừa** cấp role HR Manager **vừa** thêm tên vào đây.
 
-**Ảnh hưởng tới 4 chỗ**, không chỉ nút duyệt:
+**Ảnh hưởng tới 5 chỗ**, không chỉ nút duyệt:
 
-1. **Tab Cần duyệt** — người ngoài danh sách không thấy đơn của công ty đó nữa.
-2. **Nút Duyệt / Từ chối** — bấm sẽ báo *"Bạn không phải người duyệt đơn này ở bước hiện tại"*.
-3. **Thông báo** — chỉ người trong danh sách nhận báo khi đơn lên bước HR.
-4. **Chuyển duyệt** — ở bước HR chỉ chọn được người trong danh sách (chuyển cho người
+1. **Tab Cần duyệt** (app) — người ngoài danh sách không thấy đơn của công ty đó nữa.
+2. **Nút Duyệt / Từ chối** (app) — bấm sẽ báo *"Bạn không phải người duyệt đơn này ở bước hiện tại"*.
+3. **Nút workflow trên Desk** — chặn ở tầng document nên **Desk cũng không lách được**.
+4. **Thông báo** — chỉ người trong danh sách nhận báo khi đơn lên bước HR.
+5. **Chuyển duyệt** — ở bước HR chỉ chọn được người trong danh sách (chuyển cho người
    ngoài thì đơn **kẹt** không ai duyệt được).
+
+### Danh sách này KHÔNG áp cho
+
+| | Vì sao |
+|---|---|
+| **Bước 1 (Trưởng Bộ Phận)** | Vẫn theo `leave_approver` như cũ; HR Manager ngoài danh sách vẫn duyệt thay được ở bước này |
+| **Đơn Chấm công bù / Làm thêm giờ** | Đi theo *Shift Request Approver*, không có bước HR |
+| **Đơn đã chuyển đích danh** | Người được chuyển tới quyết — nhưng chỉ chuyển được cho người trong danh sách (mục 5) |
 
 > ⚠️ **Để trống = không giới hạn**, không phải "cấm hết". Nên deploy xong chưa đổi gì
 > cho tới khi HR điền tên.
