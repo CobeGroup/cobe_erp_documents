@@ -435,6 +435,16 @@ bảo đảm thứ tự**, giữa lúc nhận và lúc áp có thể có sự ki
 | **`ORDER_STATUSDATE` là `dd/mm/yyyy`** | `"10/11/2025"` là **10 tháng 11**. Mọi parser đoán định dạng — kể cả `frappe.utils.get_datetime` — đọc thành **11 tháng 10** với mọi ngày ≤ 12. Mốc sai làm guard **bỏ sự kiện MỚI và giữ sự kiện CŨ** = tệ hơn không có guard. Phải `datetime.strptime` khai tường minh; parse không ra thì **fail-open** (cho qua), tuyệt đối đừng đoán |
 | **So sánh mốc phải `<` chặt** | Hai bản ghi hành trình khác nhau có thể **cùng một giây** trong lô burst; `<=` là drop oan |
 | **`except Exception` quanh `enqueue` → chạy INLINE** | Hàng đợi đầy (`QueueOverloaded`) hay Redis chết thì chậm còn hơn **mất hẳn** — mình luôn trả 200 nên VTP không gửi lại. `_check_queue_size` chạy **trước** nhánh `after_commit` nên `try/except` bắt được |
+| **Tên tham số job KHÔNG được trùng tham số của `frappe.enqueue`** | Chỉ phần `**kwargs` mới xuống tới job. Đặt tên `event` (hoặc `queue`, `timeout`, `now`, `job_name`, `is_async`, `at_front`…) là bị `enqueue` **nuốt**, job nhận thiếu tham số → chết `TypeError` **trong worker** trong khi web vẫn trả 200 và Error Log **trống**. Đây là bug thật đã xảy ra: job chưa từng chạy lần nào mà nhìn hoàn toàn khoẻ mạnh |
+
+> 🔴 **Bẫy cuối cùng đó mock KHÔNG bắt được.** Mock `frappe.enqueue` bằng `lambda m, **kw` hứng sạch
+> mọi tên tham số nên luôn pass. **Bắt buộc phải có test bắn HTTP thật rồi chờ worker**, cộng một phép
+> kiểm đối chiếu tên tham số job với `inspect.signature(frappe.enqueue)`.
+
+**Chốt trùng y hệt:** cùng mã **và** cùng mốc = cùng một bản ghi hành trình → bỏ qua. Cần vì mốc đơn
+điệu so sánh **chặt** (`<`) nên bản trùng có mốc BẰNG nhau vẫn lọt, áp lại không sinh chứng từ trùng
+nhưng đẻ thêm một Comment mỗi lần. Chỉ chặn khi ĐVVC **có gửi mốc** — không mốc thì hai lần cùng mã có
+thể là hai sự kiện thật khác nhau (VD `506` thất bại nhiều lần), chặn là mất dữ liệu.
 
 `job_id` tất định `dp-webhook::{đơn}::{mã}::{mốc}` + `deduplicate=True` → **5 lần retry của VTP gộp
 thành 1 job** thay vì 5.
