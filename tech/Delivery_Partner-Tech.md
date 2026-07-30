@@ -57,7 +57,7 @@ delivery_partner/
 │   ├── handlers/
 │   │   ├── base.py                           # BaseWebhookHandler (abstract)
 │   │   ├── ghn.py                            # GHN handler (Token header, OrderCode)
-│   │   ├── viettelpost.py                    # VTP handler (X-VTP-Token, ORDER_NUMBER)
+│   │   ├── viettelpost.py                    # VTP handler (TOKEN trong body, ORDER_NUMBER)
 │   │   ├── ghtk.py                           # GHTK handler (X-Client-Source)
 │   │   └── generic.py                        # Fallback handler
 │   ├── hooks.py                              # CHỈ có app metadata (xem §9)
@@ -96,10 +96,11 @@ DP Partner
       └── description (string)
 ```
 
-**8 Normalized Events:**
+**10 Normalized Events:**
 
 | Event | Ý nghĩa | DP Shipment Status |
 |-------|---------|-------------------|
+| `booked` | ĐVVC đã nhận đơn nhưng **CHƯA cầm hàng** | Booked |
 | `picked_up` | Carrier đã lấy hàng | Partner Received |
 | `in_transit` | Đang vận chuyển | In Transit |
 | `delivered` | Giao thành công | Delivered |
@@ -108,6 +109,11 @@ DP Partner
 | `returned` | Đã hoàn hàng | Returned |
 | `lost` | Mất hàng | Lost |
 | `cancelled` | Đã hủy | Cancelled |
+| `no_change` | Mốc hành chính (VD *sửa phiếu gửi*) — chỉ ghi tracking | *(không đổi)* |
+
+> `booked` và `no_change` thêm sau: gộp các mốc "đã nhận đơn, chưa cầm hàng" vào `picked_up` là
+> **xuất kho khi chưa ai cầm hàng**; còn `normalized_event` là field bắt buộc nên mốc hành chính
+> không thể để rỗng.
 
 ### 3.2. DP Partner Account
 
@@ -174,7 +180,8 @@ DP Shipment (autoname: SHIP-DP-{YYYY}-{#####})
     ├── status (Select — lifecycle bên dưới)
     ├── external_shipment_id (string, mã vận đơn từ carrier)
     ├── tracking_status (string, raw status)
-    ├── tracking_status_info (string)
+    ├── tracking_status_info (Small Text — KHÔNG được là Data, xem ghi chú)
+    ├── tracking_status_date (Datetime — mốc ĐVVC ghi nhận, dùng làm mốc đơn điệu)
     └── tracking_url (string)
 ```
 
@@ -187,8 +194,12 @@ Draft → Submitted → Partner Received → In Transit → Delivered
         → Cancelled (on_cancel hoặc webhook event "cancelled")
 ```
 
-> `Booked` có trong options Select nhưng **không có code nào set** — app gốc không tự gọi
-> API tạo đơn khi submit. `on_submit` chỉ `db_set("status", "Submitted")`.
+> `Booked` giờ **có** code set: event `booked` map vào nó (ĐVVC đã nhận đơn nhưng chưa cầm hàng).
+> `on_submit` vẫn chỉ `db_set("status", "Submitted")` — app gốc không tự gọi API tạo đơn khi submit.
+
+> 🔴 `tracking_status_info` phải là **`Small Text`**. `Data` = `varchar(140)`, mà chuỗi tracking gộp
+> (tên trạng thái + ghi chú + mã lý do + vị trí + mốc) vượt ngưỡng đó; MariaDB chạy
+> `STRICT_TRANS_TABLES` nên vượt là **THROW, giết cả webhook** chứ không cắt ngắn.
 
 ### 3.4. DP Shipment Item (child table)
 
@@ -347,11 +358,18 @@ Status : payload["Status"].lower()
 
 **Viettel Post** (`handlers/viettelpost.py`):
 ```
-Payload: {"ORDER_NUMBER": "...", "ORDER_STATUS": 500, "NOTE": "..."}
-Verify : request.headers["X-VTP-Token"] == webhook_secret
+Payload: {"DATA": {"ORDER_NUMBER": "...", "ORDER_STATUS": 501,
+                   "ORDER_STATUSDATE": "30/07/2026 11:07:16",
+                   "IS_RETURNING": false, "REASON_CODE": null, ...},
+          "TOKEN": "<webhook_secret>"}
+Verify : envelope["TOKEN"] == webhook_secret   (hmac.compare_digest)
+         ⚠️ TOKEN nằm TRONG BODY, không phải header.
+         Header Authorization mà VTP gửi là JWT CỦA VTP, không phải secret của mình.
          (nếu chưa cấu hình secret → bỏ qua verify)
 Status : str(payload["ORDER_STATUS"])
 ```
+> Chi tiết bảng mã, chốt trạng thái-cuối, cờ `IS_RETURNING` và mô hình xử lý nền:
+> [Viettel Post — Tham chiếu kỹ thuật §6](Delivery_Partner-Viettel_Post-Tech.html).
 
 **GHTK** (`handlers/ghtk.py`):
 ```
@@ -403,7 +421,8 @@ def handle_event(self, event, raw_status="", info=""):
     self.add_comment("Info", ...)  # Ghi log
 ```
 
-`db_set("status", ...)` trigger Frappe `on_update` → extension app hooks react (tạo SE/DN/SI/PE).
+`db_set("status", ...)` trigger Frappe **`on_change`** (KHÔNG phải `on_update`) → extension app hooks
+react (tạo SE/DN/SI/PE). Đây chính là gap từng làm webhook không sinh chứng từ.
 
 ---
 
@@ -560,7 +579,7 @@ def list_carriers():
 **Không** có `doc_events`, `scheduler_events`, `override_whitelisted_methods`, hay `fixtures`.
 Webhook/setup được whitelist trực tiếp trên function (`@frappe.whitelist`), không qua hooks.
 
-> Phần phản ứng `on_update` (tạo SE/DN/SI/PE) được đăng ký trong `hooks.py` của **app extension**,
+> Phần phản ứng `on_change` (tạo SE/DN/SI/PE) được đăng ký trong `hooks.py` của **app extension**,
 > không phải app này.
 
 ### 9.2. Permissions
