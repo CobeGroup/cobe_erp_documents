@@ -53,8 +53,21 @@ nav_order: 2
 Vấn đề: role `HR Manager` được cấp rộng — hiện có **14 tài khoản**, gồm cả tài khoản
 tích hợp hệ thống. Ai cũng nhận đơn thì không ai thấy mình là người chịu trách nhiệm.
 
-Bảng **Người duyệt cuối đơn nghỉ phép** khai **đích danh** ai nhận việc đó, **theo từng
-công ty** (mỗi company một record HR Policy).
+Bảng **Người duyệt cuối đơn nghỉ phép** khai **đích danh** ai nhận việc đó.
+
+### Luật gọn trong một dòng
+
+```
+Duyệt được  =  CÓ role HR Manager   VÀ   CÓ tên trong bảng
+                                    (hoặc là System Manager)
+```
+
+| Trạng thái bảng | Ai duyệt bước HR |
+|---|---|
+| **Để trống** | **Mọi HR Manager** — y như trước khi có tính năng này |
+| **Có ≥ 1 dòng** | **Chỉ những người trong bảng** (+ System Manager) |
+
+Chi tiết từng trường hợp:
 
 | Trường hợp | Nhận đơn ở tab *Cần duyệt* | Bấm duyệt |
 |---|---|---|
@@ -66,6 +79,32 @@ công ty** (mỗi company một record HR Policy).
 
 > Bảng này chỉ **THU HẸP** trong số HR Manager — **không cấp quyền** cho ai. Muốn ai đó
 > duyệt được thì phải **vừa** cấp role HR Manager **vừa** thêm tên vào đây.
+>
+> Ngược lại, sau này **gỡ role HR Manager** của một người thì họ **tự rớt** khỏi luồng
+> duyệt, dù tên vẫn còn trong bảng — không cần nhớ vào đây xoá.
+
+### Khai theo TỪNG CÔNG TY
+
+Mỗi công ty **một record HR Policy riêng**, và danh sách này nằm trong đó. Điền cho
+công ty nào chỉ ăn cho **nhân viên của công ty đó**.
+
+| Công ty | Nếu đã điền | Nếu bỏ trống |
+|---|---|---|
+| THẾ GIỚI ĐIỆN GIẢI | chỉ người trong bảng | mọi HR Manager |
+| AKANWA | chỉ người trong bảng | mọi HR Manager |
+| DOCTOR NƯỚC | chỉ người trong bảng | mọi HR Manager |
+
+> ⚠️ Điền cho **một** công ty **không** siết hai công ty kia. Muốn siết cả tập đoàn thì
+> phải mở **cả 3 record** HR Policy và điền từng cái.
+
+### Cách khai
+
+1. Desk → **HR Policy** → mở record của **đúng công ty**.
+2. Kéo tới mục **Người duyệt cuối (cấp HR)**.
+3. Ô **Người duyệt cuối đơn nghỉ phép** → gõ tên/email, chọn từ danh sách (chọn được nhiều).
+4. **Save.** Có hiệu lực ngay, không cần migrate hay restart.
+
+Muốn quay lại như cũ: **xoá hết dòng trong bảng** rồi Save — không phải sửa code.
 
 **Ảnh hưởng tới 5 chỗ**, không chỉ nút duyệt:
 
@@ -84,11 +123,8 @@ công ty** (mỗi company một record HR Policy).
 | **Đơn Chấm công bù / Làm thêm giờ** | Đi theo *Shift Request Approver*, không có bước HR |
 | **Đơn đã chuyển đích danh** | Người được chuyển tới quyết — nhưng chỉ chuyển được cho người trong danh sách (mục 5) |
 
-> ⚠️ **Để trống = không giới hạn**, không phải "cấm hết". Nên deploy xong chưa đổi gì
-> cho tới khi HR điền tên.
->
-> ⚠️ **Đừng để danh sách chỉ có 1 người rồi người đó nghỉ việc** — đơn sẽ dồn không ai
-> duyệt. Khai ít nhất 2 người, hoặc nhờ System Manager gỡ kẹt.
+> ⚠️ **Khai ít nhất 2 người mỗi công ty.** Một người mà nghỉ việc / nghỉ phép dài là đơn
+> dồn không ai duyệt được — lúc đó chỉ System Manager gỡ kẹt, hoặc phải vào xoá bảng.
 
 ---
 
