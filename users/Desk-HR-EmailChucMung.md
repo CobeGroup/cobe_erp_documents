@@ -43,7 +43,13 @@ Vào `/app/email-account` → tạo (hoặc mở) 1 **Email Account** loại **O
 
 #### Mỗi công ty một địa chỉ gửi riêng (tuỳ chọn)
 
-Nhân viên Akanwa mà nhận thư ký tên Thế Giới Điện Giải thì kỳ. Để tách, mở Email Account của công ty đó và điền ô **Công ty trực thuộc áp dụng** (mục *Email chúc mừng (HR)*, gần Footer):
+Nhân viên Akanwa mà nhận thư ký tên Thế Giới Điện Giải thì kỳ. Để tách, mở Email Account của công ty đó rồi điền ô **Công ty trực thuộc áp dụng**.
+
+**Ô này nằm ở đâu:** mở Email Account → sang **tab Outgoing** (không phải tab Details) → cuộn xuống dưới mục **Footer** → bấm vào tiêu đề **Email chúc mừng (HR)** cho nó **bung ra** (mục này mặc định thu gọn).
+
+> Không thấy mục *Email chúc mừng (HR)*? Mở `/app/custom-field?dt=Email Account` xem có dòng `custom_congrats_company_notes` chưa. **Không có** = hệ thống chưa chạy cập nhật cơ sở dữ liệu, báo IT. **Có** mà form vẫn không hiện = bấm `Ctrl+Shift+R` để xoá cache cấu trúc form của trình duyệt.
+
+Điền vào ô đó các cách viết của công ty, mỗi dòng một cách:
 
 ```
 Akanwa VN
@@ -123,7 +129,7 @@ Hệ thống ship với **2 lớp khoá an toàn**: công tắc tổng **TẮT**
 Mỗi lần bản cập nhật lên, kiểm 3 chỗ này là biết đã ăn hay chưa:
 
 1. `/app/cobe-congrats-settings` mở được, công tắc tổng và Chạy thử **giữ nguyên** trạng thái bạn đặt.
-2. Mở 1 Email Account bất kỳ → thấy mục **Email chúc mừng (HR)** (gần Footer). Không thấy thì cấu hình người gửi theo công ty chưa có hiệu lực — báo IT chạy cập nhật cơ sở dữ liệu.
+2. Mở 1 Email Account bất kỳ → **tab Outgoing** → dưới mục Footer có mục thu gọn **Email chúc mừng (HR)**. Không thấy thì cấu hình người gửi theo công ty chưa có hiệu lực — báo IT chạy cập nhật cơ sở dữ liệu.
 3. `/app/cobe-congrats-log` có cột **Người gửi**.
 
 ---
