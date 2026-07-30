@@ -105,11 +105,26 @@ Trong form Settings:
 
 ### 5. Bật chạy thật
 Hệ thống ship với **2 lớp khoá an toàn**: công tắc tổng **TẮT** + **Chạy thử (dry-run) BẬT**. Để đi live:
-1. Tick **Bật gửi email chúc mừng tự động** (công tắc tổng) → **Save**.
-2. Bấm **Xem trước hôm nay** / xem `/app/cobe-congrats-log` (trạng thái *Dry Run*) để chắc danh sách đúng.
-3. **BỎ tick Chạy thử (dry-run)** → **Save**. Từ giờ cron gửi thật, 08:00 mỗi sáng.
+1. Đặt **Cửa sổ bù (ngày) = 0** (lý do ở cảnh báo bên dưới).
+2. Xoá trống **Email nhận test** — còn giá trị là mọi thư vẫn chuyển hướng về hộp test.
+3. Tick **Bật gửi email chúc mừng tự động** (công tắc tổng) → **Save**.
+4. Bấm **Xem trước hôm nay** / xem `/app/cobe-congrats-log` (trạng thái *Dry Run*) để chắc danh sách đúng.
+5. **BỎ tick Chạy thử (dry-run)** → **Save**. Từ giờ cron gửi thật, 08:00 mỗi sáng.
+6. Sau 1-2 ngày chạy êm, trả **Cửa sổ bù** về **3**.
 
 > Chừng nào còn tick **Chạy thử**, cron chỉ ghi log, **không gửi email thật** — kể cả khi công tắc tổng đã bật.
+
+> ⚠️ **Vì sao phải hạ Cửa sổ bù về 0 ở lần đầu.** Cửa sổ bù khiến cron quét cả **N ngày gần đây**, rất tốt để không bỏ sót — nhưng ở **lần chạy thật đầu tiên** thì Log chưa có dòng nào, nên nó sẽ gửi bù cho tất cả ai có sinh nhật/kỷ niệm trong **3 ngày trước đó**. Người ta nhận thư chúc mừng **muộn 3 ngày** mà không hiểu vì sao. Đặt 0 cho lần đầu, khi đã có Log rồi thì trả về 3 — những ngày cũ đã ghi *Sent* nên **không gửi trùng**.
+
+---
+
+## Sau khi hệ thống được cập nhật
+
+Mỗi lần bản cập nhật lên, kiểm 3 chỗ này là biết đã ăn hay chưa:
+
+1. `/app/cobe-congrats-settings` mở được, công tắc tổng và Chạy thử **giữ nguyên** trạng thái bạn đặt.
+2. Mở 1 Email Account bất kỳ → thấy mục **Email chúc mừng (HR)** (gần Footer). Không thấy thì cấu hình người gửi theo công ty chưa có hiệu lực — báo IT chạy cập nhật cơ sở dữ liệu.
+3. `/app/cobe-congrats-log` có cột **Người gửi**.
 
 ---
 
@@ -127,6 +142,7 @@ Hệ thống ship với **2 lớp khoá an toàn**: công tắc tổng **TẮT**
   - Trạng thái *Skipped "Không có company_email"* → nhân viên thiếu email → điền `company_email` trong hồ sơ Employee.
   - Trạng thái *Failed* → xem cột lỗi. Thường do Email Account/SMTP chưa cấu hình đúng (bước 1) hoặc email người gửi không khớp tài khoản outgoing.
   - Không có dòng nào → kiểm tra công tắc tổng đã bật, đúng loại đã bật, và nhân viên có `date_of_birth`/`date_of_joining`.
+- **Thư tới muộn vài ngày so với ngày sự kiện**: do **Cửa sổ bù** đang > 0 và trước đó chưa có Log cho ngày đó (mới bật, hoặc cron lỡ, hoặc lần trước gửi fail). So cột *Ngày sự kiện* với *Thời điểm ghi nhận* trong Log là thấy. Không muốn gửi bù thì đặt **Cửa sổ bù = 0**.
 - **Nhận được thư nhưng sai công ty gửi** (cột *Người gửi* trong Log là địa chỉ mặc định):
   1. Mở hồ sơ Employee, coi ô **Công ty trực thuộc** ghi gì — sai hoặc trống thì sửa ở đây.
   2. Cách viết đó đã khai trong Email Account của công ty chưa (bước 1)? Bấm **Xem trước hôm nay**, phần cuối liệt kê đúng những cách viết chưa ai nhận.
