@@ -272,6 +272,7 @@ Phép năm dùng cơ chế **Earned Leave native của HRMS** (Leave Type bật 
 | Đổi máy nhưng vẫn bị chặn dù máy cũ đang Active | Đúng thiết kế — mỗi nhân viên 1 máy Active. Báo HR deactivate máy cũ rồi submit máy mới (UI nhắc qua cờ `other_active`). |
 | "Bạn đang ở ngoài vùng văn phòng (cách 250m)" | Kiểm tra tọa độ `HR Office Location` đặt đúng chưa. Hoặc tăng `allowed_radius_m`. |
 | "Vui lòng kết nối wifi văn phòng" | Feature `enable_wifi_bssid_check` bật + nhân viên ngoài wifi VP. Hoặc BSSID list chưa enroll wifi này. |
+| "Đã quá giờ cho phép check-in (HH:MM)" | `HR Policy → Giới hạn giờ check-in` đang bật. Chỉ chặn lượt **VÀO**; nhân viên đi làm thật thì nộp Chấm công bù. Muốn tắt: đặt lại **Không giới hạn**. Xem [Chính sách chấm công §6](Desk-Admin-Policy.html#6-giới-hạn-giờ-check-in). |
 | Selfie bị quay ngang/lộn | Quay phone về portrait. Một số phone cũ Android có vấn đề camera orientation — đợi phase 2 fix. |
 | Phone iOS không cho mở camera | Vào Settings → Safari → Camera → Allow. PWA nên đã có hướng dẫn trong-app. |
 | Không thấy WFH banner dù đã duyệt | Check feature flag `enable_wfh_mode` đã bật + `Attendance Request` (reason=WFH) đã Submit (docstatus=1) phủ đúng ngày hôm nay. |

@@ -56,9 +56,17 @@ flowchart LR
 | Bước | Ai duyệt | Role | Trạng thái sau khi duyệt |
 |---|---|---|---|
 | **1** | Trưởng Bộ Phận / Người duyệt | `Leave Approver` | **Chờ HR** (Manager Approved) |
-| **2** | HR | `HR Manager` | **Đã duyệt** (Submitted) → trừ số dư phép |
+| **2** | HR | `HR Manager` **+ có tên trong danh sách người duyệt cuối** | **Đã duyệt** (Submitted) → trừ số dư phép |
 
 > ⚠️ Đơn **chỉ chính thức & trừ phép** sau khi **HR duyệt bước 2**. Manager duyệt xong, đơn vẫn còn "chờ".
+
+> 👤 **Bước 2 chỉ về tay người được chỉ định.** Role `HR Manager` được cấp khá rộng
+> (hiện có **14 tài khoản**, gồm cả tài khoản tích hợp hệ thống), nên đơn ở bước HR
+> được nhắm đúng **danh sách khai trong HR Policy của từng công ty**. Ai không có tên:
+> **không thấy đơn** trong tab *Cần duyệt* và **bấm duyệt sẽ bị chặn** — dù có role
+> HR Manager. Khai danh sách ở
+> [Chính sách chấm công §4](Desk-Admin-Policy.html#4-người-duyệt-cuối-cấp-hr).
+> Để trống bảng = mọi HR Manager duyệt được (như trước).
 
 ---
 
@@ -192,6 +200,32 @@ Mở đơn cần duyệt (đang **Manager Approved**) → bấm nút **Actions**
 
 ---
 
+## 6. "Ngày xin nghỉ đã có chấm công"
+
+Bấm duyệt mà gặp hộp thoại đỏ này thì **không phải lỗi phân quyền** — hệ thống đang
+chặn vì một ngày **không thể vừa nghỉ phép vừa có công**:
+
+> **Không duyệt được — ngày xin nghỉ đã có chấm công.**
+>
+> Nhân viên **Phan Thị Thu Hương** đã đi làm và được ghi nhận công vào:
+> • 21-07-2026 — đã chấm **Present** (8.28 giờ công)
+>
+> **Cách xử:**
+> • Nếu hôm đó nhân viên **có đi làm nửa buổi**: yêu cầu khai lại thành đơn **nửa ngày**.
+> • Nếu nhân viên **đi làm cả ngày** (đơn đã lỗi thời): bấm **Từ chối** và ghi rõ lý do.
+> • Nếu **bản chấm công sai** (quẹt nhầm, chấm hộ): mở bản chấm công, sửa hoặc huỷ, rồi duyệt lại.
+
+Bấm vào ngày trong thông báo là **mở thẳng bản chấm công** để kiểm.
+
+> 💡 Đơn lúc gửi còn hợp lệ vẫn có thể vướng về sau — hệ thống kiểm **lại mỗi lần
+> duyệt**, nên nhân viên xin nghỉ rồi hôm đó lại đi làm là đúng vào tình huống này.
+
+> ⚠️ **Ngày nghỉ, ngày lễ và Thứ 7 nửa buổi không xin nghỉ phép được** — hệ thống chặn
+> vì xin nghỉ vào ngày vốn đã nghỉ là vô nghĩa, và với ngày lễ thì thao tác đó còn xoá
+> mất bản chấm công + giờ OT hệ số cao. Muốn nghỉ buổi sáng Thứ 7 thì báo HR xử tay.
+
+---
+
 ## ⚠️ Lỗi thường gặp
 
 | Tình huống | Cách xử |
@@ -201,9 +235,11 @@ Mở đơn cần duyệt (đang **Manager Approved**) → bấm nút **Actions**
 | Không thấy tab **Cần duyệt** trên app | Bạn chưa được cấp quyền duyệt — báo HR thêm role/cấu hình ở **HR Approval Inbox Settings** |
 | Duyệt xong (Manager) đơn **vẫn "chờ"** | Đúng — đó là **bước 1**; đơn còn chờ **HR Submit bước 2** mới trừ phép |
 | Trên Desk không thấy nút **Submit / HR Reject** | Tài khoản thiếu role **HR Manager**, hoặc đơn chưa ở trạng thái **Manager Approved** |
-| **Chuyển duyệt** không thấy ai để chọn | Người nhận phải có quyền duyệt **cùng cấp + cùng phòng** với nhân viên |
+| Có role **HR Manager** nhưng **không thấy đơn nào ở bước HR** | Bạn không có tên trong **Người duyệt cuối** của công ty đó — đúng thiết kế. Cần duyệt thì báo HR thêm tên vào [HR Policy](Desk-Admin-Policy.html#4-người-duyệt-cuối-cấp-hr) |
+| Bấm duyệt báo *"Bạn không phải người duyệt đơn này ở bước hiện tại"* | Như trên — đơn ở bước HR và bạn ngoài danh sách người duyệt cuối |
+| **Chuyển duyệt** không thấy ai để chọn | Người nhận phải có quyền duyệt **cùng cấp + cùng phòng** với nhân viên. Ở **bước HR**, chỉ chuyển được cho người trong **danh sách người duyệt cuối** — chuyển cho người ngoài thì đơn kẹt |
 | Đã Submit nhưng số dư phép **không giảm** | Kiểm nhân viên đã được **cấp phép (Leave Allocation)** chưa — xem [Cấp phép](Desk-HR-CapPhep.html) |
-| Bấm duyệt thì báo *"Attendance … is already marked for the following dates …"* | Đơn xin nghỉ **cả ngày** nhưng nhân viên **đã chấm công** hôm đó (kiểm tra được ngay: bấm vào ngày trong thông báo là mở bản chấm công). Hệ thống kiểm lại mỗi lần duyệt, nên đơn lúc gửi còn hợp lệ vẫn có thể vướng nếu sau đó họ đi làm. Cách xử: bảo nhân viên gửi lại đơn **nửa ngày** (loại này duyệt được bình thường), hoặc HR sửa/huỷ bản chấm công ngày đó nếu nó sai |
+| Bấm duyệt thì báo *"Không duyệt được — ngày xin nghỉ đã có chấm công"* | Xem [mục 6](#6-ngày-xin-nghỉ-đã-có-chấm-công) — thông báo đã ghi sẵn tên nhân viên, số giờ đã chấm và 3 cách xử |
 
 ---
 

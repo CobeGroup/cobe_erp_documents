@@ -289,12 +289,20 @@ Code: `hr_for_cobegroup/overrides/shift_type.py`, khai báo qua `override_doctyp
 |---|---|
 | `mark_absent_for_dates_with_no_attendance` | **no-op** → không tự chấm Vắng ngày trống |
 | `is_half_holiday` | Mở rộng: ngày có **đơn nghỉ nửa ngày đã duyệt** cũng chia đôi ngưỡng |
-| `get_attendance` | Ngày lễ/Chủ nhật → ép Present (để OT native trả tiền); ngày thường vào trễ → Half Day |
+| `get_attendance` | Ngày lễ/Chủ nhật → ép Present (để OT native trả tiền) |
 | `get_employee_checkins` | Giữ trọn nhóm IN/OUT khi cửa sổ ca đổi giữa ngày |
 
-> Luật **"vào trễ 1 phút = nửa ngày"** chỉ chạy khi Shift Type bật
-> `Enable Late Entry Marking` = ✓ và `Late Entry Grace Period` = 0. Hiện **cả 8 ca
-> đang tắt** → luật này không có hiệu lực. Bật hay không là quyết định chính sách của HR.
+> **Đi trễ KHÔNG còn hạ nửa ngày công** (gỡ 30/07/2026). Trạng thái công chỉ còn
+> phụ thuộc số giờ làm thực so với `working_hours_threshold_for_half_day`. Cờ
+> `late_entry` vẫn được ghi để app hiện tag *Đi trễ* và báo cáo đọc, nhưng không
+> đụng tới công nữa — kể cả khi Shift Type bật `Enable Late Entry Marking`.
+> Chi tiết + 12 bản ghi cũ bị ảnh hưởng: [Chính sách chấm công §7](Desk-Admin-Policy.html#7-đi-trễ-không-còn-bị-trừ-nửa-ngày-công).
+
+> **Ngày NỬA BUỔI (Thứ 7 văn phòng) không phải ngày nghỉ.** `is_rest_day` lọc
+> `is_half_day` từ 29/07/2026, nên Thứ 7 đi qua ngưỡng đã **chia đôi** như một
+> ngày làm bình thường: làm trọn buổi sáng (4h) vượt ngưỡng 3,75h → **Present**
+> = 0,5 công. Giờ làm vượt quá nửa buổi tính OT — xem
+> [Duyệt làm thêm §6](Duyet-Lam-Them.html#6-làm-thêm-vào-thứ-7-nửa-buổi).
 
 > ⚠️ **Thứ tự deploy:** phải deploy override **TRƯỚC** khi bật auto attendance lần
 > đầu, kẻo cuối tuần bị chấm Vắng oan.

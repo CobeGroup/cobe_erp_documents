@@ -117,8 +117,13 @@ Ví dụ báo lỗi khi đứng **ngoài vùng văn phòng**:
 |---|---|
 | "Thiết bị chưa đăng ký" | Chờ HR duyệt, hoặc báo HR nếu đã lâu |
 | "Ngoài vùng văn phòng (cách Nm)" | Đứng trong khu vực VP rồi chấm lại; làm ngoài → cần đơn WFH/On Duty đã duyệt |
+| **"Đã quá giờ cho phép check-in (HH:MM)"** | Công ty có đặt **mốc giờ chặn quẹt vào**. Hôm nay bạn có đi làm thật → nộp đơn **Chấm công bù** để quản lý duyệt. Xem [Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html) |
 | Không bấm được nút | Kiểm mạng + bật quyền **Vị trí** cho trình duyệt |
 | Đổi điện thoại | Đăng ký máy mới + báo HR duyệt lại |
+
+> ⏰ **Chỉ lượt VÀO mới bị chặn theo giờ.** Lượt **RA** luôn quẹt được, kể cả khuya —
+> cứ đóng ca bình thường. Mốc giờ do HR đặt riêng cho từng công ty, mặc định là
+> **không giới hạn**.
 
 ---
 

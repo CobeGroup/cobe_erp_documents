@@ -145,9 +145,11 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 > và chỉ được tính ½ công** — kiểm tra trên bảng thấy `HD 0,0` thì đối chiếu Employee Checkin
 > rồi **bổ sung log RA / sửa Attendance tay** trước khi chốt công.
 >
-> Phân biệt: `HD` mà ô giờ **> 0** là đi làm thật nhưng **vào trễ** (chính sách Cobe: trễ là
-> nửa ngày) hoặc giờ công không đủ ngưỡng. Còn **nghỉ phép nửa ngày** hiện `L/2`, `NB`, `KL`…
-> theo đúng loại phép, **không** hiện `HD`.
+> Phân biệt: `HD` mà ô giờ **> 0** là đi làm thật nhưng **giờ công không đủ ngưỡng** của ca.
+> Còn **nghỉ phép nửa ngày** hiện `L/2`, `NB`, `KL`… theo đúng loại phép, **không** hiện `HD`.
+>
+> Từ 30/07/2026 **đi trễ không còn tự hạ xuống `HD`** — chỉ thiếu giờ mới hạ. Tag *Đi trễ*
+> vẫn hiện trên app để theo dõi.
 
 > 📊 Xem **ảnh lưới Cobe thực tế** (đủ mã + số giờ) ở **[mục 0](#0-bản-cobe--khác-gì-bản-gốc)** phía trên.
 

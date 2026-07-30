@@ -99,12 +99,15 @@ Mặc định đã cấu hình 2 dòng (Leave Application + Attendance Request) 
 - → Ngày trong Holiday List **không bị mark Absent**.
 
 **b. Shift Type** (Desk → **Shift Type**) — định nghĩa ca:
-- `start_time` / `end_time` (vd 08:00 / 17:00), gán `holiday_list`.
+- `start_time` / `end_time` (vd 08:00 / 17:00). **Để TRỐNG ô `holiday_list`** — lịch nghỉ đi qua
+  Holiday List Assignment, xem [Holiday List & Ca làm việc](HR-Holiday-Shift-Setup.html).
 - Bật **`Enable Auto Attendance`**.
 - `working_hours_calculation_based_on` (First Check-in & Last Check-out),
-  `working_hours_threshold_for_half_day` / `working_hours_threshold_for_absent` (ngưỡng nửa ngày / vắng).
+  `working_hours_threshold_for_half_day` / `working_hours_threshold_for_absent` (ngưỡng nửa ngày / vắng)
+  — **đây là thứ duy nhất quyết định Present hay Half Day**.
 - `process_attendance_after` (chỉ xử lý từ ngày này); grace: `late_entry_grace_period` /
-  `early_exit_grace_period`; bật `enable_late_entry_marking` / `enable_early_exit_marking` nếu cần.
+  `early_exit_grace_period`; `enable_late_entry_marking` / `enable_early_exit_marking` chỉ để **gắn cờ
+  theo dõi** — từ 30/07/2026 đi trễ **không** còn hạ ngày công xuống nửa ngày.
 - → Job HRMS **"Process Auto Attendance"** (~15 phút/lần) gom Employee Checkin → tạo **Attendance**
   (Present / Absent / Half Day...) theo ca.
 
