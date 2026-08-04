@@ -83,4 +83,4 @@ Chuỗi ưu tiên: **Employee.leave_approver** (đặt riêng) → fallback **ng
 | Quản lý duyệt được nghỉ phép nhưng **không thấy đơn chấm công bù** | Chưa gán khe **Shift Request Approver** (tách khỏi Leave Approver) → làm mục **B2** |
 
 ## Liên quan
-- [Leave — Setup & Workflow (kỹ thuật)](HR-Leave-Setup.html) · [Employee & Department (kỹ thuật)](HR-Employee-Department-Setup.html)
+- [Điều chỉnh số dư phép thủ công (± 0,5 ngày)](Desk-HR-DieuChinhSoDuPhep.html) · [Leave — Setup & Workflow (kỹ thuật)](HR-Leave-Setup.html) · [Employee & Department (kỹ thuật)](HR-Employee-Department-Setup.html)

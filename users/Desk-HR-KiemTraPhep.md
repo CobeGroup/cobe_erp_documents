@@ -126,6 +126,7 @@ Nguyên nhân hay gặp:
 
 ## Liên quan
 - ⚙️ [Loại phép & số dư (cấp / trừ)](Desk-HR-LoaiPhep.html) · [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html)
+- 🩹 [Điều chỉnh số dư phép thủ công (± 0,5 ngày)](Desk-HR-DieuChinhSoDuPhep.html) — soát ra số dư lệch thì nắn ở đây
 - ✅ [Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html) — xử các đơn đang treo
 - 📊 [Báo cáo (HR)](Desk-HR-BaoCao.html) · [Bảng công tháng](Desk-HR-BangCongThang.html)
 - 🔧 Kỹ thuật: [Leave Setup & Workflow](HR-Leave-Setup.html) · [Leave Type](HR-Leave-Type.html)

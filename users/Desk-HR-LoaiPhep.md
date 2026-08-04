@@ -90,7 +90,8 @@ Xem số dư + đã trừ: report **Employee Leave Balance** (Search → "Employ
 |---|---|
 | NV **không chọn được loại phép nào** | Chưa có **Leave Allocation** + chưa có loại bật **`is_lwp`** → cấp Allocation và/hoặc bật 1 loại Leave Without Pay |
 | Số dư sai | Kiểm **Leave Allocation** đúng kỳ + các **đơn đã duyệt** trong report Balance |
+| Cần **cộng/trừ tay** vài phần ngày cho 1 NV | Dùng **Leave Adjustment**, đừng sửa phiếu Allocation đã Submit → [Điều chỉnh số dư phép thủ công](Desk-HR-DieuChinhSoDuPhep.html) |
 | Cần cấp cho cả phòng/công ty | Dùng **Leave Policy Assignment** thay vì cấp tay từng người |
 
 ## Liên quan
-- [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html) · [Kiểm tra phép & báo cáo phép](Desk-HR-KiemTraPhep.html) · [Leave Type (kỹ thuật)](HR-Leave-Type.html) · [Leave Setup & Workflow (kỹ thuật)](HR-Leave-Setup.html)
+- [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html) · [Điều chỉnh số dư phép thủ công](Desk-HR-DieuChinhSoDuPhep.html) · [Kiểm tra phép & báo cáo phép](Desk-HR-KiemTraPhep.html) · [Leave Type (kỹ thuật)](HR-Leave-Type.html) · [Leave Setup & Workflow (kỹ thuật)](HR-Leave-Setup.html)
