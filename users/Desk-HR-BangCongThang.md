@@ -42,7 +42,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | **Số dư phép** | **Có** — Phép Năm & Nghỉ bù còn lại, tại **2 mốc** (cuối kỳ / tới hiện tại) | Không có |
 | **Giờ vào/ra** | **Có** — lượt bấm thật, đỡ phải mở Employee Checkin | Không có |
 | Lọc Company | **Bỏ trống = gộp MỌI công ty** | Bắt buộc chọn |
-| Lọc **Cty Trực Thuộc** | **Có** — lọc theo nhóm gốc/công ty trực thuộc (trước gộp công ty), độc lập với Company | Không có |
+| Lọc **Cty Trực Thuộc** | **Có** — lọc theo **công ty pháp lý** của nhân viên (nhóm gốc trước gộp công ty), độc lập với ô Company | Không có |
 | Cách chạy | **Chạy thẳng** (bấm là ra) | "Prepared report" — phải **Generate New Report** rồi chờ |
 
 ![COBE HR Attendance Sheet — chế độ Chấm công: Mã NV · Cty Trực Thuộc · Tổng giờ chuẩn/thực · 4 cột số dư phép (PN/NB cuối kỳ & tới hiện tại) · mỗi ngày 1 ô ghép chia đôi mã + số giờ](images/desk/hr-mas-cobe-grid.png)
@@ -77,7 +77,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 > (ô đó đã bỏ trống hẳn từ 29/07/2026, vì nhiều nhóm dùng chung một ca nhưng lịch nghỉ khác nhau).
 > HR chỉnh ở Holiday List Assignment, báo cáo tự theo, không cần sửa báo cáo.
 
-> 💡 **Cty Trực Thuộc** (công ty trực thuộc) chỉ có với NV đã **gộp công ty** (lưu công ty gốc); NV khác để trống là bình thường.
+> 💡 **Cty Trực Thuộc** = **công ty pháp lý** của nhân viên, chỉ có với NV đã **gộp công ty** (lưu công ty gốc trước khi gộp); NV khác để trống là bình thường.
 
 > ⚠️ Mở đúng tên **`COBE HR Attendance Sheet`**. Bản gốc "Monthly Attendance Sheet" **không**
 > có Mã NV / Cty Trực Thuộc / Tổng giờ / số dư phép / giờ vào-ra, **bộ lọc & ký hiệu cũng khác**
@@ -109,8 +109,8 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | **Month / Year** | Tháng & năm — hiện khi *Filter Based On = Month*. |
 | **Start Date / End Date** | Khoảng ngày (≤ 90 ngày) — hiện khi *Filter Based On = Date Range*. **End Date** cũng là ngày mà cột **PN/NB (cuối kỳ)** lấy số dư phép. |
 | **Employee** | Để trống = **tất cả** nhân viên; chọn 1 người = chỉ người đó **và mở khoá chế độ "Chi tiết theo ngày"**. |
-| **Company** | Công ty pháp lý. **Bỏ trống = gộp TẤT CẢ công ty** (riêng chế độ *Tổng hợp* thì HRMS bắt buộc chọn). |
-| **Cty Trực Thuộc** | Lọc theo **nhóm gốc / công ty trực thuộc** (công ty trước khi gộp), **độc lập** với Company. Bỏ trống = mọi nhóm. |
+| **Company** | Công ty trong ERP sau đợt gộp, **độc lập** với ô Cty Trực Thuộc. **Bỏ trống = gộp TẤT CẢ công ty** (riêng chế độ *Tổng hợp* thì HRMS bắt buộc chọn). |
+| **Cty Trực Thuộc** | **Công ty pháp lý** theo hồ sơ nhân viên — nhóm gốc trước khi gộp company. Bỏ trống = mọi nhóm. |
 | **Include Company Descendants** | Gộp cả các công ty con (mặc định bật). Không chọn Company thì ô này không có tác dụng. |
 
 > 💡 **Quên ô nào làm gì?** Bấm dòng **"Giải thích các filter"** ngay trên bảng — bung ra phần giải

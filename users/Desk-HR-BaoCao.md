@@ -22,7 +22,7 @@ nav_order: 6
 
 | Báo cáo | Cho biết |
 |---|---|
-| **[COBE HR Attendance Sheet](Desk-HR-BangCongThang.html)** *(dùng bản này)* | Bảng công **cả tháng** từng nhân viên, thêm **Mã NV · Công ty trực thuộc · Tổng giờ · 4 cột số dư phép** (Phép Năm & Nghỉ bù còn lại); ký hiệu theo loại phép (L/L2/NB/KL/CĐ/BH/WFH/H/WO). Ô **Chế độ xem** đổi được sang **Giờ vào-ra** (bảng giờ bấm kiểu máy chấm công), **Đầy đủ**, **Chi tiết theo ngày** (1 NV, mỗi ngày 1 dòng) hoặc **Tổng hợp**. **Bỏ trống Company = mọi công ty**; lọc thêm được theo **Cty Trực Thuộc** (nhóm gốc trước gộp cty). → **[Hướng dẫn chi tiết](Desk-HR-BangCongThang.html)** |
+| **[COBE HR Attendance Sheet](Desk-HR-BangCongThang.html)** *(dùng bản này)* | Bảng công **cả tháng** từng nhân viên, thêm **Mã NV · Công ty trực thuộc · Tổng giờ · 4 cột số dư phép** (Phép Năm & Nghỉ bù còn lại); ký hiệu theo loại phép (L/L2/NB/KL/CĐ/BH/WFH/H/WO). Ô **Chế độ xem** đổi được sang **Giờ vào-ra** (bảng giờ bấm kiểu máy chấm công), **Đầy đủ**, **Chi tiết theo ngày** (1 NV, mỗi ngày 1 dòng) hoặc **Tổng hợp**. **Bỏ trống Company = mọi công ty**; lọc thêm được theo **Cty Trực Thuộc** (công ty pháp lý của NV — nhóm gốc trước gộp cty). → **[Hướng dẫn chi tiết](Desk-HR-BangCongThang.html)** |
 | Monthly Attendance Sheet *(bản gốc HRMS)* | Bản đơn giản: mỗi ngày **P / A / HD / L / WFH / H / WO**, bắt buộc chọn company, là "prepared report". Ưu tiên dùng **bản Cobe** ở trên. |
 | **Shift Attendance** | Chấm công **theo ca** (giờ vào/ra thực tế vs ca), phát hiện đi trễ/về sớm. *(Chỉ cần xem giờ vào/ra thì bản Cobe ở trên, chế độ **Giờ vào-ra**, đủ dùng và gọn hơn.)* |
 | **Employees working on a holiday** | Ai **đi làm vào ngày lễ** (để tính bù/OT). |
