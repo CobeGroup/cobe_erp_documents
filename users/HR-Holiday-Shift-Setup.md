@@ -437,6 +437,52 @@ Không có lỗi nào hiện ra, hệ thống chạy tiếp với list năm cũ:
 Leave Application duyệt xong → HRMS tạo Attendance "On Leave". Số ngày bị trừ tính
 theo **HLA**, nên HLA sai là phép năm sai.
 
+**Ngày `is_half_day` = nửa ngày phép** (vá 03/08/2026, `utils/leave_days.py`). HRMS gốc
+không đọc cờ `is_half_day` — nó đếm mọi dòng Holiday là ngày nghỉ TRỌN, nên nghỉ đúng
+thứ 7 ra 0 ngày phép và bị chặn bằng *"The day(s) on which you are applying for leave
+are holidays"*; đơn vắt qua thứ 7 thì trừ thiếu 0,5. Bản vá cộng bù 0,5 cho mỗi ngày
+nửa buổi, áp cho **mọi loại phép** kể cả loại `include_holiday = 1`.
+
+Quy ước: **0,5 ngày phép = 4 giờ làm việc tuyệt đối**, không phải "một nửa của ngày
+đó". Ngày nửa buổi có **hai** buổi 4 giờ — buổi sáng 08:00–12:00 (giờ chuẩn) và ca
+trực chiều 13:30–17:30 (luân phiên, khai qua đơn Làm thêm giờ) — nên **cả hai đều trừ
+0,5**. Cờ `half_day` trên ngày này vì vậy không còn nghĩa "trừ bao nhiêu" mà là "nghỉ
+buổi nào":
+
+| Khai | Ý nghĩa | Trừ | Ghi chú |
+|---|---|---|---|
+| không tick | nghỉ buổi làm chính (sáng) | 0,5 | Attendance "On Leave" |
+| tick + buổi **Chiều** | nghỉ **ca trực chiều** | 0,5 | được miễn kiểm "đã chấm công buổi sáng" |
+| tick + buổi Sáng | = nghỉ buổi làm chính | 0,5 | cờ tự bị bỏ cho gọn |
+
+PWA đổi nhãn ô thành **"Nghỉ ca trực buổi chiều"** khi ngày đơn nằm trong danh sách
+`api.leave.get_half_workdays`.
+
+### Bảng: nhánh nào biết `is_half_day`, nhánh nào không
+
+`Holiday.is_half_day` là field gốc của ERPNext, nhưng **chỉ ShiftType của HRMS đọc nó**
+(qua `is_half_holiday()`, để chia đôi ngưỡng giờ công). Mọi nhánh khác đi qua
+`get_holiday_dates_between*` — hàm chỉ trả danh sách NGÀY nên cờ nửa buổi rụng mất, và
+Cobe phải chặn ở từng chỗ:
+
+| Nhánh | Cobe đè bằng gì |
+|---|---|
+| Ngưỡng Present / Half Day / Absent | `CobeShiftType.is_half_holiday` |
+| Đánh Vắng tự động | không cần — Cobe tắt hẳn auto-Vắng |
+| OT: cách đo + trần giờ | `attendance/overtime.py` (`is_rest_day` lọc `is_half_day=0`) |
+| OT: hệ số ×2 / ×3 | `CobeOvertimeSlip.get_holiday_map` |
+| Số ngày trừ phép | gán đè `get_number_of_leave_days` (`utils/leave_days.py`) |
+| Đơn phép tạo/xoá chấm công | `CobeLeaveApplication.update_attendance` |
+| Bảng công tháng | report tự tính giờ chuẩn = ½ ca |
+| **Ngày công + LWP trên phiếu lương** | `CobeSalarySlip.get_holidays_for_employee` + `get_working_days_details` |
+
+Mỗi lần HRMS lên phiên bản và thêm chỗ đọc Holiday là thêm một lỗ tiềm tàng — không
+có test upstream nào bảo vệ khái niệm nửa buổi ngoài `ShiftType`.
+
+> Ba chế độ thứ 7 chạy song song (nửa buổi / làm cả ngày / nghỉ thứ 2) nên mọi chỗ đều
+> phải tra `Holiday.is_half_day` của HLA hiệu lực **tại đúng ngày đó**, không suy theo
+> thứ trong tuần và không dùng list hiện tại cho đơn tháng trước.
+
 ### Vắng (Absent) — KHÔNG tự chấm
 
 Ngày không có check-in để **trống = nghỉ**. Bảng công tháng chỉ có Present / Half Day

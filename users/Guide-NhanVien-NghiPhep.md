@@ -84,15 +84,19 @@ ngày nghỉ sẵn thì **không tính là phép**:
 | Ngày làm bình thường | ✅ trừ 1 ngày |
 | **Chủ Nhật** | ❌ không trừ |
 | **Ngày lễ** (Tết, 30/4, Quốc khánh…) | ❌ không trừ |
-| **Thứ 7** — nếu ca của bạn **nghỉ nửa buổi Thứ 7** (khối văn phòng) | ❌ không trừ |
+| **Thứ 7** — nếu ca của bạn **làm nửa buổi Thứ 7** (khối văn phòng) | ✅ trừ **0.5 ngày** |
 | **Thứ 7** — nếu ca của bạn **làm cả ngày Thứ 7** | ✅ trừ 1 ngày |
 
-> Ca của bạn có nghỉ nửa buổi Thứ 7 hay không là do **cấu hình ca** — không chắc thì
+> Thứ 7 nửa buổi **vẫn là ngày làm** (làm 4 giờ buổi sáng), nên nghỉ hôm đó vẫn trừ
+> phép — chỉ trừ **nửa ngày** thôi. 0.5 ngày phép ở đây luôn có nghĩa **4 giờ làm
+> việc**, không phải "một nửa của ngày hôm đó".
+
+> Ca của bạn có làm nửa buổi Thứ 7 hay không là do **cấu hình ca** — không chắc thì
 > cứ nhìn con số ngày thực trừ (xem ô 💡 bên dưới) hoặc hỏi HR.
 
 **Ví dụ** — xin nghỉ **Thứ 6 24/07 → Thứ 2 27/07** (4 ngày lịch):
 
-- NV có **nghỉ nửa buổi Thứ 7**: trừ **2 ngày** (Thứ 7 và Chủ Nhật không tính)
+- NV **làm nửa buổi Thứ 7**: trừ **2.5 ngày** (Thứ 6 + Thứ 2 = 2, Thứ 7 = 0.5, Chủ Nhật = 0)
 - NV **làm cả ngày Thứ 7**: trừ **3 ngày** (chỉ Chủ Nhật không tính)
 
 > 💡 Form tạo đơn **chưa hiện** con số này. Gửi xong, mở **danh sách đơn** (mục 1) là thấy
@@ -139,6 +143,11 @@ Khi chỉ cần nghỉ **một buổi** (vd sáng đi khám, chiều đi làm):
 - **Ngày nghỉ (Chủ Nhật / lễ) không xin nửa ngày được** — hôm đó vốn đã nghỉ,
   và nếu bạn có đi làm thì đó là **làm thêm**, khai [đơn Làm thêm giờ](Guide-NhanVien-LamThem.html)
   chứ không phải đơn nghỉ.
+- **Thứ 7 nửa buổi** thì ô này đổi thành **"Nghỉ ca trực buổi chiều"**:
+  - **Không tích** = nghỉ buổi làm chính (sáng) → trừ **0.5 ngày**.
+  - **Tích** = nghỉ **ca trực buổi chiều** (13:30–17:30) → cũng trừ **0.5 ngày**.
+    Dùng khi bạn **đã đi làm buổi sáng** rồi mới xin nghỉ ca trực — trường hợp này
+    app cho gửi đơn bình thường dù sáng đã có chấm công.
 - Mỗi ngày chỉ **1 đơn nửa ngày**. Cần nghỉ nốt buổi còn lại thì báo HR, đừng gửi đơn thứ hai.
 
 ---
@@ -206,7 +215,8 @@ phải chọn gì — **chọn đúng loại phép là form tự đổi**:
 | Xin Nghỉ bù mà app đòi "Ngày làm thêm để bù" | Ô này **bắt buộc** với Nghỉ bù — chọn đúng hôm đã làm thêm |
 | "Ngày … không có đơn Làm thêm giờ đã duyệt…" | Ngày đó thiếu đơn Làm thêm (quy đổi Nghỉ bù) đã duyệt → [khai đơn làm thêm](Guide-NhanVien-LamThem.html) cho ngày đã làm (trong hạn — mặc định 1 ngày) |
 | "Ngày làm thêm … đã được dùng cho đơn Nghỉ bù …" | Ngày làm thêm đó đã bù rồi — mỗi ngày chỉ bù 1 lần |
-| Đơn trừ **ít ngày hơn** số ngày mình chọn | **Đúng, không phải lỗi** — Chủ Nhật, ngày lễ, và Thứ 7 (với ca nghỉ nửa buổi Thứ 7) không bị trừ phép. Xem bảng ở mục 2 |
+| Đơn trừ **ít ngày hơn** số ngày mình chọn | **Đúng, không phải lỗi** — Chủ Nhật và ngày lễ không trừ phép, Thứ 7 nửa buổi chỉ trừ 0.5. Xem bảng ở mục 2 |
+| *"The day(s) on which you are applying for leave are holidays…"* khi xin nghỉ **Thứ 7** | Lỗi cũ, đã sửa. Từ bản 03/08/2026 nghỉ Thứ 7 nửa buổi gửi được bình thường và trừ 0.5 ngày. Còn gặp thì báo HR (bản vá chưa lên) |
 | *"Attendance … is already marked for the following dates …"* | Hôm đó bạn **đã chấm công** rồi. Muốn nghỉ một buổi thì tích **Nghỉ nửa ngày** (được, kể cả khi sáng đã đi làm). Còn nếu bạn định nghỉ **cả ngày** — hoặc ngày đó là **Chủ Nhật / lễ** — thì app chặn, báo HR xử |
 
 ---

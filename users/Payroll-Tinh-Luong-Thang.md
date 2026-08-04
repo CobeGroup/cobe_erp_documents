@@ -220,6 +220,27 @@ Slip tự sinh tiền theo hệ số (150/200/300%) → tự vào phiếu lươn
 Chỉ cần đơn nghỉ loại **không lương** được duyệt — ngày công của phiếu tự giảm,
 các khoản "theo ngày công" tự prorate. Không sửa tay phiếu.
 
+Nghỉ đúng **Thứ 7 nửa buổi** thì trừ **0,5 công** (không phải 1) — hôm đó chỉ làm
+4 giờ. Trước bản vá 04/08/2026, ngày này bị bỏ qua hoàn toàn nên nghỉ không lương
+vào Thứ 7 **không bị trừ đồng nào**.
+
+### 5.5b. Thứ 7 nửa buổi trong ngày công
+Ngày Thứ 7 của khối văn phòng (làm 08:00–12:00) tính **0,5 ngày công**, không phải
+0 cũng không phải 1:
+
+| Kỳ lương | Ngày công |
+|---|---|
+| Tháng 8/2026, NV làm nửa buổi Thứ 7 | 31 − 5 Chủ Nhật − 5 × 0,5 = **23,5** |
+| Tháng 8/2026, NV làm cả ngày Thứ 7 | 31 − 5 Chủ Nhật = **26** |
+
+Con số này là **mẫu số** của mọi khoản tính theo ngày công, nên trước bản vá (ngày
+công ra 21) mỗi ngày nghỉ không lương bị trừ dư ~12%.
+
+Lịch nghỉ được lấy **theo đúng kỳ lương**, không phải lịch hiện tại: nhân viên đổi
+lịch giữa năm (vd chuyển sang làm cả ngày Thứ 7 từ 01/08) thì phiếu tháng 7 vẫn
+tính theo lịch tháng 7. Trước bản vá, chạy lại phiếu tháng 7 sau ngày 01/08 sẽ ra
+số khác hẳn.
+
 ### 5.6. Nghỉ việc giữa tháng
 HR cập nhật Relieving Date → phiếu kỳ cuối tự prorate; dưới 14 công thì không
 trích BH tháng đó.
@@ -274,7 +295,8 @@ HR mở danh sách Salary Slip — trống trơn, không thấy phiếu của ai
 | Thưởng/tạm ứng không vào phiếu | Additional Salary chưa Submit, hoặc **Payroll Date ngoài kỳ** | Sửa Payroll Date rơi trong kỳ rồi Submit. |
 | NV không nhận **email phiếu lương** | NV thiếu email (prefered email) hoặc site chưa cấu hình Email Account gửi đi | Điền email cho Employee / báo System Manager kiểm tra Email Account. |
 | Chốt nhầm phiếu, cần sửa | Phiếu đã Submit không sửa trực tiếp được | Mở phiếu → **Cancel** → Amend (bản mới tự tính lại) → Submit. |
-| Ngày công (total working days) trông "lạ" | Ngày công = ngày trong tháng trừ ngày nghỉ lễ/nghỉ tuần theo **Holiday List** gắn với NV | Kiểm tra Holiday List trên Employee/Company. |
+| Ngày công (total working days) trông "lạ" | Ngày công = ngày trong tháng − ngày nghỉ trọn − 0,5 × số ngày **nửa buổi** (Thứ 7 khối văn phòng), theo **Holiday List Assignment** hiệu lực trong kỳ | Kiểm tra HLA của NV tại đúng tháng đó (không phải HLA hiện tại). |
+| Ngày công có **số lẻ 0,5** | Đúng — kỳ đó có ngày làm nửa buổi (Thứ 7) | Xem mục 5.5b. |
 | Report Bang Luong Cobe báo lỗi Server Error | Sau khi deploy bản mới chưa **clear cache** | Báo System Manager chạy clear-cache (đã xử lý từ bản 07/2026). |
 | Sửa Settings xong phiếu cũ không đổi | Đúng thiết kế — Settings chỉ áp cho phiếu tạo **sau đó** | Muốn áp lại: Cancel + Amend phiếu. |
 
