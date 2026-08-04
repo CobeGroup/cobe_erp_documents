@@ -374,6 +374,35 @@ như mọi LPE khác.
 
 ---
 
+### 3h. Tặng điểm VIP (gói chào mừng) — dùng cho Single Tier
+
+Khi chương trình đang **Single Tier** (không có hạng để bump), VIP = **cục điểm
+chào mừng một lần**. Mở form Customer → **Loyalty → Tặng điểm VIP** (chỉ hiện cho
+`System Manager` + `Sales Manager`).
+
+Dialog:
+- **Company** — mặc định Default Company của user.
+- **Gói VIP** — chọn từ các gói đã khai trong `COBE Loyalty Settings → Gói điểm
+  chào mừng` (VIP 1/2/3…, mỗi gói 1 số điểm cố định). **Không gõ số tay** →
+  chặn phát bừa.
+- **Lý do** — tuỳ chọn.
+
+Nhấn **Tặng điểm** → tạo + submit `COBE Loyalty Adjustment`
+(`reason_category = "VIP Seed"`) cộng đúng số điểm của gói, **không bump tier**.
+
+> **Chặn seed trùng:** mỗi customer chỉ tặng VIP **một lần**. Đã có phiếu VIP
+> Seed (docstatus 1) → nút báo "đã seed" và không tạo thêm. Muốn seed lại →
+> **Cancel** phiếu cũ trước (Cancel tự sinh bút toán bù); phiếu đã cancel không
+> tính là trùng.
+>
+> **Cần cấu hình gói trước:** chưa khai gói nào trong Settings thì dialog báo
+> trống, không tặng được. Điểm chỉ đến từ gói preset (`get_vip_package_points`).
+
+Backend: `loyalty/api/vip_tier.py::seed_vip_points` (role-gated). Khác với **Set
+VIP Tier** (§3g — cho Multiple Tier, bump hạng); Single Tier dùng §3h này.
+
+---
+
 ## 4. Đổi rule Loyalty Program (mà không phá lịch sử)
 
 **Không** sửa trực tiếp collection rules của Loyalty Program đang dùng. Thay vào đó:

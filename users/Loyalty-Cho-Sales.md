@@ -172,12 +172,18 @@ Khi khách **trả hàng** hoặc hoá đơn bị **huỷ**, nếu đơn không 
 | Việc | Ai làm |
 |---|---|
 | Cộng / trừ điểm bằng tay cho khách | Quản trị viên (System Manager / Kế toán trưởng) |
-| Nâng hạng VIP cho khách | **Trưởng phòng kinh doanh** hoặc Quản trị viên |
+| Tặng điểm VIP chào mừng cho khách | **Trưởng phòng kinh doanh** hoặc Quản trị viên (xem dưới) |
 | Gán Chương trình tích điểm hàng loạt | Quản trị viên |
 | Sửa tỉ lệ quy đổi điểm, mức thưởng giới thiệu | Quản trị viên |
 
 Nếu cần cộng điểm bù cho khách (ví dụ đơn cũ bị sót), **đừng tự xử lý** — gửi yêu cầu cho
 quản trị viên kèm: tên khách, mã đơn, lý do.
+
+> 🎁 **Riêng Trưởng phòng kinh doanh — nút "Tặng điểm VIP":** trên form Customer có nút
+> **Loyalty → Tặng điểm VIP** (chỉ Trưởng phòng KD + Quản trị thấy). Chọn **gói VIP** đã
+> cấu hình sẵn (VIP 1/2/3 — số điểm cố định) → **Tặng điểm**. Mỗi khách chỉ tặng **1 lần**;
+> muốn tặng lại phải nhờ quản trị huỷ phiếu cũ. Khách phải có **Chương trình tích điểm**
+> trước. Nhân viên sales thường không có nút này — cần thì báo Trưởng phòng.
 
 ---
 
