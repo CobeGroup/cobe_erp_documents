@@ -237,6 +237,96 @@ Kiểm tra lần lượt:
 
 ---
 
+## 10. Hành trình tích điểm — vòng đời một đơn hàng
+
+Gộp mọi mảnh ở trên thành một dòng thời gian. Đọc phần này là hình dung được toàn bộ.
+
+### Chặng 0 — Đưa khách vào hệ thống *(làm 1 lần cho mỗi khách)*
+
+```
+KHÁCH MỚI
+  │
+  ├─ (nếu đến từ giới thiệu) Khai ở LEAD: Source = Reference + From Customer   → xem §3
+  │
+  ▼
+Chuyển đổi thành CUSTOMER
+  │
+  ├─ Kiểm tra khách đã có CHƯƠNG TRÌNH TÍCH ĐIỂM chưa (trống → báo admin gán)  → xem §4
+  │
+  └─ (nếu là khách VIP) Trưởng phòng KD: Loyalty → "Tặng điểm VIP"            → xem "Tích điểm VIP ban đầu" bên dưới
+```
+
+### Chặng 1→5 — vòng đời của đơn hàng
+
+```
+① Tạo SALES ORDER
+      (đừng bán thẳng hoá đơn tiền mặt nếu khách đến từ giới thiệu)
+      │
+      ▼
+② Giao hàng + xuất HOÁ ĐƠN (Sales Invoice) — có thể xuất TỪNG PHẦN
+      │
+      ▼
+③ Khi hoá đơn cộng dồn ĐỦ 100% giá trị đơn:
+      ├─ ✅ Hệ thống TỰ CỘNG ĐIỂM cho khách (1 lần / đơn, theo tổng giá trị đơn)
+      └─ ✅ Nếu đây là đơn ĐẦU TIÊN của khách được giới thiệu
+             → TỰ THƯỞNG người giới thiệu
+      │
+      ▼
+④ (Bình thường) Điểm đã vào ví — xem ở danh sách Loyalty Point Entry
+      │
+      ▼
+⑤ (Nếu TRẢ HÀNG / HUỶ HOÁ ĐƠN làm đơn tụt < 100%)
+      └─ ⛔ Hệ thống TỰ TRỪ LẠI điểm đã cộng (cả thưởng giới thiệu) — ghi dòng [REVERSE]
+```
+
+### Bảng ai làm gì ở mỗi chặng
+
+| Chặng | Sales làm | Hệ thống tự làm | Điều kiện then chốt |
+|---|---|---|---|
+| 0 | Khai referral ở Lead · tạo Customer | — | Khách phải có Loyalty Program |
+| ① | Tạo Sales Order | — | Bán qua SO, không phải hoá đơn tiền mặt |
+| ② | Xuất hoá đơn | — | — |
+| ③ | (không thao tác) | Cộng điểm khi **đủ 100%** | `per_billed = 100`; cộng **1 lần/đơn** |
+| ④ | (không thao tác) | Ghi vào sổ điểm | — |
+| ⑤ | (không thao tác) | Trừ lại điểm | Trả hàng/huỷ làm tụt < 100% |
+
+> ⚠️ **Nhớ:** điểm cộng khi hoá đơn **đủ 100%**, KHÔNG phải lúc tạo đơn hay lúc giao hàng.
+> Đây là lý do #1 khách "chưa thấy điểm" — thực ra chỉ là chưa xuất hoá đơn đủ.
+
+Xem điểm đã vào ví ở danh sách **Loyalty Point Entry**:
+
+![Danh sách Loyalty Point Entry](images/loyalty/lpe-list.png)
+
+---
+
+## 11. Tích điểm VIP ban đầu *(cho Trưởng phòng kinh doanh)*
+
+Khách VIP (khách lớn, khách cũ chuyển sang…) có thể được tặng **một cục điểm chào mừng**
+ngay khi đưa vào hệ thống, không cần chờ phát sinh đơn.
+
+**Ai làm:** chỉ **Trưởng phòng kinh doanh** hoặc **Quản trị viên** (nhân viên sales thường
+không có nút này).
+
+**Điều kiện:** khách phải **đã có Chương trình tích điểm** trước (xem §4).
+
+**Cách làm:**
+1. Mở form **Customer** của khách.
+2. Bấm **Loyalty → Tặng điểm VIP** (góc trên phải).
+3. Trong hộp thoại: chọn **Company** + **Gói VIP** (VIP 1 / VIP 2 / VIP 3… — mỗi gói một
+   mức điểm cố định do quản trị cấu hình sẵn) + **Lý do** (tuỳ chọn).
+4. Bấm **Tặng điểm** → khách có điểm chào mừng ngay.
+
+> 🔒 **Mỗi khách chỉ tặng VIP một lần.** Nếu đã tặng rồi, nút sẽ báo "đã seed VIP" và không
+> cho tặng thêm. Tặng nhầm → nhờ Quản trị viên/Kế toán trưởng **huỷ phiếu** cộng điểm đó
+> (hệ thống tự trừ lại), rồi tặng lại.
+
+> 💡 Điểm chào mừng ghi nhận bằng một phiếu **COBE Loyalty Adjustment** (loại *VIP Seed*) —
+> có lịch sử, huỷ được, minh bạch.
+
+![Phiếu cộng/trừ điểm thủ công](images/loyalty/adjustment-new.png)
+
+---
+
 ## Ghi nhớ cuối cùng
 
 > - Khách **chưa có Chương trình tích điểm** = **không có điểm**, và hệ thống **im lặng**.
