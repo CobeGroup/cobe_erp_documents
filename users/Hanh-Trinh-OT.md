@@ -221,7 +221,7 @@ Hệ thống **tự kiểm tra**, chặn ngay lúc gửi nếu:
 | Phiếu duyệt rồi, ghi nhận **0h** | Quên check-out, hoặc check-out **trước** giờ tan ca |
 | Giờ ghi nhận **ít hơn** thực tế làm | Bị cap theo giờ khai **hoặc** trần cứng 4h/8h — khai đúng số giờ đã làm |
 | *"Đã có đơn làm thêm giờ ngày…"* | Mỗi ngày chỉ **1 phiếu**. Huỷ phiếu cũ nếu muốn đổi khung giờ |
-| *"Chưa có Manager duyệt làm thêm giờ"* | HR chưa gán **Shift Request Approver** cho phòng bạn |
+| *"Chưa có người duyệt làm thêm giờ"* | HR chưa gán **Shift Request Approver** cho phòng bạn |
 
 ---
 

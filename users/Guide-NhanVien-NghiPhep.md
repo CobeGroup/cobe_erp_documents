@@ -29,7 +29,7 @@ thêm (bật tiếng để nghe thuyết minh):
 
 Mở tab **Nghỉ phép**:
 - **Số dư phép**: ngay đầu trang, mỗi loại phép là **một chip riêng** hiện số ngày **còn lại theo từng loại** (vd `Phép năm: 6,0 ngày`). Chip **xanh** = còn phép, **xám** = đã hết (0).
-- **Đơn xin nghỉ**: danh sách đơn đã gửi + trạng thái (Chờ Manager / Đã được duyệt / Từ chối).
+- **Đơn xin nghỉ**: danh sách đơn đã gửi + trạng thái (Chờ trưởng bộ phận / Đã được duyệt / Từ chối).
 
 <img src="images/guide/nhanvien/10-leave-list.png" width="240" alt="Số dư phép + danh sách đơn">
 
@@ -105,8 +105,8 @@ ngày nghỉ sẵn thì **không tính là phép**:
 
 ---
 
-> ✏️ **Điền sai vẫn sửa được** khi đơn còn **"Chờ Manager"**: mở đơn → **Sửa đơn** → gửi lại.
-> Qua bước Manager duyệt rồi thì không sửa nữa.
+> ✏️ **Điền sai vẫn sửa được** khi đơn còn **"Chờ trưởng bộ phận"**: mở đơn → **Sửa đơn** → gửi lại.
+> Qua bước trưởng bộ phận duyệt rồi thì không sửa nữa.
 >
 > ✍️ **Bị từ chối** thì mở đơn ra là thấy **Lý do từ chối** (người duyệt bắt buộc ghi) — biết
 > đường chỉnh rồi gửi đơn mới.
@@ -173,7 +173,7 @@ Có đơn làm thêm đã duyệt rồi thì tạo đơn nghỉ y như nghỉ ph
 4. **Lý do:** ghi rõ **làm gì, tới mấy giờ** — vd *"Làm khuya lắp máy tới 23h đêm 02/07"*.
 5. **Gửi đơn** → duyệt **2 bước như nghỉ phép thường** (Quản lý → HR).
 
-<img src="images/guide/nhanvien/14-leave-comp-list.png" width="240" alt="Đơn Nghỉ bù chờ Manager duyệt">
+<img src="images/guide/nhanvien/14-leave-comp-list.png" width="240" alt="Đơn Nghỉ bù chờ trưởng bộ phận duyệt">
 
 Điểm khác nghỉ phép thường:
 
@@ -209,7 +209,7 @@ phải chọn gì — **chọn đúng loại phép là form tự đổi**:
 | Tình huống | Cách xử |
 |---|---|
 | Chỉ thấy "Leave Without Pay" | Bạn chưa được cấp loại phép nào có lương → báo HR cấp **Leave Allocation** |
-| "Chưa có Manager duyệt phép" | HR chưa gán người duyệt cho phòng bạn → báo HR |
+| "Chưa có người duyệt phép" | HR chưa gán người duyệt cho phòng bạn → báo HR |
 | Đơn vẫn "Chờ" sau khi Quản lý duyệt | Còn chờ **HR duyệt bước 2** mới chính thức |
 | Không thấy loại **"Nghỉ bù"** | Công ty chưa bật Leave Type Nghỉ bù → báo HR |
 | Xin Nghỉ bù mà app đòi "Ngày làm thêm để bù" | Ô này **bắt buộc** với Nghỉ bù — chọn đúng hôm đã làm thêm |

@@ -104,7 +104,9 @@ Xem [HR KPI Period](HR-KPI-Period.html). Mỗi tháng/quý/năm tạo 1 record:
 
 ### Bước 5: Verify Holiday List của Employee
 
-Mỗi Employee phải có `holiday_list` để Overtime Slip nhận diện ngày lễ khi áp hệ số (×3.0). Thiếu Holiday List thì ngày lễ bị tính như ngày thường/cuối tuần.
+Mỗi Employee phải có **Holiday List Assignment** đang hiệu lực để Overtime Slip nhận diện ngày lễ khi áp hệ số (×3.0). Thiếu thì ngày lễ bị tính như ngày thường/cuối tuần.
+
+> ⚠️ **Không phải** ô `Holiday List` trên hồ sơ Employee — ô đó đã khoá và không còn chi phối ngày nghỉ. Kiểm ở `/app/holiday-list-assignment` (lọc theo `Assigned To`), bản `From Date` mới nhất là bản đang áp dụng. Xem [Ngày lễ (Holiday List)](Desk-Admin-Holiday.html).
 
 ### Bước 6: Verify Salary Structure Assignment
 
@@ -260,8 +262,8 @@ Additional Salary của OT có `ref_doctype = Overtime Slip`. Từ đơn HR Over
 | KPI Bonus = 0 dù đã chấm | Check `payout_date` của KPI Score có trong kỳ slip không. Check `paid_in_salary_slip` chưa bị mark trước đó |
 | WFH Deduction = 0 dù có WFH | Check `apply_to_components` có row nào không. Check chấm công WFH có `custom_checkin_source='WFH-PWA'` không |
 | Duplicate KPI Score | Hệ thống enforce 1 record / employee / period. Sửa record cũ thay vì tạo mới |
-| Hệ số cuối tuần/lễ không áp | Overtime Type chưa tick `applicable_for_weekend` / `applicable_for_public_holiday`, hoặc Employee thiếu Holiday List |
-| Day type sai cho ngày lễ | Check Employee.holiday_list có gắn Holiday List đúng năm không |
+| Hệ số cuối tuần/lễ không áp | Overtime Type chưa tick `applicable_for_weekend` / `applicable_for_public_holiday`, hoặc NV thiếu **Holiday List Assignment** |
+| Day type sai cho ngày lễ | Check **Holiday List Assignment** của NV có trỏ list đúng năm không (đừng nhìn ô Holiday List trên hồ sơ Employee — ô đó đã khoá, không còn chi phối) |
 
 ---
 

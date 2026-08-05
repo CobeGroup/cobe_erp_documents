@@ -65,7 +65,7 @@ Người được phép **nhận chuyển duyệt** một đơn được lọc t
 
 | Hiện tượng | Cách xử |
 |---|---|
-| NV gửi đơn báo "Chưa có Manager duyệt phép" | Phòng chưa có Leave Approvers → thêm dòng đầu |
+| NV gửi đơn báo "Chưa có người duyệt phép" | Phòng chưa có Leave Approvers → thêm dòng đầu |
 | Đã set approver nhưng **bấm duyệt bị chặn** | Approver **thiếu role `Leave Approver`** (bước 2: thiếu `HR Manager`) → gán role |
 | Đổi Manager phòng nhưng NV vẫn ra người cũ | NV bị override ở **Employee.leave_approver** |
 | Forward không thấy ai để chọn | Người nhận chưa đúng **role** hoặc khác phòng/công ty |

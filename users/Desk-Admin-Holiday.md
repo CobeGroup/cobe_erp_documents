@@ -52,16 +52,23 @@ Thứ 7 nửa ngày được khai bằng ô **Is Half Day** ✓ (không phải w
 > Ngày lễ VN có thể lấy nhanh: chọn `Country = Vietnam` → **Get Local Holidays**.
 > Holiday List sửa được thoải mái, nhưng **không thêm được ngày nằm ngoài khoảng From–To** → muốn nối dài thì nới `To Date` trước.
 
-## 3. Gắn Holiday List — 2 chỗ
+## 3. Gắn Holiday List — chỉ MỘT chỗ
 
-Từ 29/07/2026, ô `Holiday List` trên **Shift Type đã bỏ trống hẳn** (nhiều nhóm dùng chung một ca nhưng lịch nghỉ khác nhau). Ngày nghỉ giờ đi theo **từng nhân viên**, gắn ở 2 chỗ và phải trỏ cùng một list:
+Từ 29/07/2026, ô `Holiday List` trên **Shift Type đã bỏ trống hẳn** (nhiều nhóm dùng chung một ca nhưng lịch nghỉ khác nhau). Ngày nghỉ giờ đi theo **từng nhân viên**, và chỉ khai ở **một** nơi:
 
 | Chỗ gắn | Chi phối | Thao tác |
 |---|---|---|
-| **Holiday List Assignment** | Chấm công, nghỉ phép, OT, bảng lương | `/app/holiday-list-assignment/new` |
-| **Hồ sơ Employee** → ô `Holiday List` | Payroll Entry + ký hiệu H/WO trên report | Mở Employee → tab *Attendance & Leave Details* |
+| **Holiday List Assignment** | Chấm công, nghỉ phép, OT, bảng lương — **tất cả** | `/app/holiday-list-assignment/new` |
 
 > ⚠️ **Đừng gắn lại Holiday List vào Shift Type.** Ô đó **đè lên** Holiday List Assignment ở phần chấm công, trong khi nghỉ phép và lương vẫn đọc Assignment → hai bên tính theo hai lịch khác nhau.
+
+### Còn ô `Holiday List` trên hồ sơ Employee thì sao?
+
+**Bỏ qua nó.** Sửa ô đó **không đổi được lịch nghỉ của ai** — từ HRMS v16 mọi nhánh đều đọc Holiday List Assignment.
+
+Ô này đã **khoá (read-only)** và đổi nhãn thành *"Holiday List (tự đồng bộ từ Holiday List Assignment)"*. Nó là **bản sao**: hệ thống tự chép giá trị từ Assignment đang hiệu lực (ngay khi bạn Submit/Cancel một Assignment, và quét lại lúc 01:05 mỗi ngày cho những Assignment gán trước ngày hiệu lực). Bạn không phải làm gì cả.
+
+> 📌 Nó còn đúng **một** tác dụng nhỏ: Payroll Entry dùng để đếm ngày nghỉ khi **cảnh báo** "nhân viên còn ngày chưa chấm công" (chỉ khi tick *Validate Attendance*). Ô trống thì lùi về `Default Holiday List` của công ty. Cảnh báo thôi, không ảnh hưởng số tiền.
 
 ### Holiday List Assignment hoạt động thế nào
 
@@ -92,7 +99,7 @@ Holiday List có thời hạn theo năm → **tháng 12 hằng năm**, sau khi �
 
 1. Tạo **3 Holiday List** của năm mới (list CN · list CN + thứ 7 nửa ngày · list thứ 2). Bơm đủ **12 ngày lễ vào cả ba**.
 2. Tạo **Holiday List Assignment** mới `From Date = 01/01/<năm>` cho **3 công ty** + **từng NV Active** (140+ bản → chạy bằng script, xem doc kỹ thuật).
-3. Cập nhật `Holiday List` trên hồ sơ từng NV + `Default Holiday List` của 3 công ty.
+3. Cập nhật `Default Holiday List` của 3 công ty. **Không** cần đụng ô Holiday List trên hồ sơ NV — hệ thống tự đồng bộ (xem mục 3).
 
 Không còn bước đổi Holiday List trên Shift Type — ô đó đã bỏ trống hẳn.
 

@@ -194,13 +194,13 @@ HR Manager action:
 > cần xác định được người duyệt bước 1. Hệ thống lấy theo **chuỗi ưu tiên**:
 > 1. `Employee.leave_approver` (override cá nhân, nếu set) →
 > 2. **fallback** approver mặc định của **Department** (`Department.leave_approvers`, dòng đầu) →
-> 3. cả 2 trống → báo lỗi "Chưa có Manager duyệt phép".
+> 3. cả 2 trống → báo lỗi "Chưa có người duyệt phép".
 >
 > → **Khuyến nghị: set `Leave Approver` ở từng Department** (Desk → Department → mục
 > *Leave Approvers*). NV thuộc phòng tự thừa hưởng, khỏi set từng người; chỉ set
 > `Employee.leave_approver` khi cần ngoại lệ. Người được chọn làm approver phải có
 > **role `Leave Approver`** (chạy seed_roles) + đúng Department để dùng được Forward.
-4. Toast "Đã gửi đơn xin nghỉ. Chờ Manager duyệt."
+4. Toast "Đã gửi đơn xin nghỉ. Chờ trưởng bộ phận duyệt."
 5. List "Đơn xin nghỉ" refresh hiện đơn mới với badge "Chờ Manager" (gold)
 
 **Cách 2: Qua Desk** (cho HR / Manager tạo hộ)

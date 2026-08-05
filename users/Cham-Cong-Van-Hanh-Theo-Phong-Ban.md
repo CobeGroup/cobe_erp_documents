@@ -174,7 +174,7 @@ check-in không thành Attendance → **báo cáo tháng (§6) trống**.
 Manager = người có role **Leave Approver** và là `leave_approver` của NV.
 
 **Cách 1 — trên điện thoại (my-workspace → tab "Cần duyệt"):**
-- **Nghỉ phép** (đơn ở trạng thái *Pending Manager*): bấm đơn → **"Duyệt (Manager)"**
+- **Nghỉ phép** (đơn ở trạng thái *Pending Manager*): bấm đơn → **"Duyệt (Trưởng bộ phận)"**
   → đơn chuyển sang *Manager Approved* (chờ HR submit). Hoặc **"Từ chối"**.
 - **Chấm công bù / Công tác / WFH** (Attendance Request): bấm → **"Duyệt"** (Submit) hoặc **"Hủy"**.
   Khi duyệt, HRMS tự tạo bản ghi Attendance (Present / WFH) cho ngày đó.
@@ -188,7 +188,7 @@ Manager = người có role **Leave Approver** và là `leave_approver` của NV
 ## 5. HR cần làm gì để duyệt
 
 ### 5.1. Duyệt nghỉ phép — bước 2 (sau khi Manager đã duyệt)
-my-workspace → tab **"Cần duyệt"** → đơn ở trạng thái *Manager Approved* → bấm **"Submit (HR)"**
+my-workspace → tab **"Cần duyệt"** → đơn ở trạng thái *Manager Approved* → bấm **"Duyệt (HR)"**
 → đơn thành *Submitted* (chính thức, trừ quỹ phép). Hoặc **"Từ chối"**.
 (HR Manager cũng có thể tự duyệt cả 2 bước nếu cần.)
 

@@ -32,7 +32,7 @@ nav_order: 4
 
 > 💡 Cobe override Shift Type (**CobeShiftType**) để **vô hiệu phần tự chấm Vắng** của HRMS (presence-based). Bật **Auto Attendance** để check-in tự sinh Present/Half, nhưng sẽ **không** tự chấm Vắng ngày trống.
 
-## 2. Nhân viên mới — 3 món phải làm
+## 2. Nhân viên mới — 2 món phải làm
 
 Thiếu món nào cũng **không có báo lỗi**, sai sẽ lòi ra ở kỳ lương.
 
@@ -40,7 +40,8 @@ Thiếu món nào cũng **không có báo lỗi**, sai sẽ lòi ra ở kỳ lư
 |---|---|---|
 | 1 | **Shift Assignment** (ca) | `/app/shift-assignment/new` → Employee + Shift Type + `Start Date` = ngày vào làm, `End Date` để trống → **Submit** |
 | 2 | **Holiday List Assignment** (ngày nghỉ) | `/app/holiday-list-assignment/new` → `Applicable For = Employee`, chọn NV, **Holiday List đúng nhóm của NV**, `From Date` = ngày vào làm → **Submit** (nhớ sửa lại `From Date`, nó tự điền 01/01) |
-| 3 | **Holiday List trên hồ sơ NV** | Mở Employee → tab *Attendance & Leave Details* → chọn **đúng list ở bước 2** → Save |
+
+> 📌 **Không** phải điền ô *Holiday List* trên hồ sơ Employee (tab **Attendance & Leaves**). Ô đó đã **khoá read-only** và hệ thống **tự chép** theo Holiday List Assignment — xem [Ngày lễ](Desk-Admin-Holiday.html).
 
 ![Form Shift Assignment — gán ca cho nhân viên](images/desk/admin-shiftassign-new.png)
 
@@ -48,11 +49,10 @@ Quên món nào thì:
 
 - **Quên ca** → check-in vẫn lưu nhưng **không ra công**, NV bị cờ "Không có ca".
 - **Quên Holiday List Assignment** → NV rơi về list chung của công ty (**không có thứ 7 nửa ngày**) → NV văn phòng bị **Half Day mỗi thứ 7**; NV khối tỉnh thì sai cả hai đầu (thứ 2 tính là ngày làm, Chủ nhật tính là nghỉ).
-- **Quên Holiday List trên hồ sơ** → bảng lương đếm sai số ngày lễ.
 
 > **Không cần** điền *Default Shift* trên hồ sơ Employee — hiện toàn bộ NV đang để trống. Shift Assignment là nguồn ca duy nhất; điền Default Shift chỉ tạo ca "ma" cho những ngày hở.
 
-Gán nhiều người cùng lúc: **Shift Assignment Tool** (lọc theo phòng ban rồi gán hàng loạt) — nhưng công cụ này **chỉ tạo ca**, hai món còn lại vẫn phải làm.
+Gán nhiều người cùng lúc: **Shift Assignment Tool** (lọc theo phòng ban rồi gán hàng loạt) — nhưng công cụ này **chỉ tạo ca**, Holiday List Assignment vẫn phải làm riêng.
 
 ## 3. Đổi ca cho NV đang làm
 

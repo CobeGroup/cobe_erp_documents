@@ -51,6 +51,7 @@ flowchart TD
 6. [Đổi ca cho NV đang làm](#6-đổi-ca-cho-nv-đang-làm)
 7. [Chuyển năm (rollover)](#7-chuyển-năm-rollover)
 8. [Kết nối với chấm công Cobe](#8-kết-nối-với-chấm-công-cobe)
+9. [Ô `holiday_list` trên hồ sơ Employee](#9-ô-holiday_list-trên-hồ-sơ-employee)
 
 ---
 
@@ -69,7 +70,7 @@ Ba nguồn phải luôn trỏ về **cùng một Holiday List** cho mỗi nhân 
 | Nguồn | Nhánh nào đọc | Sai thì hậu quả |
 |---|---|---|
 | **Holiday List Assignment** (HLA) | Chấm công tự động, nghỉ phép (số ngày bị trừ), OT (`is_rest_day`), Salary Slip | Thứ 7 không được chia đôi ngưỡng → **Half Day oan**; ngày lễ bị **trừ vào phép năm**; OT ngày lễ áp sai trần |
-| **`Employee.holiday_list`** (field trên hồ sơ NV) | Payroll Entry (đếm ngày lễ khi tính unmarked attendance) + ký hiệu **H / WO** trên report | Công và lương bất đồng |
+| **`Employee.holiday_list`** (field trên hồ sơ NV) | **Chỉ** Payroll Entry — đếm ngày lễ cho cảnh báo *unmarked attendance* (khi tick `validate_attendance`), trống thì lùi về list công ty | Cảnh báo "chưa chấm công" đếm sai; **không** ảnh hưởng tiền |
 | **`Company.default_holiday_list`** | Fallback cuối của report và của `is_rest_day` | Chỉ ảnh hưởng khi 2 nguồn trên trống |
 
 > ⚠️ **Đừng gắn lại `holiday_list` vào Shift Type.** Nó **đè lên HLA** ở nhánh chấm
@@ -318,7 +319,9 @@ lòi ra ở kỳ lương.
 |---|---|---|
 | 1 | **Shift Assignment** | New → Employee + Shift Type + `Start Date` = ngày vào làm, để trống `End Date` → **Submit** |
 | 2 | **Holiday List Assignment** | New → `applicable_for = Employee`, `assigned_to` = NV, `holiday_list` = list **của nhóm NV đó** (bảng [mục 2](#2-holiday-list)), `from_date` = ngày vào làm → **Submit**. Nhớ sửa lại `From Date` sau khi chọn list ([mục 3.1](#31-gán-cho-một-người-trên-desk)) |
-| 3 | **`Employee.holiday_list`** | Mở hồ sơ Employee → tab *Attendance & Leave Details* → chọn **đúng list vừa gán ở bước 2** → Save |
+
+Chỉ **2 món**. Ô `Holiday List` trên hồ sơ Employee **đã khoá read-only** — không còn
+món thứ 3 nào phải làm tay (xem [mục 9](#9-ô-holiday_list-trên-hồ-sơ-employee)).
 
 Quên món nào thì sao:
 
@@ -327,8 +330,6 @@ Quên món nào thì sao:
 - **Quên HLA** → rơi về HLA của công ty = `HL - Lễ VN - CN - 2026` (**không có T7 nửa
   ngày**). NV văn phòng sẽ bị **Half Day mỗi thứ 7**; NV kỹ thuật/kho thì vô hại; NV
   khối tỉnh làm T3–CN thì sai cả hai đầu (thứ 2 tính là ngày làm, Chủ nhật tính là nghỉ).
-- **Quên `Employee.holiday_list`** → Payroll Entry đếm sai số ngày lễ; report hiện
-  sai ký hiệu H/WO.
 
 Vì ngày nghỉ **không còn suy ra từ ca**, món 2 là bắt buộc cho mọi NV mới — không có
 chuyện "gán ca là xong".
@@ -364,9 +365,8 @@ Phải làm **đúng thứ tự này**. Tạo bản mới trước khi đóng b�
 
 Nếu ca mới thuộc nhóm Holiday List khác (VD `ST - KTV` → `ST - Office`):
 
-1. Tạo **HLA mới**: `from_date` = X, `holiday_list` = list của nhóm mới → Submit.
-   **Không** sửa, **không** cancel HLA cũ.
-2. Cập nhật `Employee.holiday_list` sang list mới.
+Tạo **HLA mới**: `from_date` = X, `holiday_list` = list của nhóm mới → Submit.
+**Không** sửa, **không** cancel HLA cũ. Hết — không phải đụng gì trên hồ sơ Employee.
 
 Đổi ca **trong cùng nhóm** (VD `ST - Office` → `ST - Office Kế Toán`) thì bỏ qua
 bước này.
@@ -392,7 +392,7 @@ trong tháng 12, **sau khi đã chốt lương tháng 12** (xem [mục 3.4](#34-
 |---|---|---|
 | 1 | Tạo **3 Holiday List** của năm mới | `... CN - <năm>` · `... CN Và Nửa Ngày Thứ 7 - <năm>` · `... Thứ 2 - <năm>`. From/To = 01/01–31/12. Bơm 12 ngày lễ VN vào **cả ba**; list 2 thêm mọi thứ 7 `Is Half Day` ✓; list 3 thêm mọi thứ 2 `Weekly Off` ✓ và **không** có Chủ nhật |
 | 2 | Tạo **HLA mới** `from_date = 01/01/<năm>` | Cho **3 công ty** + **từng NV Active**, trỏ list đúng nhóm. HLA cũ giữ nguyên, không cancel |
-| 3 | Cập nhật `Company.default_holiday_list` và `Employee.holiday_list` | Sang list năm mới, đúng nhóm |
+| 3 | Cập nhật `Company.default_holiday_list` | Sang list năm mới. `Employee.holiday_list` **không** phải đụng — đã khoá, script gán hàng loạt tự đồng bộ |
 
 **Không còn bước đổi Holiday List trên Shift Type** — ô đó đã bỏ trống hẳn từ 29/07/2026.
 
@@ -491,6 +491,64 @@ Ngày không có check-in để **trống = nghỉ**. Bảng công tháng chỉ 
 ### Job nhắc quên chấm công (21:00)
 
 Chỉ quét NV **có Shift Assignment** hôm nay. NV không có ca sẽ bị bỏ qua hoàn toàn.
+
+---
+
+## 9. Ô `holiday_list` trên hồ sơ Employee
+
+**Từ 05/08/2026: ô này là BẢN SAO, hệ thống tự ghi.** Khoá read-only + đổi nhãn thành
+*"Holiday List (tự đồng bộ từ Holiday List Assignment)"* (patch `v0_032`).
+
+Quy tắc chốt, không có ngoại lệ:
+
+```
+Employee.holiday_list  =  HLA riêng của NV đang hiệu lực HÔM NAY
+NV không có HLA riêng  →  để TRỐNG (Payroll Entry tự lùi về list công ty)
+```
+
+Ba chỗ giữ quy tắc đó (`utils/holiday_sync.py`):
+
+| Cơ chế | Bắt trường hợp |
+|---|---|
+| `doc_events` on_submit / on_cancel của HLA | Gán hoặc huỷ có hiệu lực **ngay** |
+| Job **01:05 hằng ngày** | HLA gán **trước**, hiệu lực **sau** — hook lúc submit không thấy được |
+| Patch `v0_033` | Backfill một lần cho tồn đọng (45 NV lúc chạy) |
+
+Không còn phải chạy script dò lệch bằng tay nữa.
+
+### Vì sao phải làm vậy
+
+Hai bảng **không đồng bộ chiều nào cả**:
+
+- Submit một HLA mới **không** ghi ngược vào `Employee.holiday_list` — controller
+  `HolidayListAssignment` chỉ có `validate`, không có `on_submit` và không đụng Employee.
+- Sửa `Employee.holiday_list` **không** đẻ ra HLA — HRMS không có doc_event nào trên
+  Employee làm việc đó.
+
+HRMS chỉ đồng bộ đúng **một lần**, ở patch một chiều `v16_0/create_holiday_list_assignments`
+(đẻ HLA từ giá trị cũ lúc nâng cấp), rồi hai bên trôi tự do. Đo ngày 05/08/2026: **38/40**
+NV được gán HLA "T7 làm cả ngày" hiệu lực 01/08 vẫn còn ô này trỏ list nửa buổi; dọn tay
+xong lại lòi thêm **6** NV nhóm nghỉ Thứ 2 — đợt gán hôm đó có 2 nhóm, script chỉ quét 1.
+Đó là lý do bỏ hẳn cách "dò rồi chạy script", chuyển sang để code tự đồng bộ.
+
+Nguy hiểm không nằm ở con số lệch, mà ở chỗ HR mở form Employee, đổi ô đó, Save, và
+tưởng đã đổi lịch nghỉ — trong khi **không có gì thay đổi và cũng không có cảnh báo nào**.
+
+### Nó còn tác dụng gì không
+
+Đúng **một** chỗ đọc, trong toàn bộ HRMS + ERPNext + Cobe:
+
+`PayrollEntry.get_employees_with_unmarked_attendance()` — đếm ngày nghỉ để **cảnh báo**
+"NV này còn ngày chưa chấm công", chỉ chạy khi tick `Validate Attendance`, và tự lùi về
+`Company.default_holiday_list` nếu ô trống. Cảnh báo, **không dính tới số tiền**.
+
+Ngoài ra không nhánh nào đọc: chấm công, nghỉ phép, OT, Salary Slip, report bảng công
+Cobe — tất cả đi qua `get_holiday_list_for_employee` (chỉ tra HLA) hoặc tra HLA trực tiếp.
+
+### Vẫn ghi được từ code
+
+`read_only` là ràng buộc **giao diện**. `holiday_sync` và Server Script gán hàng loạt
+(`cobe_assign_holiday_list`, [mục 3.2](#32-gán-hàng-loạt)) vẫn ghi bình thường.
 
 ---
 

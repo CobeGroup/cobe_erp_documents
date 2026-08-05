@@ -12,7 +12,7 @@ nav_order: 3
 **Dành cho:** HR Manager · **Doctype:** Leave Allocation, Leave Policy Assignment, Department
 {: .fs-3 .text-grey-dk-000 }
 
-> 2 việc tách biệt: **(A) cấp số dư phép** cho nhân viên, và **(B) gán người duyệt** đơn nghỉ. Không có B thì nhân viên gửi đơn sẽ báo *"Chưa có Manager duyệt phép"*.
+> 2 việc tách biệt: **(A) cấp số dư phép** cho nhân viên, và **(B) gán người duyệt** đơn nghỉ. Không có B thì nhân viên gửi đơn sẽ báo *"Chưa có người duyệt phép"*.
 
 ---
 
@@ -77,7 +77,7 @@ Chuỗi ưu tiên: **Employee.leave_approver** (đặt riêng) → fallback **ng
 
 | Hiện tượng | Cách xử |
 |---|---|
-| NV gửi đơn báo "Chưa có Manager duyệt phép" | Phòng chưa có Leave Approver → làm mục **B** |
+| NV gửi đơn báo "Chưa có người duyệt phép" | Phòng chưa có Leave Approver → làm mục **B** |
 | NV chỉ thấy "Leave Without Pay" | Chưa có Leave Allocation loại có lương → làm mục **A** |
 | Đặt approver Department nhưng NV vẫn nhầm người | NV bị override ở Employee.leave_approver → kiểm field đó |
 | Quản lý duyệt được nghỉ phép nhưng **không thấy đơn chấm công bù** | Chưa gán khe **Shift Request Approver** (tách khỏi Leave Approver) → làm mục **B2** |

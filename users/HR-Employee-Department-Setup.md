@@ -82,7 +82,7 @@ Cobe lấy người duyệt bước 1 (Manager) theo **chuỗi ưu tiên**:
 ```
 1. Employee.leave_approver        (override cá nhân, nếu set)
 2. Department.leave_approvers      (approver mặc định của phòng — dòng đầu)
-3. cả 2 trống                      → báo lỗi "Chưa có Manager duyệt phép"
+3. cả 2 trống                      → báo lỗi "Chưa có người duyệt phép"
 ```
 
 → **Khuyến nghị: set `Leave Approvers` ở từng Department**, NV trong phòng tự

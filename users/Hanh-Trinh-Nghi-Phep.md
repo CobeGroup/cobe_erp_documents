@@ -82,11 +82,11 @@ Gửi xong, đơn xuất hiện trong danh sách của nhân viên với nhãn *
 ## ② Trưởng Bộ Phận duyệt (bước 1)
 
 Người duyệt nhận **thông báo đẩy** + badge đỏ trên tab **Cần duyệt**. Mở đơn của Trần Thị Bình → bấm
-**Duyệt (Manager)**.
+**Duyệt (Trưởng bộ phận)**.
 
-<img src="images/guide/hanhtrinh/j3-manager-duyet.png" width="260" alt="Trưởng Bộ Phận duyệt — nút Duyệt (Manager)">
+<img src="images/guide/hanhtrinh/j3-manager-duyet.png" width="260" alt="Trưởng Bộ Phận duyệt — nút Duyệt (Trưởng bộ phận)">
 
-- **Duyệt (Manager)** → đơn chuyển sang **Chờ HR submit**.
+- **Duyệt (Trưởng bộ phận)** → đơn chuyển sang **Chờ HR duyệt**.
 - **Từ chối** → đơn bị đóng. **Bắt buộc nhập lý do** mới từ chối được; lý do này **gửi lại cho nhân viên** (xem cuối trang).
 - **Chuyển duyệt** → giao cho người khác (ca khó / đi vắng).
 
@@ -104,12 +104,12 @@ Người duyệt nhận **thông báo đẩy** + badge đỏ trên tab **Cần d
 
 ## ③ HR duyệt (bước 2 — bước cuối)
 
-Đơn đã qua Manager hiện ở **Chờ HR submit**. HR mở trong tab **Cần duyệt** (hoặc trên Desk) → bấm
-**Submit (HR)**.
+Đơn đã qua Manager hiện ở **Chờ HR duyệt**. HR mở trong tab **Cần duyệt** (hoặc trên Desk) → bấm
+**Duyệt (HR)**.
 
-<img src="images/guide/hanhtrinh/j4-hr-duyet.png" width="260" alt="HR duyệt — nút Submit (HR)">
+<img src="images/guide/hanhtrinh/j4-hr-duyet.png" width="260" alt="HR duyệt — nút Duyệt (HR)">
 
-- **Submit (HR)** → đơn **chính thức được duyệt** và **trừ số dư phép**.
+- **Duyệt (HR)** → đơn **chính thức được duyệt** và **trừ số dư phép**.
 - **Từ chối** → đơn bị đóng.
 
 💻 **Trên Desk** (xem chi tiết, lọc trạng thái, xử lý hàng loạt): mở `/app/leave-application` → đơn ở *Manager Approved* → bấm **Actions** → chọn **Submit** (hoặc *HR Reject*).
@@ -145,8 +145,8 @@ Bị từ chối ở bước ① hoặc ②, đơn chuyển nhãn **Từ chối*
 
 | Nhân viên thấy | Người duyệt thấy | Nghĩa |
 |---|---|---|
-| 🟡 **Chờ Manager** | Chờ Manager duyệt | Đang chờ bước ① Trưởng Bộ Phận |
-| 🔵 **Manager đã duyệt** | Chờ HR submit | Đã qua bước ②, đang chờ HR |
+| 🟡 **Chờ Manager** | Chờ trưởng bộ phận duyệt | Đang chờ bước ① Trưởng Bộ Phận |
+| 🔵 **Manager đã duyệt** | Chờ HR duyệt | Đã qua bước ②, đang chờ HR |
 | 🟢 **Đã được duyệt** | *(đã rời inbox)* | Hoàn tất bước ③, đã trừ phép |
 | 🔴 **Từ chối** | *(đã rời inbox)* | Bị từ chối ở bước ① hoặc ② |
 

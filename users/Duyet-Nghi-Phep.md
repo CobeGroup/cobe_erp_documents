@@ -44,9 +44,9 @@ flowchart LR
   classDef o fill:#fff7e6,stroke:#fa8c16,color:#873800;
   classDef r fill:#fff1f0,stroke:#f5222d,color:#a8071a;
   NV["Nhân viên<br/>tạo đơn"] --> PM["Chờ Manager<br/>(Pending Manager)"]
-  PM -- "Duyệt (Manager)" --> MA["Chờ HR<br/>(Manager Approved)"]
+  PM -- "Duyệt (Trưởng bộ phận)" --> MA["Chờ HR<br/>(Manager Approved)"]
   PM -- "Từ chối" --> RJ["Từ chối<br/>(Rejected)"]
-  MA -- "Submit (HR)" --> OK["Đã duyệt · Trừ phép<br/>(Submitted)"]
+  MA -- "Duyệt (HR)" --> OK["Đã duyệt · Trừ phép<br/>(Submitted)"]
   MA -- "HR Reject" --> RJ
   class NV,PM,MA p
   class OK g
@@ -89,15 +89,15 @@ trộn **Nghỉ phép** + **Chấm công bù**, lọc nhanh bằng thanh **Tất
 
 > 🔔 Có đơn mới → bạn nhận **thông báo đẩy** (nếu đã bật) + badge đỏ trên tab.
 > Mỗi thẻ ghi rõ **tên nhân viên · loại · ngày · số ngày · lý do** và nhãn trạng thái
-> (**Chờ Manager duyệt** / **Chờ HR submit**).
+> (**Chờ trưởng bộ phận duyệt** / **Chờ HR duyệt**).
 
 ### A.2 — Bước 1: Trưởng Bộ Phận duyệt
 
-Bấm vào đơn đang **"Chờ Manager duyệt"** để xem chi tiết, rồi chọn:
+Bấm vào đơn đang **"Chờ trưởng bộ phận duyệt"** để xem chi tiết, rồi chọn:
 
-<img src="images/guide/duyet/02-detail-manager.png" width="260" alt="Chi tiết đơn — nút Duyệt (Manager) / Từ chối / Chuyển duyệt">
+<img src="images/guide/duyet/02-detail-manager.png" width="260" alt="Chi tiết đơn — nút Duyệt (Trưởng bộ phận) / Từ chối / Chuyển duyệt">
 
-- **Duyệt (Manager)** → đơn chuyển sang **Chờ HR submit** (bước 2).
+- **Duyệt (Trưởng bộ phận)** → đơn chuyển sang **Chờ HR duyệt** (bước 2).
 - **Từ chối** → đơn bị **đóng** (Rejected).
 - **Chuyển duyệt** → giao cho người khác duyệt (xem [mục A.4](#a4--chuyển-duyệt-ca-khó)).
 
@@ -110,11 +110,11 @@ thông báo (dòng *"Lý do: …"*). *(HR từ chối ở bước 2 cũng bắt 
 
 ### A.3 — Bước 2: HR duyệt
 
-Đơn đã qua Manager hiện ở trạng thái **"Chờ HR submit"**. HR mở đơn → chọn:
+Đơn đã qua Manager hiện ở trạng thái **"Chờ HR duyệt"**. HR mở đơn → chọn:
 
-<img src="images/guide/duyet/03-detail-hr.png" width="260" alt="Chi tiết đơn — nút Submit (HR) / Từ chối / Chuyển duyệt">
+<img src="images/guide/duyet/03-detail-hr.png" width="260" alt="Chi tiết đơn — nút Duyệt (HR) / Từ chối / Chuyển duyệt">
 
-- **Submit (HR)** → đơn **chính thức được duyệt** (Submitted) và **trừ số dư phép** của nhân viên.
+- **Duyệt (HR)** → đơn **chính thức được duyệt** (Submitted) và **trừ số dư phép** của nhân viên.
 - **Từ chối** → đơn bị đóng (Rejected) — **bắt buộc nhập lý do** như [bước Manager](#a2--bước-1-trưởng-bộ-phận-duyệt); lý do gửi cho nhân viên.
 - **Chuyển duyệt** → giao cho HR khác.
 
@@ -193,7 +193,7 @@ Mở đơn cần duyệt (đang **Manager Approved**) → bấm nút **Actions**
 
 ![Đơn nghỉ phép trên Desk — Actions → Submit / HR Reject](images/desk/hr-leave-approve-actions.png)
 
-- **Submit** → duyệt chính thức (= "Submit (HR)" trên app) → trừ phép.
+- **Submit** → duyệt chính thức (= "Duyệt (HR)" trên app) → trừ phép.
 - **HR Reject** → từ chối.
 
 > 💡 Trạng thái workflow hiển thị ngay cạnh tên đơn ở đầu trang (vd **Manager Approved**).
