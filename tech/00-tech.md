@@ -17,3 +17,4 @@ integrator / 3rd-party vendor** — khác với phần hướng dẫn vận hàn
 - **Compensation** — kiến trúc Overtime / KPI / WFH salary.
 - **Delivery Partner** — lifecycle, doc events, tài liệu tích hợp đối tác giao hàng.
 - **Loyalty** — API tích hợp 3rd-party.
+- **Phân loại Issue** — [thiết kế 3 tầng Nhóm · Loại · Nguyên nhân](Issue-Taxonomy-Tech.html), cơ chế ẩn theo nhóm và các bẫy khi triển khai.
