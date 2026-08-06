@@ -140,17 +140,32 @@ Sau khi gán, các đơn **phát sinh sau đó** mới được tính điểm.
 
 | Muốn xem gì | Xem ở đâu |
 |---|---|
-| **Tổng điểm hiện tại** của một khách | Loyalty Point Entry → lọc theo khách → **Report view** → bật **Show Totals** (xem §5.1) |
+| **Tổng điểm + phân loại** của một khách | Mở **form Customer** → xem thanh **"Điểm tích luỹ"** ở đầu form (xem §5.1) |
+| **Chi tiết từng dòng** điểm + số dư | Loyalty Point Entry → lọc theo khách → **Report view** → **Show Totals** (xem §5.2) |
 | Khách đang ở **hạng** nào, thuộc **chương trình** nào | Customer list → **Report view** → thêm cột *Loyalty Program* / *Loyalty Program Tier* |
-| **Lịch sử** từng lần cộng/trừ điểm | Danh sách **Loyalty Point Entry**, lọc theo tên khách |
 
 > Hiện điểm chỉ tra trong ERP (Desk). Việc cho khách tự tra qua Zalo Mini App **tạm chưa bật**.
 
-### 5.1. Xem TỔNG số điểm hiện tại của một khách
+### 5.1. Xem điểm ngay trên form Customer *(nhanh nhất)*
 
-Cách nhanh và chính xác nhất là dùng **dòng tổng (Show Totals)** trong Report view của Loyalty Point Entry:
+Chỉ cần **mở form của khách**. Ở đầu form có thanh **"Điểm tích luỹ"** hiển thị sẵn:
 
-1. Desk → gõ **Loyalty Point Entry** → mở danh sách.
+![Thanh điểm tích luỹ trên form Customer](images/loyalty/customer-points-banner.png)
+
+- **Tổng** — số điểm khách đang có.
+- **Mua hàng** — điểm từ việc **khách tự mua hàng** (đơn hàng / hoá đơn).
+- **Giới thiệu** — điểm khách được thưởng do **giới thiệu người khác** (referral).
+- **Khác** *(chỉ hiện khi có)* — điểm tặng VIP hoặc quản trị điều chỉnh tay.
+
+> **Tổng = Mua hàng + Giới thiệu + Khác.** Nếu khách chưa tham gia chương trình, thanh này ghi rõ *"chưa tham gia"*.
+
+Muốn xem chi tiết từng dòng điểm, bấm nút **Loyalty → Sổ điểm** ngay trên form (mở đúng sổ đã lọc theo khách).
+
+### 5.2. Xem chi tiết + số dư trong sổ điểm
+
+Khi cần soi **từng lần** cộng/trừ điểm và tự đối chiếu số dư:
+
+1. Desk → gõ **Loyalty Point Entry** → mở danh sách (hoặc bấm **Loyalty → Sổ điểm** trên form Customer).
 2. Bấm **Report View** (góc trên bên phải, nếu chưa ở chế độ này).
 3. Ở ô lọc **ID / Customer**, gõ **mã khách** cần xem (ví dụ `8955`).
 4. Bấm nút **⋯ (Menu)** ở góc trên bên phải → chọn **Show Totals**.
@@ -161,10 +176,7 @@ Cách nhanh và chính xác nhất là dùng **dòng tổng (Show Totals)** tron
 - Dòng cộng là số dương (mua hàng, referral, VIP seed); dòng trừ là số âm (`[REVERSE]`).
 - Dòng **Totals** đã cộng/trừ sẵn tất cả → khỏi tính tay.
 
-> **Lưu ý:** form **Customer không hiện điểm/chương trình** (mục Loyalty nằm ở tab đã ẩn),
-> nên luôn tra điểm bằng cách trên chứ đừng tìm trên form khách.
-
-Trong danh sách Loyalty Point Entry, cột **Invoice Type** cho biết điểm đến từ đâu:
+Cột **Invoice Type** cho biết điểm đến từ đâu:
 
 ![Danh sách Loyalty Point Entry](images/loyalty/lpe-list.png)
 

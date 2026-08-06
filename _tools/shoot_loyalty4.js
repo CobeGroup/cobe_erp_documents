@@ -1,9 +1,13 @@
-/* shoot_loyalty4.js — ảnh cho §5.1 "Xem tổng điểm hiện tại của khách".
-   Chụp Frappe Desk THẬT trên bản restore prod. Tên khách bị thay nhãn giả
-   (doc publish công khai).
+/* shoot_loyalty4.js — ảnh cho §5 "Tra cứu điểm của khách".
+   Chụp Frappe Desk THẬT trên bản restore prod. Tên khách bị thay nhãn giả /
+   chỉ clip vùng không có PII (doc publish công khai).
 
    Auth: bench --site cobe.cc browse --user Administrator  (lấy sid)
-   Chạy: SID=<sid> BASE=http://cobe.cc:8002 node .../shoot_loyalty4.js
+   Chạy: SID=<sid> BASE=http://cobe.cc:8002 CUST=8955 node .../shoot_loyalty4.js
+
+   Ảnh xuất:
+     - lpe-report-sum.png         : dòng Totals trong Loyalty Point Entry (Show Totals)
+     - customer-points-banner.png : banner "Điểm tích luỹ" trên đầu form Customer
 */
 const PW = '/home/Volumes/ws/thegioidiengiai.com/dev/erps/v3/cobe.cc/apps/wiki/node_modules/playwright';
 const { chromium } = require(PW);
@@ -14,7 +18,7 @@ const OUT = ROOT + '/help/cobe_erp_documents/users/images/loyalty';
 const BASE = (process.env.BASE || 'http://cobe.cc:8002').replace(/\/$/, '');
 const SID = process.env.SID || '';
 const CUST = process.env.CUST || '8955';
-const FAKE = 'Khách hàng mẫu';
+const REAL_NAME = process.env.REAL_NAME || 'Đỗ Văn Cảnh';
 if (!SID) { console.error('Thiếu SID'); process.exit(1); }
 fs.mkdirSync(OUT, { recursive: true });
 const u = (s) => BASE + s;
@@ -38,31 +42,24 @@ const u = (s) => BASE + s;
       document.querySelectorAll('.desk-alert, .notifications-list, .modal-backdrop').forEach(e => e.remove());
     }).catch(() => {});
   };
-  /* Thay mọi chỗ hiện tên thật của khách bằng nhãn giả */
   const maskName = async () => {
     await page.evaluate((real) => {
       const walk = (node) => {
         if (node.nodeType === 3) {
-          if (node.nodeValue && node.nodeValue.includes(real)) {
+          if (node.nodeValue && node.nodeValue.includes(real))
             node.nodeValue = node.nodeValue.split(real).join('Khách hàng mẫu');
-          }
           return;
         }
         node.childNodes && node.childNodes.forEach(walk);
       };
       walk(document.body);
-      document.querySelectorAll('input, textarea').forEach((el) => {
-        if (el.value && el.value.includes(real)) el.value = el.value.split(real).join('Khách hàng mẫu');
-      });
-    }, real_name).catch(() => {});
+    }, REAL_NAME).catch(() => {});
   };
-  let real_name = 'Đỗ Văn Cảnh';
 
   /* 1. Loyalty Point Entry — Report view lọc theo 1 khách.
      Menu "..." → "Show Totals" → hiện dòng tổng ở chân bảng. */
   await open('/app/loyalty-point-entry/view/report?customer=' + encodeURIComponent(CUST), 4500);
   await page.waitForTimeout(1500);
-  // Mở menu "..." rồi bấm "Show Totals"
   await page.evaluate(() => {
     const btn = document.querySelector('.menu-btn-group .btn, .menu-btn-group button');
     if (btn) btn.click();
@@ -78,34 +75,21 @@ const u = (s) => BASE + s;
   await page.waitForTimeout(400);
   await shot('lpe-report-sum.png', { fullPage: true });
 
-  /* 2. Customer — chỉ chụp khối "Loyalty Points" trên tab Details.
-     Chụp riêng section (không sidebar/activity) để khỏi lộ tên người tạo. */
-  await open('/app/customer/' + encodeURIComponent(CUST), 4200);
-  await page.evaluate(() => {
-    const f = window.cur_frm;
-    if (!f) return;
-    // Về tab Details
-    if (f.layout && f.layout.tabs && f.layout.tabs[0]) f.layout.tabs[0].set_active();
-    // Bung mọi section bị thu gọn để chắc chắn thấy ô Loyalty Program
-    (f.layout.sections || []).forEach(s => { if (s.collapsed) s.collapse(false); });
-    if (f.scroll_to_field) f.scroll_to_field('loyalty_program');
-  }).catch(() => {});
-  await page.waitForTimeout(1800);
-  await maskName();
-  await page.waitForTimeout(300);
-  // Chụp đúng khối section chứa loyalty_program
-  const sec = await page.evaluateHandle(() => {
-    const el = document.querySelector('[data-fieldname="loyalty_program"]');
-    return el ? el.closest('.form-section') : null;
+  /* 2. Customer — banner "Điểm tích luỹ" trên đầu form (clip đúng banner, chỉ có số). */
+  await open('/app/customer/' + encodeURIComponent(CUST), 4500);
+  await page.waitForTimeout(2500);
+  const h = await page.evaluateHandle(() => {
+    const els = [...document.querySelectorAll('.form-message, .form-intro, .alert')];
+    return els.find(e => /Điểm tích luỹ/.test(e.textContent)) || null;
   });
-  const elh = sec && sec.asElement && sec.asElement();
-  if (elh) {
-    await elh.scrollIntoViewIfNeeded().catch(() => {});
-    await page.waitForTimeout(400);
-    await elh.screenshot({ path: path.join(OUT, 'customer-loyalty-section.png') });
-    console.log('  ✓ customer-loyalty-section.png (section)');
+  const el = h && h.asElement && h.asElement();
+  if (el) {
+    await el.scrollIntoViewIfNeeded().catch(() => {});
+    await page.waitForTimeout(300);
+    await el.screenshot({ path: path.join(OUT, 'customer-points-banner.png') });
+    console.log('  ✓ customer-points-banner.png');
   } else {
-    await shot('customer-loyalty-section.png', { fullPage: true });
+    console.log('  ✗ banner "Điểm tích luỹ" không thấy (đã clear-cache + deploy JS chưa?)');
   }
 
   await browser.close();
