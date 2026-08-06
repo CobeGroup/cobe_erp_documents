@@ -1,0 +1,5 @@
+Tab Cần duyệt gom mọi đơn đang chờ bạn: nghỉ phép và chấm công bù. Mỗi thẻ ghi rõ tên nhân viên, loại đơn, ngày và lý do.
+Bước một: trưởng bộ phận mở đơn rồi bấm Duyệt. Đơn chuyển sang chờ HR duyệt.
+Bước hai: HR mở đơn đã qua trưởng bộ phận, bấm Duyệt HR. Lúc này đơn mới chính thức và trừ số dư phép.
+Đơn chấm công bù và làm tại nhà chỉ duyệt một bước. Bấm Duyệt là hệ thống tự tạo ngày công.
+Gặp ca khó hoặc bạn đi vắng, bấm Chuyển duyệt, chọn người thay và ghi lý do. Sau khi chuyển, chỉ người nhận mới duyệt được.

@@ -84,14 +84,14 @@ async function openCard(page, name) {
     await page.screenshot({ path: path.join(OUT, '01-inbox.png') });
     console.log('shot 01-inbox'); await ctx.close();
   }
-  // 02 — chi tiết đơn CHỜ MANAGER (nút Duyệt Manager / Từ chối / Chuyển duyệt)
+  // 02 — chi tiết đơn CHỜ TRƯỞNG BỘ PHẬN (nút Duyệt / Từ chối / Chuyển duyệt)
   {
     const { ctx, page } = await setup(browser);
     await openCard(page, 'Trần Thị Bình');
     await page.screenshot({ path: path.join(OUT, '02-detail-manager.png') });
     console.log('shot 02-detail-manager'); await ctx.close();
   }
-  // 03 — chi tiết đơn CHỜ HR (nút Submit HR / Từ chối / Chuyển duyệt)
+  // 03 — chi tiết đơn CHỜ HR (nút Duyệt (HR) / Từ chối / Chuyển duyệt)
   {
     const { ctx, page } = await setup(browser);
     await openCard(page, 'Lê Văn Cường');
@@ -136,7 +136,7 @@ async function openCard(page, name) {
   {
     const { ctx, page } = await setup(browser);
     await openCard(page, 'Trần Thị Bình');
-    await page.locator('.ant-modal button', { hasText:'Duyệt (Manager)' }).first().click().catch(()=>{});
+    await page.locator('.ant-modal button', { hasText:'Duyệt (Trưởng bộ phận)' }).first().click().catch(()=>{});
     await page.waitForSelector('.ant-message-notice', { timeout:4000 }).catch(()=>{});
     await page.waitForTimeout(450);
     await page.screenshot({ path: path.join(OUT, '07-processing.png') });

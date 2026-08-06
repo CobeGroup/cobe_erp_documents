@@ -97,18 +97,18 @@ async function openApprovalCard(page) {
     await openCreateHalfDay(page);
     await page.screenshot({ path: path.join(OUT, 'j1-nv-tao-don.png') }); console.log('shot j1'); await ctx.close(); }
 
-  // J2 — Đơn vào danh sách NV: "Chờ Manager"
+  // J2 — Đơn vào danh sách NV: "Chờ trưởng bộ phận"
   { const { ctx, page } = await setup(browser, EMP_BOOT,
       { ...EMP_COMMON, 'leave.get_leave_types_for_employee':LEAVE_TYPES(7.5), 'leave.get_my_leave_applications':APP('Pending Manager') }, 'leave');
     await page.screenshot({ path: path.join(OUT, 'j2-cho-manager.png') }); console.log('shot j2'); await ctx.close(); }
 
-  // J3 — Manager mở đơn trong "Cần duyệt" → Duyệt (Manager)
+  // J3 — Trưởng bộ phận mở đơn trong "Cần duyệt" → Duyệt (Trưởng bộ phận)
   { const { ctx, page } = await setup(browser, MGR_BOOT,
       { ...MGR_COMMON, 'approval.get_my_pending_approvals':PENDING('Pending Manager') }, 'approvals');
     await openApprovalCard(page);
     await page.screenshot({ path: path.join(OUT, 'j3-manager-duyet.png') }); console.log('shot j3'); await ctx.close(); }
 
-  // J4 — HR mở đơn (đã Manager duyệt) → Submit (HR)
+  // J4 — HR mở đơn (đã qua trưởng bộ phận) → Duyệt (HR)
   { const { ctx, page } = await setup(browser, MGR_BOOT,
       { ...MGR_COMMON, 'approval.get_my_pending_approvals':PENDING('Manager Approved') }, 'approvals');
     await openApprovalCard(page);

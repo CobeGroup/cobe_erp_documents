@@ -1,7 +1,7 @@
 /* shoot_leave_bypass.js — chụp 3 state MỚI của Nghỉ phép (mục 13/16/17):
    15-leave-skipmanager: form loại phép gửi THẲNG HR (skip_manager) + banner bắt buộc đính kèm
    16-leave-rejected:    chi tiết đơn bị Từ chối, hiện "Lý do từ chối"
-   17-leave-edit:        chi tiết đơn Chờ Manager, hiện nút "Sửa đơn"
+   17-leave-edit:        chi tiết đơn Chờ trưởng bộ phận, hiện nút "Sửa đơn"
    Khuôn shoot_leave.js. Chạy: node help/cobe_erp_documents/_tools/shoot_leave_bypass.js */
 const { chromium } = require('/home/Volumes/ws/thegioidiengiai.com/dev/erps/v3/cobe.cc/apps/wiki/node_modules/playwright');
 const fs = require('fs'), path = require('path');
@@ -28,7 +28,7 @@ const APPS = { applications:[
     total_leave_days:2, description:'Về quê có việc', status:'Open', workflow_state:'Rejected',
     docstatus:0, leave_approver:'manager@tgdg.com', posting_date:'2026-06-18', half_day:0,
     custom_rejection_reason:'Cuối tháng chốt sổ, phòng thiếu người — dời sang đầu tháng sau giúp em.' },
-  // Đơn đang Chờ Manager — sửa được (mục 16)
+  // Đơn đang Chờ trưởng bộ phận — sửa được (mục 16)
   { name:'HR-LAP-2026-00024', leave_type:'Phép năm', from_date:'2026-06-28', to_date:'2026-06-28',
     total_leave_days:1, description:'Đi khám định kỳ', status:'Open', workflow_state:'Pending Manager',
     docstatus:0, leave_approver:'manager@tgdg.com', posting_date:'2026-06-24', half_day:0 },
@@ -87,7 +87,7 @@ async function setup(browser) {
     await page.screenshot({ path: path.join(OUT, '16-leave-rejected.png') });
     console.log('shot 16-leave-rejected'); await ctx.close();
   }
-  // 17 — chi tiết đơn Chờ Manager, hiện nút Sửa đơn
+  // 17 — chi tiết đơn Chờ trưởng bộ phận, hiện nút Sửa đơn
   {
     const { ctx, page } = await setup(browser);
     await page.locator('.ant-list-item, .ant-card', { hasText:'Đi khám định kỳ' }).first().click().catch(()=>{});

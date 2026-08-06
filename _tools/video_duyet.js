@@ -1,6 +1,7 @@
 /* video_duyet.js — quay 5 đoạn video hướng dẫn PHÊ DUYỆT (tab Cần duyệt: Manager + HR
    + chấm công bù 1 bước + chuyển duyệt) từ APP THẬT (mock API + freeze giờ). Khuôn video_ktv.js.
    Output: <outdir>/segNN.webm (+ poster.png) → build_video.sh ghép TTS + mp4.
+   Thuyết minh: _tools/narration/duyet-don.txt — copy vào workdir rồi chạy build_video.sh.
    Chạy: node help/cobe_erp_documents/_tools/video_duyet.js <outdir> */
 const { chromium } = require('/home/Volumes/ws/thegioidiengiai.com/dev/erps/v3/cobe.cc/apps/wiki/node_modules/playwright');
 const fs = require('fs'), path = require('path');
@@ -53,7 +54,7 @@ const segments = [
     actions: async (page) => {
       await page.waitForTimeout(2000);
       await openCard(page, 'Trần Thị Bình');
-      await page.getByRole('button', { name:'Duyệt (Manager)' }).click();
+      await page.getByRole('button', { name:'Duyệt (Trưởng bộ phận)' }).click();
       await page.waitForTimeout(5500);                               // "Đang xử lý…" → ✓ → list cập nhật
     } },
   { name:'seg3', state:{ items:[Object.assign(clone(L1),{state:'Manager Approved'}), clone(L2), clone(A1)] },
@@ -61,7 +62,7 @@ const segments = [
     actions: async (page) => {
       await page.waitForTimeout(2000);
       await openCard(page, 'Lê Văn Cường');
-      await page.getByRole('button', { name:'Submit (HR)' }).click();
+      await page.getByRole('button', { name:'Duyệt (HR)' }).click();
       await page.waitForTimeout(5500);
     } },
   { name:'seg4', state:{ items:[clone(A1), Object.assign(clone(L1),{state:'Manager Approved'})] },

@@ -107,7 +107,7 @@ Nguyên nhân hay gặp:
 |---|---|
 | NV "còn phép" mà app không cho tạo đơn | **Allocation kỳ này chưa cấp** hoặc đã **hết hạn** (phép năm ngoái không tự chuyển) → [Cấp phép](Desk-HR-CapPhep.html) |
 | Số dư "tự nhiên" tăng lại | Đơn đã duyệt bị **Cancel** → hệ thống **xoá dòng trừ trong ledger**, số dư hồi lại — đúng thiết kế |
-| NV kêu đã xin nghỉ mà số dư chưa giảm | Đơn còn ở **Chờ Manager / Chờ HR** — chỉ trừ khi **Submitted** (mục 2) |
+| NV kêu đã xin nghỉ mà số dư chưa giảm | Đơn còn ở **Chờ trưởng bộ phận / Chờ HR duyệt** — chỉ trừ khi **Submitted** (mục 2) |
 | Số dư lẻ 0,5 | Đơn **nửa ngày** trừ 0,5 — không phải lỗi làm tròn |
 | Loại Nghỉ bù âm | **Bình thường** (mục 1) — không cần xử lý |
 

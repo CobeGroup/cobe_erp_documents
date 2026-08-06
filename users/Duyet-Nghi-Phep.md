@@ -27,7 +27,7 @@ nav_order: 2
 
 ## 🎬 Video hướng dẫn (1 phút)
 
-Xem nhanh cả 5 thao tác — inbox Cần duyệt, Manager duyệt bước 1, HR submit bước 2, duyệt chấm công
+Xem nhanh cả 5 thao tác — inbox Cần duyệt, trưởng bộ phận duyệt bước 1, HR duyệt bước 2, duyệt chấm công
 bù 1 bước, và chuyển duyệt ca khó (bật tiếng để nghe thuyết minh):
 
 <video src="images/guide/duyet/duyet-don.mp4" width="260" controls playsinline poster="images/guide/duyet/duyet-don-poster.png"></video>
@@ -43,11 +43,11 @@ flowchart LR
   classDef g fill:#f6ffed,stroke:#54ab78,color:#135200;
   classDef o fill:#fff7e6,stroke:#fa8c16,color:#873800;
   classDef r fill:#fff1f0,stroke:#f5222d,color:#a8071a;
-  NV["Nhân viên<br/>tạo đơn"] --> PM["Chờ Manager<br/>(Pending Manager)"]
+  NV["Nhân viên<br/>tạo đơn"] --> PM["Chờ trưởng bộ phận<br/>(Pending Manager)"]
   PM -- "Duyệt (Trưởng bộ phận)" --> MA["Chờ HR<br/>(Manager Approved)"]
   PM -- "Từ chối" --> RJ["Từ chối<br/>(Rejected)"]
   MA -- "Duyệt (HR)" --> OK["Đã duyệt · Trừ phép<br/>(Submitted)"]
-  MA -- "HR Reject" --> RJ
+  MA -- "Từ chối" --> RJ
   class NV,PM,MA p
   class OK g
   class RJ r
@@ -106,7 +106,7 @@ nhập lý do** mới từ chối được — bỏ trống, hệ thống báo *
 chốt. Nhập xong bấm **Xác nhận** để chốt, hoặc **Hủy** để thôi. **Lý do được gửi cho nhân viên** kèm
 thông báo (dòng *"Lý do: …"*). *(HR từ chối ở bước 2 cũng bắt buộc nhập lý do y như vậy.)*
 
-<img src="images/guide/duyet/06-reject-confirm.png" width="260" alt="Hộp xác nhận trước khi từ chối đơn">
+<img src="images/guide/duyet/06-reject-confirm.png" width="260" alt="Hộp nhập lý do từ chối đơn">
 
 ### A.3 — Bước 2: HR duyệt
 
@@ -182,8 +182,8 @@ Approved** để chỉ thấy đơn **đang chờ bạn duyệt**.
 
 | Màu nhãn | Trạng thái | Ý nghĩa |
 |---|---|---|
-| 🟠 Pending Manager | Chờ Manager | Đang chờ Trưởng bộ phận duyệt bước 1 |
-| 🔵 Manager Approved | Chờ HR | **Việc của HR** — chờ Submit bước 2 |
+| 🟠 Pending Manager | Chờ trưởng bộ phận duyệt | Đang chờ Trưởng bộ phận duyệt bước 1 |
+| 🔵 Manager Approved | Chờ HR duyệt | **Việc của HR** — chờ duyệt bước 2 |
 | 🟢 Submitted | Đã duyệt | Đã trừ phép, hoàn tất |
 | 🔴 Rejected | Từ chối | Đơn bị đóng |
 
