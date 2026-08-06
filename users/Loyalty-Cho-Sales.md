@@ -140,9 +140,30 @@ Sau khi gán, các đơn **phát sinh sau đó** mới được tính điểm.
 
 | Muốn xem gì | Xem ở đâu |
 |---|---|
+| **Tổng điểm hiện tại** của một khách | Loyalty Point Entry → lọc theo khách → **Report view** → cộng cột *Loyalty Points* (xem cách bên dưới) |
 | Khách đang ở **hạng** nào, thuộc **chương trình** nào | Customer list → **Report view** → thêm cột *Loyalty Program* / *Loyalty Program Tier* |
 | **Lịch sử** từng lần cộng/trừ điểm | Danh sách **Loyalty Point Entry**, lọc theo tên khách |
-| Khách **tự tra** điểm của mình | **Zalo Mini App** (tra bằng số điện thoại) |
+
+> Hiện điểm chỉ tra trong ERP (Desk). Việc cho khách tự tra qua Zalo Mini App **tạm chưa bật**.
+
+### 5.1. Xem TỔNG số điểm hiện tại của một khách
+
+**Cách 1 — Qua sổ điểm (Loyalty Point Entry):** cách nhanh và chính xác nhất.
+
+1. Desk → gõ **Loyalty Point Entry** → mở danh sách.
+2. Lọc **Customer = mã khách** cần xem.
+3. Bấm **Report view** (góc trên bên phải).
+4. Nhìn dòng tổng ở **chân cột *Loyalty Points*** — đó chính là **số dư hiện tại**.
+   - Dòng cộng là số dương (mua hàng, referral, VIP seed); dòng trừ là số âm (`[REVERSE]`).
+   - Cộng tất cả lại = số điểm khách còn.
+
+**Cách 2 — Từ form Customer:**
+
+1. Mở **Customer** của khách.
+2. Xem mục **Loyalty Points** để biết khách thuộc **chương trình** nào.
+3. Bấm liên kết để nhảy sang danh sách **Loyalty Point Entry** đã lọc sẵn đúng khách đó, rồi làm như Cách 1 để cộng ra tổng.
+
+> Lưu ý: form Customer **không hiện sẵn con số tổng** — muốn biết số dư phải cộng cột như Cách 1.
 
 Trong danh sách Loyalty Point Entry, cột **Invoice Type** cho biết điểm đến từ đâu:
 
