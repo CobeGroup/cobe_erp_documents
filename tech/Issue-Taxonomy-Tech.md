@@ -6,7 +6,7 @@ parent: Tài liệu kỹ thuật
 
 # Phân loại Issue hai tầng — tài liệu kỹ thuật
 
-App: **support_plus** · Patch: `setup_issue_taxonomy` → `group_first_issue_taxonomy` → `apply_excel_issue_catalogue`
+App: **support_plus** · 5 patch tuần tự, xem `patches.txt`
 
 Tài liệu người dùng: [Phân loại sự cố](../users/Phan-Loai-Su-Co.html)
 
@@ -34,25 +34,27 @@ Excel lại là danh sách người dùng thật rà từ dữ liệu thật —
 Nên **Excel làm bộ Loại, mind map làm bộ Nhóm**, còn các lá của mind map hạ xuống ô
 `description` để kỹ thuật viên tra.
 
-Chín nhóm: bảy từ mind map, cộng hai nhóm mind map không phủ nhưng dữ liệu nói rõ là có —
-*Tư vấn & hướng dẫn* (2.249 ca) và *Dịch vụ & kiểm tra* (164 ca). Bỏ *Van khóa T* và
-*Khách chưa quen dùng máy* vì không mục Excel nào thuộc về chúng.
+**Mười nhóm**: chín cái đúng như mind map vẽ, giữ nguyên tên, cộng *Dịch vụ & kiểm tra*
+cho 164 ca không phải sự cố kỹ thuật (Test Vipcare, Test nước, Đánh giá dịch vụ) — mind map
+chỉ vẽ phạm vi xử lý sự cố nên không phủ mảng này.
 
 | Doctype / field | Vai trò |
 |---|---|
 | `Issue Group` (mới) | Cấp 1 — triệu chứng. Cờ `hide_types` bật/tắt cả cụm |
-| `Issue Type` (ERPNext) | Cấp chi tiết. Thêm `custom_issue_groups` (**reqd**), `custom_retired`, `disabled` |
-| `Issue Type Group` (mới, child) | Dòng của bảng nhiều-nhóm |
+| `Issue Type` (ERPNext) | Cấp chi tiết. Thêm `custom_issue_group` (**reqd**), `custom_retired`, `disabled` |
 | `Issue.custom_issue_group` | **Nhập tay**, reqd, đứng trước `issue_type`, có index |
 | `Issue.issue_type` | Giữ nguyên reqd, lọc theo nhóm đã chọn |
 
-**Vì sao Issue Type phải thuộc NHIỀU nhóm.** `Tiền lọc/lọc trong quá hạn` gây ra nước yếu,
-pH lệch, nước có mùi lẫn cặn trắng. Khai một-nhóm sẽ phải nhân bản thành
-`Tiền lọc quá hạn (pH)` / `(mùi)` / `(cặn)` — đúng cái bệnh của danh mục cũ.
+**Mỗi Issue Type thuộc đúng MỘT nhóm.** Bản trước cho thuộc nhiều nhóm để né việc nhân bản
+tên, nhưng nó mâu thuẫn với chính định nghĩa: nhóm trả lời *"khách phàn nàn chuyện gì"*, mà
+một ca chỉ có một lời phàn nàn. Nó còn đẻ ra cái rối "tắt nhóm mà loại không tắt theo", rồi
+phải thêm một ô nữa chỉ để chữa hệ quả đó.
 
-**Vì sao `Issue.custom_issue_group` phải nhập tay chứ không `fetch_from`.** Chính vì một
-type thuộc nhiều nhóm: suy ngược từ type không ra được nhóm nào. Nhóm là dữ liệu CSKH chọn,
-nhờ đó hai ca cùng `Tiền lọc/lọc trong quá hạn` mà khác nhóm vẫn phân biệt được.
+File Excel vốn đã tách sẵn đúng kiểu một-một: cùng nguyên nhân lõi quá hạn được khai thành
+bốn loại riêng cho bốn triệu chứng, mỗi cái tự đủ nghĩa. Không có gì phải khử trùng lặp.
+
+**`Issue.custom_issue_group` vẫn nhập tay chứ không `fetch_from`**, vì luồng là chọn Nhóm
+trước để lọc Loại — `fetch_from` chỉ chạy sau khi đã có Loại, tức ngược chiều thao tác.
 
 **Nguyên tắc xuyên suốt: không đụng dữ liệu lịch sử.** Patch không rename, không xoá
 Issue Type nào, không đổi `issue_type` của bản ghi Issue — trừ các ca vốn để **trống**

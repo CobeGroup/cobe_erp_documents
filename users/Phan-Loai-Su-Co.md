@@ -40,7 +40,7 @@ Loại sự cố = Nước yếu do lọc trong/tiền lọc ← hỏi thêm r�
 
 ## Vì sao chia hai ô mà không gộp một
 
-Chọn Nhóm trước thì ô Loại chỉ còn hiện những cái thuộc nhóm đó — 8 dòng thay vì 75.
+Chọn Nhóm trước thì ô Loại chỉ còn hiện những cái thuộc nhóm đó — 7 dòng thay vì 75.
 Không có bước lọc này thì danh sách dài không dùng nổi.
 
 Ngoài ra **Nhóm còn là công tắc**: tắt một nhóm là toàn bộ Loại sự cố thuộc nhóm đó biến
@@ -50,23 +50,31 @@ khỏi ô chọn, thay vì phải mở từng cái tắt tay.
 
 ## Danh mục đã dựng sẵn
 
-Hệ thống đã có sẵn **9 nhóm** và **50 loại**:
+Hệ thống đã có sẵn **10 nhóm** và **50 loại**. Chín nhóm đầu lấy đúng sơ đồ xử lý sự cố
+của bộ phận kỹ thuật; nhóm cuối dành cho việc không phải sự cố nên sơ đồ đó không vẽ tới:
 
-| Nhóm | Số loại |
-|---|---|
-| Lỗi thiết bị | 18 |
-| Nước yếu | 8 |
-| pH không đạt | 6 |
-| Rò rỉ nước | 6 |
-| Nước bị mùi | 5 |
-| Nước bị cặn trắng hoặc cặn ván | 5 |
-| Dịch vụ & kiểm tra | 3 |
-| Tư vấn & hướng dẫn | 2 |
-| Nước chuyển màu | 1 |
+| Nhóm | Số loại | Ca hiện có |
+|---|---|---|
+| Sự cố máy điện giải | 17 | 333 |
+| Nước yếu | 7 | 552 |
+| Rò rỉ nước | 6 | 194 |
+| pH không đạt | 5 | 68 |
+| Nước bị mùi | 4 | 151 |
+| Nước bị cặn trắng hoặc cặn ván | 4 | 107 |
+| Dịch vụ & kiểm tra | 3 | 164 |
+| Khách chưa quen dùng máy | 2 | 2.249 |
+| Nước chuyển màu | 1 | 28 |
+| Van khóa T (khóa nguồn) | 1 | 12 |
 
-Cộng các dòng ra 54 nhưng chỉ có **50 bản ghi**, vì **một loại có thể thuộc nhiều nhóm**.
-`Tiền lọc/lọc trong quá hạn` gây ra cả nước yếu, pH lệch, nước có mùi lẫn cặn trắng nên nó
-xuất hiện ở cả bốn nhóm mà vẫn chỉ là một dòng.
+**Mỗi loại thuộc đúng một nhóm.** Cùng một nguyên nhân gây nhiều triệu chứng thì đã được
+khai thành nhiều loại riêng, mỗi loại tự đủ nghĩa và nằm đúng nhóm của nó:
+
+```
+Nước yếu do lọc trong/tiền lọc     → Nước yếu
+pH không đạt do lọc trong/tiền lọc → pH không đạt
+Nước bị mùi do lọc trong/tiền lọc  → Nước bị mùi
+Cặn trắng do tiền lọc/lọc tinh     → Nước bị cặn trắng
+```
 
 Danh sách loại lấy từ bảng rà soát của bộ phận CSKH: **35 loại đang dùng được giữ nguyên
 tên** (nên 3.858 ca lịch sử vẫn đọc liền mạch) và **15 loại khai thêm**.
@@ -84,12 +92,11 @@ Menu **Support** → thẻ **Issues**:
 
 ### Thêm một Loại sự cố mới
 
-Vào **Issue Type** → **Add**. Ô **Nhóm sự cố** là bảng cho phép chọn **nhiều dòng** và
-**bắt buộc phải có ít nhất một** — loại không thuộc nhóm nào sẽ không bao giờ hiện ra ở ô
-chọn của CSKH.
+Vào **Issue Type** → **Add**. Ô **Nhóm sự cố** là **bắt buộc** — loại không thuộc nhóm nào
+sẽ không bao giờ hiện ra ở ô chọn của CSKH.
 
-Nếu chi tiết đó xảy ra ở nhiều triệu chứng thì khai đủ các nhóm vào **một** bản ghi, đừng
-tạo nhiều bản ghi tên na ná nhau.
+Nếu một nguyên nhân gây ra nhiều triệu chứng khác nhau thì khai **một loại cho mỗi triệu
+chứng**, đặt tên tự đủ nghĩa, đừng cố nhét một loại vào nhiều nhóm.
 
 ### Ngừng dùng một Loại sự cố riêng lẻ
 
@@ -132,10 +139,7 @@ của danh sách và báo cáo — chỉ ô nhập liệu mới bị ẩn.
 
 **Hoàn tác được bất cứ lúc nào.** Bỏ tick *Ngừng sử dụng* là 25 loại đã ngừng hiện lại y như cũ.
 
-**Một loại thuộc nhiều nhóm chỉ ẩn khi mọi nhóm của nó đều tắt.** Tắt riêng nhóm *Nước bị
-mùi* thì `Tiền lọc/lọc trong quá hạn` vẫn còn, vì nó còn thuộc *Nước yếu*, *pH không đạt* và
-*Nước bị cặn* — còn một nhóm sống là còn đường chọn nó. Muốn bỏ hẳn loại đó thì dùng ô
-**Ngừng dùng loại này** chứ không phải đi tắt từng nhóm.
+**Tắt một nhóm là ẩn đúng những loại thuộc nhóm đó**, không ảnh hưởng nhóm khác.
 
 **Loại đã ngừng dùng riêng thì bật lại nhóm cũng không kéo nó về.** Hai công tắc độc lập:
 tắt nhóm là chuyện của cả cụm, ngừng loại là chuyện của riêng loại đó.
