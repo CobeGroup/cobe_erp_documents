@@ -35,12 +35,12 @@ Ví dụ một ca thật:
 
 ```
 Nhóm sự cố = Nước yếu                      ← nghe khách kể
-Loại sự cố = Tiền lọc Expert nghẹt UF      ← hỏi thêm rồi chốt
+Loại sự cố = Nước yếu do lọc trong/tiền lọc ← hỏi thêm rồi chốt
 ```
 
 ## Vì sao chia hai ô mà không gộp một
 
-Chọn Nhóm trước thì ô Loại chỉ còn hiện những cái thuộc nhóm đó — 17 dòng thay vì 132.
+Chọn Nhóm trước thì ô Loại chỉ còn hiện những cái thuộc nhóm đó — 8 dòng thay vì 75.
 Không có bước lọc này thì danh sách dài không dùng nổi.
 
 Ngoài ra **Nhóm còn là công tắc**: tắt một nhóm là toàn bộ Loại sự cố thuộc nhóm đó biến
@@ -50,23 +50,30 @@ khỏi ô chọn, thay vì phải mở từng cái tắt tay.
 
 ## Danh mục đã dựng sẵn
 
-Hệ thống đã có sẵn **9 nhóm** và **72 loại**, dựng theo mind map xử lý sự cố của bộ phận
-kỹ thuật:
+Hệ thống đã có sẵn **9 nhóm** và **50 loại**:
 
 | Nhóm | Số loại |
 |---|---|
-| Nước yếu | 17 |
-| Rò rỉ nước | 16 |
-| pH không đạt | 15 |
-| Sự cố máy điện giải | 11 |
-| Nước bị mùi | 8 |
-| Nước bị cặn trắng hoặc cặn ván | 6 |
-| Van khóa T (khóa nguồn) | 4 |
-| Khách chưa quen dùng máy | 4 |
-| Nước chuyển màu | 2 |
+| Lỗi thiết bị | 18 |
+| Nước yếu | 8 |
+| pH không đạt | 6 |
+| Rò rỉ nước | 6 |
+| Nước bị mùi | 5 |
+| Nước bị cặn trắng hoặc cặn ván | 5 |
+| Dịch vụ & kiểm tra | 3 |
+| Tư vấn & hướng dẫn | 2 |
+| Nước chuyển màu | 1 |
 
-Tổng cộng chỉ 72 bản ghi vì **một loại có thể thuộc nhiều nhóm**. `Tiền lọc quá hạn` gây ra
-cả pH lệch, nước có mùi lẫn cặn trắng nên nó xuất hiện ở cả ba nhóm mà vẫn chỉ là một dòng.
+Cộng các dòng ra 54 nhưng chỉ có **50 bản ghi**, vì **một loại có thể thuộc nhiều nhóm**.
+`Tiền lọc/lọc trong quá hạn` gây ra cả nước yếu, pH lệch, nước có mùi lẫn cặn trắng nên nó
+xuất hiện ở cả bốn nhóm mà vẫn chỉ là một dòng.
+
+Danh sách loại lấy từ bảng rà soát của bộ phận CSKH: **35 loại đang dùng được giữ nguyên
+tên** (nên 3.858 ca lịch sử vẫn đọc liền mạch) và **15 loại khai thêm**.
+
+Mỗi loại có ô **Mô tả** ghi các nguyên nhân thường gặp, lấy từ mind map xử lý sự cố của bộ
+phận kỹ thuật — ví dụ `Lỗi thiết bị (Bảng mạch)` ghi *"Board vô nước, bị côn trùng, đoản
+mạch, sai điện áp"*. Đây là gợi ý tra cứu, không phải ô phải điền.
 
 ## Vào đâu để sửa danh mục
 
@@ -90,8 +97,9 @@ tạo nhiều bản ghi tên na ná nhau.
 
 Đây là bước **cuối cùng**, làm sau khi đã xem lại danh mục mới.
 
-Vào **Nhóm sự cố** → *Danh mục cũ* → tick **Ngừng sử dụng** → **Save**. Toàn bộ 60 loại cũ
-biến khỏi ô chọn cùng lúc.
+Vào **Nhóm sự cố** → *Danh mục cũ* → tick **Ngừng sử dụng** → **Save**. Toàn bộ 25 loại đã
+ngừng biến khỏi ô chọn cùng lúc — gồm 17 loại bộ phận CSKH đánh dấu bỏ và 8 loại không có
+trong bảng rà soát (trong đó `Không xác định` mang 16.411 ca).
 
 Hệ thống sẽ **chặn** nếu tắt xong không còn Loại sự cố nào sống, kèm thông báo *"sẽ không
 còn Issue Type nào để chọn"* — vì Loại sự cố là trường bắt buộc, hết loại là CSKH không mở
@@ -106,21 +114,24 @@ còn Issue Type nào để chọn"* — vì Loại sự cố là trường bắt
 
 ## Những điều cần biết
 
-**Ca cũ không bị đụng tới.** 25.072 ca lịch sử giữ nguyên Loại sự cố của chúng và nằm trong
-nhóm *Danh mục cũ*. Tắt nhóm chỉ ẩn khỏi ô *chọn khi nhập ca mới*, không xoá và không sửa
-dữ liệu cũ.
+**Ca cũ không bị đụng tới.** 25.111 ca lịch sử giữ nguyên Loại sự cố của chúng. Tắt nhóm
+chỉ ẩn khỏi ô *chọn khi nhập ca mới*, không xoá và không sửa dữ liệu cũ.
+
+**3.858 ca đã vào đúng nhóm mới.** Ca nào mang một trong 35 loại còn dùng thì đi theo loại
+đó sang nhóm thật của nó, nên báo cáo theo nhóm có số liệu ngay. 21.253 ca còn lại mang
+loại đã ngừng nên ở lại *Danh mục cũ*.
 
 **Vẫn lọc và báo cáo được ca cũ.** Nhóm *Danh mục cũ* dù đã tắt vẫn chọn được trong ô lọc
 của danh sách và báo cáo — chỉ ô nhập liệu mới bị ẩn.
 
-**Hoàn tác được bất cứ lúc nào.** Bỏ tick *Ngừng sử dụng* là 60 loại cũ hiện lại y như cũ.
+**Hoàn tác được bất cứ lúc nào.** Bỏ tick *Ngừng sử dụng* là 25 loại đã ngừng hiện lại y như cũ.
 
 **Một loại thuộc nhiều nhóm chỉ ẩn khi mọi nhóm của nó đều tắt.** Tắt riêng nhóm *Nước bị
-mùi* thì `Tiền lọc quá hạn` vẫn còn, vì nó còn thuộc *pH không đạt* và *Nước bị cặn*.
+mùi* thì `Tiền lọc/lọc trong quá hạn` vẫn còn, vì nó còn thuộc *Nước yếu*, *pH không đạt* và *Nước bị cặn*.
 
 **Nhóm ghi trên ca là thứ CSKH chọn, không phải suy từ Loại.** Nhờ vậy hai ca cùng dùng
-`Tiền lọc quá hạn` mà một ca là *Nước bị mùi*, ca kia là *pH không đạt* thì vẫn phân biệt
-được khi đọc báo cáo.
+`Tiền lọc/lọc trong quá hạn` mà một ca là *Nước bị mùi*, ca kia là *pH không đạt* thì vẫn
+phân biệt được khi đọc báo cáo.
 
 **Đổi Nhóm trên một ca đang mở sẽ xoá Loại sự cố** nếu loại đó không thuộc nhóm mới — chọn
 lại là xong.

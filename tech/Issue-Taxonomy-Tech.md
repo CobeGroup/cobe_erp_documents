@@ -6,7 +6,7 @@ parent: Tài liệu kỹ thuật
 
 # Phân loại Issue hai tầng — tài liệu kỹ thuật
 
-App: **support_plus** · Patch: `setup_issue_taxonomy` → `group_first_issue_taxonomy`
+App: **support_plus** · Patch: `setup_issue_taxonomy` → `group_first_issue_taxonomy` → `apply_excel_issue_catalogue`
 
 Tài liệu người dùng: [Phân loại sự cố](../users/Phan-Loai-Su-Co.html)
 
@@ -27,6 +27,17 @@ Mind map nghiệp vụ có 4 tầng (triệu chứng → bộ phận → hỏng 
 Gộp còn **hai ô nhập liệu**, vì quy trình tiếp nhận chỉ có một thời điểm: CSKH gọi khách,
 hỏi đủ để chốt cả hai. Kết quả xử lý của kỹ thuật viên vẫn ghi vào `resolution_details`.
 
+**Danh mục lấy từ đâu.** Có hai nguồn và chúng không cùng một tầng: mind map tách lỗi bo
+mạch thành *"đoản mạch" / "vô nước" / "sai điện áp"*, còn file rà soát của CSKH dừng ở
+*"Lỗi thiết bị (Bảng mạch)"*. Tầng sâu hơn đó CSKH không chốt nổi qua điện thoại, mà file
+Excel lại là danh sách người dùng thật rà từ dữ liệu thật — 35/50 mục đã mang 3.858 ca.
+Nên **Excel làm bộ Loại, mind map làm bộ Nhóm**, còn các lá của mind map hạ xuống ô
+`description` để kỹ thuật viên tra.
+
+Chín nhóm: bảy từ mind map, cộng hai nhóm mind map không phủ nhưng dữ liệu nói rõ là có —
+*Tư vấn & hướng dẫn* (2.249 ca) và *Dịch vụ & kiểm tra* (164 ca). Bỏ *Van khóa T* và
+*Khách chưa quen dùng máy* vì không mục Excel nào thuộc về chúng.
+
 | Doctype / field | Vai trò |
 |---|---|
 | `Issue Group` (mới) | Cấp 1 — triệu chứng. Cờ `hide_types` bật/tắt cả cụm |
@@ -35,21 +46,25 @@ hỏi đủ để chốt cả hai. Kết quả xử lý của kỹ thuật viên
 | `Issue.custom_issue_group` | **Nhập tay**, reqd, đứng trước `issue_type`, có index |
 | `Issue.issue_type` | Giữ nguyên reqd, lọc theo nhóm đã chọn |
 
-**Vì sao Issue Type phải thuộc NHIỀU nhóm.** `Tiền lọc quá hạn` gây ra pH lệch, nước có mùi
-lẫn cặn trắng. Khai một-nhóm sẽ phải nhân bản thành `Tiền lọc quá hạn (pH)` / `(mùi)` /
-`(cặn)` — đúng cái bệnh của danh mục cũ. Có 8 loại như vậy; khai một-nhóm sẽ đẩy 72 loại
-thành 83.
+**Vì sao Issue Type phải thuộc NHIỀU nhóm.** `Tiền lọc/lọc trong quá hạn` gây ra nước yếu,
+pH lệch, nước có mùi lẫn cặn trắng. Khai một-nhóm sẽ phải nhân bản thành
+`Tiền lọc quá hạn (pH)` / `(mùi)` / `(cặn)` — đúng cái bệnh của danh mục cũ.
 
 **Vì sao `Issue.custom_issue_group` phải nhập tay chứ không `fetch_from`.** Chính vì một
 type thuộc nhiều nhóm: suy ngược từ type không ra được nhóm nào. Nhóm là dữ liệu CSKH chọn,
-nhờ đó hai ca cùng `Tiền lọc quá hạn` mà khác nhóm vẫn phân biệt được.
+nhờ đó hai ca cùng `Tiền lọc/lọc trong quá hạn` mà khác nhóm vẫn phân biệt được.
 
 **Nguyên tắc xuyên suốt: không đụng dữ liệu lịch sử.** Patch không rename, không xoá
 Issue Type nào, không đổi `issue_type` của bản ghi Issue — trừ các ca vốn để **trống**
 (được gán `Không xác định` vì `issue_type` là trường bắt buộc nên không save lại được).
 
-Toàn bộ 60 type cũ nằm trong một nhóm `Danh mục cũ` (tạo ở trạng thái **đang bật**), để tắt
-cả cụm bằng một công tắc khi danh mục mới đã được duyệt.
+25 loại đã ngừng — 17 cái Excel đánh X và 8 cái Excel không liệt kê — nằm trong nhóm
+`Danh mục cũ` (tạo ở trạng thái **đang bật**), để tắt cả cụm bằng một công tắc khi danh mục
+mới đã được duyệt. Không xoá cái nào: 21.253 ca vẫn trỏ vào chúng.
+
+Ca mang một trong 35 loại còn sống thì `custom_issue_group` được kéo theo nhóm thật của
+loại đó (3.858 ca) — nếu không, ngay ngày đầu bản ghi và loại của nó đã nói hai chuyện khác
+nhau. Chỉ `custom_issue_group` đổi, `issue_type` không đụng.
 
 ## Cơ chế ẩn
 
@@ -67,12 +82,12 @@ Cờ chảy từ nhóm xuống type qua hai đường:
 
 Cả hai đều đi qua `should_hide(groups)` để một chỗ quyết định.
 
-## Chín cái bẫy đã gặp
+## Mười cái bẫy đã gặp
 
 ### 1. Cờ trên Issue Group không được đặt tên `disabled`
 
 Frappe loại bản ghi `disabled` khỏi **mọi** dropdown Link, **kể cả ô lọc**. Nếu cờ của
-`Issue Group` tên là `disabled`, tắt nhóm xong là mất luôn khả năng lọc/báo cáo 25.072 ca
+`Issue Group` tên là `disabled`, tắt nhóm xong là mất luôn khả năng lọc/báo cáo 25.111 ca
 lịch sử theo nhóm đó — đúng thứ mà nhóm sinh ra để làm. Đổi tên thành `hide_types` là
 Frappe không nhận ra nữa; cờ ẩn thật vẫn nằm trên `Issue Type.disabled`.
 
@@ -111,26 +126,37 @@ Trên site sạch — tức production — hậu quả là **59/60 type không c
 có nhóm**, mà tick công tắc thì không ẩn được gì. Sửa: gom trước, hàn sau, và loại
 `Không xác định` ra khỏi phép đếm của guard.
 
-### 6. Xoá một nhóm phải kéo theo Issue trỏ vào nó
+### 6. Patch sau không được tin patch trước đã chạy đúng
+
+Bản lỗi ở mục 5 đã kịp lên production ngày 05/08. Patch đó nằm sẵn trong Patch Log nên
+`bench migrate` **không bao giờ chạy lại nó** — bản vá không với tới được, và
+`group_first_issue_taxonomy` thì đọc cột nhóm rỗng nên cũng chẳng có gì để chuyển. Kết cục:
+59/60 type và 8.700 ca không có nhóm, mà ô nhóm lại là bắt buộc → không save nổi ca cũ.
+
+Nên `group_first_issue_taxonomy` có `adopt_ungrouped_types()` + `backfill_issue_group()` tự
+đứng một mình, không giả định bước trước đã xong. Ca nào còn sót thì ghi Error Log chứ
+không im lặng.
+
+### 7. Xoá một nhóm phải kéo theo Issue trỏ vào nó
 
 `group_first_issue_taxonomy` xoá nhóm nháp của bản thiết kế trước. Bản nháp đã kéo 968 ca
 sang nhóm đó, nên xoá nhóm mà quên UPDATE `tabIssue` là đẻ ra đúng loại link mồ côi mà
 patch trước phải đi hàn.
 
-### 7. Workspace bị import lại mỗi lần migrate
+### 8. Workspace bị import lại mỗi lần migrate
 
 `("desk", "workspace")` nằm trong danh sách sync của `frappe/model/sync.py`, nên link chèn
 tay vào workspace `Support` của ERPNext sẽ mất khi ERPNext nâng cấp. Giải pháp: gắn qua
 hook `after_migrate` (`support_plus.lib.workspace.ensure_support_workspace_links`), idempotent.
 
-### 8. developer_mode ghi ngược file vào app khác
+### 9. developer_mode ghi ngược file vào app khác
 
 Save một doc chuẩn thuộc app khác (Workspace `Support` của erpnext) trên máy dev sẽ **ghi
 file json vào `apps/erpnext/`** và làm bẩn repo người khác. Chặn bằng
 `frappe.flags.in_import = True` quanh `doc.save()` — đúng nhánh điều kiện trong
 `frappe/modules/utils.py::export_module_json`. Prod `developer_mode=0` nên không dính.
 
-### 9. Link mồ côi `Không xác định`
+### 10. Link mồ côi `Không xác định`
 
 16.004 ca trỏ tới một Issue Type đã bị xoá khỏi danh mục → mọi thao tác Save trên các ca
 đó throw `LinkValidationError`. Patch tạo lại bản ghi đó thay vì sửa dữ liệu Issue.
@@ -156,8 +182,8 @@ Không đặt alias cho bảng chính — `get_match_cond()` sinh điều kiện
   đây là chủ ý, nhờ vậy bản ghi lịch sử mới giữ được type cũ.
 - `service_reminder` (trang service-report) đọc `SELECT DISTINCT name FROM tabIssue Type`
   nên ô lọc ở đó vẫn hiện đủ mọi type, kể cả đã ẩn.
-- Báo cáo theo nhóm chỉ có dữ liệu thật từ thời điểm triển khai; 25.072 ca lịch sử đều rơi
-  vào một dòng `Danh mục cũ`.
+- 21.253 ca lịch sử rơi vào một dòng `Danh mục cũ` vì mang loại đã ngừng; 3.858 ca còn lại
+  đã theo loại của chúng sang nhóm thật nên báo cáo có số liệu ngay.
 - Chưa có: nhóm lồng cha/con.
 - Xoá custom field không xoá cột trong bảng. Site nào đã chạy bản thiết kế cũ sẽ còn lại
   cột mồ côi `tabIssue.custom_root_cause` — vô hại, và site sạch không bao giờ tạo nó.
