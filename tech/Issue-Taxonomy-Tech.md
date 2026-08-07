@@ -41,7 +41,7 @@ Chín nhóm: bảy từ mind map, cộng hai nhóm mind map không phủ nhưng 
 | Doctype / field | Vai trò |
 |---|---|
 | `Issue Group` (mới) | Cấp 1 — triệu chứng. Cờ `hide_types` bật/tắt cả cụm |
-| `Issue Type` (ERPNext) | Cấp chi tiết. Thêm `custom_issue_groups` (**reqd**) + `disabled` |
+| `Issue Type` (ERPNext) | Cấp chi tiết. Thêm `custom_issue_groups` (**reqd**), `custom_retired`, `disabled` |
 | `Issue Type Group` (mới, child) | Dòng của bảng nhiều-nhóm |
 | `Issue.custom_issue_group` | **Nhập tay**, reqd, đứng trước `issue_type`, có index |
 | `Issue.issue_type` | Giữ nguyên reqd, lọc theo nhóm đã chọn |
@@ -80,9 +80,15 @@ Cờ chảy từ nhóm xuống type qua hai đường:
 - `doc_events` Issue Type validate → `inherit_group_disabled`: type mới thêm vào nhóm đang
   tắt tự bị ẩn theo.
 
-Cả hai đều đi qua `should_hide(groups)` để một chỗ quyết định.
+Cả hai đều đi qua `should_hide(groups, flags, retired)` để một chỗ quyết định:
 
-## Mười cái bẫy đã gặp
+    disabled = custom_retired  HOẶC  mọi nhóm của loại đều hide_types=1
+
+`custom_retired` là công tắc của người dùng cho **một** loại; `disabled` là **kết quả tính**
+nên để read-only. Nó vẫn phải mang đúng tên `disabled` thì `search_widget` mới loại khỏi
+dropdown. Nhờ tách hai ô, bật lại một nhóm không kéo về những loại người ta cố ý bỏ.
+
+## Mười một cái bẫy đã gặp
 
 ### 1. Cờ trên Issue Group không được đặt tên `disabled`
 
@@ -137,26 +143,37 @@ Nên `group_first_issue_taxonomy` có `adopt_ungrouped_types()` + `backfill_issu
 đứng một mình, không giả định bước trước đã xong. Ca nào còn sót thì ghi Error Log chứ
 không im lặng.
 
-### 7. Xoá một nhóm phải kéo theo Issue trỏ vào nó
+### 7. Một ô vừa là công tắc vừa là kết quả tính thì nuốt thao tác người dùng
+
+Ban đầu chỉ có `disabled`, mà hook lại tính lại nó từ trạng thái nhóm ở mỗi lần save. Người
+dùng tick tay để bỏ một loại → save → hook ghi đè về 0. Không lỗi, không cảnh báo.
+
+Tệ hơn: điều kiện khoá ô (`read_only_depends_on`) trỏ tới `custom_issue_group` - field đã bị
+xoá ở patch trước - nên luôn sai, ô vẫn bấm được trong khi hoàn toàn vô hiệu. Và vì một loại
+thuộc nhiều nhóm nên tắt nhóm cũng không bỏ được nó.
+
+Sửa: tách `custom_retired` (người dùng) khỏi `disabled` (kết quả, read-only).
+
+### 8. Xoá một nhóm phải kéo theo Issue trỏ vào nó
 
 `group_first_issue_taxonomy` xoá nhóm nháp của bản thiết kế trước. Bản nháp đã kéo 968 ca
 sang nhóm đó, nên xoá nhóm mà quên UPDATE `tabIssue` là đẻ ra đúng loại link mồ côi mà
 patch trước phải đi hàn.
 
-### 8. Workspace bị import lại mỗi lần migrate
+### 9. Workspace bị import lại mỗi lần migrate
 
 `("desk", "workspace")` nằm trong danh sách sync của `frappe/model/sync.py`, nên link chèn
 tay vào workspace `Support` của ERPNext sẽ mất khi ERPNext nâng cấp. Giải pháp: gắn qua
 hook `after_migrate` (`support_plus.lib.workspace.ensure_support_workspace_links`), idempotent.
 
-### 9. developer_mode ghi ngược file vào app khác
+### 10. developer_mode ghi ngược file vào app khác
 
 Save một doc chuẩn thuộc app khác (Workspace `Support` của erpnext) trên máy dev sẽ **ghi
 file json vào `apps/erpnext/`** và làm bẩn repo người khác. Chặn bằng
 `frappe.flags.in_import = True` quanh `doc.save()` — đúng nhánh điều kiện trong
 `frappe/modules/utils.py::export_module_json`. Prod `developer_mode=0` nên không dính.
 
-### 10. Link mồ côi `Không xác định`
+### 11. Link mồ côi `Không xác định`
 
 16.004 ca trỏ tới một Issue Type đã bị xoá khỏi danh mục → mọi thao tác Save trên các ca
 đó throw `LinkValidationError`. Patch tạo lại bản ghi đó thay vì sửa dữ liệu Issue.

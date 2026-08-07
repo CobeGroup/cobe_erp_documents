@@ -91,7 +91,13 @@ chọn của CSKH.
 Nếu chi tiết đó xảy ra ở nhiều triệu chứng thì khai đủ các nhóm vào **một** bản ghi, đừng
 tạo nhiều bản ghi tên na ná nhau.
 
-Ô **Ngừng sử dụng** trên Loại sự cố bị khoá vì nó đi theo trạng thái của nhóm.
+### Ngừng dùng một Loại sự cố riêng lẻ
+
+Tick ô **Ngừng dùng loại này** trên chính Loại đó rồi **Save**. Nó biến khỏi ô chọn ở
+**mọi** nhóm, ca lịch sử giữ nguyên. Bỏ tick là hiện lại.
+
+Ô **Đang ẩn** bên cạnh chỉ để xem, không tick được — nó là kết quả tự tính: *đã ngừng dùng
+riêng*, **hoặc** *mọi nhóm của loại này đều đã tắt*.
 
 ### Tắt nhóm *Danh mục cũ*
 
@@ -127,7 +133,12 @@ của danh sách và báo cáo — chỉ ô nhập liệu mới bị ẩn.
 **Hoàn tác được bất cứ lúc nào.** Bỏ tick *Ngừng sử dụng* là 25 loại đã ngừng hiện lại y như cũ.
 
 **Một loại thuộc nhiều nhóm chỉ ẩn khi mọi nhóm của nó đều tắt.** Tắt riêng nhóm *Nước bị
-mùi* thì `Tiền lọc/lọc trong quá hạn` vẫn còn, vì nó còn thuộc *Nước yếu*, *pH không đạt* và *Nước bị cặn*.
+mùi* thì `Tiền lọc/lọc trong quá hạn` vẫn còn, vì nó còn thuộc *Nước yếu*, *pH không đạt* và
+*Nước bị cặn* — còn một nhóm sống là còn đường chọn nó. Muốn bỏ hẳn loại đó thì dùng ô
+**Ngừng dùng loại này** chứ không phải đi tắt từng nhóm.
+
+**Loại đã ngừng dùng riêng thì bật lại nhóm cũng không kéo nó về.** Hai công tắc độc lập:
+tắt nhóm là chuyện của cả cụm, ngừng loại là chuyện của riêng loại đó.
 
 **Nhóm ghi trên ca là thứ CSKH chọn, không phải suy từ Loại.** Nhờ vậy hai ca cùng dùng
 `Tiền lọc/lọc trong quá hạn` mà một ca là *Nước bị mùi*, ca kia là *pH không đạt* thì vẫn
