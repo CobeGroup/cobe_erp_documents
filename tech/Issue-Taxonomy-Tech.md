@@ -200,7 +200,9 @@ Không đặt alias cho bảng chính — `get_match_cond()` sinh điều kiện
 - Cờ ẩn chỉ chặn ở tầng chọn tay. Ghi thẳng qua API/integration vẫn nhận type đã ẩn —
   đây là chủ ý, nhờ vậy bản ghi lịch sử mới giữ được type cũ.
 - `service_reminder` (trang service-report) đọc `SELECT DISTINCT name FROM tabIssue Type`
-  nên ô lọc ở đó vẫn hiện đủ mọi type, kể cả đã ẩn.
+  nên ô lọc ở đó hiện đủ mọi loại, kể cả loại đã ẩn. **Cố ý để nguyên**: 21.253 ca lịch sử
+  mang loại đã ngừng, lọc bỏ chúng khỏi ô lọc là trang đó không xem được chính dữ liệu nó
+  sinh ra. Cùng lý do với việc giữ nguyên tên 35 loại còn dùng.
 - 21.253 ca lịch sử rơi vào một dòng `Danh mục cũ` vì mang loại đã ngừng; 3.858 ca còn lại
   đã theo loại của chúng sang nhóm thật nên báo cáo có số liệu ngay.
 - Chưa có: nhóm lồng cha/con.
