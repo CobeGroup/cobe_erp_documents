@@ -32,7 +32,7 @@ dẫn xử lý lỗi & dữ liệu sai**.
 | **[Chi phí & Tạm ứng](users/00-chi-phi.html)** | Tạm ứng → claim (kèm hoá đơn) → hoàn ứng: nhân viên tạo trên app, duyệt & chi tiền trên Desk |
 | **[Marketing & Khách hàng](users/00-marketing.html)** | Coupon khuyến mãi, Loyalty tích điểm, Zalo Mini App · 🔧 *Sửa lỗi liên kết Khách hàng (Lead / Contact / Address)* |
 | **[Bán hàng & Đơn hàng](users/00-ban-hang.html)** | Sales Order: vòng đời đơn, 🔧 *các tình huống sửa đơn theo trạng thái* (Update Items, Amend, Close), ràng buộc kho/thanh toán |
-| **[Vận chuyển & Giao nhận](users/00-van-chuyen.html)** | Vận đơn, đối tác giao hàng (Viettel Post…), biên bản bàn giao |
+| **[Vận chuyển & Giao nhận](users/00-van-chuyen.html)** | Vận đơn, đối tác giao hàng (Viettel Post…), **chuyển kho giữa hai kho qua ĐVVC**, biên bản bàn giao |
 | **[Dịch vụ & Bảo dưỡng](users/00-dich-vu.html)** | **FSMNext**: vòng đời Phiếu công việc & Lịch hẹn, trả vật tư, thu tiền hiện trường, huỷ/tạo lại phiếu · 🔧 *Tự xử lý sự cố (WO kẹt "New"…)* · Tự động phân bổ ticket bảo dưỡng & SIM |
 | **[Lương & Thưởng](users/00-compensation.html)** | Overtime, WFH salary, KPI |
 

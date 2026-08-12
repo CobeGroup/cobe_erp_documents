@@ -26,7 +26,7 @@ flowchart TD
   classDef a fill:#e6f4ff,stroke:#299dd8,color:#0b4a6f;
   classDef g fill:#f6ffed,stroke:#54ab78,color:#135200;
 
-  SO["Sales Order (Submit)<br/>Delivery Method = ĐVVC"] --> CR["👤 Create > DP Shipment"]
+  SO["Sales Order (Submit)<br/>Delivery Method = ĐVVC"] --> CR["👤 Tạo > Vận đơn ĐVVC"]
   CR --> DS["DP Shipment (Draft)<br/>👤 chọn ĐVVC, kiện, COD"]
   DS --> SUB["👤 Submit"]
   SUB --> MR["⚙️ Đề nghị xuất kho (MR)"]
@@ -52,7 +52,10 @@ flowchart TD
 
 ## Bước 2 · Tạo Vận đơn từ SO (Sales / Logistics)
 
-Mở SO → bấm **Create > DP Shipment**.
+Mở SO → bấm **Tạo → Vận đơn ĐVVC**.
+
+> Nút này trước đây tên là *Create > DP Shipment*. Đổi tên để trùng với nút cùng chức năng
+> trên Phiếu chuyển kho — cùng một việc thì cùng một tên. Chức năng không đổi gì.
 
 - **SO có items từ nhiều kho:** hệ thống hỏi chọn kho → mỗi kho ra **1 vận đơn** riêng.
 - **Hệ thống tự điền:** người nhận (theo khách của SO), địa chỉ + liên hệ giao, hàng hoá (đã rã Product
@@ -64,6 +67,15 @@ Mở SO → bấm **Create > DP Shipment**.
   - Chỉnh items nếu chỉ giao 1 phần
   - Tab **Parcels** → **Auto-calculate Parcel** hoặc thêm tay
   - Điền **Pickup Date** + khung giờ lấy
+
+> **Hai ô mới trên vận đơn** — tạo từ SO thì hệ thống điền sẵn, không phải đụng tới:
+>
+> | Ô | Với đơn bán hàng |
+> |---|---|
+> | **Mục đích** | luôn là *Bán hàng*. Đây là ô quyết định vận đơn sinh ra chuỗi chứng từ nào — chỉ *Bán hàng* mới sinh Đề nghị xuất kho / Phiếu giao / Hoá đơn COD |
+> | **Chứng từ nguồn** | một dòng trỏ về Đơn bán hàng. Mục đích khác dùng bảng này để gom nhiều chứng từ vào một vận đơn |
+>
+> Tạo vận đơn **bằng tay** trên Desk thì phải tự chọn Mục đích, vì nó là ô bắt buộc.
 
 ## Bước 3 · Submit Vận đơn (Sales / Logistics)
 
@@ -210,5 +222,6 @@ Chi tiết kỹ thuật (custom field, hooks, ràng buộc tài khoản COD): [L
 ## Liên quan
 
 - [Quy trình vận đơn & giao nhận](Delivery_Partner-Quy-Trinh.html) — tổng quan
+- [Chuyển kho qua ĐVVC](Delivery_Partner-Chuyen-Kho.html) — cùng nút, nhưng chứng từ nguồn là Phiếu chuyển kho
 - [Viettel Post — Cài đặt & sử dụng](Delivery_Partner-Viettel_Post-Cai-Dat.html) — kết nối & đẩy đơn VTP
 - [Lifecycle & Doc Events](../tech/Delivery_Partner-Lifecycle.html) — kỹ thuật tích hợp ERP

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 470" width="980" height="470" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+  <style>
+    .box   { rx: 10; ry: 10; stroke-width: 1.6; }
+    .human { fill: #f9f0ff; stroke: #9254de; }
+    .auto  { fill: #e6f4ff; stroke: #299dd8; }
+    .done  { fill: #f6ffed; stroke: #54ab78; }
+    .wh    { fill: #fffbe6; stroke: #d4b106; }
+    .t     { font-size: 14px; fill: #1f2937; }
+    .tb    { font-size: 14.5px; font-weight: 600; fill: #111827; }
+    .ts    { font-size: 12.5px; fill: #4b5563; }
+    .lane  { font-size: 12.5px; font-weight: 700; fill: #6b7280; letter-spacing: .04em; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.8; fill: none; }
+    .stock { font-size: 12.5px; fill: #92400e; }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <text class="lane" x="24" y="34">AI LÀM</text>
+  <text class="lane" x="24" y="150">CHỨNG TỪ</text>
+  <text class="lane" x="24" y="330">HÀNG Ở ĐÂU</text>
+
+  <!-- hàng 1: người / hệ thống -->
+  <rect class="box human" x="140" y="52" width="185" height="62"/>
+  <text class="tb" x="232" y="76" text-anchor="middle">Thủ kho</text>
+  <text class="ts" x="232" y="96" text-anchor="middle">tạo Phiếu chuyển kho</text>
+
+  <rect class="box human" x="355" y="52" width="200" height="62"/>
+  <text class="tb" x="455" y="76" text-anchor="middle">Bấm “Vận đơn ĐVVC”</text>
+  <text class="ts" x="455" y="96" text-anchor="middle">nhập số thực xuất + kiện</text>
+
+  <rect class="box auto" x="585" y="52" width="170" height="62"/>
+  <text class="tb" x="670" y="76" text-anchor="middle">ĐVVC lấy hàng</text>
+  <text class="ts" x="670" y="96" text-anchor="middle">báo về qua webhook</text>
+
+  <rect class="box human" x="785" y="52" width="170" height="62"/>
+  <text class="tb" x="870" y="76" text-anchor="middle">Kho đích</text>
+  <text class="ts" x="870" y="96" text-anchor="middle">đếm hàng, bấm nhận</text>
+
+  <path class="arrow" d="M325,83 L352,83" marker-end="url(#ah)"/>
+  <path class="arrow" d="M555,83 L582,83" marker-end="url(#ah)"/>
+  <path class="arrow" d="M755,83 L782,83" marker-end="url(#ah)"/>
+
+  <!-- hàng 2: chứng từ -->
+  <rect class="box wh" x="140" y="168" width="185" height="66"/>
+  <text class="tb" x="232" y="192" text-anchor="middle">Phiếu chuyển kho</text>
+  <text class="ts" x="232" y="212" text-anchor="middle">có khai Kho nguồn</text>
+
+  <rect class="box auto" x="355" y="168" width="200" height="66"/>
+  <text class="tb" x="455" y="192" text-anchor="middle">Vận đơn (nháp)</text>
+  <text class="ts" x="455" y="212" text-anchor="middle">Submit → Đẩy sang ĐVVC</text>
+
+  <rect class="box auto" x="585" y="168" width="170" height="66"/>
+  <text class="tb" x="670" y="192" text-anchor="middle">Phiếu xuất kho</text>
+  <text class="ts" x="670" y="212" text-anchor="middle">hệ thống tự tạo</text>
+
+  <rect class="box done" x="785" y="168" width="170" height="66"/>
+  <text class="tb" x="870" y="192" text-anchor="middle">Phiếu nhập kho</text>
+  <text class="ts" x="870" y="212" text-anchor="middle">để nháp, kho đích ký</text>
+
+  <path class="arrow" d="M232,116 L232,165" marker-end="url(#ah)"/>
+  <path class="arrow" d="M455,116 L455,165" marker-end="url(#ah)"/>
+  <path class="arrow" d="M670,116 L670,165" marker-end="url(#ah)"/>
+  <path class="arrow" d="M870,116 L870,165" marker-end="url(#ah)"/>
+
+  <!-- hàng 3: tồn kho -->
+  <rect class="box wh" x="140" y="290" width="415" height="62"/>
+  <text class="tb" x="347" y="314" text-anchor="middle">Kho nguồn</text>
+  <text class="stock" x="347" y="334" text-anchor="middle">hàng chưa nhúc nhích — đặt đơn không đụng tồn kho</text>
+
+  <rect class="box auto" x="585" y="290" width="170" height="62"/>
+  <text class="tb" x="670" y="314" text-anchor="middle">Kho ảo ĐVVC</text>
+  <text class="stock" x="670" y="334" text-anchor="middle">ĐVVC đang giữ hàng</text>
+
+  <rect class="box done" x="785" y="290" width="170" height="62"/>
+  <text class="tb" x="870" y="314" text-anchor="middle">Kho đích</text>
+  <text class="stock" x="870" y="334" text-anchor="middle">hàng đã vào kho</text>
+
+  <path class="arrow" d="M555,321 L582,321" marker-end="url(#ah)"/>
+  <path class="arrow" d="M755,321 L782,321" marker-end="url(#ah)"/>
+
+  <text class="ts" x="140" y="398">Tự chở (nhà xe, xe công ty) thì thủ kho làm như cũ — hàng đi qua kho trung chuyển</text>
+  <text class="ts" x="140" y="420">Goods In Transit, và phiếu tự ghi “Tự vận chuyển”.</text>
+  <text class="ts" x="140" y="448">Mất hàng giữa đường: hệ thống tự đảo hàng từ kho ảo ĐVVC về lại kho nguồn.</text>
+</svg>

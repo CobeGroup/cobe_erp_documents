@@ -20,6 +20,11 @@ vận đơn + trạng thái). Bản dành cho end-user: [Quy trình vận đơn]
 | `delivery_partner` (gốc) | DP Shipment, DP Partner/Account, webhook ingest, API client. **Không** tạo chứng từ ERP. |
 | `delivery_partner_extension_for_cobegroup` | Hook doc_events DP Shipment → tạo MR / SE / DN / SI / PE; thêm custom field (sales_order, charges, fulfillment_status, picked_qty...). |
 
+**Chiều phụ thuộc là MỘT CHIỀU và khai tường minh** trong `required_apps`: app cầu nối là chỗ *duy nhất*
+được biết cả hai phía (`delivery_partner` + `erpnext`, sau này thêm `poe_management`). App gốc không được
+biết ERPNext hay nghiệp vụ Cobe, và **không app nào đọc Settings của app khác** — cấu hình thuộc luồng
+vận chuyển để trong settings của chính app cầu nối.
+
 Hook đăng ký (`extension/hooks.py`):
 
 ```python
@@ -39,7 +44,32 @@ doc_events = {
 
 ---
 
-## 2. Chuỗi tạo chứng từ
+## 1b. Mục đích vận đơn — công tắc rẽ nhánh {#muc-dich}
+
+Từ 08/2026 vận đơn không còn chỉ phục vụ bán hàng. Ô `custom_purpose` quyết định chuỗi chứng từ nào
+chạy; bảng đăng ký nằm ở `doc_events/purpose.py`, **không** khai bằng doctype cấu hình (prod không vào
+được console, sửa cấu hình sai là hỏng thầm lặng).
+
+| Mục đích | `stock_flow` | Chứng từ |
+|---|---|---|
+| Bán hàng | `sales_chain` | MR → SE → DN → SI/PE. **Luồng cũ, không đổi gì** |
+| Chuyển kho | `in_transit` | SE xuất (kho ảo ĐVVC) → SE nhập cho kho đích |
+| Gửi mẫu về lab · Thu hồi bảo hành · Trả máy cho khách | `none` | không sinh chứng từ kho |
+| Vật tư KTV về kho | `in_transit` | *(chưa làm)* |
+
+Ô trống → coi là **Bán hàng**. Cố ý: vận đơn tạo trước khi có ô này, hoặc đẩy vào qua API mà không khai,
+phải giữ nguyên hành vi cũ. Patch `set_shipment_purpose_and_backfill_references` điền thật cho các bản
+ghi cũ và dựng dòng chứng từ nguồn trỏ về SO.
+
+**Bảng `custom_references` (doctype `DP Shipment Reference`)** ghi chứng từ nguồn — quan hệ **nhiều–nhiều**:
+một vận đơn gom nhiều mẫu nước, một Issue bảo hành đẻ hai vận đơn (thu về + trả lại). Ô `custom_sales_order`
+vẫn giữ cho luồng bán hàng (báo cáo và hook cũ bám vào đó).
+
+`on_submit`, `on_change`, `before_cancel` đều rẽ nhánh theo mục đích ngay dòng đầu.
+
+---
+
+## 2. Chuỗi tạo chứng từ (mục đích **Bán hàng**)
 
 ### 2.1. on_submit → Material Request
 `_create_material_request(doc)`:
@@ -154,6 +184,83 @@ không vào được log server. Nay ghi hẳn **Comment lên vận đơn**.
 
 ---
 
+## 3b. Nhánh CHUYỂN KHO — `doc_events/transfer.py` {#chuyen-kho}
+
+Ngược chiều luồng bán hàng: ở đó vận đơn **đẻ ra** Material Request; ở đây Material Request **đẻ ra**
+vận đơn. Cùng doctype, hai vai trái ngược — phân biệt bằng bốn dấu hiệu độc lập (đo trên dữ liệu thật):
+
+| | MR do vận đơn bán hàng đẻ ra | MR đẻ ra vận đơn chuyển kho |
+|---|---|---|
+| `set_from_warehouse` (header) | **luôn trống** (17/17) | **luôn có** (806/806) |
+| `set_warehouse` | kho ảo ĐVVC | kho thật ở tỉnh khác |
+| Ô nối | `DP Shipment.custom_material_request` | `DP Shipment.custom_references` |
+| Dòng hàng | có `custom_dp_shipment` | không |
+
+> ⛔ **Đừng tra bằng `material_request_type`** — cả hai đều là `Material Transfer`. Báo cáo nào gộp hai
+> loại này sẽ ra số vô nghĩa: trong 11.467 MR Material Transfer chỉ **806** là chuyển kho thật, phần
+> còn lại là cấp vật tư xuống kho cá nhân KTV.
+
+### Đường đi của hàng
+
+```
+kho nguồn --(ĐVVC lấy hàng)--> kho ảo ĐVVC --(kho đích Submit)--> kho đích
+```
+
+Kho trung gian là **kho ảo của ĐVVC**, không phải Goods In Transit — Goods In Transit dành cho hàng công
+ty **tự chở**. Tách vậy để nhìn tồn kho là biết ai đang giữ hàng và ai đền nếu mất.
+
+Vẫn dùng cơ chế in-transit gốc của ERPNext (`make_in_transit_stock_entry` + `make_stock_in_entry`), chỉ
+truyền kho ảo ĐVVC làm `in_transit_warehouse` → giữ được `outgoing_stock_entry` nối cặp phiếu, MR tự lên
+`In Transit`, phiếu nhận dựng tự động. `stock_entry.py` của ERPNext **không** bắt kho trung gian phải
+thuộc `warehouse_type = Transit`.
+
+### Theo status
+
+| status | Hàm | Kết quả |
+|---|---|---|
+| Partner Received | `_create_send_entry` | SE `add_to_transit=1`, kho nguồn → kho ảo ĐVVC, **Submit**. Số lượng bám **vận đơn** (`custom_picked_qty` ∥ `qty`), không bám MR |
+| Delivered | bù SE nếu thiếu → `_create_receive_entry_draft` | SE nhận kho ảo → kho đích, **để NHÁP** + ToDo cho người có User Permission trên kho đích |
+| Returned / Lost | `_create_return_entry` | SE đảo về kho nguồn |
+
+Phiếu nhận cố ý **không** tự Submit: kho đích phải đếm hàng thật rồi mới ký.
+
+### Chống xuất kho hai lần
+
+`custom_transport_mode` trên MR (chỉ đọc, hệ thống ghi):
+
+- Submit vận đơn chuyển kho → ghi `Đơn vị vận chuyển`; `Stock Entry.validate` chặn mọi phiếu xuất tay
+  bám vào MR đó.
+- Xuất kho tay trước → `Stock Entry.on_submit` ghi `Tự vận chuyển`; `validate_transfer_source` chặn đặt
+  ĐVVC.
+- Phiếu do hệ thống dựng mang cờ `_dp_transfer_generated` để không tự chặn chính mình.
+
+### Sinh chứng từ trên đường webhook
+
+Mỗi bước chạy trong `_guarded`: `frappe.db.savepoint` → lỗi thì rollback tới savepoint, ghi Error Log
+**và Comment lên vận đơn**. Lý do: để lỗi văng ra thì ĐVVC nhận HTTP 500 và bắn lại cả lô; nuốt im thì
+status vẫn nhảy mà chứng từ không có. Prod không đọc được log server nên phải để dấu ngay trên vận đơn,
+dọn bằng nút *Đồng bộ trạng thái từ ĐVVC*.
+
+### Chọn tài khoản ĐVVC
+
+`_partner_account_for_company` xếp hạng: tài khoản sở hữu **điểm gửi khai trên kho nguồn** → có
+credentials → có điểm gửi đã đồng bộ → `is_default` → tên. Bắt buộc vì hệ thống có **8 tài khoản dựng
+sẵn không credentials** (GHN, GHTK, J&T…) đều bật `is_default`; lấy theo tên là hàng chui vào kho ảo của
+hãng không dùng. Điều kiện cứng: kho ảo phải thuộc **đúng công ty** của MR, nếu không ERPNext chặn
+`InvalidWarehouseCompany`.
+
+### Điểm gửi (`pickup_point`)
+
+App gốc có ô `pickup_point` trên vận đơn; `_sender_info` dùng đúng điểm đó thay vì luôn lấy điểm mặc
+định của tài khoản. Không có nó thì hàng gửi từ kho tỉnh vẫn báo VTP tới lấy ở TP.HCM.
+`Warehouse.custom_dp_pickup_point` ghi điểm gửi ứng với từng kho; patch
+`seed_warehouse_pickup_points` mồi sẵn 10 kho, chỉ điền ô trống.
+
+`pickup_address_name` từ nay chỉ bắt buộc khi **không** khai điểm gửi — VTP lấy người gửi từ
+`GROUPADDRESS_ID` của điểm, không từ Address, và hầu như không kho nào có Address.
+
+---
+
 ## 4. Custom field cầu nối (fixtures của extension)
 
 Trên **DP Shipment**: `custom_sales_order`, `custom_pickup_warehouse`, `custom_fulfillment_status`,
@@ -162,8 +269,32 @@ Trên **DP Shipment**: `custom_sales_order`, `custom_pickup_warehouse`, `custom_
 `custom_total_cost`. Trên **DP Shipment Item**: `custom_warehouse`, `custom_sales_order_item`,
 `custom_picked_qty`, `custom_pick_status`.
 
+Thêm từ 08/2026:
+
+| Field | Ở đâu | Việc |
+|---|---|---|
+| `custom_purpose` | DP Shipment | Bắt buộc, mặc định *Bán hàng*. Công tắc rẽ nhánh — [§1b](#muc-dich) |
+| `custom_references` | DP Shipment | Bảng `DP Shipment Reference`: chứng từ nguồn, quan hệ nhiều–nhiều |
+| `custom_receive_stock_entry` | DP Shipment | Phiếu nhập do kho đích Submit (chuyển kho) |
+| `custom_transport_mode` | Material Request | Chỉ đọc, hệ thống ghi: *Đơn vị vận chuyển* ∥ *Tự vận chuyển* |
+| `custom_dp_pickup_point` | Warehouse | Điểm gửi ĐVVC ứng với kho |
+
 > Field `carrier_push_status` / `order_source` (trạng thái đẩy đơn) là **field native của app gốc**
 > trong `dp_shipment.json` — xem [Tài liệu kỹ thuật app gốc](Delivery_Partner-Tech.html).
+> `pickup_point`, `delivery_warehouse` cũng là field native của app gốc (thêm 08/2026).
+
+### Patch
+
+| Patch | Việc |
+|---|---|
+| `set_shipment_purpose_and_backfill_references` | Điền mục đích + dựng dòng chứng từ nguồn cho vận đơn cũ |
+| `vietnamese_shipment_labels` | Translation `DP Shipment → Vận đơn`, `Create → Tạo` (**toàn hệ thống**, gỡ bằng xoá 4 dòng Translation) |
+| `seed_warehouse_pickup_points` | Mồi điểm gửi cho 10 kho nguồn, chỉ điền ô trống |
+
+> ⚠️ **Bẫy thứ tự migrate:** patch `post_model_sync` chạy **trước** `sync_fixtures`, nên patch nào đụng
+> custom field sẽ không thấy ô đó trên site mới, bỏ qua im lặng, mà Patch Log đã ghi "đã chạy" nên không
+> bao giờ chạy lại. Càng khó thấy vì `ALTER TABLE … ADD COLUMN … DEFAULT` của MariaDB điền sẵn giá trị
+> mặc định cho mọi dòng cũ. Mọi patch phải gọi `fixture_utils.ensure_custom_fields()` trước.
 
 ---
 
@@ -217,6 +348,11 @@ bench --site <site> clear-cache   # BẮT BUỘC — hook doc_events cache trong
 | `on_change` | Status = `Delivered` | **Bù SE nếu thiếu** ([§3.1](#bu-moc-lay-hang)) → tạo DN + (SI + PE nếu COD) |
 | `on_change` | Status = `Returned` / `Lost` | Tạo Return SE (chỉ khi đã có `custom_stock_entry`) |
 | `before_cancel` | Cancel DP Shipment | Cancel MR + tạo Return SE nếu cần |
+| `Stock Entry.validate` | Mọi SE `Material Transfer` | Chặn phiếu xuất tay bám vào MR đã đặt ĐVVC — [§3b](#chuyen-kho) |
+| `Stock Entry.on_submit` | SE tay bám MR chuyển kho thật | Ghi `custom_transport_mode = Tự vận chuyển` |
+
+Bảng trên là nhánh **Bán hàng**. Mục đích *Chuyển kho* đi qua `doc_events/transfer.py` — [§3b](#chuyen-kho);
+mục đích *Gửi mẫu* / *Bảo hành* ra sớm ngay đầu `on_change`, không khoá dòng.
 
 > ℹ️ Hook là **`on_change`**, KHÔNG phải `on_update`: base app đổi status bằng `db_set` → Frappe chỉ chạy
 > `on_change`. Xem [§3](#status-reactor-fix).

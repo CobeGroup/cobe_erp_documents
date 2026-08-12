@@ -74,12 +74,28 @@ theo hành trình mà ĐVVC báo về.
 
 ## 2. Tạo vận đơn
 
-Hai cách:
+Ba cách:
 
-- **Từ Sales Order** (khuyến nghị): mở SO → tạo DP Shipment → hệ thống tự điền hàng hoá, khách hàng,
-  giá trị. Vận đơn giữ liên kết về SO để sau này khớp số lượng giao + hoá đơn.
-- **Thủ công**: vào **DP Shipment → New**, tự chọn ĐVVC, người nhận, hàng hoá. (Chi tiết thao tác form
+- **Từ Sales Order** (bán hàng cho khách): mở SO → **Tạo → Vận đơn ĐVVC** → hệ thống tự điền hàng hoá,
+  khách hàng, giá trị. Vận đơn giữ liên kết về SO để sau này khớp số lượng giao + hoá đơn.
+- **Từ Phiếu chuyển kho** (chuyển hàng giữa hai kho cùng công ty): mở phiếu đã Submit có khai Kho nguồn
+  → **Tạo → Vận đơn ĐVVC**. Xem [Chuyển kho qua ĐVVC](Delivery_Partner-Chuyen-Kho.html).
+- **Thủ công**: vào **Vận đơn → New**, tự chọn ĐVVC, người nhận, hàng hoá. (Chi tiết thao tác form
   có ảnh: [Viettel Post — Cài đặt & sử dụng, Phần B](Delivery_Partner-Viettel_Post-Cai-Dat.html#phần-b--tạo-đơn-hàng-ngày).)
+
+### Ô "Mục đích" quyết định chuyện gì xảy ra sau đó
+
+Mỗi vận đơn phải khai một **Mục đích**, và chính nó quyết định hệ thống sinh ra chuỗi chứng từ nào:
+
+| Mục đích | Hàng đi đâu | Chứng từ sinh ra |
+|---|---|---|
+| **Bán hàng** | kho → kho ảo ĐVVC → khách | Đề nghị xuất kho, Phiếu xuất, Phiếu giao, Hoá đơn + Thu COD |
+| **Chuyển kho** | kho nguồn → kho ảo ĐVVC → kho đích | Phiếu xuất, rồi Phiếu nhập cho kho đích ký |
+
+Tạo từ SO hay từ phiếu chuyển kho thì ô này tự điền. Tạo tay thì phải tự chọn.
+
+Bảng **Chứng từ nguồn** ngay dưới đó ghi vận đơn này phục vụ chứng từ nào — một vận đơn có thể gom
+nhiều chứng từ, và một chứng từ có thể đẻ ra nhiều vận đơn.
 
 Cần điền: **Partner** (ĐVVC) + **Partner Account**, **Dịch vụ giao** (menu **Actions → "Xem cước
 theo dịch vụ"** hiện mã + phí thật của tuyến để chọn; bỏ trống thì lúc bấm Đẩy đơn hộp thoại
@@ -191,6 +207,8 @@ Khi trạng thái về **Delivered**, hệ thống tự sinh (nếu vận đơn 
 | Trạng thái không tự cập nhật khi ĐVVC giao | Vận đơn chưa có/đúng **External Shipment ID** khớp mã ĐVVC, hoặc webhook chưa kết nối. Xem [Viettel Post — Cài đặt, Bước 5](Delivery_Partner-Viettel_Post-Cai-Dat.html#bước-5--bật-cập-nhật-trạng-thái-tự-động). |
 | Đơn "Delivered" nhưng **không thấy Phiếu giao / Hoá đơn / Phiếu thu COD** | Vận đơn không gắn Sales Order, chưa deploy bản vá webhook, hoặc COD account sai loại — báo bộ phận kỹ thuật (xem [Tài liệu kỹ thuật](../tech/Delivery_Partner-Lifecycle.html#status-reactor-fix)). |
 | Không thấy nút "Đẩy đơn" / "Đã tạo đơn ở ngoài" | Vận đơn phải **đã Submit** và **chưa** có External Shipment ID (nút ẩn để chống tạo trùng). |
+| Không thấy nút **Tạo → Vận đơn ĐVVC** trên Phiếu chuyển kho | Phiếu phải **đã Submit**, có khai **Kho nguồn ở đầu phiếu**, và chưa tự xuất kho tay. Phiếu do vận đơn bán hàng sinh ra thì không có nút này. |
+| ĐVVC tới lấy hàng **nhầm kho** | Kho nguồn chưa khai **Điểm gửi ĐVVC** → ĐVVC dùng điểm mặc định của tài khoản. Xem [Chuyển kho qua ĐVVC, mục 7](Delivery_Partner-Chuyen-Kho.html). |
 | Đơn bị **ĐVVC huỷ** mà hàng **đã lấy đi** — có nên Cancel? | ❌ **CHƯA** — chờ kho nhận lại hàng thật rồi mới Cancel, không thì sổ kho lệch. Xem [quy tắc Cancel](Delivery_Partner_Extension.html#cancel-khi-hang-da-di). |
 | Bấm "Đẩy đơn" báo thiếu mã vùng / thông tin người nhận | Mở Address người nhận → chọn đúng Tỉnh/Huyện → Lưu (hệ thống tự dò mã vùng). Giao cho Company: điền **Phone trên Address**. Chi tiết: [Viettel Post — Cài đặt, Phần B Bước 2](Delivery_Partner-Viettel_Post-Cai-Dat.html). |
 | ĐVVC hiện **sai kích thước / số kiện / người trả cước / cước lệch** | Kiểm tab **Parcels** (kích thước + Count = số kiện thật) và tab **Charges** (Charges Paid By) **trước khi đẩy đơn**. Xem [bảng xử lý ở doc Viettel Post](Delivery_Partner-Viettel_Post-Cai-Dat.html#gặp-trục-trặc). |
@@ -202,5 +220,6 @@ Khi trạng thái về **Delivered**, hệ thống tự sinh (nếu vận đơn 
 
 - [Viettel Post — Cài đặt & sử dụng](Delivery_Partner-Viettel_Post-Cai-Dat.html) — kết nối ĐVVC, đẩy đơn, mã vùng (có ảnh)
 - [Vận đơn từ Sales Order (kho & kế toán)](Delivery_Partner_Extension.html) — luồng SO → kho → hoá đơn → COD
+- [Chuyển kho qua ĐVVC](Delivery_Partner-Chuyen-Kho.html) — chuyển hàng giữa hai kho cùng công ty
 - [Delivery Partner — Tài liệu kỹ thuật (app gốc)](../tech/Delivery_Partner-Tech.html) — kiến trúc, doctype, webhook, test
 - [Lifecycle & Doc Events](../tech/Delivery_Partner-Lifecycle.html) — tích hợp ERP
