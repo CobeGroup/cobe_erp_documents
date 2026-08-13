@@ -6,6 +6,18 @@ parent: Dịch vụ & Bảo dưỡng
 
 # Phân loại sự cố — Nhóm · Loại
 
+Trang này gộp hai việc khác hẳn nhau, đọc phần của mình thôi:
+
+| Phần | Cho ai | Màn hình |
+|---|---|---|
+| **[Phần 1 — Nhập ca](#phan-1--nhap-ca)** | CSKH, hằng ngày | Form **Issue** |
+| **[Phần 2 — Quản trị danh mục](#phan-2--quan-tri-danh-muc)** | Người khai danh mục, thi thoảng | Danh sách **Issue Type**, form **Nhóm sự cố** |
+
+---
+
+## Phần 1 — Nhập ca
+{: #phan-1--nhap-ca }
+
 Mỗi ca sự cố được phân loại bằng **hai ô**, cả hai đều bắt buộc, điền ngay lúc tiếp nhận:
 
 | Ô trên form | Trả lời câu hỏi | Điền khi nào |
@@ -25,20 +37,17 @@ tin vào cùng một cái tên (`Nước yếu`, `Nước yếu do bơm`, `Lỗi
 
 ---
 
-## Điền theo chiều nào cũng được
+### Điền theo chiều nào cũng được
 
 Không bắt buộc phải chọn Nhóm trước. Hệ thống đỡ cho cả hai chiều.
 
-### Chiều 1 — chọn Nhóm trước
-
-Ô Loại sự cố chỉ còn hiện những loại thuộc nhóm đó: **7 dòng thay vì 75**. Mỗi dòng kèm
-sẵn dòng gợi ý các nguyên nhân thường gặp.
+**Chiều 1 — chọn Nhóm trước.** Ô Loại sự cố chỉ còn hiện những loại thuộc nhóm đó: **7
+dòng thay vì 75**. Mỗi dòng kèm sẵn gợi ý các nguyên nhân thường gặp.
 
 ![Chọn Nhóm trước, ô Issue Type chỉ còn loại của nhóm đó](images/desk/issue/nhom-truoc-loai-sau.png)
 
-### Chiều 2 — chọn Loại trước
-
-Khi ô Nhóm còn trống, ô Loại hiện **đủ cả 75 loại**. Chọn xong, hệ thống **tự điền Nhóm**:
+**Chiều 2 — chọn Loại trước.** Khi ô Nhóm còn trống, ô Loại hiện **đủ cả 75 loại**. Chọn
+xong, hệ thống **tự điền Nhóm**:
 
 ![Chọn Loại trước thì Nhóm tự điền](images/desk/issue/loai-truoc-nhom-tu-dien.png)
 
@@ -46,10 +55,8 @@ Nếu loại đó thuộc nhiều nhóm thì hệ thống **hỏi** chứ không
 
 ![Loại thuộc nhiều nhóm thì hệ thống hỏi](images/desk/issue/loai-nhieu-nhom-hoi.png)
 
-### Muốn đổi sang cặp khác hẳn
-
-**Ô Nhóm luôn hiện đủ danh sách**, không bao giờ bị Loại đang chọn khoá lại. Đó là lối ra:
-đổi Nhóm rồi chọn lại Loại.
+**Muốn đổi sang cặp khác hẳn?** Ô Nhóm luôn hiện đủ danh sách, không bao giờ bị Loại đang
+chọn khoá lại. Đó là lối ra: đổi Nhóm rồi chọn lại Loại.
 
 Đổi Nhóm trên một ca **đang nhập** mà Loại cũ không thuộc nhóm mới thì Loại bị xoá — chọn
 lại là xong. Trên ca **đã lưu** thì hệ thống chỉ nhắc, không tự xoá, vì đó là dữ liệu
@@ -57,7 +64,7 @@ người ta đã nhập.
 
 ---
 
-## Danh mục hiện có
+### Danh mục hiện có
 
 **12 nhóm · 75 loại** — trong đó 50 loại đang dùng và 25 loại nằm trong nhóm *Danh mục cũ*
 chờ ngừng.
@@ -91,7 +98,7 @@ kỹ thuật. Đây là gợi ý tra cứu hiện ngay trong ô chọn, không p
 
 ---
 
-## Một Loại thuộc được NHIỀU Nhóm
+### Một Loại thuộc được NHIỀU Nhóm
 
 Ô **Nhóm sự cố** trên form Loại sự cố là một bảng, khai được nhiều dòng:
 
@@ -116,7 +123,13 @@ phân biệt được khi đọc báo cáo.
 
 ---
 
-## Sửa danh mục ở đâu
+## Phần 2 — Quản trị danh mục
+{: #phan-2--quan-tri-danh-muc }
+
+Từ đây trở xuống là việc của người khai danh mục, làm trên **màn hình quản trị** chứ
+không phải form nhập ca. CSKH không cần đọc.
+
+### Sửa danh mục ở đâu
 
 Menu **Support** → thẻ **Issues**:
 
@@ -126,14 +139,14 @@ Menu **Support** → thẻ **Issues**:
 (Thanh bên trái cũng có **Setup → Issue Type**, nhưng *Nhóm sự cố* thì chỉ vào từ thẻ
 **Issues** của trang Support.)
 
-### Thêm một Loại sự cố
+#### Thêm một Loại sự cố
 
 **Issue Type** → **Add**. Ô **Nhóm sự cố** là **bắt buộc**: loại không thuộc nhóm nào sẽ
 không bao giờ hiện ra ở ô chọn của CSKH.
 
 Không chọn được nhóm đã ngừng sử dụng — hệ thống chặn ngay lúc chọn.
 
-### Hai công tắc, mỗi cái một việc
+#### Hai công tắc, mỗi cái một việc
 
 | Công tắc | Ở đâu | Tác dụng |
 |---|---|---|
@@ -154,7 +167,7 @@ Cả hai công tắc đều bỏ tick là hiện lại, ca lịch sử không đ
 
 ---
 
-## Tắt cụm *Danh mục cũ*
+### Tắt cụm *Danh mục cũ*
 
 Đây là bước **cuối cùng**, làm sau khi đã tập huấn CSKH trên danh mục mới. 25 loại này
 đang gánh **519 trong 1.332 ca của 60 ngày gần nhất (38%)** — tắt sớm là CSKH mở form ra
@@ -168,8 +181,12 @@ Vì tắt nhóm không còn kéo theo loại, phải tắt từng loại — nh�
 
 ![Chọn trường lọc Nhóm sự cố (Issue Type Group Link)](images/desk/issue/chon-truong-loc.png)
 
-> Chỉ có đúng một lựa chọn này, đừng đi tìm trường `Nhóm sự cố` ở mức Issue Type: ô đó là
-> một bảng nên không lọc trực tiếp được, và nó không xuất hiện trong danh sách.
+> **Chỉ có đúng một lựa chọn này.** Trong danh sách chọn trường sẽ không thấy `Nhóm sự cố`
+> đứng riêng, vì ô Nhóm trên form Loại sự cố là một **bảng** — giá trị nằm ở bảng con nên
+> phải lọc qua đó. Thấy cái tên lạ `(Issue Type Group Link)` thì cứ chọn, đúng nó.
+>
+> Chuyện này **chỉ xảy ra ở màn hình quản trị này**. Ô Nhóm sự cố trên form nhập ca là ô
+> thường, lọc và chọn bình thường như mọi ô khác.
 
 Kết quả: 25 dòng.
 
@@ -183,29 +200,42 @@ records**.
 
 Sau đó ô Loại sự cố khi mở ca mới chỉ còn **50 loại**.
 
-### Kiểm lại
+#### Kiểm lại
 
 - Mở một ca mới, ô Loại sự cố không còn các loại vừa tắt
 - Mở một **ca cũ** đang mang một loại vừa tắt: loại đó vẫn còn nguyên trên ca, và vẫn
   **chọn lại được** nếu lỡ xoá
 
-### Hoàn tác
+#### Hoàn tác
 
 Lọc y như bước 1, chọn tất cả, **Actions → Edit → Ngừng sử dụng → bỏ tick → Update**.
 
 ---
 
-## Những điều cần biết
+### Những điều cần biết
 
 **Ca cũ không bị đụng tới.** 25.221 ca lịch sử giữ nguyên Loại sự cố của chúng. Tắt một
 loại chỉ ẩn nó khỏi ô *chọn khi nhập ca mới* — không xoá, không sửa dữ liệu cũ.
 
 **Ca cũ luôn chọn lại được giá trị của chính nó.** Loại đã tắt, hoặc loại đã bị chuyển
 khỏi nhóm, vẫn hiện trong ô chọn khi mở đúng ca đang mang nó. Không có chuyện lỡ tay xoá
-rồi kẹt không lưu được ca.
+rồi kẹt không lưu được ca. Ngoại lệ này chỉ có **trên form nhập ca**, không có ở ô lọc —
+xem mục ngay dưới.
 
-**Vẫn lọc và báo cáo được ca cũ.** Nhóm *Danh mục cũ* và các loại đã tắt vẫn chọn được ở ô
-lọc của danh sách và báo cáo — chỉ ô nhập liệu mới bị ẩn.
+**Loại đã tắt biến khỏi ô lọc luôn, không chỉ ô nhập liệu.** Đây là hành vi sẵn có của
+Frappe: bản ghi `Ngừng sử dụng` bị loại khỏi **mọi** ô chọn, kể cả ô lọc của danh sách và
+báo cáo. Nên sau khi tắt, gõ `Không xác định` vào ô lọc Issue Type sẽ **không ra gì**.
+
+Vẫn lọc được, bằng một trong hai cách:
+
+- **Lọc theo `Nhóm sự cố` = `Danh mục cũ`** — gọn nhất, gom hết 25 loại một lần. Nhóm dùng
+  cờ riêng (`Ngừng sử dụng nhóm này`) chứ không phải cờ `Ngừng sử dụng` của Frappe, nên
+  nhóm **vẫn hiện trong ô lọc** kể cả sau khi đã ngừng.
+- **Đổi phép so sánh sang `Like`** rồi gõ tay tên loại. Với `Like` (và `In`) thì ô giá trị
+  thành ô chữ tự do, không còn kiểm theo danh sách nữa.
+
+Dữ liệu thì không suy suyển: ca cũ vẫn giữ nguyên loại của nó, chỉ là chọn lại tên đó
+trong ô lọc thì phải đi đường vòng.
 
 **`Không xác định` một mình mang 16.412 ca.** Đây là loại mặc định của dữ liệu nhập từ hệ
 cũ, nằm trong *Danh mục cũ*. Báo cáo theo loại nên tách riêng nó ra kẻo lệch hẳn.
