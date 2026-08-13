@@ -135,7 +135,9 @@ Huỷ vận đơn **không đụng tới phiếu chuyển kho** — phiếu đó
 và sống độc lập. Chế độ vận chuyển chỉ được trả về trống để chọn đường khác.
 
 - **Chưa lấy hàng** → huỷ sạch, không để lại dấu vết gì trong kho.
-- **Đã lấy hàng, chưa tới nơi** → hệ thống tự đảo hàng về kho nguồn.
+- **Đã lấy hàng, chưa tới nơi** → hệ thống **huỷ luôn phiếu xuất kho**, hàng về lại kho nguồn.
+  Phiếu chuyển kho được **mở lại như chưa từng đi**, đặt ĐVVC khác được ngay — không phải tạo
+  phiếu chuyển kho mới.
 - **Kho đích đã ký phiếu nhập** → hệ thống **chặn huỷ**. Hàng đã vào kho rồi, muốn huỷ
   thì phải huỷ phiếu nhập trước và cân nhắc kỹ.
 
@@ -143,11 +145,17 @@ và sống độc lập. Chế độ vận chuyển chỉ được trả về tr
 
 ## 7. Trước khi dùng — quản lý kho cần khai
 
-| Việc | Ở đâu | Không khai thì sao |
-|---|---|---|
-| **Điểm gửi ĐVVC** cho từng kho nguồn | Form Kho, ô *Điểm gửi ĐVVC* | ĐVVC tới lấy hàng ở TP.HCM chứ không tới kho tỉnh |
-| **Địa chỉ** cho từng kho đích, có số điện thoại | Kho → thêm Address | Không tạo được vận đơn |
-| **Đồng bộ điểm gửi** cho từng tài khoản ĐVVC | DP Partner Account → *Đồng bộ điểm gửi* | Danh sách điểm gửi trống |
+| Việc | Ở đâu | Không khai thì sao | Hiện trạng |
+|---|---|---|---|
+| **Địa chỉ** cho từng kho đích, có số điện thoại | Kho → thêm Address | **Không tạo được vận đơn** | ⛔ **28/29 kho đích chưa có** — xem dưới |
+| **Điểm gửi ĐVVC** cho từng kho nguồn | Form Kho, ô *Điểm gửi ĐVVC* | ĐVVC tới lấy hàng ở TP.HCM chứ không tới kho tỉnh | 10/20 kho nguồn đã có, phủ 720/824 lượt |
+| **Đồng bộ điểm gửi** cho từng tài khoản ĐVVC | DP Partner Account → *Đồng bộ điểm gửi* | Danh sách điểm gửi trống | tài khoản AKW chưa đồng bộ |
+
+> ⛔ **Chốt chặn lớn nhất trước khi dùng thật: cả hệ thống mới có ĐÚNG MỘT kho khai địa chỉ**
+> (KHO HỒ CHÍ MINH - TGĐG). Đối chiếu 824 lượt chuyển kho một năm qua: **764 lượt (93%) sẽ bị
+> chặn ngay** vì kho đích chưa có địa chỉ. Nặng nhất theo lượt: HÀ NỘI KHO (164), Thanh Hoá (93),
+> Đà Nẵng (66), Hạ Long (54), Biên Hoà (49), Vũng Tàu (46), Quy Nhơn (42), Cần Thơ (42).
+> Khai xong 8 kho này là phủ hơn nửa lượng chuyển kho.
 
 Điểm gửi phải **đăng ký trước trên cổng ĐVVC** rồi mới đồng bộ về được — tạo tay bản ghi
 trong hệ thống là vô nghĩa, vì mã điểm do ĐVVC cấp.

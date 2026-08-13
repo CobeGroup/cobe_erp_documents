@@ -85,17 +85,30 @@ Ba cách:
 
 ### Ô "Mục đích" quyết định chuyện gì xảy ra sau đó
 
-Mỗi vận đơn phải khai một **Mục đích**, và chính nó quyết định hệ thống sinh ra chuỗi chứng từ nào:
+Ô **Mục đích** quyết định hệ thống sinh ra chuỗi chứng từ nào:
 
 | Mục đích | Hàng đi đâu | Chứng từ sinh ra |
 |---|---|---|
 | **Bán hàng** | kho → kho ảo ĐVVC → khách | Đề nghị xuất kho, Phiếu xuất, Phiếu giao, Hoá đơn + Thu COD |
 | **Chuyển kho** | kho nguồn → kho ảo ĐVVC → kho đích | Phiếu xuất, rồi Phiếu nhập cho kho đích ký |
+| **để trống** | ĐVVC chở, hệ thống không theo dõi tồn | không sinh gì |
 
-Tạo từ SO hay từ phiếu chuyển kho thì ô này tự điền. Tạo tay thì phải tự chọn.
+**Không ai nhập ô này** — nó chỉ đọc, hệ thống tự điền theo bảng **Chứng từ nguồn** ngay dưới:
+có dòng trỏ về Đơn bán hàng thì là *Bán hàng*, trỏ về Phiếu chuyển kho thì là *Chuyển kho*.
 
-Bảng **Chứng từ nguồn** ngay dưới đó ghi vận đơn này phục vụ chứng từ nào — một vận đơn có thể gom
-nhiều chứng từ, và một chứng từ có thể đẻ ra nhiều vận đơn.
+Nên vận đơn **tạo tay** trên Desk, không gắn chứng từ nguồn nào, sẽ để trống Mục đích và
+**không kèm chứng từ ERP nào cả** — nó chỉ là một lần đặt xe: gửi hợp đồng cho khách, gửi trả
+một món cho nhà cung cấp, gửi đồ giữa hai văn phòng. Muốn có chuỗi chứng từ thì phải bấm nút
+từ chứng từ gốc, chứ tạo tay rồi tự khai là không được nữa.
+
+Bảng **Chứng từ nguồn** ghi vận đơn này phục vụ chứng từ nào — một vận đơn có thể gom
+nhiều chứng từ, và một chứng từ có thể đẻ ra nhiều vận đơn. Ba chỗ hệ thống chặn:
+
+- Trộn **khác loại** chứng từ trong một vận đơn (Đơn bán hàng lẫn Phiếu chuyển kho) → chặn lúc Lưu.
+- **Hai Đơn bán hàng** trong một vận đơn → chặn lúc Lưu. Phiếu giao hàng và hoá đơn COD chưa biết
+  chia thế nào.
+- Gắn một **Phiếu chuyển kho không hợp lệ** (phiếu cấp vật tư cho KTV, phiếu chưa Submit, phiếu đã
+  có vận đơn khác, phiếu đã xuất kho tay) → chặn lúc **Submit**, kèm lý do cụ thể.
 
 Cần điền: **Partner** (ĐVVC) + **Partner Account**, **Dịch vụ giao** (menu **Actions → "Xem cước
 theo dịch vụ"** hiện mã + phí thật của tuyến để chọn; bỏ trống thì lúc bấm Đẩy đơn hộp thoại

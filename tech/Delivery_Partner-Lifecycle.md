@@ -30,6 +30,8 @@ Hook đăng ký (`extension/hooks.py`):
 ```python
 doc_events = {
     "DP Shipment": {
+        "before_validate": "...dp_shipment.before_validate",  # suy custom_purpose từ
+                                                              # chứng từ nguồn — §1b
         "before_save":   "...dp_shipment.before_save",    # tính custom_total_cost
         "on_submit":     "...dp_shipment.on_submit",       # tạo Material Request
         "on_change":     "...dp_shipment.on_change",        # tạo SE/DN/SI/PE theo status
@@ -56,14 +58,54 @@ chạy; bảng đăng ký nằm ở `doc_events/purpose.py`, **không** khai b�
 | Chuyển kho | `in_transit` | SE xuất (kho ảo ĐVVC) → SE nhập cho kho đích |
 | Gửi mẫu về lab · Thu hồi bảo hành · Trả máy cho khách | `none` | không sinh chứng từ kho |
 | Vật tư KTV về kho | `in_transit` | *(chưa làm)* |
+| **để trống** | `none` | không sinh chứng từ kho |
 
-Ô trống → coi là **Bán hàng**. Cố ý: vận đơn tạo trước khi có ô này, hoặc đẩy vào qua API mà không khai,
-phải giữ nguyên hành vi cũ. Patch `set_shipment_purpose_and_backfill_references` điền thật cho các bản
-ghi cũ và dựng dòng chứng từ nguồn trỏ về SO.
+### Ô này KHÔNG ai gõ — suy từ chứng từ nguồn
+
+`purpose.apply()` chạy ở **`before_validate`** và ghi đè `custom_purpose` theo loại chứng từ trong
+`custom_references`; ô trên form để `read_only`, bỏ `reqd`.
+
+| `ref_doctype` | Mục đích |
+|---|---|
+| Sales Order | Bán hàng |
+| Material Request | Chuyển kho |
+| Water Analysis Request | Gửi mẫu về lab |
+| FS Work Order | Vật tư KTV về kho |
+| Issue, `delivery_to_type == "Customer"` | Trả máy cho khách |
+| Issue, còn lại | Thu hồi bảo hành |
+| *(không có dòng nào)* | không đụng vào giá trị đang lưu |
+
+Vì sao `before_validate` chứ không `before_save`: **`before_save` không chạy lúc Submit**, mà Submit
+mới là lúc chuỗi chứng từ bắt đầu.
+
+Vì sao suy thay vì cho chọn: ô cũ là Select `reqd`, mà Frappe **lấy lựa chọn đầu tiên làm giá trị cho
+bản ghi mới** — vận đơn tạo tay tự mang mục đích *Bán hàng* rồi âm thầm đẻ chứng từ kho cho hàng
+không thuộc tồn kho. Suy từ chứng từ nguồn thì cái bẫy đó hết cửa: muốn chuỗi chứng từ nào phải chỉ
+ra một chứng từ gốc **có thật** thuộc loại đó. Options của ô vẫn phải mở đầu bằng **một dòng trống**
+dù đã `read_only` — quy tắc "lựa chọn đầu tiên" của Frappe không quan tâm ô có chỉ đọc hay không.
+
+Trộn nhiều loại chứng từ trong một vận đơn → `apply()` throw. `derive()` thì **không bao giờ throw**
+(nó còn được gọi trên đường webhook, nổ ở đó là chết cả luồng cập nhật trạng thái).
+
+Vận đơn **không có chứng từ nguồn** → mục đích trống → `stock_flow = none`, không sinh gì. Đó là mặc
+định an toàn, thay cho mặc định *Bán hàng* trước đây.
+
+### Hai chốt chặn đi kèm
+
+Suy mục đích từ một bảng người dùng sửa được mở ra hai đường lách, cả hai đã bịt:
+
+| Đường lách | Chốt |
+|---|---|
+| Vận đơn tạo tay trỏ vào **một phiếu cấp vật tư KTV** rồi Submit → đóng dấu *Đơn vị vận chuyển* lên phiếu chẳng liên quan (khoá luôn đường thủ kho tự làm phiếu xuất), rồi đẻ phiếu xuất theo phiếu đó | `transfer.on_submit` gọi lại `validate_transfer_source(mr, shipment=doc.name)`. **Đừng tin phép kiểm lúc bấm nút** — giữa lúc bấm nút và lúc Submit, bảng chứng từ nguồn sửa được. `shipment=` để vận đơn không tự tính mình là "phiếu đã có vận đơn khác" |
+| Gắn tay **hai Đơn bán hàng** vào một vận đơn → Phiếu giao hàng và hoá đơn COD chỉ biết một đơn, đơn kia im lặng rơi | `purpose._sync_sales_order()` throw. Hàm này cũng **đồng bộ ô `custom_sales_order` theo dòng chứng từ nguồn** — luồng bán hàng đọc ô đó chứ không đọc bảng, lệch nhau là chạy được nửa chuỗi rồi chết ở Phiếu giao |
 
 **Bảng `custom_references` (doctype `DP Shipment Reference`)** ghi chứng từ nguồn — quan hệ **nhiều–nhiều**:
 một vận đơn gom nhiều mẫu nước, một Issue bảo hành đẻ hai vận đơn (thu về + trả lại). Ô `custom_sales_order`
-vẫn giữ cho luồng bán hàng (báo cáo và hook cũ bám vào đó).
+vẫn giữ cho luồng bán hàng (báo cáo và hook cũ bám vào đó). Bảng này sửa được lúc còn nháp — đó là
+đường duy nhất đổi mục đích, và đổi được thì phải trỏ vào chứng từ có thật; Submit xong là khoá.
+
+Patch `set_shipment_purpose_and_backfill_references` điền mục đích cho 19 bản ghi cũ và dựng dòng
+chứng từ nguồn trỏ về SO, nên hai giá trị khớp nhau ngay từ trước lần lưu đầu tiên.
 
 `on_submit`, `on_change`, `before_cancel` đều rẽ nhánh theo mục đích ngay dòng đầu.
 
@@ -224,6 +266,41 @@ thuộc `warehouse_type = Transit`.
 
 Phiếu nhận cố ý **không** tự Submit: kho đích phải đếm hàng thật rồi mới ký.
 
+### Huỷ vận đơn: HUỶ phiếu kho, không đắp phiếu đảo — `cancel_stock_footprint`
+
+Huỷ vận đơn **huỷ luôn** phiếu xuất (và phiếu đảo nếu có), thay vì dựng thêm một phiếu bù. Huỷ
+**ngược thứ tự phát sinh** — phiếu đảo trước, phiếu xuất sau — để kho ảo ĐVVC không âm giữa chừng.
+`ignore_links` vì doc duy nhất trỏ tới hai phiếu đó là chính vận đơn đang bị huỷ.
+
+Vì sao không dùng phiếu bù: `MaterialRequest.get_mr_items_ordered_qty` cộng `transfer_qty` của
+`Stock Entry Detail` theo `material_request_item` với **`docstatus = 1`**. Phiếu bù dựng dòng mới,
+không mang khoá đó → **không trừ ngược**. Hậu quả cũ: tồn kho đúng nhưng phiếu chuyển kho vẫn đứng
+ở trạng thái đã chuyển, `has_submitted_stock_entry` vẫn thấy phiếu xuất cũ → **không đặt lại ĐVVC
+được**, phải đẻ phiếu chuyển kho mới.
+
+> ⚠️ Gắn `material_request_item` vào phiếu bù **không cứu được**: hàm đếm cộng mọi phiếu xuất của
+> phiếu chuyển kho, **không nhìn chiều kho** — thêm dòng là số đã chuyển tăng gấp đôi chứ không về 0.
+
+Huỷ phiếu gốc thì ERPNext tự lo hết, không phải viết bù trừ tay: hook `Stock Entry.on_cancel` →
+`update_completed_and_requested_qty` chạy lại phép cộng (chỉ còn phiếu `docstatus = 1`) nên
+`ordered_qty` về 0, `set_material_request_transfer_status` đưa `transfer_status` về *Not Started*,
+và tồn kho đảo theo cơ chế huỷ chuẩn.
+
+**Đo thật, 47/47 phép kiểm**, ba kịch bản — *đã lấy hàng chưa giao*, *đã trả hàng về (có phiếu
+đảo)*, *đã giao nhưng kho đích chưa ký*: phiếu xuất `docstatus = 2`, hàng về đúng kho nguồn,
+`ordered_qty` 1 → 0, `transfer_status` về *Not Started*, chế độ vận chuyển về trống, không sót
+phiếu nhập mồ côi hay ToDo, và **đặt lại ĐVVC được**.
+
+#### Hai cái bẫy của bước huỷ (cả hai đã cắn thật)
+
+| Bẫy | Triệu chứng | Chốt |
+|---|---|---|
+| Xoá phiếu nhập nháp **trước** khi bỏ ô `custom_receive_stock_entry` | `LinkExistsError` — vận đơn lúc đó vẫn `docstatus = 1` nên Frappe chặn xoá thứ nó đang trỏ tới. **Huỷ vận đơn ở trạng thái *Đã giao* chưa bao giờ chạy được** | Bỏ ô liên kết TRƯỚC, xoá SAU |
+| `db_set` trong bước huỷ **fire `on_change`** | Vừa xoá ô phiếu nhập xong, `on_change` thấy "Delivered mà chưa có phiếu nhập" → **dựng lại đúng cái vừa xoá**, kèm ToDo | Cầm cờ `_dp_ext_status_reacting` suốt cả bước huỷ, `try/finally` |
+
+`_create_return_entry` vẫn giữ nguyên cho mốc *Returned* / *Lost* — ở đó chuyến hàng **có thật**,
+phiếu đảo là bản ghi trung thực. Chỉ đường **Huỷ** mới xoá dấu vết.
+
 ### Chống xuất kho hai lần
 
 `custom_transport_mode` trên MR (chỉ đọc, hệ thống ghi):
@@ -273,7 +350,7 @@ Thêm từ 08/2026:
 
 | Field | Ở đâu | Việc |
 |---|---|---|
-| `custom_purpose` | DP Shipment | Bắt buộc, mặc định *Bán hàng*. Công tắc rẽ nhánh — [§1b](#muc-dich) |
+| `custom_purpose` | DP Shipment | **Chỉ đọc**, hệ thống suy từ `custom_references`. Công tắc rẽ nhánh — [§1b](#muc-dich) |
 | `custom_references` | DP Shipment | Bảng `DP Shipment Reference`: chứng từ nguồn, quan hệ nhiều–nhiều |
 | `custom_receive_stock_entry` | DP Shipment | Phiếu nhập do kho đích Submit (chuyển kho) |
 | `custom_transport_mode` | Material Request | Chỉ đọc, hệ thống ghi: *Đơn vị vận chuyển* ∥ *Tự vận chuyển* |
@@ -341,6 +418,7 @@ bench --site <site> clear-cache   # BẮT BUỘC — hook doc_events cache trong
 
 | Event | Trigger | Action |
 |-------|---------|--------|
+| `before_validate` | Save **và** Submit DP Shipment | Suy `custom_purpose` từ `custom_references` — [§1b](#muc-dich) |
 | `before_save` | Save DP Shipment | Auto-calc `custom_total_cost` |
 | `on_submit` | Submit DP Shipment | Tạo + submit MR |
 | `on_change` | *(mọi lần)* | Khoá dòng + nạp lại 4 ô guard — [§3.2](#guard-doc-du-lieu-cu) |

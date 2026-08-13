@@ -72,10 +72,11 @@ Mở SO → bấm **Tạo → Vận đơn ĐVVC**.
 >
 > | Ô | Với đơn bán hàng |
 > |---|---|
-> | **Mục đích** | luôn là *Bán hàng*. Đây là ô quyết định vận đơn sinh ra chuỗi chứng từ nào — chỉ *Bán hàng* mới sinh Đề nghị xuất kho / Phiếu giao / Hoá đơn COD |
+> | **Mục đích** | luôn là *Bán hàng*. Ô **chỉ đọc**, hệ thống tự điền theo Chứng từ nguồn. Nó quyết định vận đơn sinh ra chuỗi chứng từ nào — chỉ *Bán hàng* mới sinh Đề nghị xuất kho / Phiếu giao / Hoá đơn COD |
 > | **Chứng từ nguồn** | một dòng trỏ về Đơn bán hàng. Mục đích khác dùng bảng này để gom nhiều chứng từ vào một vận đơn |
 >
-> Tạo vận đơn **bằng tay** trên Desk thì phải tự chọn Mục đích, vì nó là ô bắt buộc.
+> Tạo vận đơn **bằng tay** trên Desk thì Mục đích để trống và vận đơn đó **không sinh chứng từ
+> ERP nào** — chỉ là một lần đặt xe. Muốn có chuỗi chứng từ bán hàng thì phải bấm nút từ Đơn bán hàng.
 
 ## Bước 3 · Submit Vận đơn (Sales / Logistics)
 
