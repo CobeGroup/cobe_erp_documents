@@ -244,6 +244,7 @@ Bấm vào ngày trong thông báo là **mở thẳng bản chấm công** để
 ---
 
 ## Liên quan
+- 🚫 [Huỷ đơn nghỉ đã duyệt & tra cứu đơn đã xử](Duyet-Huy-Don-Nghi-Phep.html) — rút lại đơn đã duyệt (bắt buộc kèm lý do) + 4 tab nhật ký
 - 🗺️ [Hành trình một đơn nghỉ phép (NV → Manager → HR)](Hanh-Trinh-Nghi-Phep.html) — toàn cảnh, theo chân 1 đơn
 - ✅ [Duyệt chấm công bù — từng phiếu & hàng loạt](Duyet-Cham-Cong-Bu.html) — Attendance Request 1 bước + bulk trên Desk
 - 👤 [Nhân viên: Xin nghỉ phép](Guide-NhanVien-NghiPhep.html)

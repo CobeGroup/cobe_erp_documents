@@ -29,9 +29,13 @@ thêm (bật tiếng để nghe thuyết minh):
 
 Mở tab **Nghỉ phép**:
 - **Số dư phép**: ngay đầu trang, mỗi loại phép là **một chip riêng** hiện số ngày **còn lại theo từng loại** (vd `Phép năm: 6,0 ngày`). Chip **xanh** = còn phép, **xám** = đã hết (0).
-- **Đơn xin nghỉ**: danh sách đơn đã gửi + trạng thái (Chờ trưởng bộ phận / Đã được duyệt / Từ chối).
+- **Đơn xin nghỉ**: danh sách đơn đã gửi, chia **4 tab** — **Chờ duyệt** · **Đã duyệt** · **Từ chối** · **Đã hủy**.
+  Mở app lên, nếu không còn đơn nào đang chờ thì app tự nhảy sang tab có đơn, khỏi phải bấm tìm.
 
 <img src="images/guide/nhanvien/10-leave-list.png" width="240" alt="Số dư phép + danh sách đơn">
+
+> 🚫 **Đơn bị huỷ không biến mất.** Đơn đã duyệt mà HR rút lại nằm ở tab **Đã hủy**, kèm **lý do huỷ**
+> — số ngày phép đã trừ cũng được hoàn lại. Đơn bị **Từ chối** cũng vậy: nằm ở tab *Từ chối* kèm lý do.
 
 > 💡 **Số dư trên chip là số THỰC còn dùng được** — đã tự trừ: phép đã nghỉ + **đơn đang chờ duyệt** + phép chuyển kỳ đã hết hạn. Không cần tính tay.
 >
@@ -225,4 +229,5 @@ phải chọn gì — **chọn đúng loại phép là form tự đổi**:
 - ⏱️ [Xin làm thêm giờ (OT)](Guide-NhanVien-LamThem.html) — điều kiện tiên quyết của Nghỉ bù
 - 🗺️ [Hành trình một đơn nghỉ phép (NV → Manager → HR)](Hanh-Trinh-Nghi-Phep.html) — đơn của bạn được duyệt thế nào
 - 🔁 [Hành trình một ngày Nghỉ bù](Hanh-Trinh-Nghi-Bu.html) — kiếm giờ làm thêm → đổi ngày nghỉ
+- 🚫 [Huỷ đơn nghỉ đã duyệt](Duyet-Huy-Don-Nghi-Phep.html) — đơn của bạn bị rút lại thì xem ở đâu, vì sao
 - [Cài app & Chấm công](Guide-NhanVien-ChamCong.html) · [Chi phí](Guide-NhanVien-ChiPhi.html)
