@@ -60,6 +60,12 @@ Người soạn nhập: loại VB, trích yếu, **nội dung**, **nơi nhận**
 Và khai sẵn phần công bố: **phạm vi** (Toàn công ty / Phòng ban / Nhân viên cụ thể) và
 **có bắt xác nhận đọc không** (mặc định lấy từ Settings, sửa được).
 
+> **Số hiệu giữ chỗ ngay khi tạo.** Hệ thống cấp số theo năm + loại + đơn vị (vd `04/2026/TB-TGĐG`)
+> ngay lúc lưu bản nháp, để mỗi văn bản có một mã ổn định xuyên suốt. Số này **chỉ trở thành
+> chính thức khi Ban hành** — nháp bị huỷ thì coi như số đó bỏ trống.
+
+![Văn bản ở trạng thái Draft — văn thư đang soạn, số hiệu đã cấp, nút workflow "Submit for Approval"](images/desk/cong-van-01-soan-draft.png)
+
 ### 2. Trình ký — `Pending Approval`
 Trình lên người duyệt; ghi nhận ở bảng *Người duyệt*.
 
@@ -67,10 +73,14 @@ Trình lên người duyệt; ghi nhận ở bảng *Người duyệt*.
 - Duyệt → `Approved`.
 - Trả lại → `Rejected` → người soạn **Reopen** về `Draft` sửa → trình lại.
 
+Văn bản đã duyệt (`Approved`) chờ văn thư bấm **Issue** để ban hành:
+
+![Văn bản đã duyệt — trạng thái Approved, mở "Actions" để bấm Issue (ban hành)](images/desk/cong-van-02-cho-ban-hanh.png)
+
 ### 4. ⭐ Ban hành — `Issued` (trái tim của quy trình)
 Khi Văn thư bấm **Issue**, hệ thống tự động:
 
-1. **Cấp số hiệu chính thức** kiểu VN: `04/2026/TB-TGĐG` (số/năm/mã loại–mã đơn vị, đếm lại theo năm + loại + đơn vị).
+1. **Chốt số hiệu chính thức** — số đã giữ chỗ từ lúc tạo (`04/2026/TB-TGĐG`) nay trở thành chính thức.
 2. **Đóng dấu ngày ban hành**.
 3. **CÔNG BỐ** — dựng danh sách người nhận theo phạm vi đã chọn, rồi gửi qua các kênh **bật trong Settings**:
    - **Thông báo trong hệ thống** (chuông Desk / PWA).
@@ -79,9 +89,28 @@ Khi Văn thư bấm **Issue**, hệ thống tự động:
    - Nếu bật **xác nhận đọc** → sinh mỗi người một dòng theo dõi trạng thái **"chưa đọc"**.
 4. Văn bản **khoá** (không sửa được nữa).
 
+Sau khi ban hành, văn bản mang số hiệu chính thức, badge **Issued**, và văn thư có nút
+**"Theo dõi đọc: đã/tổng"** ngay trên form:
+
+![Văn bản đã ban hành — số hiệu 04/2026/TB-TGĐG, badge Issued, nút "Theo dõi đọc: 1/3"](images/desk/cong-van-03-da-ban-hanh.png)
+
 ### 5. Nhân viên nhận & đọc
-Nhân viên thấy thông báo + email → mở văn bản → bấm **"Đã đọc"**. Hệ thống ghi lại **thời điểm đọc**.
-Văn thư/lãnh đạo tra được **ai đã đọc / ai chưa**.
+Nhân viên thấy thông báo + email → mở văn bản → thấy **cảnh báo cần đọc** và bấm nút **"Đã đọc"**:
+
+![Nhân viên mở văn bản — banner "Bạn cần xác nhận đã đọc văn bản này" và nút "Đã đọc"](images/desk/cong-van-05-nv-can-doc.png)
+
+Sau khi bấm, hệ thống ghi lại **thời điểm đọc**; lần sau mở lại chỉ còn dòng xác nhận:
+
+![Văn bản đã đọc — banner xanh "Bạn đã đọc văn bản này lúc …", không còn nút](images/desk/cong-van-07-nv-da-doc.png)
+
+Mỗi nhân viên còn có một **"hộp thư văn bản cần đọc"** (danh sách *Official Document
+Acknowledgment*) — chỉ thấy văn bản gửi cho **chính mình**, lọc nhanh **"Chỉ chưa đọc"**:
+
+![Hộp thư của nhân viên — chỉ 1 dòng của chính mình, trạng thái "Chưa đọc"](images/desk/cong-van-06-nv-hop-thu.png)
+
+Về phía văn thư/lãnh đạo, mở danh sách theo dõi để biết **ai đã đọc / ai chưa**:
+
+![Văn thư theo dõi đọc — 3 người nhận, xanh "Đã đọc" / cam "Chưa đọc"](images/desk/cong-van-04-theo-doi-doc.png)
 
 ### 6. Lưu — `Archived`
 Xử lý xong → lưu trữ.
@@ -93,7 +122,7 @@ Xử lý xong → lưu trữ.
 | | **Đến** | **Đi / Nội bộ** |
 |---|---|---|
 | Nguồn | Bên thứ 3 gửi tới | Công ty phát ra |
-| Số hiệu cấp khi | **Tiếp nhận** (sổ đến) | **Ban hành** |
+| Số hiệu | Giữ chỗ khi **Tiếp nhận** (sổ đến) | Giữ chỗ khi **tạo**, chốt khi **Ban hành** |
 | Trình ký | Không | Có |
 | **Công bố tới nhân viên** | Không | **Có** (khi ban hành) |
 | Xác nhận đọc | Không | Có (tuỳ chọn, bật/tắt) |
