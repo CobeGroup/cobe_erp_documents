@@ -58,7 +58,7 @@
 
   <rect class="box done" x="785" y="168" width="170" height="66"/>
   <text class="tb" x="870" y="192" text-anchor="middle">Phiếu nhập kho</text>
-  <text class="ts" x="870" y="212" text-anchor="middle">để nháp, kho đích ký</text>
+  <text class="ts" x="870" y="212" text-anchor="middle">để nháp, kho đích Submit</text>
 
   <path class="arrow" d="M232,116 L232,165" marker-end="url(#ah)"/>
   <path class="arrow" d="M455,116 L455,165" marker-end="url(#ah)"/>
@@ -68,7 +68,7 @@
   <!-- hàng 3: tồn kho -->
   <rect class="box wh" x="140" y="290" width="415" height="62"/>
   <text class="tb" x="347" y="314" text-anchor="middle">Kho nguồn</text>
-  <text class="stock" x="347" y="334" text-anchor="middle">hàng chưa nhúc nhích — đặt đơn không đụng tồn kho</text>
+  <text class="stock" x="347" y="334" text-anchor="middle">hàng chưa dịch chuyển — đặt đơn không tác động tồn kho</text>
 
   <rect class="box auto" x="585" y="290" width="170" height="62"/>
   <text class="tb" x="670" y="314" text-anchor="middle">Kho ảo ĐVVC</text>
@@ -81,7 +81,7 @@
   <path class="arrow" d="M555,321 L582,321" marker-end="url(#ah)"/>
   <path class="arrow" d="M755,321 L782,321" marker-end="url(#ah)"/>
 
-  <text class="ts" x="140" y="398">Tự chở (nhà xe, xe công ty) thì thủ kho làm như cũ — hàng đi qua kho trung chuyển</text>
+  <text class="ts" x="140" y="398">Tự vận chuyển (nhà xe, xe công ty) thì thủ kho thực hiện như trước — hàng đi qua kho trung chuyển</text>
   <text class="ts" x="140" y="420">Goods In Transit, và phiếu tự ghi “Tự vận chuyển”.</text>
   <text class="ts" x="140" y="448">Mất hàng giữa đường: hệ thống tự đảo hàng từ kho ảo ĐVVC về lại kho nguồn.</text>
 </svg>

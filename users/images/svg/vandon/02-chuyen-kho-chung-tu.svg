@@ -24,14 +24,14 @@
     </marker>
   </defs>
 
-  <text class="lane" x="60" y="30">MŨI TÊN LIỀN = CHỨNG TỪ ĐƯỢC DỰNG TỪ CHỨNG TỪ KIA (NGUỒN)</text>
-  <text class="lane" x="60" y="50">MŨI TÊN ĐỨT = CHỈ CẤP DỮ LIỆU / KÍCH HOẠT, KHÔNG PHẢI NGUỒN</text>
+  <text class="lane" x="60" y="30">MŨI TÊN LIỀN = CHỨNG TỪ ĐƯỢC LẬP TỪ CHỨNG TỪ KIA (NGUỒN)</text>
+  <text class="lane" x="60" y="50">MŨI TÊN ĐỨT = CHỈ CUNG CẤP DỮ LIỆU / KÍCH HOẠT, KHÔNG PHẢI NGUỒN</text>
 
   <!-- Phiếu chuyển kho -->
   <rect class="box wh" x="60" y="76" width="300" height="86"/>
   <text class="tb" x="80" y="102">Phiếu chuyển kho</text>
   <text class="ts" x="80" y="122">Material Request · loại Material Transfer</text>
-  <text class="ts" x="80" y="142">thủ kho tạo TAY — gốc của cả chuỗi</text>
+  <text class="ts" x="80" y="142">thủ kho tạo thủ công — chứng từ gốc</text>
 
   <!-- Vận đơn -->
   <rect class="box auto" x="600" y="76" width="320" height="86"/>
@@ -56,14 +56,14 @@
   <text class="tm" x="166" y="232">  Phiếu chuyển kho, kho ảo)</text>
 
   <path class="feed" d="M700,164 L700,206 L392,206 L392,300 L356,300" marker-end="url(#ag)"/>
-  <text class="ts" x="404" y="262">vận đơn cấp: số thực xuất,</text>
+  <text class="ts" x="404" y="262">vận đơn cung cấp: số thực xuất,</text>
   <text class="ts" x="404" y="280">kho ảo, mốc trạng thái</text>
 
   <!-- Phiếu nhập -->
   <rect class="box done" x="600" y="262" width="320" height="96"/>
   <text class="tb" x="620" y="288">Phiếu nhập kho — NHÁP</text>
   <text class="ts" x="620" y="308">Stock Entry · kho ảo ĐVVC → kho đích</text>
-  <text class="ts" x="620" y="328">kho đích đếm hàng rồi tự Submit</text>
+  <text class="ts" x="620" y="328">kho đích đếm hàng rồi Submit</text>
   <text class="tm" x="620" y="348">outgoing_stock_entry → Phiếu xuất</text>
 
   <path class="arrow" d="M362,300 L596,300" marker-end="url(#ah)"/>
@@ -82,13 +82,13 @@
 
   <!-- Ghi chú -->
   <rect class="box" x="600" y="392" width="320" height="140" fill="#f9fafb" stroke="#d1d5db"/>
-  <text class="tb" x="620" y="418">Hai chỗ dễ hiểu nhầm</text>
-  <text class="ts" x="620" y="440">· Phiếu xuất (Stock Entry) dựng từ Phiếu</text>
+  <text class="tb" x="620" y="418">Hai điểm dễ hiểu nhầm</text>
+  <text class="ts" x="620" y="440">· Phiếu xuất (Stock Entry) lập từ Phiếu</text>
   <text class="ts" x="620" y="458">  chuyển kho (Material Request), không</text>
   <text class="ts" x="620" y="476">  phải từ Vận đơn (DP Shipment).</text>
-  <text class="ts" x="620" y="500">· Phiếu nhập dựng từ Phiếu xuất, và cố ý</text>
+  <text class="ts" x="620" y="500">· Phiếu nhập lập từ Phiếu xuất, và có chủ đích</text>
   <text class="ts" x="620" y="518">  không mang khoá của Phiếu chuyển kho.</text>
 
-  <text class="ts" x="60" y="566">Huỷ vận đơn: huỷ ngược thứ tự — phiếu đảo trước, phiếu xuất sau. Phiếu nhập còn nháp thì bị xoá; kho đích đã ký thì chặn huỷ.</text>
-  <text class="ts" x="60" y="588">Phiếu chuyển kho KHÔNG bị đụng tới, chỉ trả ô Chế độ vận chuyển về trống để chọn đường khác.</text>
+  <text class="ts" x="60" y="566">Huỷ vận đơn: huỷ ngược thứ tự — phiếu đảo trước, phiếu xuất sau. Phiếu nhập còn nháp sẽ bị xoá; kho đích đã Submit thì không huỷ được.</text>
+  <text class="ts" x="60" y="588">Phiếu chuyển kho KHÔNG bị tác động, chỉ trả ô Chế độ vận chuyển về trống để chọn phương án khác.</text>
 </svg>

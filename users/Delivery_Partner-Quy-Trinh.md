@@ -63,7 +63,7 @@ Trong quá trình đó hệ thống tự sinh các chứng từ kho & kế toán
 theo hành trình mà ĐVVC báo về.
 
 - **Sales/CSKH**: tạo vận đơn (thường từ Sales Order), chọn ĐVVC, người nhận, hàng hoá, COD.
-- **Kho**: xuất hàng giao cho ĐVVC (sinh Phiếu xuất kho — `Stock Entry`), nhận hàng hoàn.
+- **Kho**: xuất hàng giao cho ĐVVC (sinh Phiếu xuất kho — `Stock Entry`) và nhận hàng hoàn.
 - **Kế toán**: theo dõi hoá đơn + tiền COD do ĐVVC thu hộ.
 - **Vận hành**: theo dõi trạng thái giao nhận của từng đơn.
 
@@ -97,19 +97,19 @@ Ba cách:
 có dòng trỏ về Đơn bán hàng (`Sales Order`) thì là *Bán hàng*, trỏ về Phiếu chuyển kho
 (`Material Request`) thì là *Chuyển kho*.
 
-Nên vận đơn **tạo tay** trên Desk, không gắn chứng từ nguồn nào, sẽ để trống Mục đích và
-**không kèm chứng từ ERP nào cả** — nó chỉ là một lần đặt xe: gửi hợp đồng cho khách, gửi trả
-một món cho nhà cung cấp, gửi đồ giữa hai văn phòng. Muốn có chuỗi chứng từ thì phải bấm nút
-từ chứng từ gốc, chứ tạo tay rồi tự khai là không được nữa.
+Do đó, vận đơn **tạo thủ công** trên Desk mà không gắn chứng từ nguồn sẽ để trống Mục đích và
+**không kèm chứng từ ERP nào** — đó chỉ là một lần đặt xe: gửi hợp đồng cho khách, gửi trả một
+món cho nhà cung cấp, chuyển đồ giữa hai văn phòng. Muốn có chuỗi chứng từ thì phải tạo từ nút
+trên chứng từ gốc; tạo thủ công rồi tự khai mục đích không còn được chấp nhận.
 
 Bảng **Chứng từ nguồn** (`DP Shipment Reference`) ghi vận đơn này phục vụ chứng từ nào — một vận đơn có thể gom
-nhiều chứng từ, và một chứng từ có thể đẻ ra nhiều vận đơn. Ba chỗ hệ thống chặn:
+nhiều chứng từ, và một chứng từ có thể sinh ra nhiều vận đơn. Ba trường hợp hệ thống chặn:
 
 - Trộn **khác loại** chứng từ trong một vận đơn (Đơn bán hàng lẫn Phiếu chuyển kho) → chặn lúc Lưu.
-- **Hai Đơn bán hàng** trong một vận đơn → chặn lúc Lưu. Phiếu giao hàng và hoá đơn COD chưa biết
-  chia thế nào.
-- Gắn một **Phiếu chuyển kho không hợp lệ** (phiếu cấp vật tư cho KTV, phiếu chưa Submit, phiếu đã
-  có vận đơn khác, phiếu đã xuất kho tay) → chặn lúc **Submit**, kèm lý do cụ thể.
+- **Hai Đơn bán hàng** trong một vận đơn → chặn lúc Lưu, vì chưa có quy tắc phân chia Phiếu giao
+  hàng và hoá đơn COD cho từng đơn.
+- Gắn một **Phiếu chuyển kho không hợp lệ** (phiếu cấp vật tư cho KTV, phiếu chưa Submit, phiếu
+  đã có vận đơn khác, phiếu đã xuất kho thủ công) → chặn lúc **Submit**, kèm lý do cụ thể.
 
 Cần điền: **Partner** (ĐVVC) + **Partner Account**, **Dịch vụ giao** (menu **Actions → "Xem cước
 theo dịch vụ"** hiện mã + phí thật của tuyến để chọn; bỏ trống thì lúc bấm Đẩy đơn hộp thoại

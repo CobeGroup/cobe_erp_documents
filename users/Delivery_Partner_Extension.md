@@ -144,17 +144,17 @@ Huỷ có **2 chiều** — bạn huỷ trên ERP, hoặc ĐVVC huỷ và ERP t�
 - Vận đơn **đã đẩy** (có mã) → hệ thống **tự gọi ĐVVC huỷ đơn trước khi huỷ nội bộ**:
   - ĐVVC **cho huỷ** (thường là khi **chưa lấy hàng**) → huỷ cả 2 phía + void Đề nghị xuất kho. Items quay về pool.
   - ĐVVC **từ chối** (đã lấy hàng / đang giao / đã giao) → **CHẶN Cancel**, báo lỗi rõ; vận đơn giữ nguyên.
-    Hàng đã đi thì **đừng huỷ** — để nó chạy **luồng hoàn hàng** (Returning → Returned).
+    Hàng đã rời kho thì **không huỷ** — để chứng từ đi theo **luồng hoàn hàng** (Returning → Returned).
 
 **② ĐVVC tự huỷ** (không lấy được hàng, huỷ trên cổng ĐVVC, ĐVVC huỷ hệ thống...) → vận đơn **tự chuyển
-trạng thái `Cancelled`** (qua webhook), không cần bạn làm gì. Muốn dọn hẳn tài liệu thì mở vận đơn bấm
-**Cancel** — lúc này hệ thống biết ĐVVC đã huỷ nên cho huỷ luôn (không gọi lại ĐVVC).
+trạng thái `Cancelled`** (qua webhook), người dùng không phải thao tác gì. Nếu muốn đóng hẳn chứng từ
+thì mở vận đơn và bấm **Cancel** — lúc này hệ thống đã biết ĐVVC huỷ nên cho huỷ ngay, không gọi lại ĐVVC.
 
 > **Nếu bạn bấm Cancel NGAY TRƯỚC khi tín hiệu huỷ về tới ERP** (trạng thái chưa kịp đổi): hệ thống gọi
-> ĐVVC huỷ → ĐVVC báo không huỷ được → bị chặn 1 lần. Chờ ít phút cho trạng thái tự nhảy `Cancelled`
-> rồi bấm Cancel lại là được.
+> ĐVVC huỷ → ĐVVC báo không huỷ được → thao tác bị chặn một lần. Chờ ít phút cho trạng thái tự
+> chuyển sang `Cancelled` rồi bấm Cancel lại.
 
-### 🔴 QUAN TRỌNG — Đơn bị ĐVVC huỷ mà HÀNG ĐÃ LẤY ĐI: đừng Cancel vội! {#cancel-khi-hang-da-di}
+### 🔴 QUAN TRỌNG — Đơn bị ĐVVC huỷ khi HÀNG ĐÃ LẤY ĐI: chưa Cancel ngay {#cancel-khi-hang-da-di}
 
 **Quy tắc một câu: hàng chưa nằm trong tay kho mình → CHƯA bấm Cancel.**
 
