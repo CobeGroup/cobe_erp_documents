@@ -11,6 +11,11 @@ Khi bán hàng qua đơn vị vận chuyển, hệ thống tự nối **Đơn h�
 và **tự sinh chứng từ kho + kế toán** theo hành trình giao hàng. Tài liệu này mô tả luồng vận hành cho
 **sales**, **thủ kho** và **kế toán**.
 
+> **Tên tiếng Việt ↔ doctype**: Đơn hàng = `Sales Order` · Vận đơn = `DP Shipment` · Đề nghị xuất kho =
+> `Material Request` · Phiếu xuất kho / Phiếu đảo / Phiếu ghi giảm = `Stock Entry` · Phiếu giao hàng =
+> `Delivery Note` · Hoá đơn = `Sales Invoice` · Phiếu thu COD = `Payment Entry` · Kho ảo ĐVVC =
+> `Warehouse`. Gõ tên tiếng Anh vào ô tìm kiếm là ra đúng danh sách.
+
 > Muốn nắm bức tranh tổng quát trước? Đọc [Quy trình vận đơn & giao nhận](Delivery_Partner-Quy-Trinh.html).
 > Cấu hình kỹ thuật (custom field, hooks, tài khoản COD) xem
 > [Lifecycle & Doc Events](../tech/Delivery_Partner-Lifecycle.html).
@@ -83,7 +88,7 @@ Mở SO → bấm **Tạo → Vận đơn ĐVVC**.
 Bấm **Submit**. Hệ thống kiểm tra (có kiện, có hàng, giá trị > 0, hàng cùng 1 kho) rồi:
 
 - Trạng thái → **Submitted**
-- Tự sinh **Đề nghị xuất kho (Material Request)** gửi kho — *chưa* trừ tồn.
+- Tự sinh **Đề nghị xuất kho** (`Material Request`) gửi kho — *chưa* trừ tồn.
 
 > Đẩy đơn sang ĐVVC (lấy mã vận đơn) là thao tác riêng ở menu **Actions** — xem
 > [Quy trình §5](Delivery_Partner-Quy-Trinh.html#5-gắn-mã-đơn-đvvc--theo-dõi-hành-trình)
@@ -100,7 +105,7 @@ Bấm **Submit**. Hệ thống kiểm tra (có kiện, có hàng, giá trị > 0
 Khi ĐVVC báo **đã lấy hàng** (webhook), hệ thống tự:
 
 - Trạng thái → **Partner Received**
-- Sinh **Phiếu xuất kho (Stock Entry)**: kho nguồn → kho ảo ĐVVC → **tồn kho thực sự chuyển đi**.
+- Sinh **Phiếu xuất kho** (`Stock Entry`): kho nguồn → kho ảo ĐVVC → **tồn kho thực sự chuyển đi**.
 
 ## Bước 6 · Giao thành công → Phiếu giao, Hoá đơn, COD
 
@@ -108,9 +113,9 @@ Khi ĐVVC báo **đã giao** (webhook), hệ thống tự sinh:
 
 | Chứng từ | Điều kiện | Ý nghĩa |
 |---|---|---|
-| **Phiếu giao hàng** (Delivery Note) | Luôn | Xuất khỏi kho ảo ĐVVC; tăng SL đã giao trên SO |
-| **Hoá đơn** (Sales Invoice) | Chỉ khi COD > 0 | Doanh thu + công nợ khách |
-| **Phiếu thu COD** (Payment Entry) | Chỉ khi COD > 0 | Ghi tiền ĐVVC thu hộ, cấn trừ hoá đơn |
+| **Phiếu giao hàng** (`Delivery Note`) | Luôn | Xuất khỏi kho ảo ĐVVC; tăng SL đã giao trên SO |
+| **Hoá đơn** (`Sales Invoice`) | Chỉ khi COD > 0 | Doanh thu + công nợ khách |
+| **Phiếu thu COD** (`Payment Entry`) | Chỉ khi COD > 0 | Ghi tiền ĐVVC thu hộ, cấn trừ hoá đơn |
 
 > **COD thu một phần** (COD nhỏ hơn tổng hoá đơn): Phiếu thu chỉ ghi đúng số thu hộ — hoá đơn thành
 > **"Partly Paid"**, phần còn lại khách vẫn nợ. Bình thường COD = tổng đơn thì hoá đơn tất toán luôn.
@@ -126,7 +131,7 @@ Khi ĐVVC báo **đã giao** (webhook), hệ thống tự sinh:
 xuất kho đảo** (kho ảo ĐVVC → kho nguồn), tồn hoàn về; items quay lại pool → tạo vận đơn mới được.
 
 ### Mất hàng
-`Lost`: sinh **Phiếu xuất kho ghi giảm** (trừ khỏi kho ảo ĐVVC). SO vẫn "To Deliver" — sales quyết
+`Lost`: sinh **Phiếu xuất kho ghi giảm** (`Stock Entry`, trừ khỏi kho ảo ĐVVC). SO vẫn "To Deliver" — sales quyết
 định giao lại hay đóng SO.
 
 ### Huỷ vận đơn
@@ -154,7 +159,7 @@ trạng thái `Cancelled`** (qua webhook), không cần bạn làm gì. Muốn d
 **Quy tắc một câu: hàng chưa nằm trong tay kho mình → CHƯA bấm Cancel.**
 
 **Vì sao?** Khi bạn bấm **Cancel** một vận đơn mà hàng đã rời kho (đã có Phiếu xuất kho sang kho ảo ĐVVC),
-hệ thống sẽ tạo **Phiếu xuất kho đảo NGAY LẬP TỨC** — sổ kho ghi nhận *"hàng đã về kho"* trong khi
+hệ thống sẽ tạo **Phiếu xuất kho đảo** (`Stock Entry`) **NGAY LẬP TỨC** — sổ kho ghi nhận *"hàng đã về kho"* trong khi
 **hàng thật vẫn còn ở ĐVVC**. Hậu quả: tồn kho trên hệ thống **cao hơn thực tế**, kho soạn hàng theo số
 ảo, kiểm kê lệch.
 

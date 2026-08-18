@@ -63,7 +63,7 @@ Trong quá trình đó hệ thống tự sinh các chứng từ kho & kế toán
 theo hành trình mà ĐVVC báo về.
 
 - **Sales/CSKH**: tạo vận đơn (thường từ Sales Order), chọn ĐVVC, người nhận, hàng hoá, COD.
-- **Kho**: xuất hàng giao cho ĐVVC (sinh Phiếu xuất kho), nhận hàng hoàn.
+- **Kho**: xuất hàng giao cho ĐVVC (sinh Phiếu xuất kho — `Stock Entry`), nhận hàng hoàn.
 - **Kế toán**: theo dõi hoá đơn + tiền COD do ĐVVC thu hộ.
 - **Vận hành**: theo dõi trạng thái giao nhận của từng đơn.
 
@@ -89,19 +89,20 @@ Ba cách:
 
 | Mục đích | Hàng đi đâu | Chứng từ sinh ra |
 |---|---|---|
-| **Bán hàng** | kho → kho ảo ĐVVC → khách | Đề nghị xuất kho, Phiếu xuất, Phiếu giao, Hoá đơn + Thu COD |
-| **Chuyển kho** | kho nguồn → kho ảo ĐVVC → kho đích | Phiếu xuất, rồi Phiếu nhập cho kho đích ký |
+| **Bán hàng** | kho → kho ảo ĐVVC → khách | Đề nghị xuất kho (`Material Request`), Phiếu xuất (`Stock Entry`), Phiếu giao (`Delivery Note`), Hoá đơn (`Sales Invoice`) + Thu COD (`Payment Entry`) |
+| **Chuyển kho** | kho nguồn → kho ảo ĐVVC → kho đích | Phiếu xuất rồi Phiếu nhập (cùng là `Stock Entry`), kho đích ký |
 | **để trống** | ĐVVC chở, hệ thống không theo dõi tồn | không sinh gì |
 
 **Không ai nhập ô này** — nó chỉ đọc, hệ thống tự điền theo bảng **Chứng từ nguồn** ngay dưới:
-có dòng trỏ về Đơn bán hàng thì là *Bán hàng*, trỏ về Phiếu chuyển kho thì là *Chuyển kho*.
+có dòng trỏ về Đơn bán hàng (`Sales Order`) thì là *Bán hàng*, trỏ về Phiếu chuyển kho
+(`Material Request`) thì là *Chuyển kho*.
 
 Nên vận đơn **tạo tay** trên Desk, không gắn chứng từ nguồn nào, sẽ để trống Mục đích và
 **không kèm chứng từ ERP nào cả** — nó chỉ là một lần đặt xe: gửi hợp đồng cho khách, gửi trả
 một món cho nhà cung cấp, gửi đồ giữa hai văn phòng. Muốn có chuỗi chứng từ thì phải bấm nút
 từ chứng từ gốc, chứ tạo tay rồi tự khai là không được nữa.
 
-Bảng **Chứng từ nguồn** ghi vận đơn này phục vụ chứng từ nào — một vận đơn có thể gom
+Bảng **Chứng từ nguồn** (`DP Shipment Reference`) ghi vận đơn này phục vụ chứng từ nào — một vận đơn có thể gom
 nhiều chứng từ, và một chứng từ có thể đẻ ra nhiều vận đơn. Ba chỗ hệ thống chặn:
 
 - Trộn **khác loại** chứng từ trong một vận đơn (Đơn bán hàng lẫn Phiếu chuyển kho) → chặn lúc Lưu.
@@ -191,7 +192,7 @@ Khi trạng thái về **Delivered**, hệ thống tự sinh (nếu vận đơn 
 
 ## 7. Hoàn hàng / mất hàng
 
-- **Returned** (hoàn về): hệ thống sinh **Phiếu xuất kho đảo** — chuyển hàng từ kho ảo ĐVVC **về lại kho
+- **Returned** (hoàn về): hệ thống sinh **Phiếu xuất kho đảo** (`Stock Entry`) — chuyển hàng từ kho ảo ĐVVC **về lại kho
   nguồn**, khôi phục tồn.
 - **Lost** (mất hàng): ghi nhận thất thoát để kế toán xử lý (không tự hoàn tồn).
 - **Delivery Failed / Returning**: chỉ cập nhật trạng thái, chờ kết quả cuối (Returned hoặc giao lại).
@@ -200,15 +201,24 @@ Khi trạng thái về **Delivered**, hệ thống tự sinh (nếu vận đơn 
 
 ## 8. Các chứng từ liên quan
 
+Tên tiếng Việt trong tài liệu ↔ **tên doctype thật** (gõ tên tiếng Anh vào ô tìm kiếm là ra đúng
+danh sách): Đơn bán hàng = `Sales Order` · Vận đơn = `DP Shipment` · Chứng từ nguồn = `DP Shipment
+Reference` · Đề nghị xuất kho / Phiếu chuyển kho = `Material Request` · Phiếu xuất kho, Phiếu nhập
+kho, Phiếu đảo = `Stock Entry` · Phiếu giao hàng = `Delivery Note` · Hoá đơn = `Sales Invoice` ·
+Phiếu thu COD = `Payment Entry` · Kho & kho ảo ĐVVC = `Warehouse` · Hãng vận chuyển = `DP Partner` ·
+Tài khoản ĐVVC = `DP Partner Account` · Điểm gửi = `DP Pickup Point` · Dịch vụ giao =
+`DP Account Service` · Địa chỉ = `Address` · Việc cần làm = `ToDo`.
+
+
 | Chứng từ | Sinh khi | Tác động |
 |---|---|---|
-| **Vận đơn** (DP Shipment) | Tạo tay / từ SO | Hồ sơ trung tâm theo dõi lô hàng + trạng thái |
-| **Đề nghị xuất kho** (Material Request) | Submit vận đơn | Yêu cầu kho xuất hàng (chưa trừ tồn) |
-| **Phiếu xuất kho** (Stock Entry) | Kho xuất hàng | Trừ kho nguồn → cộng kho ĐVVC |
-| **Phiếu giao hàng** (Delivery Note) | Giao thành công | Xuất khỏi kho ĐVVC; tăng SL đã giao của SO |
-| **Hoá đơn** (Sales Invoice) | Giao thành công + có COD | Doanh thu + công nợ khách |
-| **Phiếu thu COD** (Payment Entry) | Sau hoá đơn | Ghi tiền ĐVVC thu hộ, cấn trừ hoá đơn |
-| **Phiếu xuất kho đảo** | Hoàn hàng | Hoàn tồn về kho nguồn |
+| **Vận đơn** (`DP Shipment`) | Tạo tay / từ SO | Hồ sơ trung tâm theo dõi lô hàng + trạng thái |
+| **Đề nghị xuất kho** (`Material Request`) | Submit vận đơn | Yêu cầu kho xuất hàng (chưa trừ tồn) |
+| **Phiếu xuất kho** (`Stock Entry`) | Kho xuất hàng | Trừ kho nguồn → cộng kho ĐVVC |
+| **Phiếu giao hàng** (`Delivery Note`) | Giao thành công | Xuất khỏi kho ĐVVC; tăng SL đã giao của SO |
+| **Hoá đơn** (`Sales Invoice`) | Giao thành công + có COD | Doanh thu + công nợ khách |
+| **Phiếu thu COD** (`Payment Entry`) | Sau hoá đơn | Ghi tiền ĐVVC thu hộ, cấn trừ hoá đơn |
+| **Phiếu xuất kho đảo** (`Stock Entry`) | Hoàn hàng | Hoàn tồn về kho nguồn |
 
 ---
 

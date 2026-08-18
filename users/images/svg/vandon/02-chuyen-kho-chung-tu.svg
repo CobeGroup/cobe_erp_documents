@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" width="980" height="620" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+  <style>
+    .box   { rx: 10; ry: 10; stroke-width: 1.6; }
+    .human { fill: #f9f0ff; stroke: #9254de; }
+    .auto  { fill: #e6f4ff; stroke: #299dd8; }
+    .done  { fill: #f6ffed; stroke: #54ab78; }
+    .wh    { fill: #fffbe6; stroke: #d4b106; }
+    .warn  { fill: #fff2e8; stroke: #d4711c; }
+    .tb    { font-size: 14.5px; font-weight: 600; fill: #111827; }
+    .t     { font-size: 13.5px; fill: #1f2937; }
+    .ts    { font-size: 12.5px; fill: #4b5563; }
+    .tm    { font-size: 12px; fill: #6b7280; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .lane  { font-size: 12.5px; font-weight: 700; fill: #6b7280; letter-spacing: .04em; }
+    .arrow { stroke: #299dd8; stroke-width: 2; fill: none; }
+    .feed  { stroke: #9ca3af; stroke-width: 1.6; fill: none; stroke-dasharray: 6 4; }
+    .step  { font-size: 13px; font-weight: 700; fill: #299dd8; }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#299dd8"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <text class="lane" x="60" y="30">MŨI TÊN LIỀN = CHỨNG TỪ ĐƯỢC DỰNG TỪ CHỨNG TỪ KIA (NGUỒN)</text>
+  <text class="lane" x="60" y="50">MŨI TÊN ĐỨT = CHỈ CẤP DỮ LIỆU / KÍCH HOẠT, KHÔNG PHẢI NGUỒN</text>
+
+  <!-- Phiếu chuyển kho -->
+  <rect class="box wh" x="60" y="76" width="300" height="86"/>
+  <text class="tb" x="80" y="102">Phiếu chuyển kho</text>
+  <text class="ts" x="80" y="122">Material Request · loại Material Transfer</text>
+  <text class="ts" x="80" y="142">thủ kho tạo TAY — gốc của cả chuỗi</text>
+
+  <!-- Vận đơn -->
+  <rect class="box auto" x="600" y="76" width="320" height="86"/>
+  <text class="tb" x="620" y="102">Vận đơn ĐVVC</text>
+  <text class="ts" x="620" y="122">DP Shipment · nháp → Submit → Đẩy đơn</text>
+  <text class="tm" x="620" y="142">custom_references → Phiếu chuyển kho</text>
+
+  <path class="arrow" d="M362,110 L596,110" marker-end="url(#ah)"/>
+  <text class="step" x="400" y="98">① bấm “Vận đơn ĐVVC”</text>
+  <text class="tm" x="400" y="130">create_dp_shipment_from_mr</text>
+
+  <!-- Phiếu xuất -->
+  <rect class="box auto" x="60" y="262" width="300" height="96"/>
+  <text class="tb" x="80" y="288">Phiếu xuất kho</text>
+  <text class="ts" x="80" y="308">Stock Entry · add_to_transit</text>
+  <text class="ts" x="80" y="328">kho nguồn → kho ảo ĐVVC · tự Submit</text>
+  <text class="tm" x="80" y="348">dòng mang material_request_item</text>
+
+  <path class="arrow" d="M150,164 L150,258" marker-end="url(#ah)"/>
+  <text class="step" x="166" y="196">② ĐVVC báo đã lấy hàng</text>
+  <text class="tm" x="166" y="216">make_in_transit_stock_entry(</text>
+  <text class="tm" x="166" y="232">  Phiếu chuyển kho, kho ảo)</text>
+
+  <path class="feed" d="M700,164 L700,206 L392,206 L392,300 L356,300" marker-end="url(#ag)"/>
+  <text class="ts" x="404" y="262">vận đơn cấp: số thực xuất,</text>
+  <text class="ts" x="404" y="280">kho ảo, mốc trạng thái</text>
+
+  <!-- Phiếu nhập -->
+  <rect class="box done" x="600" y="262" width="320" height="96"/>
+  <text class="tb" x="620" y="288">Phiếu nhập kho — NHÁP</text>
+  <text class="ts" x="620" y="308">Stock Entry · kho ảo ĐVVC → kho đích</text>
+  <text class="ts" x="620" y="328">kho đích đếm hàng rồi tự Submit</text>
+  <text class="tm" x="620" y="348">outgoing_stock_entry → Phiếu xuất</text>
+
+  <path class="arrow" d="M362,300 L596,300" marker-end="url(#ah)"/>
+  <text class="step" x="404" y="330">③ ĐVVC báo đã giao</text>
+  <text class="tm" x="404" y="350">make_stock_in_entry(Phiếu xuất)</text>
+
+  <!-- Phiếu đảo -->
+  <rect class="box warn" x="60" y="440" width="300" height="86"/>
+  <text class="tb" x="80" y="466">Phiếu đảo hàng</text>
+  <text class="ts" x="80" y="486">Stock Entry · kho ảo ĐVVC → kho nguồn</text>
+  <text class="ts" x="80" y="506">tự Submit</text>
+
+  <path class="arrow" d="M150,360 L150,436" marker-end="url(#ah)"/>
+  <text class="step" x="166" y="392">④ Mất hàng / Trả về</text>
+  <text class="tm" x="166" y="412">chép dòng phiếu xuất, đảo chiều kho</text>
+
+  <!-- Ghi chú -->
+  <rect class="box" x="600" y="392" width="320" height="140" fill="#f9fafb" stroke="#d1d5db"/>
+  <text class="tb" x="620" y="418">Hai chỗ dễ hiểu nhầm</text>
+  <text class="ts" x="620" y="440">· Phiếu xuất (Stock Entry) dựng từ Phiếu</text>
+  <text class="ts" x="620" y="458">  chuyển kho (Material Request), không</text>
+  <text class="ts" x="620" y="476">  phải từ Vận đơn (DP Shipment).</text>
+  <text class="ts" x="620" y="500">· Phiếu nhập dựng từ Phiếu xuất, và cố ý</text>
+  <text class="ts" x="620" y="518">  không mang khoá của Phiếu chuyển kho.</text>
+
+  <text class="ts" x="60" y="566">Huỷ vận đơn: huỷ ngược thứ tự — phiếu đảo trước, phiếu xuất sau. Phiếu nhập còn nháp thì bị xoá; kho đích đã ký thì chặn huỷ.</text>
+  <text class="ts" x="60" y="588">Phiếu chuyển kho KHÔNG bị đụng tới, chỉ trả ô Chế độ vận chuyển về trống để chọn đường khác.</text>
+</svg>

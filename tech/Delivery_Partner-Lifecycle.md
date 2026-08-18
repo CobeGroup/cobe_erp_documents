@@ -256,6 +256,35 @@ truyền kho ảo ĐVVC làm `in_transit_warehouse` → giữ được `outgoing
 `In Transit`, phiếu nhận dựng tự động. `stock_entry.py` của ERPNext **không** bắt kho trung gian phải
 thuộc `warehouse_type = Transit`.
 
+### Chuỗi chứng từ — nguồn map của từng chứng từ {#chuoi-chung-tu-chuyen-kho}
+
+| # | Chứng từ | Trigger | **Dựng TỪ (nguồn map)** | Hàm | Ô nối ngược | docstatus |
+|---|---|---|---|---|---|---|
+| 1 | `Material Request` (Material Transfer) | người tạo tay | — **gốc** | — | — | 1 |
+| 2 | `DP Shipment` | nút *Vận đơn ĐVVC* trên MR | **Material Request** | `api/transfer.create_dp_shipment_from_mr` | `custom_references[ref_doctype=Material Request]`; chiều ngược: `MR.custom_transport_mode = "Đơn vị vận chuyển"` ghi ở `transfer.on_submit` | 0 → 1 |
+| 3 | `Stock Entry` **xuất** (`add_to_transit=1`) | status `Partner Received` (hoặc bù ở `Delivered`) | **Material Request** — *không phải vận đơn* | `make_in_transit_stock_entry(mr, kho ảo)` trong `_create_send_entry` | `DP Shipment.custom_stock_entry` + `custom_fulfillment_status="Transferred"`; dòng SE mang `material_request` + `material_request_item` | 1 (tự Submit) |
+| 4 | `Stock Entry` **nhập** | status `Delivered` | **Stock Entry xuất** | `make_stock_in_entry(se_xuat)` trong `_create_receive_entry_draft` | `DP Shipment.custom_receive_stock_entry`; `se_nhap.outgoing_stock_entry = se_xuat`, dòng mang `ste_detail` + `against_stock_entry` | **0 — để NHÁP** |
+| 4b | `ToDo` | cùng lúc với phiếu nhập | — | `_notify_destination` | `reference_type/name` → Stock Entry nhập; giao cho mọi user có `User Permission` trên kho đích | — |
+| 4' | `Stock Entry` **đảo** | status `Returned` / `Lost` | **Stock Entry xuất** (chép dòng, đảo `s_warehouse` ↔ `t_warehouse`) | `_create_return_entry` | `DP Shipment.custom_return_stock_entry` | 1 (tự Submit) |
+
+Ba điểm dễ đọc ngược, cả ba đều có hệ quả thật:
+
+1. **Vận đơn KHÔNG phải nguồn map của phiếu xuất.** Nguồn là MR — nhờ vậy dòng phiếu xuất mang
+   `material_request_item`, `ordered_qty` của MR tự chạy và `transfer_status` tự lên *In Transit*
+   mà không phải viết bù trừ tay. Vận đơn chỉ đóng hai vai: **kích hoạt** (mốc trạng thái) và
+   **cấp dữ liệu** — số thực xuất (`custom_picked_qty` ∥ `qty`) và kho ảo (`DP Partner Account.warehouse`).
+   Dòng nào của MR không có trên vận đơn thì bị loại khỏi phiếu xuất.
+2. **Phiếu nhập map từ PHIẾU XUẤT, không map từ MR.** Kho đích vẫn suy được vì ERPNext đọc ngược
+   `Material Request Item.warehouse` qua phiếu xuất khi `add_to_transit=1` (`stock_entry.make_stock_in_entry`
+   → `update_item`).
+3. **Phiếu nhập KHÔNG mang `material_request` / `material_request_item`** — hai field đó `no_copy=1`
+   nên `get_mapped_doc` bỏ qua. Đây là chuyện tốt chứ không phải thiếu sót: `get_mr_items_ordered_qty`
+   cộng mọi `Stock Entry Detail` có `material_request_item` với `docstatus=1` mà **không nhìn chiều kho**,
+   nên nếu phiếu nhập cũng mang khoá đó thì một chuyến hàng bị tính là chuyển **hai lần**. Cùng lý do
+   với chuyện phiếu đảo không được gắn khoá — xem phần huỷ vận đơn bên dưới.
+
+Sơ đồ cây chứng từ (bản người dùng): [Chuỗi chứng từ chuyển kho](../users/Delivery_Partner-Chuyen-Kho.html#chuoi-chung-tu).
+
 ### Theo status
 
 | status | Hàm | Kết quả |
@@ -320,11 +349,17 @@ dọn bằng nút *Đồng bộ trạng thái từ ĐVVC*.
 
 ### Chọn tài khoản ĐVVC
 
-`_partner_account_for_company` xếp hạng: tài khoản sở hữu **điểm gửi khai trên kho nguồn** → có
-credentials → có điểm gửi đã đồng bộ → `is_default` → tên. Bắt buộc vì hệ thống có **8 tài khoản dựng
-sẵn không credentials** (GHN, GHTK, J&T…) đều bật `is_default`; lấy theo tên là hàng chui vào kho ảo của
-hãng không dùng. Điều kiện cứng: kho ảo phải thuộc **đúng công ty** của MR, nếu không ERPNext chặn
-`InvalidWarehouseCompany`.
+`_usable_accounts(company, preferred_point)` lọc rồi **xếp hạng**: tài khoản sở hữu **điểm gửi khai
+trên kho nguồn** → có credentials → có điểm gửi đã đồng bộ → `is_default` → tên. Bắt buộc vì hệ thống
+có **8 tài khoản dựng sẵn không credentials** (GHN, GHTK, J&T…) đều bật `is_default`; lấy theo tên là
+hàng chui vào kho ảo của hãng không dùng. Điều kiện cứng: kho ảo phải thuộc **đúng công ty** của MR,
+nếu không ERPNext chặn `InvalidWarehouseCompany`.
+
+Hàm trả **cả danh sách** chứ không chỉ quán quân: `get_transfer_defaults` đưa `allowed_accounts` cho
+hộp thoại lọc ô Link, còn `_check_account_for_company` chặn lại ở server (UI chỉ là hàng rào đầu tiên —
+API gọi thẳng vẫn truyền được tên bất kỳ). Chặn sớm để lỗi nói đúng nguyên nhân *"kho ảo thuộc công ty
+AKANWA, phiếu này của THẾ GIỚI ĐIỆN GIẢI"*, thay vì `InvalidWarehouseCompany` lúc Submit khi người dùng
+đã nhập xong cả hộp thoại.
 
 ### Điểm gửi (`pickup_point`)
 
@@ -335,6 +370,14 @@ App gốc có ô `pickup_point` trên vận đơn; `_sender_info` dùng đúng �
 
 `pickup_address_name` từ nay chỉ bắt buộc khi **không** khai điểm gửi — VTP lấy người gửi từ
 `GROUPADDRESS_ID` của điểm, không từ Address, và hầu như không kho nào có Address.
+
+> ⚠️ **Điểm gửi phải tính LẠI theo tài khoản đang chọn.** Điểm gửi là mã kho đăng ký bên hãng, thuộc
+> đúng một `DP Partner Account`. Bản đầu tiên tính điểm gửi một lần theo tài khoản **mặc định** rồi
+> dùng lại cho mọi tài khoản, nên đổi tài khoản trong hộp thoại là vận đơn ôm điểm gửi của tài khoản
+> cũ và chết muộn ở bước Đẩy đơn (*"Điểm gửi X thuộc tài khoản A, không phải B"*) — sau khi đã dựng
+> xong chứng từ. Nay `_pickup_point_for(kho_nguồn, tài_khoản)` trả (điểm, cảnh báo) theo đúng cặp đó,
+> `get_transfer_defaults(mr, partner_account=…)` nhận tài khoản để hộp thoại hỏi lại mỗi lần đổi, và
+> `create_dp_shipment_from_mr` lấy điểm gửi từ chính kết quả đó.
 
 ---
 
