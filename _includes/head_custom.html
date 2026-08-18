@@ -43,7 +43,14 @@
     ov.addEventListener('click', close);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
     document.querySelectorAll('.main-content img').forEach(function (img) {
-      img.addEventListener('click', function () {
+      img.addEventListener('click', function (e) {
+        /* Ảnh thường được bọc trong thẻ <a> trỏ tới chính file gốc. Không chặn
+           thì một cú bấm vừa mở lightbox vừa điều hướng sang file — người dùng
+           thấy ảnh phóng to rồi trang nhảy đi mất. */
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+          return; /* Ctrl/Cmd/giữa chuột: để trình duyệt mở tab mới như thường */
+        }
+        e.preventDefault();
         big.src = img.currentSrc || img.src;
         ov.classList.add('open');
       });
