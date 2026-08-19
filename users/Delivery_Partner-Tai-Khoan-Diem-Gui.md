@@ -105,9 +105,14 @@ không lách được.
 
 > Mẹo nhìn nhanh: **hậu tố tên tài khoản phải khớp công ty của chứng từ** — `- TGDG` · `- AKW` · `- DR`.
 
+Ô chọn cũng **bỏ luôn 8 tài khoản chưa khai thông tin đăng nhập** ở mục 1 — chúng không đẩy đơn được
+nên bày ra chỉ để người dùng bấm nhầm. Chúng vẫn còn trong hệ thống, chỉ là không hiện ở ô chọn nữa.
+
 **Gửi mẫu là ngoại lệ có chủ ý:** luồng này không sinh chứng từ kho nào nên chẳng có gì để ERPNext
-từ chối — chặn ở đó là bịa ra một ràng buộc không có thật. Tài khoản khai trong cấu hình luôn được
-giữ trong danh sách kể cả khi nó thuộc công ty khác, vì mẫu nước thì công ty nào trả cước cũng được.
+từ chối — chặn ở đó là bịa ra một ràng buộc không có thật. Danh sách của nó gồm tài khoản của công ty
+trên phiếu **cộng thêm** tài khoản khai trong `DP Cobe Settings`, kể cả khi tài khoản đó thuộc công
+ty khác. Hai nguồn đó là hai bên trả cước hợp lý (công ty làm xét nghiệm, hoặc công ty của lab); tài
+khoản ngoài hai nguồn vẫn bị chặn.
 
 ### Đổi tài khoản thì cái gì đổi theo
 

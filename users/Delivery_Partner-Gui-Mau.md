@@ -81,10 +81,13 @@ từ nguồn còn sửa được khi vận đơn ở trạng thái nháp:
 | **Cân nặng kiện (kg)** | lấy từ cấu hình, **cân lại rồi sửa** — khai sai là cước sai |
 | **Ghi chú cho ĐVVC** | ghép vào mô tả nội dung kiện in trên vận đơn |
 
-Danh sách tài khoản lọc theo công ty của phiếu, **nhưng tài khoản khai trong cấu hình luôn được giữ
-lại** kể cả khi nó thuộc công ty khác. Cố ý: luồng gửi mẫu không sinh chứng từ kho nào nên không có
-ràng buộc công ty ở đây — mẫu nước thì công ty nào trả cước cũng được, và âm thầm bỏ mất giá trị
-người ta đã cố ý khai trong cấu hình mới là chuyện tệ.
+Danh sách tài khoản gồm tài khoản của **công ty trên phiếu**, cộng thêm **tài khoản khai trong cấu
+hình** kể cả khi nó thuộc công ty khác — đó là hai bên trả cước hợp lý. Tài khoản ngoài hai nguồn đó
+vẫn bị chặn.
+
+Luồng gửi mẫu không sinh chứng từ kho nào nên không có ràng buộc "kho ảo phải cùng công ty" như hai
+luồng kia; nhưng bỏ mất tài khoản người ta đã cố ý khai trong cấu hình cũng là chuyện tệ, nên nó
+luôn được giữ.
 
 Đầu hộp thoại có khối tóm tắt tuyến: **Lấy tại** (tên khách) → **Giao về** (lab).
 

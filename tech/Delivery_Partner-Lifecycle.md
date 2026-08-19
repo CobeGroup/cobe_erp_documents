@@ -383,9 +383,14 @@ lọc tiếp theo công ty, và chỉ **cộng thêm**, không đụng `set_quer
 > chốt lặng lẽ ngừng chặn — mà không phép kiểm nào đỏ lên nếu chúng đều gọi qua hook.
 
 `guard()` **chỉ chặn khi `stock_flow != none`**. Gửi mẫu và bảo hành không đụng tồn kho nên ERPNext
-chẳng có gì để từ chối; chặn ở đó là bịa ra ràng buộc không có thật. Hộp thoại gửi mẫu vì vậy vẫn
-**giữ tài khoản khai trong `DP Cobe Settings`** trong danh sách kể cả khi nó thuộc công ty khác — âm
-thầm bỏ mất giá trị người ta cố ý cấu hình là chuyện tệ hơn.
+chẳng có gì để từ chối; chặn ở đó là bịa ra ràng buộc không có thật. Danh sách của luồng gửi mẫu vì
+vậy là `bookable_accounts(request.company)` **cộng thêm** `settings.sample_partner_account` kể cả khi
+tài khoản đó thuộc công ty khác — âm thầm bỏ mất giá trị người ta cố ý cấu hình là chuyện tệ hơn.
+Ngoài hai nguồn đó thì `get_sample_defaults` vẫn throw.
+
+`bookable_accounts()` là danh sách cho **ô chọn**: `usable_accounts()` lọc theo công ty, rồi bỏ tiếp
+tài khoản chưa khai credentials — 8 tài khoản dựng sẵn không đẩy đơn được, bày ra là bày 8 cái bẫy.
+Lọc sạch hết thì trả lại danh sách đầy đủ, vì ô chọn rỗng còn tệ hơn.
 
 ### Điểm gửi (`pickup_point`)
 
