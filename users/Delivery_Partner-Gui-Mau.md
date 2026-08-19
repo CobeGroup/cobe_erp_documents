@@ -72,6 +72,11 @@ từ nguồn còn sửa được khi vận đơn ở trạng thái nháp:
 
 ## 3. Đặt đơn — hộp thoại có gì
 
+> **Không có ô chọn tài khoản ĐVVC** ở đây — luồng gửi mẫu dùng cố định tài khoản khai trong
+> `DP Cobe Settings`. Muốn đổi thì sửa cấu hình, không sửa từng đơn. (Đơn bán hàng thì tự chọn trên
+> form vận đơn, chuyển kho thì chọn trong hộp thoại —
+> xem [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html).)
+
 | Ô | Ý nghĩa |
 |---|---|
 | **Điểm gửi (nơi ĐVVC tới lấy)** | **Ô quan trọng nhất.** Xem mục 4 |

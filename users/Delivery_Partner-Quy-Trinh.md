@@ -86,9 +86,25 @@ Bốn cách. Ba cách đầu đều bấm **Tạo → Vận đơn ĐVVC** ngay t
 - **Thủ công**: vào **Vận đơn → New**, tự chọn ĐVVC, người nhận, hàng hoá. (Chi tiết thao tác form
   có ảnh: [Viettel Post — Cài đặt & sử dụng, Phần B](Delivery_Partner-Viettel_Post-Cai-Dat.html#phần-b--tạo-đơn-hàng-ngày).)
 
-> Cả bốn cách đều phải chọn **tài khoản ĐVVC** và **điểm gửi** cho đúng, nếu không đơn dựng xong vẫn
-> không đẩy đi được. Đây là chỗ sai nhiều nhất —
-> xem [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html).
+### Tài khoản ĐVVC chọn ở đâu
+
+Mỗi công ty có **tài khoản ĐVVC riêng**, gắn với kho ảo riêng. Chọn sai tài khoản thì vận đơn vẫn
+dựng ra bình thường nhưng tắc ở bước sau — nên biết chỗ chọn là ở đâu:
+
+| Đặt đơn từ | Chọn tài khoản ở đâu | Hệ thống có lọc theo công ty không |
+|---|---|---|
+| Phiếu chuyển kho | trong **hộp thoại** đặt đơn | ✅ có — chỉ hiện tài khoản đi được |
+| Đơn bán hàng | **trên form vận đơn** (*Partner* → *Partner Account*) | ⚠️ **không** — tự nhìn cho khớp |
+| Phiếu yêu cầu xét nghiệm | không chọn — lấy từ cấu hình `DP Cobe Settings` | — |
+| Tạo thủ công | trên form vận đơn | ⚠️ không |
+
+Mẹo nhanh cho hai dòng ⚠️: **hậu tố tên tài khoản phải khớp công ty của chứng từ** — `- TGDG`,
+`- AKW`, `- DR`.
+
+Đổi tài khoản trên form thì **Dịch vụ giao** và **Điểm gửi** bị xoá trắng — cố ý, vì cả hai đăng ký
+riêng theo từng tài khoản.
+
+Chi tiết đầy đủ: [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html).
 
 ### Ô "Mục đích" quyết định chuyện gì xảy ra sau đó
 
@@ -240,6 +256,8 @@ Tài khoản ĐVVC = `DP Partner Account` · Điểm gửi = `DP Pickup Point` �
 | Đơn "Delivered" nhưng **không thấy Phiếu giao / Hoá đơn / Phiếu thu COD** | Vận đơn không gắn Sales Order, chưa deploy bản vá webhook, hoặc COD account sai loại — báo bộ phận kỹ thuật (xem [Tài liệu kỹ thuật](../tech/Delivery_Partner-Lifecycle.html#status-reactor-fix)). |
 | Không thấy nút "Đẩy đơn" / "Đã tạo đơn ở ngoài" | Vận đơn phải **đã Submit** và **chưa** có External Shipment ID (nút ẩn để chống tạo trùng). |
 | Không thấy nút **Tạo → Vận đơn ĐVVC** trên Phiếu chuyển kho | Phiếu phải **đã Submit**, có khai **Kho nguồn ở đầu phiếu**, và chưa tự xuất kho tay. Phiếu do vận đơn bán hàng sinh ra thì không có nút này. |
+| Vận đơn Submit rồi mà **không sinh Đề nghị xuất kho**, hoặc báo lỗi về kho khi sinh chứng từ | Nhiều khả năng chọn **tài khoản ĐVVC của công ty khác** — kho ảo của tài khoản thuộc công ty A không nhận hàng của công ty B. Kiểm hậu tố tên tài khoản (`- TGDG` / `- AKW` / `- DR`) cho khớp công ty của đơn. Xem [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html). |
+| Đổi tài khoản xong thì **mất Dịch vụ giao / Điểm gửi** đang chọn | Đúng như thiết kế — hai thứ đó đăng ký riêng theo từng tài khoản. Chọn lại từ danh sách của tài khoản mới. |
 | ĐVVC tới lấy hàng **nhầm kho** | Kho nguồn chưa khai **Điểm gửi ĐVVC** → ĐVVC dùng điểm mặc định của tài khoản. Xem [Chuyển kho qua ĐVVC, mục 7](Delivery_Partner-Chuyen-Kho.html). |
 | Đơn bị **ĐVVC huỷ** mà hàng **đã lấy đi** — có nên Cancel? | ❌ **CHƯA** — chờ kho nhận lại hàng thật rồi mới Cancel, không thì sổ kho lệch. Xem [quy tắc Cancel](Delivery_Partner_Extension.html#cancel-khi-hang-da-di). |
 | Bấm "Đẩy đơn" báo thiếu mã vùng / thông tin người nhận | Mở Address người nhận → chọn đúng Tỉnh/Huyện → Lưu (hệ thống tự dò mã vùng). Giao cho Company: điền **Phone trên Address**. Chi tiết: [Viettel Post — Cài đặt, Phần B Bước 2](Delivery_Partner-Viettel_Post-Cai-Dat.html). |

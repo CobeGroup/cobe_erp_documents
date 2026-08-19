@@ -66,12 +66,29 @@ Mở SO → bấm **Tạo → Vận đơn ĐVVC**.
 - **Hệ thống tự điền:** người nhận (theo khách của SO), địa chỉ + liên hệ giao, hàng hoá (đã rã Product
   Bundle, trừ phần đã ship), giá trị hàng, ngày lấy hôm nay.
 - **Bạn cần làm:**
-  - Chọn **Partner** (ĐVVC) + **Partner Account**
+  - Chọn **Partner** (ĐVVC) rồi **Partner Account** — xem khung cảnh báo ngay dưới
   - Kiểm **Pickup Address** đúng kho xuất
   - Nhập **COD Amount** (0 nếu không thu hộ)
   - Chỉnh items nếu chỉ giao 1 phần
   - Tab **Parcels** → **Auto-calculate Parcel** hoặc thêm tay
   - Điền **Pickup Date** + khung giờ lấy
+
+### Chọn tài khoản ĐVVC — đọc kỹ chỗ này
+
+Khác với Phiếu chuyển kho (hộp thoại chọn sẵn cho bạn), vận đơn từ đơn bán hàng **dựng ra với ô tài
+khoản để trống** — bạn tự chọn trên form. Hai ô, đúng thứ tự: **Partner** (hãng) trước, rồi
+**Partner Account** — ô sau lọc theo hãng đã chọn.
+
+Đổi tài khoản thì **Dịch vụ giao** và **Điểm gửi** bị xoá trắng. Cố ý: cả hai đều đăng ký riêng theo
+từng tài khoản, giữ lại là gửi mã mà tài khoản mới không có.
+
+> ⚠️ **Ô này KHÔNG lọc theo công ty — dễ chọn nhầm.** Nó chỉ lọc theo hãng, nên trên đơn của
+> THẾ GIỚI ĐIỆN GIẢI bạn vẫn chọn được `Viettel Post - AKW`. Vận đơn dựng ra bình thường, Submit
+> cũng qua, nhưng tới lúc sinh chứng từ kho thì **hệ thống chặn** — hàng của công ty này không đẩy
+> vào kho ảo của công ty khác được.
+>
+> **Nhìn hậu tố tên tài khoản cho khớp công ty của đơn:** `- TGDG` · `- AKW` · `- DR`.
+> Chi tiết: [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html).
 
 > **Hai ô mới trên vận đơn** — tạo từ SO thì hệ thống điền sẵn, không phải đụng tới:
 >

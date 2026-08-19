@@ -8,7 +8,7 @@ nav_order: 2.5
 # Tài khoản ĐVVC & Điểm gửi — chọn đúng thì đơn mới đi được
 
 > Đối tượng: **quản lý kho**, **kế toán**, người dựng cấu hình. Người đặt đơn hằng ngày chỉ cần đọc
-> mục [4](#4-hộp-thoại-đặt-đơn--khi-nào-được-đổi-tay) và [6](#6-cảnh-báo-trong-hộp-thoại-nghĩa-là-gì).
+> mục [4](#4-chọn-tài-khoản-ở-đâu--khác-nhau-theo-từng-luồng) và [6](#6-cảnh-báo-trong-hộp-thoại-nghĩa-là-gì).
 
 Hai khái niệm này hay bị lẫn, mà lẫn là đơn chết giữa chừng. Tách cho rõ ngay từ đầu:
 
@@ -78,7 +78,38 @@ trong lúc thử.
 
 ---
 
-## 4. Hộp thoại đặt đơn — khi nào được đổi tay
+## 4. Chọn tài khoản ở đâu — khác nhau theo từng luồng
+
+Đây là chỗ hay bị hỏi nhất: *"sao chỗ này cho tôi chọn tài khoản, chỗ kia không thấy đâu?"*
+Bốn luồng đặt đơn cố ý làm khác nhau:
+
+| Đặt đơn từ | Chọn tài khoản ở đâu | Có lọc theo công ty không |
+|---|---|---|
+| **Phiếu chuyển kho** | ngay trong **hộp thoại**, ô *Tài khoản ĐVVC* | ✅ có — ô chỉ hiện tài khoản đi được cho công ty của phiếu |
+| **Đơn bán hàng** | **trên form vận đơn** sau khi nó được dựng — ô *Partner* + *Partner Account*, cả hai bắt buộc | ⚠️ **không** — xem cảnh báo dưới |
+| **Phiếu yêu cầu xét nghiệm** | **không chọn** — lấy từ `DP Cobe Settings` | tài khoản đã cố định sẵn trong cấu hình |
+| **Tạo tay trên Desk** | trên form vận đơn | ⚠️ không |
+
+### Trên form vận đơn: hai ô, đúng thứ tự
+
+Chọn **Partner** (hãng vận chuyển) trước, rồi mới tới **Partner Account** — ô tài khoản lọc theo hãng
+đã chọn. Đổi Partner là ô tài khoản bị xoá trắng để chọn lại.
+
+**Đổi tài khoản thì hai ô này bị xoá theo**, cố ý chứ không phải lỗi:
+
+| Ô bị xoá | Vì sao |
+|---|---|
+| **Dịch vụ giao** (`carrier_service`) | mã dịch vụ khai theo **hợp đồng của từng tài khoản** — giữ lại là gửi mã mà tài khoản mới không có |
+| **Điểm gửi** (`pickup_point`) | điểm gửi đăng ký theo tài khoản — giữ lại là gửi mã kho của tài khoản khác, hãng không nhận |
+
+> ⚠️ **Form vận đơn KHÔNG lọc theo công ty.** Ô *Partner Account* chỉ lọc theo hãng, nên trên đơn bán
+> hàng của THẾ GIỚI ĐIỆN GIẢI bạn vẫn chọn được `Viettel Post - AKW`. Vận đơn dựng ra bình thường,
+> nhưng tới lúc sinh chứng từ kho thì hệ thống chặn vì hàng của công ty này không đẩy vào kho ảo của
+> công ty khác được. **Nhìn hậu tố tên tài khoản cho khớp công ty của đơn**: `- TGDG`, `- AKW`, `- DR`.
+>
+> Hộp thoại chuyển kho thì đã lọc sẵn nên không dính chuyện này.
+
+### Trong hộp thoại chuyển kho: đổi tài khoản là điểm gửi tính lại
 
 Đổi được, và có ca đổi là đúng: công ty có nhiều tài khoản cùng hãng, hoặc muốn đẩy đơn qua tài khoản
 khác cho tách cước.
