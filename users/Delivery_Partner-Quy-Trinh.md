@@ -74,14 +74,21 @@ theo hành trình mà ĐVVC báo về.
 
 ## 2. Tạo vận đơn
 
-Ba cách:
+Bốn cách. Ba cách đầu đều bấm **Tạo → Vận đơn ĐVVC** ngay trên chứng từ gốc:
 
-- **Từ Sales Order** (bán hàng cho khách): mở SO → **Tạo → Vận đơn ĐVVC** → hệ thống tự điền hàng hoá,
-  khách hàng, giá trị. Vận đơn giữ liên kết về SO để sau này khớp số lượng giao + hoá đơn.
-- **Từ Phiếu chuyển kho** (chuyển hàng giữa hai kho cùng công ty): mở phiếu đã Submit có khai Kho nguồn
-  → **Tạo → Vận đơn ĐVVC**. Xem [Chuyển kho qua ĐVVC](Delivery_Partner-Chuyen-Kho.html).
+- **Từ Đơn bán hàng** (bán hàng cho khách): hệ thống tự điền hàng hoá, khách hàng, giá trị. Vận đơn
+  giữ liên kết về đơn để sau này khớp số lượng giao + hoá đơn.
+  Xem [Vận đơn từ Sales Order](Delivery_Partner_Extension.html).
+- **Từ Phiếu chuyển kho** (chuyển hàng giữa hai kho cùng công ty): phiếu phải đã Submit và có khai
+  Kho nguồn. Xem [Chuyển kho qua ĐVVC](Delivery_Partner-Chuyen-Kho.html).
+- **Từ Phiếu yêu cầu xét nghiệm** (lấy mẫu nước ở chỗ khách về lab): phiếu phải khai Hình thức lấy
+  mẫu là *Đơn vị vận chuyển*. Xem [Gửi mẫu nước về lab](Delivery_Partner-Gui-Mau.html).
 - **Thủ công**: vào **Vận đơn → New**, tự chọn ĐVVC, người nhận, hàng hoá. (Chi tiết thao tác form
   có ảnh: [Viettel Post — Cài đặt & sử dụng, Phần B](Delivery_Partner-Viettel_Post-Cai-Dat.html#phần-b--tạo-đơn-hàng-ngày).)
+
+> Cả bốn cách đều phải chọn **tài khoản ĐVVC** và **điểm gửi** cho đúng, nếu không đơn dựng xong vẫn
+> không đẩy đi được. Đây là chỗ sai nhiều nhất —
+> xem [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html).
 
 ### Ô "Mục đích" quyết định chuyện gì xảy ra sau đó
 
@@ -91,11 +98,13 @@ Ba cách:
 |---|---|---|
 | **Bán hàng** | kho → kho ảo ĐVVC → khách | Đề nghị xuất kho (`Material Request`), Phiếu xuất (`Stock Entry`), Phiếu giao (`Delivery Note`), Hoá đơn (`Sales Invoice`) + Thu COD (`Payment Entry`) |
 | **Chuyển kho** | kho nguồn → kho ảo ĐVVC → kho đích | Phiếu xuất rồi Phiếu nhập (cùng là `Stock Entry`), kho đích ký |
+| **Gửi mẫu về lab** | chỗ khách → lab | **không sinh gì** — mẫu nước không phải hàng tồn kho |
 | **để trống** | ĐVVC chở, hệ thống không theo dõi tồn | không sinh gì |
 
 **Không ai nhập ô này** — nó chỉ đọc, hệ thống tự điền theo bảng **Chứng từ nguồn** ngay dưới:
 có dòng trỏ về Đơn bán hàng (`Sales Order`) thì là *Bán hàng*, trỏ về Phiếu chuyển kho
-(`Material Request`) thì là *Chuyển kho*.
+(`Material Request`) thì là *Chuyển kho*, trỏ về Phiếu yêu cầu xét nghiệm (`Water Analysis Request`)
+thì là *Gửi mẫu về lab*.
 
 Do đó, vận đơn **tạo thủ công** trên Desk mà không gắn chứng từ nguồn sẽ để trống Mục đích và
 **không kèm chứng từ ERP nào** — đó chỉ là một lần đặt xe: gửi hợp đồng cho khách, gửi trả một
@@ -244,5 +253,7 @@ Tài khoản ĐVVC = `DP Partner Account` · Điểm gửi = `DP Pickup Point` �
 - [Viettel Post — Cài đặt & sử dụng](Delivery_Partner-Viettel_Post-Cai-Dat.html) — kết nối ĐVVC, đẩy đơn, mã vùng (có ảnh)
 - [Vận đơn từ Sales Order (kho & kế toán)](Delivery_Partner_Extension.html) — luồng SO → kho → hoá đơn → COD
 - [Chuyển kho qua ĐVVC](Delivery_Partner-Chuyen-Kho.html) — chuyển hàng giữa hai kho cùng công ty
+- [Gửi mẫu nước về lab](Delivery_Partner-Gui-Mau.html) — lấy mẫu ở chỗ khách, không sinh chứng từ kho
+- [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html) — chọn tài khoản, khai điểm gửi, đọc cảnh báo
 - [Delivery Partner — Tài liệu kỹ thuật (app gốc)](../tech/Delivery_Partner-Tech.html) — kiến trúc, doctype, webhook, test
 - [Lifecycle & Doc Events](../tech/Delivery_Partner-Lifecycle.html) — tích hợp ERP

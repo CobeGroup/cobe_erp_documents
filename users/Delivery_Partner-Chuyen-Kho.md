@@ -207,20 +207,30 @@ vận đơn và tồn tại độc lập. Chế độ vận chuyển chỉ đư�
 
 ## 7. Điều kiện cần khai trước khi sử dụng
 
-| Việc cần khai | Khai ở đâu | Hậu quả nếu không khai | Hiện trạng |
+| Việc cần khai | Khai ở đâu | Hậu quả nếu không khai | Hiện trạng *(19/08/2026)* |
 |---|---|---|---|
-| **Địa chỉ** (`Address`) cho từng kho đích, có số điện thoại | `Warehouse` → thêm Address | **Không tạo được vận đơn** | ⛔ **28/29 kho đích chưa có** — xem dưới |
-| **Điểm gửi ĐVVC** (`DP Pickup Point`) cho từng kho nguồn | Form `Warehouse`, ô *Điểm gửi ĐVVC* | ĐVVC tới lấy hàng ở TP.HCM chứ không tới kho tỉnh | 10/20 kho nguồn đã có, phủ 720/824 lượt |
-| **Đồng bộ điểm gửi** cho từng tài khoản ĐVVC | `DP Partner Account` → *Đồng bộ điểm gửi* | Danh sách điểm gửi trống | tài khoản AKW chưa đồng bộ |
+| **Địa chỉ** (`Address`) cho từng kho đích, có số điện thoại | `Warehouse` → thêm Address | **Không tạo được vận đơn** | 30/225 kho đã có — 8 kho đích nặng nhất xong, còn **Thanh Hoá** |
+| **Điểm gửi ĐVVC** (`DP Pickup Point`) cho từng kho nguồn | Form `Warehouse`, ô *Điểm gửi ĐVVC* | ĐVVC tới trụ sở chính lấy hàng chứ không tới kho tỉnh | ⛔ mới 10 kho, **toàn bộ của TGĐG** — kho nguồn AKANWA và DOCTOR NƯỚC chưa kho nào |
+| **Đồng bộ điểm gửi** cho từng tài khoản ĐVVC | `DP Partner Account` → *Đồng bộ điểm gửi* | Danh sách điểm gửi trống | ✅ xong cả 3 tài khoản — TGDG 36, AKW 50, DR 50 |
+| **Tài khoản ĐVVC** cho từng công ty | `DP Partner Account` | Công ty đó không đặt được ĐVVC | ✅ cả 3 công ty đều có |
 
-> ⛔ **Chốt chặn lớn nhất trước khi dùng thật: cả hệ thống mới có ĐÚNG MỘT kho khai địa chỉ**
-> (KHO HỒ CHÍ MINH - TGĐG). Đối chiếu 824 lượt chuyển kho một năm qua: **764 lượt (93%) sẽ bị
-> chặn ngay** vì kho đích chưa có địa chỉ. Nặng nhất theo lượt: HÀ NỘI KHO (164), Thanh Hoá (93),
-> Đà Nẵng (66), Hạ Long (54), Biên Hoà (49), Vũng Tàu (46), Quy Nhơn (42), Cần Thơ (42).
-> Khai xong 8 kho này là phủ hơn nửa lượng chuyển kho.
+Chi tiết cách chọn tài khoản, khai điểm gửi và đọc các cảnh báo:
+[Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html).
+
+> ⛔ **Còn treo: Thanh Hoá.** Viettel Post chưa có điểm gửi ở địa bàn này, mà đây lại là tuyến nặng
+> thứ hai (96 lượt/năm) và vừa là kho nguồn vừa là kho đích. Phải đăng ký điểm trên cổng Viettel Post
+> rồi đồng bộ về, đồng thời khai địa chỉ cho kho — thiếu một trong hai là tuyến này vẫn tắc.
 
 Điểm gửi phải được **đăng ký trước trên cổng ĐVVC** rồi mới đồng bộ về được — tạo thủ công bản
 ghi trong hệ thống là vô nghĩa, vì mã điểm do ĐVVC cấp.
 
 Công ty chưa có tài khoản ĐVVC thì hệ thống báo rõ khi bấm nút, và chuyển kho của công ty đó
 vẫn đi theo hướng tự vận chuyển như trước.
+
+---
+
+## Liên quan
+
+- [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html)
+- [Quy trình vận đơn & giao nhận](Delivery_Partner-Quy-Trinh.html)
+- [Gửi mẫu nước về lab](Delivery_Partner-Gui-Mau.html)

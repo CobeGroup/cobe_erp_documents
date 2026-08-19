@@ -21,7 +21,7 @@ vận đơn + trạng thái). Bản dành cho end-user: [Quy trình vận đơn]
 | `delivery_partner_extension_for_cobegroup` | Hook doc_events DP Shipment → tạo MR / SE / DN / SI / PE; thêm custom field (sales_order, charges, fulfillment_status, picked_qty...). |
 
 **Chiều phụ thuộc là MỘT CHIỀU và khai tường minh** trong `required_apps`: app cầu nối là chỗ *duy nhất*
-được biết cả hai phía (`delivery_partner` + `erpnext`, sau này thêm `poe_management`). App gốc không được
+được biết cả ba phía: `delivery_partner` + `erpnext` + `poe_management` (khai đủ trong `required_apps`). App gốc không được
 biết ERPNext hay nghiệp vụ Cobe, và **không app nào đọc Settings của app khác** — cấu hình thuộc luồng
 vận chuyển để trong settings của chính app cầu nối.
 
@@ -41,6 +41,12 @@ doc_events = {
     },
     "Stock Entry":      {"on_submit": "...stock_entry.on_submit"},
     "Material Request": {"on_update": "...material_request.on_update"},
+}
+
+doctype_js = {                       # nút "Vận đơn ĐVVC" trên từng chứng từ gốc
+    "Sales Order":            "public/js/sales_order.js",
+    "Material Request":       "public/js/material_request.js",
+    "Water Analysis Request": "public/js/water_analysis_request.js",   # §3c
 }
 ```
 
@@ -381,6 +387,83 @@ App gốc có ô `pickup_point` trên vận đơn; `_sender_info` dùng đúng �
 
 ---
 
+## 3c. Nhánh GỬI MẪU — `api/sample.py` + `doc_events/sample.py` {#gui-mau}
+
+Chứng từ nguồn là **Water Analysis Request** (app `poe_management`). Hàng đi **ngược** chiều bán
+hàng: mẫu nước từ phía khách → về lab.
+
+**Không sinh chứng từ kho nào** (`purpose.SAMPLE` → `FLOW_NONE`). Cố ý: mẫu nước không phải tồn kho
+của công ty, ghi nhập kho là bịa tài sản. Nên `doc_events/sample.py` chỉ còn đúng một việc —
+**kiểm lại phiếu nguồn lúc Submit**, vì bảng chứng từ nguồn sửa được khi vận đơn còn nháp (cùng lý
+do với `transfer.on_submit`, xem [§1b](#muc-dich)).
+
+### Phụ thuộc app
+
+`required_apps` của extension thêm `poe_management`. Chiều phụ thuộc vẫn **một chiều**:
+`poe_management ← extension → delivery_partner` + `erpnext`. App nền không biết ERPNext, app POE
+không biết vận đơn.
+
+> Nút **Vận đơn ĐVVC** và khối trạng thái trên form Phiếu yêu cầu xét nghiệm do **extension** vẽ
+> (`doctype_js` → `public/js/water_analysis_request.js`), ghi vào ô `carrier_status` sẵn có. Nút stub
+> *"Chức năng đang được phát triển"* bên `poe_management` đã gỡ — **đừng để hai app cùng mọc nút**
+> trên một form.
+
+### Cấu hình bắc cầu: Single `DP Cobe Settings`
+
+Không app nào đọc Settings của app khác, nên cấu hình thuộc luồng vận chuyển nằm trong singleton của
+chính extension:
+
+| Nhóm | Ô | Ghi chú |
+|---|---|---|
+| Gửi mẫu | `sample_partner_account` | điểm gửi chọn được phải thuộc tài khoản này |
+| | `sample_item` | **Item phi tồn kho** — dòng hàng bắt buộc có `item_code`, mà luồng này không sinh phiếu kho nên Item phi tồn kho chạy được |
+| | `sample_value_of_goods` | bắt buộc > 0 thì mới Submit được vận đơn |
+| | `sample_parcel_weight`, `sample_description` | mồi cho hộp thoại |
+| Nơi nhận | `sample_lab_warehouse` ∥ `sample_lab_company` | khai kho **không** sinh phiếu nhập |
+| | `sample_lab_address`, `sample_lab_contact` | ĐVVC đòi tên + SĐT người nhận |
+
+`_require_settings()` gom **toàn bộ** ô còn thiếu rồi throw một lần, nêu đích danh từng ô — không
+đoán thay người dùng, cũng không bắt họ sửa từng lỗi một.
+
+### Người gửi = điểm gửi, không có đường tắt
+
+VTP đòi `GROUPADDRESS_ID`, **không nhận địa chỉ người gửi tự do** (xem
+`ViettelpostClient._sender_info`). Nên hộp thoại bắt chọn Điểm gửi trong danh sách đã đồng bộ của
+tài khoản, và mồi sẵn điểm **cùng tỉnh với khách**:
+
+```
+_address_province(request.address)  →  _suggest_pickup_point(points, province_id)
+        ↓ dò không ra                          ↓ cùng tỉnh → điểm mặc định → không mồi
+    nuốt lỗi, cảnh báo
+```
+
+`_address_province` **nuốt lỗi có chủ đích**: `resolve_region_for_address` throw khi danh mục vùng
+rỗng, mà chuyện đó không được phép chặn cả hộp thoại — nó chỉ dùng để *gợi ý*.
+
+`_suggest_pickup_point` **không mồi bừa điểm khác tỉnh**: hãng sẽ cử shipper của tỉnh đó đi lấy, đơn
+sai chặng và sai cước, mà nhìn form thì vẫn thấy "đã chọn điểm gửi".
+
+Địa chỉ khách vẫn ghi đủ vào ô `pickup_address_name` — chỗ người điều phối nhìn, không phải cái đi
+vào payload người gửi.
+
+### Chốt chặn
+
+| Chốt | Ở đâu |
+|---|---|
+| Phiếu phải `docstatus = 1` | `validate_sample_source` |
+| `sample_collection_type == "Đơn vị vận chuyển"` | nt |
+| Có `customer` + `address` | nt |
+| Chưa có vận đơn nào `docstatus < 2` trỏ về phiếu | `get_live_sample_shipment(request, exclude=shipment)` |
+| Điểm gửi phải thuộc tài khoản của vận đơn | `create_dp_shipment_from_war` |
+
+`exclude=` để vận đơn không tự tính mình là "vận đơn khác" lúc Submit — cùng bẫy đã gặp ở luồng
+chuyển kho.
+
+> `create_dp_shipment_from_war` **KHÔNG gán tay `custom_purpose`** — để `purpose.apply()` suy từ dòng
+> chứng từ nguồn. Gán tay là mở lại đúng cái bẫy đã đóng ở [§1b](#muc-dich).
+
+---
+
 ## 4. Custom field cầu nối (fixtures của extension)
 
 Trên **DP Shipment**: `custom_sales_order`, `custom_pickup_warehouse`, `custom_fulfillment_status`,
@@ -471,9 +554,12 @@ bench --site <site> clear-cache   # BẮT BUỘC — hook doc_events cache trong
 | `before_cancel` | Cancel DP Shipment | Cancel MR + tạo Return SE nếu cần |
 | `Stock Entry.validate` | Mọi SE `Material Transfer` | Chặn phiếu xuất tay bám vào MR đã đặt ĐVVC — [§3b](#chuyen-kho) |
 | `Stock Entry.on_submit` | SE tay bám MR chuyển kho thật | Ghi `custom_transport_mode = Tự vận chuyển` |
+| `on_submit` | Mục đích *Chuyển kho* | `transfer.on_submit` — kiểm lại phiếu nguồn rồi đóng dấu đi ĐVVC — [§3b](#chuyen-kho) |
+| `on_submit` | Mục đích *Gửi mẫu về lab* | `sample.on_submit` — kiểm lại phiếu xét nghiệm, **không sinh chứng từ** — [§3c](#gui-mau) |
 
-Bảng trên là nhánh **Bán hàng**. Mục đích *Chuyển kho* đi qua `doc_events/transfer.py` — [§3b](#chuyen-kho);
-mục đích *Gửi mẫu* / *Bảo hành* ra sớm ngay đầu `on_change`, không khoá dòng.
+Bảng trên chủ yếu là nhánh **Bán hàng**. Mục đích *Chuyển kho* đi qua `doc_events/transfer.py` —
+[§3b](#chuyen-kho); *Gửi mẫu về lab* qua `doc_events/sample.py` — [§3c](#gui-mau); *Gửi mẫu* và
+*Bảo hành* đều ra sớm ngay đầu `on_change`, không khoá dòng.
 
 > ℹ️ Hook là **`on_change`**, KHÔNG phải `on_update`: base app đổi status bằng `db_set` → Frappe chỉ chạy
 > `on_change`. Xem [§3](#status-reactor-fix).
@@ -520,4 +606,7 @@ mục đích *Gửi mẫu* / *Bảo hành* ra sớm ngay đầu `on_change`, kh�
 
 - [Quy trình vận đơn (end-user)](../users/Delivery_Partner-Quy-Trinh.html)
 - [Vận đơn từ Sales Order — kho & kế toán (end-user)](../users/Delivery_Partner_Extension.html)
+- [Chuyển kho qua ĐVVC (end-user)](../users/Delivery_Partner-Chuyen-Kho.html)
+- [Gửi mẫu nước về lab (end-user)](../users/Delivery_Partner-Gui-Mau.html)
+- [Tài khoản ĐVVC & Điểm gửi (end-user)](../users/Delivery_Partner-Tai-Khoan-Diem-Gui.html)
 - [Delivery Partner — Tài liệu kỹ thuật (app gốc)](Delivery_Partner-Tech.html)
