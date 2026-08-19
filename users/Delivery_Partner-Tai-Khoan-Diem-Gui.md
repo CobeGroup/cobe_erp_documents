@@ -8,7 +8,7 @@ nav_order: 2.5
 # Tài khoản ĐVVC & Điểm gửi — chọn đúng thì đơn mới đi được
 
 > Đối tượng: **quản lý kho**, **kế toán**, người dựng cấu hình. Người đặt đơn hằng ngày chỉ cần đọc
-> mục [4](#4-chọn-tài-khoản-ở-đâu--khác-nhau-theo-từng-luồng) và [6](#6-cảnh-báo-trong-hộp-thoại-nghĩa-là-gì).
+> mục [4](#4-chọn-tài-khoản-ở-đâu--mọi-luồng-như-nhau) và [6](#6-cảnh-báo-trong-hộp-thoại-nghĩa-là-gì).
 
 Hai khái niệm này hay bị lẫn, mà lẫn là đơn chết giữa chừng. Tách cho rõ ngay từ đầu:
 
@@ -53,12 +53,12 @@ dung.
 Chuyển kho của công ty A **không** đẩy hàng vào kho ảo của công ty B được — hệ thống kế toán kho
 chặn thẳng, và lỗi nó ném ra (`InvalidWarehouseCompany`) thì đọc không hiểu gì.
 
-Nên hộp thoại đặt đơn **chỉ hiện những tài khoản có kho ảo thuộc đúng công ty của phiếu**. Với phiếu
-của AKANWA hay DOCTOR NƯỚC thì danh sách chỉ có một dòng; với TGĐG thì có 9 dòng (1 dùng được + 8
-tài khoản rỗng), nên đọc kỹ mục 1.
+Nên mọi ô chọn tài khoản **chỉ hiện những tài khoản có kho ảo thuộc đúng công ty của chứng từ**. Với
+phiếu của AKANWA hay DOCTOR NƯỚC thì danh sách chỉ có một dòng; với TGĐG thì có 9 dòng (1 dùng được
++ 8 tài khoản rỗng), nên đọc kỹ mục 1.
 
-Kể cả gọi thẳng qua API bỏ qua hộp thoại, hệ thống vẫn chặn lại và **nói đúng nguyên nhân** thay vì
-để lỗi nổ muộn lúc Submit.
+Kể cả gọi thẳng qua API bỏ qua hộp thoại, hệ thống vẫn chặn lại **lúc lưu vận đơn** và nói đúng
+nguyên nhân, thay vì để lỗi nổ muộn lúc sinh chứng từ kho.
 
 ---
 
@@ -78,47 +78,55 @@ trong lúc thử.
 
 ---
 
-## 4. Chọn tài khoản ở đâu — khác nhau theo từng luồng
+## 4. Chọn tài khoản ở đâu — mọi luồng như nhau
 
-Đây là chỗ hay bị hỏi nhất: *"sao chỗ này cho tôi chọn tài khoản, chỗ kia không thấy đâu?"*
-Bốn luồng đặt đơn cố ý làm khác nhau:
+Cả bốn luồng đều **hỏi tài khoản ngay lúc đặt đơn**, và danh sách **luôn lọc theo công ty của chứng
+từ gốc**:
 
-| Đặt đơn từ | Chọn tài khoản ở đâu | Có lọc theo công ty không |
+| Đặt đơn từ | Hỏi ở đâu | Điền sẵn cái gì |
 |---|---|---|
-| **Phiếu chuyển kho** | ngay trong **hộp thoại**, ô *Tài khoản ĐVVC* | ✅ có — ô chỉ hiện tài khoản đi được cho công ty của phiếu |
-| **Đơn bán hàng** | **trên form vận đơn** sau khi nó được dựng — ô *Partner* + *Partner Account*, cả hai bắt buộc | ⚠️ **không** — xem cảnh báo dưới |
-| **Phiếu yêu cầu xét nghiệm** | **không chọn** — lấy từ `DP Cobe Settings` | tài khoản đã cố định sẵn trong cấu hình |
-| **Tạo tay trên Desk** | trên form vận đơn | ⚠️ không |
+| **Đơn bán hàng** | hộp thoại *Tạo vận đơn ĐVVC* | tài khoản hạng nhất của công ty trên đơn |
+| **Phiếu chuyển kho** | hộp thoại *Tạo vận đơn ĐVVC* | tài khoản hạng nhất, ưu tiên chủ của điểm gửi khai trên kho nguồn |
+| **Phiếu yêu cầu xét nghiệm** | hộp thoại *Đặt ĐVVC lấy mẫu* | tài khoản khai trong `DP Cobe Settings` |
+| **Tạo tay trên Desk** | trên form vận đơn | không điền sẵn |
+
+Đổi được ở mọi chỗ — không có luồng nào khoá cứng.
+
+### Vì sao danh sách bị lọc
+
+Kho ảo của tài khoản là kho **thật**, thuộc một công ty. Hàng của công ty A không đẩy vào kho ảo của
+công ty B được. Trước đây ô này chỉ lọc theo **hãng**, nên trên đơn của THẾ GIỚI ĐIỆN GIẢI vẫn chọn
+được `Viettel Post - AKW`: vận đơn lưu được, Submit cũng qua, và chỉ vỡ lúc sinh chứng từ kho bằng
+một lỗi đọc không hiểu — sau khi người dùng đã nhập xong tất cả.
+
+Giờ danh sách chỉ hiện tài khoản đi được, **và hệ thống kiểm lại lần nữa lúc lưu**. Lọc ở giao diện
+chỉ là hàng rào đầu tiên; chốt thật nằm ở máy chủ, nên đổi ô sau khi hộp thoại đóng hay sửa tay đều
+không lách được.
+
+> Mẹo nhìn nhanh: **hậu tố tên tài khoản phải khớp công ty của chứng từ** — `- TGDG` · `- AKW` · `- DR`.
+
+**Gửi mẫu là ngoại lệ có chủ ý:** luồng này không sinh chứng từ kho nào nên chẳng có gì để ERPNext
+từ chối — chặn ở đó là bịa ra một ràng buộc không có thật. Tài khoản khai trong cấu hình luôn được
+giữ trong danh sách kể cả khi nó thuộc công ty khác, vì mẫu nước thì công ty nào trả cước cũng được.
+
+### Đổi tài khoản thì cái gì đổi theo
+
+| Đổi theo | Vì sao |
+|---|---|
+| **Điểm gửi** | đăng ký theo từng tài khoản — giữ lại là gửi mã kho của tài khoản khác, hãng không nhận. Hộp thoại tính lại điểm mồi sẵn; trên form thì ô bị xoá để chọn lại |
+| **Dịch vụ giao** | mã dịch vụ khai theo **hợp đồng của từng tài khoản** — giữ lại là gửi mã tài khoản mới không có |
+
+Trông như mất dữ liệu nhưng không phải: hai ô đó buộc phải thuộc cùng một tài khoản với vận đơn.
+
+Chuyện tính lại điểm gửi này từng là bẫy thật: bản đầu tiên tính một lần theo tài khoản mặc định rồi
+giữ nguyên, nên đổi tài khoản xong là vận đơn ôm điểm gửi của tài khoản cũ — dựng xong xuôi rồi mới
+chết ở bước **Đẩy đơn** với câu *"Điểm gửi X thuộc tài khoản A, không phải B"*.
 
 ### Trên form vận đơn: hai ô, đúng thứ tự
 
-Chọn **Partner** (hãng vận chuyển) trước, rồi mới tới **Partner Account** — ô tài khoản lọc theo hãng
-đã chọn. Đổi Partner là ô tài khoản bị xoá trắng để chọn lại.
-
-**Đổi tài khoản thì hai ô này bị xoá theo**, cố ý chứ không phải lỗi:
-
-| Ô bị xoá | Vì sao |
-|---|---|
-| **Dịch vụ giao** (`carrier_service`) | mã dịch vụ khai theo **hợp đồng của từng tài khoản** — giữ lại là gửi mã mà tài khoản mới không có |
-| **Điểm gửi** (`pickup_point`) | điểm gửi đăng ký theo tài khoản — giữ lại là gửi mã kho của tài khoản khác, hãng không nhận |
-
-> ⚠️ **Form vận đơn KHÔNG lọc theo công ty.** Ô *Partner Account* chỉ lọc theo hãng, nên trên đơn bán
-> hàng của THẾ GIỚI ĐIỆN GIẢI bạn vẫn chọn được `Viettel Post - AKW`. Vận đơn dựng ra bình thường,
-> nhưng tới lúc sinh chứng từ kho thì hệ thống chặn vì hàng của công ty này không đẩy vào kho ảo của
-> công ty khác được. **Nhìn hậu tố tên tài khoản cho khớp công ty của đơn**: `- TGDG`, `- AKW`, `- DR`.
->
-> Hộp thoại chuyển kho thì đã lọc sẵn nên không dính chuyện này.
-
-### Trong hộp thoại chuyển kho: đổi tài khoản là điểm gửi tính lại
-
-Đổi được, và có ca đổi là đúng: công ty có nhiều tài khoản cùng hãng, hoặc muốn đẩy đơn qua tài khoản
-khác cho tách cước.
-
-**Đổi tài khoản thì điểm gửi được tính lại.** Đây là chỗ từng có bẫy: bản đầu tiên tính điểm gửi một
-lần theo tài khoản mặc định rồi giữ nguyên, nên đổi tài khoản xong là vận đơn ôm điểm gửi của tài
-khoản cũ — dựng vận đơn xong xuôi rồi mới chết ở bước **Đẩy đơn** với câu *"Điểm gửi X thuộc tài
-khoản A, không phải B"*. Giờ đổi tài khoản là hệ thống hỏi lại điểm gửi + cảnh báo mới, khối thông
-tin tuyến ở đầu hộp thoại cập nhật theo.
+Với vận đơn tạo tay, chọn **Partner** (hãng) trước rồi mới tới **Partner Account** — ô sau lọc theo
+hãng đã chọn. Vận đơn không gắn chứng từ gốc thì không suy được công ty nên **không lọc thêm**: thà
+để rộng còn hơn khoá sạch ô.
 
 ---
 

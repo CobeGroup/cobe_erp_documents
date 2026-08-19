@@ -88,21 +88,22 @@ Bốn cách. Ba cách đầu đều bấm **Tạo → Vận đơn ĐVVC** ngay t
 
 ### Tài khoản ĐVVC chọn ở đâu
 
-Mỗi công ty có **tài khoản ĐVVC riêng**, gắn với kho ảo riêng. Chọn sai tài khoản thì vận đơn vẫn
-dựng ra bình thường nhưng tắc ở bước sau — nên biết chỗ chọn là ở đâu:
+Mỗi công ty có **tài khoản ĐVVC riêng**, gắn với kho ảo riêng. Cả bốn cách đặt đơn đều hỏi tài khoản
+ngay lúc tạo, và danh sách **luôn lọc theo công ty của chứng từ gốc**:
 
-| Đặt đơn từ | Chọn tài khoản ở đâu | Hệ thống có lọc theo công ty không |
+| Đặt đơn từ | Hỏi ở đâu | Điền sẵn |
 |---|---|---|
-| Phiếu chuyển kho | trong **hộp thoại** đặt đơn | ✅ có — chỉ hiện tài khoản đi được |
-| Đơn bán hàng | **trên form vận đơn** (*Partner* → *Partner Account*) | ⚠️ **không** — tự nhìn cho khớp |
-| Phiếu yêu cầu xét nghiệm | không chọn — lấy từ cấu hình `DP Cobe Settings` | — |
-| Tạo thủ công | trên form vận đơn | ⚠️ không |
+| Đơn bán hàng | hộp thoại tạo vận đơn | tài khoản của công ty trên đơn |
+| Phiếu chuyển kho | hộp thoại tạo vận đơn | tài khoản hợp với điểm gửi của kho nguồn |
+| Phiếu yêu cầu xét nghiệm | hộp thoại đặt ĐVVC lấy mẫu | tài khoản khai trong cấu hình |
+| Tạo thủ công | trên form vận đơn | — |
 
-Mẹo nhanh cho hai dòng ⚠️: **hậu tố tên tài khoản phải khớp công ty của chứng từ** — `- TGDG`,
-`- AKW`, `- DR`.
+Chọn nhầm tài khoản của công ty khác thì **hệ thống chặn lúc lưu vận đơn** kèm lý do, chứ không để
+tắc âm thầm tới lúc sinh chứng từ kho như trước. Mẹo nhìn nhanh: **hậu tố tên tài khoản khớp công ty
+của chứng từ** — `- TGDG`, `- AKW`, `- DR`.
 
-Đổi tài khoản trên form thì **Dịch vụ giao** và **Điểm gửi** bị xoá trắng — cố ý, vì cả hai đăng ký
-riêng theo từng tài khoản.
+Đổi tài khoản thì **Điểm gửi** và **Dịch vụ giao** phải chọn lại — cả hai đăng ký riêng theo từng
+tài khoản, giữ lại là gửi mã mà tài khoản mới không có.
 
 Chi tiết đầy đủ: [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html).
 
@@ -256,7 +257,7 @@ Tài khoản ĐVVC = `DP Partner Account` · Điểm gửi = `DP Pickup Point` �
 | Đơn "Delivered" nhưng **không thấy Phiếu giao / Hoá đơn / Phiếu thu COD** | Vận đơn không gắn Sales Order, chưa deploy bản vá webhook, hoặc COD account sai loại — báo bộ phận kỹ thuật (xem [Tài liệu kỹ thuật](../tech/Delivery_Partner-Lifecycle.html#status-reactor-fix)). |
 | Không thấy nút "Đẩy đơn" / "Đã tạo đơn ở ngoài" | Vận đơn phải **đã Submit** và **chưa** có External Shipment ID (nút ẩn để chống tạo trùng). |
 | Không thấy nút **Tạo → Vận đơn ĐVVC** trên Phiếu chuyển kho | Phiếu phải **đã Submit**, có khai **Kho nguồn ở đầu phiếu**, và chưa tự xuất kho tay. Phiếu do vận đơn bán hàng sinh ra thì không có nút này. |
-| Vận đơn Submit rồi mà **không sinh Đề nghị xuất kho**, hoặc báo lỗi về kho khi sinh chứng từ | Nhiều khả năng chọn **tài khoản ĐVVC của công ty khác** — kho ảo của tài khoản thuộc công ty A không nhận hàng của công ty B. Kiểm hậu tố tên tài khoản (`- TGDG` / `- AKW` / `- DR`) cho khớp công ty của đơn. Xem [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html). |
+| Lưu vận đơn báo *"Tài khoản ĐVVC … có kho ảo … thuộc công ty …"* | Đang chọn tài khoản của công ty khác. Kiểm hậu tố tên tài khoản (`- TGDG` / `- AKW` / `- DR`) cho khớp công ty của chứng từ. Xem [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html). |
 | Đổi tài khoản xong thì **mất Dịch vụ giao / Điểm gửi** đang chọn | Đúng như thiết kế — hai thứ đó đăng ký riêng theo từng tài khoản. Chọn lại từ danh sách của tài khoản mới. |
 | ĐVVC tới lấy hàng **nhầm kho** | Kho nguồn chưa khai **Điểm gửi ĐVVC** → ĐVVC dùng điểm mặc định của tài khoản. Xem [Chuyển kho qua ĐVVC, mục 7](Delivery_Partner-Chuyen-Kho.html). |
 | Đơn bị **ĐVVC huỷ** mà hàng **đã lấy đi** — có nên Cancel? | ❌ **CHƯA** — chờ kho nhận lại hàng thật rồi mới Cancel, không thì sổ kho lệch. Xem [quy tắc Cancel](Delivery_Partner_Extension.html#cancel-khi-hang-da-di). |

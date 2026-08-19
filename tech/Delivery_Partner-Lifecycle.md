@@ -353,19 +353,39 @@ Mỗi bước chạy trong `_guarded`: `frappe.db.savepoint` → lỗi thì roll
 status vẫn nhảy mà chứng từ không có. Prod không đọc được log server nên phải để dấu ngay trên vận đơn,
 dọn bằng nút *Đồng bộ trạng thái từ ĐVVC*.
 
-### Chọn tài khoản ĐVVC
+### Chọn tài khoản ĐVVC — `api/accounts.py` {#chon-tai-khoan}
 
-`_usable_accounts(company, preferred_point)` lọc rồi **xếp hạng**: tài khoản sở hữu **điểm gửi khai
+**Một quy tắc cho mọi luồng.** Trước đây mỗi luồng tự lo và cư xử một kiểu; giờ cả bốn (bán hàng,
+chuyển kho, gửi mẫu, tạo tay) đều gọi cùng một module.
+
+`usable_accounts(company, preferred_point)` lọc rồi **xếp hạng**: tài khoản sở hữu **điểm gửi khai
 trên kho nguồn** → có credentials → có điểm gửi đã đồng bộ → `is_default` → tên. Bắt buộc vì hệ thống
-có **8 tài khoản dựng sẵn không credentials** (GHN, GHTK, J&T…) đều bật `is_default`; lấy theo tên là
-hàng chui vào kho ảo của hãng không dùng. Điều kiện cứng: kho ảo phải thuộc **đúng công ty** của MR,
-nếu không ERPNext chặn `InvalidWarehouseCompany`.
+có **8 tài khoản dựng sẵn** chưa khai credentials, **tất cả đều `is_default = 1` và đều thuộc cùng
+một công ty** — chỉ xét `is_default` là bốc bừa theo thứ tự bảng chữ cái.
 
-Hàm trả **cả danh sách** chứ không chỉ quán quân: `get_transfer_defaults` đưa `allowed_accounts` cho
-hộp thoại lọc ô Link, còn `_check_account_for_company` chặn lại ở server (UI chỉ là hàng rào đầu tiên —
-API gọi thẳng vẫn truyền được tên bất kỳ). Chặn sớm để lỗi nói đúng nguyên nhân *"kho ảo thuộc công ty
-AKANWA, phiếu này của THẾ GIỚI ĐIỆN GIẢI"*, thay vì `InvalidWarehouseCompany` lúc Submit khi người dùng
-đã nhập xong cả hộp thoại.
+`company_of(doc)` suy công ty từ **chứng từ nguồn**, không phải từ vận đơn (vận đơn không có ô công
+ty). Đọc động theo meta — dòng tham chiếu nào có ô `company` thì lấy — nên mục đích mới thêm về sau
+được hưởng sẵn, không phải sửa bảng cứng.
+
+#### Chốt hai tầng
+
+| Tầng | Ở đâu | Chặn được gì |
+|---|---|---|
+| Lọc danh sách | hộp thoại của 3 luồng + `public/js/dp_shipment.js` cho form | người dùng chọn nhầm |
+| **Kiểm lại lúc lưu** | `accounts.guard()` trong `before_validate` | API gọi thẳng, đổi ô sau khi hộp thoại đóng, sửa tay |
+
+Tầng dưới mới là cái chặn thật. App nền lọc ô `partner_account` **theo hãng** thôi — nó không được
+biết ERPNext nên cũng không biết "công ty" là gì; extension đắp thêm `doctype_js` trên DP Shipment để
+lọc tiếp theo công ty, và chỉ **cộng thêm**, không đụng `set_query` nào của app nền.
+
+> ⚠️ `guard()` **tự suy lại mục đích** thay vì đọc ô `custom_purpose` đã lưu, dù nó chạy ngay sau
+> `purpose.apply()` trong cùng một hook. Đọc ô đã lưu thì đảo hai dòng trong `before_validate` là
+> chốt lặng lẽ ngừng chặn — mà không phép kiểm nào đỏ lên nếu chúng đều gọi qua hook.
+
+`guard()` **chỉ chặn khi `stock_flow != none`**. Gửi mẫu và bảo hành không đụng tồn kho nên ERPNext
+chẳng có gì để từ chối; chặn ở đó là bịa ra ràng buộc không có thật. Hộp thoại gửi mẫu vì vậy vẫn
+**giữ tài khoản khai trong `DP Cobe Settings`** trong danh sách kể cả khi nó thuộc công ty khác — âm
+thầm bỏ mất giá trị người ta cố ý cấu hình là chuyện tệ hơn.
 
 ### Điểm gửi (`pickup_point`)
 

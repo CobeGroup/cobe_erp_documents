@@ -72,18 +72,19 @@ từ nguồn còn sửa được khi vận đơn ở trạng thái nháp:
 
 ## 3. Đặt đơn — hộp thoại có gì
 
-> **Không có ô chọn tài khoản ĐVVC** ở đây — luồng gửi mẫu dùng cố định tài khoản khai trong
-> `DP Cobe Settings`. Muốn đổi thì sửa cấu hình, không sửa từng đơn. (Đơn bán hàng thì tự chọn trên
-> form vận đơn, chuyển kho thì chọn trong hộp thoại —
-> xem [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html).)
-
 | Ô | Ý nghĩa |
 |---|---|
+| **Tài khoản ĐVVC** | điền sẵn theo `DP Cobe Settings`, **đổi được**. Đổi thì phải chọn lại Điểm gửi — điểm gửi đăng ký riêng theo từng tài khoản |
 | **Điểm gửi (nơi ĐVVC tới lấy)** | **Ô quan trọng nhất.** Xem mục 4 |
 | **Số mẫu** | số mẫu gói trong kiện này |
 | **Giá trị khai với ĐVVC** | lấy từ cấu hình, sửa được |
 | **Cân nặng kiện (kg)** | lấy từ cấu hình, **cân lại rồi sửa** — khai sai là cước sai |
 | **Ghi chú cho ĐVVC** | ghép vào mô tả nội dung kiện in trên vận đơn |
+
+Danh sách tài khoản lọc theo công ty của phiếu, **nhưng tài khoản khai trong cấu hình luôn được giữ
+lại** kể cả khi nó thuộc công ty khác. Cố ý: luồng gửi mẫu không sinh chứng từ kho nào nên không có
+ràng buộc công ty ở đây — mẫu nước thì công ty nào trả cước cũng được, và âm thầm bỏ mất giá trị
+người ta đã cố ý khai trong cấu hình mới là chuyện tệ.
 
 Đầu hộp thoại có khối tóm tắt tuyến: **Lấy tại** (tên khách) → **Giao về** (lab).
 
