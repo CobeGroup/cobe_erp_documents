@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 520" width="980" height="520" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <title>Toàn cảnh hành trình một phiếu lương</title>
+  <desc>Ba chặng: chuẩn bị một lần, phát sinh trong tháng, chốt lương cuối tháng — tất cả đổ vào Salary Slip.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7b8794"/>
+    </marker>
+    <style>
+      .h    { font-size: 15px; font-weight: 700; }
+      .t    { font-size: 13px; }
+      .s    { font-size: 11.5px; }
+      .tiny { font-size: 10.5px; fill: #7b8794; }
+      .num  { font-size: 12.5px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="980" height="520" fill="#ffffff"/>
+
+  <!-- ============ CHẶNG 1 ============ -->
+  <rect x="16" y="16" width="296" height="286" rx="10" fill="#f2f8fd" stroke="#9fc9e6"/>
+  <rect x="16" y="16" width="296" height="30" rx="10" fill="#2f8fd0"/>
+  <rect x="16" y="36" width="296" height="10" fill="#2f8fd0"/>
+  <text x="30" y="36" class="h" fill="#ffffff">① CHUẨN BỊ — làm 1 lần</text>
+
+  <rect x="30" y="60" width="268" height="40" rx="7" fill="#ffffff" stroke="#9fc9e6"/>
+  <text x="42" y="78" class="t" fill="#0b4a6f">Cobe Payroll Policy (theo ngày hiệu lực)</text>
+  <text x="42" y="93" class="s" fill="#5b6b78" font-size="11">tỷ lệ BH · trần · ngưỡng · giảm trừ · biểu thuế</text>
+
+  <rect x="30" y="106" width="268" height="40" rx="7" fill="#ffffff" stroke="#9fc9e6"/>
+  <text x="42" y="124" class="t" fill="#0b4a6f">Employee → “Lương &amp; Thuế (Cobe)”</text>
+  <text x="42" y="139" class="s" fill="#5b6b78">4 phụ cấp · mức đóng BH · người phụ thuộc</text>
+
+  <rect x="30" y="152" width="268" height="40" rx="7" fill="#ffffff" stroke="#9fc9e6"/>
+  <text x="42" y="170" class="t" fill="#0b4a6f">Holiday List Assignment</text>
+  <text x="42" y="185" class="s" fill="#5b6b78">lịch nghỉ → quyết định số ngày công chuẩn</text>
+
+  <rect x="30" y="198" width="268" height="40" rx="7" fill="#ffffff" stroke="#9fc9e6"/>
+  <text x="42" y="216" class="t" fill="#0b4a6f">Salary Structure (dựng sẵn/công ty)</text>
+  <text x="42" y="231" class="s" fill="#5b6b78" font-size="11">công thức: lương CB = base, phụ cấp lấy ô Employee</text>
+
+  <rect x="30" y="244" width="268" height="44" rx="7" fill="#ffffff" stroke="#2f8fd0" stroke-width="2"/>
+  <text x="42" y="262" class="t" fill="#0b4a6f">Salary Structure Assignment</text>
+  <text x="42" y="278" class="s" fill="#5b6b78">Base = lương cơ bản · có ngày hiệu lực → Submit</text>
+
+  <!-- ============ CHẶNG 2 ============ -->
+  <rect x="342" y="16" width="296" height="286" rx="10" fill="#fff8ec" stroke="#f0c992"/>
+  <rect x="342" y="16" width="296" height="30" rx="10" fill="#e08b1a"/>
+  <rect x="342" y="36" width="296" height="10" fill="#e08b1a"/>
+  <text x="356" y="36" class="h" fill="#ffffff">② TRONG THÁNG — tự chảy về</text>
+
+  <rect x="356" y="60" width="268" height="46" rx="7" fill="#ffffff" stroke="#f0c992"/>
+  <text x="368" y="78" class="t" fill="#7a4a00">Chấm công (Attendance / Check-in)</text>
+  <text x="368" y="93" class="s" fill="#5b6b78">ngày Present · ngày On Leave · giờ OT thực tế</text>
+
+  <rect x="356" y="112" width="268" height="46" rx="7" fill="#ffffff" stroke="#f0c992"/>
+  <text x="368" y="130" class="t" fill="#7a4a00">Đơn nghỉ (Leave Application)</text>
+  <text x="368" y="145" class="s" fill="#5b6b78">nghỉ KHÔNG lương → trừ ngày công của phiếu</text>
+
+  <rect x="356" y="164" width="268" height="60" rx="7" fill="#ffffff" stroke="#f0c992"/>
+  <text x="368" y="182" class="t" fill="#7a4a00">Đơn OT đã duyệt → Overtime Slip</text>
+  <text x="368" y="197" class="s" fill="#5b6b78">giờ OT × hệ số (×1,5 / ×2 / ×3)</text>
+  <text x="368" y="213" class="s" fill="#5b6b78">→ tự đẻ Additional Salary “Lương làm thêm giờ”</text>
+
+  <rect x="356" y="230" width="268" height="58" rx="7" fill="#ffffff" stroke="#f0c992"/>
+  <text x="368" y="248" class="t" fill="#7a4a00">Additional Salary (kế toán nhập tay)</text>
+  <text x="368" y="263" class="s" fill="#5b6b78">Thưởng (+) · Tạm ứng (−)</text>
+  <text x="368" y="279" class="s" fill="#5b6b78">Payroll Date phải rơi trong kỳ lương</text>
+
+  <!-- ============ CHẶNG 3 ============ -->
+  <rect x="668" y="16" width="296" height="286" rx="10" fill="#f7f2ff" stroke="#c4b0ee"/>
+  <rect x="668" y="16" width="296" height="30" rx="10" fill="#8b5cf6"/>
+  <rect x="668" y="36" width="296" height="10" fill="#8b5cf6"/>
+  <text x="682" y="36" class="h" fill="#ffffff">③ CUỐI THÁNG — kế toán bấm</text>
+
+  <rect x="682" y="60" width="268" height="52" rx="7" fill="#ffffff" stroke="#c4b0ee"/>
+  <text x="694" y="78" class="t" fill="#3b1d75">1. Payroll Entry (kỳ 01 → 31)</text>
+  <text x="694" y="93" class="s" fill="#5b6b78">Get Employees → gom NV có Assignment</text>
+  <text x="694" y="108" class="s" fill="#5b6b78">Create Salary Slips → loạt phiếu Nháp</text>
+
+  <rect x="682" y="120" width="268" height="46" rx="7" fill="#ffffff" stroke="#c4b0ee"/>
+  <text x="694" y="138" class="t" fill="#3b1d75">2. Soát phiếu Nháp</text>
+  <text x="694" y="153" class="s" fill="#5b6b78">ngày công · phụ cấp · BH · thuế · thực lãnh</text>
+
+  <rect x="682" y="174" width="268" height="46" rx="7" fill="#ffffff" stroke="#c4b0ee"/>
+  <text x="694" y="192" class="t" fill="#3b1d75">3. Submit → phiếu “Đã chốt”</text>
+  <text x="694" y="207" class="s" fill="#5b6b78">NV tự nhận email phiếu lương của mình</text>
+
+  <rect x="682" y="228" width="268" height="60" rx="7" fill="#ffffff" stroke="#c4b0ee"/>
+  <text x="694" y="246" class="t" fill="#3b1d75">4. Report “Bang Luong Cobe”</text>
+  <text x="694" y="261" class="s" fill="#5b6b78">mỗi khoản 1 cột · dòng Total</text>
+  <text x="694" y="277" class="s" fill="#5b6b78">Export Excel → đối chiếu → chuyển khoản</text>
+
+  <!-- ============ mũi tên xuống ============ -->
+  <line x1="164" y1="302" x2="164" y2="344" stroke="#7b8794" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="490" y1="302" x2="490" y2="344" stroke="#7b8794" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="816" y1="302" x2="816" y2="344" stroke="#7b8794" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="176" y="326" class="tiny">hồ sơ &amp; công thức</text>
+  <text x="502" y="326" class="tiny">phát sinh của tháng</text>
+  <text x="828" y="326" class="tiny">lệnh chạy</text>
+
+  <!-- ============ SALARY SLIP ============ -->
+  <rect x="16" y="348" width="948" height="98" rx="10" fill="#eefaf2" stroke="#34a36a" stroke-width="2"/>
+  <text x="40" y="378" class="h" fill="#12502f">PHIẾU LƯƠNG — Salary Slip (CobeSalarySlip)</text>
+  <text x="40" y="400" class="t" fill="#12502f">Ngày công &amp; prorate: HRMS lo · BHXH/BHYT/BHTN + Thuế TNCN luỹ tiến tháng: phần Cobe tự đắp</text>
+  <text x="40" y="422" class="s" fill="#3f5a4b">Thu nhập − Khấu trừ = <tspan class="num" fill="#12502f">Thực lãnh</tspan>  ·  Nháp → Submit = chốt (sửa được bằng Cancel + Amend)</text>
+
+  <!-- chú thích -->
+  <text x="16" y="474" class="s" fill="#5b6b78">Nguyên tắc: pipeline lương là <tspan font-weight="700">HRMS chuẩn</tspan>; Cobe chỉ đắp 3 thứ HRMS không có cho Việt Nam —</text>
+  <text x="16" y="492" class="s" fill="#5b6b78">(1) bảo hiểm bắt buộc phần NLĐ đóng, (2) thuế TNCN luỹ tiến <tspan font-weight="700">theo tháng</tspan>, (3) ngày công của ngày làm <tspan font-weight="700">nửa buổi</tspan> (Thứ 7).</text>
+</svg>

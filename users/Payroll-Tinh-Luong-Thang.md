@@ -22,25 +22,12 @@ Trần Thị Demo / Lê Văn Demo) — số liệu là số tính thật của m
 
 ## 1. Bức tranh tổng thể
 
-```mermaid
-flowchart LR
-  subgraph HoSo["Hồ sơ (nhập 1 lần)"]
-    E["Employee<br/>4 phụ cấp · mức đóng BH<br/>số người phụ thuộc"]
-    SSA["Salary Structure Assignment<br/>base = lương cơ bản"]
-  end
-  subgraph PhatSinh["Phát sinh trong tháng"]
-    OT["Overtime Slip<br/>(OT đã duyệt)"]
-    AS["Additional Salary<br/>(thưởng / tạm ứng)"]
-    LV["Leave Application<br/>(ngày công)"]
-  end
-  PE["Payroll Entry<br/>(chạy cả công ty)"]
-  SLIP["SALARY SLIP<br/>+ tự trích BHXH/BHYT/BHTN<br/>+ thuế TNCN luỹ tiến tháng"]
-  RPT["Report Bang Luong Cobe<br/>(xuất Excel)"]
-  HoSo --> SLIP
-  PhatSinh --> SLIP
-  PE --> SLIP
-  SLIP --> RPT
-```
+<a href="images/svg/payroll/01-toan-canh.svg" title="Bấm để phóng to">
+  <img src="images/svg/payroll/01-toan-canh.svg" alt="Toàn cảnh: chuẩn bị 1 lần → phát sinh trong tháng → chốt lương cuối tháng" style="width:100%;height:auto">
+</a>
+
+> 📖 Muốn xem **một phiếu cụ thể đi qua đủ 3 chặng** (kèm số tính thật từng đồng):
+> [Hành trình một phiếu lương](Hanh-Trinh-Phieu-Luong.html).
 
 **Ai thấy gì** — dữ liệu lương tách hẳn khỏi HR:
 
@@ -59,7 +46,8 @@ Gán quyền: mở **User** của người kế toán → thêm role `Payroll Of
 
 | Thành phần | Ở đâu | Để làm gì | Ai đụng |
 |---|---|---|---|
-| **Cobe Payroll Settings** | gõ tên vào Search | Chứa toàn bộ "luật": tỷ lệ BH, trần đóng, giảm trừ gia cảnh, biểu thuế 7 bậc | Kế toán, sửa khi luật đổi |
+| **Cobe Payroll Settings** | gõ tên vào Search | 2 công tắc: bật/tắt tính BH, tính thuế | Gần như không đụng |
+| **Cobe Payroll Policy** | gõ tên vào Search | Toàn bộ "luật": tỷ lệ BH, trần đóng, ngưỡng ngày công, giảm trừ gia cảnh, trần ăn trưa miễn thuế, biểu thuế 7 bậc — **mỗi bản một ngày hiệu lực** | Kế toán, **tạo bản mới** khi luật đổi |
 | **Employee → mục "Lương & Thuế (Cobe)"** (tab Salary) | form Employee | Thông số lương RIÊNG từng người: mức đóng BH, số người phụ thuộc, MST, 4 phụ cấp cố định | Kế toán nhập 1 lần |
 | **Salary Structure** | Payroll → Setup | Khung công thức chung: lương cơ bản = `base`, phụ cấp đọc từ ô trên Employee. Đã dựng sẵn 1 khung/công ty, **không cần sửa** | Xem là chính |
 | **Salary Structure Assignment** | Payroll | Gán khung + **mức lương cơ bản (Base)** cho từng NV, có ngày hiệu lực → giữ lịch sử tăng lương | Kế toán |
@@ -69,24 +57,35 @@ Gán quyền: mở **User** của người kế toán → thêm role `Payroll Of
 | **Salary Slip** | Payroll | Phiếu lương từng người — sản phẩm cuối. Submit = chốt + tự email cho NV | Kế toán duyệt/chốt |
 | **Report "Bang Luong Cobe"** | Reports | Bảng lương cả tháng kiểu VN, mỗi khoản 1 cột, xuất Excel | Kế toán |
 
-### 2.1. Cobe Payroll Settings — nơi chứa "luật"
+### 2.1. Nơi chứa "luật" — Settings (2 công tắc) + Policy (mọi ngưỡng)
 
-![Cobe Payroll Settings — công tắc + tỷ lệ BH](images/desk/payroll/settings-top.png)
+**Cobe Payroll Settings** giờ chỉ còn **2 công tắc tổng**: tắt "Tính bảo hiểm" /
+"Tính thuế TNCN" thì phiếu lương không sinh dòng tương ứng (dùng khi muốn chạy thử
+hoặc công ty chưa áp dụng).
 
-- **2 công tắc tổng**: tắt "Tính bảo hiểm" / "Tính thuế TNCN" thì phiếu lương
-  không sinh dòng tương ứng (dùng khi muốn chạy thử hoặc công ty chưa áp dụng).
+![Cobe Payroll Settings — 2 công tắc](images/desk/payroll/journey/01-settings-bh.png)
+
+Toàn bộ ngưỡng nằm ở **Cobe Payroll Policy**, **mỗi bản một ngày hiệu lực**:
+
+![Cobe Payroll Policy — tỷ lệ + trần đóng](images/desk/payroll/journey/02-policy-bh.png)
+
 - **Tỷ lệ NLĐ đóng**: BHXH 8% · BHYT 1,5% · BHTN 1% (mặc định đúng luật).
-- **Trần đóng**: BHXH/BHYT tối đa trên 20× lương cơ sở (2.340.000 → trần 46,8tr);
-  BHTN tối đa trên 20× lương tối thiểu vùng (4.960.000 → trần 99,2tr).
-- **Ngày công tối thiểu 14**: tháng nào NV làm dưới 14 công (vào/nghỉ giữa
-  tháng) thì **không trích BH tháng đó** — đúng quy định BHXH.
+- **Trần đóng**: BHXH/BHYT tối đa trên **hệ số 20 ×** lương cơ sở (2.340.000 → trần
+  46,8tr); BHTN tối đa trên **20 ×** lương tối thiểu vùng (4.960.000 → trần 99,2tr).
+  Hệ số cũng là ô nhập, không còn cứng trong code.
+- **Ngày công tối thiểu 14**: kỳ nào NV làm dưới 14 công (vào/nghỉ giữa tháng) thì
+  **không trích BH kỳ đó** — đúng quy định BHXH.
 
-![Cobe Payroll Settings — giảm trừ + biểu thuế](images/desk/payroll/settings-tax.png)
+![Cobe Payroll Policy — giảm trừ + trần ăn trưa + biểu thuế](images/desk/payroll/journey/02b-policy-thue.png)
 
 - **Giảm trừ bản thân 15,5tr/tháng + mỗi người phụ thuộc 6,2tr/tháng** (mức áp
   dụng từ kỳ tính thuế 2026).
-- **Biểu thuế luỹ tiến từng phần** 7 bậc (5% → 35%): khi Quốc hội đổi biểu thuế,
-  kế toán sửa **ngay tại bảng này**, phiếu lương tạo sau đó tự tính theo luật mới.
+- **Phụ cấp ăn giữa ca miễn thuế tối đa 730.000/tháng** — trả cao hơn thì phần vượt
+  tự vào thu nhập chịu thuế.
+- **Biểu thuế luỹ tiến từng phần** 7 bậc (5% → 35%).
+
+> 🗓️ Luật đổi → **tạo bản Policy MỚI** với ngày hiệu lực, đừng sửa bản cũ. Phiếu tra
+> luật theo **ngày bắt đầu kỳ lương** nên chạy lại phiếu tháng cũ vẫn ra đúng số cũ.
 
 ### 2.2. Hồ sơ lương trên Employee (tab Salary)
 
@@ -120,7 +119,7 @@ Mỗi công ty có sẵn khung **"Cobe Lương tháng - \<Cty\>"**:
 ## 3. Chuẩn bị một lần (setup)
 
 1. **Gán role** `Payroll Officer` cho kế toán lương (form User).
-2. **Rà Cobe Payroll Settings** — mặc định đã đúng luật 2026, chỉ xem lại.
+2. **Rà Cobe Payroll Policy** (bản `CPP-2026-01-01`) — mặc định đã đúng luật 2026, chỉ xem lại.
 3. **Nhập hồ sơ lương từng NV** (mục 2.2). Đông người → **Data Import** cho
    Employee với 4 cột phụ cấp + mức BH + số phụ thuộc.
 4. **Gán lương**: tạo **Salary Structure Assignment** cho từng NV:
@@ -246,8 +245,8 @@ HR cập nhật Relieving Date → phiếu kỳ cuối tự prorate; dưới 14 
 trích BH tháng đó.
 
 ### 5.7. Luật đổi (biểu thuế, lương cơ sở, tỷ lệ BH…)
-Kế toán sửa **Cobe Payroll Settings** → phiếu tạo từ đó áp luật mới. Phiếu đã
-chốt không bị đụng.
+Kế toán tạo **Cobe Payroll Policy mới** với đúng ngày hiệu lực → mọi kỳ lương bắt
+đầu từ ngày đó áp luật mới, kỳ cũ giữ nguyên (chạy lại cũng ra số cũ).
 
 ---
 
@@ -289,7 +288,7 @@ HR mở danh sách Salary Slip — trống trơn, không thấy phiếu của ai
 | Mở Employee **không thấy mục "Lương & Thuế (Cobe)"** | (1) Thiếu role Payroll Officer; (2) mục nằm ở **tab Salary** và đang **đóng** (bấm tiêu đề để mở) | Kiểm tra role rồi bấm đúng tab Salary. |
 | Tạo phiếu báo *"Please assign a Salary Structure for Employee…"* | NV chưa có **Salary Structure Assignment** submit, hoặc From Date **sau** kỳ lương | Tạo/sửa Assignment với From Date ≤ ngày đầu kỳ. |
 | Get Employees ra **thiếu người** | Như trên — chỉ NV có Assignment hiệu lực mới được gom | Rà danh sách Assignment. |
-| **BH = 0** bất thường | NV dưới **14 ngày công** tháng đó (đúng luật, không phải lỗi); hoặc công tắc "Tính bảo hiểm" đang tắt; hoặc Base + Mức đóng BH đều = 0 | Xem Payment Days trên phiếu; xem Settings. |
+| **BH = 0** bất thường | NV dưới **14 ngày công** tháng đó (đúng luật, không phải lỗi); hoặc công tắc "Tính bảo hiểm" đang tắt; hoặc Base + Mức đóng BH đều = 0 | Xem Payment Days trên phiếu; xem Settings + Policy. |
 | **Thuế = 0** hàng loạt | Bình thường! Giảm trừ 2026 là 15,5tr + 6,2tr/người phụ thuộc — lương < ~18tr độc thân là chưa tới ngưỡng | Tính tay 1 ca đối chiếu trước khi nghi lỗi. |
 | **Không thấy tiền OT** trên phiếu | Đơn OT chưa duyệt xong / Overtime Slip chưa submit trước khi tạo phiếu | Duyệt OT xong **rồi mới** Create Salary Slips; phiếu lỡ tạo thì xoá phiếu nháp tạo lại. |
 | Thưởng/tạm ứng không vào phiếu | Additional Salary chưa Submit, hoặc **Payroll Date ngoài kỳ** | Sửa Payroll Date rơi trong kỳ rồi Submit. |
@@ -298,7 +297,7 @@ HR mở danh sách Salary Slip — trống trơn, không thấy phiếu của ai
 | Ngày công (total working days) trông "lạ" | Ngày công = ngày trong tháng − ngày nghỉ trọn − 0,5 × số ngày **nửa buổi** (Thứ 7 khối văn phòng), theo **Holiday List Assignment** hiệu lực trong kỳ | Kiểm tra HLA của NV tại đúng tháng đó (không phải HLA hiện tại). |
 | Ngày công có **số lẻ 0,5** | Đúng — kỳ đó có ngày làm nửa buổi (Thứ 7) | Xem mục 5.5b. |
 | Report Bang Luong Cobe báo lỗi Server Error | Sau khi deploy bản mới chưa **clear cache** | Báo System Manager chạy clear-cache (đã xử lý từ bản 07/2026). |
-| Sửa Settings xong phiếu cũ không đổi | Đúng thiết kế — Settings chỉ áp cho phiếu tạo **sau đó** | Muốn áp lại: Cancel + Amend phiếu. |
+| Sửa luật xong phiếu cũ không đổi | Đúng thiết kế — phiếu chốt số tại lúc tạo | Muốn áp lại: Cancel + Amend phiếu (sẽ dùng bản Policy hiệu lực theo kỳ). |
 
 ---
 

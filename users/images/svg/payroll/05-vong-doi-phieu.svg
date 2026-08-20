@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 300" width="980" height="300" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <title>Vòng đời một phiếu lương</title>
+  <desc>Nháp → Đã chốt → (Huỷ + Amend) → phiếu mới. Sửa số liệu đầu vào chỉ ăn khi phiếu được tạo lại.</desc>
+  <defs>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7b8794"/>
+    </marker>
+    <style>
+      .st { font-size: 14px; font-weight: 700; }
+      .l  { font-size: 12px; fill: #5b6b78; }
+      .s  { font-size: 11.5px; fill: #7b8794; }
+      .h  { font-size: 14px; font-weight: 700; fill: #26323d; }
+    </style>
+  </defs>
+  <rect width="980" height="300" fill="#ffffff"/>
+
+  <text x="40" y="32" class="h">Vòng đời một phiếu lương — và chỗ duy nhất sửa được</text>
+
+  <!-- (0) chưa có -->
+  <rect x="40" y="56" width="150" height="62" rx="9" fill="#f4f6f8" stroke="#cbd2d9"/>
+  <text x="58" y="82" class="st" fill="#5b6b78">Chưa có phiếu</text>
+  <text x="58" y="102" class="l">dữ liệu còn sửa thoải mái</text>
+
+  <line x1="192" y1="87" x2="246" y2="87" stroke="#7b8794" stroke-width="1.6" marker-end="url(#a3)"/>
+  <text x="219" y="48" class="s" text-anchor="middle">Create Salary Slips</text>
+
+  <!-- (1) nháp -->
+  <rect x="248" y="56" width="190" height="62" rx="9" fill="#fff8ec" stroke="#e08b1a" stroke-width="2"/>
+  <text x="266" y="82" class="st" fill="#7a4a00">NHÁP (Draft)</text>
+  <text x="266" y="102" class="l">soát lại · sửa được · xoá được</text>
+
+  <line x1="440" y1="87" x2="494" y2="87" stroke="#7b8794" stroke-width="1.6" marker-end="url(#a3)"/>
+  <text x="467" y="48" class="s" text-anchor="middle">Submit</text>
+
+  <!-- (2) đã chốt -->
+  <rect x="496" y="56" width="200" height="62" rx="9" fill="#eefaf2" stroke="#34a36a" stroke-width="2"/>
+  <text x="514" y="82" class="st" fill="#12502f">ĐÃ CHỐT (Submitted)</text>
+  <text x="514" y="102" class="l">khoá số · NV nhận email phiếu</text>
+
+  <line x1="698" y1="87" x2="752" y2="87" stroke="#7b8794" stroke-width="1.6" marker-end="url(#a3)"/>
+  <text x="725" y="48" class="s" text-anchor="middle">Cancel</text>
+
+  <!-- (3) đã huỷ -->
+  <rect x="754" y="56" width="186" height="62" rx="9" fill="#fff6f5" stroke="#d95c52"/>
+  <text x="772" y="82" class="st" fill="#7a1f18">ĐÃ HUỶ (Cancelled)</text>
+  <text x="772" y="102" class="l">không sửa · chỉ Amend</text>
+
+  <!-- vòng lặp amend -->
+  <path d="M 847 120 L 847 158 L 343 158 L 343 122" fill="none" stroke="#7b8794" stroke-width="1.6" marker-end="url(#a3)"/>
+  <text x="560" y="152" class="s" text-anchor="middle">Amend → phiếu MỚI, tính lại từ đầu theo dữ liệu hiện tại</text>
+
+  <!-- ghi chú -->
+  <rect x="40" y="184" width="900" height="92" rx="9" fill="#f2f8fd" stroke="#9fc9e6"/>
+  <text x="58" y="208" class="st" fill="#0b4a6f">Quy tắc vàng: phiếu chỉ chụp ảnh dữ liệu tại LÚC TẠO</text>
+  <text x="58" y="230" class="l">Sửa phụ cấp trên Employee, khai bản luật mới, duyệt thêm đơn OT/đơn nghỉ… <tspan font-weight="700">không</tspan> làm phiếu đã tạo tự đổi số.</text>
+  <text x="58" y="250" class="l">Phiếu còn Nháp → xoá rồi Create Salary Slips lại.  ·  Phiếu đã chốt → Cancel + Amend.</text>
+  <text x="58" y="268" class="l">Vì vậy trình tự bắt buộc: <tspan font-weight="700">duyệt sạch đơn nghỉ + đơn OT + nhập thưởng/tạm ứng TRƯỚC</tspan>, rồi mới chạy Payroll Entry.</text>
+</svg>

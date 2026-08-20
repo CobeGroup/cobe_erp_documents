@@ -9,7 +9,7 @@ has_children: true
 
 Module mở rộng HRMS để tự động hóa **tính lương và các thành phần lương**:
 
-0. **Tính lương tháng (Payroll VN)** ✅ *đã chạy* — Salary Structure/Payroll Entry native + tự trích **BHXH/BHYT/BHTN** và **thuế TNCN luỹ tiến theo tháng** (module Cobe Payroll). Xem [Tính lương tháng](Payroll-Tinh-Luong-Thang.html).
+0. **Tính lương tháng (Payroll VN)** ✅ *đã chạy* — Salary Structure/Payroll Entry native + tự trích **BHXH/BHYT/BHTN** và **thuế TNCN luỹ tiến theo tháng** (module Cobe Payroll). Xem [Tính lương tháng](Payroll-Tinh-Luong-Thang.html) — hoặc đi theo một phiếu cụ thể từ đầu đến cuối: [Hành trình một phiếu lương](Hanh-Trinh-Phieu-Luong.html).
 1. **Overtime (OT)** ✅ *đã chạy* — NV xin làm thêm **trước** khi làm (PWA) → manager duyệt → đối chiếu chấm công → **Overtime Slip** → `Additional Salary` gộp vào Salary Slip kỳ tới. Quy đổi được **tiền** hoặc **nghỉ bù**.
 2. **WFH Salary Adjustment** ⏳ *thiết kế, chưa triển khai* — Đếm ngày WFH (qua chấm công PWA) → trừ % lương Basic/phụ cấp theo cấu hình.
 3. **KPI Bonus** ⏳ *thiết kế, chưa triển khai* — Manager chấm điểm 0-100 mỗi kỳ → hệ thống auto suggest % thưởng → tự cộng vào Salary Slip.
