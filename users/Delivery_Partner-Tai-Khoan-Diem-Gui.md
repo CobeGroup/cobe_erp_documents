@@ -45,6 +45,10 @@ dung.
 > `GrabExpress Default`. **Chưa cái nào khai thông tin đăng nhập**, và cả 8 đều nằm ở công ty
 > THẾ GIỚI ĐIỆN GIẢI. Chọn nhầm một trong số đó thì vận đơn dựng ra bình thường nhưng **đẩy đơn sẽ
 > hỏng**, và hàng thì đã chui vào kho ảo của một hãng không dùng.
+>
+> Từ 19/08/2026 các ô chọn **không bày chúng ra nữa**. Vẫn gặp lại được trong đúng một trường hợp:
+> vận đơn **tạo tay chưa gắn chứng từ nguồn** — lúc đó hệ thống không suy được công ty nên không lọc
+> gì cả, và bày ra đủ 11 tài khoản.
 
 ---
 
@@ -53,9 +57,10 @@ dung.
 Chuyển kho của công ty A **không** đẩy hàng vào kho ảo của công ty B được — hệ thống kế toán kho
 chặn thẳng, và lỗi nó ném ra (`InvalidWarehouseCompany`) thì đọc không hiểu gì.
 
-Nên mọi ô chọn tài khoản **chỉ hiện những tài khoản có kho ảo thuộc đúng công ty của chứng từ**. Với
-phiếu của AKANWA hay DOCTOR NƯỚC thì danh sách chỉ có một dòng; với TGĐG thì có 9 dòng (1 dùng được
-+ 8 tài khoản rỗng), nên đọc kỹ mục 1.
+Nên mọi ô chọn tài khoản **chỉ hiện những tài khoản có kho ảo thuộc đúng công ty của chứng từ**, và
+lọc thêm một lần nữa: bỏ hết tài khoản **chưa khai thông tin đăng nhập**. Kết quả là mỗi công ty còn
+đúng **một dòng** — `- TGDG`, `- AKW`, hoặc `- DR`. Thấy nhiều hơn một dòng thì có tài khoản mới được
+khai thêm, đọc mục 1 rồi chọn cho đúng hãng.
 
 Kể cả gọi thẳng qua API bỏ qua hộp thoại, hệ thống vẫn chặn lại **lúc lưu vận đơn** và nói đúng
 nguyên nhân, thay vì để lỗi nổ muộn lúc sinh chứng từ kho.
@@ -202,6 +207,27 @@ Trình tự bắt buộc:
 | Địa chỉ kho | 30/225 kho có Address (10 kho mỗi công ty) — 8 kho đích nặng nhất đã xong |
 | Điểm gửi trên kho nguồn | ⛔ mới 10 kho, toàn TGĐG — AKANWA và DOCTOR NƯỚC chưa kho nào |
 | Điểm gửi ở Thanh Hoá | ⛔ Viettel Post chưa có điểm ở địa bàn này, phải đăng ký theo mục 7 |
+| Vận đơn nháp `SHIP-DP-2026-398778` | ⛔ chọn sai tài khoản — xem dưới |
+
+### Vận đơn nháp sai tài khoản, cần sửa tay
+
+Rà lại toàn bộ vận đơn đang có, đúng **một** cái vướng chốt mới:
+
+| | |
+|---|---|
+| Vận đơn | `SHIP-DP-2026-398778` — nháp, tạo 24/07/2026 |
+| Đơn bán hàng | `SO-26-398728`, công ty **AKANWA** |
+| Nhưng tài khoản đang chọn | `Viettel Post - TGDG` — kho ảo của **THẾ GIỚI ĐIỆN GIẢI** |
+| Và kho lấy hàng | `KHO HỒ CHÍ MINH - TGĐG` |
+
+Đây đúng là loại nhầm mà mục 2 nói tới, và nó **đã xảy ra thật** trước khi có chốt. Vận đơn này chưa
+sinh chứng từ nào; Submit nó thì kiểu gì cũng vỡ, chỉ là vỡ muộn hơn và bằng một lỗi khó hiểu hơn.
+
+Sửa: mở vận đơn → đổi **Tài khoản ĐVVC** sang `Viettel Post - AKW`, đổi **kho lấy hàng** sang kho của
+AKANWA → Lưu. Không còn cần nữa thì xoá luôn.
+
+> Lưu ý: từ khi có chốt, **mở ra bấm Lưu mà không sửa tài khoản thì hệ thống báo lỗi** và không cho
+> lưu. Đó là cố ý — nhưng nghĩa là vận đơn nháp này không để nguyên đó được.
 
 ---
 

@@ -392,6 +392,17 @@ Ngoài hai nguồn đó thì `get_sample_defaults` vẫn throw.
 tài khoản chưa khai credentials — 8 tài khoản dựng sẵn không đẩy đơn được, bày ra là bày 8 cái bẫy.
 Lọc sạch hết thì trả lại danh sách đầy đủ, vì ô chọn rỗng còn tệ hơn.
 
+`allowed_accounts()` là hàm whitelist duy nhất của module, mở cho giao diện gọi. Nó kiểm
+`frappe.has_permission("DP Shipment", "read", throw=True)` trước — đúng chuẩn đã dùng ở
+`api/sample.py`. Trả **danh sách rỗng khi không suy được công ty**, và chỗ gọi phải hiểu rỗng là
+*"không lọc được"* chứ không phải *"không có tài khoản nào"*: hiểu nhầm là vận đơn tạo tay mất sạch
+lựa chọn.
+
+> **Chốt này đổi hành vi trên dữ liệu đang có.** Rà 20 vận đơn hiện có thì đúng một cái vướng:
+> `SHIP-DP-2026-398778` (nháp 24/07) mang `SO-26-398728` của AKANWA nhưng chọn `Viettel Post - TGDG`.
+> Nó chưa sinh chứng từ nào và Submit thì kiểu gì cũng vỡ, nhưng **từ giờ mở ra bấm Lưu cũng không
+> lưu được** cho tới khi đổi tài khoản. Trước khi deploy nên báo trước cho người giữ vận đơn đó.
+
 ### Điểm gửi (`pickup_point`)
 
 App gốc có ô `pickup_point` trên vận đơn; `_sender_info` dùng đúng điểm đó thay vì luôn lấy điểm mặc
