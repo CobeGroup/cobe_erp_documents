@@ -30,7 +30,8 @@ nav_order: 2
 | **Feature Flags** | Bật/tắt: **selfie** (mặc định bật), **face match**, **WFH mode** (`enable_wfh_mode`)… |
 | **Defaults** | Giờ vào/ra mặc định, bán kính mặc định, ngưỡng… |
 | **Lunch Break** | Khai giờ nghỉ trưa để tính công đúng |
-| **Overtime Notification** | Nhắc khi làm quá giờ · **trần OT/ngày** · **hệ số OT ngày nửa buổi** |
+| **Overtime Notification** | Nhắc khi làm quá giờ · bảng **Trần OT theo ngày hiệu lực** (trần giờ/ngày + hệ số OT ngày nửa buổi) |
+| **Hạn khai bù sau khi việc đã xảy ra** | Bảng **Hạn khai theo ngày hiệu lực**: hạn nộp đơn nghỉ · hạn khai làm thêm · hạn nộp đơn chấm công — xem [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html) |
 | **Người duyệt cuối (cấp HR)** | Chỉ định ai chốt đơn nghỉ phép bước 2 |
 | **Giới hạn giờ check-in** | Chặn quẹt VÀO quá muộn |
 | **Check-in Whitelist** | Danh sách được phép chấm ngoại lệ |
@@ -128,11 +129,17 @@ Muốn quay lại như cũ: **xoá hết dòng trong bảng** rồi Save — kh�
 
 ---
 
-## 5. Hệ số OT ngày làm nửa buổi
+## 5. Trần OT & hệ số ngày làm nửa buổi (bảng theo ngày hiệu lực)
 
-Áp cho **ngày nửa buổi** — dòng trong Holiday List có tick *Half Day*, ở Cobe là
-**Thứ 7 của khối văn phòng**. Người làm thêm buổi còn lại của ngày đó được trả
-theo hệ số nào của **Overtime Type**:
+Từ bản cập nhật **08/2026**, trần giờ OT và hệ số ngày nửa buổi khai trong bảng
+**Trần OT theo ngày hiệu lực** (`HR Policy Overtime Rule`) — mỗi dòng một mốc *Hiệu lực
+từ ngày*, phiếu OT được xét theo bản luật hiệu lực tại **ngày làm thêm**, nên chỉnh quy
+định về sau **không đổi số của những ngày đã chốt**. Trần mặc định khi bảng trống:
+ngày thường **4h**, ngày lễ/nghỉ **8h**.
+
+Cột **Hệ số ngày nửa buổi** áp cho **ngày nửa buổi** — dòng trong Holiday List có tick
+*Half Day*, ở Cobe là **Thứ 7 của khối văn phòng**. Người làm thêm buổi còn lại của ngày
+đó được trả theo hệ số nào của **Overtime Type**:
 
 | Lựa chọn | Hệ số dùng | Ở Cobe hiện là |
 |---|---|---|
@@ -143,12 +150,12 @@ theo hệ số nào của **Overtime Type**:
 **Vì sao mặc định Cuối tuần:** buổi chiều Thứ 7 là **nửa ngày công ty đã cho
 nghỉ**, làm vào đó là làm vào thời gian nghỉ chứ không phải giờ hành chính.
 
-> 🔧 **Ô này sinh ra để vá một lỗi.** HRMS gốc xếp mọi ngày trong Holiday List
+> 🔧 **Cột này sinh ra để vá một lỗi.** HRMS gốc xếp mọi ngày trong Holiday List
 > không phải nghỉ tuần vào loại "ngày lễ", nên Thứ 7 nửa buổi bị trả **×3.0** —
 > giá ngày lễ. Đặt lại ở đây là để đúng ý công ty, không phải để "chọn cho vui".
 > Ô trống = hiểu là *Cuối tuần*.
 
-Ngày thường, Chủ nhật và ngày lễ thật **không bị ô này ảnh hưởng** — vẫn ×1.5 /
+Ngày thường, Chủ nhật và ngày lễ thật **không bị cột này ảnh hưởng** — vẫn ×1.5 /
 ×2.0 / ×3.0 như cũ, dù chọn gì.
 
 ---

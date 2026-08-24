@@ -70,6 +70,14 @@ Khi NV tạo qua PWA (`api.attendance_request.create_attendance_request`), `reas
 > `get_my_attendance_requests` trả về mọi reason (kèm `custom_work_location_label`). Flow check-in
 > GPS của ngày WFH: xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
 
+Ràng buộc khi tạo đơn: một đơn phủ tối đa **31 ngày**, mỗi NV tối đa **10 đơn nháp** chờ
+duyệt, đơn **thừa** (mọi ngày đã có Attendance đúng trạng thái) bị chặn từ lúc tạo. Đơn cho
+**ngày quá khứ** chịu hạn nộp riêng — cột *Hạn nộp đơn chấm công* của bảng **Hạn khai theo
+ngày hiệu lực** trong `HR Policy`, xét theo **ngày đầu của đơn**; 0 = không giới hạn (mặc
+định). Hạn này áp ở `validate()` của doctype nên PWA, Desk hay API đều chịu chung; role HR
+không bị hạn để còn tạo thủ công thay NV. Xem
+[Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html).
+
 ---
 
 ## 2. Workflow 1 bước Manager

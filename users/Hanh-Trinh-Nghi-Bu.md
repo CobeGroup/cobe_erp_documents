@@ -108,6 +108,17 @@ Duyệt xong, ngày 18/07 tính **On Leave** (nghỉ có phép). Trên danh sác
 
 ---
 
+## Hạn NỘP đơn (khi công ty bật)
+
+> Công ty có thể đặt **hạn nộp đơn nghỉ sau khi đã nghỉ** (bảng *Hạn khai theo ngày hiệu
+> lực* trong `HR Policy`). Với Nghỉ bù, đồng hồ tính trễ chạy từ **mốc muộn hơn** giữa
+> **ngày bắt đầu nghỉ** và **ngày phiếu OT được duyệt** — phiếu OT duyệt chậm thì thời gian
+> chờ duyệt **không bị tính** vào hạn, còn phiếu duyệt sớm rồi để dành ngày bù thì tính từ
+> ngày nghỉ như phép thường. Chi tiết & ví dụ:
+> [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html).
+
+---
+
 ## So với các nhánh khác
 
 | | **Nghỉ bù** *(trang này)* | **Làm thêm → Tiền** | **Nghỉ phép năm** |
@@ -128,6 +139,7 @@ Duyệt xong, ngày 18/07 tính **On Leave** (nghỉ có phép). Trên danh sác
 | *"đã dùng để bù rồi"* | Mỗi ngày làm thêm chỉ đổi **1 ngày nghỉ** — dùng ngày làm thêm khác |
 | Số dư Nghỉ bù bỗng về 0 / mất | Đã qua **cuối kỳ** — phiếu chưa dùng bị **Hết hạn**. Lần sau xin nghỉ trong kỳ |
 | Số dư âm, tưởng bị phạt | Âm là **đúng thiết kế** — không trừ lương, không trừ quỹ phép |
+| *"Đơn Nghỉ bù từ ngày … đã quá hạn nộp"* | Nộp trễ quá hạn công ty đặt (tính từ ngày nghỉ hoặc ngày duyệt phiếu OT, mốc muộn hơn) → liên hệ HR tạo thủ công |
 | *"Attendance … is already marked …"* khi xin nghỉ bù | Hôm đó **đã chấm công**. Rất hay gặp vì nghỉ bù thường xin ngay trong ngày: làm sáng → trưa xin nghỉ chiều. Tích **Nghỉ nửa ngày** là gửi được (buổi đã làm vẫn tính công). Xin **cả ngày** cho hôm đã đi làm thì không được |
 
 ---

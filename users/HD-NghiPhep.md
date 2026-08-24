@@ -15,7 +15,7 @@ Xin nghỉ phép (cả **nửa ngày**), **làm thêm giờ (OT)** và **nghỉ 
 3. **[Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html)** — toàn cảnh: theo chân 1 đơn từ lúc tạo đến lúc được duyệt
 4. **[Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html)** — toàn cảnh: xin → duyệt → **đối chiếu chấm công** → thành tiền hoặc ngày nghỉ bù
 
-> ⚠️ Muốn xin **Nghỉ bù** thì ngày làm thêm phải có **đơn Làm thêm giờ (quy đổi Nghỉ bù) đã được duyệt** — nhớ khai đơn sau khi đã làm thêm (trong hạn 1 ngày).
+> ⚠️ Muốn xin **Nghỉ bù** thì ngày làm thêm phải có **đơn Làm thêm giờ (quy đổi Nghỉ bù) đã được duyệt** — nhớ khai đơn sau khi đã làm thêm (trong hạn khai của công ty).
 
 > ✅ Bạn là **người duyệt**? Xem **[Phê duyệt](HD-TruongBoPhan.html)** — duyệt trên app + trên Desk.
 > ⚙️ HR cần **cấp phép / tạo loại phép / kiểm số dư & báo cáo**? Xem [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html) · [Loại phép & số dư](Desk-HR-LoaiPhep.html) · [Kiểm tra phép & báo cáo phép](Desk-HR-KiemTraPhep.html).

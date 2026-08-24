@@ -37,7 +37,7 @@ flowchart TB
   classDef sys fill:#f9f0ff,stroke:#9254de,color:#391085;
   classDef ok fill:#f6ffed,stroke:#54ab78,color:#135200;
   A["①  NV ở lại làm thêm<br/>chấm công / <b>check-out</b> như thường"]:::nv
-  B["②  NV <b>KHAI</b> phiếu cho ngày ĐÃ làm<br/>(app · Thêm → Làm thêm giờ)<br/><b>trong hạn — mặc định 1 ngày</b>"]:::nv
+  B["②  NV <b>KHAI</b> phiếu cho ngày ĐÃ làm<br/>(app · Thêm → Làm thêm giờ)<br/><b>trong hạn khai của công ty</b>"]:::nv
   C["Phiếu: <b>Chờ duyệt</b>"]:::nv
   D["③  Trưởng Bộ Phận duyệt<br/>(app · tab Cần duyệt)"]:::mg
   E["④  Hệ thống đối chiếu ngay<br/>giờ = min(thực tế sau ca, giờ khai, <b>trần 4h/8h</b>)"]:::sys
@@ -86,9 +86,10 @@ Hôm sau (12/07) anh An mở app → tab **Thêm** → **Làm thêm giờ** → 
 Form nói rõ luật khai-sau:
 
 > ⏱️ **Chỉ khai cho ngày ĐÃ làm** — ô ngày **không cho chọn ngày mai trở đi**.
-> **Trong hạn — mặc định 1 ngày:** làm hôm nay thì khai chậm nhất **hôm sau**. Quá hạn → app báo
-> *"Chỉ được khai làm thêm trong vòng N ngày sau khi làm. Quá hạn liên hệ HR."* → nhờ HR khai tay.
-> *(N = cấu hình `HR Policy.overtime_declaration_deadline_days`, mặc định 1.)*
+> **Trong hạn:** quá hạn → app báo *"Chỉ được khai làm thêm trong vòng N ngày sau khi làm.
+> Quá hạn liên hệ HR."* → nhờ HR khai thủ công.
+> *(N = cột "Hạn khai làm thêm" trong bảng **Hạn khai theo ngày hiệu lực** của `HR Policy`,
+> xét theo NGÀY LÀM THÊM — xem [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html).)*
 
 Gửi xong, phiếu nằm trong danh sách với nhãn **Chờ duyệt** (vàng):
 
@@ -217,7 +218,7 @@ Hệ thống **tự kiểm tra**, chặn ngay lúc gửi nếu:
 |---|---|
 | Ở lại làm thêm mà không có giờ OT nào | Ngày đó **chưa khai phiếu** — phải khai (trong hạn) rồi được duyệt |
 | Không chọn được ngày làm thêm trong lịch | App **chặn ngày tương lai** — chỉ khai cho ngày **đã làm** |
-| *"Chỉ được khai … trong vòng N ngày sau khi làm"* | Khai quá hạn (mặc định **1 ngày**) → nhờ HR khai tay |
+| *"Chỉ được khai … trong vòng N ngày sau khi làm"* | Khai quá hạn (N theo bảng **Hạn khai theo ngày hiệu lực** của công ty) → nhờ HR khai thủ công |
 | Phiếu duyệt rồi, ghi nhận **0h** | Quên check-out, hoặc check-out **trước** giờ tan ca |
 | Giờ ghi nhận **ít hơn** thực tế làm | Bị cap theo giờ khai **hoặc** trần cứng 4h/8h — khai đúng số giờ đã làm |
 | *"Đã có đơn làm thêm giờ ngày…"* | Mỗi ngày chỉ **1 phiếu**. Huỷ phiếu cũ nếu muốn đổi khung giờ |

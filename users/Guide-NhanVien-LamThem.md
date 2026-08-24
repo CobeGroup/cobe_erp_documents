@@ -38,8 +38,8 @@ thì giờ làm thêm hôm đó mới được tính:
   tính 2 tiếng. Khai 2 tiếng mà chỉ ở lại 1 tiếng → tính 1 tiếng.
 - **Trần cứng mỗi ngày:** ngày thường tối đa **4h**, ngày lễ/nghỉ tối đa **8h**.
   Khai vượt trần thì hệ thống tự cắt về trần.
-- Khai bổ sung được trong **1 ngày (mặc định)** kể từ ngày làm thêm — quá hạn thì
-  liên hệ HR khai tay.
+- Khai bổ sung được trong **hạn do công ty cấu hình** kể từ ngày làm thêm — quá hạn thì
+  liên hệ HR khai thủ công (app sẽ báo rõ số ngày khi bạn khai trễ).
 
 ---
 
@@ -112,7 +112,7 @@ Khi đơn được duyệt / từ chối, bạn nhận **thông báo đẩy** tr
 |---|---|
 | Check-out muộn nhưng không thấy giờ OT | Ngày đó **không có đơn đã duyệt** → giờ dôi ra không được tính (đúng thiết kế) |
 | "Đã có đơn làm thêm giờ ngày…" | Mỗi ngày chỉ 1 đơn (chờ hoặc đã duyệt). Huỷ đơn cũ nếu muốn đổi khung giờ |
-| "Chỉ được khai bổ sung trong vòng 1 ngày" | Đơn cho ngày quá khứ chỉ nhận trong 1 ngày (mặc định) — quá hạn báo HR xử lý tay |
+| "Chỉ được khai bổ sung trong vòng N ngày" | Đơn cho ngày quá khứ chỉ nhận trong hạn công ty cấu hình — quá hạn báo HR xử lý thủ công |
 | "Chưa có người duyệt làm thêm giờ" | HR chưa gán người duyệt (Shift Request Approver) cho phòng bạn → báo HR |
 | Đơn duyệt rồi mà ghi nhận 0h | Hôm đó bạn quên check-out, hoặc check-out trước giờ tan ca → không có bằng chứng giờ dôi |
 | Số giờ ghi nhận ít hơn thực tế | Hệ thống lấy **min(giờ thực tế, giờ xin)** — lần sau xin đúng số giờ dự kiến |

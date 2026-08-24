@@ -124,7 +124,7 @@ Khuyến nghị: mỗi Employee có 1 Salary Structure Assignment chuẩn trư�
 
 | Việc | Ai làm | Tần suất |
 |---|---|---|
-| Tạo HR Overtime Request (PWA) | Nhân viên | **Sau** khi làm thêm, trong hạn 1 ngày (mặc định) |
+| Tạo HR Overtime Request (PWA) | Nhân viên | **Sau** khi làm thêm, trong hạn khai của công ty ([Hạn nộp phiếu](HR-Filing-Deadline.html)) |
 | Duyệt HR Overtime Request | Manager (Shift Request Approver) | Ngay khi nhận thông báo — duyệt muộn hệ thống vẫn đối chiếu ngược |
 | Đăng ký WFH Approval | Nhân viên | Hôm trước hoặc sáng |
 | Duyệt WFH Approval | Manager | Trong ngày |

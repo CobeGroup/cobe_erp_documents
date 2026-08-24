@@ -113,8 +113,9 @@ mình phụ trách; HR Manager / System Manager huỷ được mọi đơn.
    - Nhân viên nhận **thông báo** kèm lý do.
 
 > Đơn *Cancelled* **không chiếm chỗ** — cần ghi nhận lại thì khai đơn mới cho đúng
-> ngày đó, không bị báo trùng. Nhân viên tự khai lại được trong hạn 1 ngày; quá hạn
-> thì HR tạo tay trên Desk.
+> ngày đó, không bị báo trùng. Nhân viên tự khai lại được trong hạn khai làm thêm của
+> công ty (xem [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html)); quá hạn thì HR
+> tạo thủ công trên Desk.
 
 ---
 

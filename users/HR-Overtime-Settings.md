@@ -73,9 +73,12 @@ Desk → **HR Policy** (mỗi Company 1 bản ghi) → section **Overtime Notifi
 |---|---|
 | **Default Overtime Type** | Giờ OT đã duyệt của Company này tính theo Overtime Type nào |
 | Notify OT Threshold (minutes) | NV check-out muộn quá N phút **mà không có đơn OT** → nhắc NV tạo đơn (0 = tắt nhắc) |
-| **`overtime_max_hours_normal`** | Trần giờ OT **ngày thường** (mặc định **4**). Khai vượt bị cắt về trần ngay lúc tạo đơn (`cap_ot_hours`) |
-| **`overtime_max_hours_holiday`** | Trần giờ OT **ngày lễ/nghỉ** (mặc định **8**). Cắt cứng như trên |
-| **`overtime_declaration_deadline_days`** | Số ngày được khai bổ sung sau khi làm thêm (mặc định **1**). Quá hạn → app chặn, phải nhờ HR khai tay |
+| Bảng **Trần OT theo ngày hiệu lực** (`HR Policy Overtime Rule`) | Trần giờ OT ngày thường / ngày lễ (mặc định **4h / 8h**, khai vượt bị cắt về trần ngay lúc tạo đơn) + hệ số ngày nửa buổi — khai theo **ngày hiệu lực**, mỗi dòng một mốc |
+| Bảng **Hạn khai theo ngày hiệu lực** (`HR Policy Filing Deadline`), cột *Hạn khai làm thêm* | Số ngày được khai bổ sung sau **ngày làm thêm**. **0 = không giới hạn.** Quá hạn → app chặn, phải nhờ HR khai thủ công |
+
+> 📅 Từ bản cập nhật **08/2026**, trần giờ và hạn khai chuyển từ ô đơn lẻ sang **bảng theo
+> ngày hiệu lực**: phiếu được xét theo bản luật hiệu lực tại **ngày làm thêm**, nên chỉnh quy
+> định về sau không hồi tố lên ngày đã qua. Chi tiết: [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html).
 
 > ⚠️ Đây là **trần cứng thực thi ở tầng đơn** (khi NV tạo/HR tạo hộ HR Overtime
 > Request), khác với "Maximum Overtime Hours Allowed" của Overtime Type (mục 2) chỉ

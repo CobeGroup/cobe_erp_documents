@@ -28,6 +28,8 @@ nav_order: 4
    - [3.3. Lunch Break](#33-lunch-break)
    - [3.4. Overtime Notification](#34-overtime-notification)
    - [3.5. Check-in Whitelist](#35-check-in-whitelist)
+   - [3.6. Trần OT theo ngày hiệu lực](#36-trần-ot-theo-ngày-hiệu-lực)
+   - [3.7. Hạn khai theo ngày hiệu lực](#37-hạn-khai-theo-ngày-hiệu-lực)
 4. [Cấp phép năm (Earned Leave)](#4-cấp-phép-năm-earned-leave)
 5. [Kịch bản roll-out theo giai đoạn](#5-kịch-bản-roll-out-theo-giai-đoạn)
 6. [Lưu ý vận hành](#6-lưu-ý-vận-hành)
@@ -194,6 +196,41 @@ Khi NV whitelist check-in:
 #### Quản lý list
 
 Add row → Save → hiệu lực ngay request kế tiếp. Xóa: xóa row + Save (không có flag enable per row).
+
+### 3.6. Trần OT theo ngày hiệu lực
+
+Bảng `HR Policy Overtime Rule` (section **Overtime Notification**). Mỗi dòng một mốc:
+
+| Field | Ý nghĩa |
+|---|---|
+| `effective_from` | Bản luật áp cho ngày làm thêm từ ngày này trở đi |
+| `max_hours_normal` | Trần giờ OT ngày thường (mặc định 4). **0 = không giới hạn** |
+| `max_hours_holiday` | Trần giờ OT ngày lễ/nghỉ (mặc định 8). **0 = không giới hạn** |
+| `half_day_rate_basis` | Hệ số OT ngày nửa buổi: Ngày thường / **Cuối tuần** (mặc định) / Ngày lễ |
+
+Resolver `utils/hr_policy.get_overtime_rule(company, as_on)` tra bản có `effective_from`
+lớn nhất ≤ **ngày làm thêm**; không có bản nào áp được → mặc định của code (4/8/Cuối tuần).
+Trùng `effective_from` hoặc giá trị âm bị chặn lúc lưu. Vì sao theo ngày: `granted_hours`
+được tính lại mỗi lần Attendance ngày đó được save (cron quét lại cửa sổ 14 ngày) — đọc giá
+trị hiện tại thì chỉnh trần hôm nay đổi số của ngày đã chốt.
+
+### 3.7. Hạn khai theo ngày hiệu lực
+
+Bảng `HR Policy Filing Deadline` (section **Hạn khai bù sau khi việc đã xảy ra**) — hạn nộp
+chung cho **ba** loại phiếu khai-sau:
+
+| Field | Áp cho | Mốc tính trễ |
+|---|---|---|
+| `leave_days` | `Leave Application` | Ngày bắt đầu nghỉ; riêng Nghỉ bù lấy max(ngày nghỉ, ngày duyệt phiếu OT) |
+| `overtime_days` | `HR Overtime Request` | Ngày làm thêm |
+| `attendance_days` | `Attendance Request` (On Duty + WFH) | Ngày đầu của đơn |
+
+Resolver `utils/hr_policy.get_filing_deadline(company, as_on, kind)`; bảng trống hoặc giá
+trị **0 = không giới hạn**; ngày trước bản luật đầu tiên = ngoài phạm vi (không hồi tố).
+Miễn theo role: HR Manager / HR User / System Manager / Administrator. Hạn đơn chấm công
+khai chặt hơn hạn đơn nghỉ → cảnh báo (không chặn) lúc lưu.
+
+Chi tiết cho người vận hành: [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html).
 
 ---
 
