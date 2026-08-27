@@ -111,13 +111,17 @@ Sau khi xác nhận, hệ thống lập một **vận đơn ở trạng thái nh
 
 Hộp thoại có thể hiển thị dải cảnh báo màu vàng. Cần đọc kỹ, không bỏ qua:
 
-- *"Kho nguồn chưa khai Điểm gửi ĐVVC"* — ĐVVC sẽ tới lấy hàng ở **điểm mặc định của
-  tài khoản** (kho TP.HCM) chứ không tới kho của bạn. Đề nghị quản lý khai điểm gửi cho kho
-  trước khi đẩy đơn.
-- *"Điểm gửi khai trên kho … thuộc tài khoản khác"* — điểm gửi là mã kho đăng ký bên ĐVVC, mỗi mã
-  thuộc đúng một tài khoản. Đổi tài khoản đồng nghĩa mất điểm gửi của kho và ĐVVC sẽ tới điểm
-  mặc định. Nếu cần lấy hàng đúng tại kho, hãy quay lại tài khoản cũ, hoặc đăng ký kho đó cho tài
-  khoản mới trên cổng ĐVVC rồi đồng bộ lại.
+- *"Kho nguồn … chưa khai Điểm gửi ĐVVC cho tài khoản …"* — ĐVVC sẽ tới lấy hàng ở **điểm mặc
+  định của tài khoản** (trụ sở chính) chứ không tới kho của bạn. Điểm gửi là mã kho đăng ký bên
+  ĐVVC, mỗi mã thuộc đúng một tài khoản, nên kho phải khai **riêng cho từng tài khoản** sẽ dùng.
+  Nếu cảnh báo còn kèm *"Kho này mới khai điểm gửi cho: A"* thì kho đã khai cho tài khoản A nhưng
+  chưa khai cho tài khoản đang chọn — đề nghị quản lý thêm dòng cho tài khoản này vào bảng
+  *Điểm gửi ĐVVC* trên form Kho (xem [mục 7](#dieu-kien-can-khai)), hoặc
+  quay lại tài khoản A.
+- *"Điểm gửi khai trên kho … thuộc tài khoản khác — đã bỏ qua"* / *"… đã bị tắt — đã bỏ qua"* —
+  dòng khai trên kho đang trỏ vào điểm không dùng được (điểm của tài khoản khác, hoặc điểm đã bị
+  tắt sau khi đồng bộ lại). Hệ thống bỏ qua và xử lý như chưa khai. Cần sửa lại dòng đó trên form
+  Kho.
 - *"Kho đích chưa có địa chỉ"* — thiếu địa chỉ thì không tạo được vận đơn, hệ thống chặn ngay
   khi xác nhận. Cần khai địa chỉ cho kho đích và **điền cả số điện thoại** trên địa chỉ đó.
 
@@ -205,12 +209,12 @@ vận đơn và tồn tại độc lập. Chế độ vận chuyển chỉ đư�
 
 ---
 
-## 7. Điều kiện cần khai trước khi sử dụng
+## 7. Điều kiện cần khai trước khi sử dụng {#dieu-kien-can-khai}
 
 | Việc cần khai | Khai ở đâu | Hậu quả nếu không khai | Hiện trạng *(19/08/2026)* |
 |---|---|---|---|
 | **Địa chỉ** (`Address`) cho từng kho đích, có số điện thoại | `Warehouse` → thêm Address | **Không tạo được vận đơn** | 30/225 kho đã có — 8 kho đích nặng nhất xong, còn **Thanh Hoá** |
-| **Điểm gửi ĐVVC** (`DP Pickup Point`) cho từng kho nguồn | Form `Warehouse`, ô *Điểm gửi ĐVVC* | ĐVVC tới trụ sở chính lấy hàng chứ không tới kho tỉnh | ⛔ mới 10 kho, **toàn bộ của TGĐG** — kho nguồn AKANWA và DOCTOR NƯỚC chưa kho nào |
+| **Điểm gửi ĐVVC** (`DP Pickup Point`) cho từng kho nguồn, **theo từng tài khoản** | Form `Warehouse`, bảng *Điểm gửi ĐVVC* — mỗi dòng một cặp *Tài khoản ĐVVC → Điểm gửi*; kho dùng nhiều tài khoản thì khai nhiều dòng | ĐVVC tới trụ sở chính lấy hàng chứ không tới kho tỉnh | ⛔ mới 10 kho, **toàn bộ của TGĐG** — kho nguồn AKANWA và DOCTOR NƯỚC chưa kho nào; tài khoản mới (vd. *114 HVT*) chưa kho nào khai |
 | **Đồng bộ điểm gửi** cho từng tài khoản ĐVVC | `DP Partner Account` → *Đồng bộ điểm gửi* | Danh sách điểm gửi trống | ✅ xong cả 3 tài khoản — TGDG 36, AKW 50, DR 50 |
 | **Tài khoản ĐVVC** cho từng công ty | `DP Partner Account` | Công ty đó không đặt được ĐVVC | ✅ cả 3 công ty đều có |
 

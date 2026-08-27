@@ -150,12 +150,21 @@ Hệ quả với từng luồng:
 | Luồng | Người gửi khai với ĐVVC |
 |---|---|
 | Bán hàng | điểm gửi của kho xuất hàng |
-| Chuyển kho | điểm gửi khai trên **kho nguồn** (ô *Điểm gửi ĐVVC* trên form Kho) |
+| Chuyển kho | điểm gửi khai trên **kho nguồn** cho **đúng tài khoản đang chọn** (bảng *Điểm gửi ĐVVC* trên form Kho) |
 | Gửi mẫu | điểm gửi **cùng tỉnh với khách** — chọn trong hộp thoại. Xem [Gửi mẫu về lab](Delivery_Partner-Gui-Mau.html) |
 
-**Khai cho kho:** mở form **Kho** → ô *Điểm gửi ĐVVC* → chọn điểm thuộc **tài khoản của đúng công ty
-sở hữu kho đó**. Khai điểm của tài khoản khác thì hệ thống bỏ qua và cảnh báo — không phải lỗi âm
-thầm, nhưng cũng không tự sửa được cho bạn.
+**Khai cho kho:** mở form **Kho** → bảng *Điểm gửi ĐVVC* (`DP Warehouse Pickup Point`) → thêm một
+dòng gồm **Tài khoản ĐVVC** và **Điểm gửi** thuộc tài khoản đó. Một kho vật lý đăng ký được ở nhiều
+tài khoản bên ĐVVC (mỗi tài khoản một mã điểm riêng), nên kho dùng bao nhiêu tài khoản thì khai bấy
+nhiêu dòng — mỗi tài khoản đúng một dòng. Ô *Điểm gửi* chỉ liệt kê điểm đang bật của tài khoản ở cùng
+dòng; chọn chéo tài khoản hoặc khai hai dòng cùng tài khoản thì hệ thống **chặn ngay khi lưu Kho**.
+
+Khi lưu, hệ thống đồng thời điền ô *Warehouse* trên chính bản ghi `DP Pickup Point` (chiều ngược,
+dùng cho [report đối chiếu kho xuất](../tech/Delivery_Partner-Lifecycle.html)) nếu ô đó đang trống —
+không đè lên giá trị đã khai tay.
+
+> Tài khoản **mới** (vd. thêm *Viettel Post - 114 HVT - TGDG*): bấm *Đồng bộ điểm gửi* trên tài
+> khoản đó trước để có danh sách điểm, rồi mới thêm dòng cho tài khoản này trên từng kho nguồn.
 
 **Hiện trạng** *(19/08/2026)*: mới **10 kho** khai điểm gửi, **toàn bộ của TGĐG**. Kho nguồn của
 AKANWA và DOCTOR NƯỚC chưa kho nào trỏ điểm gửi → ĐVVC sẽ tới điểm mặc định của tài khoản (trụ sở)
@@ -170,8 +179,9 @@ hoặc không ai tới lấy hàng.
 
 | Cảnh báo | Nghĩa thật | Làm gì |
 |---|---|---|
-| *"Kho nguồn … chưa khai Điểm gửi ĐVVC cho tài khoản …"* | ĐVVC sẽ tới **trụ sở chính** lấy hàng, không tới kho tỉnh | Báo quản lý khai điểm gửi cho kho trước khi đẩy đơn |
-| *"Điểm gửi khai trên kho … thuộc tài khoản A, không phải B — đã bỏ qua"* | Kho đang trỏ vào điểm của tài khoản khác | Khai lại điểm thuộc đúng tài khoản, hoặc đổi tài khoản trong hộp thoại |
+| *"Kho nguồn … chưa khai Điểm gửi ĐVVC cho tài khoản …"* (có thể kèm *"Kho này mới khai điểm gửi cho: A"*) | Kho chưa có dòng cho tài khoản đang chọn → ĐVVC sẽ tới **trụ sở chính** lấy hàng, không tới kho tỉnh | Báo quản lý thêm dòng cho tài khoản này vào bảng *Điểm gửi ĐVVC* trên Kho, hoặc chọn lại tài khoản đã khai (A) |
+| *"Điểm gửi khai trên kho … thuộc tài khoản A, không phải B — đã bỏ qua"* | Dòng trên kho bị sửa lệch sau khi khai (điểm của tài khoản khác) | Sửa lại dòng đó trên form Kho |
+| *"Điểm gửi … khai trên kho … đã bị tắt — đã bỏ qua"* | Điểm đã bị tắt (`is_active` = 0) sau khi khai | Chọn điểm khác cho dòng đó trên form Kho |
 | *"Không dò được tỉnh của địa chỉ khách nên điểm gửi đang mồi theo điểm MẶC ĐỊNH"* | Địa chỉ khách thiếu Tỉnh/Quận nên không gợi ý được | Kiểm tay điểm gửi cho đúng nơi cần tới lấy |
 | *"Kho đích chưa có địa chỉ"* | **Chặn cứng** — không tạo được vận đơn | Khai Address cho kho đích, nhớ cả số điện thoại |
 

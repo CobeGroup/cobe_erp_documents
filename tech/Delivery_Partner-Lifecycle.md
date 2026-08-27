@@ -407,8 +407,18 @@ lựa chọn.
 
 App gốc có ô `pickup_point` trên vận đơn; `_sender_info` dùng đúng điểm đó thay vì luôn lấy điểm mặc
 định của tài khoản. Không có nó thì hàng gửi từ kho tỉnh vẫn báo VTP tới lấy ở TP.HCM.
-`Warehouse.custom_dp_pickup_point` ghi điểm gửi ứng với từng kho; patch
-`seed_warehouse_pickup_points` mồi sẵn 10 kho, chỉ điền ô trống.
+Bảng `Warehouse.custom_dp_pickup_points` (child `DP Warehouse Pickup Point`: `partner_account` →
+`pickup_point`) ghi điểm gửi ứng với từng kho **theo từng tài khoản** — một kho vật lý đăng ký được ở
+nhiều tài khoản bên hãng, mỗi tài khoản một mã điểm riêng, nên ô Link đơn `custom_dp_pickup_point`
+ban đầu là không đủ: đổi tài khoản trong hộp thoại là mất điểm gửi. `api/transfer._pickup_point_for`
+tra theo cặp (kho nguồn, tài khoản đang chọn); `accounts.usable_accounts(preferred_accounts=…)` xếp
+các tài khoản đã khai cho kho lên đầu ô chọn. Hook `doc_events/warehouse.validate` chặn hai lỗi child
+table không tự bắt được (điểm sai tài khoản, một tài khoản hai dòng); `on_update` điền
+`DP Pickup Point.warehouse` (chiều ngược, report đối chiếu kho xuất đọc) nếu ô đó trống.
+
+Patch `seed_warehouse_pickup_points` mồi sẵn 10 kho cho `Viettel Post - TGDG`; patch
+`warehouse_pickup_point_to_table` bê ô Link cũ sang bảng (tài khoản suy từ chính điểm gửi), xoá
+Custom Field cũ + cột DB, dọn `__UserSettings` còn nhớ field ma. Cả hai chỉ điền chỗ trống.
 
 `pickup_address_name` từ nay chỉ bắt buộc khi **không** khai điểm gửi — VTP lấy người gửi từ
 `GROUPADDRESS_ID` của điểm, không từ Address, và hầu như không kho nào có Address.
@@ -516,7 +526,7 @@ Thêm từ 08/2026:
 | `custom_references` | DP Shipment | Bảng `DP Shipment Reference`: chứng từ nguồn, quan hệ nhiều–nhiều |
 | `custom_receive_stock_entry` | DP Shipment | Phiếu nhập do kho đích Submit (chuyển kho) |
 | `custom_transport_mode` | Material Request | Chỉ đọc, hệ thống ghi: *Đơn vị vận chuyển* ∥ *Tự vận chuyển* |
-| `custom_dp_pickup_point` | Warehouse | Điểm gửi ĐVVC ứng với kho |
+| `custom_dp_pickup_points` | Warehouse | Bảng `DP Warehouse Pickup Point`: điểm gửi ĐVVC ứng với kho, mỗi tài khoản một dòng (thay ô Link đơn `custom_dp_pickup_point`) |
 
 > Field `carrier_push_status` / `order_source` (trạng thái đẩy đơn) là **field native của app gốc**
 > trong `dp_shipment.json` — xem [Tài liệu kỹ thuật app gốc](Delivery_Partner-Tech.html).
