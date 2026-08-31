@@ -16,4 +16,5 @@ Quản lý dịch vụ hiện trường (FSMNext) và tự động phân bổ ti
 - **[Auto-Assign Ticket & SIM](Service_Reminder_Auto_Assign.html)** — tự động phân bổ ticket bảo dưỡng & SIM.
 - **[Quy tắc phân bổ bảo dưỡng](QUY_TAC_PHAN_BO_BAO_DUONG.html)** — thuật toán chọn kỹ thuật viên.
 - 🏷️ **[Phân loại sự cố (Nhóm · Loại)](Phan-Loai-Su-Co.html)** — hai ô Nhóm/Loại điền được theo cả hai chiều, một loại thuộc nhiều nhóm, hai công tắc ngừng sử dụng, và cách tắt cụm *Danh mục cũ* hàng loạt.
+- 📊 **[Hiệu suất xử lý sự cố](Hieu-Suat-Xu-Ly-Su-Co.html)** — tỉ lệ ca hoàn thành trong hạn của nhân viên sự cố và kỹ thuật viên, bấm vào con số để xem từng ca, biểu đồ 12 tháng và chỗ khai số ngày hạn.
 - 🔍 **[Lọc ticket bảo dưỡng](Loc-Ticket-Bao-Duong.html)** — lọc theo tháng/khoảng ngày, theo người phụ trách, ca quá hạn, ticket chưa gán; sắp xếp và lưu bộ lọc dùng lại.
