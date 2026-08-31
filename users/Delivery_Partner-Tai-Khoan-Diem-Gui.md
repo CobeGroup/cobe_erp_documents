@@ -28,17 +28,24 @@ Một điểm gửi **thuộc về đúng một tài khoản**. Đây là gốc 
 Mỗi công ty một tài khoản riêng, vì mỗi tài khoản gắn với một **kho ảo** — và kho ảo là kho **thật**
 trong hệ thống, nên nó thuộc về một công ty.
 
-Hiện trạng *(đo 19/08/2026)*:
+Hiện trạng *(đo 31/08/2026)* — **hai tài khoản mỗi công ty**:
 
 | Tài khoản | Công ty | Kho ảo | Điểm gửi đã đồng bộ |
 |---|---|---|---|
-| `Viettel Post - TGDG` | THẾ GIỚI ĐIỆN GIẢI | Kho Viettel Post - TGĐG | 36 |
-| `Viettel Post - AKW` | AKANWA | Kho Viettel Post - AKW | 50 |
-| `Viettel Post - DR` | DOCTOR NƯỚC | Kho Viettel Post - DR | 50 |
+| `Viettel Post - TGDG` | THẾ GIỚI ĐIỆN GIẢI | Kho Viettel Post - TGĐG | 51 |
+| `Viettel Post - AKW` | AKANWA | Kho Viettel Post - AKW | 51 |
+| `Viettel Post - DR` | DOCTOR NƯỚC | Kho Viettel Post - DR | 51 |
+| `Viettel Post - 114 HVT - TGDG` | THẾ GIỚI ĐIỆN GIẢI | Kho Viettel Post - TGĐG | 30 |
+| `Viettel Post - 114 HVT - AKW` | AKANWA | Kho Viettel Post - AKW | 30 |
+| `Viettel Post - 114 HVT - DR` | DOCTOR NƯỚC | Kho Viettel Post - DR | 30 |
 
-Ba tài khoản này **dùng chung một số đăng nhập Viettel Post**. Nên khi đồng bộ, cả ba nhận về gần
+Ba tài khoản đầu **dùng chung một số đăng nhập Viettel Post**. Nên khi đồng bộ, cả ba nhận về gần
 như cùng một danh sách điểm gửi — khác nhau ở chỗ bản ghi nằm dưới tài khoản nào, chứ không phải nội
 dung.
+
+Ba tài khoản `114 HVT` là **hợp đồng thứ hai**, số đăng nhập khác, nên danh sách điểm gửi của chúng
+cũng khác (30 điểm). Hai tài khoản của cùng một công ty **dùng chung một kho ảo** — nên xét theo công
+ty thì cả hai đều hợp lệ, và **người đặt đơn phải tự chọn đúng hợp đồng muốn trừ cước**.
 
 > ⛔ **Ngoài ba cái trên còn 8 tài khoản dựng sẵn** — `GHN Default`, `GHTK Default`, `J&T Express
 > Default`, `Ninja Van Default`, `Best Express Default`, `Ahamove Default`, `Shopee Express Default`,
@@ -48,7 +55,7 @@ dung.
 >
 > Từ 19/08/2026 các ô chọn **không bày chúng ra nữa**. Vẫn gặp lại được trong đúng một trường hợp:
 > vận đơn **tạo tay chưa gắn chứng từ nguồn** — lúc đó hệ thống không suy được công ty nên không lọc
-> gì cả, và bày ra đủ 11 tài khoản.
+> gì cả, và bày ra đủ 14 tài khoản.
 
 ---
 
@@ -58,9 +65,10 @@ Chuyển kho của công ty A **không** đẩy hàng vào kho ảo của công 
 chặn thẳng, và lỗi nó ném ra (`InvalidWarehouseCompany`) thì đọc không hiểu gì.
 
 Nên mọi ô chọn tài khoản **chỉ hiện những tài khoản có kho ảo thuộc đúng công ty của chứng từ**, và
-lọc thêm một lần nữa: bỏ hết tài khoản **chưa khai thông tin đăng nhập**. Kết quả là mỗi công ty còn
-đúng **một dòng** — `- TGDG`, `- AKW`, hoặc `- DR`. Thấy nhiều hơn một dòng thì có tài khoản mới được
-khai thêm, đọc mục 1 rồi chọn cho đúng hãng.
+lọc thêm một lần nữa: bỏ hết tài khoản **chưa khai thông tin đăng nhập**. Kết quả *(31/08/2026)* là
+mỗi công ty còn **hai dòng** — hợp đồng cũ và hợp đồng `114 HVT`. Cả hai đều đi được; khác nhau ở
+**cước trừ vào hợp đồng nào** và **điểm gửi nào dùng được**, nên xem mục 3 để biết hệ thống mồi sẵn
+cái nào.
 
 Kể cả gọi thẳng qua API bỏ qua hộp thoại, hệ thống vẫn chặn lại **lúc lưu vận đơn** và nói đúng
 nguyên nhân, thay vì để lỗi nổ muộn lúc sinh chứng từ kho.
@@ -166,9 +174,10 @@ không đè lên giá trị đã khai tay.
 > Tài khoản **mới** (vd. thêm *Viettel Post - 114 HVT - TGDG*): bấm *Đồng bộ điểm gửi* trên tài
 > khoản đó trước để có danh sách điểm, rồi mới thêm dòng cho tài khoản này trên từng kho nguồn.
 
-**Hiện trạng** *(19/08/2026)*: mới **10 kho** khai điểm gửi, **toàn bộ của TGĐG**. Kho nguồn của
-AKANWA và DOCTOR NƯỚC chưa kho nào trỏ điểm gửi → ĐVVC sẽ tới điểm mặc định của tài khoản (trụ sở)
-chứ không tới kho tỉnh.
+**Hiện trạng** *(31/08/2026)*: mới **10 kho** khai điểm gửi, **10 dòng, toàn bộ cho một tài khoản
+duy nhất là `Viettel Post - TGDG`**. Năm tài khoản còn lại — kể cả `AKW` và `DR` của hai công ty kia,
+lẫn cả ba hợp đồng `114 HVT` — **chưa kho nào khai dòng nào**. Đặt đơn bằng những tài khoản đó thì
+ĐVVC tới điểm mặc định của tài khoản (trụ sở) chứ không tới kho tỉnh.
 
 ---
 
@@ -211,11 +220,12 @@ Trình tự bắt buộc:
 
 ## 8. Việc còn treo
 
-| Việc | Hiện trạng *(19/08/2026)* |
+| Việc | Hiện trạng *(31/08/2026)* |
 |---|---|
-| Đồng bộ điểm gửi cho cả 3 tài khoản | ✅ xong — TGDG 36, AKW 50, DR 50 |
-| Địa chỉ kho | 30/225 kho có Address (10 kho mỗi công ty) — 8 kho đích nặng nhất đã xong |
-| Điểm gửi trên kho nguồn | ⛔ mới 10 kho, toàn TGĐG — AKANWA và DOCTOR NƯỚC chưa kho nào |
+| Đồng bộ điểm gửi | ✅ cả 6 tài khoản — hợp đồng cũ 51 điểm/tài khoản, `114 HVT` 30 điểm/tài khoản |
+| Địa chỉ kho | 33/228 kho có Address (11 kho mỗi công ty) — 8 kho đích nặng nhất đã xong |
+| Điểm gửi trên kho nguồn | ⛔ mới 10 kho / 10 dòng, **chỉ cho `Viettel Post - TGDG`** — 5 tài khoản còn lại chưa kho nào khai |
+| Cấu hình gửi mẫu (`DP Cobe Settings`) | ⛔ thiếu **Tài khoản ĐVVC**, **Item vật mang**, **Giá trị khai** — nút gửi mẫu chưa dùng được |
 | Điểm gửi ở Thanh Hoá | ⛔ Viettel Post chưa có điểm ở địa bàn này, phải đăng ký theo mục 7 |
 | Vận đơn nháp `SHIP-DP-2026-398778` | ⛔ chọn sai tài khoản — xem dưới |
 
