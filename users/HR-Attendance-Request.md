@@ -71,7 +71,15 @@ Khi NV tạo qua PWA (`api.attendance_request.create_attendance_request`), `reas
 > GPS của ngày WFH: xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
 
 Ràng buộc khi tạo đơn: một đơn phủ tối đa **31 ngày**, mỗi NV tối đa **10 đơn nháp** chờ
-duyệt, đơn **thừa** (mọi ngày đã có Attendance đúng trạng thái) bị chặn từ lúc tạo. Đơn cho
+duyệt, đơn **thừa** (mọi ngày đã có Attendance đúng trạng thái) bị chặn từ lúc tạo.
+
+> 📅 **Ngày nghỉ trong khoảng đơn CÓ được đánh công** (từ bản cập nhật 09/2026): đơn tạo qua
+> app luôn bật `include_holidays`, nên duyệt đơn phủ Chủ nhật/ngày lễ sẽ tạo Attendance
+> `Present` cho cả ngày đó — KTV đi làm ngày nghỉ chính là trường hợp cần đơn này nhất.
+> Trước đây HRMS lặng lẽ bỏ qua ngày nghỉ lúc duyệt: đơn duyệt xong mà ngày Chủ nhật vẫn
+> trắng công, hoặc kẹt `Half Day` 0 giờ nếu nhân viên có check-in nhưng quên check-out.
+> Ngày quên một lần chấm trên đơn đã duyệt giữ **giờ ca chuẩn**; check đủ vào/ra thì tiến
+> trình nền điền **giờ thật**. Bản chấm công giờ thật do hệ thống tự dựng không bị đơn đè. Đơn cho
 **ngày quá khứ** chịu hạn nộp riêng — cột *Hạn nộp đơn chấm công* của bảng **Hạn khai theo
 ngày hiệu lực** trong `HR Policy`, xét theo **ngày đầu của đơn**; 0 = không giới hạn (mặc
 định). Hạn này áp ở `validate()` của doctype nên PWA, Desk hay API đều chịu chung; role HR
