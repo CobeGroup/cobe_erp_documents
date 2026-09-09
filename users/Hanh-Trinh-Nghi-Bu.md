@@ -83,6 +83,10 @@ chọn **đúng ngày trong phiếu OT** (11/07), rồi chọn **ngày muốn ng
 Hệ thống **kiểm tra ngay lúc gửi**, chặn nếu:
 - Ngày làm thêm đó **không có phiếu OT đã duyệt** (quy đổi Nghỉ bù) → *"Ngày … không có đơn Làm thêm giờ đã duyệt…"*.
 - Ngày làm thêm đó **đã dùng để bù rồi** → mỗi ngày làm thêm chỉ đổi được **1 lần**.
+- **Chưa đủ giờ theo tỷ giá** (áp dụng từ 09/2026): xin **0,5 ngày** cần phiếu OT ngày đó
+  được duyệt **≥ 4h**, xin **1 ngày** cần **≥ 8h**. Làm thêm ngày thường (trần 4h) vì vậy
+  đổi tối đa 0,5 ngày; một ngày làm thêm đổi tối đa 1 ngày nghỉ. Trường hợp đặc biệt
+  (mất bằng chứng chấm công, phiếu cũ) liên hệ HR tạo thay trên Desk.
 
 Qua được kiểm tra, đơn đi tiếp **2 bước Manager → HR** y như [đơn nghỉ phép thường](Hanh-Trinh-Nghi-Phep.html).
 

@@ -27,19 +27,22 @@ Xem nhanh cả quy trình — tạo đơn quy đổi tiền, tạo đơn quy đ�
 
 ---
 
-## Nguyên tắc quan trọng: khai SAU khi đã làm
+## Nguyên tắc quan trọng: đơn là giấy phép, chấm công là bằng chứng
 
-**Check-out muộn KHÔNG tự thành giờ làm thêm.** Bạn làm thêm trước, check-out như
-thường, RỒI mới khai phiếu; chỉ ngày nào có đơn làm thêm **đã được Quản lý duyệt**
-thì giờ làm thêm hôm đó mới được tính:
+**Check-out muộn KHÔNG tự thành giờ làm thêm.** Chỉ ngày nào có đơn làm thêm
+**đã được Quản lý duyệt** thì giờ làm thêm hôm đó mới được tính:
 
-- **Giờ được công nhận** = giờ bạn thực tế ở lại sau giờ tan ca (theo check-out),
-  nhưng **tối đa bằng số giờ đã khai** trong đơn. Khai 2 tiếng mà ở lại 3 tiếng →
-  tính 2 tiếng. Khai 2 tiếng mà chỉ ở lại 1 tiếng → tính 1 tiếng.
+- **Khung sau giờ tan ca** (làm tối): giờ được công nhận = giờ bạn thực tế ở lại sau
+  giờ tan ca (theo check-out), nhưng **tối đa bằng số giờ đã khai**. Khai 2 tiếng mà
+  ở lại 3 tiếng → tính 2 tiếng; chỉ ở lại 1 tiếng → tính 1 tiếng.
+- **Khung xuyên trưa** (làm không nghỉ trưa): khai **khung riêng đúng giờ nghỉ trưa**
+  (ví dụ 12:00 → 13:30). Được tính khi hôm đó bạn **check-in/check-out đầy đủ** và
+  Quản lý duyệt — tối đa bằng độ dài giờ nghỉ trưa.
 - **Trần cứng mỗi ngày:** ngày thường tối đa **4h**, ngày lễ/nghỉ tối đa **8h**.
   Khai vượt trần thì hệ thống tự cắt về trần.
-- Khai bổ sung được trong **hạn do công ty cấu hình** kể từ ngày làm thêm — quá hạn thì
-  liên hệ HR khai thủ công (app sẽ báo rõ số ngày khi bạn khai trễ).
+- Khai trước cho ngày sắp làm thêm được (như đơn nghỉ); khai bổ sung cho ngày đã làm
+  thì trong **hạn do công ty cấu hình** — quá hạn liên hệ HR khai thủ công (app sẽ
+  báo rõ số ngày khi bạn khai trễ).
 
 ---
 
@@ -61,8 +64,12 @@ Bấm nút **+** (góc dưới phải) → điền:
 
 <img src="images/guide/overtime/02-ot-form.png" width="240" alt="Form tạo đơn làm thêm — quy đổi tiền lương">
 
-1. **Ngày làm thêm** — hôm bạn ĐÃ làm thêm (app chặn khai cho ngày trong tương lai).
-2. **Khung giờ dự kiến** — ví dụ 18:00 → 20:00 (sau giờ tan ca).
+1. **Ngày làm thêm** — hôm sắp làm thêm (khai trước, như đơn nghỉ) hoặc hôm đã làm
+   (khai bù, trong hạn cho phép).
+2. **Khung giờ dự kiến** — ví dụ 18:00 → 20:00 (sau giờ tan ca). Một ngày làm thêm
+   **nhiều lần** thì bấm **Thêm khung giờ**: làm xuyên trưa khai khung riêng đúng giờ
+   nghỉ trưa (ví dụ 12:00 → 13:30), làm tối khai khung sau giờ tan ca — phần khung
+   lọt vào giờ làm chính thức không được tính.
 3. **Hình thức quy đổi** — chọn **Tiền lương**.
 4. **Lý do / nội dung công việc** — ghi rõ làm gì (vd *"Chốt báo cáo tháng"*).
 5. Bấm **Gửi đơn** → Quản lý nhận thông báo và duyệt trên tab **Cần duyệt**.
@@ -111,11 +118,12 @@ Khi đơn được duyệt / từ chối, bạn nhận **thông báo đẩy** tr
 | Tình huống | Cách xử |
 |---|---|
 | Check-out muộn nhưng không thấy giờ OT | Ngày đó **không có đơn đã duyệt** → giờ dôi ra không được tính (đúng thiết kế) |
-| "Đã có đơn làm thêm giờ ngày…" | Mỗi ngày chỉ 1 đơn (chờ hoặc đã duyệt). Huỷ đơn cũ nếu muốn đổi khung giờ |
+| "Đã có đơn làm thêm giờ ngày…" | Mỗi ngày chỉ 1 đơn (chờ hoặc đã duyệt) — làm thêm nhiều lần trong ngày thì dùng **Thêm khung giờ** trong cùng đơn. Muốn đổi khung thì huỷ đơn cũ khai lại |
+| "Toàn bộ khung giờ đã khai nằm trong giờ làm chính thức…" | Khung bạn khai lọt vào giờ làm bình thường (đã trả lương). Làm xuyên trưa thì khai khung riêng đúng giờ nghỉ trưa; làm tối thì khai khung sau giờ tan ca |
 | "Chỉ được khai bổ sung trong vòng N ngày" | Đơn cho ngày quá khứ chỉ nhận trong hạn công ty cấu hình — quá hạn báo HR xử lý thủ công |
 | "Chưa có người duyệt làm thêm giờ" | HR chưa gán người duyệt (Shift Request Approver) cho phòng bạn → báo HR |
-| Đơn duyệt rồi mà ghi nhận 0h | Hôm đó bạn quên check-out, hoặc check-out trước giờ tan ca → không có bằng chứng giờ dôi |
-| Số giờ ghi nhận ít hơn thực tế | Hệ thống lấy **min(giờ thực tế, giờ xin)** — lần sau xin đúng số giờ dự kiến |
+| Đơn duyệt rồi mà ghi nhận 0h | Hôm đó bạn quên check-out (mọi loại khung đều cần bằng chứng chấm công), hoặc chỉ khai khung tối mà check-out trước giờ tan ca |
+| Số giờ ghi nhận ít hơn thực tế | Hệ thống lấy **min(giờ có bằng chứng theo từng khung, giờ xin)** — lần sau khai đúng khung và đủ số giờ dự kiến |
 
 ---
 

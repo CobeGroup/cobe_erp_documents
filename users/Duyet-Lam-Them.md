@@ -50,7 +50,7 @@ Bấm vào đơn để xem chi tiết rồi **Duyệt** hoặc **Từ chối**:
 
 | Thông tin | Ý nghĩa khi duyệt |
 |---|---|
-| **Ngày + khung giờ (Xh)** | Số giờ **tối đa** sẽ được tính. Thực tế làm ít hơn thì tính ít hơn — không lo duyệt "hớ" |
+| **Ngày + các khung giờ (Xh)** | Một ngày có thể có **nhiều khung** — ví dụ `12:00–13:30 + 17:30–19:30`. Tổng là số giờ **tối đa** sẽ được tính; thực tế làm ít hơn thì tính ít hơn — không lo duyệt "hớ". **Riêng khung trưa** (12:00–13:30): chấm công không đo được giờ nghỉ trưa, nên chữ ký của bạn chính là căn cứ công nhận — chỉ duyệt khi biết nhân viên thực sự làm xuyên trưa |
 | **Quy đổi: Tiền lương** | Giờ OT sẽ vào lương kỳ tới (hệ số ×1.5 ngày thường / ×2.0 Chủ nhật **và Thứ 7 nửa buổi** / ×3.0 lễ) |
 | **Quy đổi: Nghỉ bù** | Không ra tiền — đơn này là căn cứ để nhân viên xin Nghỉ bù sau đó |
 | **Lý do** | Nội dung công việc làm thêm — căn cứ chính để duyệt/từ chối |
@@ -68,8 +68,11 @@ Nhân viên nhận thông báo ngay khi bạn duyệt / từ chối.
 Bạn **không phải theo dõi gì thêm**. Hôm nhân viên làm thêm:
 
 1. Nhân viên check-in/out như bình thường.
-2. Hệ thống đối chiếu: **giờ công nhận = min(giờ thực tế check-out sau ca, giờ xin trong đơn)**.
-   - Không check-out / về đúng giờ → 0h, không tính.
+2. Hệ thống đối chiếu **theo từng khung**: khung sau tan ca = min(giờ thực tế
+   check-out sau ca, giờ xin); khung trưa = phần khung được phủ bởi check-in/check-out
+   của ngày đó (có mặt cả ngày là điều kiện).
+   - Không check-out → 0h cho mọi khung, không tính.
+   - Chỉ khai khung tối mà về đúng giờ → 0h; khung trưa thì về đúng giờ vẫn được tính.
    - Ở lại lâu hơn số giờ xin → chỉ tính đúng số giờ đã duyệt.
 3. Quy đổi **Tiền lương** → giờ OT vào **Overtime Slip** kỳ lương (HR chạy payroll là có).
    Quy đổi **Nghỉ bù** → nhân viên xin Nghỉ bù, hệ thống **tự kiểm tra** phải có đơn này.

@@ -188,6 +188,7 @@ Có đơn làm thêm đã duyệt rồi thì tạo đơn nghỉ y như nghỉ ph
 | Cần khai gì thêm? | — | **Ngày làm thêm để bù** |
 | Ai xác nhận làm thêm là có thật? | — | **Hệ thống tự kiểm**: phải có đơn Làm thêm giờ đã duyệt cho đúng ngày đó |
 | Dùng lại được không? | — | Mỗi ngày làm thêm chỉ bù **1 lần** |
+| Đổi được bao nhiêu ngày? | — | Theo **giờ đã duyệt** trong đơn làm thêm: **0,5 ngày cần ≥ 4h, 1 ngày cần ≥ 8h**. Chưa đủ giờ thì hệ thống báo ngay lúc gửi |
 
 ---
 

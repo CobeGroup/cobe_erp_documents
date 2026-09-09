@@ -40,7 +40,7 @@ flowchart TB
   B["②  NV <b>KHAI</b> phiếu cho ngày ĐÃ làm<br/>(app · Thêm → Làm thêm giờ)<br/><b>trong hạn khai của công ty</b>"]:::nv
   C["Phiếu: <b>Chờ duyệt</b>"]:::nv
   D["③  Trưởng Bộ Phận duyệt<br/>(app · tab Cần duyệt)"]:::mg
-  E["④  Hệ thống đối chiếu ngay<br/>giờ = min(thực tế sau ca, giờ khai, <b>trần 4h/8h</b>)"]:::sys
+  E["④  Hệ thống đối chiếu ngay<br/>giờ = min(bằng chứng theo từng khung, giờ khai, <b>trần 4h/8h</b>)"]:::sys
   F["Phiếu: <b>đã ghi nhận 2h</b>"]:::ok
   G["⑤a  Quy đổi <b>Tiền lương</b><br/>→ vào lương kỳ tới"]:::ok
   H["⑤b  Quy đổi <b>Nghỉ bù</b><br/>→ căn cứ xin ngày nghỉ"]:::ok
@@ -57,9 +57,13 @@ flowchart TB
 | ④ Đối chiếu | **Hệ thống** (tự động, ngay lúc duyệt) | — | Phiếu có **số giờ công nhận** |
 | ⑤ Quy đổi | HR (lương) / Nhân viên (nghỉ bù) | Payroll / App → Nghỉ phép | Thành tiền **hoặc** ngày nghỉ |
 
-> ⚠️ **Khai SAU, không khai trước.** App **chặn khai cho ngày trong tương lai** — chưa làm thì
-> chưa có gì để khai. Và **phiếu duyệt xong CHƯA chắc là đủ giờ** — giờ chốt sau bước ④, khi
-> đã đối chiếu với chấm công thực tế. Duyệt ≠ trả tiền.
+> ⚠️ **Khai trước hay khai sau đều được** (khai trước như đơn nghỉ; khai bù trong hạn cấu
+> hình). Nhưng **phiếu duyệt xong CHƯA chắc là đủ giờ** — giờ chốt sau bước ④, khi đã đối
+> chiếu với chấm công thực tế của ngày làm thêm. Duyệt ≠ trả tiền.
+>
+> 💡 **Một ngày làm thêm nhiều lần** (ví dụ làm xuyên trưa rồi tối lại ở thêm) thì khai
+> **nhiều khung giờ trong cùng một phiếu** — nút *Thêm khung giờ* trên form. Mỗi ngày vẫn
+> chỉ một phiếu.
 
 ---
 
@@ -130,10 +134,16 @@ Vì phiếu **khai sau khi đã làm**, chấm công của ngày đó **đã có
 hệ thống đối chiếu luôn — không cần chờ thêm:
 
 ```
-Giờ công nhận  =  min( giờ thực tế check-out SAU giờ tan ca ,  giờ khai ,  trần 4h/8h )
+Giờ công nhận  =  min( giờ có bằng chứng theo TỪNG KHUNG ,  giờ khai ,  trần 4h/8h )
 ```
 
-Ví dụ anh An (ca tan 17:30, khai OT 2 tiếng cho ngày thường → trần 4h):
+- **Khung sau giờ tan ca** (làm tối): bằng chứng = giờ check-out thực tế sau `end_time` của ca.
+- **Khung xuyên trưa** (khai đích danh trong giờ nghỉ trưa, ví dụ 12:00–13:30): máy không đo
+  được giờ trưa (giờ nghỉ trưa được trừ tự động khỏi giờ công), nên bằng chứng = **có mặt cả
+  ngày** (check-in/check-out phủ khung trưa) + **chữ ký người duyệt**; tối đa bằng độ dài giờ
+  nghỉ trưa.
+
+Ví dụ anh An (ca tan 17:30, khai OT khung tối 2 tiếng cho ngày thường → trần 4h):
 
 | Thực tế check-out | Giờ dôi sau ca | Giờ khai | **Được tính** | Vì sao |
 |---|---|---|---|---|
@@ -142,6 +152,10 @@ Ví dụ anh An (ca tan 17:30, khai OT 2 tiếng cho ngày thường → trần 
 | 18:30 | 1h | 2h | **1h** | Làm ít hơn khai → tính theo thực tế |
 | 17:30 (về đúng giờ) | 0h | 2h | **0h** | Không ở lại → không có OT |
 | *(quên check-out)* | — | 2h | **0h** | Không có bằng chứng giờ về |
+
+Nếu anh An khai thêm **khung trưa 12:00–13:30** (làm xuyên trưa): có mặt cả ngày (vào 07:55,
+ra 17:30) → được tính **1,5h** cho khung trưa, kể cả khi về đúng giờ tan ca. Bằng chứng buổi
+tối không cộng thay cho khung trưa và ngược lại.
 
 > 🔒 **Trần cứng bao trùm tất cả:** dù thực tế lẫn giờ khai đều cao, ngày thường **không quá 4h**,
 > ngày lễ/nghỉ **không quá 8h** (cấu hình per công ty tại `HR Policy`).
@@ -217,11 +231,11 @@ Hệ thống **tự kiểm tra**, chặn ngay lúc gửi nếu:
 | Tình huống | Nguyên nhân / cách xử |
 |---|---|
 | Ở lại làm thêm mà không có giờ OT nào | Ngày đó **chưa khai phiếu** — phải khai (trong hạn) rồi được duyệt |
-| Không chọn được ngày làm thêm trong lịch | App **chặn ngày tương lai** — chỉ khai cho ngày **đã làm** |
 | *"Chỉ được khai … trong vòng N ngày sau khi làm"* | Khai quá hạn (N theo bảng **Hạn khai theo ngày hiệu lực** của công ty) → nhờ HR khai thủ công |
-| Phiếu duyệt rồi, ghi nhận **0h** | Quên check-out, hoặc check-out **trước** giờ tan ca |
+| Phiếu duyệt rồi, ghi nhận **0h** | Quên check-out (mọi loại khung đều cần bằng chứng chấm công), hoặc chỉ khai khung tối mà check-out **trước** giờ tan ca |
+| Làm xuyên trưa mà không được tính giờ | Chưa khai **khung trưa đích danh** (ví dụ 12:00–13:30) — khung gộp lẫn giờ làm chính thức không được tính phần trưa |
 | Giờ ghi nhận **ít hơn** thực tế làm | Bị cap theo giờ khai **hoặc** trần cứng 4h/8h — khai đúng số giờ đã làm |
-| *"Đã có đơn làm thêm giờ ngày…"* | Mỗi ngày chỉ **1 phiếu**. Huỷ phiếu cũ nếu muốn đổi khung giờ |
+| *"Đã có đơn làm thêm giờ ngày…"* | Mỗi ngày chỉ **1 phiếu** — làm thêm nhiều lần trong ngày thì **thêm khung giờ** trong cùng phiếu; muốn đổi khung thì huỷ phiếu cũ khai lại |
 | *"Chưa có người duyệt làm thêm giờ"* | HR chưa gán **Shift Request Approver** cho phòng bạn |
 
 ---
