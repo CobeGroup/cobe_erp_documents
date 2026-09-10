@@ -126,6 +126,7 @@ chứng từ nguồn trỏ về SO, nên hai giá trị khớp nhau ngay từ tr
   `sales_order_item` / `custom_dp_shipment`.
 - Set `custom_material_request`, `custom_fulfillment_status = "Pending MR"`.
 - **MR không ghi Stock Ledger** — chỉ là đề nghị.
+- **Công ty** suy bằng `_company_from_source` — [§2.4](#cong-ty-chung-tu).
 
 ### 2.2. Trừ kho thật → Stock Entry (2 đường)
 
@@ -135,7 +136,8 @@ chứng từ nguồn trỏ về SO, nên hai giá trị khớp nhau ngay từ tr
 
 **Đường B — auto theo status "Partner Received":**
 `on_update` → `_create_pickup_stock_entry`: SE Material Transfer source_wh → partner_warehouse, dùng
-`custom_picked_qty` (∥ `qty`); set `custom_stock_entry` + `"Transferred"`.
+`custom_picked_qty` (∥ `qty`); set `custom_stock_entry` + `"Transferred"`. Công ty của phiếu
+lấy theo [§2.4](#cong-ty-chung-tu).
 
 ### 2.3. on_change theo status (EVENT_STATUS_MAP của app gốc)
 
@@ -155,6 +157,25 @@ toán/kho; webhook chạy dưới `Administrator`.
 
 > ⚠️ **`Returned` mà KHÔNG có `custom_stock_entry` thì không đảo kho** — đúng: hàng chưa từng rời kho
 > mình thì không có gì để nhập lại.
+
+### 2.4. Công ty của chứng từ — suy từ kho, không lấy mặc định của người dùng {#cong-ty-chung-tu}
+
+`_company_from_source(doc, partner_warehouse)` là chỗ duy nhất quyết định công ty cho hai chứng từ mà
+nhánh Bán hàng sinh ra: Đề nghị xuất kho (`Material Request`) ở `on_submit`, và Phiếu xuất kho
+(`Stock Entry`) lúc ĐVVC lấy hàng. Thứ tự đọc:
+
+1. **Đơn bán hàng (`Sales Order`)** nếu vận đơn có gắn — chứng từ nguồn là chủ sở hữu.
+2. **Kho nguồn của dòng hàng** — `custom_warehouse` ∥ `custom_pickup_warehouse` của vận đơn.
+3. **Kho ảo của tài khoản ĐVVC** — luôn có, vì cả hai chỗ gọi đều kiểm tra kho này trước khi hỏi.
+
+Trước 10/09/2026 hai hàm này ngã về `frappe.defaults.get_user_default("company")` khi vận đơn không
+gắn đơn bán hàng. Nhánh lấy hàng chạy trong **worker của webhook**, ở đó phiên làm việc là
+`Administrator`: "công ty mặc định của người dùng" hoặc trống, hoặc là công ty của người khác — phiếu
+kho mang sai công ty rồi chết muộn ở `InvalidWarehouseCompany`, nặng hơn nữa là ghi sổ nhầm công ty.
+Kho mới là nguồn sự thật, vì Phiếu xuất kho bắt buộc cùng công ty với cả kho xuất lẫn kho nhận.
+
+> Nhánh **Chuyển kho** và **Gửi mẫu** không đi qua hàm này — chúng đã có công ty từ chứng từ nguồn
+> (`mr.company`, `request.company`), còn phiếu đảo lấy theo phiếu gốc (`original.company`).
 
 ---
 
@@ -583,6 +604,28 @@ bench --site <site> clear-cache   # BẮT BUỘC — hook doc_events cache trong
 | **Warehouse Address + Contact** | Mỗi kho pickup: Address link `Warehouse`; Contact (optional); Warehouse.`Account` (fallback đích COD PE) |
 | **Item dimensions** (optional) | `Weight Per Unit` (kg) + `custom_parcel_length/width/height` (cm) — phục vụ Auto-calculate Parcel |
 | **Mode of Payment `Cash`** | Có `Default Account` cho company (Settings → Mode of Payment → Cash) |
+
+---
+
+## 6b. Quyền — các cửa vào vận đơn {#quyen}
+
+Mọi hàm whitelist dựng vận đơn đều hỏi quyền **`create` trên Vận đơn (`DP Shipment`)** trước khi chạm
+tới dữ liệu: `create_dp_shipment_from_so`, `get_transfer_defaults`, `create_dp_shipment_from_mr`,
+`get_sample_defaults`, `create_dp_shipment_from_war`. App nền gác riêng một tầng nữa — mọi thao tác
+trên vận đơn đã tạo (`push_to_carrier`, `mark_external_order`, `sync_status_from_carrier`,
+`apply_carrier_status`) đi qua `_load_for_action`, hàm này đòi quyền **`write` trên chính vận đơn đó**.
+
+Giao diện chỉ **cộng thêm** cho người có quyền, không để ai đâm vào chốt chặn rồi mới biết: nút
+*Vận đơn ĐVVC* chỉ vẽ khi `frappe.model.can_create("DP Shipment")`, còn khối theo dõi vận đơn trên
+Đơn bán hàng / Phiếu chuyển kho / Phiếu xét nghiệm chỉ gọi khi `frappe.model.can_read("DP Shipment")`.
+
+`api/sample.py: list_shipments` là ngoại lệ có chủ ý — **thiếu quyền đọc thì trả danh sách rỗng chứ
+không ném lỗi**. Hàm chạy mỗi lần làm mới biểu mẫu, ném `PermissionError` ở đó là bắn hộp thoại
+"Không được phép" vào mặt người chỉ mở phiếu ra xem. Giấu khối trạng thái là đủ; chốt chặn thật nằm
+ở các hàm ghi.
+
+Chứng từ kho và kế toán vẫn tạo bằng `insert(ignore_permissions=True)` — người đặt vận đơn không cần
+quyền kho hay kế toán, và webhook chạy dưới `Administrator`.
 
 ---
 

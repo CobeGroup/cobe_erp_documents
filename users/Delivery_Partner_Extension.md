@@ -234,6 +234,7 @@ trong bundle bị bỏ qua.
 | DN qty không khớp SO | DN dùng **qty thực ĐVVC lấy** (picked qty), không phải qty khai — giao 1 phần thì nhỏ hơn |
 | SO không tự Completed sau giao | SO chỉ complete khi **tất cả** item đã giao đủ — còn item chưa ship |
 | "Partner Account has no warehouse" | DP Partner Account thiếu **Partner Warehouse** — báo quản trị |
+| Không thấy nút **Vận đơn ĐVVC** trên Sales Order, cũng không thấy khối theo dõi vận đơn | Tài khoản không có quyền tạo Vận đơn (`DP Shipment`) — nút và khối trạng thái đều ẩn theo quyền. Nhờ quản trị cấp role **DP Operator** hoặc **DP Manager** |
 | Thu COD nhưng không có Phiếu thu | DP Partner Account thiếu **COD Receivable Account** — báo quản trị |
 
 Chi tiết kỹ thuật (custom field, hooks, ràng buộc tài khoản COD): [Lifecycle & Doc Events](../tech/Delivery_Partner-Lifecycle.html).

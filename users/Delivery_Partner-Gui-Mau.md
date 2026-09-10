@@ -145,6 +145,7 @@ từ**, và Submit xong là bảng khoá.
 | Hiện tượng | Nguyên nhân | Cách xử lý |
 |---|---|---|
 | Không thấy nút **Vận đơn ĐVVC** | phiếu chưa Submit, Hình thức lấy mẫu ≠ *Đơn vị vận chuyển*, hoặc phiếu đã có vận đơn rồi | sửa phiếu, hoặc mở vận đơn cũ qua nhóm nút **Vận đơn** |
+| Không thấy nút **lẫn** khối trạng thái vận đơn | tài khoản không có quyền tạo Vận đơn (`DP Shipment`) | nhờ quản trị cấp role **DP Operator** hoặc **DP Manager** |
 | *"Chưa khai cấu hình gửi mẫu: …"* | DP Cobe Settings thiếu ô | khai đúng ô nó liệt kê |
 | *"Tài khoản … chưa có điểm gửi nào"* | tài khoản chưa đồng bộ | DP Partner Account → **Đồng bộ điểm gửi** |
 | Cảnh báo *"chưa mồi được điểm gửi"* | không có điểm cùng tỉnh, cũng chưa đặt điểm mặc định | chọn tay trong danh sách |

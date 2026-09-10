@@ -586,9 +586,18 @@ Webhook/setup được whitelist trực tiếp trên function (`@frappe.whitelis
 
 | DocType | System Manager | Stock Manager |
 |---------|---------------|---------------|
-| DP Shipment | Full (create/read/write/submit/cancel/delete) | Full (create/read/write) |
+| DP Shipment | Full (create/read/write/submit/cancel/delete) | Full (create/read/write/submit/cancel/delete) |
 
-Setup API yêu cầu **System Manager**.
+Doctype JSON chỉ khai hai role trên. Site production cấp thêm **DP Manager** và **DP Operator** bằng
+`Custom DocPerm` — sửa qua Role Permission Manager, không cần deploy.
+
+Setup API yêu cầu **System Manager**. Các API chạy hàng loạt hoặc gọi nhiều lượt sang ĐVVC cũng vậy:
+`pull_tracking_for_partner`, `rebuild_normalized_names`. Đồng bộ danh mục thì gác theo quyền *Create*
+trên chính danh mục đó (`DP Carrier Region`, `DP Pickup Point`), không gác theo role.
+
+Mọi thao tác trên một vận đơn đã tạo — `push_to_carrier`, `mark_external_order`,
+`sync_status_from_carrier`, `apply_carrier_status` — đi qua `_load_for_action`, hàm này đòi quyền
+**`write` trên chính vận đơn đó** rồi mới kiểm tiếp docstatus và tài khoản ĐVVC.
 
 ---
 

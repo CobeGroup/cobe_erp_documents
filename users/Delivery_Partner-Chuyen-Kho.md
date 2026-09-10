@@ -92,9 +92,11 @@ kho thật, không phải phiếu cấp vật tư cho kỹ thuật viên.
 
 Sau khi Submit phiếu, nút **Tạo → Vận đơn ĐVVC** sẽ hiển thị.
 
-> **Nút không hiển thị?** Kiểm tra ba điều: phiếu đã Submit chưa, đầu phiếu đã khai Kho nguồn
-> chưa, và phiếu này có phải do vận đơn bán hàng sinh ra không — loại đó không đặt ĐVVC được
-> vì hàng đang được soạn để giao cho khách.
+> **Nút không hiển thị?** Kiểm tra bốn điều: phiếu đã Submit chưa, đầu phiếu đã khai Kho nguồn
+> chưa, phiếu này có phải do vận đơn bán hàng sinh ra không — loại đó không đặt ĐVVC được vì hàng
+> đang được soạn để giao cho khách — và tài khoản có quyền tạo Vận đơn (`DP Shipment`) hay không.
+> Không có quyền thì cả nút lẫn khối theo dõi vận đơn đều ẩn; nhờ quản trị cấp role **DP Operator**
+> hoặc **DP Manager**.
 
 Khi bấm nút, hộp thoại sau hiện ra:
 
@@ -211,19 +213,22 @@ vận đơn và tồn tại độc lập. Chế độ vận chuyển chỉ đư�
 
 ## 7. Điều kiện cần khai trước khi sử dụng {#dieu-kien-can-khai}
 
-| Việc cần khai | Khai ở đâu | Hậu quả nếu không khai | Hiện trạng *(19/08/2026)* |
+| Việc cần khai | Khai ở đâu | Hậu quả nếu không khai | Hiện trạng *(10/09/2026)* |
 |---|---|---|---|
-| **Địa chỉ** (`Address`) cho từng kho đích, có số điện thoại | `Warehouse` → thêm Address | **Không tạo được vận đơn** | 30/225 kho đã có — 8 kho đích nặng nhất xong, còn **Thanh Hoá** |
+| **Địa chỉ** (`Address`) cho từng kho đích, có số điện thoại | `Warehouse` → thêm Address | **Không tạo được vận đơn** | 33/232 kho đã có — các kho đích nặng nhất xong, còn thiếu **Thanh Hoá** và **Hải Phòng** ở cả ba công ty |
 | **Điểm gửi ĐVVC** (`DP Pickup Point`) cho từng kho nguồn, **theo từng tài khoản** | Form `Warehouse`, bảng *Điểm gửi ĐVVC* — mỗi dòng một cặp *Tài khoản ĐVVC → Điểm gửi*; kho dùng nhiều tài khoản thì khai nhiều dòng | ĐVVC tới trụ sở chính lấy hàng chứ không tới kho tỉnh | ⛔ mới 10 kho, **toàn bộ của TGĐG** — kho nguồn AKANWA và DOCTOR NƯỚC chưa kho nào; tài khoản mới (vd. *114 HVT*) chưa kho nào khai |
-| **Đồng bộ điểm gửi** cho từng tài khoản ĐVVC | `DP Partner Account` → *Đồng bộ điểm gửi* | Danh sách điểm gửi trống | ✅ xong cả 3 tài khoản — TGDG 36, AKW 50, DR 50 |
-| **Tài khoản ĐVVC** cho từng công ty | `DP Partner Account` | Công ty đó không đặt được ĐVVC | ✅ cả 3 công ty đều có |
+| **Đồng bộ điểm gửi** cho từng tài khoản ĐVVC | `DP Partner Account` → *Đồng bộ điểm gửi* | Danh sách điểm gửi trống | ✅ đã đồng bộ — mỗi tài khoản chính 51 điểm (TGDG · AKW · DR), mỗi tài khoản *114 HVT* 30 điểm |
+| **Tài khoản ĐVVC** cho từng công ty | `DP Partner Account` | Công ty đó không đặt được ĐVVC | ✅ cả 3 công ty đều có, mỗi công ty hai tài khoản |
 
 Chi tiết cách chọn tài khoản, khai điểm gửi và đọc các cảnh báo:
 [Tài khoản ĐVVC & Điểm gửi](Delivery_Partner-Tai-Khoan-Diem-Gui.html).
 
-> ⛔ **Còn treo: Thanh Hoá.** Viettel Post chưa có điểm gửi ở địa bàn này, mà đây lại là tuyến nặng
-> thứ hai (96 lượt/năm) và vừa là kho nguồn vừa là kho đích. Phải đăng ký điểm trên cổng Viettel Post
-> rồi đồng bộ về, đồng thời khai địa chỉ cho kho — thiếu một trong hai là tuyến này vẫn tắc.
+> ⛔ **Còn treo: Thanh Hoá.** Viettel Post chưa có điểm gửi ở địa bàn này, mà đo lại ngày 10/09/2026
+> thì `HÀ NỘI KHO → KHO Thanh Hoa` là **tuyến chuyển kho đông nhất** — 66 phiếu trong ba tháng
+> 01/06–07/09/2026, ngang tuyến `KHO HỒ CHÍ MINH → HÀ NỘI KHO` — và kho này vừa là kho nguồn vừa là
+> kho đích. Phải đăng ký điểm trên cổng Viettel Post rồi đồng bộ về, đồng thời khai địa chỉ cho kho —
+> thiếu một trong hai là tuyến này vẫn tắc. **Buôn Mê Thuột** cũng chưa có điểm gửi, **Hải Phòng**
+> thì chưa có địa chỉ kho.
 
 Điểm gửi phải được **đăng ký trước trên cổng ĐVVC** rồi mới đồng bộ về được — tạo thủ công bản
 ghi trong hệ thống là vô nghĩa, vì mã điểm do ĐVVC cấp.
