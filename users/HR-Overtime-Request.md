@@ -174,6 +174,9 @@ giờ lẻ rơi rụng, nên được thay bằng quỹ giờ ở đây.
 
 Cơ chế Leave Type Nghỉ bù (allow_negative, không trừ lương) giữ nguyên như cũ.
 
+📘 Hướng dẫn vận hành cho HR — xem quỹ, điều chỉnh tay, cắt cuối kỳ:
+[Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html).
+
 ---
 
 ## 7. Can thiệp trên Desk

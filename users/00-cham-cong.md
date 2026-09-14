@@ -33,6 +33,8 @@ has_children: true
 - 🗺️ Muốn hiểu đơn nghỉ được duyệt thế nào → **[Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html)**
 - ⏱️ Làm thêm giờ, đổi tiền/nghỉ bù → **[Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html)** · **[Hành trình một ngày Nghỉ bù](Hanh-Trinh-Nghi-Bu.html)**
 - ✅ Là người duyệt, có đơn chờ → **[Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html)** · **[Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html)**
+- 🏦 Là HR, cần xem hoặc sửa **quỹ giờ Nghỉ bù** → **[Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html)**
+- 🚦 Là HR, muốn giới hạn **số đơn chấm công bù mỗi tháng** → **[Hạn mức đơn Chấm công bù](Desk-HR-HanMucChamCongBu.html)**
 
 ---
 

@@ -79,6 +79,25 @@ Anh A đang ở chỗ khách, mở app. Có **2 lối** cùng mở 1 form:
 > tự cho qua kiểm tra vị trí. Nhưng công ngày này **không tính theo giờ chấm** mà chờ đơn duyệt
 > (xem bước ③). Chi tiết: [Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html).
 
+### Hạn mức số đơn mỗi tháng
+
+Công ty có thể đặt **số đơn Chấm công bù tối đa mỗi tháng** cho từng nhân viên hoặc cho cả
+công ty. Khi có hạn mức, form hiện sẵn *tháng này đã dùng bao nhiêu trên bao nhiêu đơn* ngay
+lúc chọn khoảng ngày, và chặn khi hết:
+
+> Bạn đã dùng hết hạn mức đơn chấm công bù của tháng 10/2026: 5/5 đơn (tính cả đơn đang chờ
+> duyệt). Cần thêm thì liên hệ HR.
+
+Ba điều cần biết:
+
+- **Đơn đang chờ duyệt cũng tính**, không riêng đơn đã duyệt. Đơn bị từ chối hoặc đã huỷ thì
+  không tính.
+- Đơn nhiều ngày tính vào **tháng của ngày đầu** đơn.
+- Đơn **Làm việc tại nhà** (WFH) đi luồng riêng, **không** trừ hạn mức này.
+
+Hết hạn mức mà vẫn còn việc chính đáng thì liên hệ HR — HR nhập thay được, hoặc nâng hạn mức
+cho tháng đó. Chưa đặt hạn mức = không giới hạn, đúng như trước nay.
+
 ---
 
 ## ② Người duyệt chấm công duyệt (1 bước duy nhất)
@@ -140,4 +159,5 @@ cả khi anh A đã check-in ngoài VP dựa trên đơn. Nếu thực tế có 
 - 🔧 [KTV hiện trường: Chấm công ngoài VP](Guide-KTV-ChamCong.html) — KTV dùng đề xuất cho ngày đi thẳng công trình
 - ✅ [Duyệt chấm công bù — từng phiếu & hàng loạt](Duyet-Cham-Cong-Bu.html) — phía người duyệt + bulk trên Desk
 - ⚙️ [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html) — HR gán Shift Request Approver
+- 🚦 HR: [Hạn mức đơn Chấm công bù theo tháng](Desk-HR-HanMucChamCongBu.html) — cách đặt và miễn trừ
 - 🔧 Kỹ thuật: [Attendance Request](HR-Attendance-Request.html)

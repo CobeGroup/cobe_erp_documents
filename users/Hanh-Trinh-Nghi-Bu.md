@@ -168,4 +168,5 @@ màn hình Nghỉ phép hiện **số ngày đổi được kèm số giờ còn
 - 🔁 [Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html) — bước ①②, cơ chế khai-sau & đối chiếu
 - 🌴 [Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html) — bước ③④ chạy y hệt
 - 👤 [Nhân viên: Xin làm thêm giờ](Guide-NhanVien-LamThem.html) · [Xin nghỉ phép & nghỉ bù](Guide-NhanVien-NghiPhep.html)
+- 🔧 HR: [Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html) — xem quỹ, điều chỉnh tay, hết hạn cuối kỳ
 - 🔧 HR: [Loại phép & cấu hình](HR-Leave-Type.html) · [Cấu hình Overtime](HR-Overtime-Settings.html)
