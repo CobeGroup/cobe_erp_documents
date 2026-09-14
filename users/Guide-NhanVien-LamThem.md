@@ -88,12 +88,14 @@ Muốn đổi giờ làm thêm lấy **ngày nghỉ** thay vì tiền? Làm y h�
 
 1. **Hình thức quy đổi** — chọn **Nghỉ bù**.
 2. Gửi đơn → Quản lý duyệt như thường.
-3. Sau khi làm thêm xong, vào tab **Nghỉ phép** tạo đơn **Nghỉ bù** — ô
-   **"Ngày làm thêm để bù"** chọn đúng ngày trong đơn làm thêm này.
+3. Sau khi qua ngày làm thêm, giờ được duyệt **cộng vào quỹ giờ Nghỉ bù**. Vào tab
+   **Nghỉ phép** tạo đơn **Nghỉ bù** và chọn ngày muốn nghỉ — không phải chỉ ra ngày
+   làm thêm nào.
 
-> ⚠️ **Đơn làm thêm (quy đổi Nghỉ bù) đã duyệt là ĐIỀU KIỆN BẮT BUỘC để xin Nghỉ bù.**
-> Không có đơn → hệ thống từ chối đơn nghỉ bù ngay khi gửi. Mỗi ngày làm thêm chỉ
-> bù được **1 lần**. Xem chi tiết: [Xin nghỉ phép & nghỉ bù](Guide-NhanVien-NghiPhep.html).
+> ⚠️ **Chỉ giờ trên đơn làm thêm (quy đổi Nghỉ bù) ĐÃ DUYỆT mới vào quỹ**, và chỉ khi
+> ngày làm thêm đã qua. Tỷ giá **4 giờ = 0,5 ngày nghỉ, 8 giờ = 1 ngày**; quỹ thiếu giờ
+> thì hệ thống từ chối đơn nghỉ bù ngay khi gửi. Giờ lẻ **không mất** — cộng dồn qua
+> nhiều ngày. Xem chi tiết: [Xin nghỉ phép & nghỉ bù](Guide-NhanVien-NghiPhep.html).
 
 ---
 

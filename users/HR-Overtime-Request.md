@@ -146,19 +146,31 @@ lễ 3.0). Chi tiết cấu hình + checklist trước kỳ lương đầu tiên
 Với `payout_type = Nghỉ bù`, đơn **không** vào Overtime Slip (không ra tiền). Thay
 vào đó nó là **căn cứ bắt buộc** khi NV xin Nghỉ bù:
 
-- Đơn Leave Application loại `is_compensatory` phải khai `custom_comp_worked_date`
-  = đúng `ot_date` của một đơn OT **Approved + payout Nghỉ bù**.
-- Mỗi ngày làm thêm chỉ bù **1 lần** (hệ thống check đơn nghỉ bù active trùng ngày).
-- **Tỷ giá tối thiểu** (áp dụng từ 09/2026): xin **0,5 ngày** cần đơn OT ngày đó có
-  `expected_hours` ≥ **4h**, xin **1 ngày** cần ≥ **8h** — so theo giờ **đã duyệt**
-  chứ không theo `granted_hours` (granted chỉ có sau khi Attendance ngày đó được
-  dựng, đòi nó là bắt nhân viên chờ qua đêm). Hệ quả: làm thêm ngày thường (trần 4h)
-  đổi tối đa 0,5 ngày; một ngày làm thêm đổi tối đa 1 ngày nghỉ. Trước đó điểm quy
-  đổi không có luật — đo toàn bộ đơn active (09/09/2026): 102 đơn = 76,5 ngày nghỉ
-  đối lại 336,9h được công nhận, 53 đơn xin nhiều hơn giờ có.
-- HR Manager / HR User / System Manager được **miễn** tỷ giá khi tạo thay trên Desk —
-  đường ngoại lệ cho ca mất bằng chứng chấm công có người bảo lãnh.
-- Không có đơn hợp lệ → chặn ngay khi NV gửi đơn nghỉ.
+**QUỸ GIỜ (từ 09/2026).** `expected_hours` của đơn OT Approved payout Nghỉ bù cộng dồn
+vào quỹ giờ Nghỉ bù của nhân viên (`attendance/comp_leave_ledger.py`); đơn nghỉ trừ quỹ:
+
+- **Tỷ giá:** 0,5 ngày = **4h**, 1 ngày = **8h** (`_validate_comp_leave_balance`). Giờ lẻ
+  và giờ dư ở lại quỹ — hai buổi 2h và 3h gộp lại đổi được 0,5 ngày.
+- Cộng theo `expected_hours` (giờ **đã duyệt**) chứ không `granted_hours`: granted chỉ có
+  sau khi Attendance ngày đó được dựng bằng job nền, đòi nó là bắt nhân viên chờ qua đêm.
+  Trên prod 11/09/2026 có 54/160 đơn granted = 0 (44 đơn không một lần check-in) — siết
+  theo granted sẽ quét sạch quyền của họ không báo trước.
+- Giờ chỉ vào quỹ khi **ot_date đã tới**; đơn khai trước nằm chờ.
+- `custom_comp_worked_date` **hết bắt buộc**, chỉ còn là ghi chú. Một đơn nghỉ tiêu giờ gom
+  từ nhiều ngày, trừ **FIFO theo hạn dùng** (lô sắp hết hạn trước).
+- **Hạn dùng:** mỗi lô hết hạn cuối kỳ chứa ngày làm thêm (30/06 / 31/12). Cuối kỳ,
+  `scheduled/expire_comp_leave` cắt phần **còn dư** và đặt đơn OT tương ứng thành
+  **Expired**; đơn đã tiêu hết giữ nguyên Approved. Làm thêm đúng ngày cắt thì lô sống
+  sang kỳ sau. Lô của kỳ đã đóng mà cron **chưa từng cắt** vẫn sống tới mốc kế tiếp.
+- HR Manager / HR User / System Manager được **miễn** kiểm quỹ khi tạo thay trên Desk.
+  Muốn cộng/trừ quỹ có chứng từ thì dùng **HR Comp Leave Adjustment** (submittable, ghi
+  lý do, cộng số dương / trừ số âm).
+- Quỹ không đủ → chặn ngay khi NV gửi đơn nghỉ, kèm số giờ còn lại.
+
+Trước 09/2026 điểm quy đổi không có luật — đo toàn bộ đơn active (09/09/2026): 102 đơn =
+76,5 ngày nghỉ đối lại 336,9h được công nhận, 53 đơn xin nhiều hơn giờ có. Bản tỷ giá đầu
+tiên (09/09) so số ngày xin với đơn OT của ĐÚNG một ngày; nó chặn được duyệt lố nhưng làm
+giờ lẻ rơi rụng, nên được thay bằng quỹ giờ ở đây.
 
 Cơ chế Leave Type Nghỉ bù (allow_negative, không trừ lương) giữ nguyên như cũ.
 

@@ -154,12 +154,14 @@ với nhãn **"Chấm công bù"**. Khác nghỉ phép, loại này **duyệt 1 
 Đơn **Nghỉ bù** là **Leave Application bình thường** (duyệt **2 bước** Quản lý → HR như phép năm),
 nhưng khi duyệt cần để ý mấy điểm riêng:
 
-- **Căn cứ duyệt = đơn Làm thêm giờ đã duyệt.** Hệ thống **tự kiểm tra**: ngày khai
-  trong ô **"Ngày làm thêm để bù"** phải có [HR Overtime Request](Duyet-Lam-Them.html)
-  (quy đổi **Nghỉ bù**) đã được duyệt, và mỗi ngày làm thêm chỉ bù **1 lần** — nhân viên
-  không gửi được đơn "khống". Bạn chỉ cần cân nhắc **ngày nghỉ có hợp lý** không.
-- **Trên app chỉ thấy Lý do**, không thấy ô ngày làm thêm — cần đối chiếu chính xác: mở đơn
-  trên **Desk**, xem field **"Ngày làm thêm để bù"** (hoặc mở HR Overtime Request tương ứng).
+- **Căn cứ duyệt = quỹ giờ Nghỉ bù.** Hệ thống **tự kiểm tra**: nhân viên phải có đủ giờ
+  trong quỹ (**4h = 0,5 ngày, 8h = 1 ngày**), mà quỹ chỉ nhận giờ từ
+  [HR Overtime Request](Duyet-Lam-Them.html) quy đổi **Nghỉ bù** đã được **bạn duyệt** và
+  đã qua ngày làm thêm — nhân viên không gửi được đơn "khống". Bạn chỉ cần cân nhắc
+  **ngày nghỉ có hợp lý** không.
+- **Đơn nghỉ không còn chỉ vào một ngày làm thêm cụ thể** (từ 09/2026): một đơn nghỉ tiêu
+  giờ gom từ nhiều ngày, hệ thống tự trừ lô sắp hết hạn trước. Muốn xem nhân viên còn bao
+  nhiêu giờ thì mở Desk → *HR Overtime Request* lọc theo người, hoặc nhờ HR tra quỹ.
 - **Không trừ quỹ phép, không trừ lương** — số dư loại "Nghỉ bù" âm là **bình thường** (âm bao nhiêu
   = đã nghỉ bù bấy nhiêu ngày, mang tính thống kê). Đừng từ chối đơn chỉ vì "hết số dư".
 - **Từ chối đơn Nghỉ bù** cũng **bắt buộc nhập lý do** (bỏ trống bị chặn) và **lý do gửi cho nhân

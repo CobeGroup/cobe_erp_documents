@@ -182,12 +182,13 @@ Lắp máy / sửa chữa tới khuya thì hôm sau được **nghỉ bù**. Đ�
 <img src="images/guide/nhanvien/13-leave-comp.png" width="240" alt="Form Nghỉ bù — khai ngày làm khuya + ngày nghỉ">
 
 1. Tab **Nghỉ phép** → bấm **+** → **Loại phép** chọn **"Nghỉ bù"**.
-2. **Ngày làm thêm để bù** = hôm làm khuya (vd 02/07). **Khoảng ngày** = hôm muốn nghỉ (vd 03/07).
+2. **Khoảng ngày** = hôm muốn nghỉ (vd 03/07). Màn hình hiện **quỹ giờ Nghỉ bù** đang có —
+   4 giờ đổi 0,5 ngày, 8 giờ đổi 1 ngày; không phải chỉ ra hôm làm khuya nào.
 3. **Lý do** ghi rõ *làm gì, tới mấy giờ* — quản lý duyệt trên app chỉ nhìn thấy lý do.
 4. Gửi → duyệt **2 bước** (Quản lý → HR) như nghỉ phép thường.
 
-> 💡 **Nghỉ bù không trừ phép năm, không trừ lương** và không cần số dư. Chốt chặn duy nhất là
-> **quản lý xác nhận hôm đó có làm khuya thật** — nên khai ngày + giờ cho chuẩn.
+> 💡 **Nghỉ bù không trừ phép năm, không trừ lương.** Chốt chặn là **quỹ giờ**: chỉ giờ trên
+> đơn làm thêm đã được quản lý duyệt mới vào quỹ — nên khai ngày + giờ cho chuẩn.
 > Chi tiết: [Xin nghỉ phép §4](Guide-NhanVien-NghiPhep.html).
 
 ---

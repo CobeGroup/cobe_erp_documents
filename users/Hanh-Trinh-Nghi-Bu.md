@@ -17,6 +17,12 @@ nav_order: 5
 > đó thành ngày nghỉ. Trang này nối cả hai. Ví dụ: anh **Nguyễn Văn An** làm thêm buổi tối
 > **11/07**, đổi lấy **nghỉ ngày 18/07**.
 
+> 🆕 **Từ 09/2026: giờ làm thêm vào một QUỸ GIỜ.** Trước đây mỗi ngày làm thêm là một "vé"
+> dùng đúng một lần, giờ lẻ không đủ 4h coi như mất. Nay mọi giờ được duyệt quy đổi *Nghỉ bù*
+> **cộng dồn vào một quỹ**, xin nghỉ thì **trừ quỹ**: **4 giờ = 0,5 ngày**, **8 giờ = 1 ngày**.
+> Hai buổi lẻ 2h và 3h của hai ngày khác nhau nay gộp lại đổi được 0,5 ngày nghỉ, và phần dư
+> ở lại quỹ cho lần sau.
+
 <details open markdown="block">
   <summary>Mục lục</summary>
 {: .text-delta }
@@ -40,22 +46,23 @@ flowchart TB
   classDef ok fill:#f6ffed,stroke:#54ab78,color:#135200;
   A["①  Làm thêm + khai phiếu OT<br/>quy đổi <b>Nghỉ bù</b>"]:::nv
   B["②  Manager duyệt phiếu OT<br/>→ ghi nhận số giờ"]:::mg
-  C["<b>Có 'vé' nghỉ bù</b><br/>(gắn với ngày 11/07)"]:::ok
-  D["③  Xin nghỉ: Loại phép = <b>Nghỉ bù</b><br/>ô 'Ngày làm thêm để bù' = 11/07"]:::nv
+  C["<b>Giờ vào QUỸ</b><br/>(cộng dồn, hết hạn cuối kỳ)"]:::ok
+  D["③  Xin nghỉ: Loại phép = <b>Nghỉ bù</b><br/>(không phải chọn ngày làm thêm nào)"]:::nv
   E["④  Manager → HR duyệt<br/>(2 bước như nghỉ phép)"]:::hr
-  F["<b>Được nghỉ 18/07</b><br/>số dư Nghỉ bù về <b>−1</b>"]:::ok
+  F["<b>Được nghỉ 18/07</b><br/>quỹ trừ <b>8 giờ</b>"]:::ok
   A --> B --> C --> D --> E --> F
 ```
 
 | Bước | Ai làm | Ở đâu | Kết quả |
 |---|---|---|---|
 | ① Kiếm giờ | Nhân viên | App → **Làm thêm giờ**, quy đổi **Nghỉ bù** | Phiếu OT **Chờ duyệt** |
-| ② Duyệt OT | Trưởng Bộ Phận (`Shift Request Approver`) | App → **Cần duyệt** | Phiếu **Đã duyệt** = "vé" nghỉ bù |
+| ② Duyệt OT | Trưởng Bộ Phận (`Shift Request Approver`) | App → **Cần duyệt** | Phiếu **Đã duyệt** → giờ vào **quỹ** |
 | ③ Tiêu giờ | Nhân viên | App → **Nghỉ phép**, loại **Nghỉ bù** | Đơn nghỉ **Chờ Manager** |
-| ④ Duyệt nghỉ | Trưởng Bộ Phận → HR | App / Desk | **Được nghỉ**, số dư Nghỉ bù âm |
+| ④ Duyệt nghỉ | Trưởng Bộ Phận → HR | App / Desk | **Được nghỉ**, quỹ trừ 4h (nửa ngày) hoặc 8h (cả ngày) |
 
-> ⚠️ **Phải có bước ①② TRƯỚC.** Không có phiếu OT (quy đổi Nghỉ bù) đã duyệt cho đúng ngày thì
-> **bước ③ bị chặn ngay lúc gửi**. Nghỉ bù không tự sinh ra từ đâu.
+> ⚠️ **Phải có bước ①② TRƯỚC.** Quỹ không đủ giờ thì **bước ③ bị chặn ngay lúc gửi**. Nghỉ bù
+> không tự sinh ra từ đâu — chỉ giờ làm thêm đã được duyệt quy đổi *Nghỉ bù* mới vào quỹ, và
+> chỉ khi **ngày làm thêm đã qua**.
 
 ---
 
@@ -66,8 +73,8 @@ nhưng ở **Hình thức quy đổi** chọn **Nghỉ bù** thay vì *Tiền l�
 
 <img src="images/guide/overtime/03-ot-form-comp.png" width="260" alt="Form làm thêm — chọn Hình thức quy đổi = Nghỉ bù">
 
-Sau khi Manager duyệt và hệ thống đối chiếu chấm công, phiếu **ghi nhận số giờ** — đây chính là
-"vé" để xin nghỉ bù, **gắn với ngày 11/07**.
+Sau khi Manager duyệt, **số giờ được duyệt trên phiếu cộng vào quỹ Nghỉ bù** của anh An. Giờ chỉ
+vào quỹ khi **ngày làm thêm đã qua** — phiếu khai trước cho ngày chưa tới vẫn nằm chờ.
 
 > 📘 Chi tiết cơ chế khai-sau, đối chiếu, trần giờ: [Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html).
 
@@ -75,40 +82,48 @@ Sau khi Manager duyệt và hệ thống đối chiếu chấm công, phiếu **
 
 ## ② + ③ Tiêu giờ — xin nghỉ loại "Nghỉ bù"
 
-Vào tab **Nghỉ phép** → **➕** → **Loại phép = Nghỉ bù**. Form hiện thêm ô **"Ngày làm thêm để bù"** —
-chọn **đúng ngày trong phiếu OT** (11/07), rồi chọn **ngày muốn nghỉ** (18/07) + lý do → **Gửi đơn**:
+Vào tab **Nghỉ phép** → **➕** → **Loại phép = Nghỉ bù**. Màn hình hiện **quỹ giờ đang có**, kèm
+từng lô giờ và hạn dùng của nó. Chọn **ngày muốn nghỉ** (18/07) + lý do → **Gửi đơn**. **Không phải
+chọn ngày làm thêm nào** — hệ thống tự trừ lô giờ **sắp hết hạn trước**.
 
-<img src="images/guide/nhanvien/13-leave-comp.png" width="260" alt="Đơn Nghỉ bù — ô Ngày làm thêm để bù">
+Hệ thống **kiểm tra ngay lúc gửi**, chặn nếu **quỹ không đủ giờ**:
 
-Hệ thống **kiểm tra ngay lúc gửi**, chặn nếu:
-- Ngày làm thêm đó **không có phiếu OT đã duyệt** (quy đổi Nghỉ bù) → *"Ngày … không có đơn Làm thêm giờ đã duyệt…"*.
-- Ngày làm thêm đó **đã dùng để bù rồi** → mỗi ngày làm thêm chỉ đổi được **1 lần**.
-- **Chưa đủ giờ theo tỷ giá** (áp dụng từ 09/2026): xin **0,5 ngày** cần phiếu OT ngày đó
-  được duyệt **≥ 4h**, xin **1 ngày** cần **≥ 8h**. Làm thêm ngày thường (trần 4h) vì vậy
-  đổi tối đa 0,5 ngày; một ngày làm thêm đổi tối đa 1 ngày nghỉ. Trường hợp đặc biệt
-  (mất bằng chứng chấm công, phiếu cũ) liên hệ HR tạo thay trên Desk.
+| Xin nghỉ | Quỹ phải có |
+|---|---|
+| 0,5 ngày | **4 giờ** |
+| 1 ngày | **8 giờ** |
+| 2 ngày | **16 giờ** |
+
+Ví dụ: quỹ còn 6h thì xin được 0,5 ngày (trừ 4h, còn 2h), chưa xin được cả ngày. Làm thêm ngày
+thường bị trần 4h/ngày nên thường phải gom hai buổi mới đủ một ngày nghỉ; ngày lễ/cuối tuần trần
+8h thì một buổi là đủ. Trường hợp đặc biệt (mất bằng chứng chấm công, phiếu cũ) liên hệ HR — HR
+có thể **điều chỉnh quỹ** bằng chứng từ *HR Comp Leave Adjustment* trên Desk.
 
 Qua được kiểm tra, đơn đi tiếp **2 bước Manager → HR** y như [đơn nghỉ phép thường](Hanh-Trinh-Nghi-Phep.html).
 
 ---
 
-## ④ Kết quả — được nghỉ, số dư về âm
+## ④ Kết quả — được nghỉ, quỹ giờ trừ đi
 
-Duyệt xong, ngày 18/07 tính **On Leave** (nghỉ có phép). Trên danh sách, loại **Nghỉ bù** hiện số dư
-**âm** — đó là **bình thường**:
+Duyệt xong, ngày 18/07 tính **On Leave** (nghỉ có phép) và quỹ trừ **8 giờ**. Thẻ **Nghỉ bù** trên
+màn hình Nghỉ phép hiện **số ngày đổi được kèm số giờ còn lại**, ví dụ *"Nghỉ bù: 1.5 ngày (12.00h)"*.
 
-<img src="images/guide/nhanvien/14-leave-comp-list.png" width="260" alt="Danh sách — loại Nghỉ bù số dư âm + đơn nghỉ bù">
-
-> 💡 **Vì sao số dư âm?** Nghỉ bù **không có quỹ cấp trước** như Phép năm. Mỗi ngày nghỉ bù kéo số
-> dư xuống 1; con số âm = *"đã nghỉ bao nhiêu ngày bù"*. **Không trừ quỹ phép, không trừ lương.**
+> 💡 **Quỹ này không phải phép năm.** Nghỉ bù **không trừ quỹ phép, không trừ lương** — nó là giờ
+> bạn đã làm thêm, đổi lấy ngày nghỉ. Trên Desk, loại *Nghỉ bù* vẫn hiện số dư **âm** vì nó không
+> dùng cơ chế cấp phép của HRMS; con số âm ở đó nghĩa là *"đã nghỉ bù bấy nhiêu ngày"*, không phải
+> bạn đang nợ.
 
 ---
 
 ## Nghỉ bù có HẠN DÙNG
 
-> ⏳ **Dùng trong kỳ, đừng để dành lâu.** Cuối mỗi kỳ (**30/06** và **31/12**) hệ thống **dọn** số dư
-> nghỉ bù: phiếu OT quy đổi Nghỉ bù còn dư mà **chưa xin nghỉ** sẽ chuyển trạng thái **"Hết hạn"
-> (Expired)** và **không dùng được nữa**. Làm thêm để bù thì tranh thủ **xin nghỉ trong cùng kỳ**.
+> ⏳ **Dùng trong kỳ, đừng để dành lâu.** Mỗi lô giờ hết hạn ở **cuối kỳ chứa ngày làm thêm** —
+> **30/06** hoặc **31/12**. Đến mốc đó, phần giờ **còn dư chưa nghỉ** bị cắt và phiếu OT tương ứng
+> chuyển trạng thái **"Hết hạn" (Expired)**; phiếu đã dùng hết giờ thì giữ nguyên *Đã duyệt*.
+> Hệ thống **nhắc trước** vào 15 và 24 của tháng 6 và tháng 12, kèm số giờ sắp mất.
+>
+> Làm thêm **đúng ngày cắt** (30/06 hoặc 31/12) thì giờ đó sống sang kỳ sau — hôm đó bạn còn đang
+> làm, chưa kịp xin nghỉ.
 
 ---
 
@@ -116,9 +131,9 @@ Duyệt xong, ngày 18/07 tính **On Leave** (nghỉ có phép). Trên danh sác
 
 > Công ty có thể đặt **hạn nộp đơn nghỉ sau khi đã nghỉ** (bảng *Hạn khai theo ngày hiệu
 > lực* trong `HR Policy`). Với Nghỉ bù, đồng hồ tính trễ chạy từ **mốc muộn hơn** giữa
-> **ngày bắt đầu nghỉ** và **ngày phiếu OT được duyệt** — phiếu OT duyệt chậm thì thời gian
-> chờ duyệt **không bị tính** vào hạn, còn phiếu duyệt sớm rồi để dành ngày bù thì tính từ
-> ngày nghỉ như phép thường. Chi tiết & ví dụ:
+> **ngày bắt đầu nghỉ** và **lúc quỹ gom đủ giờ** cho đơn đó — thời gian chờ Manager duyệt
+> phiếu OT **không bị tính** vào hạn, còn quỹ đã đủ từ trước rồi để dành mới xin nghỉ thì
+> tính từ ngày nghỉ như phép thường. Chi tiết & ví dụ:
 > [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html).
 
 ---
@@ -128,7 +143,8 @@ Duyệt xong, ngày 18/07 tính **On Leave** (nghỉ có phép). Trên danh sác
 | | **Nghỉ bù** *(trang này)* | **Làm thêm → Tiền** | **Nghỉ phép năm** |
 |---|---|---|---|
 | Bắt đầu từ | Phiếu OT quy đổi **Nghỉ bù** | Phiếu OT quy đổi **Tiền lương** | (có quỹ cấp sẵn) |
-| Kết quả | **Ngày nghỉ** (số dư âm) | **Tiền** vào lương | Ngày nghỉ (trừ quỹ) |
+| Đơn vị | **Giờ** (4h = 0,5 ngày) | Giờ × hệ số | Ngày |
+| Kết quả | **Ngày nghỉ** (trừ quỹ giờ) | **Tiền** vào lương | Ngày nghỉ (trừ quỹ) |
 | Hết hạn | **Có** — cuối kỳ 30/06 & 31/12 | Không (đã thành tiền) | Theo chính sách phép năm |
 | Số bước xin nghỉ | 2 (Manager → HR) | — | 2 (Manager → HR) |
 
@@ -138,12 +154,12 @@ Duyệt xong, ngày 18/07 tính **On Leave** (nghỉ có phép). Trên danh sác
 
 | Tình huống | Nguyên nhân / cách xử |
 |---|---|
-| *"Ngày … không có đơn Làm thêm giờ đã duyệt"* | Chưa có phiếu OT (quy đổi **Nghỉ bù**) đã duyệt cho đúng ngày — làm bước ①② trước |
-| Chọn được ngày làm thêm nhưng vẫn báo lỗi | Phiếu OT ngày đó quy đổi **Tiền lương**, không phải Nghỉ bù — huỷ, khai lại đúng loại |
-| *"đã dùng để bù rồi"* | Mỗi ngày làm thêm chỉ đổi **1 ngày nghỉ** — dùng ngày làm thêm khác |
-| Số dư Nghỉ bù bỗng về 0 / mất | Đã qua **cuối kỳ** — phiếu chưa dùng bị **Hết hạn**. Lần sau xin nghỉ trong kỳ |
-| Số dư âm, tưởng bị phạt | Âm là **đúng thiết kế** — không trừ lương, không trừ quỹ phép |
-| *"Đơn Nghỉ bù từ ngày … đã quá hạn nộp"* | Nộp trễ quá hạn công ty đặt (tính từ ngày nghỉ hoặc ngày duyệt phiếu OT, mốc muộn hơn) → liên hệ HR tạo thủ công |
+| *"Quỹ Nghỉ bù còn …h, chưa đủ để nghỉ … ngày"* | Quỹ thiếu giờ — làm thêm tiếp (bước ①②), hoặc xin **0,5 ngày** thay vì cả ngày |
+| Làm thêm rồi mà quỹ vẫn 0 | Phiếu OT quy đổi **Tiền lương** chứ không phải Nghỉ bù; hoặc **chưa được duyệt**; hoặc **ngày làm thêm chưa tới** |
+| Quỹ ít hơn số giờ đã khai | Phiếu bị **trần 4h/8h** cắt; hoặc lô giờ kỳ trước **đã hết hạn** |
+| Quỹ Nghỉ bù bỗng về 0 / mất | Đã qua **cuối kỳ** — giờ dư bị cắt. Lần sau xin nghỉ trong kỳ, để ý thông báo nhắc giữa tháng 6/12 |
+| Số dư âm trên Desk, tưởng bị phạt | Âm ở Desk là **đúng thiết kế** — không trừ lương, không trừ quỹ phép; xem quỹ thật ở màn hình Nghỉ phép trên app |
+| *"Đơn Nghỉ bù từ ngày … đã quá hạn nộp"* | Nộp trễ quá hạn công ty đặt (tính từ ngày nghỉ hoặc lúc quỹ đủ giờ, mốc muộn hơn) → liên hệ HR tạo thủ công |
 | *"Attendance … is already marked …"* khi xin nghỉ bù | Hôm đó **đã chấm công**. Rất hay gặp vì nghỉ bù thường xin ngay trong ngày: làm sáng → trưa xin nghỉ chiều. Tích **Nghỉ nửa ngày** là gửi được (buổi đã làm vẫn tính công). Xin **cả ngày** cho hôm đã đi làm thì không được |
 
 ---

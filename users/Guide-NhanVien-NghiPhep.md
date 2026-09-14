@@ -163,16 +163,17 @@ Hôm trước **làm thêm giờ / làm khuya** (hay gặp ở kỹ thuật viê
 
 > ⚠️ **Bước 0 (khai SAU khi đã làm thêm):** khai đơn **Làm thêm giờ** với quy đổi
 > **"Nghỉ bù"** cho **ngày đã làm** (trong hạn khai của công ty) và được Quản lý duyệt — xem
-> [Xin làm thêm giờ](Guide-NhanVien-LamThem.html). Không có đơn này, hệ thống sẽ
-> **từ chối đơn Nghỉ bù ngay khi gửi**.
+> [Xin làm thêm giờ](Guide-NhanVien-LamThem.html). Giờ được duyệt sẽ **cộng vào quỹ giờ Nghỉ
+> bù** của bạn. Quỹ chưa đủ giờ thì hệ thống **từ chối đơn Nghỉ bù ngay khi gửi**.
 
-Có đơn làm thêm đã duyệt rồi thì tạo đơn nghỉ y như nghỉ phép thường, chỉ khác **Loại phép**:
+**Tỷ giá: 4 giờ = 0,5 ngày nghỉ · 8 giờ = 1 ngày.** Giờ lẻ **không mất** — nó nằm lại quỹ, cộng
+dồn qua nhiều ngày làm thêm cho tới khi đủ.
 
-<img src="images/guide/nhanvien/13-leave-comp.png" width="240" alt="Form Nghỉ bù — Ngày làm thêm để bù + khoảng ngày nghỉ">
+Có giờ trong quỹ rồi thì tạo đơn nghỉ y như nghỉ phép thường, chỉ khác **Loại phép**:
 
 1. Bấm **+** → **Loại phép** chọn **"Nghỉ bù"**.
-2. Form hiện thêm ô **"Ngày làm thêm để bù"** (bắt buộc) — chọn **đúng ngày trong đơn
-   Làm thêm giờ đã duyệt**.
+2. Màn hình hiện **quỹ giờ đang có** cùng hạn dùng của từng lô. **Không phải chọn ngày làm
+   thêm nào** — hệ thống tự trừ lô sắp hết hạn trước.
 3. **Khoảng ngày** = ngày muốn nghỉ (thường là hôm sau).
 4. **Lý do:** ghi rõ **làm gì, tới mấy giờ** — vd *"Làm khuya lắp máy tới 23h đêm 02/07"*.
 5. **Gửi đơn** → duyệt **2 bước như nghỉ phép thường** (Quản lý → HR).
@@ -185,10 +186,11 @@ Có đơn làm thêm đã duyệt rồi thì tạo đơn nghỉ y như nghỉ ph
 |---|---|---|
 | Trừ quỹ phép? | Có (hết quỹ là không xin được) | **Không** — không cần số dư |
 | Trừ lương? | Không | **Không** |
-| Cần khai gì thêm? | — | **Ngày làm thêm để bù** |
-| Ai xác nhận làm thêm là có thật? | — | **Hệ thống tự kiểm**: phải có đơn Làm thêm giờ đã duyệt cho đúng ngày đó |
-| Dùng lại được không? | — | Mỗi ngày làm thêm chỉ bù **1 lần** |
-| Đổi được bao nhiêu ngày? | — | Theo **giờ đã duyệt** trong đơn làm thêm: **0,5 ngày cần ≥ 4h, 1 ngày cần ≥ 8h**. Chưa đủ giờ thì hệ thống báo ngay lúc gửi |
+| Cần khai gì thêm? | — | Không — chỉ cần **quỹ đủ giờ** |
+| Ai xác nhận làm thêm là có thật? | — | **Hệ thống tự kiểm**: chỉ giờ trên đơn Làm thêm giờ **đã duyệt** mới vào quỹ |
+| Giờ lẻ có mất không? | — | **Không** — cộng dồn qua nhiều ngày, phần dư ở lại quỹ |
+| Đổi được bao nhiêu ngày? | — | Theo **quỹ giờ**: **4h = 0,5 ngày, 8h = 1 ngày**. Quỹ thiếu thì hệ thống báo ngay lúc gửi |
+| Có hết hạn không? | Theo chính sách phép năm | **Có** — giờ chưa dùng bị cắt cuối kỳ (30/06 và 31/12) |
 
 ---
 
@@ -217,10 +219,9 @@ phải chọn gì — **chọn đúng loại phép là form tự đổi**:
 | "Chưa có người duyệt phép" | HR chưa gán người duyệt cho phòng bạn → báo HR |
 | Đơn vẫn "Chờ" sau khi Quản lý duyệt | Còn chờ **HR duyệt bước 2** mới chính thức |
 | Không thấy loại **"Nghỉ bù"** | Công ty chưa bật Leave Type Nghỉ bù → báo HR |
-| Xin Nghỉ bù mà app đòi "Ngày làm thêm để bù" | Ô này **bắt buộc** với Nghỉ bù — chọn đúng hôm đã làm thêm |
-| "Ngày … không có đơn Làm thêm giờ đã duyệt…" | Ngày đó thiếu đơn Làm thêm (quy đổi Nghỉ bù) đã duyệt → [khai đơn làm thêm](Guide-NhanVien-LamThem.html) cho ngày đã làm (trong hạn khai của công ty) |
-| "Đơn nghỉ từ ngày … đã quá hạn nộp" | Công ty đặt hạn nộp đơn sau khi đã nghỉ — quá hạn thì liên hệ HR tạo thủ công. Riêng Nghỉ bù: hạn tính từ ngày nghỉ **hoặc** ngày đơn làm thêm được duyệt, mốc nào muộn hơn |
-| "Ngày làm thêm … đã được dùng cho đơn Nghỉ bù …" | Ngày làm thêm đó đã bù rồi — mỗi ngày chỉ bù 1 lần |
+| "Quỹ Nghỉ bù còn …h, chưa đủ để nghỉ … ngày" | Quỹ thiếu giờ → [khai đơn làm thêm](Guide-NhanVien-LamThem.html) cho ngày đã làm (trong hạn khai của công ty), hoặc xin **0,5 ngày** thay vì cả ngày |
+| Làm thêm rồi mà quỹ vẫn 0 giờ | Đơn làm thêm quy đổi **Tiền lương** chứ không phải Nghỉ bù; hoặc **chưa được duyệt**; hoặc **ngày làm thêm chưa tới** |
+| "Đơn nghỉ từ ngày … đã quá hạn nộp" | Công ty đặt hạn nộp đơn sau khi đã nghỉ — quá hạn thì liên hệ HR tạo thủ công. Riêng Nghỉ bù: hạn tính từ ngày nghỉ **hoặc** lúc quỹ gom đủ giờ, mốc nào muộn hơn |
 | Đơn trừ **ít ngày hơn** số ngày mình chọn | **Đúng, không phải lỗi** — Chủ Nhật và ngày lễ không trừ phép, Thứ 7 nửa buổi chỉ trừ 0.5. Xem bảng ở mục 2 |
 | *"The day(s) on which you are applying for leave are holidays…"* khi xin nghỉ **Thứ 7** | Lỗi cũ, đã sửa. Từ bản 03/08/2026 nghỉ Thứ 7 nửa buổi gửi được bình thường và trừ 0.5 ngày. Còn gặp thì báo HR (bản vá chưa lên) |
 | *"Attendance … is already marked for the following dates …"* | Hôm đó bạn **đã chấm công** rồi. Muốn nghỉ một buổi thì tích **Nghỉ nửa ngày** (được, kể cả khi sáng đã đi làm). Còn nếu bạn định nghỉ **cả ngày** — hoặc ngày đó là **Chủ Nhật / lễ** — thì app chặn, báo HR xử |

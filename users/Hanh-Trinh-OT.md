@@ -192,24 +192,22 @@ trên phiếu lương.
 
 ### ⑤b — Chọn **Nghỉ bù**
 
-Phiếu OT đã duyệt (quy đổi **Nghỉ bù**) trở thành **"vé"** để xin nghỉ bù. Nhân viên vào tab
-**Nghỉ phép** → tạo đơn → **Loại phép = Nghỉ bù** → ô **"Ngày làm thêm để bù"** chọn **đúng ngày
-trong phiếu OT**.
+Giờ trên phiếu OT đã duyệt (quy đổi **Nghỉ bù**) **cộng dồn vào quỹ giờ Nghỉ bù** của nhân viên.
+Muốn nghỉ thì vào tab **Nghỉ phép** → tạo đơn → **Loại phép = Nghỉ bù** → chọn ngày muốn nghỉ.
+**Không phải chọn ngày làm thêm nào** — hệ thống tự trừ lô giờ sắp hết hạn trước.
 
-<img src="images/guide/nhanvien/13-leave-comp.png" width="260" alt="Đơn Nghỉ bù — chọn Ngày làm thêm để bù">
-
-Hệ thống **tự kiểm tra**, chặn ngay lúc gửi nếu:
-- Ngày đó **không có phiếu OT đã duyệt** (quy đổi Nghỉ bù) → *"Ngày … không có đơn Làm thêm giờ đã duyệt…"*
-- Ngày làm thêm đó **đã dùng để bù rồi** → mỗi ngày chỉ bù **1 lần**.
+**Tỷ giá: 4 giờ = 0,5 ngày nghỉ · 8 giờ = 1 ngày.** Hệ thống chặn ngay lúc gửi nếu quỹ không đủ
+giờ (*"Quỹ Nghỉ bù còn …h, chưa đủ để nghỉ … ngày"*). Vì ngày thường bị trần 4h, thường phải gom
+hai buổi làm thêm mới đủ một ngày nghỉ; giờ lẻ không mất, nó nằm lại quỹ chờ đủ.
 
 Đơn nghỉ bù sau đó đi qua **2 bước duyệt Quản lý → HR** như nghỉ phép thường.
 
-> ⏳ **Nghỉ bù có hạn dùng.** Số dư nghỉ bù được **dọn cuối mỗi kỳ** (30/06 và 31/12): phiếu OT
-> quy đổi Nghỉ bù còn dư mà chưa nghỉ sẽ chuyển **"Hết hạn" (Expired)** — nên tranh thủ xin nghỉ
-> trong kỳ.
+> ⏳ **Quỹ Nghỉ bù có hạn dùng.** Mỗi lô giờ hết hạn ở cuối kỳ chứa ngày làm thêm (**30/06** hoặc
+> **31/12**): phần giờ còn dư bị cắt, phiếu OT tương ứng chuyển **"Hết hạn" (Expired)**. Hệ thống
+> nhắc trước vào 15 và 24 của tháng 6 và tháng 12.
 
-> 💡 Nghỉ bù **không trừ quỹ phép, không trừ lương**. Số dư loại "Nghỉ bù" hiện **âm** là
-> bình thường — âm bao nhiêu = đã nghỉ bù bấy nhiêu ngày.
+> 💡 Nghỉ bù **không trừ quỹ phép, không trừ lương**. Trên Desk, số dư loại "Nghỉ bù" hiện **âm**
+> là bình thường — âm bao nhiêu = đã nghỉ bù bấy nhiêu ngày; quỹ giờ thật xem trên app.
 
 📘 Toàn cảnh riêng cho nhánh này: [Hành trình một ngày Nghỉ bù](Hanh-Trinh-Nghi-Bu.html).
 
