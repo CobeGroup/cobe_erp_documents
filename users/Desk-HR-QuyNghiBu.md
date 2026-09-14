@@ -37,10 +37,15 @@ Trước đó mỗi ngày làm thêm là một "phiếu" dùng đúng một lầ
 làm thêm nào được bù, và giờ lẻ không đủ 4 giờ coi như mất. Nay hai buổi lẻ 2 giờ và 3 giờ
 của hai ngày khác nhau gộp lại đổi được 0,5 ngày, phần dư ở lại quỹ cho lần sau.
 
-> **Quỹ này không phải Leave Allocation.** Loại phép *Nghỉ bù* (`Leave Type`) vẫn bật cờ
-> `allow_negative` và không có cấp phép, nên trên Desk số dư của loại này hiện **âm**. Con
-> số âm đó chỉ có nghĩa "đã nghỉ bù bấy nhiêu ngày", không phải nhân viên đang nợ. Quỹ
-> thật là thứ mô tả ở trang này.
+> **Quỹ này không phải Leave Allocation.** Loại phép *Nghỉ bù* (`Leave Type`) bật cờ
+> `allow_negative` và thường không có cấp phép, nên trên Desk số dư của loại này hiện
+> **âm**. Con số âm đó chỉ có nghĩa "đã nghỉ bù bấy nhiêu ngày", không phải nhân viên đang
+> nợ. Quỹ thật là thứ mô tả ở trang này.
+>
+> Nếu một nhân viên có phiếu cấp phép (`Leave Allocation`) cho loại *Nghỉ bù* — đường làm
+> cũ, trên dữ liệu 14/09/2026 còn đúng một phiếu — thì phiếu đó **không còn tác dụng**:
+> ứng dụng lấy số dư từ quỹ giờ, và đơn nghỉ cũng được chốt theo quỹ. Không cần huỷ phiếu
+> cấp phép, nhưng cũng đừng cấp thêm.
 
 ### Giờ nào vào quỹ
 
@@ -62,7 +67,11 @@ làm thêm hay không thuộc về **khâu duyệt phiếu**, không thuộc v�
 **Nhân viên** tự xem trên ứng dụng: tab **Nghỉ phép** → chọn loại phép *Nghỉ bù*. Màn hình
 hiện số giờ còn lại, số ngày đổi được, và từng lô giờ kèm hạn dùng.
 
-**HR** xem trên Desk theo hai bảng:
+**HR** xem nhanh cả công ty ở báo cáo **Bảng công** (`COBE HR Attendance Sheet`): hai cột
+**NB (cuối kỳ)** và **NB (tới hiện tại)** là số ngày nghỉ bù còn đổi được, lấy thẳng từ quỹ
+giờ. Đây là con số nhân viên cũng thấy trên ứng dụng.
+
+Muốn lần lại quỹ hình thành thế nào thì tra hai bảng:
 
 - `HR Overtime Request` — lọc `payout_type = Nghỉ bù`, `status = Đã duyệt`, theo nhân
   viên. Cột *Số giờ dự kiến* là phần cộng vào quỹ.
