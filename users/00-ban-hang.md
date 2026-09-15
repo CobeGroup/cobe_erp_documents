@@ -15,3 +15,6 @@ xử lý khi không sửa được trực tiếp.
 > **không phải lỗi đơn hàng** mà do dữ liệu liên kết Khách hàng bị sai — xem
 > *[Sửa lỗi liên kết Khách hàng](Sua-Loi-Lien-Ket-Khach-Hang.html)* (trong module
 > Marketing & Khách hàng).
+
+> 🔗 Muốn xem đơn bán hàng nằm ở đâu trong cả dây chuyền — từ khách tiềm năng tới bảo dưỡng
+> định kỳ — đọc [Quy trình hợp nhất · Chặng 2](Quy-Trinh-02-Don-Hang.html).

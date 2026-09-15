@@ -13,3 +13,6 @@ Các tính năng phục vụ marketing và chăm sóc khách hàng: chương tr�
 - 👔 [Loyalty — Hướng dẫn cho Sales](Loyalty-Cho-Sales.html) — **dành cho nhân viên kinh doanh**: điểm cộng khi nào, cách khai người giới thiệu, xử lý khiếu nại "khách không thấy điểm".
 - [Loyalty — Tích điểm](Loyalty-Tich-Diem.html) — mô hình đầy-đủ: điểm cộng/trừ khi nào, tier, referral, outbound event sang 3rd party.
 - [Loyalty — Seed điểm cho đơn cũ (Go-live)](Loyalty-Seed-Don-Cu.html) — 🖼️ *hướng dẫn thực hành có hình*: nạp điểm cho đơn lịch sử + quy trình go-live an toàn.
+
+> 🔗 Khách vào hệ thống bằng cửa nào, khi nào thành khách hàng chính thức: xem
+> [Quy trình hợp nhất · Chặng 1](Quy-Trinh-01-Khach-Hang.html).

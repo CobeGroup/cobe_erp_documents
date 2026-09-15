@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1110 560" width="1110" height="560" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+  <title>Hai đường giao hàng và thu tiền</title>
+  <desc>Từ một đơn bán hàng đã xác nhận có hai đường giao hàng. Đường trên là kỹ thuật viên giao tận nơi: lập phiếu giao hàng, thu tiền tại chỗ, xuất hoá đơn rồi nộp tiền mặt về công ty. Đường dưới là gửi qua đơn vị vận chuyển: lập vận đơn, đề nghị xuất kho, phiếu xuất kho sang kho ảo của đơn vị vận chuyển, đơn vị vận chuyển giao thành công thì hệ thống tự sinh phiếu giao hàng, hoá đơn và phiếu thu tiền thu hộ.</desc>
+  <style>
+    .box  { rx: 10; ry: 10; stroke-width: 1.6; }
+    .so   { fill: #f9f0ff; stroke: #9254de; }
+    .tech { fill: #e6f4ff; stroke: #299dd8; }
+    .ship { fill: #fffbe6; stroke: #d4b106; }
+    .fin  { fill: #f6ffed; stroke: #54ab78; }
+    .tb   { font-size: 13px; font-weight: 600; fill: #111827; }
+    .ts   { font-size: 11px; fill: #4b5563; }
+    .arrow{ stroke: #9ca3af; stroke-width: 1.8; fill: none; }
+    .lane { font-size: 12px; font-weight: 700; fill: #6b7280; letter-spacing: .04em; }
+    .note { font-size: 12px; fill: #92400e; }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1110" height="560" fill="#ffffff"/>
+
+  <rect class="box so" x="440" y="26" width="230" height="56"/>
+  <text class="tb" x="555" y="50" text-anchor="middle">Đơn bán hàng đã xác nhận</text>
+  <text class="ts" x="555" y="68" text-anchor="middle">Sales Order · Submitted</text>
+
+  <polyline class="arrow" points="500,82 500,110 235,110 235,156" marker-end="url(#ah)"/>
+  <polyline class="arrow" points="610,82 610,130 1075,130 1075,300 227,300 227,336" marker-end="url(#ah)"/>
+
+  <text class="lane" x="24" y="150">KỸ THUẬT VIÊN GIAO TẬN NƠI</text>
+
+  <rect class="box tech" x="140" y="160" width="190" height="60"/>
+  <text class="tb" x="235" y="184" text-anchor="middle">Phiếu giao hàng</text>
+  <text class="ts" x="235" y="203" text-anchor="middle">khách ký trên ứng dụng</text>
+
+  <rect class="box tech" x="355" y="160" width="190" height="60"/>
+  <text class="tb" x="450" y="184" text-anchor="middle">Thu tiền tại chỗ</text>
+  <text class="ts" x="450" y="203" text-anchor="middle">Payment Entry</text>
+
+  <rect class="box fin" x="570" y="160" width="190" height="60"/>
+  <text class="tb" x="665" y="184" text-anchor="middle">Hoá đơn</text>
+  <text class="ts" x="665" y="203" text-anchor="middle">Sales Invoice</text>
+
+  <rect class="box fin" x="785" y="160" width="190" height="60"/>
+  <text class="tb" x="880" y="184" text-anchor="middle">Nộp tiền về công ty</text>
+  <text class="ts" x="880" y="203" text-anchor="middle">Internal Transfer</text>
+
+  <line class="arrow" x1="330" y1="190" x2="351" y2="190" marker-end="url(#ah)"/>
+  <line class="arrow" x1="545" y1="190" x2="566" y2="190" marker-end="url(#ah)"/>
+  <line class="arrow" x1="760" y1="190" x2="781" y2="190" marker-end="url(#ah)"/>
+
+  <text class="ts" x="235" y="244" text-anchor="middle">bắt buộc làm trước khi thu tiền</text>
+  <text class="ts" x="450" y="244" text-anchor="middle">tiền mặt vào tài khoản KTV</text>
+  <text class="ts" x="665" y="244" text-anchor="middle">khi đã thu đủ 100%</text>
+  <text class="ts" x="880" y="244" text-anchor="middle">chỉ áp dụng cho tiền mặt</text>
+
+  <text class="lane" x="24" y="318">GỬI QUA ĐƠN VỊ VẬN CHUYỂN</text>
+
+  <rect class="box ship" x="140" y="340" width="175" height="60"/>
+  <text class="tb" x="227" y="364" text-anchor="middle">Vận đơn</text>
+  <text class="ts" x="227" y="383" text-anchor="middle">DP Shipment</text>
+
+  <rect class="box ship" x="330" y="340" width="175" height="60"/>
+  <text class="tb" x="417" y="364" text-anchor="middle">Đề nghị xuất kho</text>
+  <text class="ts" x="417" y="383" text-anchor="middle">Material Request</text>
+
+  <rect class="box ship" x="520" y="340" width="175" height="60"/>
+  <text class="tb" x="607" y="364" text-anchor="middle">Phiếu xuất kho</text>
+  <text class="ts" x="607" y="383" text-anchor="middle">sang kho ảo của ĐVVC</text>
+
+  <rect class="box ship" x="710" y="340" width="175" height="60"/>
+  <text class="tb" x="797" y="364" text-anchor="middle">ĐVVC giao xong</text>
+  <text class="ts" x="797" y="383" text-anchor="middle">ĐVVC báo về tự động</text>
+
+  <rect class="box fin" x="900" y="340" width="175" height="60"/>
+  <text class="tb" x="987" y="364" text-anchor="middle">Giao · Hoá đơn · COD</text>
+  <text class="ts" x="987" y="383" text-anchor="middle">hệ thống tự sinh</text>
+
+  <line class="arrow" x1="315" y1="370" x2="326" y2="370" marker-end="url(#ah)"/>
+  <line class="arrow" x1="505" y1="370" x2="516" y2="370" marker-end="url(#ah)"/>
+  <line class="arrow" x1="695" y1="370" x2="706" y2="370" marker-end="url(#ah)"/>
+  <line class="arrow" x1="885" y1="370" x2="896" y2="370" marker-end="url(#ah)"/>
+
+  <text class="ts" x="227" y="424" text-anchor="middle">lập từ nút trên đơn hàng</text>
+  <text class="ts" x="417" y="424" text-anchor="middle">xác nhận vận đơn là sinh</text>
+  <text class="ts" x="607" y="424" text-anchor="middle">đây mới là lúc trừ tồn kho</text>
+  <text class="ts" x="797" y="424" text-anchor="middle">hoặc hoàn hàng / mất hàng</text>
+  <text class="ts" x="987" y="424" text-anchor="middle">nếu vận đơn gắn đơn hàng</text>
+
+  <text class="note" x="140" y="478">Cả hai đường đều kết thúc bằng cùng ba chứng từ: Phiếu giao hàng, Hoá đơn và Phiếu thu — khác nhau ở ai lập và lập lúc nào.</text>
+  <text class="note" x="140" y="502">Chưa có Phiếu giao hàng thì hệ thống chặn thu tiền; thu tiền mặt xong mà chưa nộp về công ty thì kỹ thuật viên còn treo công nợ.</text>
+  <text class="note" x="140" y="526">Đơn hàng chỉ chuyển sang Hoàn tất khi đã giao đủ và xuất hoá đơn đủ — đó cũng là điều kiện cộng điểm tích luỹ cho khách.</text>
+</svg>

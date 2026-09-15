@@ -21,6 +21,25 @@ Dành cho **người lần đầu dùng ERP**: đăng nhập, giao diện **Desk
 
 ---
 
+## 🟠 Phần 1b — Quy trình hợp nhất (xuyên suốt các module)
+
+Dành cho **người cần hiểu cả dây chuyền**, không chỉ phần việc của mình: từ lúc khách để lại
+số điện thoại, qua đơn hàng, điều phối, vật tư, giao hàng, thu tiền, cho tới bảo dưỡng định kỳ
+và sự cố — kèm **sơ đồ từng chặng** và **bảng tra ngoại lệ**.
+
+→ **[Quy trình hợp nhất](users/00-quy-trinh.html)**
+
+| Trang | Nội dung |
+|---|---|
+| [Tổng quan toàn chuỗi](users/Quy-Trinh-Tong-Quan.html) | Bản đồ chứng từ, bảng đối chiếu tên, ai dùng màn hình nào, quy mô thực tế từng chặng |
+| [1 · Khách tiềm năng → Khách hàng](users/Quy-Trinh-01-Khach-Hang.html) · [2 · Đơn bán hàng](users/Quy-Trinh-02-Don-Hang.html) | Cửa vào hệ thống và trục chính của mọi chứng từ |
+| [3 · Điều phối & hiện trường](users/Quy-Trinh-03-Hien-Truong.html) · [4 · Vật tư](users/Quy-Trinh-04-Vat-Tu.html) | Phiếu công việc, lịch hẹn, kho kỹ thuật viên, nghĩa vụ trả hàng |
+| [5 · Giao hàng & thu tiền](users/Quy-Trinh-05-Giao-Hang-Thu-Tien.html) | Hai đường giao hàng, hoá đơn, tiền mặt, thu hộ |
+| [6 · Bảo dưỡng lặp lại](users/Quy-Trinh-06-Bao-Duong.html) · [7 · Sự cố](users/Quy-Trinh-07-Su-Co.html) | Vì sao khách cũ tự quay lại thành đơn mới; khách báo hỏng đi đường nào |
+| [8 · Ngoại lệ, lỗi và bất thường](users/Quy-Trinh-08-Ngoai-Le.html) | Tra nhanh theo triệu chứng cho cả tám chặng |
+
+---
+
 ## 🔵 Phần 2 — Hướng dẫn sử dụng các module (end-user)
 
 Giới thiệu từng **module / custom app** và cách dùng trực quan, **bao gồm cả hướng
