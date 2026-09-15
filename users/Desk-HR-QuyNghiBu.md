@@ -102,9 +102,17 @@ Ba điểm cần nhớ:
 - Lô của một kỳ đã đóng mà hệ thống **chưa từng cắt** (tác vụ nền lỡ một mốc) vẫn sống tới
   mốc kế tiếp. Quyền chỉ mất khi hệ thống thực sự cắt, không phải vì lịch trôi qua.
 
-**Chạy tay khi cần:** hàm `expire_comp_leave.run_now` mặc định chỉ chạy đúng hai mốc cuối
-kỳ. Muốn đóng bù một kỳ đã lỡ thì phải truyền `force=1` — chốt chặn này cố ý, vì chạy lệch
-mốc là quét sạch quỹ của cả kỳ đang chạy và không có đường hoàn.
+**Chạy tay khi cần** (chỉ HR Manager / System Manager): đang đăng nhập trên Desk, mở địa
+chỉ
+
+```
+/api/method/hr_for_cobegroup.scheduled.expire_comp_leave.run_now
+```
+
+Mặc định hàm chỉ chịu chạy đúng hai mốc cuối kỳ. Muốn đóng bù một kỳ đã lỡ thì thêm
+`?as_of=2026-06-30&force=1`. Chốt chặn `force` là cố ý: chạy lệch mốc sẽ quét sạch quỹ của
+cả kỳ đang chạy và **không có đường hoàn**. Bắn thông báo nhắc trước hạn thì dùng
+`/api/method/hr_for_cobegroup.scheduled.expire_comp_leave.remind_now`.
 
 ---
 
