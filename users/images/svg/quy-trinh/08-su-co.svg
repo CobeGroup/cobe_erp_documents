@@ -25,8 +25,8 @@
   <text class="lane" x="36" y="36">TIẾP NHẬN</text>
 
   <rect class="box in" x="60" y="50" width="200" height="62"/>
-  <text class="tb" x="160" y="76" text-anchor="middle">Khách báo hỏng</text>
-  <text class="ts" x="160" y="96" text-anchor="middle">tổng đài · Zalo · KTV báo</text>
+  <text class="tb" x="160" y="76" text-anchor="middle">Khách hàng báo hỏng</text>
+  <text class="ts" x="160" y="96" text-anchor="middle">tổng đài, Zalo, kỹ thuật viên</text>
 
   <rect class="box in" x="290" y="50" width="200" height="62"/>
   <text class="tb" x="390" y="76" text-anchor="middle">Lập phiếu sự cố</text>
@@ -34,7 +34,7 @@
 
   <rect class="box in" x="520" y="50" width="200" height="62"/>
   <text class="tb" x="620" y="76" text-anchor="middle">Phân loại Nhóm · Loại</text>
-  <text class="ts" x="620" y="96" text-anchor="middle">hai ô bắt buộc</text>
+  <text class="ts" x="620" y="96" text-anchor="middle">hai ô đều bắt buộc</text>
 
   <rect class="box in" x="750" y="50" width="200" height="62"/>
   <text class="tb" x="850" y="76" text-anchor="middle">Gán người xử lý</text>
@@ -46,8 +46,8 @@
 
   <text class="lane" x="36" y="176">HAI ĐƯỜNG XỬ LÝ</text>
 
-  <polyline class="arrow" points="850,112 850,152 205,152 205,186" marker-end="url(#ah)"/>
-  <polyline class="arrow" points="850,152 555,152 555,186" marker-end="url(#ah)"/>
+  <polyline class="arrow" points="820,112 820,145 205,145 205,186" marker-end="url(#ah)"/>
+  <polyline class="arrow" points="880,112 880,165 555,165 555,186" marker-end="url(#ah)"/>
 
   <rect class="box fin" x="100" y="190" width="210" height="62"/>
   <text class="tb" x="205" y="216" text-anchor="middle">Xử lý qua điện thoại</text>
@@ -58,13 +58,13 @@
   <text class="ts" x="555" y="236" text-anchor="middle">loại việc: Sự cố</text>
 
   <rect class="box work" x="760" y="190" width="210" height="62"/>
-  <text class="tb" x="865" y="216" text-anchor="middle">Lịch hẹn · KTV xử lý</text>
+  <text class="tb" x="865" y="216" text-anchor="middle">Lịch hẹn · kỹ thuật viên</text>
   <text class="ts" x="865" y="236" text-anchor="middle">như quy trình hiện trường</text>
 
   <line class="arrow" x1="660" y1="221" x2="756" y2="221" marker-end="url(#ah)"/>
 
   <rect class="box dec" x="760" y="310" width="210" height="62"/>
-  <text class="tb" x="865" y="336" text-anchor="middle">Có thay vật tư tính tiền?</text>
+  <text class="tb" x="865" y="336" text-anchor="middle">Có phát sinh vật tư tính phí?</text>
   <text class="ts" x="865" y="356" text-anchor="middle">quyết định tại hiện trường</text>
 
   <line class="arrow" x1="865" y1="252" x2="865" y2="306" marker-end="url(#ah)"/>
@@ -81,12 +81,12 @@
   <text class="ts" x="205" y="356" text-anchor="middle">Issue · Closed</text>
 
   <line class="arrow" x1="446" y1="341" x2="314" y2="341" marker-end="url(#ah)"/>
-  <text class="al" x="380" y="330" text-anchor="middle">giao hàng · thu tiền xong</text>
+  <text class="al" x="380" y="330" text-anchor="middle">giao hàng và thu tiền</text>
   <line class="arrow" x1="205" y1="252" x2="205" y2="306" marker-end="url(#ah)"/>
   <polyline class="arrow" points="865,372 865,412 250,412 250,376" marker-end="url(#ah)"/>
   <text class="al" x="600" y="404" text-anchor="middle">không phát sinh chi phí</text>
 
-  <text class="note" x="60" y="458">Phiếu sự cố luôn gắn về đơn hàng gốc — nhờ vậy tra được khách đã mua máy nào, lắp ngày nào, đã bảo dưỡng tới đâu.</text>
-  <text class="note" x="60" y="482">Hạn xử lý của nhân viên sự cố đếm từ lúc mở phiếu; hạn của kỹ thuật viên đếm từ lúc phiếu công việc được lập.</text>
+  <text class="note" x="60" y="458">Phiếu sự cố luôn gắn về đơn hàng gốc, nhờ đó tra cứu được khách hàng đã mua thiết bị nào, lắp đặt ngày nào và bảo dưỡng tới đâu.</text>
+  <text class="note" x="60" y="482">Hạn xử lý của nhân viên sự cố được tính từ lúc mở phiếu; hạn của kỹ thuật viên được tính từ lúc phiếu công việc được lập.</text>
   <text class="note" x="60" y="506">Phiếu sự cố và phiếu công việc có trạng thái độc lập: đóng phiếu sự cố không tự đóng phiếu công việc và ngược lại.</text>
 </svg>

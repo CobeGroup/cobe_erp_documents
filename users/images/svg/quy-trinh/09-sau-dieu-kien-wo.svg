@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1010 500" width="1010" height="500" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
   <title>Sáu điều kiện để hoàn thành phiếu công việc</title>
-  <desc>Sáu điều kiện xếp chồng: trạng thái cho phép, các bước công việc bắt buộc đã xong, mọi lịch hẹn đã kết thúc, tiền và vật tư đã sạch nợ, đơn bán hàng liên kết đã xong, và yêu cầu riêng theo loại việc. Qua đủ sáu thì phiếu chuyển sang hoàn thành, thiếu bất kỳ điều nào thì hệ thống chặn và nêu rõ lý do.</desc>
+  <desc>Sáu điều kiện xếp chồng: trạng thái cho phép, các bước công việc bắt buộc đã xong, mọi lịch hẹn đã kết thúc, tiền và vật tư đã được thanh toán và hoàn trả đầy đủ, đơn bán hàng liên kết đã xong, và yêu cầu riêng theo loại việc. Đáp ứng đủ sáu điều kiện thì phiếu chuyển sang hoàn thành; thiếu bất kỳ điều kiện nào thì hệ thống từ chối và nêu rõ lý do.</desc>
   <style>
     .box  { rx: 9; ry: 9; stroke-width: 1.5; }
     .cond { fill: #e6f4ff; stroke: #299dd8; }
@@ -30,11 +30,11 @@
   <rect class="box cond" x="60" y="58" width="600" height="44"/>
   <text class="num" x="76" y="86">1</text>
   <text class="t" x="100" y="86">Trạng thái hiện tại cho phép chuyển sang Hoàn thành</text>
-  <text class="ts" x="648" y="85" text-anchor="end">luôn kiểm</text>
+  <text class="ts" x="648" y="85" text-anchor="end">luôn kiểm tra</text>
 
   <rect class="box cond" x="60" y="116" width="600" height="44"/>
   <text class="num" x="76" y="144">2</text>
-  <text class="t" x="100" y="144">Mọi bước công việc bắt buộc đã xong hoặc đã đánh dấu bỏ</text>
+  <text class="t" x="100" y="144">Mọi bước công việc bắt buộc đã hoàn thành hoặc không áp dụng</text>
   <text class="ts" x="648" y="143" text-anchor="end">nếu phiếu có bước công việc</text>
 
   <rect class="box cond" x="60" y="174" width="600" height="44"/>
@@ -45,7 +45,7 @@
   <rect class="box cond" x="60" y="232" width="600" height="44"/>
   <text class="num" x="76" y="260">4</text>
   <text class="t" x="100" y="260">Tiền mặt đã nộp · vật tư đã trả · đơn hàng đã thu đủ</text>
-  <text class="ts" x="648" y="259" text-anchor="end">ba công tắc riêng</text>
+  <text class="ts" x="648" y="259" text-anchor="end">ba tham số riêng</text>
 
   <rect class="box cond" x="60" y="290" width="600" height="44"/>
   <text class="num" x="76" y="318">5</text>
@@ -65,14 +65,14 @@
 
   <rect class="box ok" x="740" y="348" width="220" height="60"/>
   <text class="tb" x="850" y="374" text-anchor="middle">Phiếu chuyển Hoàn thành</text>
-  <text class="ts" x="850" y="393" text-anchor="middle">bấm tay, hoặc tác vụ đêm tự làm</text>
+  <text class="ts" x="850" y="393" text-anchor="middle">thủ công hoặc do tác vụ tự động</text>
 
   <polyline class="arrow" points="660,370 700,370 700,378 736,378" marker-end="url(#ah)"/>
 
   <rect class="box bad" x="740" y="66" width="220" height="96"/>
   <text class="tb" x="850" y="104" text-anchor="middle">Bị chặn, nêu rõ lý do</text>
-  <text class="ts" x="850" y="124" text-anchor="middle">thiếu điều nào nói đúng điều đó</text>
-  <text class="ts" x="850" y="140" text-anchor="middle">hiện như nhau trên Desk và app</text>
+  <text class="ts" x="850" y="124" text-anchor="middle">nêu đúng điều kiện còn thiếu</text>
+  <text class="ts" x="850" y="140" text-anchor="middle">hiển thị giống nhau ở mọi màn hình</text>
 
   <polyline class="stop" points="660,80 690,80 690,78 736,78" marker-end="url(#ar)"/>
   <polyline class="stop" points="660,138 696,138 696,92 736,92" marker-end="url(#ar)"/>
@@ -81,7 +81,7 @@
   <polyline class="stop" points="660,312 714,312 714,134 736,134" marker-end="url(#ar)"/>
   <polyline class="stop" points="660,360 720,360 720,148 736,148" marker-end="url(#ar)"/>
 
-  <text class="note" x="60" y="438">Tác vụ đêm còn chờ thêm một khoảng ân hạn tính từ lịch hẹn cuối cùng; chưa đủ số ngày đó thì phiếu vẫn bị bỏ qua.</text>
-  <text class="note" x="60" y="462">Phiếu đang Tạm dừng bị tác vụ đêm bỏ qua hoàn toàn — muốn nó chạy phải đưa phiếu về Đang thực hiện trước.</text>
-  <text class="note" x="60" y="486">Điều kiện 3 đến 6 bật tắt được trong cấu hình; hai công ty vận hành khác nhau thì kết quả kiểm khác nhau.</text>
+  <text class="note" x="60" y="438">Tác vụ tự động còn chờ thêm một khoảng ân hạn tính từ lịch hẹn cuối cùng; chưa đủ số ngày đó thì phiếu vẫn được bỏ qua.</text>
+  <text class="note" x="60" y="462">Phiếu ở trạng thái Tạm dừng được tác vụ tự động bỏ qua hoàn toàn; cần chuyển phiếu về Đang thực hiện trước.</text>
+  <text class="note" x="60" y="486">Điều kiện 3 đến 6 có thể bật hoặc tắt trong cấu hình; hai công ty cấu hình khác nhau sẽ cho kết quả kiểm tra khác nhau.</text>
 </svg>

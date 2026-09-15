@@ -31,7 +31,7 @@
 
   <rect class="box tech" x="140" y="160" width="190" height="60"/>
   <text class="tb" x="235" y="184" text-anchor="middle">Phiếu giao hàng</text>
-  <text class="ts" x="235" y="203" text-anchor="middle">khách ký trên ứng dụng</text>
+  <text class="ts" x="235" y="203" text-anchor="middle">khách hàng ký trên ứng dụng</text>
 
   <rect class="box tech" x="355" y="160" width="190" height="60"/>
   <text class="tb" x="450" y="184" text-anchor="middle">Thu tiền tại chỗ</text>
@@ -49,8 +49,8 @@
   <line class="arrow" x1="545" y1="190" x2="566" y2="190" marker-end="url(#ah)"/>
   <line class="arrow" x1="760" y1="190" x2="781" y2="190" marker-end="url(#ah)"/>
 
-  <text class="ts" x="235" y="244" text-anchor="middle">bắt buộc làm trước khi thu tiền</text>
-  <text class="ts" x="450" y="244" text-anchor="middle">tiền mặt vào tài khoản KTV</text>
+  <text class="ts" x="235" y="244" text-anchor="middle">bắt buộc lập trước khi thu tiền</text>
+  <text class="ts" x="450" y="244" text-anchor="middle">tiền mặt vào tài khoản kỹ thuật viên</text>
   <text class="ts" x="665" y="244" text-anchor="middle">khi đã thu đủ 100%</text>
   <text class="ts" x="880" y="244" text-anchor="middle">chỉ áp dụng cho tiền mặt</text>
 
@@ -66,28 +66,28 @@
 
   <rect class="box ship" x="520" y="340" width="175" height="60"/>
   <text class="tb" x="607" y="364" text-anchor="middle">Phiếu xuất kho</text>
-  <text class="ts" x="607" y="383" text-anchor="middle">sang kho ảo của ĐVVC</text>
+  <text class="ts" x="607" y="383" text-anchor="middle">sang kho đơn vị vận chuyển</text>
 
   <rect class="box ship" x="710" y="340" width="175" height="60"/>
-  <text class="tb" x="797" y="364" text-anchor="middle">ĐVVC giao xong</text>
-  <text class="ts" x="797" y="383" text-anchor="middle">ĐVVC báo về tự động</text>
+  <text class="tb" x="797" y="364" text-anchor="middle">Giao thành công</text>
+  <text class="ts" x="797" y="383" text-anchor="middle">hệ thống nhận cập nhật</text>
 
   <rect class="box fin" x="900" y="340" width="175" height="60"/>
-  <text class="tb" x="987" y="364" text-anchor="middle">Giao · Hoá đơn · COD</text>
-  <text class="ts" x="987" y="383" text-anchor="middle">hệ thống tự sinh</text>
+  <text class="tb" x="987" y="364" text-anchor="middle">Chứng từ tự sinh</text>
+  <text class="ts" x="987" y="383" text-anchor="middle">phiếu giao, hoá đơn, thu hộ</text>
 
   <line class="arrow" x1="315" y1="370" x2="326" y2="370" marker-end="url(#ah)"/>
   <line class="arrow" x1="505" y1="370" x2="516" y2="370" marker-end="url(#ah)"/>
   <line class="arrow" x1="695" y1="370" x2="706" y2="370" marker-end="url(#ah)"/>
   <line class="arrow" x1="885" y1="370" x2="896" y2="370" marker-end="url(#ah)"/>
 
-  <text class="ts" x="227" y="424" text-anchor="middle">lập từ nút trên đơn hàng</text>
-  <text class="ts" x="417" y="424" text-anchor="middle">xác nhận vận đơn là sinh</text>
-  <text class="ts" x="607" y="424" text-anchor="middle">đây mới là lúc trừ tồn kho</text>
-  <text class="ts" x="797" y="424" text-anchor="middle">hoặc hoàn hàng / mất hàng</text>
-  <text class="ts" x="987" y="424" text-anchor="middle">nếu vận đơn gắn đơn hàng</text>
+  <text class="ts" x="227" y="424" text-anchor="middle">lập từ đơn bán hàng</text>
+  <text class="ts" x="417" y="424" text-anchor="middle">phát sinh khi xác nhận vận đơn</text>
+  <text class="ts" x="607" y="424" text-anchor="middle">thời điểm trừ tồn kho</text>
+  <text class="ts" x="797" y="424" text-anchor="middle">hoặc hoàn hàng, mất hàng</text>
+  <text class="ts" x="987" y="424" text-anchor="middle">khi vận đơn gắn đơn bán hàng</text>
 
-  <text class="note" x="140" y="478">Cả hai đường đều kết thúc bằng cùng ba chứng từ: Phiếu giao hàng, Hoá đơn và Phiếu thu — khác nhau ở ai lập và lập lúc nào.</text>
-  <text class="note" x="140" y="502">Chưa có Phiếu giao hàng thì hệ thống chặn thu tiền; thu tiền mặt xong mà chưa nộp về công ty thì kỹ thuật viên còn treo công nợ.</text>
-  <text class="note" x="140" y="526">Đơn hàng chỉ chuyển sang Hoàn tất khi đã giao đủ và xuất hoá đơn đủ — đó cũng là điều kiện cộng điểm tích luỹ cho khách.</text>
+  <text class="note" x="140" y="478">Cả hai đường đều kết thúc bằng cùng ba chứng từ: Phiếu giao hàng, Hoá đơn và Phiếu thu; khác nhau ở người lập và thời điểm lập.</text>
+  <text class="note" x="140" y="502">Khi chưa có Phiếu giao hàng, hệ thống chặn thu tiền; thu tiền mặt mà chưa nộp về công ty thì kỹ thuật viên vẫn còn công nợ.</text>
+  <text class="note" x="140" y="526">Đơn hàng chỉ chuyển sang Hoàn tất khi đã giao đủ và xuất hoá đơn đủ; đó cũng là điều kiện cộng điểm tích luỹ cho khách hàng.</text>
 </svg>

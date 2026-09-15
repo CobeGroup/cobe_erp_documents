@@ -29,7 +29,7 @@
   <!-- ai làm -->
   <rect class="box tech" x="140" y="46" width="165" height="52"/>
   <text class="tb" x="222" y="68" text-anchor="middle">Kỹ thuật viên</text>
-  <text class="ts" x="222" y="86" text-anchor="middle">bấm Yêu cầu hàng</text>
+  <text class="ts" x="222" y="86" text-anchor="middle">lập Yêu cầu vật tư</text>
 
   <rect class="box wh" x="330" y="46" width="165" height="52"/>
   <text class="tb" x="412" y="68" text-anchor="middle">Nhân viên kho</text>
@@ -37,15 +37,15 @@
 
   <rect class="box tech" x="520" y="46" width="165" height="52"/>
   <text class="tb" x="602" y="68" text-anchor="middle">Kỹ thuật viên</text>
-  <text class="ts" x="602" y="86" text-anchor="middle">giao hàng cho khách</text>
+  <text class="ts" x="602" y="86" text-anchor="middle">giao hàng cho khách hàng</text>
 
   <rect class="box tech" x="710" y="46" width="165" height="52"/>
   <text class="tb" x="792" y="68" text-anchor="middle">Kỹ thuật viên</text>
-  <text class="ts" x="792" y="86" text-anchor="middle">bấm Trả vật tư</text>
+  <text class="ts" x="792" y="86" text-anchor="middle">lập Phiếu trả vật tư</text>
 
   <rect class="box wh" x="900" y="46" width="165" height="52"/>
   <text class="tb" x="982" y="68" text-anchor="middle">Nhân viên kho</text>
-  <text class="ts" x="982" y="86" text-anchor="middle">đếm hàng, duyệt phiếu</text>
+  <text class="ts" x="982" y="86" text-anchor="middle">kiểm đếm và duyệt phiếu</text>
 
   <line class="arrow" x1="305" y1="72" x2="326" y2="72" marker-end="url(#ah)"/>
   <line class="arrow" x1="495" y1="72" x2="516" y2="72" marker-end="url(#ah)"/>
@@ -67,7 +67,7 @@
 
   <rect class="box doc" x="710" y="172" width="165" height="58"/>
   <text class="tb" x="792" y="196" text-anchor="middle">Phiếu trả · Nháp</text>
-  <text class="ts" x="792" y="215" text-anchor="middle">chưa đụng sổ kho</text>
+  <text class="ts" x="792" y="215" text-anchor="middle">chưa tác động sổ kho</text>
 
   <rect class="box docd" x="900" y="172" width="165" height="58"/>
   <text class="tb" x="982" y="196" text-anchor="middle">Phiếu trả đã duyệt</text>
@@ -82,19 +82,19 @@
   <!-- hàng ở đâu -->
   <rect class="box loc" x="140" y="310" width="165" height="52"/>
   <text class="tb" x="222" y="332" text-anchor="middle">Kho công ty</text>
-  <text class="ts" x="222" y="350" text-anchor="middle">chưa đổi chỗ</text>
+  <text class="ts" x="222" y="350" text-anchor="middle">chưa thay đổi</text>
 
   <rect class="box loc" x="330" y="310" width="165" height="52"/>
   <text class="tb" x="412" y="332" text-anchor="middle">Kho kỹ thuật viên</text>
-  <text class="ts" x="412" y="350" text-anchor="middle">hàng theo xe</text>
+  <text class="ts" x="412" y="350" text-anchor="middle">hàng mang theo</text>
 
   <rect class="box loc" x="520" y="310" width="165" height="52"/>
-  <text class="tb" x="602" y="332" text-anchor="middle">Nhà khách</text>
+  <text class="tb" x="602" y="332" text-anchor="middle">Nhà khách hàng</text>
   <text class="ts" x="602" y="350" text-anchor="middle">phần dư sinh nghĩa vụ trả</text>
 
   <rect class="box loc" x="710" y="310" width="165" height="52"/>
-  <text class="tb" x="792" y="332" text-anchor="middle">Vẫn ở kho KTV</text>
-  <text class="ts" x="792" y="350" text-anchor="middle">nháp không chuyển hàng</text>
+  <text class="tb" x="792" y="332" text-anchor="middle">Kho kỹ thuật viên</text>
+  <text class="ts" x="792" y="350" text-anchor="middle">trạng thái nháp, chưa chuyển</text>
 
   <rect class="box loc" x="900" y="310" width="165" height="52"/>
   <text class="tb" x="982" y="332" text-anchor="middle">Về kho công ty</text>
@@ -106,8 +106,8 @@
   <line class="thin" x1="792" y1="230" x2="792" y2="306"/>
   <line class="thin" x1="982" y1="230" x2="982" y2="306"/>
 
-  <text class="note" x="140" y="404">Nghĩa vụ trả sinh ra ngay lúc lập Phiếu giao hàng, không phải lúc trả: số cần trả = số mang đi − số thực giao.</text>
-  <text class="note" x="140" y="428">Phiếu trả còn nháp thì chỉ giữ chỗ: hàng chưa về kho, nợ chưa xoá, nhưng ứng dụng khoá phần đó để khỏi lập trùng.</text>
-  <text class="note" x="140" y="452">Vật tư dùng hẳn tại hiện trường đi đường riêng: Phiếu xuất vật tư (Stock Entry · Material Issue), tự duyệt ngay.</text>
-  <text class="note" x="140" y="476">Huỷ Phiếu công việc không tự trả kho — hàng đã nhận vẫn phải trả bằng phiếu trả như thường.</text>
+  <text class="note" x="140" y="404">Nghĩa vụ trả phát sinh ngay khi lập Phiếu giao hàng, không phải khi trả hàng: số cần trả = số mang đi − số thực giao.</text>
+  <text class="note" x="140" y="428">Phiếu trả ở trạng thái nháp chỉ có tác dụng giữ chỗ: hàng chưa về kho, nghĩa vụ chưa được xoá, nhưng phần đó bị khoá để tránh lập trùng.</text>
+  <text class="note" x="140" y="452">Vật tư sử dụng hết tại hiện trường theo đường riêng: Phiếu xuất vật tư (Stock Entry · Material Issue), tự động duyệt.</text>
+  <text class="note" x="140" y="476">Huỷ Phiếu công việc không tự động trả hàng về kho: hàng đã nhận vẫn phải trả bằng phiếu trả.</text>
 </svg>

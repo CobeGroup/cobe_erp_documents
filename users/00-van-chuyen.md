@@ -30,5 +30,5 @@ chuỗi chứng từ kho sinh ra sau đó:
 | Phiếu yêu cầu xét nghiệm | Gửi mẫu về lab | **không sinh gì** |
 | Tạo tay, không gắn chứng từ gốc | *(để trống)* | **không sinh gì** |
 
-> 🔗 Vận đơn là một trong hai đường giao hàng của công ty. Xem cả hai đường đặt cạnh nhau ở
-> [Quy trình hợp nhất · Chặng 5](Quy-Trinh-05-Giao-Hang-Thu-Tien.html).
+> 🔗 Vận đơn là một trong hai phương thức giao hàng của công ty. So sánh cả hai phương thức:
+> xem [Quy trình hợp nhất · Chặng 5](Quy-Trinh-05-Giao-Hang-Thu-Tien.html).

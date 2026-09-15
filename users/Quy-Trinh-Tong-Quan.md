@@ -8,11 +8,11 @@ nav_order: 1
 # Tổng quan toàn chuỗi
 {: .no_toc }
 
-**Dành cho:** mọi vai trò · **Thời lượng đọc:** khoảng 12 phút
+**Đối tượng:** mọi vai trò · **Thời lượng đọc:** khoảng 12 phút
 {: .fs-3 .text-grey-dk-000 }
 
-Trang này là bản đồ. Đọc xong sẽ hình dung được toàn bộ hệ thống chạy thế nào, và biết cần
-mở trang nào để tra chi tiết phần việc của mình.
+Trang này giữ vai trò bản đồ tổng thể. Sau khi đọc, người dùng nắm được cấu trúc vận hành của
+hệ thống và xác định được cần tham khảo trang nào cho phần việc của mình.
 
 ---
 
@@ -24,105 +24,107 @@ mở trang nào để tra chi tiết phần việc của mình.
 
 ---
 
-## 1. Toàn cảnh trong một sơ đồ
+## 1. Toàn cảnh hệ thống
 
 <a href="images/svg/quy-trinh/01-toan-canh.svg" title="Bấm để phóng to">
-  <img src="images/svg/quy-trinh/01-toan-canh.svg" alt="Sơ đồ vòng tròn toàn chuỗi: khách tiềm năng chuyển thành khách hàng rồi mở đơn bán hàng; đơn sinh phiếu công việc, yêu cầu vật tư và lịch hẹn; kỹ thuật viên ra hiện trường lập phiếu giao hàng, hoá đơn và phiếu thu; đơn hoàn tất sinh phiếu nhắc bảo dưỡng và phiếu nhắc lại mở đơn bán hàng mới; sự cố là cửa vào thứ hai đi thẳng vào phiếu công việc" style="width:100%;height:auto">
+  <img src="images/svg/quy-trinh/01-toan-canh.svg" alt="Sơ đồ vòng tròn toàn chuỗi: khách tiềm năng chuyển thành khách hàng rồi mở đơn bán hàng; đơn sinh phiếu công việc, yêu cầu vật tư và lịch hẹn; kỹ thuật viên ra hiện trường lập phiếu giao hàng, hoá đơn và phiếu thu; đơn hoàn tất sinh phiếu nhắc bảo dưỡng và phiếu nhắc lại mở đơn bán hàng mới; sự cố là đầu vào thứ hai, dẫn thẳng vào phiếu công việc" style="width:100%;height:auto">
 </a>
 
-Điểm quan trọng nhất của sơ đồ này là **nó khép kín**. Hệ thống không được thiết kế để bán
-một lần rồi thôi: sản phẩm chính là máy lọc nước, mà máy lọc nước thì phải thay lõi và bảo
-dưỡng theo chu kỳ. Vì vậy **mọi đơn hàng hoàn tất đều tự sinh ra lịch chăm sóc cho lần sau**,
-và lần sau đó lại trở thành một đơn hàng mới.
+Đặc điểm quan trọng nhất của sơ đồ là **tính khép kín**. Hệ thống không được thiết kế cho mô
+hình bán một lần: sản phẩm chính là máy lọc nước, mà máy lọc nước phải thay lõi và bảo dưỡng
+theo chu kỳ. Do đó **mỗi đơn hàng hoàn tất đều tự phát sinh lịch chăm sóc cho kỳ kế tiếp**, và
+kỳ chăm sóc đó lại trở thành một đơn hàng mới.
 
-Hệ quả thực tế: trong 51.152 đơn bán hàng đang có trên hệ thống, **19.056 đơn — tức hơn một
-phần ba — sinh ra từ phiếu nhắc bảo dưỡng**, không phải từ khách mới. Đây là vòng quay chính
-tạo doanh thu lặp lại.
+Kết quả thể hiện rõ trên số liệu: trong 51.152 đơn bán hàng hiện có, **19.056 đơn — tương
+đương hơn một phần ba — được lập từ phiếu nhắc bảo dưỡng** chứ không phải từ khách hàng mới.
+Đây là nguồn doanh thu lặp lại chính của công ty.
 
 ---
 
-## 2. Hai cửa vào, một dòng chảy
+## 2. Hai đầu vào, một dây chuyền
 
-Khách chỉ vào hệ thống bằng **hai cửa**:
+Khách hàng đi vào hệ thống qua **hai đầu vào**:
 
-| Cửa vào | Chứng từ mở đầu | Ai mở | Khi nào |
+| Đầu vào | Chứng từ mở đầu | Vai trò lập | Trường hợp áp dụng |
 |---|---|---|---|
-| **Khách mới muốn mua** | Khách tiềm năng (`Lead`) | Kinh doanh · Chăm sóc khách hàng | Khách gọi hotline, nhắn trang mạng xã hội, để lại thông tin trên trang web, hoặc được người khác giới thiệu |
-| **Khách cũ báo hỏng** | Phiếu sự cố (`Issue`) | Chăm sóc khách hàng | Khách đã mua máy, máy có vấn đề |
+| **Khách hàng mới có nhu cầu mua** | Khách tiềm năng (`Lead`) | Kinh doanh · Chăm sóc khách hàng | Khách hàng gọi tổng đài, nhắn tin qua mạng xã hội, để lại thông tin trên trang web hoặc được giới thiệu |
+| **Khách hàng hiện hữu báo hỏng** | Phiếu sự cố (`Issue`) | Chăm sóc khách hàng | Khách hàng đã mua thiết bị và thiết bị phát sinh vấn đề |
 
-Cửa thứ ba trông như một cửa nhưng thực ra **không phải cửa vào mà là vòng quay lại**: phiếu
-nhắc bảo dưỡng (`Service Ticket Reminder`). Nó chỉ phát sinh cho khách **đã từng mua**, do hệ
-thống tự sinh từ đơn hàng cũ.
+Ngoài hai đầu vào trên còn một luồng thứ ba là phiếu nhắc bảo dưỡng (`Service Ticket
+Reminder`). Đây **không phải đầu vào mà là vòng quay trở lại**: phiếu chỉ phát sinh cho khách
+hàng **đã từng mua**, do hệ thống tự lập từ đơn hàng cũ.
 
-Sau khi vào, cả ba đều đổ về cùng một dòng chảy: **đơn bán hàng → phiếu công việc → hiện
+Cả ba luồng sau đó đều đi vào cùng một dây chuyền: **đơn bán hàng → phiếu công việc → hiện
 trường → giao hàng → thu tiền**.
 
 ---
 
 ## 3. Bảng đối chiếu tên chứng từ
 
-Tài liệu gọi chứng từ bằng tiếng Việt cho dễ đọc. Khi cần tra trên hệ thống, gõ **tên tiếng
-Anh** ở cột phải vào ô tìm kiếm.
+Tài liệu gọi tên chứng từ bằng tiếng Việt để thuận tiện khi đọc. Khi tra cứu trên hệ thống,
+cần nhập **tên tiếng Anh** ở cột giữa vào thanh tìm kiếm.
 
-| Tên trong tài liệu | Tên thật trên hệ thống | Vai trò |
+| Tên trong tài liệu | Tên trên hệ thống | Vai trò |
 |---|---|---|
-| Khách tiềm năng | `Lead` | Hồ sơ người chưa mua |
+| Khách tiềm năng | `Lead` | Hồ sơ khách hàng chưa phát sinh giao dịch |
 | Cơ hội bán hàng | `Opportunity` | Nhu cầu cụ thể của một khách tiềm năng |
-| Khách hàng | `Customer` | Hồ sơ khách chính thức |
-| Liên hệ | `Contact` | Người liên hệ, số điện thoại |
-| Địa chỉ | `Address` | Nơi lắp đặt, nơi giao hàng |
-| Đơn bán hàng | `Sales Order` | Cam kết bán: hàng gì, giá bao nhiêu, ai bán |
+| Khách hàng | `Customer` | Hồ sơ khách hàng chính thức |
+| Liên hệ | `Contact` | Người liên hệ và số điện thoại |
+| Địa chỉ | `Address` | Địa điểm lắp đặt, địa điểm giao hàng |
+| Đơn bán hàng | `Sales Order` | Cam kết bán: hàng hoá, giá trị, người phụ trách |
 | Phiếu công việc | `FS Work Order` | Hồ sơ trung tâm của một vụ việc kỹ thuật |
 | Dòng việc trong phiếu | `FS Work Order Line Item` | Từng đầu việc trong phiếu công việc |
-| Lịch hẹn dịch vụ | `FS Service Appointment` | Một buổi kỹ thuật viên tới hiện trường |
-| Yêu cầu vật tư | `Material Request` | Kỹ thuật viên xin hàng từ kho công ty |
-| Phiếu xuất kho · nhập kho · chuyển kho · trả hàng | `Stock Entry` | Mọi lần hàng đổi kho đều là chứng từ này |
-| Phiếu giao hàng | `Delivery Note` | Xác nhận khách đã nhận hàng |
-| Hoá đơn bán hàng | `Sales Invoice` | Ghi doanh thu và công nợ |
-| Phiếu thu · phiếu nộp tiền | `Payment Entry` | Mọi lần tiền đổi tay |
+| Lịch hẹn dịch vụ | `FS Service Appointment` | Một buổi kỹ thuật viên có mặt tại hiện trường |
+| Yêu cầu vật tư | `Material Request` | Đề nghị cấp hàng từ kho công ty |
+| Phiếu xuất kho · nhập kho · chuyển kho · trả hàng | `Stock Entry` | Mọi lần hàng hoá thay đổi kho |
+| Phiếu giao hàng | `Delivery Note` | Xác nhận khách hàng đã nhận hàng |
+| Hoá đơn bán hàng | `Sales Invoice` | Ghi nhận doanh thu và công nợ |
+| Phiếu thu · phiếu nộp tiền | `Payment Entry` | Mọi lần phát sinh dòng tiền |
 | Vận đơn | `DP Shipment` | Lô hàng gửi qua đơn vị vận chuyển |
-| Phiếu sự cố | `Issue` | Khách báo hỏng |
+| Phiếu sự cố | `Issue` | Trường hợp khách hàng báo hỏng |
 | Nhóm sự cố · Loại sự cố | `Issue Group` · `Issue Type` | Hai tầng phân loại của phiếu sự cố |
-| Nhắc theo vật tư | `Item Service Reminder` | Lịch nhắc của **một** vật tư trên **một** đơn |
-| Phiếu nhắc bảo dưỡng | `Service Ticket Reminder` | Việc gọi khách, gom nhiều lịch nhắc lại |
-| Kho công ty · kho kỹ thuật viên · kho ảo đơn vị vận chuyển | `Warehouse` | Mọi loại kho đều là chứng từ này |
+| Nhắc theo vật tư | `Item Service Reminder` | Lịch nhắc của một vật tư trên một đơn hàng |
+| Phiếu nhắc bảo dưỡng | `Service Ticket Reminder` | Công việc liên hệ khách hàng, gom nhiều lịch nhắc |
+| Kho công ty · kho kỹ thuật viên · kho của đơn vị vận chuyển | `Warehouse` | Mọi loại kho trong hệ thống |
 
-> Lưu ý dễ nhầm: **Phiếu xuất kho, Phiếu nhập kho, Phiếu chuyển kho và Phiếu trả vật tư đều là
-> cùng một loại chứng từ** (`Stock Entry`), chỉ khác ở ô *Mục đích*. Tương tự, **Phiếu thu và
-> Phiếu nộp tiền về công ty cũng là cùng một loại** (`Payment Entry`), khác ở ô *Loại thanh toán*.
+> **Điểm cần phân biệt:** Phiếu xuất kho, Phiếu nhập kho, Phiếu chuyển kho và Phiếu trả vật tư
+> đều thuộc **cùng một loại chứng từ** (`Stock Entry`), chỉ khác nhau ở ô *Mục đích*. Tương
+> tự, Phiếu thu và Phiếu nộp tiền về công ty cũng thuộc **cùng một loại** (`Payment Entry`),
+> khác nhau ở ô *Loại thanh toán*.
 
 ---
 
-## 4. Ai làm gì, trên màn hình nào
+## 4. Phân công vai trò và màn hình làm việc
 
-Hệ thống không chỉ có một giao diện. Mỗi vai trò làm việc trên màn hình riêng, nhưng tất cả
-ghi vào **cùng một kho dữ liệu**.
+Hệ thống có nhiều giao diện khác nhau. Mỗi vai trò làm việc trên màn hình riêng, nhưng tất cả
+đều ghi vào **cùng một cơ sở dữ liệu**.
 
-| Vai trò | Màn hình chính | Việc chính trong chuỗi |
+| Vai trò | Màn hình chính | Phần việc trong dây chuyền |
 |---|---|---|
 | Kinh doanh · Chăm sóc khách hàng | Desk (giao diện chính) | Khách tiềm năng, khách hàng, đơn bán hàng, phiếu sự cố |
-| Nhân viên dịch vụ | Desk + báo cáo dịch vụ `/service-report` | Phiếu nhắc bảo dưỡng, gọi khách, chốt đơn mới |
-| Điều phối | Màn điều phối `/smart-scheduler` | Lập lịch hẹn, gán kỹ thuật viên, xem lịch cả đội |
-| Kỹ thuật viên | Ứng dụng kỹ thuật viên `/technician` | Nhận việc, check-in, yêu cầu vật tư, giao hàng, thu tiền |
-| Kho | Màn kho `/master-stock` + Desk | Xuất hàng theo yêu cầu, duyệt phiếu trả vật tư |
+| Nhân viên dịch vụ | Desk và báo cáo dịch vụ `/service-report` | Phiếu nhắc bảo dưỡng, liên hệ khách hàng, lập đơn hàng mới |
+| Điều phối | Màn hình điều phối `/smart-scheduler` | Lập lịch hẹn, gán kỹ thuật viên, theo dõi lịch toàn đội |
+| Kỹ thuật viên | Ứng dụng kỹ thuật viên `/technician` | Tiếp nhận công việc, check-in, yêu cầu vật tư, giao hàng, thu tiền |
+| Kho | Màn hình kho `/master-stock` và Desk | Xuất hàng theo yêu cầu, duyệt phiếu trả vật tư |
 | Kế toán | Desk | Hoá đơn, phiếu thu, đối chiếu công nợ |
-| Quản lý dịch vụ | `/service-report` và `/fsm-report` | Theo dõi tồn đọng, hiệu suất, doanh thu dịch vụ |
+| Quản lý dịch vụ | `/service-report` và `/fsm-report` | Theo dõi tồn đọng, hiệu suất và doanh thu dịch vụ |
 
 > Hệ thống dịch vụ hiện trường đã **chuyển sang nền tảng mới từ tháng 03/2026**. Dữ liệu vụ
-> việc phát sinh trước mốc đó nằm ở hệ cũ và chỉ để tra cứu; mọi việc mới đều chạy trên
-> phiếu công việc (`FS Work Order`) và lịch hẹn (`FS Service Appointment`) của hệ mới.
+> việc phát sinh trước mốc đó nằm trên nền tảng cũ và chỉ phục vụ tra cứu; mọi vụ việc mới đều
+> vận hành trên phiếu công việc (`FS Work Order`) và lịch hẹn dịch vụ (`FS Service
+> Appointment`) của nền tảng mới.
 
 ---
 
-## 5. Quy mô thực tế của từng chặng
+## 5. Qui mô thực tế của từng chặng
 
-Bảng dưới cho thấy chặng nào là chặng chính, chặng nào là ngoại lệ. Số liệu chốt ngày
-**15/09/2026**.
+Bảng dưới đây cho thấy chặng nào là luồng chính và chặng nào là trường hợp ngoại lệ. Số liệu
+tính đến ngày **15/09/2026**.
 
 | Chặng | Chứng từ | Số lượng |
 |---|---|---|
-| Khách vào hệ thống | Khách tiềm năng | 93.956 |
-| Trở thành khách hàng | Khách hàng | 25.566 |
+| Tiếp nhận khách hàng | Khách tiềm năng | 93.956 |
+| Chuyển đổi khách hàng | Khách hàng | 25.566 |
 | Bán hàng | Đơn bán hàng | 51.152 |
 | Dịch vụ hiện trường | Phiếu công việc | 16.004 |
 | Dịch vụ hiện trường | Lịch hẹn dịch vụ | 15.001 |
@@ -131,89 +133,90 @@ Bảng dưới cho thấy chặng nào là chặng chính, chặng nào là ngo�
 | Giao hàng | Phiếu giao hàng | 24.191 |
 | Kế toán | Hoá đơn | 23.207 |
 | Kế toán | Phiếu thu và phiếu nộp tiền | 33.492 |
-| Chăm sóc lặp lại | Phiếu nhắc bảo dưỡng | 82.552 |
+| Chăm sóc định kỳ | Phiếu nhắc bảo dưỡng | 82.552 |
 | Sự cố | Phiếu sự cố | 25.944 |
 | Vận chuyển qua đối tác | Vận đơn | 27 |
 
-Hai điều đọc được ngay từ bảng này:
+Bảng trên cho thấy hai điểm đáng lưu ý:
 
-- **Phiếu nhắc bảo dưỡng nhiều hơn đơn hàng.** Đó là bản chất của việc chăm sóc định kỳ: mỗi
-  khách được nhắc nhiều lần trong đời máy, và không phải lần nhắc nào cũng chốt được đơn.
-- **Vận đơn qua đơn vị vận chuyển hiện còn rất ít.** Kênh giao hàng chính vẫn là kỹ thuật
-  viên mang hàng đi và giao tận nơi.
+- **Số phiếu nhắc bảo dưỡng lớn hơn số đơn hàng.** Đây là đặc thù của công tác chăm sóc định
+  kỳ: mỗi khách hàng được liên hệ nhiều lần trong vòng đời thiết bị, và không phải lần liên hệ
+  nào cũng phát sinh đơn hàng.
+- **Lượng vận đơn qua đơn vị vận chuyển hiện còn rất nhỏ.** Phương thức giao hàng chính vẫn là
+  kỹ thuật viên mang hàng đi và giao tận nơi.
 
 ---
 
-## 6. Ba loại việc tại hiện trường
+## 6. Ba nhóm công việc tại hiện trường
 
-Phiếu công việc được phân theo **loại việc** (`FS Work Type`). Bốn loại chiếm gần như toàn bộ:
+Phiếu công việc được phân theo **loại việc** (`FS Work Type`). Bốn loại chiếm gần như toàn bộ
+khối lượng:
 
-| Loại việc | Số phiếu | Nguồn gốc thường gặp |
+| Loại việc | Số phiếu | Nguồn phát sinh phổ biến |
 |---|---|---|
-| Bảo dưỡng | 9.599 | Phiếu nhắc bảo dưỡng chốt thành đơn, rồi lập phiếu công việc |
-| Sự cố | 3.350 | Khách báo hỏng, lập phiếu sự cố rồi lập phiếu công việc |
-| Lắp đặt | 2.076 | Đơn bán máy mới |
-| Khảo sát | 912 | Đo nước, xem mặt bằng trước khi chốt bán |
+| Bảo dưỡng | 9.599 | Phiếu nhắc bảo dưỡng được chốt thành đơn hàng, sau đó lập phiếu công việc |
+| Sự cố | 3.350 | Khách hàng báo hỏng, lập phiếu sự cố rồi lập phiếu công việc |
+| Lắp đặt | 2.076 | Đơn bán thiết bị mới |
+| Khảo sát | 912 | Đo mẫu nước, khảo sát mặt bằng trước khi ký hợp đồng |
 
-Loại việc quyết định **yêu cầu khi hoàn thành**: có loại bắt buộc chụp ảnh, có loại bắt buộc
-lập phiếu giao hàng, có loại bắt buộc thu tiền. Chọn sai loại việc thì hệ thống đòi những thứ
-không liên quan, hoặc ngược lại bỏ qua thứ đáng lẽ phải kiểm.
+Loại việc quyết định **yêu cầu khi hoàn thành phiếu**: có loại bắt buộc đính kèm ảnh, có loại
+bắt buộc lập phiếu giao hàng, có loại bắt buộc thu tiền. Chọn sai loại việc dẫn tới việc hệ
+thống yêu cầu những nội dung không liên quan, hoặc bỏ qua nội dung lẽ ra phải kiểm tra.
 
 ---
 
-## 7. Nguyên tắc chung cần nhớ
+## 7. Bốn nguyên tắc vận hành
 
-Bốn nguyên tắc dưới đây giải thích phần lớn các tình huống *"tại sao hệ thống không cho tôi làm"*.
+Bốn nguyên tắc dưới đây giải thích phần lớn các trường hợp hệ thống từ chối thao tác.
 
-### 7.1. Chứng từ đi theo một chiều, muốn lùi phải huỷ ngược
+### 7.1. Chứng từ vận hành một chiều; muốn quay lại phải huỷ ngược
 
-Mỗi chứng từ sinh ra chứng từ sau và **khoá chứng từ trước**. Muốn sửa một thứ ở giữa chuỗi,
-phải huỷ ngược từ cuối về:
+Mỗi chứng từ làm phát sinh chứng từ kế tiếp và đồng thời **khoá chứng từ trước đó**. Muốn điều
+chỉnh một chứng từ ở giữa chuỗi, phải huỷ ngược từ cuối chuỗi trở về:
 
 ```
 Phiếu thu  →  Hoá đơn  →  Phiếu giao hàng  →  Đơn bán hàng
-   huỷ 1       huỷ 2         huỷ 3              rồi mới sửa được
+  huỷ 1       huỷ 2         huỷ 3           mới điều chỉnh được
 ```
 
-### 7.2. Trạng thái của các phiếu là độc lập với nhau
+### 7.2. Trạng thái của các chứng từ độc lập với nhau
 
-Đây là điểm gây ngạc nhiên nhiều nhất. **Lịch hẹn hoàn tất không tự đẩy phiếu công việc sang
-hoàn tất. Đơn hàng hoàn tất không tự đóng phiếu công việc. Đóng phiếu sự cố không đóng phiếu
-công việc.** Mỗi phiếu có bộ điều kiện riêng và phải được kết thúc riêng.
+Đây là điểm dễ hiểu nhầm nhất. **Lịch hẹn hoàn tất không tự chuyển phiếu công việc sang hoàn
+tất. Đơn hàng hoàn tất không tự đóng phiếu công việc. Đóng phiếu sự cố không đóng phiếu công
+việc.** Mỗi chứng từ có bộ điều kiện riêng và phải được kết thúc riêng.
 
-Đây là thiết kế cố ý, không phải lỗi: một vụ việc có thể cần nhiều lần xuống hiện trường, và
-một đơn hàng có thể chỉ giao được một phần.
+Đây là thiết kế có chủ đích: một vụ việc có thể cần nhiều lần xuống hiện trường, và một đơn
+hàng có thể chỉ giao được một phần.
 
-### 7.3. Chứng từ nháp không làm thay đổi gì
+### 7.3. Chứng từ ở trạng thái nháp chưa làm thay đổi dữ liệu
 
-Phiếu ở trạng thái **nháp** chỉ là ý định. Sổ kho chưa đổi, công nợ chưa đổi, nghĩa vụ chưa
-xoá. Chỉ khi phiếu được **xác nhận** thì hệ thống mới ghi nhận. Riêng phiếu trả vật tư nháp
-có tác dụng phụ đặc biệt: nó **giữ chỗ** để kỹ thuật viên không lập trùng, dù chưa đụng sổ kho.
+Chứng từ ở trạng thái **nháp** mới chỉ là dự kiến: sổ kho chưa thay đổi, công nợ chưa thay
+đổi, nghĩa vụ chưa được xoá. Chỉ khi chứng từ được **xác nhận** thì hệ thống mới ghi nhận.
+Riêng phiếu trả vật tư ở trạng thái nháp có thêm một tác dụng: **giữ chỗ** phần hàng tương ứng
+để kỹ thuật viên không lập trùng, dù chưa tác động tới sổ kho.
 
-### 7.4. Hệ thống im lặng ở vài chỗ
+### 7.4. Một số thao tác thiếu sót không được hệ thống cảnh báo
 
-Có những việc hệ thống **không báo lỗi** khi làm thiếu, nhưng hậu quả xuất hiện về sau:
+Có những nội dung khai thiếu không làm phát sinh thông báo lỗi, nhưng hậu quả xuất hiện về sau:
 
-| Làm thiếu | Hệ thống nói gì | Hậu quả |
+| Nội dung khai thiếu | Hệ thống cảnh báo | Hậu quả |
 |---|---|---|
-| Khách chưa được gán chương trình tích điểm | Không nói gì | Khách không nhận điểm nào, phát hiện khi khách khiếu nại |
-| Không khai người giới thiệu ở bước khách tiềm năng | Không nói gì | Người giới thiệu mất thưởng, sửa sau rất khó |
-| Chọn sai loại việc trên phiếu công việc | Không nói gì | Bỏ sót yêu cầu bắt buộc, hoặc bị đòi thứ không cần |
-| Kho nguồn chưa khai điểm gửi hàng | Không nói gì | Đơn vị vận chuyển tới lấy hàng nhầm kho |
+| Khách hàng chưa được gán chương trình tích điểm | Không | Khách hàng không được cộng điểm, chỉ phát hiện khi có khiếu nại |
+| Không khai người giới thiệu ở bước khách tiềm năng | Không | Người giới thiệu không được tính thưởng, khắc phục sau rất khó khăn |
+| Chọn sai loại việc trên phiếu công việc | Không | Bỏ sót yêu cầu bắt buộc hoặc bị yêu cầu nội dung không cần thiết |
+| Kho nguồn chưa khai điểm gửi hàng | Không | Đơn vị vận chuyển đến lấy hàng sai địa điểm |
 
 ---
 
-## 8. Đi tiếp
+## 8. Nội dung đọc tiếp
 
-Từ đây, chọn chặng cần đọc:
-
-| Bạn làm việc ở chặng | Đọc trang |
+| Phạm vi công việc | Trang tham khảo |
 |---|---|
-| Tìm và chốt khách mới | [Từ khách tiềm năng đến khách hàng](Quy-Trinh-01-Khach-Hang.html) |
-| Lập và sửa đơn hàng | [Đơn bán hàng](Quy-Trinh-02-Don-Hang.html) |
-| Xếp lịch, đi hiện trường | [Điều phối và thực hiện tại hiện trường](Quy-Trinh-03-Hien-Truong.html) |
-| Giữ kho, cấp phát và nhận trả vật tư | [Vật tư của kỹ thuật viên](Quy-Trinh-04-Vat-Tu.html) |
-| Giao hàng, xuất hoá đơn, thu tiền | [Giao hàng và thu tiền](Quy-Trinh-05-Giao-Hang-Thu-Tien.html) |
-| Gọi khách bảo dưỡng định kỳ | [Bảo dưỡng định kỳ và vòng lặp](Quy-Trinh-06-Bao-Duong.html) |
-| Tiếp nhận và xử lý khách báo hỏng | [Sự cố](Quy-Trinh-07-Su-Co.html) |
-| Gặp hiện tượng lạ, cần tra nhanh | [Ngoại lệ, lỗi và bất thường](Quy-Trinh-08-Ngoai-Le.html) |
+| Tiếp nhận và chuyển đổi khách hàng mới | [Từ khách tiềm năng đến khách hàng](Quy-Trinh-01-Khach-Hang.html) |
+| Lập và điều chỉnh đơn hàng | [Đơn bán hàng](Quy-Trinh-02-Don-Hang.html) |
+| Lập lịch và thực hiện tại hiện trường | [Điều phối và thực hiện tại hiện trường](Quy-Trinh-03-Hien-Truong.html) |
+| Quản lý kho, cấp phát và tiếp nhận vật tư hoàn trả | [Vật tư của kỹ thuật viên](Quy-Trinh-04-Vat-Tu.html) |
+| Giao hàng, xuất hoá đơn và thu tiền | [Giao hàng và thu tiền](Quy-Trinh-05-Giao-Hang-Thu-Tien.html) |
+| Liên hệ khách hàng theo lịch bảo dưỡng định kỳ | [Bảo dưỡng định kỳ và vòng lặp](Quy-Trinh-06-Bao-Duong.html) |
+| Tiếp nhận và xử lý trường hợp báo hỏng | [Sự cố](Quy-Trinh-07-Su-Co.html) |
+| Tra cứu một tình huống bất thường | [Ngoại lệ, lỗi và bất thường](Quy-Trinh-08-Ngoai-Le.html) |

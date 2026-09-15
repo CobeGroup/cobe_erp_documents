@@ -16,5 +16,5 @@ xử lý khi không sửa được trực tiếp.
 > *[Sửa lỗi liên kết Khách hàng](Sua-Loi-Lien-Ket-Khach-Hang.html)* (trong module
 > Marketing & Khách hàng).
 
-> 🔗 Muốn xem đơn bán hàng nằm ở đâu trong cả dây chuyền — từ khách tiềm năng tới bảo dưỡng
-> định kỳ — đọc [Quy trình hợp nhất · Chặng 2](Quy-Trinh-02-Don-Hang.html).
+> 🔗 Vị trí của đơn bán hàng trong toàn bộ dây chuyền, từ khách tiềm năng tới bảo dưỡng định
+> kỳ: xem [Quy trình hợp nhất · Chặng 2](Quy-Trinh-02-Don-Hang.html).

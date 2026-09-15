@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1010 510" width="1010" height="510" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 540" width="1040" height="540" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
   <title>Từ khách tiềm năng đến khách hàng</title>
-  <desc>Năm nguồn khách đổ về một phiếu khách tiềm năng; từ phiếu đó lập liên hệ và địa chỉ, rồi chuyển đổi thành khách hàng và mở đơn bán hàng. Dải dưới cùng là bốn trạng thái của phiếu khách tiềm năng.</desc>
+  <desc>Năm nguồn khách hàng xếp thành một cột bên trái, mỗi nguồn có một mũi tên riêng dẫn vào phiếu khách tiềm năng. Từ phiếu khách tiềm năng lập liên hệ và địa chỉ, sau đó chuyển đổi thành khách hàng. Dải phía dưới là bốn trạng thái của phiếu khách tiềm năng.</desc>
   <style>
     .box  { rx: 11; ry: 11; stroke-width: 1.6; }
     .src  { fill: #f0f5ff; stroke: #6b8ee8; }
@@ -10,9 +10,9 @@
     .tb   { font-size: 14px; font-weight: 600; fill: #111827; }
     .tc   { font-size: 12.5px; fill: #1f2937; }
     .ts   { font-size: 11.5px; fill: #4b5563; }
+    .li   { font-size: 12px; fill: #4b5563; }
     .num  { font-size: 11px; font-weight: 700; fill: #6b7280; }
     .arrow{ stroke: #9ca3af; stroke-width: 1.9; fill: none; }
-    .thin { stroke: #c7c7c7; stroke-width: 1.4; fill: none; }
     .dash { stroke: #9254de; stroke-width: 1.5; fill: none; stroke-dasharray: 5 4; }
     .lane { font-size: 12px; font-weight: 700; fill: #6b7280; letter-spacing: .05em; }
     .note { font-size: 12px; fill: #92400e; }
@@ -21,76 +21,72 @@
     <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
     </marker>
+    <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9254de"/>
+    </marker>
   </defs>
-  <rect x="0" y="0" width="1010" height="510" fill="#ffffff"/>
+  <rect x="0" y="0" width="1040" height="540" fill="#ffffff"/>
 
-  <text class="lane" x="24" y="36">NGUỒN KHÁCH</text>
-  <text class="lane" x="24" y="182">HỒ SƠ</text>
-  <text class="lane" x="24" y="330">TRẠNG THÁI PHIẾU</text>
+  <text class="lane" x="36" y="36">NGUỒN KHÁCH HÀNG</text>
 
-  <!-- nguồn -->
-  <rect class="box src" x="100" y="48" width="150" height="42"/>
-  <text class="tc" x="175" y="74" text-anchor="middle">Hotline · Tổng đài</text>
-  <rect class="box src" x="270" y="48" width="150" height="42"/>
-  <text class="tc" x="345" y="74" text-anchor="middle">Facebook · Zalo</text>
-  <rect class="box src" x="440" y="48" width="150" height="42"/>
-  <text class="tc" x="515" y="74" text-anchor="middle">Webchat · Website</text>
-  <rect class="box src" x="610" y="48" width="150" height="42"/>
-  <text class="tc" x="685" y="74" text-anchor="middle">Khách giới thiệu</text>
-  <rect class="box src" x="780" y="48" width="150" height="42"/>
-  <text class="tc" x="855" y="74" text-anchor="middle">Sale nhập tay</text>
+  <rect class="box src" x="36" y="52"  width="186" height="40"/>
+  <text class="tc" x="129" y="77"  text-anchor="middle">Hotline · Tổng đài</text>
+  <rect class="box src" x="36" y="102" width="186" height="40"/>
+  <text class="tc" x="129" y="127" text-anchor="middle">Facebook · Zalo</text>
+  <rect class="box src" x="36" y="152" width="186" height="40"/>
+  <text class="tc" x="129" y="177" text-anchor="middle">Webchat · Website</text>
+  <rect class="box src" x="36" y="202" width="186" height="40"/>
+  <text class="tc" x="129" y="227" text-anchor="middle">Khách hàng giới thiệu</text>
+  <rect class="box src" x="36" y="252" width="186" height="40"/>
+  <text class="tc" x="129" y="277" text-anchor="middle">Nhân viên nhập liệu</text>
 
-  <line class="thin" x1="175" y1="90" x2="175" y2="118"/>
-  <line class="thin" x1="345" y1="90" x2="345" y2="118"/>
-  <line class="thin" x1="515" y1="90" x2="515" y2="118"/>
-  <line class="thin" x1="685" y1="90" x2="685" y2="118"/>
-  <line class="thin" x1="855" y1="90" x2="855" y2="118"/>
-  <line class="thin" x1="175" y1="118" x2="855" y2="118"/>
-  <line class="arrow" x1="190" y1="118" x2="190" y2="186" marker-end="url(#ah)"/>
+  <line class="arrow" x1="222" y1="72"  x2="268" y2="72"  marker-end="url(#ah)"/>
+  <line class="arrow" x1="222" y1="122" x2="268" y2="122" marker-end="url(#ah)"/>
+  <line class="arrow" x1="222" y1="172" x2="268" y2="172" marker-end="url(#ah)"/>
+  <line class="arrow" x1="222" y1="222" x2="268" y2="222" marker-end="url(#ah)"/>
+  <line class="arrow" x1="222" y1="272" x2="268" y2="272" marker-end="url(#ah)"/>
 
-  <!-- hồ sơ -->
-  <rect class="box sale" x="90"  y="190" width="200" height="68"/>
-  <text class="num" x="102" y="208">①</text>
-  <text class="tb"  x="190" y="228" text-anchor="middle">Khách tiềm năng</text>
-  <text class="ts"  x="190" y="247" text-anchor="middle">Lead</text>
+  <rect class="box sale" x="272" y="52" width="210" height="240"/>
+  <text class="num" x="286" y="74">①</text>
+  <text class="tb"  x="377" y="98"  text-anchor="middle">Khách tiềm năng</text>
+  <text class="ts"  x="377" y="118" text-anchor="middle">Lead</text>
+  <text class="li"  x="296" y="160">Nội dung bắt buộc khai:</text>
+  <text class="li"  x="296" y="186">· Số điện thoại</text>
+  <text class="li"  x="296" y="210">· Nguồn khách hàng</text>
+  <text class="li"  x="296" y="234">· Công ty tiếp nhận</text>
+  <text class="li"  x="296" y="258">· Người giới thiệu (nếu có)</text>
 
-  <rect class="box sale" x="330" y="190" width="200" height="68"/>
-  <text class="num" x="342" y="208">②</text>
-  <text class="tb"  x="430" y="228" text-anchor="middle">Liên hệ &amp; Địa chỉ</text>
-  <text class="ts"  x="430" y="247" text-anchor="middle">Contact · Address</text>
+  <rect class="box sale" x="532" y="138" width="200" height="68"/>
+  <text class="num" x="546" y="158">②</text>
+  <text class="tb"  x="632" y="176" text-anchor="middle">Liên hệ và Địa chỉ</text>
+  <text class="ts"  x="632" y="195" text-anchor="middle">Contact · Address</text>
 
-  <rect class="box sale" x="570" y="190" width="200" height="68"/>
-  <text class="num" x="582" y="208">③</text>
-  <text class="tb"  x="670" y="228" text-anchor="middle">Khách hàng</text>
-  <text class="ts"  x="670" y="247" text-anchor="middle">Customer</text>
+  <rect class="box sale" x="782" y="138" width="200" height="68"/>
+  <text class="num" x="796" y="158">③</text>
+  <text class="tb"  x="882" y="176" text-anchor="middle">Khách hàng</text>
+  <text class="ts"  x="882" y="195" text-anchor="middle">Customer</text>
 
-  <rect class="box fin" x="800" y="190" width="185" height="68"/>
-  <text class="num" x="812" y="208">④</text>
-  <text class="tb"  x="895" y="228" text-anchor="middle">Đơn bán hàng</text>
-  <text class="ts"  x="895" y="247" text-anchor="middle">Sales Order</text>
+  <line class="arrow" x1="482" y1="172" x2="528" y2="172" marker-end="url(#ah)"/>
+  <line class="arrow" x1="732" y1="172" x2="778" y2="172" marker-end="url(#ah)"/>
 
-  <line class="arrow" x1="290" y1="224" x2="326" y2="224" marker-end="url(#ah)"/>
-  <line class="arrow" x1="530" y1="224" x2="566" y2="224" marker-end="url(#ah)"/>
-  <line class="arrow" x1="770" y1="224" x2="796" y2="224" marker-end="url(#ah)"/>
+  <text class="lane" x="36" y="356">TRẠNG THÁI PHIẾU</text>
 
-  <!-- trạng thái -->
-  <polyline class="dash" points="190,258 190,300 130,300 130,340"/>
-  <polyline class="dash" points="670,258 670,300 730,300 730,340"/>
+  <polyline class="dash" points="377,292 377,330 195,330 195,372" marker-end="url(#ap)"/>
 
-  <rect class="box st" x="50"  y="342" width="160" height="42"/>
-  <text class="tc" x="130" y="368" text-anchor="middle">Lead</text>
-  <rect class="box st" x="240" y="342" width="160" height="42"/>
-  <text class="tc" x="320" y="368" text-anchor="middle">Interested</text>
-  <rect class="box st" x="430" y="342" width="160" height="42"/>
-  <text class="tc" x="510" y="368" text-anchor="middle">Opportunity</text>
-  <rect class="box fin" x="650" y="342" width="160" height="42"/>
-  <text class="tc" x="730" y="368" text-anchor="middle">Converted</text>
+  <rect class="box st"  x="100" y="376" width="190" height="42"/>
+  <text class="tc" x="195" y="402" text-anchor="middle">Lead</text>
+  <rect class="box st"  x="320" y="376" width="190" height="42"/>
+  <text class="tc" x="415" y="402" text-anchor="middle">Interested</text>
+  <rect class="box st"  x="540" y="376" width="190" height="42"/>
+  <text class="tc" x="635" y="402" text-anchor="middle">Opportunity</text>
+  <rect class="box fin" x="760" y="376" width="190" height="42"/>
+  <text class="tc" x="855" y="402" text-anchor="middle">Converted</text>
 
-  <line class="arrow" x1="210" y1="363" x2="236" y2="363" marker-end="url(#ah)"/>
-  <line class="arrow" x1="400" y1="363" x2="426" y2="363" marker-end="url(#ah)"/>
-  <line class="arrow" x1="590" y1="363" x2="646" y2="363" marker-end="url(#ah)"/>
+  <line class="arrow" x1="290" y1="397" x2="316" y2="397" marker-end="url(#ah)"/>
+  <line class="arrow" x1="510" y1="397" x2="536" y2="397" marker-end="url(#ah)"/>
+  <line class="arrow" x1="730" y1="397" x2="756" y2="397" marker-end="url(#ah)"/>
 
-  <text class="note" x="50" y="424">Hai bước giữa được phép bỏ qua: phần lớn phiếu đi thẳng từ Lead sang Converted khi khách chốt mua.</text>
-  <text class="note" x="50" y="448">Mọi khách hàng trên hệ thống đều sinh ra từ một phiếu khách tiềm năng — không có khách nào lập trực tiếp.</text>
-  <text class="note" x="50" y="472">Khai người giới thiệu phải làm ngay ở bước ①; chuyển đổi xong mới khai thì liên kết thưởng không còn đúng.</text>
+  <text class="note" x="100" y="456">Hai trạng thái ở giữa là tuỳ chọn: phần lớn phiếu chuyển thẳng từ Lead sang Converted khi khách hàng đồng ý mua.</text>
+  <text class="note" x="100" y="480">Mọi khách hàng trên hệ thống đều được sinh ra từ một phiếu khách tiềm năng; không có khách hàng nào được lập trực tiếp.</text>
+  <text class="note" x="100" y="504">Người giới thiệu phải được khai ngay ở bước ①; khai sau khi chuyển đổi thì liên kết tính thưởng không còn chính xác.</text>
 </svg>

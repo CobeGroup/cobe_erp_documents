@@ -8,11 +8,12 @@ nav_order: 8
 # Chặng 7 — Sự cố
 {: .no_toc }
 
-**Ai làm:** Chăm sóc khách hàng · Điều phối · Kỹ thuật viên · Quản lý dịch vụ
+**Vai trò thực hiện:** Chăm sóc khách hàng · Điều phối · Kỹ thuật viên · Quản lý dịch vụ
 {: .fs-3 .text-grey-dk-000 }
 
-Sự cố là **cửa vào thứ hai** của hệ thống. Khách đã mua máy, máy có vấn đề, khách gọi về. Từ
-đó có thể phát sinh một chuyến đi, và đôi khi phát sinh cả một đơn hàng mới.
+Sự cố là **đầu vào thứ hai** của hệ thống: khách hàng đã mua thiết bị, thiết bị phát sinh vấn
+đề và khách hàng liên hệ lại. Từ đầu vào này có thể phát sinh một lần đến hiện trường, và
+trong nhiều trường hợp phát sinh thêm một đơn hàng mới.
 
 ---
 
@@ -27,150 +28,154 @@ Sự cố là **cửa vào thứ hai** của hệ thống. Khách đã mua máy,
 ## Sơ đồ chặng
 
 <a href="images/svg/quy-trinh/08-su-co.svg" title="Bấm để phóng to">
-  <img src="images/svg/quy-trinh/08-su-co.svg" alt="Khách báo hỏng, nhân viên lập phiếu sự cố gắn về đơn hàng gốc, phân loại theo nhóm và loại rồi gán người xử lý. Từ đó có hai đường: xử lý dứt điểm qua điện thoại rồi đóng phiếu, hoặc lập phiếu công việc loại Sự cố để cử kỹ thuật viên xuống hiện trường; nếu phải thay vật tư có tính tiền thì lập đơn bán hàng mới từ chính phiếu sự cố" style="width:100%;height:auto">
+  <img src="images/svg/quy-trinh/08-su-co.svg" alt="Khách hàng báo hỏng, nhân viên lập phiếu sự cố gắn về đơn hàng gốc, phân loại theo nhóm và loại rồi gán người xử lý. Từ đó có hai đường: xử lý dứt điểm qua điện thoại rồi đóng phiếu, hoặc lập phiếu công việc loại Sự cố để cử kỹ thuật viên xuống hiện trường; nếu phải thay vật tư có tính phí thì lập đơn bán hàng mới từ chính phiếu sự cố" style="width:100%;height:auto">
 </a>
 
 ---
 
-## 1. Tiếp nhận — lập phiếu sự cố
+## 1. Tiếp nhận và lập phiếu sự cố
 
-Mỗi lần khách báo hỏng được ghi thành một **phiếu sự cố** (`Issue`). Hệ thống hiện có **25.944
-phiếu**.
+Mỗi lượt khách hàng báo hỏng được ghi nhận thành một **phiếu sự cố** (`Issue`). Hệ thống hiện
+có **25.944 phiếu**.
 
-Việc quan trọng nhất lúc lập phiếu là **gắn phiếu về đơn hàng gốc** — đơn khách đã mua máy.
-Thực tế **25.940 trên 25.944 phiếu** đều có đường dẫn này, tức gần như tuyệt đối.
+Nội dung quan trọng nhất khi lập phiếu là **gắn phiếu về đơn hàng gốc** — đơn hàng khách hàng
+đã mua thiết bị. Trên thực tế **25.940 trên tổng số 25.944 phiếu** đều có liên kết này.
 
-Nhờ đường dẫn đó, người xử lý mở phiếu ra là thấy ngay:
+Nhờ liên kết đó, người xử lý mở phiếu là nắm được ngay:
 
-- Khách đã mua máy gì, lắp ngày nào.
-- Đã bảo dưỡng tới đâu, thay lõi lần gần nhất khi nào.
-- Lịch sử các lần báo hỏng trước của chính khách này.
+- Khách hàng đã mua thiết bị nào và lắp đặt ngày nào.
+- Tình trạng bảo dưỡng và lần thay lõi gần nhất.
+- Lịch sử các lần báo hỏng trước đó của cùng khách hàng.
 
-Phiếu còn ghi sẵn số điện thoại và tên khách, và nối được với nhật ký cuộc gọi của tổng đài.
+Phiếu cũng ghi sẵn số điện thoại và tên khách hàng, đồng thời liên kết được với nhật ký cuộc
+gọi của tổng đài.
 
 ---
 
 ## 2. Phân loại hai tầng
 
-Mỗi phiếu được phân loại bằng **hai ô, cả hai đều bắt buộc**, điền ngay lúc tiếp nhận:
+Mỗi phiếu được phân loại bằng **hai ô, cả hai đều bắt buộc**, khai ngay khi tiếp nhận:
 
-| Ô | Trả lời câu hỏi | Điền khi nào |
+| Ô | Nội dung phản ánh | Thời điểm khai |
 |---|---|---|
-| **Nhóm sự cố** (`Issue Group`) | Khách phàn nàn chuyện gì | Vừa nghe khách kể là biết |
-| **Loại sự cố** (`Issue Type`) | Cụ thể hỏng ở đâu | Hỏi thêm vài câu là chốt được |
+| **Nhóm sự cố** (`Issue Group`) | Nội dung khách hàng phản ánh | Ngay khi tiếp nhận thông tin |
+| **Loại sự cố** (`Issue Type`) | Vị trí hoặc bộ phận phát sinh lỗi | Sau khi trao đổi thêm để xác định |
 
-Danh mục hiện có **12 nhóm và 75 loại**. Cách điền linh hoạt theo cả hai chiều:
+Danh mục hiện có **12 nhóm và 75 loại**. Trình tự khai linh hoạt theo cả hai chiều:
 
-- **Chọn nhóm trước**, ô loại chỉ còn hiện những loại thuộc nhóm đó — khoảng bảy dòng thay vì
-  bảy mươi lăm.
-- **Chọn loại trước**, hệ thống **tự điền nhóm**. Loại nào thuộc nhiều nhóm thì hệ thống hỏi
-  chứ không tự đoán.
+- **Chọn nhóm trước**, ô loại chỉ hiển thị các loại thuộc nhóm đó, khoảng bảy dòng thay vì bảy
+  mươi lăm.
+- **Chọn loại trước**, hệ thống **tự điền nhóm**. Loại thuộc nhiều nhóm thì hệ thống hiển thị
+  hộp thoại để người dùng lựa chọn thay vì tự xác định.
 
-Mỗi loại có phần mô tả ghi sẵn các nguyên nhân thường gặp, lấy từ sơ đồ xử lý của bộ phận kỹ
-thuật — đây là gợi ý tra cứu, không phải ô phải điền.
+Mỗi loại có phần mô tả liệt kê các nguyên nhân thường gặp, trích từ sơ đồ xử lý của bộ phận kỹ
+thuật. Đây là nội dung tham khảo, không phải ô bắt buộc điền.
 
-📚 Chi tiết cách quản trị danh mục: [Phân loại sự cố (Nhóm · Loại)](Phan-Loai-Su-Co.html).
+📚 Hướng dẫn quản trị danh mục: [Phân loại sự cố (Nhóm · Loại)](Phan-Loai-Su-Co.html).
 
 ---
 
-## 3. Hai đường xử lý
+## 3. Hai hướng xử lý
 
-Sau khi gán **người xử lý** (`Handling Person`), phiếu đi một trong hai đường.
+Sau khi gán **người xử lý** (`Handling Person`), phiếu đi theo một trong hai hướng.
 
-### Đường 1 — Xử lý dứt điểm qua điện thoại
+### Hướng 1 — Xử lý dứt điểm qua điện thoại
 
-Nhiều ca chỉ là khách chưa quen dùng máy, hoặc thao tác sai. Nhân viên hướng dẫn qua điện
-thoại là xong, ghi kết quả vào ô **Resolution Details** rồi đóng phiếu.
+Nhiều trường hợp chỉ do khách hàng chưa quen sử dụng thiết bị hoặc thao tác chưa đúng. Nhân
+viên hướng dẫn qua điện thoại là xử lý xong, ghi kết quả vào ô **Resolution Details** rồi đóng
+phiếu.
 
-Nhóm *Khách chưa quen dùng máy* hiện có **2.296 ca** — đủ lớn để thấy đường này không phải
-ngoại lệ.
+Riêng nhóm *Khách chưa quen dùng máy* hiện có **2.296 trường hợp**, đủ để thấy đây không phải
+hướng ngoại lệ.
 
-### Đường 2 — Cử kỹ thuật viên xuống hiện trường
+### Hướng 2 — Cử kỹ thuật viên xuống hiện trường
 
-Bấm **Create → FS Work Order** ngay trên phiếu sự cố. Hệ thống mang sẵn khách hàng, mô tả sự
-cố, và ghi đường dẫn ngược về phiếu. Chọn **loại việc là *Sự cố***.
+Chọn **Create → FS Work Order** ngay trên phiếu sự cố. Hệ thống điền sẵn khách hàng, mô tả sự
+cố và ghi liên kết ngược về phiếu. Loại việc được chọn là ***Sự cố***.
 
-Từ đây, phiếu công việc chạy đúng như [Chặng 3](Quy-Trinh-03-Hien-Truong.html): lập lịch hẹn,
-gán kỹ thuật viên, xuống hiện trường, hoàn thành.
+Từ đây, phiếu công việc vận hành theo đúng [Chặng 3](Quy-Trinh-03-Hien-Truong.html): lập lịch
+hẹn, gán kỹ thuật viên, thực hiện tại hiện trường và hoàn thành.
 
-Hệ thống hiện có **3.350 phiếu công việc loại *Sự cố***, trong đó:
+Hệ thống hiện có **3.350 phiếu công việc loại *Sự cố***, phân bố như sau:
 
-| Kiểu | Số phiếu | Nghĩa |
+| Trường hợp | Số phiếu | Ý nghĩa |
 |---|---|---|
-| Gắn phiếu sự cố, **không** gắn đơn hàng | 1.444 | Sửa chữa không phát sinh chi phí, hoặc còn bảo hành |
-| Gắn **cả** phiếu sự cố **và** đơn hàng | 1.943 | Có thay vật tư tính tiền |
+| Gắn phiếu sự cố, **không** gắn đơn hàng | 1.444 | Sửa chữa không phát sinh chi phí, hoặc còn trong thời hạn bảo hành |
+| Gắn **đồng thời** phiếu sự cố và đơn hàng | 1.943 | Có thay vật tư tính phí |
 
 ---
 
-## 4. Khi sự cố phát sinh đơn hàng mới
+## 4. Trường hợp sự cố phát sinh đơn hàng mới
 
-Xuống tới nơi mới biết phải thay linh kiện có tính tiền. Lúc đó lập **đơn bán hàng mới** ngay
-từ phiếu sự cố: **Create → Sales Order**. Hệ thống hiện có **3.321 đơn** sinh theo đường này.
+Khi đến hiện trường mới xác định được cần thay linh kiện có tính phí, nhân sự lập **đơn bán
+hàng mới** ngay từ phiếu sự cố bằng chức năng **Create → Sales Order**. Hệ thống hiện ghi nhận
+**3.321 đơn** phát sinh theo hướng này.
 
-Đơn mới chạy đủ chặng như mọi đơn khác: giao hàng, hoá đơn, thu tiền. Và vì nó cũng sẽ **Hoàn
-tất**, nó cũng **sinh lịch bảo dưỡng cho kỳ sau** — một ca sự cố có thể kéo khách quay lại vòng
-chăm sóc định kỳ.
+Đơn mới vận hành đầy đủ các chặng như mọi đơn khác: giao hàng, xuất hoá đơn, thu tiền. Do đơn
+cũng sẽ chuyển sang trạng thái **Hoàn tất**, đơn này đồng thời **phát sinh lịch bảo dưỡng cho
+kỳ kế tiếp**. Như vậy một trường hợp sự cố có thể đưa khách hàng quay lại vòng chăm sóc định kỳ.
 
-> 💡 Đây là lý do nên lập đơn **từ nút trên phiếu sự cố** thay vì tạo mới trên Desk: giữ được
-> đường dẫn để biết doanh thu này đến từ ca sự cố nào.
+> 💡 Đây là lý do cần lập đơn **từ chức năng trên phiếu sự cố** thay vì tạo mới trên Desk: liên
+> kết được giữ lại giúp xác định doanh thu này phát sinh từ trường hợp sự cố nào.
 
 ---
 
 ## 5. Trạng thái phiếu sự cố
 
-| Trạng thái | Nghĩa | Số phiếu |
+| Trạng thái | Ý nghĩa | Số phiếu |
 |---|---|---|
 | **Closed** | Đã đóng | 19.864 |
-| **On Hold** | Đang treo, chờ khách hoặc chờ linh kiện | 5.738 |
+| **On Hold** | Đang tạm dừng, chờ khách hàng hoặc chờ linh kiện | 5.738 |
 | **Resolved** | Đã xử lý, chờ xác nhận | 232 |
-| **Replied** | Đã phản hồi khách | 109 |
+| **Replied** | Đã phản hồi khách hàng | 109 |
 | **Open** | Đang mở | 1 |
 
-Khối **On Hold** 5.738 phiếu là điểm cần quản lý chú ý: đây là tồn đọng thật, không phải phiếu
-đang chạy.
+Khối **On Hold** với 5.738 phiếu là nội dung cán bộ quản lý cần theo dõi: đây là phần tồn đọng
+thực tế, không phải phiếu đang được xử lý.
 
-> ⚠️ **Phiếu sự cố và phiếu công việc có trạng thái độc lập.** Đóng phiếu sự cố không đóng phiếu
-> công việc, và ngược lại. Hai phiếu phải được kết thúc riêng.
-
----
-
-## 6. Đo hiệu suất — hai mốc thời gian khác nhau
-
-Hệ thống đo hai nhóm người theo hai cách khác nhau, và **không cộng chung được**:
-
-| | Nhân viên sự cố | Kỹ thuật viên |
-|---|---|---|
-| **Là ai** | Người ghi ở ô *Handling Person* trên phiếu sự cố | Người được gán vào lịch hẹn của phiếu công việc |
-| **Bắt đầu đếm hạn từ** | Lúc mở phiếu sự cố | Lúc **phiếu công việc được lập** |
-| **Coi là xong khi** | Phiếu được đóng, **hoặc** có phiếu công việc đầu tiên | Phiếu công việc chuyển *Completed* hoặc *Closed* |
-
-Kỹ thuật viên được tính từ lúc phiếu công việc sinh ra chứ không phải từ lúc khách báo hỏng —
-để phần chậm ở khâu tiếp nhận không tính vào điểm của họ.
-
-Công thức: `Tỉ lệ đạt = Đúng hạn ÷ (Đúng hạn + Trễ hạn + Quá hạn chưa xong)`. Các ca **đang còn
-trong hạn** bị loại khỏi mẫu số có chủ đích, để những ca vừa mở hôm qua không kéo tụt tỉ lệ
-của cả tháng.
-
-📚 Chi tiết: [Hiệu suất xử lý sự cố](Hieu-Suat-Xu-Ly-Su-Co.html).
+> ⚠️ **Phiếu sự cố và phiếu công việc có trạng thái độc lập.** Đóng phiếu sự cố không đóng
+> phiếu công việc và ngược lại. Hai chứng từ phải được kết thúc riêng.
 
 ---
 
-## 7. Ngoại lệ thường gặp ở chặng này
+## 6. Đo hiệu suất theo hai mốc thời gian
 
-| Hiện tượng | Nguyên nhân | Cách xử lý |
+Hệ thống đo hai nhóm nhân sự theo hai cách khác nhau, và **kết quả không cộng chung được**:
+
+| Nội dung | Nhân viên sự cố | Kỹ thuật viên |
 |---|---|---|
-| Không biết khách đã mua máy gì | Phiếu chưa gắn về đơn hàng gốc | Tìm đơn của khách rồi gắn vào ô chứng từ tham chiếu |
-| Ô **Loại sự cố** rỗng trơn sau khi chọn nhóm | Nhóm đó chưa có loại nào | Chọn nhóm khác, hoặc báo quản trị khai loại cho nhóm đó |
-| Đổi nhóm làm mất loại đang chọn | Loại cũ không thuộc nhóm mới | Chọn lại loại. Trên phiếu **đã lưu** thì hệ thống chỉ nhắc chứ không tự xoá |
-| Phiếu công việc đã xong mà **phiếu sự cố vẫn mở** | Hai phiếu độc lập trạng thái | Đóng phiếu sự cố riêng, kèm ghi nhận kết quả |
-| Phiếu sự cố đã đóng mà **phiếu công việc vẫn New** | Cùng lý do trên | Xem [Chặng 3, mục 5](Quy-Trinh-03-Hien-Truong.html#5-hoàn-thành-phiếu-công-việc--sáu-điều-kiện) |
-| Đơn hàng sửa chữa không truy được về ca sự cố | Đơn lập tay trên Desk thay vì lập từ nút trên phiếu | Nhờ quản trị gắn lại đường dẫn |
-| Phiếu treo **On Hold** rất lâu | Chờ linh kiện, chờ khách sắp xếp, hoặc bị bỏ quên | Rà định kỳ danh sách *On Hold*; đóng những ca đã xử lý xong nhưng quên cập nhật |
-| Tỉ lệ đạt của một người tụt bất thường | Có ca quá hạn chưa xong nằm trong mẫu số | Bấm vào con số trên báo cáo để xem từng ca cụ thể |
+| **Đối tượng** | Người được ghi tại ô *Handling Person* trên phiếu sự cố | Người được gán vào lịch hẹn của phiếu công việc |
+| **Mốc bắt đầu tính hạn** | Thời điểm mở phiếu sự cố | Thời điểm **phiếu công việc được lập** |
+| **Điều kiện coi là hoàn thành** | Phiếu được đóng, **hoặc** có phiếu công việc đầu tiên | Phiếu công việc chuyển sang *Completed* hoặc *Closed* |
+
+Kỹ thuật viên được tính từ thời điểm phiếu công việc phát sinh chứ không phải từ thời điểm
+khách hàng báo hỏng, nhằm bảo đảm phần chậm trễ ở khâu tiếp nhận không tính vào kết quả của
+kỹ thuật viên.
+
+Công thức: `Tỉ lệ đạt = Đúng hạn ÷ (Đúng hạn + Trễ hạn + Quá hạn chưa xong)`. Các trường hợp
+**còn trong hạn** được loại khỏi mẫu số một cách có chủ đích, để những trường hợp vừa mở không
+làm sai lệch tỉ lệ của cả kỳ báo cáo.
+
+📚 Nội dung chi tiết: [Hiệu suất xử lý sự cố](Hieu-Suat-Xu-Ly-Su-Co.html).
+
+---
+
+## 7. Ngoại lệ thường gặp
+
+| Hiện tượng | Nguyên nhân | Hướng xử lý |
+|---|---|---|
+| Không xác định được khách hàng đã mua thiết bị nào | Phiếu chưa gắn về đơn hàng gốc | Tra đơn hàng của khách hàng và gắn vào ô chứng từ tham chiếu |
+| Ô **Loại sự cố** không có giá trị nào sau khi chọn nhóm | Nhóm đó chưa được khai loại nào | Chọn nhóm khác, hoặc đề nghị quản trị viên khai loại cho nhóm |
+| Thay đổi nhóm làm mất loại đang chọn | Loại cũ không thuộc nhóm mới | Chọn lại loại. Trên phiếu **đã lưu**, hệ thống chỉ cảnh báo chứ không tự xoá |
+| Phiếu công việc đã hoàn thành nhưng **phiếu sự cố vẫn mở** | Hai chứng từ có trạng thái độc lập | Đóng phiếu sự cố riêng, kèm ghi nhận kết quả |
+| Phiếu sự cố đã đóng nhưng **phiếu công việc vẫn ở New** | Cùng nguyên nhân trên | Xem [Chặng 3, mục 5](Quy-Trinh-03-Hien-Truong.html#5-sáu-điều-kiện-hoàn-thành-phiếu-công-việc) |
+| Đơn hàng sửa chữa không truy được về trường hợp sự cố | Đơn lập thủ công trên Desk thay vì lập từ chức năng trên phiếu | Đề nghị quản trị viên gắn lại liên kết |
+| Phiếu tồn đọng ở **On Hold** trong thời gian dài | Chờ linh kiện, chờ khách hàng sắp xếp, hoặc chưa được theo dõi | Rà soát định kỳ danh sách *On Hold*; đóng các trường hợp đã xử lý xong nhưng chưa cập nhật |
+| Tỉ lệ đạt của một nhân sự giảm bất thường | Có trường hợp quá hạn chưa hoàn thành nằm trong mẫu số | Chọn vào con số trên báo cáo để xem chi tiết từng trường hợp |
 
 ---
 
 ## 8. Trang còn lại
 
-Toàn bộ các tình huống bất thường của cả tám chặng được gom vào một bảng tra nhanh:
+Toàn bộ tình huống bất thường của cả tám chặng được tập hợp thành một bảng tra cứu:
 **[Ngoại lệ, lỗi và bất thường](Quy-Trinh-08-Ngoai-Le.html)**.
