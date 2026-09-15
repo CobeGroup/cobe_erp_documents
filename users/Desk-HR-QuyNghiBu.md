@@ -167,7 +167,63 @@ lúc chạy còn phát sinh phiếu mới.
 
 ---
 
-## 6. Sự cố hay gặp
+## 6. Hệ thống hành xử thế nào trong từng tình huống
+
+Ba bảng dưới đây gom toàn bộ luật lại thành câu trả lời trực tiếp, để HR khỏi phải suy từ cơ
+chế ra.
+
+### 6.1 Khi giờ vào quỹ
+
+| Tình huống | Hệ thống làm gì |
+|---|---|
+| Phiếu làm thêm quy đổi *Nghỉ bù* được duyệt, ngày làm thêm **đã qua** | Giờ vào quỹ **ngay**, dùng được liền |
+| Phiếu được duyệt cho **ngày chưa tới** | Giờ **nằm chờ**. Tự vào quỹ khi qua ngày đó, không ai phải thao tác |
+| Phiếu còn **chờ duyệt** | Chưa có giờ nào |
+| Phiếu bị **từ chối** hoặc **huỷ duyệt** | Không vào quỹ; nếu đã vào thì rút ra ngay |
+| Phiếu quy đổi **Tiền lương** | Không liên quan tới quỹ |
+| Nhân viên **không chấm công** ngày làm thêm đó | **Vẫn tính đủ** số giờ đã duyệt. Xác minh có làm thật hay không là việc của khâu duyệt phiếu |
+| Nhiều phiếu **cùng một ngày** | Cộng dồn cả, mỗi phiếu là một lô riêng |
+| Quỹ đang **âm**, nhân viên làm thêm tiếp | Giờ mới **trả nợ trước**, chỉ phần thừa mới dùng được |
+
+### 6.2 Khi giờ ra khỏi quỹ
+
+| Tình huống | Hệ thống làm gì |
+|---|---|
+| Nhân viên **nộp** đơn nghỉ bù | Trừ quỹ **ngay lúc nộp**, chưa cần duyệt — để người ta không nộp chồng nhiều đơn rồi cùng được duyệt |
+| Đơn bị **từ chối** | Trả giờ lại quỹ |
+| Nhân viên **tự thu hồi** đơn | Trả giờ lại quỹ |
+| Đơn đã duyệt rồi **huỷ** | Trả giờ lại quỹ |
+| **Sửa** ngày hoặc số ngày của đơn cũ | Kiểm lại quỹ, nhưng bỏ chính đơn đó ra khi đo để nó không tự chặn mình |
+| Nghỉ **nửa ngày** | Trừ 4 giờ |
+| Nghỉ đúng **ngày nửa buổi** (Thứ 7 khối văn phòng) | Trừ 4 giờ, dù có tick *nửa ngày* hay không |
+| Đơn **vắt qua ngày lễ / Chủ Nhật** | Ngày nghỉ không bị tính, đơn trừ **ít giờ hơn** số ngày trên lịch |
+| Đơn nghỉ **nhiều ngày** | Trừ `số ngày × 8` giờ, gom từ **nhiều** ngày làm thêm khác nhau |
+| **Không đủ** giờ | Chặn ngay lúc lưu, báo rõ còn bao nhiêu và cần bao nhiêu |
+| **HR** lập đơn thay nhân viên | **Miễn** kiểm quỹ — đường xử tay cho ca oan |
+| Hai đơn nộp gần nhau, riêng lẻ thì đủ, cộng lại thì không | Đơn thứ hai **bị chặn** |
+| Đơn đã duyệt xong mới phát hiện thiếu giờ | **Không** bị lật lại. Cân đối bằng chứng từ điều chỉnh số âm |
+
+> **Máy tự chọn lô, nhân viên không chọn được.** Thứ tự: lô **sắp hết hạn trước** thì tiêu
+> trước; cùng hạn thì lô có ngày làm thêm sớm hơn đi trước. Nhờ vậy giờ cũ luôn được dùng
+> trước khi bị cắt.
+
+### 6.3 Khi tới mốc hết hạn
+
+| Tình huống | Hệ thống làm gì |
+|---|---|
+| Lô còn **dư giờ** ở mốc cắt | Cắt phần dư; phiếu làm thêm chuyển **Hết hạn** (`Expired`) |
+| Lô đã **tiêu hết** | Giữ nguyên *Đã duyệt* — không dán nhãn hết hạn lên một ngày đã dùng xong |
+| Lô tiêu **một phần** | Cắt phần dư, phiếu vẫn chuyển *Hết hạn* |
+| Làm thêm **đúng ngày cắt** (30/06, 31/12) | Lô sống sang kỳ sau |
+| Kỳ đã đóng mà hệ thống **chưa từng cắt** | Lô vẫn sống tới mốc kế tiếp. Quyền chỉ mất khi hệ thống thực sự cắt |
+| Nghỉ trong kỳ nhưng **nộp đơn ở kỳ sau** | Vẫn ăn được lô của kỳ cũ — hôm đó nhân viên có quyền thật, chỉ nộp giấy muộn. Vẫn phải qua cửa hạn nộp đơn |
+| Làm thêm tháng 12, **nộp đơn** tháng 12, **nghỉ** đầu tháng 1 | Vẫn ăn được lô tháng 12 |
+| Huỷ một đơn nghỉ **sau khi** lô nó tiêu đã bị cắt | Giờ **không** quay lại. Lô đã đóng sổ |
+| Đánh dấu *Hết hạn* có làm mất giờ làm thêm đã ghi không? | **Không.** Dữ liệu chấm công và giờ công nhận giữ nguyên |
+
+---
+
+## 7. Sự cố hay gặp
 
 | Tình huống | Nguyên nhân / cách xử |
 |---|---|
@@ -185,3 +241,4 @@ lúc chạy còn phát sinh phiếu mới.
 - 🔁 [Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html) — cách giờ được duyệt và đối chiếu
 - 🔧 [HR Overtime Request](HR-Overtime-Request.html) — chi tiết phiếu làm thêm
 - 🗂️ [Loại phép & cấu hình](HR-Leave-Type.html) · [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html)
+- 🧪 Kỹ thuật: [Nghỉ bù — Sổ giờ](../tech/HR-Comp-Leave-Ledger.html) — đặc tả đầy đủ thuật toán phân bổ, hạn dùng và các chốt chặn

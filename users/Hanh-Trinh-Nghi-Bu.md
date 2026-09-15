@@ -150,6 +150,53 @@ màn hình Nghỉ phép hiện **số ngày đổi được kèm số giờ còn
 
 ---
 
+## Quỹ cộng vào và trừ đi lúc nào
+
+Bảng này trả lời thẳng những câu hay hỏi nhất, khỏi phải đoán.
+
+### Giờ vào quỹ
+
+| Bạn làm gì | Quỹ ra sao |
+|---|---|
+| Phiếu làm thêm quy đổi *Nghỉ bù* **được duyệt**, ngày làm thêm **đã qua** | Cộng **ngay**, xin nghỉ được liền |
+| Phiếu được duyệt cho **ngày chưa tới** | **Chưa cộng**. Qua ngày đó tự cộng, bạn không phải làm gì |
+| Phiếu còn **chờ duyệt** | Chưa có gì |
+| Phiếu bị **từ chối** hoặc **huỷ duyệt** | Không cộng; đã cộng rồi thì rút ra |
+| Phiếu quy đổi **Tiền lương** | Không vào quỹ — giờ đó trả bằng tiền |
+| Hôm làm thêm bạn **quên chấm công** | **Vẫn cộng đủ** số giờ đã duyệt |
+| Làm thêm **nhiều lần trong một ngày** | Cộng dồn hết |
+
+### Giờ ra khỏi quỹ
+
+| Bạn làm gì | Quỹ ra sao |
+|---|---|
+| **Nộp** đơn nghỉ bù | Trừ **ngay lúc nộp**, chưa cần ai duyệt — để bạn không lỡ nộp chồng nhiều đơn rồi thiếu giờ |
+| Đơn bị **từ chối** | **Trả lại** đủ |
+| Bạn **tự thu hồi** đơn | **Trả lại** đủ |
+| Đơn đã duyệt rồi **huỷ** | **Trả lại** đủ |
+| **Sửa** ngày trên đơn cũ | Tính lại, đơn không tự chặn chính nó |
+| Nghỉ **nửa ngày** | Trừ **4 giờ** |
+| Nghỉ đúng **Thứ 7 nửa buổi** | Trừ **4 giờ** — dù có tích ô *nửa ngày* hay không |
+| Đơn **vắt qua Chủ Nhật hoặc ngày lễ** | Ngày nghỉ **không bị tính**, trừ ít giờ hơn số ngày trên lịch |
+| Nghỉ **nhiều ngày liền** | Trừ `số ngày × 8` giờ, gom giờ từ **nhiều** ngày làm thêm khác nhau |
+
+> 🔀 **Bạn không phải chọn ngày làm thêm nào để bù.** Hệ thống tự lấy **lô sắp hết hạn
+> trước**, nên giờ cũ luôn được dùng trước khi mất. Ô *Ngày làm thêm để bù* đã bỏ khỏi màn
+> hình xin nghỉ.
+
+### Vài tình huống dễ nhầm
+
+| Tình huống | Kết quả |
+|---|---|
+| Quỹ còn **6 giờ** | Xin được **0,5 ngày**. Còn 2 giờ lẻ **vẫn nằm trong quỹ**, cộng với lần làm thêm sau |
+| Làm thêm **2 giờ** hôm nay, **3 giờ** hôm sau | Quỹ có 5 giờ → đổi được **0,5 ngày**, dư 1 giờ để dành. Luật cũ thì mất trắng cả hai |
+| Nghỉ **tháng 12**, nộp đơn **tháng 12**, nghỉ rơi vào **đầu tháng 1** | Vẫn dùng được giờ của tháng 12 |
+| Nghỉ **trong kỳ** nhưng **nộp đơn ở kỳ sau** | Vẫn dùng được giờ của kỳ cũ, miễn còn trong hạn nộp đơn |
+| Quỹ đang **âm** | Không xin nghỉ bù được cho tới khi về dương. Giờ làm thêm mới **trả nợ trước**. Màn hình hiện dòng đỏ — liên hệ HR |
+| Đơn đã **duyệt xong** rồi mới thiếu giờ | Đơn **không bị lật lại**. HR cân đối sau |
+
+---
+
 ## Sự cố hay gặp
 
 | Tình huống | Nguyên nhân / cách xử |
@@ -170,3 +217,4 @@ màn hình Nghỉ phép hiện **số ngày đổi được kèm số giờ còn
 - 👤 [Nhân viên: Xin làm thêm giờ](Guide-NhanVien-LamThem.html) · [Xin nghỉ phép & nghỉ bù](Guide-NhanVien-NghiPhep.html)
 - 🔧 HR: [Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html) — xem quỹ, điều chỉnh tay, hết hạn cuối kỳ
 - 🔧 HR: [Loại phép & cấu hình](HR-Leave-Type.html) · [Cấu hình Overtime](HR-Overtime-Settings.html)
+- 🧪 Kỹ thuật: [Nghỉ bù — Sổ giờ](../tech/HR-Comp-Leave-Ledger.html)
