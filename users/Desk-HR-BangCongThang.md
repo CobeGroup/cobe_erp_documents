@@ -192,7 +192,7 @@ Nằm ngay sau *Tổng giờ thực*, cho biết nhân viên **còn bao nhiêu p
 |---|---|
 | **PN (cuối kỳ)** | **Phép Năm** còn lại tính tại **ngày cuối của kỳ đang xem** (vd xem tháng 7 → tính tại 31/07) |
 | **PN (tới hiện tại)** | **Phép Năm** còn lại tính tại **lúc mở báo cáo** |
-| **NB (cuối kỳ)** · **NB (tới hiện tại)** | Y như trên nhưng cho **Nghỉ bù** |
+| **NB (cuối kỳ)** · **NB (tới hiện tại)** | Y như trên nhưng cho **Nghỉ bù** — lấy từ **quỹ giờ Nghỉ bù** (4 giờ = 0,5 ngày), không phải từ phiếu cấp phép |
 
 > 💡 **Vì sao hai mốc?** Xem lại tháng đã qua thì phép vẫn tiếp tục bị tiêu ở các tháng sau — cột
 > *cuối kỳ* cho biết **số dư đúng thời điểm của bảng công đó** (để đối chiếu kỳ lương), còn cột
@@ -201,6 +201,12 @@ Nằm ngay sau *Tổng giờ thực*, cho biết nhân viên **còn bao nhiêu p
 > (tới hiện tại) vì sang đầu tháng 8 nhân viên nghỉ thêm 1 ngày phép.
 
 > ⚠️ **"tới hiện tại" KHÔNG phải "nghỉ trong ngày hôm nay"** — đó là số dư luỹ kế tính đến hôm nay.
+
+> 🏦 **Hai cột NB đọc quỹ giờ, không đọc cấp phép.** Từ 09/2026 quyền nghỉ bù nằm trong quỹ giờ
+> cộng dồn; số ở đây là số ngày quy đổi được từ số giờ còn lại, **làm tròn xuống** bậc 0,5 ngày
+> (còn 6 giờ hiện `0,5`, phần 2 giờ lẻ vẫn nằm trong quỹ). Đây đúng là con số nhân viên thấy
+> trên ứng dụng. Muốn xem chi tiết từng lô giờ và hạn dùng thì mở
+> [Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html).
 
 > 📘 Cần chi tiết cấp/nghỉ/còn theo **từng loại phép**, hoặc truy vết số dư sai → dùng
 > **[Kiểm tra phép & báo cáo phép](Desk-HR-KiemTraPhep.html)** (Employee Leave Balance / Leave Ledger).
