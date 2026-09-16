@@ -32,6 +32,7 @@ cho tới bảo dưỡng định kỳ và xử lý sự cố — kèm **sơ đ�
 | Trang | Nội dung |
 |---|---|
 | [Tổng quan toàn chuỗi](users/Quy-Trinh-Tong-Quan.html) | Quan hệ giữa các chứng từ, bảng đối chiếu tên, phân công vai trò và màn hình, qui mô thực tế từng chặng |
+| [Vòng đời một đơn hàng](users/Quy-Trinh-Vong-Doi-Don-Hang.html) | Bám theo một đơn hàng có thật qua mười mốc, từ lúc lập đơn tới lúc sinh lịch bảo dưỡng kỳ sau |
 | [1 · Khách tiềm năng → Khách hàng](users/Quy-Trinh-01-Khach-Hang.html) · [2 · Đơn bán hàng](users/Quy-Trinh-02-Don-Hang.html) | Các nguồn khách hàng và trục chính của mọi chứng từ |
 | [3 · Điều phối và hiện trường](users/Quy-Trinh-03-Hien-Truong.html) · [4 · Vật tư](users/Quy-Trinh-04-Vat-Tu.html) | Phiếu công việc, lịch hẹn, kho kỹ thuật viên, nghĩa vụ hoàn trả |
 | [5 · Giao hàng và thu tiền](users/Quy-Trinh-05-Giao-Hang-Thu-Tien.html) | Hai phương thức giao hàng, hoá đơn, tiền mặt, thu hộ |

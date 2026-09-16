@@ -212,6 +212,7 @@ Có những nội dung khai thiếu không làm phát sinh thông báo lỗi, nh
 
 | Phạm vi công việc | Trang tham khảo |
 |---|---|
+| **Nắm mạch chung trước khi đi vào chi tiết** | **[Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html)** |
 | Tiếp nhận và chuyển đổi khách hàng mới | [Từ khách tiềm năng đến khách hàng](Quy-Trinh-01-Khach-Hang.html) |
 | Lập và điều chỉnh đơn hàng | [Đơn bán hàng](Quy-Trinh-02-Don-Hang.html) |
 | Lập lịch và thực hiện tại hiện trường | [Điều phối và thực hiện tại hiện trường](Quy-Trinh-03-Hien-Truong.html) |

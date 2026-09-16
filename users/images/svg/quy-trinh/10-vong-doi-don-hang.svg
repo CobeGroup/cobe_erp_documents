@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 1222" width="1120" height="1222" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+  <title>Vòng đời một đơn hàng, từ lúc lập đơn đến lúc sinh lịch bảo dưỡng kỳ sau</title>
+  <desc>Mười mốc thời gian xếp theo chiều dọc của một đơn hàng có thật, hoàn thành trong bốn ngày. Cột bên trái là mốc thời gian, việc được thực hiện và chứng từ sinh ra. Cột bên phải là hệ quả của mốc đó đối với tồn kho, công nợ và trạng thái đơn. Sau mốc cuối cùng, hệ thống sinh lịch bảo dưỡng cho kỳ kế tiếp và lịch này sẽ mở ra một đơn hàng mới, khép lại vòng lặp.</desc>
+  <style>
+    .box   { rx: 10; ry: 10; stroke-width: 1.6; }
+    .sale  { fill: #e6f4ff; stroke: #299dd8; }
+    .svc   { fill: #f9f0ff; stroke: #9254de; }
+    .wh    { fill: #fff7e6; stroke: #d48806; }
+    .doc   { fill: #fffbe6; stroke: #d4b106; }
+    .money { fill: #f6ffed; stroke: #54ab78; }
+    .done  { fill: #e6fffb; stroke: #13a8a8; }
+    .res   { fill: #fafafa; stroke: #d9d9d9; }
+    .tb    { font-size: 13.5px; font-weight: 600; fill: #111827; }
+    .ts    { font-size: 11.5px; fill: #4b5563; }
+    .tm    { font-size: 11px; fill: #6b7280; font-style: italic; }
+    .num   { font-size: 12px; font-weight: 700; fill: #6b7280; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.8; fill: none; }
+    .loop  { stroke: #52a86a; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; }
+    .lane  { font-size: 12px; font-weight: 700; fill: #6b7280; letter-spacing: .05em; }
+    .lp    { font-size: 12px; font-weight: 600; fill: #276749; }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#52a86a"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="1222" fill="#ffffff"/>
+  <text class="lane" x="108" y="44">MỐC THỜI GIAN · VIỆC ĐƯỢC THỰC HIỆN · CHỨNG TỪ</text>
+  <text class="lane" x="552" y="44">HỆ QUẢ ĐỐI VỚI TỒN KHO, CÔNG NỢ VÀ TRẠNG THÁI ĐƠN</text>
+
+  <!-- mốc 1 -->
+  <rect class="box sale" x="108" y="62" width="352" height="78"/>
+  <text class="num" x="82" y="88">1</text>
+  <text class="tb" x="124" y="86">Ngày 1 · 11:48 — Lập và xác nhận đơn</text>
+  <text class="ts" x="124" y="105">Kinh doanh lập đơn cho khách hàng</text>
+  <text class="tm" x="124" y="124">Sales Order</text>
+  <line class="arrow" x1="468" y1="101" x2="544" y2="101" marker-end="url(#ah)"/>
+  <rect class="box res" x="552" y="68" width="520" height="66"/>
+  <text class="ts" x="568" y="93">Đơn chuyển sang Chờ giao hàng và chờ hoá đơn.</text>
+  <text class="ts" x="568" y="114">Khách hàng đặt cọc bằng chuyển khoản; công nợ còn lại 60.050.000 đồng.</text>
+  <line class="arrow" x1="284" y1="143" x2="284" y2="162" marker-end="url(#ah)"/>
+
+  <!-- mốc 2 -->
+  <rect class="box svc" x="108" y="166" width="352" height="78"/>
+  <text class="num" x="82" y="192">2</text>
+  <text class="tb" x="124" y="190">Ngày 1 · 11:54 — Lập phiếu công việc</text>
+  <text class="ts" x="124" y="209">Điều phối tiếp nhận đơn</text>
+  <text class="tm" x="124" y="228">FS Work Order</text>
+  <line class="arrow" x1="468" y1="205" x2="544" y2="205" marker-end="url(#ah)"/>
+  <rect class="box res" x="552" y="172" width="520" height="66"/>
+  <text class="ts" x="568" y="197">Chưa tác động tồn kho, chưa tác động công nợ.</text>
+  <text class="ts" x="568" y="218">Phiếu công việc chỉ mô tả phần việc phải làm tại hiện trường.</text>
+  <line class="arrow" x1="284" y1="247" x2="284" y2="266" marker-end="url(#ah)"/>
+
+  <!-- mốc 3 -->
+  <rect class="box svc" x="108" y="270" width="352" height="78"/>
+  <text class="num" x="82" y="296">3</text>
+  <text class="tb" x="124" y="294">Ngày 1 · 14:33 — Lập lịch hẹn</text>
+  <text class="ts" x="124" y="313">Điều phối gán kỹ thuật viên, hẹn sáng hôm sau</text>
+  <text class="tm" x="124" y="332">FS Service Appointment</text>
+  <line class="arrow" x1="468" y1="309" x2="544" y2="309" marker-end="url(#ah)"/>
+  <rect class="box res" x="552" y="276" width="520" height="66"/>
+  <text class="ts" x="568" y="301">Lịch hẹn ở trạng thái Đã lên lịch.</text>
+  <text class="ts" x="568" y="322">Kỹ thuật viên nhận được thông báo trên ứng dụng.</text>
+  <line class="arrow" x1="284" y1="351" x2="284" y2="370" marker-end="url(#ah)"/>
+
+  <!-- mốc 4 -->
+  <rect class="box wh" x="108" y="374" width="352" height="78"/>
+  <text class="num" x="82" y="400">4</text>
+  <text class="tb" x="124" y="398">Ngày 2 · 15:53 → 16:09 — Xuất vật tư</text>
+  <text class="ts" x="124" y="417">Kỹ thuật viên đề nghị, kho xuất hàng</text>
+  <text class="tm" x="124" y="436">Material Request · Stock Entry</text>
+  <line class="arrow" x1="468" y1="413" x2="544" y2="413" marker-end="url(#ah)"/>
+  <rect class="box res" x="552" y="380" width="520" height="66"/>
+  <text class="ts" x="568" y="405">Tồn kho chuyển từ kho công ty sang kho của kỹ thuật viên.</text>
+  <text class="ts" x="568" y="426">Hàng vẫn thuộc tài sản công ty, chỉ đổi vị trí lưu trữ.</text>
+  <line class="arrow" x1="284" y1="455" x2="284" y2="474" marker-end="url(#ah)"/>
+
+  <!-- mốc 5 -->
+  <rect class="box svc" x="108" y="478" width="352" height="78"/>
+  <text class="num" x="82" y="504">5</text>
+  <text class="tb" x="124" y="502">Ngày 2 · 16:08 — Hoàn tất việc tại hiện trường</text>
+  <text class="ts" x="124" y="521">Kỹ thuật viên lắp đặt và nghiệm thu</text>
+  <text class="tm" x="124" y="540">FS Service Appointment</text>
+  <line class="arrow" x1="468" y1="517" x2="544" y2="517" marker-end="url(#ah)"/>
+  <rect class="box res" x="552" y="484" width="520" height="66"/>
+  <text class="ts" x="568" y="509">Lịch hẹn chuyển sang Hoàn tất.</text>
+  <text class="ts" x="568" y="530">Phần vật tư mang theo nhưng không sử dụng trở thành nghĩa vụ hoàn trả.</text>
+  <line class="arrow" x1="284" y1="559" x2="284" y2="578" marker-end="url(#ah)"/>
+
+  <!-- mốc 6 -->
+  <rect class="box doc" x="108" y="582" width="352" height="78"/>
+  <text class="num" x="82" y="608">6</text>
+  <text class="tb" x="124" y="606">Ngày 2 · 16:11 — Lập phiếu giao hàng</text>
+  <text class="ts" x="124" y="625">Khách hàng ký xác nhận trên màn hình</text>
+  <text class="tm" x="124" y="644">Delivery Note</text>
+  <line class="arrow" x1="468" y1="621" x2="544" y2="621" marker-end="url(#ah)"/>
+  <rect class="box res" x="552" y="588" width="520" height="66"/>
+  <text class="ts" x="568" y="613">Tồn kho trừ khỏi kho của kỹ thuật viên.</text>
+  <text class="ts" x="568" y="634">Đơn chuyển sang Đã giao đủ; đây là điều kiện bắt buộc để được thu tiền.</text>
+  <line class="arrow" x1="284" y1="663" x2="284" y2="682" marker-end="url(#ah)"/>
+
+  <!-- mốc 7 -->
+  <rect class="box money" x="108" y="686" width="352" height="78"/>
+  <text class="num" x="82" y="712">7</text>
+  <text class="tb" x="124" y="710">Ngày 3 · 06:46 — Thu 60.000.000 đồng tiền mặt</text>
+  <text class="ts" x="124" y="729">Kỹ thuật viên thu tại nhà khách hàng</text>
+  <text class="tm" x="124" y="748">Payment Entry · Receive</text>
+  <line class="arrow" x1="468" y1="725" x2="544" y2="725" marker-end="url(#ah)"/>
+  <rect class="box res" x="552" y="692" width="520" height="66"/>
+  <text class="ts" x="568" y="717">Phiếu thu được ghi nhận chính thức ngay.</text>
+  <text class="ts" x="568" y="738">Tiền nằm ở tài khoản của kỹ thuật viên và trở thành công nợ cá nhân.</text>
+  <line class="arrow" x1="284" y1="767" x2="284" y2="786" marker-end="url(#ah)"/>
+
+  <!-- mốc 8 -->
+  <rect class="box money" x="108" y="790" width="352" height="78"/>
+  <text class="num" x="82" y="816">8</text>
+  <text class="tb" x="124" y="814">Ngày 3 · 08:11 — Nộp tiền mặt về công ty</text>
+  <text class="ts" x="124" y="833">Kỹ thuật viên lập phiếu, kế toán xác nhận</text>
+  <text class="tm" x="124" y="852">Payment Entry · Internal Transfer</text>
+  <line class="arrow" x1="468" y1="829" x2="544" y2="829" marker-end="url(#ah)"/>
+  <rect class="box res" x="552" y="796" width="520" height="66"/>
+  <text class="ts" x="568" y="821">Công nợ cá nhân của kỹ thuật viên trở về không.</text>
+  <text class="ts" x="568" y="842">Chưa nộp thì phiếu công việc không được phép hoàn thành.</text>
+  <line class="arrow" x1="284" y1="871" x2="284" y2="890" marker-end="url(#ah)"/>
+
+  <!-- mốc 9 -->
+  <rect class="box money" x="108" y="894" width="352" height="78"/>
+  <text class="num" x="82" y="920">9</text>
+  <text class="tb" x="124" y="918">Ngày 4 · 08:51 — Thu nốt phần chuyển khoản</text>
+  <text class="ts" x="124" y="937">Kế toán đối chiếu sao kê và xác nhận</text>
+  <text class="tm" x="124" y="956">Payment Entry · Receive</text>
+  <line class="arrow" x1="468" y1="933" x2="544" y2="933" marker-end="url(#ah)"/>
+  <rect class="box res" x="552" y="900" width="520" height="66"/>
+  <text class="ts" x="568" y="925">Phiếu thu chuyển từ trạng thái nháp sang chính thức.</text>
+  <text class="ts" x="568" y="946">Đơn được ghi nhận đã thu đủ một trăm phần trăm.</text>
+  <line class="arrow" x1="284" y1="975" x2="284" y2="994" marker-end="url(#ah)"/>
+
+  <!-- mốc 10 -->
+  <rect class="box done" x="108" y="998" width="352" height="78"/>
+  <text class="num" x="82" y="1024">10</text>
+  <text class="tb" x="124" y="1022">Ngày 4 · 08:55 — Hoá đơn tự phát sinh</text>
+  <text class="ts" x="124" y="1041">Hệ thống thực hiện, không cần thao tác</text>
+  <text class="tm" x="124" y="1060">Sales Invoice</text>
+  <line class="arrow" x1="468" y1="1037" x2="544" y2="1037" marker-end="url(#ah)"/>
+  <rect class="box res" x="552" y="1004" width="520" height="66"/>
+  <text class="ts" x="568" y="1029">Đơn chuyển sang Hoàn tất; khách hàng được cộng điểm tích luỹ.</text>
+  <text class="ts" x="568" y="1050">Hệ thống sinh bốn lịch bảo dưỡng cho các kỳ 2026, 2027 và 2028.</text>
+
+  <!-- vòng lặp: lịch bảo dưỡng kỳ sau mở ra đơn hàng mới -->
+  <polyline class="loop" points="284,1079 284,1124 40,1124 40,30 284,30 284,56" marker-end="url(#ag)"/>
+  <text class="lp" x="300" y="1146">Lịch bảo dưỡng đến hạn sẽ sinh phiếu nhắc, phiếu nhắc mở ra một đơn hàng mới: vòng lặp khép lại tại đây.</text>
+</svg>

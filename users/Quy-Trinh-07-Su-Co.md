@@ -11,6 +11,14 @@ nav_order: 8
 **Vai trò thực hiện:** Chăm sóc khách hàng · Điều phối · Kỹ thuật viên · Quản lý dịch vụ
 {: .fs-3 .text-grey-dk-000 }
 
+> **Chặng này nằm ở đâu trong dây chuyền**
+>
+> **Nhận vào:** Phản ánh của khách hàng về thiết bị đang sử dụng, tiếp nhận qua tổng đài hoặc các kênh liên hệ.
+>
+> **Bàn giao ra:** Phiếu công việc cho [Chặng 3](Quy-Trinh-03-Hien-Truong.html), hoặc đơn bán hàng mới cho [Chặng 2](Quy-Trinh-02-Don-Hang.html) khi phải thay thế vật tư có tính phí.
+>
+> Toàn bộ mạch từ đầu đến cuối, theo một đơn hàng cụ thể: [Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html).
+
 Sự cố là **đầu vào thứ hai** của hệ thống: khách hàng đã mua thiết bị, thiết bị phát sinh vấn
 đề và khách hàng liên hệ lại. Từ đầu vào này có thể phát sinh một lần đến hiện trường, và
 trong nhiều trường hợp phát sinh thêm một đơn hàng mới.

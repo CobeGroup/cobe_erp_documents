@@ -11,6 +11,14 @@ nav_order: 4
 **Vai trò thực hiện:** Điều phối · Kỹ thuật viên · Quản lý dịch vụ
 {: .fs-3 .text-grey-dk-000 }
 
+> **Chặng này nằm ở đâu trong dây chuyền**
+>
+> **Nhận vào:** Đơn bán hàng đã xác nhận từ [Chặng 2](Quy-Trinh-02-Don-Hang.html), hoặc phiếu sự cố từ [Chặng 7](Quy-Trinh-07-Su-Co.html).
+>
+> **Bàn giao ra:** Phiếu công việc và lịch hẹn đã lên kế hoạch, bàn giao cho [Chặng 4 — Vật tư](Quy-Trinh-04-Vat-Tu.html) và [Chặng 5 — Giao hàng và thu tiền](Quy-Trinh-05-Giao-Hang-Thu-Tien.html).
+>
+> Toàn bộ mạch từ đầu đến cuối, theo một đơn hàng cụ thể: [Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html).
+
 ---
 
 ## Mục lục
@@ -161,16 +169,23 @@ theo **một trong hai đường**, và cả hai đều phải đáp ứng **cù
 | 2 | Mọi **bước công việc bắt buộc** đã hoàn thành hoặc đã đánh dấu không áp dụng | Luôn kiểm tra, nếu phiếu có bước công việc |
 | 3 | Mọi **lịch hẹn** đã kết thúc, và phiếu phải có **tối thiểu một** lịch hẹn | **Đang bật** |
 | 4 | Tiền mặt đã nộp, vật tư đã trả, đơn hàng đã thu đủ | Ba tham số riêng — xem bảng dưới |
-| 5 | **Đơn bán hàng** liên kết đã ở *Completed* hoặc *Closed* | **Đang tắt** |
+| 5 | **Đơn bán hàng** liên kết đã ở *Completed* hoặc *Closed* | **Đang bật** |
 | 6 | Yêu cầu riêng theo **loại việc** | Theo cấu hình từng loại việc |
 
 Ba tham số thuộc điều kiện 4:
 
-| Tham số | Giá trị mặc định | Tác dụng khi bật |
+| Tham số | Trạng thái trên hệ thống | Tác dụng khi bật |
 |---|---|---|
-| Kiểm tra **đơn hàng đã thu đủ tiền** | **Bật** | Đơn còn công nợ thì không cho hoàn thành phiếu |
-| Kiểm tra **tiền mặt đã nộp về công ty** | Tắt | Kỹ thuật viên còn giữ tiền thì không cho hoàn thành |
-| Kiểm tra **vật tư đã trả về kho** | Tắt | Còn nghĩa vụ trả hàng thì không cho hoàn thành |
+| Kiểm tra **đơn hàng đã thu đủ tiền** | **Đang bật** | Đơn còn công nợ thì không cho hoàn thành phiếu |
+| Kiểm tra **tiền mặt đã nộp về công ty** | **Đang bật** | Kỹ thuật viên còn giữ tiền thì không cho hoàn thành |
+| Kiểm tra **vật tư đã trả về kho** | Đang tắt | Còn nghĩa vụ trả hàng thì không cho hoàn thành |
+
+> ⛔ **Hai điều kiện 4 và 5 cộng lại tạo thành một trình tự bắt buộc.** Phiếu công việc chỉ hoàn
+> thành được sau khi đơn bán hàng đã *Hoàn tất*, mà đơn chỉ hoàn tất sau khi đã giao đủ hàng,
+> thu đủ tiền và xuất hoá đơn. Do đó phần lớn trường hợp phiếu công việc không hoàn thành được đều có nguyên
+> nhân nằm ở chứng từ thanh toán chứ không nằm ở phần việc hiện trường. Cách đọc nguyên nhân
+> theo thông báo lỗi được trình bày tại
+> [Chặng 5 — mục 6](Quy-Trinh-05-Giao-Hang-Thu-Tien.html#6-phiếu-công-việc-bị-chặn-vì-lý-do-thanh-toán).
 
 ### Điều kiện bổ sung của tác vụ tự động: thời gian ân hạn
 

@@ -11,6 +11,14 @@ nav_order: 5
 **Vai trò thực hiện:** Kỹ thuật viên · Nhân viên kho · Điều phối
 {: .fs-3 .text-grey-dk-000 }
 
+> **Chặng này nằm ở đâu trong dây chuyền**
+>
+> **Nhận vào:** Lịch hẹn đã có kỹ thuật viên phụ trách từ [Chặng 3](Quy-Trinh-03-Hien-Truong.html).
+>
+> **Bàn giao ra:** Vật tư đã nằm ở kho của kỹ thuật viên, kèm nghĩa vụ hoàn trả phần không sử dụng; bàn giao cho [Chặng 5 — Giao hàng và thu tiền](Quy-Trinh-05-Giao-Hang-Thu-Tien.html).
+>
+> Toàn bộ mạch từ đầu đến cuối, theo một đơn hàng cụ thể: [Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html).
+
 ---
 
 ## Mục lục

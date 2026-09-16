@@ -11,6 +11,14 @@ nav_order: 3
 **Vai trò thực hiện:** Kinh doanh · Chăm sóc khách hàng · Nhân viên dịch vụ · Kế toán
 {: .fs-3 .text-grey-dk-000 }
 
+> **Chặng này nằm ở đâu trong dây chuyền**
+>
+> **Nhận vào:** Khách hàng chính thức từ [Chặng 1](Quy-Trinh-01-Khach-Hang.html), hoặc phiếu nhắc bảo dưỡng từ [Chặng 6](Quy-Trinh-06-Bao-Duong.html), hoặc phiếu sự cố từ [Chặng 7](Quy-Trinh-07-Su-Co.html).
+>
+> **Bàn giao ra:** Đơn bán hàng đã xác nhận, bàn giao cho [Chặng 3 — Điều phối và hiện trường](Quy-Trinh-03-Hien-Truong.html).
+>
+> Toàn bộ mạch từ đầu đến cuối, theo một đơn hàng cụ thể: [Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html).
+
 Đơn bán hàng (`Sales Order`) là **trục chính** của toàn hệ thống. Mọi chứng từ phía sau đều
 tham chiếu về đơn: phiếu công việc, yêu cầu vật tư, phiếu giao hàng, hoá đơn, phiếu thu và cả
 lịch bảo dưỡng cho các năm tiếp theo.

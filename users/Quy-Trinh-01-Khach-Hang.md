@@ -11,6 +11,14 @@ nav_order: 2
 **Vai trò thực hiện:** Kinh doanh · Chăm sóc khách hàng · Quản trị bán hàng
 {: .fs-3 .text-grey-dk-000 }
 
+> **Chặng này nằm ở đâu trong dây chuyền**
+>
+> **Nhận vào:** Thông tin liên hệ của người có nhu cầu, đến từ năm nguồn khác nhau.
+>
+> **Bàn giao ra:** Khách hàng chính thức (`Customer`) kèm liên hệ và địa chỉ, bàn giao cho [Chặng 2 — Đơn bán hàng](Quy-Trinh-02-Don-Hang.html).
+>
+> Toàn bộ mạch từ đầu đến cuối, theo một đơn hàng cụ thể: [Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html).
+
 ---
 
 ## Mục lục

@@ -11,6 +11,14 @@ nav_order: 7
 **Vai trò thực hiện:** Nhân viên dịch vụ · Quản lý dịch vụ · Hệ thống tự động
 {: .fs-3 .text-grey-dk-000 }
 
+> **Chặng này nằm ở đâu trong dây chuyền**
+>
+> **Nhận vào:** Đơn hàng đã hoàn tất ở [Chặng 5](Quy-Trinh-05-Giao-Hang-Thu-Tien.html), kèm danh sách hạng mục cần chăm sóc định kỳ.
+>
+> **Bàn giao ra:** Đơn bán hàng mới cho kỳ kế tiếp, quay lại [Chặng 2 — Đơn bán hàng](Quy-Trinh-02-Don-Hang.html).
+>
+> Toàn bộ mạch từ đầu đến cuối, theo một đơn hàng cụ thể: [Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html).
+
 Đây là chặng khép kín vòng đời khách hàng. Khách hàng đã mua thiết bị sẽ cần thay lõi sau vài
 tháng và bảo dưỡng sau một năm. Hệ thống ghi nhận nhu cầu này ngay từ khi đơn hàng hoàn tất và
 tự phát sinh lịch nhắc đúng hạn.
