@@ -22,14 +22,6 @@ Một tháng mỗi nhân viên được nộp bao nhiêu đơn *Chấm công bù
 
 ---
 
-> ⚠️ **Chưa triển khai.** Tính năng này còn đang hoàn thiện, **chưa có trên hệ thống thật** —
-> tìm `HR Attendance Request Quota` trên Desk lúc này sẽ không thấy. Hiện tại số đơn Chấm công
-> bù **không bị giới hạn**; ràng buộc duy nhất đang chạy là
-> [hạn nộp phiếu](HR-Filing-Deadline.html). Trang này mô tả cách vận hành khi tính năng lên,
-> giữ sẵn để HR nắm trước.
-
----
-
 ## 1. Vấn đề mà hạn mức giải quyết
 
 Đơn **Chấm công bù** (`Attendance Request`, lý do *On Duty*) là đường để nhân viên xin ghi

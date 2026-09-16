@@ -81,9 +81,6 @@ Anh A đang ở chỗ khách, mở app. Có **2 lối** cùng mở 1 form:
 
 ### Hạn mức số đơn mỗi tháng
 
-> ⚠️ **Chưa áp dụng.** Hiện tại **không có giới hạn** số đơn mỗi tháng. Phần dưới mô tả cách
-> hoạt động khi công ty bật tính năng này.
-
 Công ty có thể đặt **số đơn Chấm công bù tối đa mỗi tháng** cho từng nhân viên hoặc cho cả
 công ty. Khi có hạn mức, form hiện sẵn *tháng này đã dùng bao nhiêu trên bao nhiêu đơn* ngay
 lúc chọn khoảng ngày, và chặn khi hết:

@@ -71,7 +71,10 @@ Khi NV tạo qua PWA (`api.attendance_request.create_attendance_request`), `reas
 > GPS của ngày WFH: xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
 
 Ràng buộc khi tạo đơn: một đơn phủ tối đa **31 ngày**, mỗi NV tối đa **10 đơn nháp** chờ
-duyệt, đơn **thừa** (mọi ngày đã có Attendance đúng trạng thái) bị chặn từ lúc tạo.
+duyệt, đơn **thừa** (mọi ngày đã có Attendance đúng trạng thái) bị chặn từ lúc tạo, và từ
+**14/09/2026** có thêm **hạn mức số đơn Chấm công bù mỗi tháng** theo bản gán cho nhân viên
+hoặc công ty (`HR Attendance Request Quota`, có ngày hiệu lực như gán lịch nghỉ; chưa gán =
+không giới hạn) — xem [Hạn nộp phiếu & ràng buộc §7](HR-Filing-Deadline.html#7-hạn-mức-số-đơn-chấm-công-bù-mỗi-tháng).
 
 > 📅 **Ngày nghỉ trong khoảng đơn CÓ được đánh công** (từ bản cập nhật 09/2026): đơn tạo qua
 > app luôn bật `include_holidays`, nên duyệt đơn phủ Chủ nhật/ngày lễ sẽ tạo Attendance

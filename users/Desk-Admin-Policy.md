@@ -36,6 +36,11 @@ nav_order: 2
 | **Giới hạn giờ check-in** | Chặn quẹt VÀO quá muộn |
 | **Check-in Whitelist** | Danh sách được phép chấm ngoại lệ |
 
+> **Hạn mức số đơn chấm công bù mỗi tháng** không nằm trong HR Policy mà ở doctype riêng
+> **Hạn mức đơn chấm công bù** (`HR Attendance Request Quota`): gán cho từng nhân viên hoặc cả
+> công ty, có ngày hiệu lực từ/đến, Submit mới áp dụng — cùng cách dùng với gán lịch nghỉ.
+> Chi tiết: [Hạn nộp phiếu & ràng buộc §7](HR-Filing-Deadline.html#7-hạn-mức-số-đơn-chấm-công-bù-mỗi-tháng).
+
 ![Form HR Policy — feature flags & defaults](images/desk/admin-policy-form.png)
 
 ## 3. Vài flag hay dùng

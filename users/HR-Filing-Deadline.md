@@ -23,7 +23,8 @@ nav_order: 14
 4. [Ai không bị hạn & các cửa thoát](#4-ai-không-bị-hạn--các-cửa-thoát)
 5. [Trần giờ OT & hệ số nửa buổi theo ngày hiệu lực](#5-trần-giờ-ot--hệ-số-nửa-buổi-theo-ngày-hiệu-lực)
 6. [Các ràng buộc khác khi tạo phiếu](#6-các-ràng-buộc-khác-khi-tạo-phiếu)
-7. [Trạng thái sau nâng cấp & cách bật](#7-trạng-thái-sau-nâng-cấp--cách-bật)
+7. [Hạn mức số đơn chấm công bù mỗi tháng](#7-hạn-mức-số-đơn-chấm-công-bù-mỗi-tháng)
+8. [Trạng thái sau nâng cấp & cách bật](#8-trạng-thái-sau-nâng-cấp--cách-bật)
 
 ---
 
@@ -168,10 +169,60 @@ Không thuộc bảng hạn nộp nhưng cùng áp lúc tạo phiếu:
 | `Attendance Request` | Một đơn phủ tối đa **31 ngày** | Chống đơn quét cả quý |
 | `Attendance Request` | Tối đa **10 đơn nháp** chờ duyệt mỗi nhân viên | Chống spam |
 | `Attendance Request` | Chặn đơn **thừa** — mọi ngày trong đơn đã có chấm công đúng trạng thái | Đơn không thêm được gì thì không cho tạo |
+| `Attendance Request` | Tối đa **N đơn Chấm công bù / Công tác mỗi tháng** theo bản gán cho nhân viên hoặc công ty | Xem [mục 7](#7-hạn-mức-số-đơn-chấm-công-bù-mỗi-tháng) |
 
 ---
 
-## 7. Trạng thái sau nâng cấp & cách bật
+## 7. Hạn mức số đơn chấm công bù mỗi tháng
+
+Bổ sung **14/09/2026**. Hạn nộp ([mục 2](#2-bảng-hạn-khai-theo-ngày-hiệu-lực)) trả lời
+*"việc đã qua, còn được khai lùi mấy ngày"*; hạn mức trả lời *"một tháng được nộp mấy
+đơn"*. Hai câu hỏi khác nhau nên là hai luật, cấu hình ở hai chỗ khác nhau.
+
+Cấu hình ở doctype **Hạn mức đơn chấm công bù** (`HR Attendance Request Quota`), gán cho
+**từng nhân viên** hoặc **cả công ty**, có ngày hiệu lực — cùng khuôn với gán lịch nghỉ
+(`Holiday List Assignment`): tạo bản ghi rồi **Submit** mới có hiệu lực, muốn bỏ thì **Cancel**.
+
+| Ô | Ý nghĩa |
+|---|---|
+| **Áp dụng cho** | `Employee` (một nhân viên) hoặc `Company` (mặc định cho cả công ty) |
+| **Gán cho** | Mã nhân viên hoặc tên công ty |
+| **Hiệu lực từ ngày** | Áp cho các đơn có **ngày đầu đơn** từ ngày này trở đi |
+| **Hiệu lực đến ngày** | Tuỳ chọn. Bỏ trống = tới khi có bản gán mới hơn cho cùng đối tượng |
+| **Số đơn tối đa mỗi tháng** | Số đơn *Chấm công bù / Công tác* được nộp trong một tháng dương lịch. **0 = không giới hạn** |
+
+**Bản nào được áp cho một đơn.** Lấy **ngày đầu đơn** làm mốc, tra theo thứ tự:
+
+1. Bản gán cho **chính nhân viên**: bản đã Submit có *Hiệu lực từ ngày* lớn nhất mà ≤ mốc.
+   Bản đó đã quá *Hiệu lực đến ngày* thì coi như nhân viên không có bản riêng.
+2. Không có thì lấy bản gán cho **công ty** của nhân viên, cùng phép chọn.
+3. Không có nữa = **không giới hạn**.
+
+**Đếm cái gì.** Số **đơn** `Attendance Request` loại *Chấm công bù / Công tác* (`reason`
+= On Duty) của nhân viên có ngày đầu đơn rơi vào **cùng tháng dương lịch** với đơn đang
+tạo, gồm cả đơn **đang chờ duyệt** lẫn đã duyệt. Đơn bị từ chối hoặc đã huỷ không đếm.
+Đơn WFH không đếm (luồng đó bật/tắt theo công ty và có người duyệt riêng). Một đơn phủ
+nhiều ngày vẫn đếm là **một** đơn.
+
+**Chỉ kiểm lúc nhân viên tạo đơn, hoặc sửa ngày đầu đơn.** Duyệt đơn đã tạo không kiểm lại
+— HR hạ hạn mức giữa tháng thì đơn nộp hợp lệ trước đó vẫn duyệt được. Sửa ngày đầu đơn thì
+kiểm lại theo tháng mới (không tính chính đơn đó), vì đổi ngày có thể đẩy đơn sang một tháng
+khác. HR Manager / HR User / System Manager
+nhập thay không bị hạn mức, giống hạn nộp ([mục 4](#4-ai-không-bị-hạn--các-cửa-thoát)).
+
+**Trên app my-workspace**, form *Đề xuất chấm công* hiện dòng *"Tháng MM/YYYY: đã dùng
+N/M đơn chấm công bù, còn K"* theo tháng của ngày đang chọn; hết hạn mức thì nút *Gửi đề
+xuất* bị khoá và báo *"Đã hết hạn mức M đơn chấm công bù của tháng MM/YYYY. Cần thêm thì
+liên hệ HR."* Chốt chặn thật nằm ở tầng doctype nên đơn đi cửa Desk hay API cũng dính.
+
+**Gợi ý cấu hình.** Số liệu tháng 08/2026: khối văn phòng đa số nộp 1–3 đơn/tháng, còn
+kỹ thuật viên các tỉnh nộp **21–23 đơn/tháng** vì làm ngoài văn phòng gần như mọi ngày.
+Vì vậy nếu đặt hạn mức chung cho công ty (ví dụ 3), phải gán riêng cho nhóm kỹ thuật viên
+một bản **0** (không giới hạn) hoặc mức cao — bản riêng của nhân viên luôn thắng bản công ty.
+
+---
+
+## 8. Trạng thái sau nâng cấp & cách bật
 
 Ngay sau nâng cấp, hành vi **giữ nguyên như trước**, chưa có gì bị siết thêm:
 
@@ -181,6 +232,7 @@ Ngay sau nâng cấp, hành vi **giữ nguyên như trước**, chưa có gì b�
 | Hạn nộp đơn nghỉ | **Chưa bật** (0 = không giới hạn) |
 | Hạn nộp đơn chấm công | **Chưa bật** (0 = không giới hạn) |
 | Trần OT & hệ số nửa buổi | Giữ nguyên 4h / 8h / Cuối tuần |
+| Hạn mức đơn chấm công bù mỗi tháng | **Chưa bật** (chưa gán bản nào = không giới hạn) |
 
 Muốn bật hạn cho đơn nghỉ và đơn chấm công: thêm **một dòng mới** vào bảng với *Hiệu lực từ
 ngày* là ngày bắt đầu áp dụng (ví dụ 01/09/2026) và điền số ngày cho từng cột. Lưu ý:
