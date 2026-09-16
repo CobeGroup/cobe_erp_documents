@@ -89,4 +89,20 @@
   <text class="note" x="60" y="458">Phiếu sự cố luôn gắn về đơn hàng gốc, nhờ đó tra cứu được khách hàng đã mua thiết bị nào, lắp đặt ngày nào và bảo dưỡng tới đâu.</text>
   <text class="note" x="60" y="482">Hạn xử lý của nhân viên sự cố được tính từ lúc mở phiếu; hạn của kỹ thuật viên được tính từ lúc phiếu công việc được lập.</text>
   <text class="note" x="60" y="506">Phiếu sự cố và phiếu công việc có trạng thái độc lập: đóng phiếu sự cố không tự đóng phiếu công việc và ngược lại.</text>
+  <!-- VUNG-BAM: sinh bởi _tools/svg_hotspots.py, không sửa tay -->
+  <style>
+    .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
+    .hot:hover { fill-opacity: .08; }
+  </style>
+  <a href="../../../Quy-Trinh-07-Su-Co.html#tiep-nhan" target="_top"><title>Tiếp nhận phản ánh</title><rect class="hot" x="60" y="50" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-07-Su-Co.html#tiep-nhan" target="_top"><title>Lập phiếu sự cố</title><rect class="hot" x="290" y="50" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-07-Su-Co.html#phan-loai" target="_top"><title>Phân loại hai tầng</title><rect class="hot" x="520" y="50" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-07-Su-Co.html#phan-loai" target="_top"><title>Gán người xử lý</title><rect class="hot" x="750" y="50" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-07-Su-Co.html#hai-duong" target="_top"><title>Xử lý qua điện thoại</title><rect class="hot" x="100" y="190" width="210" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-07-Su-Co.html#hai-duong" target="_top"><title>Cử người xuống hiện trường</title><rect class="hot" x="450" y="190" width="210" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#lap-sa" target="_top"><title>Lịch hẹn và kỹ thuật viên</title><rect class="hot" x="760" y="190" width="210" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-07-Su-Co.html#don-moi" target="_top"><title>Khi phát sinh vật tư tính phí</title><rect class="hot" x="760" y="310" width="210" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-07-Su-Co.html#don-moi" target="_top"><title>Lập đơn bán hàng mới</title><rect class="hot" x="450" y="310" width="210" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-07-Su-Co.html#hai-duong" target="_top"><title>Đóng phiếu sự cố</title><rect class="hot" x="100" y="310" width="210" height="62" rx="10" ry="10"/></a>
+  <!-- /VUNG-BAM -->
 </svg>

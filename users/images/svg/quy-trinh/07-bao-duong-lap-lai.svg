@@ -90,4 +90,20 @@
   <text class="note" x="60" y="454">Mỗi vật tư có chu kỳ nhắc riêng; hệ thống tự đặt ngày hẹn kế tiếp ngay khi vòng hiện tại được sinh ra.</text>
   <text class="note" x="60" y="478">Khách hàng còn phiếu chờ xử lý thì vòng mới được hoãn lại, nhằm tránh liên hệ hai lần cho cùng một lần đến.</text>
   <text class="note" x="60" y="502">Phiếu nhắc không phải đơn hàng: chỉ phát sinh doanh thu khi khách hàng đồng ý và đơn bán hàng mới được lập.</text>
+  <!-- VUNG-BAM: sinh bởi _tools/svg_hotspots.py, không sửa tay -->
+  <style>
+    .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
+    .hot:hover { fill-opacity: .08; }
+  </style>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#hoa-don" target="_top"><title>Đơn hàng hoàn tất</title><rect class="hot" x="60" y="50" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-06-Bao-Duong.html#sinh-lich" target="_top"><title>Lịch nhắc theo từng vật tư</title><rect class="hot" x="290" y="50" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-06-Bao-Duong.html#phieu-nhac" target="_top"><title>Gom lịch theo khách hàng</title><rect class="hot" x="520" y="50" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-06-Bao-Duong.html#phieu-nhac" target="_top"><title>Phiếu nhắc bảo dưỡng</title><rect class="hot" x="750" y="50" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-06-Bao-Duong.html#phan-cong" target="_top"><title>Phân người phụ trách</title><rect class="hot" x="750" y="190" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-06-Bao-Duong.html#lien-he" target="_top"><title>Liên hệ khách hàng</title><rect class="hot" x="520" y="190" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-06-Bao-Duong.html#don-moi" target="_top"><title>Khách hàng đồng ý: lập đơn mới</title><rect class="hot" x="60" y="330" width="200" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-06-Bao-Duong.html#lien-he" target="_top"><title>Khách hàng hẹn lại</title><rect class="hot" x="290" y="330" width="200" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-06-Bao-Duong.html#lien-he" target="_top"><title>Không liên hệ được</title><rect class="hot" x="520" y="330" width="200" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-06-Bao-Duong.html#lien-he" target="_top"><title>Khách hàng không có nhu cầu</title><rect class="hot" x="750" y="330" width="200" height="60" rx="10" ry="10"/></a>
+  <!-- /VUNG-BAM -->
 </svg>

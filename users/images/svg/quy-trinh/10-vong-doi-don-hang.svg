@@ -34,32 +34,32 @@
   <!-- mốc 1 -->
   <rect class="box sale" x="108" y="62" width="352" height="78"/>
   <text class="num" x="82" y="88">1</text>
-  <text class="tb" x="124" y="86">Ngày 1 · 11:48 — Lập và xác nhận đơn</text>
+  <text class="tb" x="124" y="86">Ngày 1 — Lập và xác nhận đơn</text>
   <text class="ts" x="124" y="105">Kinh doanh lập đơn cho khách hàng</text>
   <text class="tm" x="124" y="124">Sales Order</text>
   <line class="arrow" x1="468" y1="101" x2="544" y2="101" marker-end="url(#ah)"/>
   <rect class="box res" x="552" y="68" width="520" height="66"/>
   <text class="ts" x="568" y="93">Đơn chuyển sang Chờ giao hàng và chờ hoá đơn.</text>
-  <text class="ts" x="568" y="114">Khách hàng đặt cọc bằng chuyển khoản; công nợ còn lại 60.050.000 đồng.</text>
+  <text class="ts" x="568" y="114">Từ đây đơn không sửa trực tiếp được nữa.</text>
   <line class="arrow" x1="284" y1="143" x2="284" y2="162" marker-end="url(#ah)"/>
 
   <!-- mốc 2 -->
   <rect class="box svc" x="108" y="166" width="352" height="78"/>
   <text class="num" x="82" y="192">2</text>
-  <text class="tb" x="124" y="190">Ngày 1 · 11:54 — Lập phiếu công việc</text>
+  <text class="tb" x="124" y="190">Ngày 1 — Lập phiếu công việc</text>
   <text class="ts" x="124" y="209">Điều phối tiếp nhận đơn</text>
   <text class="tm" x="124" y="228">FS Work Order</text>
   <line class="arrow" x1="468" y1="205" x2="544" y2="205" marker-end="url(#ah)"/>
   <rect class="box res" x="552" y="172" width="520" height="66"/>
   <text class="ts" x="568" y="197">Chưa tác động tồn kho, chưa tác động công nợ.</text>
-  <text class="ts" x="568" y="218">Phiếu công việc chỉ mô tả phần việc phải làm tại hiện trường.</text>
+  <text class="ts" x="568" y="218">Không có phiếu này thì đơn không xuất hiện trên màn hình điều phối.</text>
   <line class="arrow" x1="284" y1="247" x2="284" y2="266" marker-end="url(#ah)"/>
 
   <!-- mốc 3 -->
   <rect class="box svc" x="108" y="270" width="352" height="78"/>
   <text class="num" x="82" y="296">3</text>
-  <text class="tb" x="124" y="294">Ngày 1 · 14:33 — Lập lịch hẹn</text>
-  <text class="ts" x="124" y="313">Điều phối gán kỹ thuật viên, hẹn sáng hôm sau</text>
+  <text class="tb" x="124" y="294">Ngày 1 — Lập lịch hẹn</text>
+  <text class="ts" x="124" y="313">Điều phối gán kỹ thuật viên và hẹn giờ</text>
   <text class="tm" x="124" y="332">FS Service Appointment</text>
   <line class="arrow" x1="468" y1="309" x2="544" y2="309" marker-end="url(#ah)"/>
   <rect class="box res" x="552" y="276" width="520" height="66"/>
@@ -70,87 +70,103 @@
   <!-- mốc 4 -->
   <rect class="box wh" x="108" y="374" width="352" height="78"/>
   <text class="num" x="82" y="400">4</text>
-  <text class="tb" x="124" y="398">Ngày 2 · 15:53 → 16:09 — Xuất vật tư</text>
+  <text class="tb" x="124" y="398">Ngày 2 — Xuất vật tư</text>
   <text class="ts" x="124" y="417">Kỹ thuật viên đề nghị, kho xuất hàng</text>
   <text class="tm" x="124" y="436">Material Request · Stock Entry</text>
   <line class="arrow" x1="468" y1="413" x2="544" y2="413" marker-end="url(#ah)"/>
   <rect class="box res" x="552" y="380" width="520" height="66"/>
-  <text class="ts" x="568" y="405">Tồn kho chuyển từ kho công ty sang kho của kỹ thuật viên.</text>
-  <text class="ts" x="568" y="426">Hàng vẫn thuộc tài sản công ty, chỉ đổi vị trí lưu trữ.</text>
+  <text class="ts" x="568" y="405">Hàng chuyển từ kho công ty sang kho của kỹ thuật viên.</text>
+  <text class="ts" x="568" y="426">Phần nhận mà không dùng sẽ thành nghĩa vụ phải trả về kho.</text>
   <line class="arrow" x1="284" y1="455" x2="284" y2="474" marker-end="url(#ah)"/>
 
   <!-- mốc 5 -->
   <rect class="box svc" x="108" y="478" width="352" height="78"/>
   <text class="num" x="82" y="504">5</text>
-  <text class="tb" x="124" y="502">Ngày 2 · 16:08 — Hoàn tất việc tại hiện trường</text>
+  <text class="tb" x="124" y="502">Ngày 2 — Hoàn tất việc tại hiện trường</text>
   <text class="ts" x="124" y="521">Kỹ thuật viên lắp đặt và nghiệm thu</text>
   <text class="tm" x="124" y="540">FS Service Appointment</text>
   <line class="arrow" x1="468" y1="517" x2="544" y2="517" marker-end="url(#ah)"/>
   <rect class="box res" x="552" y="484" width="520" height="66"/>
   <text class="ts" x="568" y="509">Lịch hẹn chuyển sang Hoàn tất.</text>
-  <text class="ts" x="568" y="530">Phần vật tư mang theo nhưng không sử dụng trở thành nghĩa vụ hoàn trả.</text>
+  <text class="ts" x="568" y="530">Lịch hẹn xong không có nghĩa là phiếu công việc xong.</text>
   <line class="arrow" x1="284" y1="559" x2="284" y2="578" marker-end="url(#ah)"/>
 
   <!-- mốc 6 -->
   <rect class="box doc" x="108" y="582" width="352" height="78"/>
   <text class="num" x="82" y="608">6</text>
-  <text class="tb" x="124" y="606">Ngày 2 · 16:11 — Lập phiếu giao hàng</text>
+  <text class="tb" x="124" y="606">Ngày 2 — Lập phiếu giao hàng</text>
   <text class="ts" x="124" y="625">Khách hàng ký xác nhận trên màn hình</text>
   <text class="tm" x="124" y="644">Delivery Note</text>
   <line class="arrow" x1="468" y1="621" x2="544" y2="621" marker-end="url(#ah)"/>
   <rect class="box res" x="552" y="588" width="520" height="66"/>
   <text class="ts" x="568" y="613">Tồn kho trừ khỏi kho của kỹ thuật viên.</text>
-  <text class="ts" x="568" y="634">Đơn chuyển sang Đã giao đủ; đây là điều kiện bắt buộc để được thu tiền.</text>
+  <text class="ts" x="568" y="634">Bắt buộc phải có phiếu này mới được thu tiền.</text>
   <line class="arrow" x1="284" y1="663" x2="284" y2="682" marker-end="url(#ah)"/>
 
   <!-- mốc 7 -->
   <rect class="box money" x="108" y="686" width="352" height="78"/>
   <text class="num" x="82" y="712">7</text>
-  <text class="tb" x="124" y="710">Ngày 3 · 06:46 — Thu 60.000.000 đồng tiền mặt</text>
+  <text class="tb" x="124" y="710">Ngày 3 — Thu tiền mặt</text>
   <text class="ts" x="124" y="729">Kỹ thuật viên thu tại nhà khách hàng</text>
   <text class="tm" x="124" y="748">Payment Entry · Receive</text>
   <line class="arrow" x1="468" y1="725" x2="544" y2="725" marker-end="url(#ah)"/>
   <rect class="box res" x="552" y="692" width="520" height="66"/>
-  <text class="ts" x="568" y="717">Phiếu thu được ghi nhận chính thức ngay.</text>
-  <text class="ts" x="568" y="738">Tiền nằm ở tài khoản của kỹ thuật viên và trở thành công nợ cá nhân.</text>
+  <text class="ts" x="568" y="717">Phiếu thu chính thức ngay, không cần ai duyệt.</text>
+  <text class="ts" x="568" y="738">Tiền vào tài khoản của kỹ thuật viên và thành công nợ cá nhân.</text>
   <line class="arrow" x1="284" y1="767" x2="284" y2="786" marker-end="url(#ah)"/>
 
   <!-- mốc 8 -->
   <rect class="box money" x="108" y="790" width="352" height="78"/>
   <text class="num" x="82" y="816">8</text>
-  <text class="tb" x="124" y="814">Ngày 3 · 08:11 — Nộp tiền mặt về công ty</text>
+  <text class="tb" x="124" y="814">Ngày 3 — Nộp tiền mặt về công ty</text>
   <text class="ts" x="124" y="833">Kỹ thuật viên lập phiếu, kế toán xác nhận</text>
   <text class="tm" x="124" y="852">Payment Entry · Internal Transfer</text>
   <line class="arrow" x1="468" y1="829" x2="544" y2="829" marker-end="url(#ah)"/>
   <rect class="box res" x="552" y="796" width="520" height="66"/>
   <text class="ts" x="568" y="821">Công nợ cá nhân của kỹ thuật viên trở về không.</text>
-  <text class="ts" x="568" y="842">Chưa nộp thì phiếu công việc không được phép hoàn thành.</text>
+  <text class="ts" x="568" y="842">Chưa nộp thì phiếu công việc không hoàn thành được.</text>
   <line class="arrow" x1="284" y1="871" x2="284" y2="890" marker-end="url(#ah)"/>
 
   <!-- mốc 9 -->
   <rect class="box money" x="108" y="894" width="352" height="78"/>
   <text class="num" x="82" y="920">9</text>
-  <text class="tb" x="124" y="918">Ngày 4 · 08:51 — Thu nốt phần chuyển khoản</text>
+  <text class="tb" x="124" y="918">Ngày 4 — Thu nốt phần chuyển khoản</text>
   <text class="ts" x="124" y="937">Kế toán đối chiếu sao kê và xác nhận</text>
   <text class="tm" x="124" y="956">Payment Entry · Receive</text>
   <line class="arrow" x1="468" y1="933" x2="544" y2="933" marker-end="url(#ah)"/>
   <rect class="box res" x="552" y="900" width="520" height="66"/>
-  <text class="ts" x="568" y="925">Phiếu thu chuyển từ trạng thái nháp sang chính thức.</text>
-  <text class="ts" x="568" y="946">Đơn được ghi nhận đã thu đủ một trăm phần trăm.</text>
+  <text class="ts" x="568" y="925">Phiếu thu chuyển từ nháp sang chính thức.</text>
+  <text class="ts" x="568" y="946">Đến lúc này đơn mới được tính là đã thu đủ.</text>
   <line class="arrow" x1="284" y1="975" x2="284" y2="994" marker-end="url(#ah)"/>
 
   <!-- mốc 10 -->
   <rect class="box done" x="108" y="998" width="352" height="78"/>
   <text class="num" x="82" y="1024">10</text>
-  <text class="tb" x="124" y="1022">Ngày 4 · 08:55 — Hoá đơn tự phát sinh</text>
+  <text class="tb" x="124" y="1022">Ngày 4 — Hoá đơn tự phát sinh</text>
   <text class="ts" x="124" y="1041">Hệ thống thực hiện, không cần thao tác</text>
   <text class="tm" x="124" y="1060">Sales Invoice</text>
   <line class="arrow" x1="468" y1="1037" x2="544" y2="1037" marker-end="url(#ah)"/>
   <rect class="box res" x="552" y="1004" width="520" height="66"/>
-  <text class="ts" x="568" y="1029">Đơn chuyển sang Hoàn tất; khách hàng được cộng điểm tích luỹ.</text>
-  <text class="ts" x="568" y="1050">Hệ thống sinh bốn lịch bảo dưỡng cho các kỳ 2026, 2027 và 2028.</text>
+  <text class="ts" x="568" y="1029">Đơn chuyển sang Hoàn tất, khách hàng được cộng điểm tích luỹ.</text>
+  <text class="ts" x="568" y="1050">Hệ thống sinh lịch bảo dưỡng cho các kỳ kế tiếp.</text>
 
   <!-- vòng lặp: lịch bảo dưỡng kỳ sau mở ra đơn hàng mới -->
   <polyline class="loop" points="284,1079 284,1124 40,1124 40,30 284,30 284,56" marker-end="url(#ag)"/>
   <text class="lp" x="300" y="1146">Lịch bảo dưỡng đến hạn sẽ sinh phiếu nhắc, phiếu nhắc mở ra một đơn hàng mới: vòng lặp khép lại tại đây.</text>
+  <!-- VUNG-BAM: sinh bởi _tools/svg_hotspots.py, không sửa tay -->
+  <style>
+    .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
+    .hot:hover { fill-opacity: .08; }
+  </style>
+  <a href="../../../Quy-Trinh-02-Don-Hang.html#khai-don" target="_top"><title>Lập và xác nhận đơn</title><rect class="hot" x="108" y="62" width="352" height="78" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#lap-wo" target="_top"><title>Lập phiếu công việc</title><rect class="hot" x="108" y="166" width="352" height="78" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#lap-sa" target="_top"><title>Lập lịch hẹn</title><rect class="hot" x="108" y="270" width="352" height="78" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-04-Vat-Tu.html#yeu-cau" target="_top"><title>Xuất vật tư</title><rect class="hot" x="108" y="374" width="352" height="78" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#hien-truong" target="_top"><title>Làm việc tại hiện trường</title><rect class="hot" x="108" y="478" width="352" height="78" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#giao-hang" target="_top"><title>Lập phiếu giao hàng</title><rect class="hot" x="108" y="582" width="352" height="78" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#ba-truong-hop" target="_top"><title>Thu tiền</title><rect class="hot" x="108" y="686" width="352" height="78" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#nop-tien" target="_top"><title>Nộp tiền về công ty</title><rect class="hot" x="108" y="790" width="352" height="78" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#ba-truong-hop" target="_top"><title>Thu phần chuyển khoản</title><rect class="hot" x="108" y="894" width="352" height="78" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#hoa-don" target="_top"><title>Hoá đơn và lịch bảo dưỡng</title><rect class="hot" x="108" y="998" width="352" height="78" rx="10" ry="10"/></a>
+  <!-- /VUNG-BAM -->
 </svg>

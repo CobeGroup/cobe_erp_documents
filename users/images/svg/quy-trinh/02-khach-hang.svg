@@ -89,4 +89,22 @@
   <text class="note" x="100" y="456">Hai trạng thái ở giữa là tuỳ chọn: phần lớn phiếu chuyển thẳng từ Lead sang Converted khi khách hàng đồng ý mua.</text>
   <text class="note" x="100" y="480">Mọi khách hàng trên hệ thống đều được sinh ra từ một phiếu khách tiềm năng; không có khách hàng nào được lập trực tiếp.</text>
   <text class="note" x="100" y="504">Người giới thiệu phải được khai ngay ở bước ①; khai sau khi chuyển đổi thì liên kết tính thưởng không còn chính xác.</text>
+  <!-- VUNG-BAM: sinh bởi _tools/svg_hotspots.py, không sửa tay -->
+  <style>
+    .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
+    .hot:hover { fill-opacity: .08; }
+  </style>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#nguon" target="_top"><title>Nguồn khách hàng</title><rect class="hot" x="36" y="52" width="186" height="40" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#nguon" target="_top"><title>Nguồn khách hàng</title><rect class="hot" x="36" y="102" width="186" height="40" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#nguon" target="_top"><title>Nguồn khách hàng</title><rect class="hot" x="36" y="152" width="186" height="40" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#gioi-thieu" target="_top"><title>Khách hàng giới thiệu</title><rect class="hot" x="36" y="202" width="186" height="40" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#nguon" target="_top"><title>Nhân viên nhập liệu</title><rect class="hot" x="36" y="252" width="186" height="40" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#nguon" target="_top"><title>Nội dung phải khai trên phiếu khách tiềm năng</title><rect class="hot" x="272" y="52" width="210" height="240" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#lien-he" target="_top"><title>Liên hệ và địa chỉ</title><rect class="hot" x="532" y="138" width="200" height="68" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#chuyen-doi" target="_top"><title>Chuyển đổi thành khách hàng</title><rect class="hot" x="782" y="138" width="200" height="68" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#trang-thai" target="_top"><title>Các trạng thái của phiếu</title><rect class="hot" x="100" y="376" width="190" height="42" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#trang-thai" target="_top"><title>Các trạng thái của phiếu</title><rect class="hot" x="320" y="376" width="190" height="42" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#trang-thai" target="_top"><title>Các trạng thái của phiếu</title><rect class="hot" x="540" y="376" width="190" height="42" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-01-Khach-Hang.html#trang-thai" target="_top"><title>Các trạng thái của phiếu</title><rect class="hot" x="760" y="376" width="190" height="42" rx="10" ry="10"/></a>
+  <!-- /VUNG-BAM -->
 </svg>

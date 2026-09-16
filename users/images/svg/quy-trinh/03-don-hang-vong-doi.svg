@@ -79,4 +79,18 @@
   <text class="note" x="30" y="418">Đơn hàng phát sinh càng nhiều chứng từ phía sau thì càng bị khoá chặt: muốn sửa phải huỷ ngược theo thứ tự Phiếu thu, Hoá đơn, Phiếu giao hàng.</text>
   <text class="note" x="30" y="442">Khi còn Phiếu giao hàng hiệu lực thì không đóng và không huỷ được đơn hàng.</text>
   <text class="note" x="30" y="466">Sơ đồ đặt mỗi nhánh rẽ dưới một trạng thái chỉ để các đường không cắt nhau, không hàm ý nhánh đó chỉ đi ra từ trạng thái phía trên.</text>
+  <!-- VUNG-BAM: sinh bởi _tools/svg_hotspots.py, không sửa tay -->
+  <style>
+    .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
+    .hot:hover { fill-opacity: .08; }
+  </style>
+  <a href="../../../Quy-Trinh-02-Don-Hang.html#khai-don" target="_top"><title>Nội dung phải khai trên đơn</title><rect class="hot" x="30" y="80" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-02-Don-Hang.html#trang-thai" target="_top"><title>Ý nghĩa từng trạng thái</title><rect class="hot" x="290" y="80" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-02-Don-Hang.html#trang-thai" target="_top"><title>Ý nghĩa từng trạng thái</title><rect class="hot" x="550" y="80" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-02-Don-Hang.html#trang-thai" target="_top"><title>Khi nào đơn hoàn tất</title><rect class="hot" x="810" y="80" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-02-Don-Hang.html#sua-don" target="_top"><title>Tạm giữ đơn</title><rect class="hot" x="290" y="210" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-02-Don-Hang.html#sua-don" target="_top"><title>Đóng đơn</title><rect class="hot" x="550" y="210" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-02-Don-Hang.html#sua-don" target="_top"><title>Huỷ đơn</title><rect class="hot" x="810" y="210" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-02-Don-Hang.html#sua-don" target="_top"><title>Lập lại đơn đã huỷ</title><rect class="hot" x="810" y="320" width="200" height="56" rx="10" ry="10"/></a>
+  <!-- /VUNG-BAM -->
 </svg>

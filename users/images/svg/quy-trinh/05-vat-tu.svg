@@ -110,4 +110,20 @@
   <text class="note" x="140" y="428">Phiếu trả ở trạng thái nháp chỉ có tác dụng giữ chỗ: hàng chưa về kho, nghĩa vụ chưa được xoá, nhưng phần đó bị khoá để tránh lập trùng.</text>
   <text class="note" x="140" y="452">Vật tư sử dụng hết tại hiện trường theo đường riêng: Phiếu xuất vật tư (Stock Entry · Material Issue), tự động duyệt.</text>
   <text class="note" x="140" y="476">Huỷ Phiếu công việc không tự động trả hàng về kho: hàng đã nhận vẫn phải trả bằng phiếu trả.</text>
+  <!-- VUNG-BAM: sinh bởi _tools/svg_hotspots.py, không sửa tay -->
+  <style>
+    .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
+    .hot:hover { fill-opacity: .08; }
+  </style>
+  <a href="../../../Quy-Trinh-04-Vat-Tu.html#yeu-cau" target="_top"><title>Kỹ thuật viên yêu cầu vật tư</title><rect class="hot" x="140" y="46" width="165" height="52" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-04-Vat-Tu.html#yeu-cau" target="_top"><title>Kho xử lý yêu cầu</title><rect class="hot" x="330" y="46" width="165" height="52" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#giao-hang" target="_top"><title>Giao hàng cho khách hàng</title><rect class="hot" x="520" y="46" width="165" height="52" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-04-Vat-Tu.html#tra-ve" target="_top"><title>Lập phiếu trả vật tư</title><rect class="hot" x="710" y="46" width="165" height="52" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-04-Vat-Tu.html#tra-ve" target="_top"><title>Kho duyệt phiếu trả</title><rect class="hot" x="900" y="46" width="165" height="52" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-04-Vat-Tu.html#yeu-cau" target="_top"><title>Yêu cầu vật tư</title><rect class="hot" x="140" y="172" width="165" height="58" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-04-Vat-Tu.html#yeu-cau" target="_top"><title>Phiếu xuất kho</title><rect class="hot" x="330" y="172" width="165" height="58" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#giao-hang" target="_top"><title>Phiếu giao hàng</title><rect class="hot" x="520" y="172" width="165" height="58" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-04-Vat-Tu.html#tra-ve" target="_top"><title>Phiếu trả ở trạng thái nháp</title><rect class="hot" x="710" y="172" width="165" height="58" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-04-Vat-Tu.html#tra-ve" target="_top"><title>Phiếu trả đã được duyệt</title><rect class="hot" x="900" y="172" width="165" height="58" rx="10" ry="10"/></a>
+  <!-- /VUNG-BAM -->
 </svg>

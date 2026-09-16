@@ -23,21 +23,21 @@ Dành cho **người lần đầu dùng ERP**: đăng nhập, giao diện **Desk
 
 ## 🟠 Phần 1b — Quy trình hợp nhất (xuyên suốt các module)
 
-Dành cho **người cần nắm toàn bộ dây chuyền nghiệp vụ**, không chỉ phần việc của mình: từ khi
-khách hàng cung cấp thông tin liên hệ, qua đơn hàng, điều phối, vật tư, giao hàng, thu tiền,
-cho tới bảo dưỡng định kỳ và xử lý sự cố — kèm **sơ đồ từng chặng** và **bảng tra cứu ngoại lệ**.
+Dành cho **người cần nắm toàn bộ dây chuyền**, không chỉ phần việc của mình: từ lúc khách hàng
+để lại số điện thoại, qua đơn hàng, điều phối, vật tư, giao hàng, thu tiền, tới bảo dưỡng định
+kỳ và sự cố. **Sơ đồ bấm được** ở mỗi chặng, kèm bảng tra cứu khi bị chặn và phần hỏi đáp.
 
 → **[Quy trình hợp nhất](users/00-quy-trinh.html)**
 
 | Trang | Nội dung |
 |---|---|
-| [Tổng quan toàn chuỗi](users/Quy-Trinh-Tong-Quan.html) | Quan hệ giữa các chứng từ, bảng đối chiếu tên, phân công vai trò và màn hình, qui mô thực tế từng chặng |
-| [Vòng đời một đơn hàng](users/Quy-Trinh-Vong-Doi-Don-Hang.html) | Bám theo một đơn hàng có thật qua mười mốc, từ lúc lập đơn tới lúc sinh lịch bảo dưỡng kỳ sau |
-| [1 · Khách tiềm năng → Khách hàng](users/Quy-Trinh-01-Khach-Hang.html) · [2 · Đơn bán hàng](users/Quy-Trinh-02-Don-Hang.html) | Các nguồn khách hàng và trục chính của mọi chứng từ |
-| [3 · Điều phối và hiện trường](users/Quy-Trinh-03-Hien-Truong.html) · [4 · Vật tư](users/Quy-Trinh-04-Vat-Tu.html) | Phiếu công việc, lịch hẹn, kho kỹ thuật viên, nghĩa vụ hoàn trả |
-| [5 · Giao hàng và thu tiền](users/Quy-Trinh-05-Giao-Hang-Thu-Tien.html) | Hai phương thức giao hàng, hoá đơn, tiền mặt, thu hộ |
-| [6 · Bảo dưỡng định kỳ](users/Quy-Trinh-06-Bao-Duong.html) · [7 · Sự cố](users/Quy-Trinh-07-Su-Co.html) | Cơ chế phát sinh đơn hàng mới từ khách hàng hiện hữu; hướng xử lý khi khách hàng báo hỏng |
-| [8 · Ngoại lệ, lỗi và bất thường](users/Quy-Trinh-08-Ngoai-Le.html) | Bảng tra cứu theo hiện tượng cho cả tám chặng |
+| [Vòng đời một đơn hàng](users/Quy-Trinh-Vong-Doi-Don-Hang.html) | Bám theo một đơn qua mười mốc, từ lúc lập đơn tới lúc sinh lịch bảo dưỡng kỳ sau |
+| [Tổng quan toàn chuỗi](users/Quy-Trinh-Tong-Quan.html) | Bản đồ toàn chuỗi, tên chứng từ, ai làm trên màn hình nào, bốn nguyên tắc vận hành |
+| [1 · Khách hàng](users/Quy-Trinh-01-Khach-Hang.html) · [2 · Đơn bán hàng](users/Quy-Trinh-02-Don-Hang.html) | Nguồn khách hàng, người giới thiệu; lập đơn, sửa đơn, trạng thái đơn |
+| [3 · Hiện trường](users/Quy-Trinh-03-Hien-Truong.html) · [4 · Vật tư](users/Quy-Trinh-04-Vat-Tu.html) | Phiếu công việc, lịch hẹn; kho kỹ thuật viên và nghĩa vụ trả hàng |
+| [5 · Giao hàng và thu tiền](users/Quy-Trinh-05-Giao-Hang-Thu-Tien.html) | Giao hàng, thu tiền mặt · chuyển khoản · cả hai, hoá đơn, nộp tiền về công ty |
+| [6 · Bảo dưỡng](users/Quy-Trinh-06-Bao-Duong.html) · [7 · Sự cố](users/Quy-Trinh-07-Su-Co.html) | Nhắc khách đến kỳ và lập đơn mới; tiếp nhận và xử lý báo hỏng |
+| [8 · Khi gặp trục trặc](users/Quy-Trinh-08-Ngoai-Le.html) | Tra theo hiện tượng: nguyên nhân và cách gỡ, cho cả tám chặng |
 
 ---
 

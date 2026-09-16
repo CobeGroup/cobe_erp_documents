@@ -45,12 +45,12 @@
   <rect class="box cond" x="60" y="232" width="600" height="44"/>
   <text class="num" x="76" y="260">4</text>
   <text class="t" x="100" y="260">Tiền mặt đã nộp · vật tư đã trả · đơn hàng đã thu đủ</text>
-  <text class="ts" x="648" y="259" text-anchor="end">ba tham số riêng</text>
+  <text class="ts" x="648" y="259" text-anchor="end">tiền: đang bật</text>
 
   <rect class="box cond" x="60" y="290" width="600" height="44"/>
   <text class="num" x="76" y="318">5</text>
   <text class="t" x="100" y="318">Đơn bán hàng liên kết đã Hoàn tất hoặc đã Đóng</text>
-  <text class="ts" x="648" y="317" text-anchor="end">đang tắt</text>
+  <text class="ts" x="648" y="317" text-anchor="end">đang bật</text>
 
   <rect class="box cond" x="60" y="348" width="600" height="44"/>
   <text class="num" x="76" y="376">6</text>
@@ -84,4 +84,18 @@
   <text class="note" x="60" y="438">Tác vụ tự động còn chờ thêm một khoảng ân hạn tính từ lịch hẹn cuối cùng; chưa đủ số ngày đó thì phiếu vẫn được bỏ qua.</text>
   <text class="note" x="60" y="462">Phiếu ở trạng thái Tạm dừng được tác vụ tự động bỏ qua hoàn toàn; cần chuyển phiếu về Đang thực hiện trước.</text>
   <text class="note" x="60" y="486">Điều kiện 3 đến 6 có thể bật hoặc tắt trong cấu hình; hai công ty cấu hình khác nhau sẽ cho kết quả kiểm tra khác nhau.</text>
+  <!-- VUNG-BAM: sinh bởi _tools/svg_hotspots.py, không sửa tay -->
+  <style>
+    .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
+    .hot:hover { fill-opacity: .08; }
+  </style>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#dieu-kien" target="_top"><title>Điều kiện 1</title><rect class="hot" x="60" y="58" width="600" height="44" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#dieu-kien" target="_top"><title>Điều kiện 2</title><rect class="hot" x="60" y="116" width="600" height="44" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#dieu-kien" target="_top"><title>Điều kiện 3</title><rect class="hot" x="60" y="174" width="600" height="44" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#wo-bi-chan" target="_top"><title>Điều kiện 4: tiền và vật tư</title><rect class="hot" x="60" y="232" width="600" height="44" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#wo-bi-chan" target="_top"><title>Điều kiện 5: đơn bán hàng</title><rect class="hot" x="60" y="290" width="600" height="44" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#dieu-kien" target="_top"><title>Điều kiện 6</title><rect class="hot" x="60" y="348" width="600" height="44" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#wo-bi-chan" target="_top"><title>Đọc thông báo bị chặn</title><rect class="hot" x="740" y="66" width="220" height="96" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#dieu-kien" target="_top"><title>Phiếu chuyển sang hoàn thành</title><rect class="hot" x="740" y="348" width="220" height="60" rx="10" ry="10"/></a>
+  <!-- /VUNG-BAM -->
 </svg>

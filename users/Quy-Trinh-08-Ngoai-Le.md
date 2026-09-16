@@ -1,18 +1,17 @@
 ---
-title: 8 · Ngoại lệ, lỗi và bất thường
+title: 8 · Khi gặp trục trặc
 layout: default
 parent: Quy trình hợp nhất
 nav_order: 9
 ---
 
-# Chặng 8 — Ngoại lệ, lỗi và bất thường
+# Chặng 8 — Khi gặp trục trặc
 {: .no_toc }
 
-**Đối tượng:** mọi vai trò · **Cách sử dụng:** tra cứu theo hiện tượng đang gặp
+**Dùng khi:** đang bị chặn, đang thấy một thông báo lạ, hoặc số liệu không như mong đợi
 {: .fs-3 .text-grey-dk-000 }
 
-Trang này tập hợp toàn bộ tình huống bất thường của bảy chặng trước vào một bảng tra cứu. Mỗi
-dòng nêu ba nội dung: **hiện tượng, nguyên nhân và hướng xử lý**.
+Tra theo **hiện tượng đang gặp**. Mỗi dòng có đủ ba cột: hiện tượng, nguyên nhân, cách gỡ.
 
 ---
 
@@ -25,6 +24,7 @@ dòng nêu ba nội dung: **hiện tượng, nguyên nhân và hướng xử lý
 ---
 
 ## 1. Bốn nguyên tắc xử lý tình huống bất thường
+{: #nguyen-tac }
 
 ### 1.1. Ghi nhận nguyên văn thông báo của hệ thống
 
@@ -58,11 +58,12 @@ cách này làm sai lệch sổ kho và công nợ, và rất khó khắc phục
 | **Hệ thống từ chối** | Có thông báo lỗi, không lưu được | Thấp — phát hiện và khắc phục ngay |
 | **Hệ thống không cảnh báo** | Không có thông báo, kết quả sai xuất hiện về sau | **Cao** — chỉ phát hiện khi khách hàng khiếu nại hoặc khi đối chiếu số liệu |
 
-Nhóm thứ hai được liệt kê riêng tại [mục 3](#3-các-trường-hợp-hệ-thống-không-cảnh-báo).
+Nhóm thứ hai được liệt kê riêng tại [mục 3](#khong-canh-bao).
 
 ---
 
 ## 2. Bảng tra cứu theo hiện tượng
+{: #tra-cuu }
 
 ### 2.1. Khách hàng, liên hệ, địa chỉ
 
@@ -93,7 +94,7 @@ Nhóm thứ hai được liệt kê riêng tại [mục 3](#3-các-trường-h�
 |---|---|---|
 | Lịch hẹn và đơn đã hoàn tất nhưng **phiếu công việc vẫn ở New** | Chưa đáp ứng một trong sáu điều kiện, hoặc chưa hết thời gian ân hạn | Thực hiện hoàn thành thủ công để hệ thống nêu đúng nguyên nhân |
 | Phiếu đủ điều kiện nhưng **tác vụ tự động vẫn bỏ qua** | Phiếu đang ở *On Hold*, hoặc chưa hết ân hạn | Chuyển phiếu về *In Progress*, hoặc chờ đủ số ngày |
-| Không hoàn thành được: *“SO … còn nợ …”* | Tổng phiếu thu đã chính thức chưa bằng giá trị đơn | Xem còn phiếu thu nào đang ở trạng thái nháp; xử lý theo [Chặng 5 mục 6](Quy-Trinh-05-Giao-Hang-Thu-Tien.html#6-phiếu-công-việc-bị-chặn-vì-lý-do-thanh-toán) |
+| Không hoàn thành được: *“SO … còn nợ …”* | Tổng phiếu thu đã chính thức chưa bằng giá trị đơn | Xem còn phiếu thu nào đang ở trạng thái nháp; xử lý theo [Chặng 5 mục 6](Quy-Trinh-05-Giao-Hang-Thu-Tien.html#wo-bi-chan) |
 | Không hoàn thành được: *“thu tiền mặt nhưng chưa có Internal Transfer”* | Khoản tiền mặt chưa có phiếu nộp được xác nhận, hoặc phiếu nộp không gắn liên kết | Lập phiếu nộp từ ứng dụng, chọn đúng khoản thu |
 | Không hoàn thành được: *“Sales Order not completed”* | Đơn liên kết chưa ở *Hoàn tất* hoặc *Đóng đơn*, thường do chưa có hoá đơn | Xuất nốt hoá đơn sau khi đã thu đủ |
 | Không hoàn thành được: *“Chưa trả kho đủ”* | Tham số kiểm tra vật tư đang bật | Lập phiếu trả và chờ kho duyệt |
@@ -164,6 +165,7 @@ Nhóm thứ hai được liệt kê riêng tại [mục 3](#3-các-trường-h�
 ---
 
 ## 3. Các trường hợp hệ thống không cảnh báo
+{: #khong-canh-bao }
 
 Đây là nhóm rủi ro cao nhất: thao tác khai thiếu nhưng không phát sinh thông báo lỗi.
 
@@ -180,6 +182,7 @@ Nhóm thứ hai được liệt kê riêng tại [mục 3](#3-các-trường-h�
 ---
 
 ## 4. Khác biệt giữa các công ty
+{: #khac-biet }
 
 Tập đoàn vận hành nhiều pháp nhân trên cùng một hệ thống. Các điểm khác biệt cần lưu ý:
 
@@ -196,6 +199,7 @@ Dấu hiệu nhận biết nhanh trên tên tài khoản và tên kho: **hậu t
 ---
 
 ## 5. Đầu mối tiếp nhận
+{: #dau-moi }
 
 | Loại vướng mắc | Đầu mối | Thông tin cần gửi kèm |
 |---|---|---|
@@ -211,6 +215,10 @@ ngắn thời gian xử lý hơn mọi mô tả dài dòng.
 
 ---
 
-## 6. Quay lại trang tổng quan
+## 6. Quay lại
 
-**[Tổng quan toàn chuỗi](Quy-Trinh-Tong-Quan.html)**
+| Bạn cần | Mở trang |
+|---|---|
+| Xem lại mạch chung | [Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html) |
+| Tra tên chứng từ, ai làm gì | [Tổng quan toàn chuỗi](Quy-Trinh-Tong-Quan.html) |
+| Danh sách tất cả các chặng | [Quy trình hợp nhất](00-quy-trinh.html) |

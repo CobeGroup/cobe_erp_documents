@@ -90,4 +90,20 @@
   <text class="note" x="140" y="478">Cả hai đường đều kết thúc bằng cùng ba chứng từ: Phiếu giao hàng, Hoá đơn và Phiếu thu; khác nhau ở người lập và thời điểm lập.</text>
   <text class="note" x="140" y="502">Khi chưa có Phiếu giao hàng, hệ thống chặn thu tiền; thu tiền mặt mà chưa nộp về công ty thì kỹ thuật viên vẫn còn công nợ.</text>
   <text class="note" x="140" y="526">Đơn hàng chỉ chuyển sang Hoàn tất khi đã giao đủ và xuất hoá đơn đủ; đó cũng là điều kiện cộng điểm tích luỹ cho khách hàng.</text>
+  <!-- VUNG-BAM: sinh bởi _tools/svg_hotspots.py, không sửa tay -->
+  <style>
+    .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
+    .hot:hover { fill-opacity: .08; }
+  </style>
+  <a href="../../../Quy-Trinh-02-Don-Hang.html" target="_top"><title>Đơn bán hàng đã xác nhận</title><rect class="hot" x="440" y="26" width="230" height="56" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#giao-hang" target="_top"><title>Lập phiếu giao hàng</title><rect class="hot" x="140" y="160" width="190" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#ba-truong-hop" target="_top"><title>Ba trường hợp thu tiền</title><rect class="hot" x="355" y="160" width="190" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#hoa-don" target="_top"><title>Hoá đơn</title><rect class="hot" x="570" y="160" width="190" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#nop-tien" target="_top"><title>Nộp tiền mặt về công ty</title><rect class="hot" x="785" y="160" width="190" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#van-chuyen" target="_top"><title>Gửi qua đơn vị vận chuyển</title><rect class="hot" x="140" y="340" width="175" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#van-chuyen" target="_top"><title>Gửi qua đơn vị vận chuyển</title><rect class="hot" x="330" y="340" width="175" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#van-chuyen" target="_top"><title>Gửi qua đơn vị vận chuyển</title><rect class="hot" x="520" y="340" width="175" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#van-chuyen" target="_top"><title>Gửi qua đơn vị vận chuyển</title><rect class="hot" x="710" y="340" width="175" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#van-chuyen" target="_top"><title>Chứng từ tự phát sinh</title><rect class="hot" x="900" y="340" width="175" height="60" rx="10" ry="10"/></a>
+  <!-- /VUNG-BAM -->
 </svg>

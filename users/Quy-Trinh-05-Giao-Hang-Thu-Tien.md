@@ -8,16 +8,12 @@ nav_order: 6
 # Chặng 5 — Giao hàng và thu tiền
 {: .no_toc }
 
-**Vai trò thực hiện:** Kỹ thuật viên · Kho · Kế toán · Kinh doanh
+**Ai làm:** Kỹ thuật viên · Kho · Kế toán · Kinh doanh
 {: .fs-3 .text-grey-dk-000 }
 
-> **Chặng này nằm ở đâu trong dây chuyền**
->
-> **Nhận vào:** Vật tư đã ở kho kỹ thuật viên từ [Chặng 4](Quy-Trinh-04-Vat-Tu.html), gắn với đơn bán hàng của [Chặng 2](Quy-Trinh-02-Don-Hang.html).
->
-> **Bàn giao ra:** Đơn đã giao đủ, thu đủ và có hoá đơn; bàn giao cho [Chặng 6 — Bảo dưỡng định kỳ](Quy-Trinh-06-Bao-Duong.html).
->
-> Toàn bộ mạch từ đầu đến cuối, theo một đơn hàng cụ thể: [Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html).
+| Nhận vào | Bàn giao ra |
+|---|---|
+| Vật tư đã ở kho kỹ thuật viên, gắn với một đơn bán hàng | Đơn đã giao đủ, thu đủ, có hoá đơn → [Chặng 6](Quy-Trinh-06-Bao-Duong.html) |
 
 ---
 
@@ -31,335 +27,313 @@ nav_order: 6
 
 ## Sơ đồ chặng
 
-<a href="images/svg/quy-trinh/06-giao-hang-thu-tien.svg" title="Bấm để phóng to">
-  <img src="images/svg/quy-trinh/06-giao-hang-thu-tien.svg" alt="Từ một đơn bán hàng đã xác nhận có hai đường giao hàng. Đường trên là kỹ thuật viên giao tận nơi: lập phiếu giao hàng, thu tiền tại chỗ, xuất hoá đơn rồi nộp tiền mặt về công ty. Đường dưới là gửi qua đơn vị vận chuyển: lập vận đơn, đề nghị xuất kho, phiếu xuất kho sang kho của đơn vị vận chuyển, giao thành công thì hệ thống tự sinh phiếu giao hàng, hoá đơn và phiếu thu tiền thu hộ" style="width:100%;height:auto">
-</a>
+<div style="position:relative;width:100%;padding-bottom:50.45%">
+  <object type="image/svg+xml" data="images/svg/quy-trinh/06-giao-hang-thu-tien.svg" style="position:absolute;inset:0;width:100%;height:100%;border:0">
+    <img src="images/svg/quy-trinh/06-giao-hang-thu-tien.svg" alt="Từ một đơn bán hàng đã xác nhận có hai đường giao hàng. Đường trên là kỹ thuật viên giao tận nơi: lập phiếu giao hàng, thu tiền tại chỗ, xuất hoá đơn rồi nộp tiền mặt về công ty. Đường dưới là gửi qua đơn vị vận chuyển: lập vận đơn, đề nghị xuất kho, phiếu xuất kho sang kho của đơn vị vận chuyển, giao thành công thì hệ thống tự sinh phiếu giao hàng, hoá đơn và phiếu thu tiền thu hộ" style="width:100%;height:auto">
+  </object>
+</div>
 
-Hai phương thức khác nhau ở **người lập chứng từ và thời điểm lập**, nhưng cùng kết thúc bằng
+👆 **Bấm vào từng ô** để mở phần giải thích.
+{: .fs-3 }
+
+Hai đường giao hàng khác nhau ở **ai lập chứng từ và lập lúc nào**, nhưng cùng kết thúc bằng
 **ba chứng từ giống nhau**: phiếu giao hàng (`Delivery Note`), hoá đơn (`Sales Invoice`) và
 phiếu thu (`Payment Entry`).
 
 ---
 
-## 1. Phương thức A — Kỹ thuật viên giao tận nơi
+## 1. Lập phiếu giao hàng
+{: #giao-hang }
 
-Đây là phương thức chủ đạo của công ty: kỹ thuật viên mang hàng theo phương tiện, lắp đặt hoặc
-thay lõi tại địa điểm của khách hàng, sau đó giao hàng và thu tiền tại chỗ.
+Trên ứng dụng: mở lịch hẹn → tab **Đơn hàng** → **Giao hàng**. Hệ thống nạp các dòng còn phải
+giao của những đơn gắn với lịch hẹn.
 
-### 1.1. Lập phiếu giao hàng trên ứng dụng
-
-Kỹ thuật viên mở lịch hẹn, chọn tab **Đơn hàng**, sau đó chọn chức năng **Giao hàng**. Hệ thống
-nạp các dòng hàng còn phải giao của những đơn gắn với lịch hẹn.
-
-| Điều kiện thực hiện | Nội dung |
+| Điều kiện | Nội dung |
 |---|---|
-| Trạng thái đơn | Không thuộc *Closed*, *Cancelled* hoặc *On Hold* |
-| Dòng hàng | Còn tối thiểu một dòng chưa giao hết |
+| Trạng thái đơn | Không thuộc *Closed*, *Cancelled*, *On Hold* |
+| Dòng hàng | Còn ít nhất một dòng chưa giao hết |
 | Kho | Kỹ thuật viên phải được khai kho cho công ty của đơn |
-| Mỗi đơn | Phải giao tối thiểu một món; không cho phép hoàn trả toàn bộ đơn |
+| Mỗi đơn | Phải giao ít nhất một món; không cho hoàn trả toàn bộ đơn |
 
-### 1.2. Giao đủ hoặc giao một phần
+**Giao đủ hay giao một phần:**
 
-Kỹ thuật viên điều chỉnh số lượng của từng dòng:
-
-| Thao tác | Ý nghĩa |
+| Thao tác | Nghĩa |
 |---|---|
-| Giữ nguyên | Giao đủ |
-| Giảm số lượng | Giao một phần; phần chênh lệch được ghi nhận là **hàng hoàn trả** |
-| Đặt về 0 | Không giao món đó; toàn bộ món được ghi nhận là hàng hoàn trả |
+| Giữ nguyên số lượng | Giao đủ |
+| Giảm số lượng | Giao một phần; phần chênh thành **hàng hoàn trả** |
+| Đặt về 0 | Không giao món đó; cả món thành hàng hoàn trả |
 
-Màn hình xác nhận tách riêng hai khối: **hàng hoàn trả** nền đỏ và **hàng giao** nền xanh, kèm
-giá trị từng dòng. Khách hàng **ký xác nhận trên màn hình**; khi chưa ký, chức năng xác nhận
-không được kích hoạt.
+Màn hình xác nhận tách hai khối: **hàng hoàn trả** nền đỏ và **hàng giao** nền xanh. Khách hàng
+**ký trên màn hình**; chưa ký thì nút xác nhận không bật.
 
-> 🔗 Phần hàng hoàn trả chính là nội dung làm phát sinh **nghĩa vụ trả vật tư** ở
-> [Chặng 4](Quy-Trinh-04-Vat-Tu.html). Giao một phần không đồng nghĩa với bỏ qua phần còn lại:
-> đó là một khoản nợ hàng mà kỹ thuật viên phải hoàn trả về kho.
+> 🔗 Phần hàng hoàn trả chính là **nghĩa vụ trả vật tư** ở [Chặng 4](Quy-Trinh-04-Vat-Tu.html#tra-ve).
+> Giao một phần không có nghĩa là bỏ qua phần còn lại: đó là một khoản nợ hàng.
 
 ---
 
 ## 2. Điều kiện và thao tác thu tiền
+{: #dieu-kien-thu }
 
-### 2.1. Điều kiện bắt buộc
+> ⛔ **Phải có phiếu giao hàng trước đã.** Chưa có thì hệ thống từ chối:
+> *“Chưa tạo phiếu giao hàng cho … Vui lòng tạo phiếu giao hàng trước khi thanh toán.”*
 
-> ⛔ **Phải lập phiếu giao hàng trước khi thu tiền.** Hệ thống từ chối kèm thông báo
-> *“Chưa tạo phiếu giao hàng cho … Vui lòng tạo phiếu giao hàng trước khi thanh toán.”* Công ty
-> có thể mở ngoại lệ cho phép thu trước bằng một tham số cấu hình; tham số này **đang tắt**.
+Ngoài ra kỹ thuật viên phải được khai **tài khoản thu tiền** cho công ty của đơn; chưa khai thì
+màn hình thu tiền không cho thao tác.
 
-Ngoài ra, kỹ thuật viên phải được khai **tài khoản thu tiền** cho công ty của đơn. Chưa khai thì
-màn hình thu tiền không cho thực hiện, kể cả khi đã có phiếu giao hàng.
+**Màn hình thu tiền làm việc theo từng dòng**, mỗi dòng gồm: thu cho đơn nào, bằng hình thức
+nào, bao nhiêu tiền.
 
-### 2.2. Màn hình thu tiền hoạt động theo dòng
-
-Màn hình thu tiền không làm việc theo từng đơn mà theo **từng dòng thu**. Mỗi dòng gồm ba nội
-dung: thu cho đơn nào, bằng hình thức nào và bao nhiêu tiền.
-
-| Nội dung | Cách hệ thống xử lý |
+| Nội dung | Hệ thống xử lý |
 |---|---|
-| Số dòng mặc định | Mỗi đơn còn nợ được nạp sẵn một dòng |
-| Số tiền mặc định | Bằng đúng số còn nợ của đơn |
-| Hình thức mặc định | **Chuyển khoản** nếu đơn có khai sẵn tài khoản ngân hàng, ngược lại là **tiền mặt** |
-| Thêm dòng | Được phép, dùng cho trường hợp một đơn trả bằng hai hình thức |
-| Giới hạn | Một đơn **không được có hai dòng cùng một hình thức** trong cùng lần thu |
-| Số tiền | Được phép nhỏ hơn số còn nợ; phần còn lại thu ở lần sau |
-| Tổng kiểm tra | Tổng tiền của tất cả các dòng không được lớn hơn **tổng** số còn nợ của các đơn đang xử lý |
+| Dòng mặc định | Mỗi đơn còn nợ được nạp sẵn một dòng |
+| Số tiền mặc định | Bằng đúng số còn nợ |
+| Hình thức mặc định | **Chuyển khoản** nếu đơn có khai sẵn tài khoản ngân hàng, ngược lại **tiền mặt** |
+| Thêm dòng | Được, dùng khi một đơn trả bằng hai hình thức |
+| Giới hạn | Một đơn **không được hai dòng cùng hình thức** trong một lần thu |
+| Số tiền | Nhỏ hơn số còn nợ cũng được; phần còn lại thu lần sau |
+| Kiểm tra cuối | Tổng các dòng không lớn hơn **tổng** số còn nợ của các đơn đang xử lý |
 
-> ⚠️ **Chốt kiểm tra cuối cùng đối chiếu trên tổng, không đối chiếu từng đơn.** Khi kỹ thuật
-> viên thu cho nhiều đơn trong cùng một lần, việc ghi dư cho đơn này và ghi thiếu cho đơn kia
-> vẫn qua được chốt kiểm tra. Cần đọc lại số tiền của từng dòng trước khi xác nhận.
+> ⚠️ **Chốt cuối kiểm trên tổng, không kiểm từng đơn.** Thu cho nhiều đơn một lúc mà ghi dư đơn
+> này, thiếu đơn kia thì vẫn lọt. Đọc lại số tiền từng dòng trước khi xác nhận.
 
-### 2.3. Chọn tài khoản ngân hàng cho dòng chuyển khoản
-
-Dòng chuyển khoản bắt buộc phải chọn tài khoản ngân hàng nhận tiền. Khi đã chọn xong mà đổi sang
-tài khoản khác, hệ thống hỏi lại kèm cảnh báo: **chỉ đổi tài khoản khi có yêu cầu từ công ty**.
-
-Sau khi chọn tài khoản và nhập số tiền, ứng dụng hiện **mã QR** tương ứng với đúng tài khoản và
-đúng số tiền của dòng đó để khách hàng quét và chuyển.
+**Dòng chuyển khoản** bắt buộc chọn tài khoản ngân hàng nhận tiền; đổi tài khoản đã chọn thì hệ
+thống hỏi lại kèm cảnh báo *chỉ đổi khi có yêu cầu từ công ty*. Chọn xong, ứng dụng hiện **mã
+QR** đúng tài khoản và đúng số tiền của dòng đó.
 
 ---
 
-## 3. Ba trường hợp thu tiền và hệ quả của từng trường hợp
+## 3. Ba trường hợp thu tiền
+{: #ba-truong-hop }
 
-<a href="images/svg/quy-trinh/11-thu-tien.svg" title="Bấm để phóng to">
-  <img src="images/svg/quy-trinh/11-thu-tien.svg" alt="Sau khi đã lập phiếu giao hàng, việc thu tiền rẽ thành ba nhánh. Nhánh một, khách hàng trả tiền mặt: phiếu thu được ghi nhận ngay, tiền vào tài khoản của kỹ thuật viên và trở thành công nợ cá nhân, kỹ thuật viên phải lập phiếu nộp và kế toán xác nhận thì công nợ mới hết. Nhánh hai, khách hàng chuyển khoản: ứng dụng hiện mã QR, phiếu thu nằm ở trạng thái nháp cho tới khi kế toán đối chiếu sao kê và xác nhận, khi đó hoá đơn tự phát sinh. Nhánh ba, khách hàng trả bằng cả hai hình thức: mỗi hình thức một dòng thu riêng, phần tiền mặt đi theo nhánh một, phần chuyển khoản đi theo nhánh hai, và đơn chỉ được coi là thu đủ khi cả hai phiếu đều đã chính thức. Cả ba nhánh cùng dẫn tới kết quả chung: thu đủ một trăm phần trăm thì hoá đơn phát sinh, đơn chuyển sang hoàn tất, khách hàng được cộng điểm tích luỹ và hệ thống sinh lịch bảo dưỡng cho kỳ kế tiếp" style="width:100%;height:auto">
-</a>
+<div style="position:relative;width:100%;padding-bottom:61.40%">
+  <object type="image/svg+xml" data="images/svg/quy-trinh/11-thu-tien.svg" style="position:absolute;inset:0;width:100%;height:100%;border:0">
+    <img src="images/svg/quy-trinh/11-thu-tien.svg" alt="Sau khi đã lập phiếu giao hàng, việc thu tiền rẽ thành ba nhánh. Nhánh một, khách hàng trả tiền mặt: phiếu thu được ghi nhận ngay, tiền vào tài khoản của kỹ thuật viên và trở thành công nợ cá nhân, kỹ thuật viên phải lập phiếu nộp và kế toán xác nhận thì công nợ mới hết. Nhánh hai, khách hàng chuyển khoản: ứng dụng hiện mã QR, phiếu thu nằm ở trạng thái nháp cho tới khi kế toán đối chiếu sao kê và xác nhận, khi đó hoá đơn tự phát sinh. Nhánh ba, khách hàng trả bằng cả hai hình thức: mỗi hình thức một dòng thu riêng, phần tiền mặt đi theo nhánh một, phần chuyển khoản đi theo nhánh hai, và đơn chỉ được coi là thu đủ khi cả hai phiếu đều đã chính thức" style="width:100%;height:auto">
+  </object>
+</div>
 
-### 3.1. So sánh hai hình thức
+👆 **Bấm vào từng ô** để mở phần giải thích.
+{: .fs-3 }
 
-Hai hình thức thanh toán không chỉ khác nhau ở cách khách hàng trả tiền. Chúng sinh ra **hai
-đường xử lý khác nhau về chứng từ, về người chịu trách nhiệm và về thời điểm đơn được ghi nhận
-là đã thu**.
+### 3.1. Tiền mặt và chuyển khoản khác nhau thế nào
 
-| Nội dung | Tiền mặt | Chuyển khoản |
+| | Tiền mặt | Chuyển khoản |
 |---|---|---|
-| **Trạng thái phiếu thu ngay sau khi lập** | Chính thức ngay, không cần ai duyệt | **Nháp** |
-| **Tiền được ghi vào** | Tài khoản của chính kỹ thuật viên | Tài khoản ngân hàng của công ty |
-| **Phát sinh nghĩa vụ cá nhân** | **Có** — kỹ thuật viên đang giữ tiền của công ty | Không |
-| **Người phải làm tiếp** | Kỹ thuật viên lập phiếu nộp, kế toán xác nhận | Kế toán đối chiếu sao kê rồi xác nhận |
-| **Đơn được tính là đã thu từ lúc nào** | Ngay khi kỹ thuật viên lập phiếu | Chỉ khi kế toán xác nhận |
-| **Hoá đơn phát sinh khi nào** | Do tác vụ tự động chạy hằng ngày, sớm nhất là một ngày sau phiếu giao hàng | **Ngay lập tức** khi kế toán xác nhận phiếu thu |
-| **Hỗ trợ trên ứng dụng** | Không có bước trung gian | Mã QR theo đúng tài khoản và đúng số tiền |
-| **Qui mô thực tế** | 4.582 phiếu chính thức | 6.853 phiếu chính thức và **792 phiếu còn nháp** |
+| **Phiếu thu sau khi lập** | Chính thức ngay, không ai phải duyệt | **Nháp** |
+| **Tiền vào đâu** | Tài khoản của chính kỹ thuật viên | Tài khoản ngân hàng công ty |
+| **Sinh nghĩa vụ cá nhân** | **Có** — kỹ thuật viên đang giữ tiền công ty | Không |
+| **Ai phải làm tiếp** | Kỹ thuật viên nộp tiền, kế toán xác nhận | Kế toán đối chiếu sao kê rồi xác nhận |
+| **Đơn được tính đã thu từ lúc** | Ngay khi lập phiếu | Chỉ khi kế toán xác nhận |
+| **Hoá đơn phát sinh khi** | Tác vụ tự động chạy hằng ngày, sớm nhất một ngày sau phiếu giao hàng | **Ngay lập tức** khi kế toán xác nhận phiếu thu |
+| **Hỗ trợ trên ứng dụng** | Không có bước trung gian | Mã QR đúng tài khoản, đúng số tiền |
 
-Số liệu ở dòng cuối tính trên các phiếu thu do kỹ thuật viên lập từ ứng dụng, đến ngày
-15/09/2026.
+### 3.2. Khách trả bằng cả hai hình thức
 
-### 3.2. Trường hợp khách hàng trả bằng cả hai hình thức
-
-Trường hợp này không phải là ngoại lệ phải xin phép: hệ thống hỗ trợ sẵn. Cách làm là **lập hai
-dòng thu trên cùng một đơn**, một dòng tiền mặt và một dòng chuyển khoản.
-
-Kết quả là **hai phiếu thu riêng biệt**, mỗi phiếu đi theo đúng đường xử lý của hình thức đó:
+Trường hợp này hệ thống hỗ trợ sẵn: **lập hai dòng thu trên cùng một đơn**, một dòng tiền mặt,
+một dòng chuyển khoản. Kết quả là **hai phiếu thu riêng**, mỗi phiếu đi theo đúng đường của nó:
 
 | Nội dung | Diễn biến |
 |---|---|
-| Phần tiền mặt | Chính thức ngay; kỹ thuật viên phát sinh công nợ cá nhân và phải nộp về công ty |
-| Phần chuyển khoản | Nằm ở trạng thái nháp cho tới khi kế toán đối chiếu sao kê |
-| Đơn được coi là thu đủ | Chỉ khi **cả hai** phiếu đều đã chính thức |
-| Hoá đơn | Phát sinh tại thời điểm phiếu sau cùng được xác nhận |
-| Nghĩa vụ nộp tiền của kỹ thuật viên | Tính trên **phần tiền mặt**, không chờ phần chuyển khoản |
+| Phần tiền mặt | Chính thức ngay; kỹ thuật viên có công nợ cá nhân, phải nộp về công ty |
+| Phần chuyển khoản | Nằm ở nháp cho tới khi kế toán đối chiếu sao kê |
+| Đơn được coi là thu đủ | Chỉ khi **cả hai** phiếu đều chính thức |
+| Hoá đơn | Phát sinh lúc phiếu sau cùng được xác nhận |
+| Nghĩa vụ nộp tiền | Tính trên **phần tiền mặt**, không chờ phần chuyển khoản |
 
-Ví dụ một đơn có thật trị giá 65.550.000 đồng được thanh toán làm ba lần: đặt cọc 5.500.000 đồng
-bằng chuyển khoản lúc lập đơn, 60.000.000 đồng tiền mặt thu tại nhà khách hàng sau khi lắp đặt
-xong, và 50.000 đồng còn lại chuyển khoản vào hôm sau. Bốn phút sau khi kế toán xác nhận phiếu
-thu cuối cùng, hệ thống tự lập hoá đơn và đơn chuyển sang Hoàn tất.
+### 3.3. Ba sai sót hay gặp
 
-> 📖 Toàn bộ mốc thời gian của đơn này được trình bày tại
-> [Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html).
-
-Trên thực tế, **116 đơn** đã được thanh toán bằng cả hai hình thức, chiếm khoảng 1% số đơn có
-phiếu thu lập từ ứng dụng. Tỉ lệ thấp, nhưng đây là nhóm đơn có tỉ lệ ghi nhận sai cao nhất, vì người
-lập phiếu thường chỉ theo dõi một trong hai phiếu.
-
-### 3.3. Ba sai sót thường gặp khi thu tiền
-
-| Sai sót | Hệ quả |
+| Sai sót | Hậu quả |
 |---|---|
-| Chọn nhầm **tiền mặt** cho khoản khách hàng đã chuyển khoản | Kỹ thuật viên bị ghi một khoản công nợ cá nhân không có thật, và phải nộp một khoản tiền mà mình không giữ |
-| Chọn nhầm **chuyển khoản** cho khoản đã thu bằng tiền mặt | Tiền mặt nằm ngoài sổ sách; phiếu thu nằm lại ở trạng thái nháp vì kế toán không tìm thấy giao dịch trong sao kê |
-| Thu gộp nhiều đơn rồi chia sai số tiền giữa các dòng | Một đơn thừa tiền, một đơn thiếu tiền; đơn thiếu không xuất được hoá đơn và phiếu công việc bị chặn |
+| Chọn nhầm **tiền mặt** cho khoản khách đã chuyển khoản | Kỹ thuật viên bị ghi công nợ cá nhân không có thật, phải nộp khoản tiền mình không giữ |
+| Chọn nhầm **chuyển khoản** cho khoản thu bằng tiền mặt | Tiền mặt nằm ngoài sổ sách; phiếu thu nằm lại ở nháp vì kế toán không thấy giao dịch trong sao kê |
+| Thu gộp nhiều đơn rồi chia sai tiền giữa các dòng | Một đơn thừa, một đơn thiếu; đơn thiếu không xuất được hoá đơn và phiếu công việc bị chặn |
 
 ---
 
 ## 4. Nộp tiền mặt về công ty
+{: #nop-tien }
 
-### 4.1. Nguyên tắc: mỗi khoản thu một phiếu nộp
+### 4.1. Mỗi khoản thu một phiếu nộp
 
-Tiền mặt nằm tại tài khoản kỹ thuật viên được ghi nhận là **công nợ của nhân sự đó với công ty**.
-Việc nộp về được thực hiện bằng một phiếu riêng (`Payment Entry` loại *Internal Transfer*).
+Tiền mặt ở tài khoản kỹ thuật viên là **công nợ của người đó với công ty**. Nộp về bằng một
+phiếu riêng (`Payment Entry` loại *Internal Transfer*).
 
-| Nội dung | Cách hệ thống xử lý |
+| Nội dung | Quy tắc |
 |---|---|
-| Phạm vi một phiếu nộp | Gắn với **đúng một khoản thu**, số tiền bằng đúng khoản thu đó |
-| Nộp gộp nhiều khoản | Ứng dụng không hỗ trợ; phải lập lần lượt từng phiếu |
+| Phạm vi một phiếu nộp | Gắn **đúng một khoản thu**, số tiền bằng đúng khoản đó |
+| Nộp gộp nhiều khoản | Ứng dụng không hỗ trợ; lập lần lượt từng phiếu |
 | Nộp một phần | Không hỗ trợ |
-| Ảnh chứng từ | Được phép đính kèm khi lập phiếu |
+| Ảnh chứng từ | Đính kèm được khi lập phiếu |
 | Trạng thái sau khi lập | **Nháp** — kế toán phải xác nhận |
 
-Hai chốt kiểm soát bảo vệ quỹ:
+Hai chốt bảo vệ quỹ: **không nộp trùng** một khoản thu, và **không nộp quá** số đang giữ.
 
-| Chốt kiểm soát | Tác dụng |
-|---|---|
-| Kiểm soát nộp trùng | Không cho phép lập hai phiếu nộp cho cùng một khoản đã thu |
-| Kiểm soát quỹ âm | Không cho phép nộp nhiều hơn số tiền đang giữ trên tài khoản |
+### 4.2. Hệ thống đối chiếu theo liên kết, không theo số dư
 
-### 4.2. Hệ thống đối chiếu theo liên kết, không đối chiếu theo số dư
+Đây là chỗ hay hiểu sai nhất. Khi xét một khoản tiền mặt đã nộp về hay chưa, hệ thống **không
+nhìn số dư tài khoản** mà nhìn **liên kết giữa phiếu nộp và khoản thu**.
 
-Đây là nội dung quan trọng nhất của mục này, và cũng là nội dung thường bị hiểu sai nhất.
+⛔ Phiếu nộp lập thẳng trên Desk, không gắn khoản thu cụ thể, thì tiền về công ty trên sổ kế
+toán nhưng **dấu nợ của khoản thu vẫn còn**. Phiếu công việc liên quan tiếp tục bị chặn, dù tiền
+đã về từ lâu.
 
-Khi xét một khoản thu tiền mặt đã được nộp về hay chưa, hệ thống **không nhìn số dư tài khoản**
-mà nhìn **liên kết giữa phiếu nộp và khoản thu**. Một phiếu nộp lập trực tiếp trên Desk, không
-gắn với khoản thu cụ thể, sẽ đưa tiền về công ty trên sổ kế toán nhưng **không xoá được dấu nợ**
-của khoản thu đó.
-
-Hệ quả: khoản thu vẫn bị tính là chưa nộp, và phiếu công việc liên quan vẫn bị chặn không cho
-hoàn thành, mặc dù tiền đã về công ty từ lâu.
-
-Số liệu thực tế cho thấy rõ khoảng cách này:
-
-| Nội dung | Số liệu |
-|---|---|
-| Khoản thu tiền mặt bị hệ thống đánh dấu **chưa nộp** | 3.679 khoản, tương đương 18,25 tỉ đồng |
-| Số dư thực tế còn nằm trên toàn bộ tài khoản của kỹ thuật viên | **0,86 tỉ đồng** |
-| Trong số bị đánh dấu chưa nộp, thuộc giai đoạn **trước tháng 3/2026** | 3.639 khoản |
-| Phát sinh trong tháng 9/2026 | 35 khoản, tương đương 199 triệu đồng |
-
-Phần chênh lệch gần như toàn bộ thuộc về giai đoạn trước tháng 3/2026, khi phiếu nộp được lập
-trên Desk và không gắn liên kết. Từ tháng 3/2026 trở đi, khi kỹ thuật viên lập phiếu nộp trực
-tiếp trên ứng dụng, sai lệch gần như không còn: số chưa nộp chỉ còn là các khoản phát sinh
-trong tháng hiện hành.
-
-> ✅ **Quy tắc thực hành:** lập phiếu nộp **từ ứng dụng** và chọn đúng khoản thu cần nộp. Không
-> lập phiếu nộp thủ công trên Desk, kể cả khi số tiền và tài khoản đều đúng.
+> ✅ **Quy tắc:** lập phiếu nộp **từ ứng dụng** và chọn đúng khoản thu. Không lập thủ công trên
+> Desk, kể cả khi số tiền và tài khoản đều đúng.
 
 ---
 
-## 5. Hoá đơn: thời điểm phát sinh và người lập
+## 5. Hoá đơn
+{: #hoa-don }
 
-### 5.1. Điều kiện phát sinh
+**Điều kiện:** đơn đã thu đủ **100%**, tính trên phiếu thu **đã chính thức**. Phiếu còn nháp
+không được tính.
 
-Hoá đơn (`Sales Invoice`) chỉ được lập khi đơn **đã thu đủ 100%** giá trị, tính trên các phiếu
-thu **đã chính thức**. Phiếu thu còn nháp không được tính. Công ty có tham số cho phép xuất hoá
-đơn khi chưa thu đủ; tham số này **đang tắt**.
+**Ba đường hoá đơn phát sinh:**
 
-### 5.2. Ba đường phát sinh
-
-| Đường | Ai thực hiện | Thời điểm |
+| Đường | Ai làm | Lúc nào |
 |---|---|---|
-| **Lập trên ứng dụng** | Kỹ thuật viên chọn phiếu giao hàng rồi lập hoá đơn | Ngay tại hiện trường, sau khi đã thu đủ |
+| **Lập trên ứng dụng** | Kỹ thuật viên chọn phiếu giao hàng rồi lập | Ngay tại hiện trường, sau khi thu đủ |
 | **Tự phát sinh khi xác nhận phiếu thu** | Hệ thống | Ngay khi kế toán xác nhận một phiếu thu **chuyển khoản** |
-| **Tác vụ tự động chạy hằng ngày** | Hệ thống | Với đơn đã giao đủ, đã thu đủ, và đã qua tối thiểu một ngày kể từ phiếu giao hàng cuối cùng |
+| **Tác vụ tự động hằng ngày** | Hệ thống | Đơn đã giao đủ, thu đủ, và qua ít nhất một ngày kể từ phiếu giao hàng cuối |
 
-Hệ thống đang lập **một hoá đơn cho mỗi phiếu giao hàng**. Đơn có nhiều lần giao sẽ có nhiều hoá
-đơn.
+Hệ thống lập **một hoá đơn cho mỗi phiếu giao hàng**; đơn giao nhiều lần sẽ có nhiều hoá đơn.
 
-Kết quả đo trên thực tế: **40%** hoá đơn phát sinh ngay trong ngày giao hàng, **90%** trong vòng
-một tuần.
-
-### 5.3. Ba hệ quả đi kèm hoá đơn
-
-> 🔑 Mốc hoá đơn đủ 100% quyết định đồng thời ba nội dung: đơn chuyển sang trạng thái **Hoàn
-> tất**, khách hàng được **cộng điểm tích luỹ**, và hệ thống **phát sinh lịch bảo dưỡng** cho
-> kỳ kế tiếp.
+> 🔑 Hoá đơn đủ 100% quyết định cùng lúc ba việc: đơn sang **Hoàn tất**, khách hàng được **cộng
+> điểm tích luỹ**, và hệ thống **sinh lịch bảo dưỡng** cho kỳ sau.
 
 ---
 
 ## 6. Phiếu công việc bị chặn vì lý do thanh toán
+{: #wo-bi-chan }
 
-Phần lớn trường hợp phiếu công việc (`FS Work Order`) không hoàn thành được đều có nguyên nhân
-nằm ở chứng từ thanh toán. Hệ thống nêu rõ lý do trong thông báo; bảng dưới đây dịch từng thông
-báo sang việc cần làm.
+Hệ thống luôn nói rõ lý do. Bảng dưới dịch từng thông báo sang việc cần làm.
 
-| Thông báo của hệ thống | Nghĩa thực tế | Việc cần làm |
+| Thông báo | Nghĩa | Cần làm |
 |---|---|---|
-| *“SO …: còn nợ …”* | Tổng phiếu thu **đã chính thức** chưa bằng giá trị đơn | Kiểm tra xem còn phiếu thu chuyển khoản nào đang ở trạng thái nháp; đề nghị kế toán đối chiếu và xác nhận |
-| *“SO …: thu tiền mặt nhưng chưa có Internal Transfer về công ty”* | Khoản tiền mặt chưa có phiếu nộp được xác nhận, **hoặc** đã nộp nhưng phiếu nộp không gắn liên kết | Lập phiếu nộp từ ứng dụng và chọn đúng khoản thu; trường hợp đã nộp trên Desk thì đề nghị kế toán lập lại phiếu có liên kết |
-| *“SO …: đã trả về … nhưng thu … (thiếu …)”* | Tổng số tiền đã nộp nhỏ hơn tổng số tiền đã thu | Nộp nốt phần chênh lệch. **Hệ thống không có dung sai**: lệch một đồng cũng bị chặn |
-| *“Sales Order not completed: …”* | Đơn liên kết chưa ở trạng thái *Hoàn tất* hoặc *Đóng đơn* | Xử lý phần hoá đơn theo mục 5 |
-| *“Số dư tài khoản KTV … không đủ”* | Số tiền định nộp lớn hơn số dư đang có trên tài khoản | Đối chiếu lại các khoản đã nộp; nhiều khả năng khoản này đã được nộp bằng một phiếu khác |
-| *“Công nợ … đã được trả qua …”* | Khoản thu này đã có phiếu nộp, kể cả phiếu còn nháp | Không lập thêm phiếu; tra cứu phiếu nộp đang tồn tại theo mã ghi trong thông báo |
+| *“SO …: còn nợ …”* | Tổng phiếu thu **đã chính thức** chưa bằng giá trị đơn | Xem còn phiếu thu chuyển khoản nào đang nháp; đề nghị kế toán xác nhận |
+| *“SO …: thu tiền mặt nhưng chưa có Internal Transfer về công ty”* | Khoản tiền mặt chưa có phiếu nộp được xác nhận, **hoặc** đã nộp nhưng phiếu không gắn liên kết | Lập phiếu nộp từ ứng dụng, chọn đúng khoản thu. Đã nộp trên Desk thì nhờ kế toán lập lại phiếu có liên kết |
+| *“SO …: đã trả về … nhưng thu … (thiếu …)”* | Tổng đã nộp nhỏ hơn tổng đã thu | Nộp nốt phần chênh. **Không có dung sai**: lệch một đồng cũng chặn |
+| *“Sales Order not completed: …”* | Đơn chưa *Hoàn tất* hoặc *Đóng đơn* | Xử lý phần hoá đơn theo [mục 5](#hoa-don) |
+| *“Số dư tài khoản KTV … không đủ”* | Số định nộp lớn hơn số dư đang có | Đối chiếu lại; nhiều khả năng khoản này đã nộp bằng một phiếu khác |
+| *“Công nợ … đã được trả qua …”* | Khoản thu này đã có phiếu nộp, kể cả phiếu còn nháp | Không lập thêm; tra phiếu đang tồn theo mã ghi trong thông báo |
 
 ---
 
 ## 7. Sửa và huỷ phiếu thu
+{: #huy-phieu }
 
 | Nội dung | Quy định |
 |---|---|
-| Thời hạn huỷ trên ứng dụng | **24 giờ** kể từ lúc lập; đây là tham số cấu hình của công ty |
-| Người được huỷ | Chỉ người đã lập phiếu |
-| Trường hợp không huỷ được | Khoản thu đã có phiếu nộp đối ứng, kể cả phiếu nộp còn ở trạng thái nháp |
-| Quá thời hạn | Việc huỷ do kế toán thực hiện trên Desk |
-| Trình tự khi đơn đã có hoá đơn | Phải huỷ theo trình tự ngược: hoá đơn trước, phiếu thu sau, vì hai chứng từ đang liên kết với nhau |
+| Thời hạn huỷ trên ứng dụng | **24 giờ** kể từ lúc lập |
+| Ai được huỷ | Chỉ người đã lập phiếu |
+| Không huỷ được khi | Khoản thu đã có phiếu nộp đối ứng, kể cả phiếu nộp còn nháp |
+| Quá hạn | Kế toán xử lý trên Desk |
+| Đơn đã có hoá đơn | Huỷ ngược: hoá đơn trước, phiếu thu sau |
 
 ---
 
-## 8. Phương thức B — Gửi qua đơn vị vận chuyển
+## 8. Gửi qua đơn vị vận chuyển
+{: #van-chuyen }
 
-Áp dụng khi khách hàng ở xa, hàng không cần lắp đặt, hoặc chỉ gửi vật tư lẻ. Phương thức này
-hiện được sử dụng ít — **27 vận đơn** trên toàn hệ thống — nhưng quy trình đã được xây dựng đầy
-đủ.
+Dùng khi khách ở xa, hàng không cần lắp đặt, hoặc chỉ gửi vật tư lẻ.
 
-| Bước | Nội dung | Chứng từ | Tồn kho thay đổi |
+| Bước | Nội dung | Chứng từ | Tồn kho đổi |
 |---|---|---|---|
 | 1 | Lập vận đơn từ đơn bán hàng | Vận đơn (`DP Shipment`) | Chưa |
-| 2 | Xác nhận vận đơn | Đề nghị xuất kho (`Material Request`) tự phát sinh | Chưa |
-| 3 | Kho xuất hàng bàn giao cho đơn vị vận chuyển | Phiếu xuất kho (`Stock Entry`) | **Có** — trừ kho nguồn, cộng kho của đơn vị vận chuyển |
-| 4 | Đẩy đơn sang đơn vị vận chuyển và tiếp nhận mã vận đơn | Ghi mã vào vận đơn | Không |
+| 2 | Xác nhận vận đơn | Đề nghị xuất kho tự phát sinh | Chưa |
+| 3 | Kho xuất hàng cho đơn vị vận chuyển | Phiếu xuất kho | **Có** — trừ kho nguồn, cộng kho đơn vị vận chuyển |
+| 4 | Đẩy đơn sang đơn vị vận chuyển, nhận mã vận đơn | Ghi mã vào vận đơn | Không |
 | 5 | Đơn vị vận chuyển cập nhật hành trình | Trạng thái vận đơn tự cập nhật | Không |
-| 6 | Giao thành công | Phiếu giao hàng, hoá đơn và phiếu thu tiền thu hộ **tự phát sinh** | **Có** — xuất khỏi kho của đơn vị vận chuyển |
+| 6 | Giao thành công | Phiếu giao hàng, hoá đơn và phiếu thu hộ **tự phát sinh** | **Có** — xuất khỏi kho đơn vị vận chuyển |
 
-Ba kết cục khác:
+**Ba kết cục khác:**
 
-| Kết cục | Xử lý của hệ thống |
+| Kết cục | Hệ thống xử lý |
 |---|---|
-| **Hoàn về kho** | Phát sinh phiếu đảo, chuyển hàng từ kho của đơn vị vận chuyển về lại kho nguồn |
+| **Hoàn về kho** | Phát sinh phiếu đảo, hàng từ kho đơn vị vận chuyển về lại kho nguồn |
 | **Mất hàng** | Ghi nhận thất thoát để kế toán xử lý, **không** tự hoàn tồn kho |
-| **Giao không thành công, đang hoàn** | Chỉ cập nhật trạng thái, chờ kết cục cuối cùng |
+| **Giao không thành công, đang hoàn** | Chỉ cập nhật trạng thái, chờ kết cục cuối |
 
-> ⚠️ Trường hợp đơn vị vận chuyển huỷ đơn **khi hàng đã được lấy đi**, **chưa huỷ vận đơn ngay**.
-> Cần chờ kho tiếp nhận lại hàng trên thực tế rồi mới huỷ, nếu không sổ kho sẽ sai lệch.
+> ⚠️ Đơn vị vận chuyển huỷ đơn **khi hàng đã lấy đi** thì **chưa huỷ vận đơn ngay**. Chờ kho
+> nhận lại hàng thật rồi mới huỷ, nếu không sổ kho sai lệch.
 
-📚 Nội dung chi tiết: [Quy trình vận đơn và giao nhận](Delivery_Partner-Quy-Trinh.html).
-
----
-
-## 9. Ba khái niệm hoàn trả cần phân biệt
-
-Thuật ngữ *trả hàng* đang được dùng cho ba nghiệp vụ khác nhau. Nhầm lẫn giữa ba nghiệp vụ này
-là nguyên nhân của nhiều sai lệch khi đối chiếu kho.
-
-| Cách gọi thông dụng | Bản chất nghiệp vụ | Chứng từ | Qui mô |
-|---|---|---|---|
-| **Khách hàng không tiếp nhận khi giao** | Giảm số lượng trên phiếu giao hàng; phần chênh lệch thành nghĩa vụ trả | Ghi nhận trong đơn bán hàng | Rất thường xuyên |
-| **Kỹ thuật viên hoàn trả vật tư về kho** | Chuyển hàng từ kho cá nhân về kho công ty | Phiếu trả (`Stock Entry`) | Rất thường xuyên |
-| **Khách hàng trả hàng sau khi đã nhận** | Đảo ngược nghiệp vụ bán đã hoàn tất | Phiếu giao hàng trả lại và hoá đơn trả lại | **Hiếm** — 20 phiếu giao trả lại và 1 hoá đơn trả lại trên toàn hệ thống |
-
-Chỉ nghiệp vụ thứ ba làm **giảm doanh thu** và **thu hồi điểm tích luỹ** của khách hàng.
+📚 Chi tiết: [Quy trình vận đơn và giao nhận](Delivery_Partner-Quy-Trinh.html).
 
 ---
 
-## 10. Ngoại lệ thường gặp
+## 9. Ba kiểu “trả hàng” cần phân biệt
+{: #hoan-tra }
 
-| Hiện tượng | Nguyên nhân | Hướng xử lý |
+| Cách gọi thông dụng | Thực chất là | Chứng từ |
 |---|---|---|
-| Không thu được tiền, báo *“Chưa tạo phiếu giao hàng”* | Chưa lập phiếu giao hàng cho đơn | Lập phiếu giao hàng trước |
-| Màn hình thu tiền không cho thao tác | Kỹ thuật viên chưa được khai tài khoản thu tiền cho công ty của đơn | Đề nghị bộ phận quản trị khai tài khoản |
-| Không xác nhận được phiếu giao hàng | Có đơn bị hoàn trả toàn bộ số món | Mỗi đơn phải giao tối thiểu một món; tách đơn nếu thực tế không giao món nào |
-| Chức năng xác nhận không kích hoạt ở màn hình ký | Khách hàng chưa ký xác nhận | Đề nghị khách hàng ký, hoặc xoá chữ ký lỗi rồi ký lại |
-| Báo *“… đã có dòng Tiền mặt”* khi thêm dòng thu | Một đơn không được có hai dòng cùng hình thức trong một lần thu | Sửa số tiền trên dòng đã có, hoặc thu lần thứ hai sau khi đã hoàn tất lần thứ nhất |
-| Đơn đã thu tiền nhưng **vẫn hiển thị còn nợ** | Phiếu thu chuyển khoản còn ở trạng thái nháp | Đề nghị kế toán đối chiếu sao kê và xác nhận phiếu |
-| Đã thu tiền mặt nhưng **vẫn còn công nợ cá nhân** | Chưa lập phiếu nộp, hoặc phiếu nộp còn nháp | Lập phiếu nộp từ ứng dụng; đề nghị kế toán xác nhận |
-| Đã nộp tiền nhưng hệ thống **vẫn báo chưa nộp** | Phiếu nộp lập trên Desk, không gắn liên kết với khoản thu | Xem mục 4.2; đề nghị kế toán lập lại phiếu nộp có liên kết |
-| Không huỷ được phiếu thu vừa lập | Quá 24 giờ, hoặc đã có phiếu nộp đối ứng | Chuyển kế toán xử lý theo quy trình |
-| Đơn đã giao đủ nhưng **chưa chuyển Hoàn tất** | Chưa xuất hoá đơn đủ 100% | Kế toán xuất nốt hoá đơn; khi chưa đủ thì chưa cộng điểm và chưa phát sinh lịch bảo dưỡng |
-| Vận đơn đã xác nhận nhưng **tồn kho chưa thay đổi** | Đúng thiết kế: xác nhận chỉ phát sinh đề nghị xuất kho | Kho phải lập phiếu xuất kho thực tế ở bước 3 |
-| Vận đơn đã *Delivered* nhưng **không thấy chứng từ tự phát sinh** | Vận đơn không gắn đơn bán hàng, hoặc kết nối trạng thái chưa được bật | Kiểm tra bảng chứng từ nguồn trên vận đơn; nếu vẫn chưa có thì báo bộ phận kỹ thuật |
-| Đơn vị vận chuyển tính **sai cước, sai số kiện** | Tab kiện hàng và người trả cước khai sai trước khi đẩy đơn | Cập nhật **trước khi đẩy đơn**; nếu đã đẩy thì xử lý với đơn vị vận chuyển |
-| Hoá đơn đã xuất nhưng khách hàng trả hàng | Nghiệp vụ trả hàng sau bán | Lập phiếu giao trả lại và hoá đơn trả lại; hệ thống **tự thu hồi điểm tích luỹ** tương ứng |
+| **Khách không nhận khi giao** | Giảm số trên phiếu giao hàng; phần chênh thành nghĩa vụ trả vật tư | Ghi trong đơn bán hàng |
+| **Kỹ thuật viên trả vật tư về kho** | Chuyển hàng từ kho cá nhân về kho công ty | Phiếu trả (`Stock Entry`) |
+| **Khách trả hàng sau khi đã nhận** | Đảo ngược nghiệp vụ bán đã xong | Phiếu giao hàng trả lại và hoá đơn trả lại |
+
+Chỉ kiểu thứ ba mới **giảm doanh thu** và **thu hồi điểm tích luỹ**. Hai kiểu đầu là chuyện kho,
+không phải chuyện doanh thu.
 
 ---
 
-## 11. Chặng tiếp theo
+## 10. Khi gặp trục trặc
+{: #truc-trac }
 
-Đơn đã hoàn tất. Đây là thời điểm hệ thống bắt đầu tính lịch chăm sóc cho kỳ kế tiếp:
-**[Chặng 6 — Bảo dưỡng định kỳ và vòng lặp](Quy-Trinh-06-Bao-Duong.html)**.
+| Hiện tượng | Nguyên nhân | Cách gỡ |
+|---|---|---|
+| Báo *“Chưa tạo phiếu giao hàng”* khi thu tiền | Chưa lập phiếu giao hàng | Lập phiếu giao hàng trước |
+| Màn hình thu tiền không cho thao tác | Chưa được khai tài khoản thu tiền cho công ty của đơn | Đề nghị quản trị viên khai |
+| Không xác nhận được phiếu giao hàng | Có đơn bị hoàn trả toàn bộ số món | Mỗi đơn phải giao ít nhất một món; tách đơn nếu thực tế không giao gì |
+| Nút xác nhận ở màn hình ký không bật | Khách hàng chưa ký | Đề nghị khách ký, hoặc xoá chữ ký lỗi rồi ký lại |
+| Báo *“… đã có dòng Tiền mặt”* khi thêm dòng | Một đơn không được hai dòng cùng hình thức | Sửa số tiền dòng đã có, hoặc thu lần thứ hai |
+| Đã thu tiền nhưng đơn **vẫn hiện còn nợ** | Phiếu thu chuyển khoản còn nháp | Đề nghị kế toán đối chiếu sao kê và xác nhận |
+| Đã thu tiền mặt nhưng **vẫn còn công nợ cá nhân** | Chưa lập phiếu nộp, hoặc phiếu nộp còn nháp | Lập phiếu nộp; đề nghị kế toán xác nhận |
+| Đã nộp tiền nhưng hệ thống **vẫn báo chưa nộp** | Phiếu nộp lập trên Desk, không gắn khoản thu | Xem [mục 4.2](#nop-tien); nhờ kế toán lập lại phiếu có liên kết |
+| Không huỷ được phiếu thu vừa lập | Quá 24 giờ, hoặc đã có phiếu nộp đối ứng | Chuyển kế toán xử lý |
+| Đơn đã giao đủ nhưng **chưa Hoàn tất** | Chưa xuất hoá đơn đủ 100% | Kế toán xuất nốt; chưa đủ thì chưa cộng điểm và chưa sinh lịch bảo dưỡng |
+| Vận đơn đã xác nhận nhưng **tồn kho chưa đổi** | Đúng thiết kế: xác nhận chỉ sinh đề nghị xuất kho | Kho phải lập phiếu xuất kho thật ở bước 3 |
+| Vận đơn *Delivered* nhưng **không thấy chứng từ tự sinh** | Vận đơn không gắn đơn bán hàng, hoặc kết nối trạng thái chưa bật | Kiểm bảng chứng từ nguồn trên vận đơn; vẫn không có thì báo bộ phận kỹ thuật |
+| Đơn vị vận chuyển tính **sai cước, sai số kiện** | Tab kiện hàng và người trả cước khai sai trước khi đẩy đơn | Sửa **trước khi** đẩy đơn; đã đẩy rồi thì làm việc với đơn vị vận chuyển |
+| Hoá đơn đã xuất nhưng khách trả hàng | Trả hàng sau bán | Lập phiếu giao trả lại và hoá đơn trả lại; hệ thống **tự thu hồi điểm tích luỹ** |
+
+---
+
+## 11. Câu hỏi thường gặp
+{: #hoi-dap }
+
+**Khách đưa một nửa tiền mặt, một nửa chuyển khoản, ghi thế nào?**
+
+Lập hai dòng thu trên cùng đơn, mỗi hình thức một dòng. Xem [mục 3.2](#ba-truong-hop).
+
+**Thu tiền mặt xong bao giờ phải nộp về công ty?**
+
+Càng sớm càng tốt, vì chưa nộp thì phiếu công việc không hoàn thành được. Nộp từ ứng dụng và
+chọn đúng khoản thu.
+
+**Khách chuyển khoản rồi, sao hệ thống vẫn nói chưa thu?**
+
+Phiếu thu chuyển khoản nằm ở **nháp** cho tới khi kế toán đối chiếu sao kê. Đó là bước bắt buộc.
+
+**Thu nhầm hình thức thanh toán thì sửa sao?**
+
+Trong **24 giờ** và chưa có phiếu nộp đối ứng thì huỷ phiếu rồi lập lại. Quá hạn thì chuyển kế toán.
+
+**Khách chỉ nhận một phần hàng, có thu tiền được không?**
+
+Được. Thu theo phần đã giao. Phần không giao thành nghĩa vụ trả vật tư, xem
+[Chặng 4](Quy-Trinh-04-Vat-Tu.html#tra-ve).
+
+**Đã thu đủ tiền, sao chưa thấy hoá đơn?**
+
+Hoá đơn tiền mặt do tác vụ tự động lập, sớm nhất là một ngày sau phiếu giao hàng. Cần ngay thì
+lập tay trên ứng dụng.
+
+**Khách đòi trả lại hàng sau một tuần thì làm gì?**
+
+Đó là trả hàng sau bán: lập phiếu giao trả lại và hoá đơn trả lại. Không dùng chức năng trả vật
+tư của kỹ thuật viên, xem [mục 9](#hoan-tra).
+
+---
+
+## Chặng tiếp theo
+
+Đơn đã hoàn tất. Đây là lúc hệ thống bắt đầu tính lịch chăm sóc cho kỳ sau:
+**[Chặng 6 — Bảo dưỡng định kỳ](Quy-Trinh-06-Bao-Duong.html)**.

@@ -79,4 +79,20 @@
   <line class="arrow" x1="596" y1="391" x2="564" y2="391" marker-end="url(#ah)"/>
 
   <text class="note" x="140" y="458">Lịch hẹn hoàn tất không tự chuyển Phiếu công việc sang hoàn tất: phải thực hiện thủ công hoặc chờ tác vụ tự động, và phải qua đủ sáu điều kiện.</text>
+  <!-- VUNG-BAM: sinh bởi _tools/svg_hotspots.py, không sửa tay -->
+  <style>
+    .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
+    .hot:hover { fill-opacity: .08; }
+  </style>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#lap-wo" target="_top"><title>Lập phiếu công việc</title><rect class="hot" x="140" y="70" width="190" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#lap-sa" target="_top"><title>Lập lịch hẹn</title><rect class="hot" x="370" y="70" width="190" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#lap-sa" target="_top"><title>Gán kỹ thuật viên</title><rect class="hot" x="600" y="70" width="190" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#hien-truong" target="_top"><title>Trình tự thao tác tại hiện trường</title><rect class="hot" x="140" y="210" width="190" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#hien-truong" target="_top"><title>Trình tự thao tác tại hiện trường</title><rect class="hot" x="370" y="210" width="190" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#hien-truong" target="_top"><title>Trình tự thao tác tại hiện trường</title><rect class="hot" x="600" y="210" width="190" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#hien-truong" target="_top"><title>Trình tự thao tác tại hiện trường</title><rect class="hot" x="830" y="210" width="190" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#hien-truong" target="_top"><title>Điều kiện hoàn tất lịch hẹn</title><rect class="hot" x="830" y="360" width="190" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#dieu-kien" target="_top"><title>Sáu điều kiện hoàn thành phiếu công việc</title><rect class="hot" x="600" y="360" width="190" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-03-Hien-Truong.html#dong-mo" target="_top"><title>Đóng, mở lại và huỷ phiếu</title><rect class="hot" x="370" y="360" width="190" height="62" rx="10" ry="10"/></a>
+  <!-- /VUNG-BAM -->
 </svg>
