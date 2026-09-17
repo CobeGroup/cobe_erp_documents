@@ -2,7 +2,7 @@
 title: Lọc ticket bảo dưỡng
 layout: default
 parent: Dịch vụ & Bảo dưỡng
-nav_order: 5
+nav_order: 6
 ---
 
 # Lọc & sắp xếp ticket bảo dưỡng

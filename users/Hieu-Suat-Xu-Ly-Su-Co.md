@@ -2,7 +2,7 @@
 title: Hiệu suất xử lý sự cố
 layout: default
 parent: Dịch vụ & Bảo dưỡng
-nav_order: 6
+nav_order: 7
 ---
 
 # Hiệu suất xử lý sự cố

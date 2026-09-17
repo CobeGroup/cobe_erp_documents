@@ -66,7 +66,7 @@ flowchart TD
 3. [Tạo phiếu: WO từ SO, SA từ WO](#3-tạo-phiếu-wo-từ-so-sa-từ-wo)
 4. [Hoàn thành SA](#4-hoàn-thành-sa)
 5. [Hoàn thành WO — 6 điều kiện](#5-hoàn-thành-wo--6-điều-kiện)
-6. [Trả vật tư / hoàn hàng](#6-trả-vật-tư--hoàn-hàng)
+6. [Trả vật tư / hoàn hàng](#6-trả-vật-tư--hoàn-hàng) — *chi tiết: [Trả vật tư về kho](FSMNext-Tra-Vat-Tu.html)*
 7. [Thu tiền tại hiện trường](#7-thu-tiền-tại-hiện-trường)
 8. [Huỷ phiếu — đúng thứ tự](#8-huỷ-phiếu--đúng-thứ-tự)
 9. [Tạo lại / mở lại phiếu](#9-tạo-lại--mở-lại-phiếu)
@@ -274,20 +274,24 @@ Chính màn hình cấu hình cũng liệt kê đúng bộ điều kiện này (
 
 Vật tư KTV mang đi được quản lý qua **kho riêng của từng KTV**. Hàng dư / hàng thu hồi phải **trả về kho** bằng **Phiếu chuyển kho (Stock Entry — Material Transfer)**.
 
-```mermaid
-flowchart LR
-  A["Kho KTV<br/>(hàng đã nhận)"] -- "nút Trả hàng (app)" --> B["Phiếu trả (Draft)<br/>Material Transfer"]
-  B -- "Kho review + Submit" --> C["Kho đích<br/>(nhận lại hàng)"]
-```
+<a href="images/svg/fsm/tra-vat-tu-vong-doi.svg" title="Bấm để phóng to">
+  <img src="images/svg/fsm/tra-vat-tu-vong-doi.svg" alt="Vòng đời trả vật tư theo bốn tầng: ai làm, chứng từ, nghĩa vụ trả và vị trí hàng. Kỹ thuật viên lập phiếu giao hàng sinh nghĩa vụ trả, bấm trả vật tư sinh phiếu chuyển kho ở trạng thái nháp, nhân viên kho duyệt thì nghĩa vụ mới được xoá nợ và sổ kho mới thay đổi" style="width:100%;height:auto">
+</a>
 
-- **KTV tạo phiếu trả** trên app (*Trả hàng / Return Materials*): tạo Phiếu chuyển kho **ở trạng thái Draft** — **kho** kiểm tra rồi mới **Submit**.
-- Chỉ trả được **từ kho của chính mình**, **kho đích cùng công ty**, và **không vượt số lượng cần trả**.
-- Phiếu trả còn **Draft** thì KTV **xoá được**; đã Submit thì phải huỷ theo quy trình kho.
+- **Nghĩa vụ trả hàng sinh ra lúc lập Phiếu giao hàng**, không phải lúc trả: `số cần trả = số KTV mang đi − số thực giao`. Mỗi phần chênh được cấp một **mã nghĩa vụ** riêng, ghi vào Đơn bán hàng.
+- **KTV tạo phiếu trả** trên app (*Trả vật tư*): tạo Phiếu chuyển kho **ở trạng thái Draft** — **kho** kiểm tra rồi mới **Submit**.
+- **Chỉ phiếu đã Submit mới xoá được nghĩa vụ.** Phiếu Draft không đụng sổ kho, nhưng app **khoá** phần đã nằm trong phiếu Draft để KTV không lập trùng, và ghi rõ đang chờ phiếu nào.
+- Chỉ trả được **từ kho của chính mình**, **kho đích cùng công ty**, **không vượt phần còn chọn được**. Nghĩa vụ nhiều đơn vị **trả được làm nhiều lần**.
+- Phiếu trả còn **Draft** thì KTV **xoá được** (phiếu do chính mình lập); đã Submit thì phải huỷ theo quy trình kho. Tab *Phiếu trả* **luôn hiện phiếu Draft** bất kể khoảng ngày đang lọc.
 - **Xuất tiêu hao** vật tư (dùng hẳn tại hiện trường) dùng **Phiếu xuất vật tư (Material Issue)** — hệ thống kiểm tra tồn kho và danh mục vật tư được phép.
+
+> 📘 **Chi tiết đầy đủ** — bốn chốt chặn lúc tạo phiếu, cơ chế tự gắn mã nghĩa vụ cho hàng trả lẻ, hành xử khi huỷ Phiếu giao hàng sau khi đã trả hàng, và bảng tình huống ngoại lệ: xem **[Trả vật tư về kho](FSMNext-Tra-Vat-Tu.html)**.
 
 > 🔧 Nếu bật cờ **kiểm tra trả kho khi hoàn thành WO** (`validate_stock_return_on_wo_complete`), WO sẽ **bị chặn** cho tới khi trả đủ, kèm thông báo *"Không thể hoàn thành WO - Chưa trả kho đủ: SO ... thiếu ..."*.
 >
-> ⚠️ **Huỷ WO KHÔNG tự trả kho.** Hàng đã nhận vẫn phải trả tay bằng Phiếu chuyển kho.
+> ⚠️ **Huỷ WO KHÔNG tự trả kho.** Hàng đã nhận vẫn phải trả thủ công bằng Phiếu chuyển kho.
+>
+> ⚠️ **Huỷ Phiếu giao hàng mà hàng đã trả về kho rồi** thì nghĩa vụ được **giữ làm dấu vết** chứ không xoá, kèm cảnh báo hàng đang nằm ở kho công ty. Trước đây dấu vết này bị xoá mất.
 
 ---
 
@@ -361,7 +365,9 @@ Các cờ trong **FSM Settings** (Single doctype) quyết định phiếu "chặ
 | `wo_require_so_complete` | **TẮT** | Bắt SO Completed/Closed mới cho hoàn thành WO |
 | `validate_so_payment_on_wo_complete` | **BẬT** | Bắt SO hết công nợ mới cho hoàn thành WO |
 | `validate_cash_payment_on_wo_complete` | **TẮT** | Bắt thu-trả tiền mặt khớp mới cho hoàn thành WO |
-| `validate_stock_return_on_wo_complete` | **TẮT** | Bắt trả kho đủ mới cho hoàn thành WO |
+| `validate_stock_return_on_wo_complete` | **TẮT** | Bắt trả kho đủ mới cho hoàn thành WO. Cờ này gác **cả** chốt chặn duyệt phiếu trả vượt nghĩa vụ |
+| `auto_link_return_tracking` | **BẬT** | Tự gắn mã nghĩa vụ cho hàng KTV trả lẻ, theo nghĩa vụ khai sớm nhất trước |
+| `block_return_when_insufficient` | **TẮT** | TẮT: chỉ cảnh báo khi kho KTV không đủ hàng. BẬT: chặn hẳn không cho tạo phiếu trả |
 | `sa_auto_complete_enabled` | **TẮT** | Cron tự hoàn thành SA |
 | `sa_locked_status_categories` | Completed, Cannot Complete, Canceled | Trạng thái SA khoá đổi KTV / chặn huỷ-xoá |
 | `sa_schedule_locked_categories` | In Progress, Completed, Cannot Complete, Canceled | Trạng thái SA khoá đổi lịch |
@@ -374,6 +380,7 @@ Các cờ trong **FSM Settings** (Single doctype) quyết định phiếu "chặ
 
 ## Liên quan
 
+- **[Trả vật tư về kho (FSMNext)](FSMNext-Tra-Vat-Tu.html)** — nghĩa vụ trả hàng, bốn chốt chặn lúc tạo phiếu, huỷ phiếu giao sau khi đã trả hàng, tình huống ngoại lệ
 - **[Tự xử lý sự cố dịch vụ (FSMNext)](FSMNext-Xu-Ly-Su-Co.html)** — cây quyết định "WO kẹt New", tra lỗi theo triệu chứng, cách đọc FS Scheduler Log
 - [Auto-Assign Ticket & SIM](Service_Reminder_Auto_Assign.html) — tự động phân bổ ticket bảo dưỡng
 - [Quy tắc phân bổ bảo dưỡng](QUY_TAC_PHAN_BO_BAO_DUONG.html) — thuật toán chọn KTV

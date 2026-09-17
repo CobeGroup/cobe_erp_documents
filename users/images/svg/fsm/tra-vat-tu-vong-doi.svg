@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 490" width="1000" height="490" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+  <style>
+    .box   { rx: 10; ry: 10; stroke-width: 1.6; }
+    .human { fill: #f9f0ff; stroke: #9254de; }
+    .auto  { fill: #e6f4ff; stroke: #299dd8; }
+    .done  { fill: #f6ffed; stroke: #54ab78; }
+    .wh    { fill: #fffbe6; stroke: #d4b106; }
+    .t     { font-size: 14px; fill: #1f2937; }
+    .tb    { font-size: 14.5px; font-weight: 600; fill: #111827; }
+    .ts    { font-size: 12.5px; fill: #4b5563; }
+    .lane  { font-size: 12.5px; font-weight: 700; fill: #6b7280; letter-spacing: .04em; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.8; fill: none; }
+    .note  { font-size: 12.5px; fill: #92400e; }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <text class="lane" x="24" y="40">AI LÀM</text>
+  <text class="lane" x="24" y="176">CHỨNG TỪ</text>
+  <text class="lane" x="24" y="320">NGHĨA VỤ TRẢ</text>
+  <text class="lane" x="24" y="428">HÀNG Ở ĐÂU</text>
+
+  <!-- hàng 1: ai làm -->
+  <rect class="box human" x="150" y="56" width="192" height="62"/>
+  <text class="tb" x="246" y="80" text-anchor="middle">Kỹ thuật viên</text>
+  <text class="ts" x="246" y="100" text-anchor="middle">lập Phiếu giao hàng</text>
+
+  <rect class="box human" x="392" y="56" width="192" height="62"/>
+  <text class="tb" x="488" y="80" text-anchor="middle">Kỹ thuật viên</text>
+  <text class="ts" x="488" y="100" text-anchor="middle">bấm Trả vật tư</text>
+
+  <rect class="box human" x="634" y="56" width="192" height="62"/>
+  <text class="tb" x="730" y="80" text-anchor="middle">Nhân viên kho</text>
+  <text class="ts" x="730" y="100" text-anchor="middle">đếm hàng, bấm Submit</text>
+
+  <line class="arrow" x1="342" y1="87" x2="388" y2="87" marker-end="url(#ah)"/>
+  <line class="arrow" x1="584" y1="87" x2="630" y2="87" marker-end="url(#ah)"/>
+
+  <!-- hàng 2: chứng từ -->
+  <rect class="box done" x="150" y="196" width="192" height="66"/>
+  <text class="tb" x="246" y="220" text-anchor="middle">Phiếu giao hàng</text>
+  <text class="ts" x="246" y="240" text-anchor="middle">Delivery Note · đã duyệt</text>
+
+  <rect class="box wh" x="392" y="196" width="192" height="66"/>
+  <text class="tb" x="488" y="220" text-anchor="middle">Phiếu trả (Nháp)</text>
+  <text class="ts" x="488" y="240" text-anchor="middle">Material Transfer · chờ kho</text>
+
+  <rect class="box done" x="634" y="196" width="192" height="66"/>
+  <text class="tb" x="730" y="220" text-anchor="middle">Phiếu trả (Đã duyệt)</text>
+  <text class="ts" x="730" y="240" text-anchor="middle">Material Transfer</text>
+
+  <line class="arrow" x1="246" y1="122" x2="246" y2="192" marker-end="url(#ah)"/>
+  <line class="arrow" x1="488" y1="122" x2="488" y2="192" marker-end="url(#ah)"/>
+  <line class="arrow" x1="730" y1="122" x2="730" y2="192" marker-end="url(#ah)"/>
+  <line class="arrow" x1="342" y1="229" x2="388" y2="229" marker-end="url(#ah)"/>
+  <line class="arrow" x1="584" y1="229" x2="630" y2="229" marker-end="url(#ah)"/>
+
+  <!-- hàng 3: nghĩa vụ -->
+  <rect class="box auto" x="150" y="296" width="192" height="62"/>
+  <text class="tb" x="246" y="320" text-anchor="middle">Nghĩa vụ sinh ra</text>
+  <text class="ts" x="246" y="340" text-anchor="middle">mã riêng, ghi vào đơn hàng</text>
+
+  <rect class="box auto" x="392" y="296" width="192" height="62"/>
+  <text class="tb" x="488" y="320" text-anchor="middle">Vẫn còn nợ</text>
+  <text class="ts" x="488" y="340" text-anchor="middle">nhưng KHOÁ không chọn lại</text>
+
+  <rect class="box done" x="634" y="296" width="192" height="62"/>
+  <text class="tb" x="730" y="320" text-anchor="middle">Xoá nợ</text>
+  <text class="ts" x="730" y="340" text-anchor="middle">biến khỏi danh sách phải trả</text>
+
+  <line class="arrow" x1="342" y1="327" x2="388" y2="327" marker-end="url(#ah)"/>
+  <line class="arrow" x1="584" y1="327" x2="630" y2="327" marker-end="url(#ah)"/>
+
+  <!-- hàng 4: hàng ở đâu -->
+  <text class="note" x="246" y="412" text-anchor="middle">Kho kỹ thuật viên</text>
+  <text class="note" x="246" y="430" text-anchor="middle">(sổ kho chưa đổi)</text>
+  <text class="note" x="488" y="412" text-anchor="middle">Vẫn ở kho kỹ thuật viên</text>
+  <text class="note" x="488" y="430" text-anchor="middle">phiếu nháp KHÔNG đụng sổ kho</text>
+  <text class="note" x="730" y="412" text-anchor="middle">Đã về kho chi nhánh</text>
+  <text class="note" x="730" y="430" text-anchor="middle">sổ kho ghi nhận lúc này</text>
+
+  <line class="arrow" x1="246" y1="362" x2="246" y2="392" marker-end="url(#ah)" stroke-dasharray="4 3"/>
+  <line class="arrow" x1="488" y1="362" x2="488" y2="392" marker-end="url(#ah)" stroke-dasharray="4 3"/>
+  <line class="arrow" x1="730" y1="362" x2="730" y2="392" marker-end="url(#ah)" stroke-dasharray="4 3"/>
+
+  <!-- chú thích trọng tâm -->
+  <rect x="852" y="196" width="132" height="162" rx="8" fill="#fff1f0" stroke="#d9534f" stroke-width="1.4"/>
+  <text class="tb" x="918" y="220" text-anchor="middle" fill="#a8071a">Điểm cốt lõi</text>
+  <text class="ts" x="918" y="244" text-anchor="middle">Chỉ phiếu</text>
+  <text class="ts" x="918" y="262" text-anchor="middle">ĐÃ DUYỆT mới</text>
+  <text class="ts" x="918" y="280" text-anchor="middle">xoá được nghĩa vụ.</text>
+  <text class="ts" x="918" y="304" text-anchor="middle">Phiếu nháp chỉ</text>
+  <text class="ts" x="918" y="322" text-anchor="middle">giữ chỗ, không</text>
+  <text class="ts" x="918" y="340" text-anchor="middle">đổi tồn kho.</text>
+</svg>

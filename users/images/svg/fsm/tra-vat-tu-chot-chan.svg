@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+  <style>
+    .box   { rx: 10; ry: 10; stroke-width: 1.6; }
+    .start { fill: #f9f0ff; stroke: #9254de; }
+    .gate  { fill: #e6f4ff; stroke: #299dd8; }
+    .soft  { fill: #fffbe6; stroke: #d4b106; }
+    .stop  { fill: #fff1f0; stroke: #d9534f; }
+    .ok    { fill: #f6ffed; stroke: #54ab78; }
+    .tb    { font-size: 14px; font-weight: 600; fill: #111827; }
+    .ts    { font-size: 12.5px; fill: #4b5563; }
+    .tn    { font-size: 12px; fill: #6b7280; }
+    .lane  { font-size: 12.5px; font-weight: 700; fill: #6b7280; letter-spacing: .04em; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.8; fill: none; }
+    .stopl { stroke: #d9534f; stroke-width: 1.6; fill: none; }
+  </style>
+  <defs>
+    <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+    <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d9534f"/>
+    </marker>
+  </defs>
+
+  <text class="lane" x="24" y="34">LÚC TẠO PHIẾU — bốn chốt, theo thứ tự</text>
+
+  <rect class="box start" x="60" y="52" width="180" height="56"/>
+  <text class="tb" x="150" y="76" text-anchor="middle">Bấm Trả vật tư</text>
+  <text class="ts" x="150" y="95" text-anchor="middle">app KTV hoặc điều phối</text>
+
+  <rect class="box gate" x="60" y="140" width="180" height="62"/>
+  <text class="tb" x="150" y="164" text-anchor="middle">Chốt 0 — Phạm vi</text>
+  <text class="ts" x="150" y="183" text-anchor="middle">đúng kho mình, cùng công ty</text>
+
+  <rect class="box gate" x="60" y="234" width="180" height="62"/>
+  <text class="tb" x="150" y="258" text-anchor="middle">Chốt 1 — Đã trả xong?</text>
+  <text class="ts" x="150" y="277" text-anchor="middle">có phiếu duyệt cùng mã</text>
+
+  <rect class="box gate" x="60" y="328" width="180" height="62"/>
+  <text class="tb" x="150" y="352" text-anchor="middle">Chốt 2 — Vượt phần?</text>
+  <text class="ts" x="150" y="371" text-anchor="middle">nợ − đã duyệt − đang nháp</text>
+
+  <rect class="box soft" x="60" y="422" width="180" height="62"/>
+  <text class="tb" x="150" y="446" text-anchor="middle">Chốt 4 — Đủ tồn?</text>
+  <text class="ts" x="150" y="465" text-anchor="middle">Bin − cam kết phiếu nháp</text>
+
+  <line class="arrow" x1="150" y1="108" x2="150" y2="136" marker-end="url(#ah2)"/>
+  <line class="arrow" x1="150" y1="202" x2="150" y2="230" marker-end="url(#ah2)"/>
+  <line class="arrow" x1="150" y1="296" x2="150" y2="324" marker-end="url(#ah2)"/>
+  <line class="arrow" x1="150" y1="390" x2="150" y2="418" marker-end="url(#ah2)"/>
+
+  <!-- nhánh chặn -->
+  <rect class="box stop" x="300" y="140" width="250" height="62"/>
+  <text class="tb" x="425" y="164" text-anchor="middle" fill="#a8071a">Chặn</text>
+  <text class="ts" x="425" y="183" text-anchor="middle">Chỉ được trả hàng từ kho của KTV</text>
+
+  <rect class="box stop" x="300" y="234" width="250" height="62"/>
+  <text class="tb" x="425" y="258" text-anchor="middle" fill="#a8071a">Chặn</text>
+  <text class="ts" x="425" y="277" text-anchor="middle">Nghĩa vụ đã hoàn tất, đừng lập mới</text>
+
+  <rect class="box stop" x="300" y="328" width="250" height="62"/>
+  <text class="tb" x="425" y="352" text-anchor="middle" fill="#a8071a">Chặn</text>
+  <text class="ts" x="425" y="371" text-anchor="middle">Nêu rõ còn chọn được bao nhiêu</text>
+
+  <rect class="box soft" x="300" y="422" width="250" height="62"/>
+  <text class="tb" x="425" y="446" text-anchor="middle" fill="#92400e">Cảnh báo, vẫn tạo phiếu</text>
+  <text class="ts" x="425" y="465" text-anchor="middle">bật cờ chặn cứng thì mới Chặn</text>
+
+  <line class="stopl" x1="240" y1="171" x2="296" y2="171" marker-end="url(#ahr)"/>
+  <line class="stopl" x1="240" y1="265" x2="296" y2="265" marker-end="url(#ahr)"/>
+  <line class="stopl" x1="240" y1="359" x2="296" y2="359" marker-end="url(#ahr)"/>
+  <line class="arrow" x1="240" y1="453" x2="296" y2="453" marker-end="url(#ah2)"/>
+
+  <!-- chốt 3 tự gắn mã -->
+  <rect class="box gate" x="612" y="234" width="212" height="76"/>
+  <text class="tb" x="718" y="258" text-anchor="middle">Chốt 3 — Tự gắn mã</text>
+  <text class="ts" x="718" y="277" text-anchor="middle">hàng trả lẻ nhận mã nghĩa vụ</text>
+  <text class="ts" x="718" y="295" text-anchor="middle">cũ nhất trước, dư giữ là hàng lẻ</text>
+
+  <rect class="box ok" x="612" y="422" width="212" height="62"/>
+  <text class="tb" x="718" y="446" text-anchor="middle" fill="#135200">Phiếu trả (Nháp)</text>
+  <text class="ts" x="718" y="465" text-anchor="middle">chờ kho đếm hàng và duyệt</text>
+
+  <line class="arrow" x1="718" y1="310" x2="718" y2="418" marker-end="url(#ah2)"/>
+  <line class="arrow" x1="240" y1="359" x2="606" y2="272" marker-end="url(#ah2)" stroke-dasharray="4 3"/>
+
+  <text class="tn" x="612" y="200">Chốt 3 chạy giữa chốt 2 và chốt 4, và không bao giờ chặn.</text>
+  <text class="tn" x="612" y="218">Đọc nghĩa vụ lỗi thì ghi log rồi đi tiếp.</text>
+
+  <text class="tn" x="612" y="356">Cả app KTV và màn điều phối dùng CÙNG một lõi,</text>
+  <text class="tn" x="612" y="374">nên không đường nào lách được bốn chốt này.</text>
+</svg>

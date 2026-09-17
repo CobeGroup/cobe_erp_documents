@@ -53,7 +53,7 @@ dẫn xử lý lỗi & dữ liệu sai**.
 | **[Marketing & Khách hàng](users/00-marketing.html)** | Coupon khuyến mãi, Loyalty tích điểm, Zalo Mini App · 🔧 *Sửa lỗi liên kết Khách hàng (Lead / Contact / Address)* |
 | **[Bán hàng & Đơn hàng](users/00-ban-hang.html)** | Sales Order: vòng đời đơn, 🔧 *các tình huống sửa đơn theo trạng thái* (Update Items, Amend, Close), ràng buộc kho/thanh toán |
 | **[Vận chuyển & Giao nhận](users/00-van-chuyen.html)** | Vận đơn, đối tác giao hàng (Viettel Post…), **chuyển kho giữa hai kho qua ĐVVC**, **gửi mẫu nước về lab**, tài khoản ĐVVC & điểm gửi, biên bản bàn giao |
-| **[Dịch vụ & Bảo dưỡng](users/00-dich-vu.html)** | **FSMNext**: vòng đời Phiếu công việc & Lịch hẹn, trả vật tư, thu tiền hiện trường, huỷ/tạo lại phiếu · 🔧 *Tự xử lý sự cố (WO kẹt "New"…)* · Tự động phân bổ ticket bảo dưỡng & SIM |
+| **[Dịch vụ & Bảo dưỡng](users/00-dich-vu.html)** | **FSMNext**: vòng đời Phiếu công việc & Lịch hẹn, **trả vật tư về kho (nghĩa vụ trả hàng, chốt chặn phiếu trùng)**, thu tiền hiện trường, huỷ/tạo lại phiếu · 🔧 *Tự xử lý sự cố (WO kẹt "New"…)* · Tự động phân bổ ticket bảo dưỡng & SIM |
 | **[Lương & Thưởng](users/00-compensation.html)** | Overtime, WFH salary, KPI |
 
 > 🔧 **Xử lý lỗi / thông tin sai** nằm ngay trong module liên quan — ví dụ
