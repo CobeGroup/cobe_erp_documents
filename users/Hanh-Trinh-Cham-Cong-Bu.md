@@ -131,7 +131,8 @@ làm gì thêm. Đơn biến mất khỏi danh sách chờ, thay bằng dòng c�
 
 **Bị từ chối** (ở bước nào cũng vậy) → đơn **bị xoá, biến mất khỏi danh sách**; anh A nhận thông báo
 kèm lý do. Ngày đó **không có công**
-(để trống = vắng) — kể cả khi anh A đã check-in ngoài VP dựa trên đơn. Nếu thực tế có đi làm: hỏi
+(để trống = vắng) — kể cả khi anh A đã check-in ngoài VP dựa trên đơn: lần chấm công đó dựa vào đơn,
+đơn mất thì nó cũng mất căn cứ (công đã lỡ sinh cũng bị thu hồi). Nếu thực tế có đi làm: hỏi
 lại người duyệt, **gửi đơn mới** với lý do/bằng chứng rõ hơn, hoặc nhờ HR chỉnh công tay.
 
 > 🏠 **Đơn WFH** đi y hệt: duyệt xong thì nút **chấm công WFH** mở cho ngày đó.

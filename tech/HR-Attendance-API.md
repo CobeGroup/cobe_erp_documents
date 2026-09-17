@@ -301,6 +301,13 @@ có dòng nào = 1 bước.
 Hộp duyệt gọi collector qua `_run_collector`: một loại đơn đọc lỗi thì chỉ mất loại đó (ghi Error Log),
 không kéo sập cả hộp — kể cả đơn nghỉ phép.
 
+**Quẹt ngoài VP dựa trên đơn CHƯA DUYỆT không thành công** (chốt 18/09/2026):
+`attendance.eligibility.desired_skip` trả `SKIP` cho ngày thường mà MỌI log đều là
+`custom_checkin_source = "Remote-PWA"` và không có `Attendance Request` docstatus 1 phủ ngày. Khi đơn
+bị từ chối / huỷ, `onduty_hooks._cancel_attendance_without_basis` còn huỷ bản `Attendance` đã lỡ sinh
+từ chính các log đó (chỉ bản không do đơn nào tạo và mọi log gắn vào đều là Remote-PWA — bản HR chấm
+tay không có log gắn vào nên không bị đụng). Ngày có thêm log `Onsite-PWA` thì tính công như thường.
+
 > ⚠️ **Migrate là bắt buộc khi deploy.** Chỉ riêng cột công tắc có lớp chống thiếu cột; hộp duyệt,
 > danh sách đơn của nhân viên và hook còn đọc `custom_approval_state`, `custom_manager_approved_by`,
 > `HR Overtime Request.manager_approved_by`… — code chạy trước migrate thì danh sách đơn của nhân viên

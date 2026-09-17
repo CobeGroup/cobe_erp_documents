@@ -108,7 +108,12 @@ trên **Bảng công** với nhãn **"Đề xuất chấm bù"** + trạng thái
 > tháng".
 
 > 💡 **Mẹo:** Tạo đơn **trước hoặc ngay trong ngày** đi công tác. Khi đã có đơn (dù **chưa duyệt**),
-> app **cho phép bạn chấm công ngoài VP** cho ngày đó — tiện nếu bạn vẫn muốn chụp ảnh/ghi nhận giờ.
+> app **cho phép bạn chấm công ngoài VP** cho ngày đó.
+>
+> ⏳ Nhưng các lần chấm công ngoài VP đó **chưa thành công** cho tới khi đơn **được duyệt**: đơn là
+> giấy phép, lần chấm công chỉ là bằng chứng giờ giấc. Đơn bị từ chối thì ngày đó **không có công**,
+> kể cả khi bạn đã chấm công đủ vào/ra. Ngày bạn có chấm công **tại văn phòng** thì vẫn tính như
+> thường, không phụ thuộc đơn.
 
 ---
 
