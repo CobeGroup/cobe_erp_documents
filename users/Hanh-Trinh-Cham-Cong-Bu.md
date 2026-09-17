@@ -1,5 +1,5 @@
 ---
-title: "Hành trình một Đề xuất chấm công bù (NV → Trưởng bộ phận → HR)"
+title: "Hành trình một Đề xuất chấm công bù (NV → Người duyệt)"
 layout: default
 parent: Chấm công
 grand_parent: Chấm công & HR
@@ -9,11 +9,12 @@ nav_order: 2.5
 # Hành trình một Đề xuất chấm công bù
 {: .no_toc }
 
-**Theo chân 1 đề xuất từ lúc gửi đến lúc ngày được tính công** · Nhân viên → Trưởng bộ phận → HR
+**Theo chân 1 đề xuất từ lúc gửi đến lúc ngày được tính công** · Nhân viên → Người duyệt chấm công
 {: .fs-3 .text-grey-dk-000 }
 
-> Trang này kể **toàn cảnh** một Đề xuất chấm công bù / công tác — **duyệt HAI BƯỚC** như đơn nghỉ
-> phép (trưởng bộ phận rồi HR), nhưng không trừ gì của ai. Ví dụ dùng xuyên suốt: anh **Nguyễn Văn A** đi công
+> Trang này kể **toàn cảnh** một Đề xuất chấm công bù / công tác — hiện **duyệt 1 BƯỚC** và không trừ
+> gì của ai (công ty có thể bật **duyệt 2 cấp** như đơn nghỉ phép — xem
+> [cuối trang](#khi-công-ty-bật-duyệt-2-cấp)). Ví dụ dùng xuyên suốt: anh **Nguyễn Văn A** đi công
 > tác Quận 1 gặp khách **cả ngày 30/06**, không ghé văn phòng nên không chấm công được → gửi đề xuất
 > để ngày đó vẫn tính **Có mặt**.
 
@@ -36,28 +37,23 @@ flowchart TB
   classDef ok fill:#f6ffed,stroke:#54ab78,color:#135200;
   classDef r fill:#fff1f0,stroke:#f5222d,color:#a8071a;
   A["①  Nhân viên tạo Đề xuất<br/>(app · tab Chấm công / Bảng công)"]:::nv
-  B["Đơn: <b>Chờ trưởng bộ phận duyệt</b>"]:::nv
-  C{"②a  Trưởng bộ phận<br/>(app · tab Cần duyệt)"}:::mg
-  H["Đơn: <b>Chờ HR duyệt</b><br/>chưa có công"]:::nv
-  C2{"②b  HR — người duyệt cuối<br/>(app · tab Cần duyệt / Desk)"}:::mg
+  B["Đơn: <b>Chờ duyệt</b>"]:::nv
+  C{"②  Người duyệt chấm công<br/>(app · tab Cần duyệt)"}:::mg
   D["③a <b>Đã duyệt</b><br/>→ tự tạo công <b>Có mặt</b> theo ca chuẩn"]:::ok
   E["③b <b>Từ chối</b><br/>→ ngày không có công (vắng)"]:::r
   A --> B --> C
-  C -- "Duyệt" --> H --> C2
-  C2 -- "Duyệt" --> D
+  C -- "Duyệt" --> D
   C -- "Từ chối" --> E
-  C2 -- "Từ chối" --> E
 ```
 
 | Bước | Ai làm | Ở đâu | Kết quả |
 |---|---|---|---|
-| ① Tạo đề xuất | Nhân viên / KTV | App → **Chấm công** hoặc **Bảng công** | Đơn ở **Chờ trưởng bộ phận duyệt** |
-| ②a Duyệt bước 1 | **Người duyệt chấm công** (`Shift Request Approver`) | App → **Cần duyệt** | Đơn **Chờ HR duyệt** — chưa có công / **Từ chối** → không công |
-| ②b Duyệt bước cuối | **HR** có tên trong danh sách người duyệt cuối (HR Policy) | App → **Cần duyệt** *hoặc* Desk | **Đã duyệt** → tự tạo công / **Từ chối** → không công |
+| ① Tạo đề xuất | Nhân viên / KTV | App → **Chấm công** hoặc **Bảng công** | Đơn ở **Chờ duyệt** |
+| ② Duyệt | **Người duyệt chấm công** (`Shift Request Approver`) | App → **Cần duyệt** *hoặc* Desk | **Đã duyệt** → tự tạo công / **Từ chối** → không công |
 
-> 👥 **Người duyệt bước 1 KHÔNG phải người duyệt nghỉ phép.** Đơn chấm công bù về khe
+> 👥 **Người duyệt ở đây KHÔNG phải người duyệt nghỉ phép.** Đơn chấm công bù về khe
 > **Shift Request Approver** (HR gán trên Employee hoặc Department) — tách khỏi **Leave Approver**.
-> Bước cuối là **HR** — cùng danh sách người duyệt cuối với đơn nghỉ phép.
+> HR Manager luôn duyệt thay / hủy được.
 
 ---
 
@@ -105,25 +101,19 @@ cho tháng đó. Chưa đặt hạn mức = không giới hạn, đúng như tr�
 
 ---
 
-## ② Duyệt hai bước: Trưởng bộ phận → HR
+## ② Người duyệt chấm công duyệt
 
-**Bước 1 — Trưởng bộ phận.** Người duyệt (được gán **Shift Request Approver** cho anh A hoặc cho
-phòng) nhận **thông báo đẩy** + badge đỏ trên tab **Cần duyệt**. Mở đơn thấy đủ: tên, loại, ngày,
-lý do → chọn:
+Người duyệt (được gán **Shift Request Approver** cho anh A hoặc cho phòng) nhận **thông báo đẩy** +
+badge đỏ trên tab **Cần duyệt**. Mở đơn thấy đủ: tên, loại, ngày, lý do → chọn:
 
 <img src="images/guide/hanhtrinh/ar-duyet.png" width="260" alt="Người duyệt mở đơn chấm công bù — nút Duyệt / Hủy">
 
-- **Duyệt (Trưởng bộ phận)** → đơn chuyển sang **Chờ HR duyệt**, HR nhận thông báo. Ngày 30/06
-  **vẫn chưa có công**.
+- **Duyệt** → xong ngay.
 - **Từ chối** → ngày đó không có công. **Bắt buộc nhập lý do** mới từ chối được; nhân viên
   **nhận được lý do** đó để biết đường gửi lại đơn.
 
-**Bước 2 — HR.** HR có tên trong danh sách người duyệt cuối của công ty mở tab **Cần duyệt**, thấy
-đơn kèm dòng *"… đã duyệt bước 1"* → **Duyệt (HR)** hoặc **Từ chối**. Duyệt xong mới có công.
-
-💻 **Trên Desk** (dồn nhiều phiếu cuối tuần/cuối tháng): HR lọc **Attendance Request · Draft** và
-**Bước duyệt = Manager Approved** → tick chọn → **Actions → Submit** — duyệt bước cuối hàng loạt. Chỉ
-người duyệt cuối Submit được; trưởng bộ phận bấm Submit trên Desk sẽ bị chặn. Chi tiết:
+💻 **Trên Desk** (dồn nhiều phiếu cuối tuần/cuối tháng): HR lọc **Attendance Request · Draft** → tick
+chọn → **Actions → Submit** — duyệt hàng loạt một phát. Chi tiết:
 [Duyệt chấm công bù — từng phiếu & hàng loạt](Duyet-Cham-Cong-Bu.html).
 
 <img src="images/desk/hr-ar-bulk-actions.png" width="600" alt="Desk — chọn nhiều đơn Draft, Actions → Submit">
@@ -142,8 +132,7 @@ làm gì thêm. Đơn biến mất khỏi danh sách chờ, thay bằng dòng c�
 (để trống = vắng) — kể cả khi anh A đã check-in ngoài VP dựa trên đơn. Nếu thực tế có đi làm: hỏi
 lại người duyệt, **gửi đơn mới** với lý do/bằng chứng rõ hơn, hoặc nhờ HR chỉnh công tay.
 
-> 🏠 **Đơn WFH** đi y hệt hai bước này. Riêng một điều: nút **chấm công WFH** chỉ mở khi **HR đã
-> duyệt** — trưởng bộ phận duyệt xong là chưa đủ.
+> 🏠 **Đơn WFH** đi y hệt: duyệt xong thì nút **chấm công WFH** mở cho ngày đó.
 
 ---
 
@@ -151,10 +140,25 @@ lại người duyệt, **gửi đơn mới** với lý do/bằng chứng rõ h�
 
 | Nhân viên thấy (Bảng công) | Nghĩa | Tác động lên công |
 |---|---|---|
-| 🟡 **Chờ trưởng bộ phận duyệt** | Đơn đang chờ bước 1 | Chưa tính công; ngày tạm chưa có kết quả |
-| 🔵 **Chờ HR duyệt** | Trưởng bộ phận đã duyệt, đang chờ HR | **Vẫn chưa tính công** |
+| 🟡 **Chờ duyệt** | Đơn đang nằm chờ người duyệt | Chưa tính công; ngày tạm chưa có kết quả |
+| 🔵 **Chờ HR duyệt** | *(chỉ khi bật 2 cấp)* Trưởng bộ phận đã duyệt, đang chờ HR | **Vẫn chưa tính công** |
 | 🟢 *(đơn biến mất, hiện dòng công)* | **Đã duyệt** | Ngày tính **Có mặt (P)** / WFH / Nửa ngày theo ca chuẩn |
 | 🔴 **Từ chối** | Đơn bị đóng | Ngày **không có công** — gửi lại đơn mới nếu cần |
+
+---
+
+## Khi công ty bật duyệt 2 cấp
+
+HR có thể bật **Duyệt 2 cấp** cho đơn chấm công bù (xem
+[Duyệt chấm công bù — mục E](Duyet-Cham-Cong-Bu.html#e-bật--tắt-duyệt-2-cấp-hr--quản-trị)). Khi đó
+đơn của anh A đi **hai bước** như đơn nghỉ phép:
+
+1. **Trưởng bộ phận** duyệt → đơn chuyển nhãn **Chờ HR duyệt** (xanh dương), ngày 30/06 **vẫn chưa có
+   công**.
+2. **HR** (người duyệt cuối) duyệt → mới có công **Có mặt**. Đơn WFH cũng chỉ mở chấm công WFH ở bước
+   này.
+
+Từ chối ở bước nào cũng vậy: đơn bị đóng, anh A nhận lý do.
 
 ---
 
@@ -162,9 +166,8 @@ lại người duyệt, **gửi đơn mới** với lý do/bằng chứng rõ h�
 
 | | **Nghỉ phép / Nghỉ bù** | **Đề xuất chấm công bù** |
 |---|---|---|
-| Số bước duyệt | **2** (Manager → HR) | **2** (Trưởng bộ phận → HR) |
-| Người duyệt bước 1 | Leave Approver | **Shift Request Approver** |
-| Người duyệt bước cuối | HR Manager trong danh sách người duyệt cuối | **Cùng danh sách đó** |
+| Số bước duyệt | **2** (Manager → HR) | **1** *(hiện tại — bật được 2 cấp)* |
+| Người duyệt | Leave Approver → HR Manager | **Shift Request Approver** |
 | Kết quả | Trừ số dư phép, ngày = On Leave | Tự tạo công **Có mặt** theo ca chuẩn |
 | Toàn cảnh | [Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html) | *(trang này)* |
 

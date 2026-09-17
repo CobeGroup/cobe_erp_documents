@@ -133,6 +133,9 @@ bước nào cũng từ chối được, và phải ghi lý do).
 người duyệt nghỉ phép; HR Manager bước vào thay được. Bước cuối: HR Manager có tên trong danh sách
 người duyệt cuối của công ty — cùng danh sách với đơn nghỉ phép.
 
+> ⚙️ Hai bước này là cấu hình hiện tại của công ty — HR có thể chuyển về **1 bước** (trưởng bộ phận
+> duyệt là xong).
+
 > ⏳ **Trưởng Bộ Phận duyệt xong, phiếu CHƯA có hiệu lực.** Chưa đối chiếu giờ, chưa vào lương,
 > chưa cộng quỹ Nghỉ bù, ngày nghỉ chưa được tính công — cho tới khi HR duyệt. Trong lúc chờ,
 > bạn vẫn **tự huỷ phiếu** được và **không khai được phiếu thứ hai** cho cùng ngày.

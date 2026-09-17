@@ -36,7 +36,7 @@ Ví dụ cụ thể: **Phòng Sales** và **Phòng Bảo dưỡng (kỹ thuật 
 | **HR Checkin Phone Registration** | Đăng ký + duyệt **thiết bị** điện thoại của NV trước khi chấm công. |
 | **Cấp quỹ phép (Leave Allocation)** | Số dư phép. Phép năm tự cộng vào đây — **không qua duyệt**. |
 | **Đơn xin nghỉ (Leave Application)** | Khi NV **dùng** phép — qua **workflow 2 bước**. |
-| **Attendance Request** | Chấm công bù / công tác / WFH — duyệt 2 bước (trưởng bộ phận → HR) qua tab "Cần duyệt". |
+| **Attendance Request** | Chấm công bù / công tác / WFH — duyệt qua tab "Cần duyệt", 1 bước hoặc 2 cấp theo cấu hình (§1.4). |
 
 **Ai thấy tab gì trên my-workspace:**
 - Tab **"Cần duyệt"**: user có role trong `viewer_roles` của HR Approval Inbox Settings (mặc định **Leave Approver / HR Manager / System Manager**).
@@ -74,10 +74,23 @@ Tạo mỗi văn phòng 1 record: `office_label`, `company`, `location_latitude`
 - **HR** (duyệt bước 2 + duyệt thiết bị): gán role **HR Manager**.
 
 ### 1.4. HR Approval Inbox Settings (đã seed sẵn — kiểm tra)
-Mặc định đã cấu hình 2 dòng (Leave Application + Attendance Request) với
+Mặc định đã cấu hình 3 dòng (Leave Application, Attendance Request, HR Overtime Request) với
 `viewer_roles = approver_roles = "Leave Approver, HR Manager, System Manager"`,
 `restrict_to_leave_approver = 1` (manager chỉ thấy đơn của NV mình phụ trách).
 → Muốn đổi ai thấy/duyệt cái gì thì sửa ở đây, **không cần code**.
+
+**Cột "Duyệt 2 cấp"** (từ 09/2026) — bật/tắt riêng cho từng loại đơn:
+
+| Dòng | Tick | Bỏ tick |
+|---|---|---|
+| **Attendance Request** | Trưởng bộ phận → HR duyệt cuối | **1 bước** *(đang dùng)* |
+| **HR Overtime Request** | **Trưởng bộ phận → HR duyệt cuối** *(đang dùng)* | 1 bước |
+| Leave Application | — *(luôn 2 bước theo workflow, không có cột này)* | — |
+
+HR duyệt cuối = người có tên trong **Người duyệt cuối** của HR Policy (xem
+[Chính sách chấm công §4](Desk-Admin-Policy.html#4-người-duyệt-cuối-cấp-hr)). Save là có hiệu lực ngay.
+Đổi chế độ khi còn đơn chờ: 2 cấp → 1 bước thì đơn đang chờ HR quay về hộp của trưởng bộ phận, duyệt
+là xong; 1 bước → 2 cấp thì đơn chưa ai duyệt bắt đầu đi 2 bước.
 
 ### 1.5. Phép năm tự cộng (Earned Leave — HRMS native)
 1. Desk → **Leave Type** (vd "Annual Leave"): bật `Is Earned Leave`, `Earned Leave Frequency = Monthly`,
@@ -232,6 +245,6 @@ HR duyệt thiết bị → xong.
 
 **Mỗi ngày:** NV chấm công / xin nghỉ / chấm công bù → người duyệt xử lý trên app: nghỉ phép về
 **leave_approver** (bước 1) rồi HR submit (bước 2); chấm công bù và làm thêm giờ về **shift_request_approver**
-(bước 1) rồi HR (bước 2) — cùng danh sách người duyệt cuối với nghỉ phép.
+— 1 bước, hoặc thêm bước HR nếu bật duyệt 2 cấp (§1.4).
 
 **Cuối tháng:** Earned Leave tự +1 quỹ phép · HR xem COBE HR Attendance Sheet.

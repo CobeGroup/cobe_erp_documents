@@ -83,6 +83,10 @@ theo đơn).
 `Manager Approved` là trạng thái CHỜ: mọi nơi dùng đơn (đối chiếu chấm công, quỹ Nghỉ bù,
 luật tính công ngày nghỉ) chỉ đọc `Approved`, nên hiệu lực chỉ phát sinh ở bước HR.
 
+Hai cấp là **công tắc** — HR Approval Inbox Settings → dòng *HR Overtime Request* → cột **Duyệt 2 cấp**
+(hiện bật). Tắt thì duyệt 1 bước như trước: trưởng bộ phận duyệt là `Approved` ngay; đơn đang ở
+`Manager Approved` lúc tắt vẫn được coi là đang chờ và duyệt là xong.
+
 ---
 
 ## 3. Vòng đời một đơn

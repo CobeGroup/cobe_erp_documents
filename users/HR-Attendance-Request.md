@@ -8,7 +8,7 @@ nav_order: 7
 
 # Attendance Request — Xin chấm công bù (On Duty)
 
-> Doctype HRMS chuẩn. Nhân viên tạo đơn **"Chấm công bù"** qua form **"Đề xuất"** (chọn loại: Chấm công bù / WFH). Form mở từ **3 lối** — cùng component `AttendanceRequestModal`: (1) FAB **"Đề xuất"** trong tab **"Bảng công"**; (2) link **"Đi công tác / làm ngoài? Đề xuất chấm công bù"** dưới nút chấm công ở tab **"Chấm công"**; (3) hộp thoại **"Ngoài vùng văn phòng"** khi check-in bị chặn `OUT_OF_RANGE` (nút **"Tạo đề xuất"**). Duyệt **hai bước** qua tab **"Cần duyệt"**: trưởng bộ phận rồi HR (api.approval.act; bước HR mới submit Attendance Request → HRMS tự tạo Attendance). Tài liệu này giải thích cách dùng + working_hours được tính ra sao sau khi approve.
+> Doctype HRMS chuẩn. Nhân viên tạo đơn **"Chấm công bù"** qua form **"Đề xuất"** (chọn loại: Chấm công bù / WFH). Form mở từ **3 lối** — cùng component `AttendanceRequestModal`: (1) FAB **"Đề xuất"** trong tab **"Bảng công"**; (2) link **"Đi công tác / làm ngoài? Đề xuất chấm công bù"** dưới nút chấm công ở tab **"Chấm công"**; (3) hộp thoại **"Ngoài vùng văn phòng"** khi check-in bị chặn `OUT_OF_RANGE` (nút **"Tạo đề xuất"**). Người duyệt chấm công duyệt qua tab **"Cần duyệt"** (api.approval.act → submit Attendance Request → HRMS tự tạo Attendance) — **1 bước** theo cấu hình hiện tại; bật được **duyệt 2 cấp** (trưởng bộ phận → HR) ở HR Approval Inbox Settings. Tài liệu này giải thích cách dùng + working_hours được tính ra sao sau khi approve.
 >
 > **WFH cũng nằm trong form Đề xuất này**: khi feature flag `enable_wfh_mode` (HR Policy)
 > được BẬT, mục **"Loại đề xuất"** có thêm lựa chọn **"Làm việc tại nhà (WFH)"** (chọn xong
@@ -30,11 +30,12 @@ flowchart TD
   A["Mở form Đề xuất<br/>(Bảng công FAB / Chấm công link / lỗi Ngoài vùng)"] --> B["Chọn loại: Chấm công bù / WFH"]
   B --> C["Chọn ngày + lý do (WFH: thêm địa điểm)"]
   C --> D["Gửi → Attendance Request (chờ duyệt)"]
-  D --> E{"Trưởng bộ phận duyệt? (tab Cần duyệt)"}
+  D --> E{"Người duyệt chấm công duyệt? (tab Cần duyệt)"}
   E -- "Từ chối" --> X["Đơn bị xoá · NV nhận lý do"]
-  E -- "Duyệt" --> E2{"HR duyệt? (tab Cần duyệt / Desk)"}
+  E -- "Duyệt — 1 bước" --> F["Submit Attendance Request"]
+  E -- "Duyệt — khi bật 2 cấp" --> E2{"HR duyệt? (tab Cần duyệt / Desk)"}
   E2 -- "Từ chối" --> X
-  E2 -- "Duyệt" --> F["Submit Attendance Request"]
+  E2 -- "Duyệt" --> F
   F --> G["HRMS tự tạo Attendance: Present / WFH / Half Day"]
 
   class A,B,C,D,F process
@@ -48,7 +49,7 @@ flowchart TD
 ## Mục lục
 
 1. [Khi nào dùng](#1-khi-nào-dùng)
-2. [Duyệt hai bước](#2-duyệt-hai-bước)
+2. [Duyệt: 1 bước hoặc 2 cấp](#2-duyệt-1-bước-hoặc-2-cấp)
 3. [Working hours được tính ra sao sau approve](#3-working-hours-được-tính-ra-sao-sau-approve)
 4. [Cảnh báo "Quên check-in/out" trên Attendance](#4-cảnh-báo-quên-check-inout-trên-attendance)
 5. [Các case thực tế](#5-các-case-thực-tế)
@@ -93,9 +94,25 @@ không bị hạn để còn tạo thủ công thay NV. Xem
 
 ---
 
-## 2. Duyệt hai bước
+## 2. Duyệt: 1 bước hoặc 2 cấp
 
-Từ 09/2026 Attendance Request duyệt **hai bước**, cùng khuôn với đơn nghỉ phép:
+Chế độ đặt ở **HR Approval Inbox Settings** → dòng *Attendance Request* → cột **Duyệt 2 cấp**
+(`two_level_approval`). **Hiện đang tắt = 1 bước** (chốt 17/09/2026).
+
+**1 bước** — như trước 09/2026:
+
+```
+NV tạo "Chấm công bù" / WFH → docstatus = 0
+  ↓
+Người duyệt chấm công → tab "Cần duyệt" → Duyệt (state "Pending", action "Submit") → docstatus = 1
+  ↓
+HRMS tự tạo / update Attendance records cho khoảng ngày
+```
+
+Không có bước HR, không chặn tự duyệt, không chốt submit trên Desk (chỉ còn quyền `submit` của
+doctype). Mọi tên action — kể cả `Manager Approve` từ bundle PWA bản 2 cấp — đều là duyệt cuối.
+
+**2 cấp** — khi bật, cùng khuôn với đơn nghỉ phép:
 
 ```
 NV tạo "Chấm công bù" / WFH (Bảng công FAB / Chấm công link / hộp thoại "Ngoài vùng")
@@ -124,7 +141,7 @@ sang đây là từ chối xong lại đi chấm công. Workflow còn chặn m�
 | `custom_approval_state` | *Pending Manager* / *Manager Approved*. Đơn nộp trước 09/2026 để trống = *Pending Manager* |
 | `custom_manager_approved_by` / `_on` | Ai duyệt bước 1, lúc nào. HR submit thẳng thì ghi tên HR |
 
-**Chốt ở controller:** hook `before_submit` chỉ cho **người duyệt cuối** (HR Manager có tên trong
+**Chốt ở controller (chỉ khi bật 2 cấp):** hook `before_submit` chỉ cho **người duyệt cuối** (HR Manager có tên trong
 danh sách người duyệt cuối của `HR Policy`, hoặc System Manager) submit — đường nào vào cũng dính:
 PWA, Desk, bulk. Role *Attendance Request Approver* vẫn có quyền `submit` ở Custom DocPerm từ thời
 duyệt một bước, nhưng bấm sẽ bị chặn. Người duyệt cuối submit thẳng một đơn chưa qua bước 1 = làm
@@ -142,18 +159,17 @@ luôn bước đó, và bước đó vẫn phải qua luật không tự duyệt
 1. Mở my-workspace → tab **"Cần duyệt"** (đơn hiện qua `api.approval.get_my_pending_approvals`) —
    mỗi người chỉ thấy đơn ở đúng bước của mình
 2. Review reason + explanation
-3. Trưởng bộ phận bấm **Duyệt (Trưởng bộ phận)** → `action = "Manager Approve"` → đơn lên HR
-4. HR bấm **Duyệt (HR)** → `action = "Submit"` → `doc.submit()` → HRMS tạo Attendance (status
+3. **1 bước:** bấm **Duyệt** → `action = "Submit"` → `doc.submit()` → HRMS tạo Attendance (status
    `Present`, hoặc `Half Day` nếu đánh dấu nửa ngày)
-
-`action = "Submit"` gửi cho đơn còn ở bước 1 (bundle PWA cũ) chỉ được hiểu là duyệt bước 1 — không
-bao giờ nhảy thẳng qua bước HR.
+4. **2 cấp:** trưởng bộ phận bấm **Duyệt (Trưởng bộ phận)** (`action = "Manager Approve"`) → đơn lên
+   HR; HR bấm **Duyệt (HR)** (`action = "Submit"`) → `doc.submit()`. Ở chế độ này `Submit` gửi cho
+   đơn còn ở bước 1 (bundle PWA cũ) chỉ được hiểu là duyệt bước 1 — không nhảy qua bước HR.
 
 > Phân quyền (từ 07/2026 — commit `6010839`): nếu config `restrict_to_leave_approver = 1`, người
 > duyệt AR = **`shift_request_approver`** — helper `_ar_approver_users()` hợp `Employee.shift_request_approver`
 > với mọi dòng child table `Department Approver` (`parentfield = shift_request_approver`) của phòng.
-> **TÁCH hẳn khỏi `leave_approver`** (nghỉ phép không đổi). Đó là người duyệt **bước 1**; HR Manager /
-> System Manager được bước vào thay ở bước này. Bước cuối là người duyệt cuối của `HR Policy`.
+> **TÁCH hẳn khỏi `leave_approver`** (nghỉ phép không đổi). HR Manager / System Manager luôn duyệt
+> thay được. Khi bật 2 cấp, đó là người duyệt **bước 1**; bước cuối là người duyệt cuối của `HR Policy`.
 > Tab "Cần duyệt" hiện theo role trong **HR Approval Inbox Settings** — dòng AR đã thêm role
 > **`Attendance Request Approver`**.
 
@@ -266,7 +282,7 @@ Desk → Attendance list → filter `hr_warning_type` để thấy:
    - from_date = T2, to_date = T4
    - reason = `On Duty`
    - explanation = "Công tác Hà Nội gặp khách hàng"
-2. Trưởng bộ phận rồi HR duyệt qua tab "Cần duyệt"
+2. Người duyệt chấm công duyệt qua tab "Cần duyệt" (khi bật 2 cấp: thêm bước HR)
 3. HRMS tạo 3 Attendance records (T2, T3, T4) với status = Present
 4. Hook fill working_hours = 9h (ca 8-17h) - 1h break = 8h cho mỗi ngày
 5. Salary Slip kỳ này tính bình thường — 3 ngày Present tương đương
@@ -275,7 +291,7 @@ Desk → Attendance list → filter `hr_warning_type` để thấy:
 
 ### Case B: NV quên check-out
 
-NV tạo "Chấm công bù" cho đúng ngày quên (`from_date = to_date`), `reason = On Duty`, ghi `explanation = "Quên check-out"`. Trưởng bộ phận rồi HR duyệt qua "Cần duyệt" → Attendance status = Present, hook fill working_hours = giờ ca chuẩn - break.
+NV tạo "Chấm công bù" cho đúng ngày quên (`from_date = to_date`), `reason = On Duty`, ghi `explanation = "Quên check-out"`. Người duyệt duyệt qua "Cần duyệt" → Attendance status = Present, hook fill working_hours = giờ ca chuẩn - break.
 
 ### Case C: NV làm ca chiều (14:00-22:00) — không bị trừ break trưa
 

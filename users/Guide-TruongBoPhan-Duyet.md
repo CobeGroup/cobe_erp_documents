@@ -12,7 +12,7 @@ nav_order: 1
 **Dành cho:** Trưởng Bộ Phận / Người duyệt (Leave Approver) · **Thời lượng:** ~2 phút
 {: .fs-3 .text-grey-dk-000 }
 
-> Duyệt **đơn nghỉ phép**, **đề xuất chấm công bù / WFH** và **đơn làm thêm giờ** của nhân viên trong phòng, ngay trên điện thoại. Cả ba loại đều **2 bước**: bạn duyệt bước 1, HR duyệt bước cuối. Ca khó (đơn nghỉ phép) có thể **chuyển** cho người khác duyệt.
+> Duyệt **đơn nghỉ phép**, **đề xuất chấm công bù / WFH** và **đơn làm thêm giờ** của nhân viên trong phòng, ngay trên điện thoại. Nghỉ phép luôn **2 bước** (bạn duyệt bước 1, HR duyệt bước cuối); chấm công bù và làm thêm giờ 1 bước hoặc 2 bước tuỳ cấu hình — hiện **chấm công bù 1 bước** (bạn duyệt là xong), **làm thêm giờ 2 bước**. Ca khó (đơn nghỉ phép) có thể **chuyển** cho người khác duyệt.
 
 > 📘 Cần **quy trình đầy đủ 2 bước (Manager → HR)** kèm bước HR và duyệt trên Desk? Xem **[Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html)** — trang đó có 🎬 **video hướng dẫn 1 phút** quay đủ các thao tác duyệt.
 
@@ -50,8 +50,8 @@ Bấm vào 1 đề nghị để xem chi tiết (nhân viên, loại, ngày, lý 
 
 <img src="images/guide/truongbophan/02-detail.png" width="240" alt="Chi tiết đề nghị + nút duyệt">
 
-- **Duyệt (Trưởng bộ phận)** → đề nghị lên **HR duyệt bước 2**. Áp cho cả nghỉ phép, chấm công bù / WFH
-  và làm thêm giờ — đơn **chưa có hiệu lực** cho tới khi HR duyệt.
+- **Duyệt (Trưởng bộ phận)** → đề nghị lên **HR duyệt bước 2** — đơn **chưa có hiệu lực** cho tới khi
+  HR duyệt. Loại đơn đang duyệt 1 bước thì nút chỉ ghi **Duyệt** và bấm là xong.
 - **Từ chối** → đóng đề nghị; **bắt buộc nhập lý do** mới từ chối được (bỏ trống bị chặn), và **nhân viên nhận được lý do** kèm thông báo.
 - **Chuyển duyệt** → giao cho người khác (xem mục 3). Chỉ có ở đơn nghỉ phép.
 

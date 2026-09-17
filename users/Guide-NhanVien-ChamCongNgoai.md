@@ -122,27 +122,25 @@ flowchart TB
   classDef p fill:#e6f4ff,stroke:#299dd8,color:#0b4a6f;
   classDef g fill:#f6ffed,stroke:#54ab78,color:#135200;
   classDef r fill:#fff1f0,stroke:#f5222d,color:#a8071a;
-  S0["① Bạn gửi đơn<br/>Chờ trưởng bộ phận duyệt"] --> S1{"②a Trưởng bộ phận<br/>quyết định"}
-  S1 -- "Duyệt" --> S1b{"②b HR<br/>quyết định"}
-  S1b -- "Duyệt" --> S2["③a Đã duyệt<br/>Hệ thống tự tạo công<br/>Ngày = Có mặt (P)"]
+  S0["① Bạn gửi đơn<br/>Chờ duyệt"] --> S1{"② Quản lý<br/>quyết định"}
+  S1 -- "Duyệt" --> S2["③a Đã duyệt<br/>Hệ thống tự tạo công<br/>Ngày = Có mặt (P)"]
   S1 -- "Từ chối" --> S3["③b Từ chối<br/>Không có công<br/>Ngày để trống (vắng)"]
-  S1b -- "Từ chối" --> S3
   class S0 p
-  class S1,S1b p
+  class S1 p
   class S2 g
   class S3 r
 ```
 
 | Trạng thái | Bạn thấy gì trên **Bảng công** | Tác động lên công của bạn |
 |---|---|---|
-| **Chờ trưởng bộ phận duyệt** (vàng) | Đơn nằm trong danh sách | **Chưa** tính công; ngày đó tạm thời chưa có kết quả |
-| **Chờ HR duyệt** (xanh dương) | Trưởng bộ phận đã duyệt, đơn vẫn nằm trong danh sách | **Vẫn chưa** tính công — chờ HR duyệt bước cuối |
+| **Chờ duyệt** (vàng) | Đơn nằm trong danh sách, nhãn *Chờ duyệt* | **Chưa** tính công; ngày đó tạm thời chưa có kết quả |
+| **Chờ HR duyệt** (xanh dương) | *Chỉ khi công ty bật duyệt 2 cấp* — quản lý đã duyệt, đơn còn chờ HR | **Vẫn chưa** tính công |
 | **Đã duyệt** (xanh) | Đơn **biến mất**, thay bằng dòng công **Có mặt** (hoặc **WFH** / **Nửa ngày**) | Ngày được tính **Có mặt (P)**. Nếu bạn có check-in ngoài VP, các cảnh báo *"ngoài vùng / quên ra"* được **bỏ** |
 | **Từ chối** (đỏ) | Đơn còn đó với nhãn *Từ chối* | **Không** có công → ngày đó **để trống** trên bảng công (coi như **vắng**), trừ khi ngày đó có công hợp lệ khác. Hỏi quản lý lý do, sửa & gửi lại nếu cần |
 
 <img src="images/guide/dexuat/04-approved.png" width="240" alt="Sau khi duyệt — ngày hiện Có mặt">
 
-> ✅ **Đã duyệt (HR đã duyệt) = xong.** Hệ thống **tự tạo bảng công "Có mặt"** cho đúng ca làm của bạn — bạn **không
+> ✅ **Đã duyệt = xong.** Hệ thống **tự tạo bảng công "Có mặt"** cho đúng ca làm của bạn — bạn **không
 > cần** làm thêm gì. Ngày này sẽ hiện **P** (hoặc **WFH**) trên báo cáo
 > [Bảng công tháng (COBE HR Attendance Sheet)](Desk-HR-BangCongThang.html).
 
@@ -157,16 +155,18 @@ flowchart TB
 
 ## D. Người quản lý duyệt như thế nào?
 
-Đơn chấm công bù **duyệt 2 bước**, như nghỉ phép: **trưởng bộ phận** (người duyệt chấm công của bạn)
-nhận **thông báo đẩy** và duyệt trước, rồi **HR** duyệt bước cuối. Cả hai duyệt trong tab **Cần duyệt**:
+Quản lý (người duyệt chấm công của bạn) nhận **thông báo đẩy** + thấy đơn trong tab **Cần duyệt**. Đơn
+chấm công bù hiện **duyệt 1 bước** (khác nghỉ phép 2 bước):
 
 <img src="images/guide/duyet/05-attendance.png" width="240" alt="Quản lý mở đơn chấm công bù — nút Duyệt / Hủy">
 
-- Trưởng bộ phận **duyệt** → đơn chuyển sang *Chờ HR duyệt*, **chưa** có công.
-- HR **duyệt** → hệ thống tự tạo công **Có mặt** cho bạn.
-- **Từ chối** ở bước nào → đơn bị đóng, bạn nhận lý do và không có công ngày đó.
+- **Duyệt** → hệ thống tự tạo công **Có mặt** cho bạn.
+- **Từ chối** → đơn bị đóng, bạn nhận lý do và không có công ngày đó.
 
-> 📘 Chi tiết phía người duyệt: [Duyệt chấm công bù — hai bước](Duyet-Cham-Cong-Bu.html).
+> 🔁 Nếu công ty **bật duyệt 2 cấp**: quản lý duyệt xong thì đơn chuyển *Chờ HR duyệt* và **chưa** có
+> công; HR duyệt bước cuối mới có công.
+
+> 📘 Chi tiết phía người duyệt: [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html).
 
 ---
 

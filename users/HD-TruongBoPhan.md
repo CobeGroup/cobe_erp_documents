@@ -12,7 +12,7 @@ Dành cho **Trưởng Bộ Phận** (Leave Approver) và **HR** — duyệt ngay
 
 1. **[Phê duyệt đề nghị (+ Chuyển duyệt)](Guide-TruongBoPhan-Duyet.html)** — bắt đầu nhanh cho Trưởng Bộ Phận: duyệt / từ chối / chuyển duyệt trên app
 2. **[Duyệt nghỉ phép & nghỉ bù (Manager + HR)](Duyet-Nghi-Phep.html)** — quy trình đầy đủ 2 bước, cả app lẫn Desk, kèm lưu ý đơn Nghỉ bù 🎬 *(có video)*
-3. **[Duyệt chấm công bù — từng phiếu & hàng loạt](Duyet-Cham-Cong-Bu.html)** — Attendance Request 2 bước (bạn duyệt bước 1) + bulk trên Desk
+3. **[Duyệt chấm công bù — từng phiếu & hàng loạt](Duyet-Cham-Cong-Bu.html)** — Attendance Request (hiện 1 bước — bạn duyệt là xong) + bulk trên Desk
 4. **[Duyệt đơn làm thêm giờ (OT)](Duyet-Lam-Them.html)** — bạn duyệt bước 1, HR duyệt bước cuối; hệ thống tự đối chiếu chấm công & tính tiền/nghỉ bù 🎬 *(có video)*
 5. **[Cài đặt thông báo cho người duyệt](Duyet-Cai-Dat-Thong-Bao.html)** — đơn mới báo ngay, vấn đề chấm công gộp 1 bản tin cuối ngày, tự bật/tắt từng loại
 

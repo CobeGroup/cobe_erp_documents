@@ -54,15 +54,18 @@ nav_order: 2
 
 ## 4. Người duyệt cuối (cấp HR)
 
-Ba loại đơn đi 2 bước **Trưởng Bộ Phận → HR**, và bước HR là bước **chốt, có hiệu lực**:
+Đơn đi 2 bước **Trưởng Bộ Phận → HR** thì bước HR là bước **chốt, có hiệu lực**. Nghỉ phép luôn
+2 bước; chấm công bù và làm thêm giờ 2 bước khi bật cột **Duyệt 2 cấp** ở HR Approval Inbox Settings
+(xem [Vận hành chấm công theo phòng ban §1.4](Cham-Cong-Van-Hanh-Theo-Phong-Ban.html)):
 
 | Đơn | Bước 1 (Trưởng Bộ Phận) | Bước HR chốt việc gì |
 |---|---|---|
 | **Nghỉ phép / Nghỉ bù** | `leave_approver` | Trừ phép / trừ quỹ Nghỉ bù, ghi ngày nghỉ |
-| **Chấm công bù / WFH** (`Attendance Request`) | *Shift Request Approver* — từ 09/2026 | Tạo công Có mặt / WFH, mở chấm công WFH |
-| **Làm thêm giờ** (`HR Overtime Request`) | *Shift Request Approver* — từ 09/2026 | Đối chiếu giờ vào chấm công, vào lương hoặc quỹ Nghỉ bù |
+| **Chấm công bù / WFH** (`Attendance Request`) — *hiện 1 bước* | *Shift Request Approver* | Tạo công Có mặt / WFH, mở chấm công WFH |
+| **Làm thêm giờ** (`HR Overtime Request`) — *hiện 2 bước* | *Shift Request Approver* | Đối chiếu giờ vào chấm công, vào lương hoặc quỹ Nghỉ bù |
 
-Cả ba dùng **chung một bảng** người duyệt cuối bên dưới.
+Cả ba dùng **chung một bảng** người duyệt cuối bên dưới (loại nào đang duyệt 1 bước thì bảng không
+áp cho loại đó).
 
 Vấn đề: role `HR Manager` được cấp rộng — hiện có **14 tài khoản**, gồm cả tài khoản
 tích hợp hệ thống. Ai cũng nhận đơn thì không ai thấy mình là người chịu trách nhiệm.
@@ -125,8 +128,8 @@ Muốn quay lại như cũ: **xoá hết dòng trong bảng** rồi Save — kh�
 
 1. **Tab Cần duyệt** (app) — người ngoài danh sách không thấy đơn của công ty đó nữa.
 2. **Nút Duyệt / Từ chối** (app) — bấm sẽ báo *"Bạn không phải người duyệt đơn này ở bước hiện tại"*.
-3. **Nút trên Desk** — nút workflow của đơn nghỉ, và nút **Submit** của đơn chấm công bù (kể cả
-   Submit hàng loạt) — chặn ở tầng document nên **Desk cũng không lách được**.
+3. **Nút trên Desk** — nút workflow của đơn nghỉ, và nút **Submit** của đơn chấm công bù khi bật
+   duyệt 2 cấp (kể cả Submit hàng loạt) — chặn ở tầng document nên **Desk cũng không lách được**.
 4. **Thông báo** — chỉ người trong danh sách nhận báo khi đơn lên bước HR.
 5. **Chuyển duyệt** (chỉ đơn nghỉ phép) — ở bước HR chỉ chọn được người trong danh sách
    (chuyển cho người ngoài thì đơn **kẹt** không ai duyệt được).
@@ -140,9 +143,9 @@ Muốn quay lại như cũ: **xoá hết dòng trong bảng** rồi Save — kh�
 | **Đơn đã chuyển đích danh** | Người được chuyển tới quyết — nhưng chỉ chuyển được cho người trong danh sách (mục 5) |
 
 > ⚠️ **Khai ít nhất 2 người mỗi công ty.** Một người mà nghỉ việc / nghỉ phép dài là đơn
-> dồn không ai duyệt được — lúc đó chỉ System Manager gỡ kẹt, hoặc phải vào xoá bảng. Từ 09/2026
-> bảng này gánh cả đơn chấm công bù và làm thêm giờ — số đơn tới bước HR tăng nhiều lần (chấm
-> công bù khoảng 250 đơn/tháng), nên càng không nên để một người.
+> dồn không ai duyệt được — lúc đó chỉ System Manager gỡ kẹt, hoặc phải vào xoá bảng. Bảng này
+> gánh cả đơn làm thêm giờ, và cả đơn chấm công bù (khoảng 250 đơn/tháng) nếu bật duyệt 2 cấp cho
+> loại đó — càng không nên để một người.
 
 ---
 

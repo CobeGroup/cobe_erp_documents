@@ -14,8 +14,9 @@ nav_order: 2
 
 > Đơn nghỉ phép chạy **workflow 2 bước: Manager → HR**. Cả hai bước đều duyệt được ngay trên
 > **app điện thoại** (tab **Cần duyệt**); HR có thể duyệt thêm trên **Desk** khi cần xem chi tiết.
-> Đơn **Chấm công bù / WFH** và **Làm thêm giờ** đi qua cùng inbox này, và từ 09/2026 cũng **2 bước**
-> như nghỉ phép — cùng nút, cùng danh sách người duyệt cuối.
+> Đơn **Chấm công bù / WFH** và **Làm thêm giờ** đi qua cùng inbox này. Hai loại đó duyệt **1 bước
+> hoặc 2 cấp** tuỳ công tắc của từng loại — hiện **chấm công bù 1 bước**, **làm thêm giờ 2 cấp** (cùng
+> nút, cùng danh sách người duyệt cuối với nghỉ phép).
 
 <details open markdown="block">
   <summary>Mục lục</summary>
@@ -29,8 +30,7 @@ nav_order: 2
 ## 🎬 Video hướng dẫn (1 phút)
 
 Xem nhanh cả 5 thao tác — inbox Cần duyệt, trưởng bộ phận duyệt bước 1, HR duyệt bước 2, duyệt chấm công
-bù, và chuyển duyệt ca khó (bật tiếng để nghe thuyết minh). *Video quay trước 09/2026, lúc chấm công bù còn
-duyệt 1 bước — nay đơn chấm công bù cũng đi 2 bước như nghỉ phép, xem mục A.5.*
+bù 1 bước, và chuyển duyệt ca khó (bật tiếng để nghe thuyết minh):
 
 <video src="images/guide/duyet/duyet-don.mp4" width="260" controls playsinline poster="images/guide/duyet/duyet-don-poster.png"></video>
 
@@ -133,21 +133,21 @@ cùng phòng) + nhập **lý do** (tuỳ chọn) → **Chuyển**.
 > Người nhận thấy đơn trong inbox của họ kèm nhãn **"Chuyển từ …"**. Khi đơn lên cấp tiếp theo
 > (Manager → HR), thông tin chuyển duyệt được **reset**.
 
-### A.5 — Chấm công bù / WFH (cũng 2 bước)
+### A.5 — Chấm công bù / WFH (hiện 1 bước)
 
 Đơn **Làm tại nhà (WFH)** và **chấm công bù / On Duty** là **Attendance Request**, hiện chung inbox
-với nhãn **"Chấm công bù"**. Từ 09/2026 loại này **duyệt 2 bước y như nghỉ phép** — cùng hai nút
-*Duyệt (Trưởng bộ phận)* rồi *Duyệt (HR)*, cùng danh sách người duyệt cuối:
+với nhãn **"Chấm công bù"**. Loại này **hiện duyệt 1 bước**:
 
 <img src="images/guide/duyet/05-attendance.png" width="260" alt="Chi tiết Chấm công bù — nút Duyệt / Hủy">
 
-- **Duyệt (Trưởng bộ phận)** → đơn lên HR, **chưa** có công.
-- **Duyệt (HR)** → hệ thống **tự tạo Attendance** cho ngày đó (Work From Home / Present / Half Day).
-- **Từ chối** (ở bước nào cũng được) → **bắt buộc nhập lý do** (bỏ trống bị chặn) và **lý do gửi cho nhân viên** kèm thông báo.
+- **Duyệt** → hệ thống **tự tạo Attendance** cho ngày đó (Work From Home / Present / Half Day).
+- **Từ chối** → **bắt buộc nhập lý do** (bỏ trống bị chặn) và **lý do gửi cho nhân viên** kèm thông báo.
 
-Khác nghỉ phép ở chỗ **không có chuyển duyệt**. Chi tiết: [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html).
+HR bật được **Duyệt 2 cấp** cho loại này; khi đó nút đổi thành *Duyệt (Trưởng bộ phận)* rồi *Duyệt
+(HR)* như nghỉ phép, chỉ không có chuyển duyệt. Chi tiết và cách bật:
+[Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html).
 
-> 👥 **Người duyệt BƯỚC 1 của loại này KHÁC người duyệt nghỉ phép.** Đơn chấm công bù/WFH về
+> 👥 **Người duyệt loại này KHÁC người duyệt nghỉ phép.** Đơn chấm công bù/WFH về
 > **Shift Request Approver** (gán trên Employee hoặc Department) — tách khỏi **Leave Approver**.
 > Cùng một người kiêm cả hai vai thì thấy cả hai loại đơn chung inbox; tách vai thì mỗi người chỉ
 > thấy loại đơn của mình. Chi tiết gán: [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html).
@@ -254,7 +254,7 @@ Bấm vào ngày trong thông báo là **mở thẳng bản chấm công** để
 ## Liên quan
 - 🚫 [Huỷ đơn nghỉ đã duyệt & tra cứu đơn đã xử](Duyet-Huy-Don-Nghi-Phep.html) — rút lại đơn đã duyệt (bắt buộc kèm lý do) + 4 tab nhật ký
 - 🗺️ [Hành trình một đơn nghỉ phép (NV → Manager → HR)](Hanh-Trinh-Nghi-Phep.html) — toàn cảnh, theo chân 1 đơn
-- ✅ [Duyệt chấm công bù — từng phiếu & hàng loạt](Duyet-Cham-Cong-Bu.html) — Attendance Request 2 bước + bulk trên Desk
+- ✅ [Duyệt chấm công bù — từng phiếu & hàng loạt](Duyet-Cham-Cong-Bu.html) — Attendance Request 1 bước / 2 cấp + bulk trên Desk
 - 👤 [Nhân viên: Xin nghỉ phép](Guide-NhanVien-NghiPhep.html)
 - 👔 [Trưởng Bộ Phận: Phê duyệt](Guide-TruongBoPhan-Duyet.html) · 👩‍💼 [HR: Duyệt bước HR](Desk-HR-DuyetDon.html)
 - ⚙️ [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html) · [Loại phép & số dư](Desk-HR-LoaiPhep.html)

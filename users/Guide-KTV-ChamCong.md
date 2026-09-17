@@ -197,13 +197,13 @@ Lắp máy / sửa chữa tới khuya thì hôm sau được **nghỉ bù**. Đ�
 
 Đơn của bạn đến **người duyệt chấm công** (Shift Request Approver — HR gán trong hồ sơ nhân viên
 hoặc theo phòng ban; **có thể khác** người duyệt nghỉ phép). Người duyệt nhận **thông báo đẩy**,
-mở tab **Cần duyệt** trên my-workspace, bấm **Duyệt** hoặc **Từ chối**. Đơn chấm công bù **duyệt 2
-bước** như nghỉ phép: người duyệt chấm công duyệt trước, rồi **HR** duyệt bước cuối — chỉ khi HR duyệt
-xong, ngày đó mới có công.
+mở tab **Cần duyệt** trên my-workspace, bấm **Duyệt** hoặc **Từ chối** — đơn chấm công bù hiện
+**duyệt 1 bước** (không qua bước HR như nghỉ phép). Công ty có thể bật **duyệt 2 cấp**; khi đó HR duyệt
+thêm bước cuối rồi ngày đó mới có công.
 
 <img src="images/guide/duyet/05-attendance.png" width="240" alt="Quản lý duyệt đơn chấm công bù">
 
-> 📘 Chi tiết phía người duyệt: [Duyệt chấm công bù — hai bước](Duyet-Cham-Cong-Bu.html).
+> 📘 Chi tiết phía người duyệt: [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html).
 
 ---
 

@@ -49,6 +49,11 @@ Chờ HR duyệt ──────────────từ chối──► 
 | **1 — Trưởng bộ phận** | **Người duyệt chấm công** của nhân viên (Shift Request Approver — cùng người duyệt Chấm công bù / WFH), **không phải** người duyệt nghỉ phép. HR Manager được bước vào duyệt thay | Ngay khi nhân viên gửi đơn |
 | **2 — HR** | HR Manager **có tên trong danh sách người duyệt cuối** ở [Chính sách chấm công](Desk-Admin-Policy.html) của công ty nhân viên — **cùng danh sách** với đơn nghỉ phép. Danh sách để trống thì mọi HR Manager duyệt được. System Manager luôn duyệt được | Ngay khi trưởng bộ phận duyệt xong |
 
+> ⚙️ **Chế độ này bật/tắt được.** HR Approval Inbox Settings → dòng *HR Overtime Request* → cột
+> **Duyệt 2 cấp** (hiện đang **bật**). Bỏ tick thì đơn làm thêm quay về **1 bước**: trưởng bộ phận bấm
+> **Duyệt** là đơn có hiệu lực ngay, như trước 09/2026. Xem
+> [Vận hành chấm công theo phòng ban §1.4](Cham-Cong-Van-Hanh-Theo-Phong-Ban.html).
+
 Hai luật giống hệt đơn nghỉ phép:
 
 - **Không tự duyệt bước 1 cho đơn của chính mình.** Trưởng bộ phận là người duyệt của

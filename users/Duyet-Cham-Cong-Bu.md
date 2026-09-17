@@ -1,5 +1,5 @@
 ---
-title: "Duyệt chấm công bù — hai bước, từng phiếu & hàng loạt"
+title: "Duyệt chấm công bù — từng phiếu & hàng loạt"
 layout: default
 parent: Phê duyệt
 grand_parent: Chấm công & HR
@@ -12,10 +12,14 @@ nav_order: 3
 **Dành cho:** Quản lý bộ phận + HR · **Thời lượng:** ~3 phút
 {: .fs-3 .text-grey-dk-000 }
 
-> Đơn **"Đề xuất chấm công bù / Công tác"** và đơn **WFH** (Attendance Request) **duyệt HAI BƯỚC**,
-> giống đơn nghỉ phép: **trưởng bộ phận** duyệt trước, **HR** duyệt bước cuối. Chỉ khi HR duyệt
-> xong, hệ thống mới ghi công. Duyệt **từng phiếu trên app**; HR cần xử **nhiều phiếu một lúc** thì
-> làm trên **Desk** (mục C).
+> Đơn **"Đề xuất chấm công bù / Công tác"** và đơn **WFH** (Attendance Request) duyệt theo **cấu
+> hình** của công ty:
+>
+> - **Hiện tại: 1 BƯỚC** — người duyệt chấm công bấm **Duyệt** là xong, hệ thống ghi công ngay.
+> - Khi HR bật **Duyệt 2 cấp** (mục E): **trưởng bộ phận** duyệt trước, **HR** duyệt bước cuối, giống
+>   đơn nghỉ phép; chỉ khi HR duyệt xong hệ thống mới ghi công.
+>
+> Duyệt **từng phiếu trên app**; cần xử **nhiều phiếu một lúc** thì làm trên **Desk** (mục C).
 
 <details open markdown="block">
   <summary>Mục lục</summary>
@@ -26,7 +30,22 @@ nav_order: 3
 
 ---
 
-## A. Hai bước duyệt
+## A. Hai chế độ duyệt
+
+| | **1 bước** *(đang dùng)* | **2 cấp** *(khi bật)* |
+|---|---|---|
+| Ai duyệt | Người duyệt chấm công của nhân viên | Người duyệt chấm công → **HR** (người duyệt cuối) |
+| Duyệt xong bước đầu | **Có công ngay** | **Chưa có công** — chờ HR |
+| Tự duyệt đơn của chính mình | Không chặn (như trước) | **Bị chặn** ở bước đầu |
+| Submit trên Desk | Ai có quyền submit đều bấm được (như trước) | **Chỉ người duyệt cuối** |
+| Chấm công WFH mở khi | Người duyệt chấm công duyệt | **HR** duyệt |
+
+Người duyệt chấm công gán qua khe **Shift Request Approver** (field trên hồ sơ Employee, hoặc bảng
+**Shift Request Approver** của Department). Khe này **tách riêng khỏi người duyệt nghỉ phép** (Leave
+Approver): công ty có thể để **cùng một người**, hoặc tách — vd đơn nghỉ phép về trưởng phòng, còn đơn
+chấm công bù/công tác về điều phối vận hành. HR Manager luôn duyệt thay được.
+
+### Khi bật duyệt 2 cấp
 
 ```
 Nhân viên gửi đơn
@@ -43,12 +62,8 @@ Chờ HR duyệt ──────────────từ chối──► 
 
 | Bước | Ai duyệt | Được báo khi nào |
 |---|---|---|
-| **1 — Trưởng bộ phận** | **Người duyệt chấm công** của nhân viên — khe **Shift Request Approver** (field trên hồ sơ Employee, hoặc bảng **Shift Request Approver** của Department). HR Manager được bước vào duyệt thay | Ngay khi nhân viên gửi đơn |
+| **1 — Trưởng bộ phận** | Người duyệt chấm công của nhân viên. HR Manager được bước vào duyệt thay | Ngay khi nhân viên gửi đơn |
 | **2 — HR** | HR Manager **có tên trong danh sách người duyệt cuối** ở [Chính sách chấm công](Desk-Admin-Policy.html) của công ty nhân viên — **cùng danh sách** với đơn nghỉ phép và đơn làm thêm. Danh sách trống thì mọi HR Manager duyệt được. System Manager luôn duyệt được | Ngay khi trưởng bộ phận duyệt xong |
-
-Khe **Shift Request Approver** **tách riêng khỏi người duyệt nghỉ phép** (Leave Approver): công ty
-có thể để **cùng một người**, hoặc tách — vd đơn nghỉ phép về trưởng phòng, còn đơn chấm công
-bù/công tác về điều phối vận hành.
 
 **Hai luật giống hệt đơn nghỉ phép:**
 
@@ -63,29 +78,28 @@ bù/công tác về điều phối vận hành.
 
 ## B. Duyệt TỪNG PHIẾU trên app
 
-Mở **my-workspace → tab Cần duyệt**. Mỗi người chỉ thấy đơn ở **đúng bước của mình**:
-
-- **Trưởng bộ phận** thấy đơn *Chờ trưởng bộ phận duyệt* của **nhân viên do mình duyệt chấm công**
-  (được gán là Shift Request Approver của NV hoặc của phòng).
-- **HR** thấy đơn *Chờ HR duyệt* của các công ty mình có tên trong danh sách người duyệt cuối — kèm
-  dòng *"… đã duyệt bước 1"* cho biết trưởng bộ phận nào đã duyệt.
+Mở **my-workspace → tab Cần duyệt**. Bạn thấy đơn của **nhân viên do mình duyệt chấm công** (được
+gán là Shift Request Approver của NV hoặc của phòng). Khi bật duyệt 2 cấp, mỗi người chỉ thấy đơn ở
+**đúng bước của mình** — HR thấy đơn *Chờ HR duyệt* của các công ty mình có tên trong danh sách người
+duyệt cuối, kèm dòng *"… đã duyệt bước 1"*.
 
 Đơn hiện loại "Chấm công bù / Công tác" kèm tên + **Mã NV** (mã nhân viên chính; mã hệ thống HR-EMP
 hiện phụ bên cạnh trong màn chi tiết), khoảng ngày + lý do:
 
 <img src="images/guide/duyet/05-attendance.png" width="240" alt="Đơn chấm công bù trong tab Cần duyệt — nút Duyệt / Từ chối">
 
-| Đơn đang ở | Nút | Bấm duyệt thì |
-|---|---|---|
-| *Chờ trưởng bộ phận duyệt* | **Duyệt (Trưởng bộ phận)** · **Từ chối** | Đơn chuyển lên HR, HR nhận thông báo. **Chưa có công** |
-| *Chờ HR duyệt* | **Duyệt (HR)** · **Từ chối** | Xong: hệ thống tạo công **Có mặt** (hoặc **WFH**) cho (các) ngày trong đơn |
+| Nhãn trên thẻ | Chế độ | Nút | Bấm duyệt thì |
+|---|---|---|---|
+| *Chờ duyệt* | 1 bước | **Duyệt** · **Từ chối** | Xong: hệ thống tạo công **Có mặt** (hoặc **WFH**) |
+| *Chờ trưởng bộ phận duyệt* | 2 cấp | **Duyệt (Trưởng bộ phận)** · **Từ chối** | Đơn chuyển lên HR, HR nhận thông báo. **Chưa có công** |
+| *Chờ HR duyệt* | 2 cấp | **Duyệt (HR)** · **Từ chối** | Xong: hệ thống tạo công **Có mặt** (hoặc **WFH**) |
 
 - **Từ chối** (ở bước nào cũng vậy) → đơn bị xoá; **bắt buộc nhập lý do** mới từ chối được (bỏ trống,
   hệ thống báo *"Vui lòng nhập lý do từ chối."*), và **nhân viên nhận được lý do** kèm thông báo. Ngày
   đó nhân viên **không có công** (kể cả khi đã check-in ngoài VP dựa trên đơn — với KTV hiện trường,
   xem [Guide KTV](Guide-KTV-ChamCong.html)).
-- Nhân viên thấy trên Bảng công nhãn *Chờ trưởng bộ phận duyệt* rồi *Chờ HR duyệt*, trước khi ngày đó
-  chuyển thành công.
+- Khi bật 2 cấp, nhân viên thấy trên Bảng công nhãn *Chờ trưởng bộ phận duyệt* rồi *Chờ HR duyệt*,
+  trước khi ngày đó chuyển thành công.
 
 > 📱 App duyệt **từng phiếu một** — phù hợp nhịp hằng ngày (1-2 đơn lẻ tẻ). Cuối tuần/cuối tháng dồn
 > nhiều phiếu → dùng Desk bên dưới.
@@ -94,15 +108,17 @@ hiện phụ bên cạnh trong màn chi tiết), khoảng ngày + lý do:
 
 ## C. Duyệt HÀNG LOẠT trên Desk (HR)
 
-> 🔑 **Chỉ người duyệt cuối mới Submit được.** Submit trên Desk là duyệt **bước cuối** — đơn có hiệu
-> lực ngay. Hệ thống chỉ cho HR Manager **có tên trong danh sách người duyệt cuối** của công ty nhân
-> viên (hoặc System Manager) bấm. Trưởng bộ phận có role *Attendance Request Approver* vẫn thấy nút
-> **Submit** trên Desk, nhưng bấm sẽ bị chặn với thông báo *"Chỉ người duyệt cuối (HR) mới duyệt xong
-> được đơn này"* — trưởng bộ phận duyệt bước 1 trên app.
+> 🔑 **Ai Submit được trên Desk** — Submit là duyệt **xong**, đơn có hiệu lực ngay:
+>
+> - **1 bước** (đang dùng): ai có quyền submit Attendance Request đều bấm được, như trước — HR User,
+>   HR Manager, System Manager, và trưởng bộ phận có role *Attendance Request Approver*.
+> - **2 cấp**: chỉ HR Manager **có tên trong danh sách người duyệt cuối** của công ty nhân viên (hoặc
+>   System Manager). Trưởng bộ phận vẫn thấy nút **Submit** nhưng bấm sẽ bị chặn với thông báo *"Chỉ
+>   người duyệt cuối (HR) mới duyệt xong được đơn này"* — trưởng bộ phận duyệt bước 1 trên app.
 
 **Bước 1 —** Vào Desk → app **Frappe HR → Shift & Attendance → Attendance Request** (hoặc gõ
-"Attendance Request" vào ô Search). Lọc **Status = Draft** và **Bước duyệt = Manager Approved** để
-lấy đúng những đơn trưởng bộ phận đã duyệt — thêm lọc **From Date / Department** để rà từng cụm:
+"Attendance Request" vào ô Search). Lọc **Status = Draft** (khi bật 2 cấp: thêm **Bước duyệt = Manager Approved** để lấy đúng những đơn
+trưởng bộ phận đã duyệt) — thêm lọc **From Date / Department** để rà từng cụm:
 
 <img src="images/desk/hr-ar-bulk-list.png" width="720" alt="List Attendance Request — các đơn Draft chờ duyệt">
 
@@ -119,8 +135,8 @@ nào lỗi sẽ báo riêng, các phiếu còn lại vẫn được duyệt:
 > ✅ Submit xong, mỗi ngày trong từng đơn được tạo bản ghi công (**Present** — hoặc **WFH** nếu đơn
 > WFH) theo ca chuẩn của nhân viên. Nhân viên thấy ngày đó chuyển **"Có mặt"** trên Bảng công.
 
-> 🧾 **Submit đơn chưa qua trưởng bộ phận** (ô *Bước duyệt* là *Pending Manager* hoặc trống — đơn nộp
-> trước khi có duyệt hai cấp để trống) = HR làm **luôn cả bước 1**, như HR bước vào bước duyệt quản lý
+> 🧾 **Khi bật 2 cấp — Submit đơn chưa qua trưởng bộ phận** (ô *Bước duyệt* là *Pending Manager* hoặc
+> trống) = HR làm **luôn cả bước 1**, như HR bước vào bước duyệt quản lý
 > của đơn nghỉ. Tên HR được ghi vào ô *Trưởng bộ phận duyệt*. Riêng đơn **của chính HR** thì không bỏ
 > qua bước 1 được — phải có trưởng bộ phận duyệt trước. Đây cũng là cách **HR nhập thay** đơn cho
 > nhân viên: tạo đơn trên Desk rồi Submit.
@@ -146,17 +162,40 @@ quyền sửa bản ghi công. Trưởng bộ phận phát hiện nhầm thì b�
 
 ---
 
+## E. Bật / tắt duyệt 2 cấp (HR / quản trị)
+
+Chế độ duyệt đặt **theo từng loại đơn**, ở Desk → **HR Approval Inbox Settings** → bảng **Inbox
+Doctypes** → dòng **Attendance Request** → cột **Duyệt 2 cấp**:
+
+| Cột *Duyệt 2 cấp* | Chế độ |
+|---|---|
+| ☐ bỏ tick *(đang dùng)* | **1 bước**, như trước 09/2026 |
+| ☑ tick | **2 cấp** — trưởng bộ phận → HR |
+
+Bấm **Save** là có hiệu lực ngay, không cần deploy hay restart. Cột này đặt riêng cho từng dòng: dòng
+**HR Overtime Request** (làm thêm giờ) có công tắc riêng — hiện đang **bật**. Đơn nghỉ phép luôn 2 cấp
+theo workflow nên dòng *Leave Application* không có cột này.
+
+**Đổi chế độ khi đang có đơn chờ:**
+
+- **2 cấp → 1 bước:** đơn đang *Chờ HR duyệt* quay lại hộp duyệt của **trưởng bộ phận** với nhãn *Chờ
+  duyệt*; trưởng bộ phận bấm **Duyệt** là xong.
+- **1 bước → 2 cấp:** đơn chưa ai duyệt bắt đầu đi 2 bước từ *Chờ trưởng bộ phận duyệt*.
+
+---
+
 ## ⚠️ Lỗi thường gặp
 
 | Tình huống | Cách xử |
 |---|---|
 | Không thấy nút **Submit** trong Actions | Tài khoản thiếu quyền submit — báo quản trị cấp role |
-| Bấm **Submit** báo *"Chỉ người duyệt cuối (HR) mới duyệt xong được đơn này"* | Bạn không phải người duyệt cuối của công ty nhân viên. Trưởng bộ phận duyệt bước 1 trên app; HR xem danh sách ở [Chính sách chấm công](Desk-Admin-Policy.html) |
-| Bấm **Submit** báo *"Không tự duyệt được đơn của chính mình"* | Đơn của chính bạn chưa qua trưởng bộ phận — nhờ trưởng bộ phận duyệt bước 1 trước |
-| HR không thấy đơn trên app | Đơn chưa qua trưởng bộ phận; hoặc bạn không có tên trong danh sách người duyệt cuối của công ty nhân viên |
-| Trưởng bộ phận duyệt rồi mà NV vẫn chưa có công | Đúng thiết kế — đơn còn chờ HR. Nhãn trên app: *Chờ HR duyệt* |
+| *(2 cấp)* Bấm **Submit** báo *"Chỉ người duyệt cuối (HR) mới duyệt xong được đơn này"* | Bạn không phải người duyệt cuối của công ty nhân viên. Trưởng bộ phận duyệt bước 1 trên app; HR xem danh sách ở [Chính sách chấm công](Desk-Admin-Policy.html) |
+| *(2 cấp)* Bấm **Submit** báo *"Không tự duyệt được đơn của chính mình"* | Đơn của chính bạn chưa qua trưởng bộ phận — nhờ trưởng bộ phận duyệt bước 1 trước |
+| *(2 cấp)* HR không thấy đơn trên app | Đơn chưa qua trưởng bộ phận; hoặc bạn không có tên trong danh sách người duyệt cuối của công ty nhân viên |
+| *(2 cấp)* Trưởng bộ phận duyệt rồi mà NV vẫn chưa có công | Đúng thiết kế — đơn còn chờ HR. Nhãn trên app: *Chờ HR duyệt* |
+| Không rõ công ty đang dùng chế độ nào | Xem mục E — cột **Duyệt 2 cấp** của dòng *Attendance Request* |
 | Bulk submit báo lỗi vài phiếu | Mở từng phiếu lỗi xem message (vd ngày đã có công, trùng đơn) — các phiếu khác vẫn duyệt bình thường |
-| Quản lý bộ phận không thấy đơn trên app | Kiểm tra đã gán **Shift Request Approver** chưa — field trên **Employee** (Approvers) hoặc bảng **Shift Request Approver** của **Department**. Lưu ý khe này **tách khỏi Leave Approver** (duyệt nghỉ phép) — gán duyệt phép thôi là **chưa đủ**. Đơn đã qua bước 1 cũng không còn hiện với trưởng bộ phận |
+| Quản lý bộ phận không thấy đơn trên app | Kiểm tra đã gán **Shift Request Approver** chưa — field trên **Employee** (Approvers) hoặc bảng **Shift Request Approver** của **Department**. Lưu ý khe này **tách khỏi Leave Approver** (duyệt nghỉ phép) — gán duyệt phép thôi là **chưa đủ**. Khi bật 2 cấp, đơn đã qua bước 1 cũng không còn hiện với trưởng bộ phận |
 | Người duyệt không thấy tab **Cần duyệt** | Thiếu role **Attendance Request Approver** (hoặc Leave Approver nếu kiêm duyệt phép) — báo quản trị cấp role |
 | Bấm **Duyệt** báo *"does not have doctype access via role permission"* | Thấy được đơn nhưng thiếu quyền duyệt: user chưa có role **Attendance Request Approver**. Leave Approver chỉ đủ để **thấy** tab, không đủ để duyệt chấm công bù — báo quản trị cấp role (xem [Cấp phép](Desk-HR-CapPhep.html), mục B2 bước 3) |
 | HR duyệt rồi mà NV chưa thấy "Có mặt" | Bảo NV kéo làm mới Bảng công; vẫn thiếu → xem đơn đã Submitted chưa |

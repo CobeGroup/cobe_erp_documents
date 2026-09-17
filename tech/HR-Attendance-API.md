@@ -286,9 +286,21 @@ Endpoints (`api.attendance_request`):
 - **Duyệt**: tab **"Cần duyệt"** = `api.approval.act`, **hai bước** (trưởng bộ phận → HR; bước HR mới
   submit Attendance Request → HRMS tạo Attendance).
 
-#### Duyệt hai bước — Attendance Request & HR Overtime Request (từ 09/2026)
+#### Duyệt 1 bước / 2 cấp — Attendance Request & HR Overtime Request (từ 09/2026)
 
-Cùng khuôn với Leave Application, cùng tên state để PWA dùng chung một bộ nút:
+**Công tắc theo từng loại đơn:** `HR Approval Inbox Doctype.two_level_approval` (cột *Duyệt 2 cấp* trên
+HR Approval Inbox Settings), mặc định 1; patch `v0_043` tắt riêng dòng Attendance Request (chốt
+17/09/2026: chấm công bù 1 bước, làm thêm 2 cấp). `_get_inbox_configs()` trả khoá `two_level`;
+thiếu cột (chưa migrate) thì coi như bật. `approval.two_level_enabled(doctype)` dùng cho chỗ không
+có sẵn cfg (hook `before_submit`); không có dòng cấu hình cũng coi như bật.
+
+**Tắt (1 bước)** — y như trước 09/2026: item mang `state = "Pending"`; mọi action duyệt (`Submit`,
+`Approve`, `Manager Approve`) là duyệt cuối, mọi action từ chối (`Cancel`, `Reject`, `Manager Reject`,
+`HR Reject`) là từ chối; người được bấm = người duyệt chấm công hoặc HR Manager / System Manager;
+không chặn tự duyệt; hook `before_submit` không chặn. Đơn đang chờ HR lúc tắt (AR `Manager Approved`,
+OT `status = Manager Approved`) được coi là đơn chờ bình thường.
+
+**Bật (2 cấp)** — cùng khuôn với Leave Application, cùng tên state để PWA dùng chung một bộ nút:
 
 | Bước | `state` trong item của `get_my_pending_approvals` | Nguồn trạng thái |
 |---|---|---|
