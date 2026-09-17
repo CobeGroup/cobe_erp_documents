@@ -75,7 +75,8 @@ theo đơn).
 **Duyệt hai cấp**, như đơn nghỉ phép:
 
 - **Bước 1** — **Shift Request Approver** (trên Employee hoặc Department), cùng bộ với
-  Attendance Request, tách khỏi Leave Approver. HR Manager bước vào thay được. Không tự
+  Attendance Request, tách khỏi Leave Approver. Hộp duyệt chỉ hiện đơn bước này cho đúng
+  người duyệt đó — HR không thấy, và đơn làm thêm không có đường duyệt trên Desk. Không tự
   duyệt bước này cho đơn của chính mình.
 - **Bước cuối** — HR Manager có tên trong **danh sách người duyệt cuối** của `HR Policy`
   (cùng danh sách với đơn nghỉ phép; trống = mọi HR Manager). System Manager luôn duyệt được.
@@ -89,7 +90,8 @@ luật tính công ngày nghỉ) chỉ đọc `Approved`, nên hiệu lực ch�
 
 **Status và kết quả duyệt chỉ đổi qua mục Cần duyệt** (và các thao tác huỷ duyệt / rút đơn /
 hết hạn). Leave Approver và HR Manager có quyền ghi mọi đơn làm thêm, nên không chặn ở server thì
-gọi `/api/resource` là tự đặt được `Approved` mà không qua ai. Các chốt, System Manager được miễn:
+gọi `/api/resource` là tự đặt được `Approved` mà không qua ai. Các chốt dưới — System Manager được miễn
+việc **chặn**, nhưng vẫn theo luật "quay về *Pending*" và "không tính lại số giờ":
 
 | Thao tác trên Desk / API | Kết quả |
 |---|---|
@@ -97,7 +99,8 @@ gọi `/api/resource` là tự đặt được `Approved` mà không qua ai. Cá
 | Đổi `status`, `approved_by/on`, `manager_approved_by/on`, `reject_reason`, `attendance`, `granted_hours` | Bị chặn |
 | Sửa đơn **đang chờ HR** (*Manager Approved*): đổi nhân viên, ngày, khung giờ, hình thức quy đổi hoặc lý do | Lưu được, đơn **quay về *Pending*** — trưởng bộ phận duyệt lại |
 | Sửa đơn **đã xử xong** (*Approved*, *Rejected*, *Cancelled*, *Expired*): đổi nhân viên, ngày, khung giờ, hình thức quy đổi | Bị chặn — cần đổi thì **Huỷ duyệt** rồi khai đơn mới |
-| Lưu lại đơn đã xử xong (vd sửa lý do) | Lưu được, **không tính lại** số giờ: trần giờ hay lịch nghỉ đổi về sau không làm đổi số giờ đơn đã duyệt |
+| Lưu lại đơn đã xử xong (vd sửa lý do) | Lưu được, **không tính lại** số giờ: trần giờ hay lịch nghỉ đổi về sau không làm đổi số giờ đơn đã duyệt. Gửi thẳng `expected_hours` lên cũng bị bỏ. System Manager sửa nội dung thì số giờ tính lại theo nội dung mới |
+| Form mở từ trước lúc đối chiếu chấm công chạy | Lưu được; `attendance` và `granted_hours` giữ kết quả đối chiếu trong DB, không bị form cũ đè |
 
 Hai cấp là **công tắc** — HR Approval Inbox Settings → dòng *HR Overtime Request* → cột **Duyệt 2 cấp**
 (hiện bật). Tắt thì duyệt 1 bước như trước: trưởng bộ phận duyệt là `Approved` ngay; đơn đang ở
@@ -218,7 +221,7 @@ HR Manager mở **Desk → HR Overtime Request** khi cần:
 
 | Việc | Cách làm |
 |---|---|
-| Duyệt thay | Trên PWA, tab **Cần duyệt**. `status` là trường chỉ đọc — không sửa tay trên Desk được; mọi chuyển trạng thái đi qua luồng duyệt để có đủ hiệu lực đi kèm (đối chiếu chấm công, thông báo) |
+| Người duyệt bước 1 vắng | Khai thêm người duyệt cho phòng (bảng *Shift Request Approver* của Department) hoặc đổi người duyệt trên hồ sơ nhân viên — đơn đang chờ hiện ngay cho người mới. HR không duyệt thay bước 1 trên app được. `status` là trường chỉ đọc — không sửa tay trên Desk được; mọi chuyển trạng thái đi qua luồng duyệt để có đủ hiệu lực đi kèm (đối chiếu chấm công, thông báo) |
 | Sửa duyệt nhầm | Đơn đã **Approved** → nút **Huỷ duyệt** (Desk hoặc tab *Đã duyệt · OT* trên PWA) — xem [Duyệt đơn làm thêm giờ §5](Duyet-Lam-Them.html#5-lỡ-duyệt-nhầm--huỷ-duyệt). Đơn còn chờ HR → HR **từ chối** ở bước 2 |
 | Đơn quá hạn khai | HR tạo đơn hộ trên Desk (điền employee, ngày, giờ, payout). Đơn tạo trên Desk **không tự báo** ai, nên nhắc trưởng bộ phận của nhân viên vào tab **Cần duyệt** duyệt bước 1 — hộp duyệt chỉ hiện đơn bước 1 cho đúng người duyệt của nhân viên, như đơn nghỉ phép. Sau đó HR duyệt bước cuối; đối chiếu chấm công chạy ngay lúc đó |
 | Kiểm tra giờ đã ghi nhận | Xem `granted_hours` + link `attendance` trên đơn; hoặc mở Attendance xem section **Overtime** |

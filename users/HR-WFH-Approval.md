@@ -85,8 +85,8 @@ WFH duyệt **chung cơ chế với chấm công bù** — qua tab **"Cần duy�
 **Từ chối** ở bước nào cũng được (bắt buộc lý do) → đơn nháp bị **xoá**, nhân viên nhận lý do.
 
 > Phân quyền: người duyệt bước 1 là **`shift_request_approver`** của nhân viên (trên Employee hoặc
-> bảng Department Approver) — không phải `leave_approver`. HR Manager / System Manager được bước vào
-> thay ở bước này. Bước cuối là người duyệt cuối của `HR Policy` (hoặc System Manager). Chi tiết:
+> bảng Department Approver) — không phải `leave_approver`. Trên app, đơn ở bước này chỉ hiện với người
+> duyệt đó; HR không thấy. Bước cuối là người duyệt cuối của `HR Policy` (hoặc System Manager). Chi tiết:
 > [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html).
 
 ---
@@ -101,8 +101,11 @@ Check-in WFH (GPS + selfie) **vẫn là phần custom của app** (xem `api.atte
 4. Nếu không có AR WFH duyệt → check-in WFH bị từ chối, hướng dẫn NV đăng ký WFH trước
 
 > ⚠️ **"Đã duyệt" là đơn đã submit** (`docstatus = 1`). Khi bật 2 cấp, trưởng bộ phận duyệt bước 1
-> xong thì nhân viên **vẫn chưa** chấm công WFH được — đơn WFH làm ngay trong ngày phải được duyệt đủ
-> hai bước trước giờ bắt đầu làm.
+> xong thì nút **chấm công WFH** vẫn chưa mở — nút đó chờ HR duyệt bước cuối.
+>
+> Lưu ý: nút **chấm công thường** thì khác — hễ có đơn WFH / công tác phủ hôm nay, kể cả đơn **đang
+> chờ duyệt**, lần chấm công đó được bỏ qua kiểm tra vị trí (`_remote_request_today`). Hành vi này có
+> từ trước khi có duyệt 2 cấp.
 
 ---
 

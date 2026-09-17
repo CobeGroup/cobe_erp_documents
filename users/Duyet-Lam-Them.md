@@ -46,7 +46,7 @@ Chờ HR duyệt ──────────────từ chối──► 
 
 | Bước | Ai duyệt | Được báo khi nào |
 |---|---|---|
-| **1 — Trưởng bộ phận** | **Người duyệt chấm công** của nhân viên (Shift Request Approver — cùng người duyệt Chấm công bù / WFH), **không phải** người duyệt nghỉ phép. HR Manager được bước vào duyệt thay | Ngay khi nhân viên gửi đơn |
+| **1 — Trưởng bộ phận** | **Người duyệt chấm công** của nhân viên (Shift Request Approver — cùng người duyệt Chấm công bù / WFH), **không phải** người duyệt nghỉ phép. Trên app chỉ người này thấy đơn ở bước 1 | Ngay khi nhân viên gửi đơn |
 | **2 — HR** | HR Manager **có tên trong danh sách người duyệt cuối** ở [Chính sách chấm công](Desk-Admin-Policy.html) của công ty nhân viên — **cùng danh sách** với đơn nghỉ phép. Danh sách để trống thì mọi HR Manager duyệt được. System Manager luôn duyệt được | Ngay khi trưởng bộ phận duyệt xong |
 
 > ⚙️ **Chế độ này bật/tắt được.** HR Approval Inbox Settings → dòng *HR Overtime Request* → cột
@@ -54,7 +54,7 @@ Chờ HR duyệt ──────────────từ chối──► 
 > **Duyệt** là đơn có hiệu lực ngay, như trước 09/2026. Xem
 > [Vận hành chấm công theo phòng ban §1.4](Cham-Cong-Van-Hanh-Theo-Phong-Ban.html).
 
-Ba luật giống đơn nghỉ phép:
+Ba luật cần nhớ (hai luật đầu giống đơn nghỉ phép):
 
 - **Không tự duyệt bước 1 cho đơn của chính mình.** Trưởng bộ phận là người duyệt của
   chính mình thì người duyệt khác của phòng (bảng người duyệt chấm công trên
@@ -65,8 +65,9 @@ Ba luật giống đơn nghỉ phép:
   mình, giống đơn nghỉ của quản lý đi thẳng HR. HR đứng đầu tự duyệt được đơn của mình ở
   bước này. Sau này khai thêm người duyệt cho nhân viên đó thì đơn đang chờ tự quay về
   bước 1.
-- **HR bước vào bước 1 vẫn phải bấm hai lần** — một lần cho bước trưởng bộ phận, một
-  lần cho bước HR.
+- **HR không duyệt thay bước 1 trên app** (hộp duyệt không hiện đơn bước 1 cho HR, và đơn
+  làm thêm không có đường duyệt trên Desk). Người duyệt vắng lâu thì khai thêm người duyệt
+  cho phòng — đơn đang chờ hiện ngay cho người mới.
 
 ---
 
@@ -213,8 +214,9 @@ Hệ số ×2.0 là **cấu hình được** per company — xem
 |---|---|
 | Trưởng bộ phận không thấy đơn trong Cần duyệt | Chưa được gán làm **Shift Request Approver** của nhân viên đó → báo HR. Hoặc đơn đã qua bước 1 (đang chờ HR) |
 | HR không thấy đơn trong Cần duyệt | Đơn chưa qua trưởng bộ phận; hoặc bạn không có tên trong danh sách người duyệt cuối của công ty nhân viên — xem [Chính sách chấm công](Desk-Admin-Policy.html) |
-| *"Bạn không phải người duyệt đơn này ở bước hiện tại"* | Đơn đã sang bước khác từ lúc bạn mở màn hình, hoặc bạn đang duyệt bước 1 cho đơn của chính mình. Tải lại danh sách |
-| Sửa đơn làm thêm trên Desk | Đơn đang chờ HR mà sửa ngày, khung giờ, hình thức hay lý do → quay về chờ trưởng bộ phận duyệt lại. Đơn đã duyệt / từ chối thì không sửa được các ô đó — cần đổi thì **Huỷ duyệt** rồi khai đơn mới. Xem [HR Overtime Request](HR-Overtime-Request.html) |
+| *"Đơn đã qua bước trưởng bộ phận duyệt…"* / *"Đơn chưa tới bước HR duyệt…"* / *"Đơn không còn ở trạng thái chờ duyệt"* | Đơn đã sang bước khác từ lúc bạn mở màn hình — người khác vừa duyệt, hoặc đơn bị sửa nên quay về bước 1. Tải lại danh sách |
+| *"Bạn không phải người duyệt đơn này ở bước hiện tại"* | Bạn không phải người duyệt của nhân viên này ở bước đó, hoặc đang duyệt bước 1 cho đơn của chính mình |
+| Sửa đơn làm thêm trên Desk | Đơn đang chờ HR mà sửa ngày, khung giờ, hình thức hay lý do → quay về chờ trưởng bộ phận duyệt lại. Đơn đã duyệt / từ chối thì không sửa được nhân viên, ngày, khung giờ, hình thức (lý do vẫn sửa được) — cần đổi thì **Huỷ duyệt** rồi khai đơn mới. Xem [HR Overtime Request](HR-Overtime-Request.html) |
 | Đơn của trưởng phòng hiện thẳng ở hộp HR | Đúng thiết kế — ngoài chính họ không còn ai duyệt chấm công cho họ (mục 1). Muốn có bước 1 thì khai thêm người duyệt cho phòng hoặc cho hồ sơ nhân viên |
 | Nhân viên kêu "trưởng bộ phận duyệt rồi mà chưa có giờ" | Đúng thiết kế — đơn còn chờ HR. Nhãn trên app: *Trưởng bộ phận đã duyệt · chờ HR* |
 | Nhân viên kêu "duyệt rồi mà 0 giờ" | Kiểm tra hôm đó có check-out không, check-out có sau giờ tan ca không |

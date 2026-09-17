@@ -138,7 +138,7 @@ Muốn quay lại như cũ: **xoá hết dòng trong bảng** rồi Save — kh�
 
 | | Vì sao |
 |---|---|
-| **Bước 1 (Trưởng Bộ Phận)** | Theo `leave_approver` (nghỉ phép) hoặc *Shift Request Approver* (chấm công bù, làm thêm); HR Manager ngoài danh sách vẫn duyệt thay được ở bước này |
+| **Bước 1 (Trưởng Bộ Phận)** | Theo `leave_approver` (nghỉ phép) hoặc *Shift Request Approver* (chấm công bù, làm thêm). Trên app, đơn ở bước này chỉ hiện với đúng người duyệt của nhân viên — người duyệt vắng lâu thì khai thêm người duyệt cho phòng |
 | **Huỷ đơn đã duyệt** | Giữ nguyên quyền cũ của từng loại đơn — duyệt hai bước chặn việc **cấp** hiệu lực, còn huỷ chỉ **rút** hiệu lực |
 | **Đơn đã chuyển đích danh** | Người được chuyển tới quyết — nhưng chỉ chuyển được cho người trong danh sách (mục 5) |
 

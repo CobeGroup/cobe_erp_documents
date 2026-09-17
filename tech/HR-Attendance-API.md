@@ -96,9 +96,9 @@ Permissions: HR Manager + System Manager submit, Employee read own.
 WFH model hiện tại:
 - **Đăng ký WFH** = tạo `Attendance Request` (reason="Work From Home", 1 ngày
   `from_date = to_date`). Nhãn địa điểm lưu ở custom field `custom_work_location_label`.
-- **Duyệt** = hai bước qua tab "Cần duyệt" (`api.approval.act`): trưởng bộ phận rồi HR. Bước HR
-  submit Attendance Request, HRMS **tự tạo Attendance status="Work From Home"** cho ngày đó —
-  xem §"Duyệt hai bước" bên dưới.
+- **Duyệt** = qua tab "Cần duyệt" (`api.approval.act`), 1 bước (mặc định sau patch `v0_043`) hoặc 2
+  cấp trưởng bộ phận → HR theo công tắc. Bước cuối submit Attendance Request, HRMS **tự tạo
+  Attendance status="Work From Home"** cho ngày đó — xem §"Duyệt 1 bước / 2 cấp" bên dưới.
 - **Check-in WFH** (GPS audit + selfie) = phần CUSTOM giữ lại, gate vào Attendance
   Request WFH đã duyệt (docstatus=1) phủ ngày hôm nay.
 
@@ -283,7 +283,7 @@ Endpoints (`api.attendance_request`):
 - `GET get_my_attendance_requests?limit=50` — list đơn của NV (**cả On Duty lẫn WFH**),
   kèm `reason`, `work_location_label`, `status` (`Pending` / `Manager Approved` / `Approved` /
   `Rejected` — suy từ docstatus + `custom_approval_state`).
-- **Duyệt**: tab **"Cần duyệt"** = `api.approval.act`, **hai bước** (trưởng bộ phận → HR; bước HR mới
+- **Duyệt**: tab **"Cần duyệt"** = `api.approval.act`, 1 bước hoặc 2 cấp theo công tắc (bước cuối mới
   submit Attendance Request → HRMS tạo Attendance).
 
 #### Duyệt 1 bước / 2 cấp — Attendance Request & HR Overtime Request (từ 09/2026)
@@ -303,11 +303,13 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
 
 > ⚠️ **Migrate là bắt buộc khi deploy.** Chỉ riêng cột công tắc có lớp chống thiếu cột; hộp duyệt,
 > danh sách đơn của nhân viên và hook còn đọc `custom_approval_state`, `custom_manager_approved_by`,
-> `HR Overtime Request.manager_approved_by`… — code chạy trước migrate thì các màn này báo lỗi SQL.
+> `HR Overtime Request.manager_approved_by`… — code chạy trước migrate thì danh sách đơn của nhân viên
+> báo lỗi SQL, còn hộp duyệt **lặng lẽ mất** chấm công bù / làm thêm (chỉ có dòng Error Log "Hộp duyệt:
+> không đọc được …"). Hộp duyệt trống sau deploy không có nghĩa là migrate đã ổn — soi Error Log.
 
 **Tắt (1 bước)** — y như trước 09/2026: item mang `state = "Pending"`; mọi action duyệt (`Submit`,
-`Approve`, `Manager Approve`) là duyệt cuối, mọi action từ chối (`Cancel`, `Reject`, `Manager Reject`,
-`HR Reject`) là từ chối; người được bấm = người duyệt chấm công hoặc HR Manager / System Manager;
+`Approve`, `Manager Approve`, `HR Approve`) là duyệt cuối, mọi action từ chối (`Cancel`, `Reject`,
+`Manager Reject`, `HR Reject`) là từ chối; người được bấm = người duyệt chấm công hoặc HR Manager / System Manager;
 không chặn tự duyệt; hook `before_submit` không chặn. Đơn đang chờ HR lúc tắt (AR `Manager Approved`,
 OT `status = Manager Approved`) được coi là đơn chờ bình thường.
 
@@ -323,27 +325,33 @@ OT `status = Manager Approved`) được coi là đơn chờ bình thường.
 | `action` | Hợp lệ ở bước | Tác dụng |
 |---|---|---|
 | `Manager Approve` | Chờ trưởng bộ phận | AR: ghi `custom_approval_state`, `custom_manager_approved_by/_on` (vẫn nháp) · OT: `status = Manager Approved`, `manager_approved_by/_on`. Báo người duyệt cuối |
-| `Submit` | Chờ HR | AR: `doc.submit()` · OT: `status = Approved`, `approved_by/_on`, đối chiếu chấm công, báo NV |
+| `HR Approve` | Chờ HR | AR: `doc.submit()` · OT: `status = Approved`, `approved_by/_on`, đối chiếu chấm công, báo NV |
 | `Manager Reject` / `HR Reject` | Đúng bước tên gọi | AR: xoá đơn nháp · OT: `status = Rejected`, `reject_reason`. Bắt buộc `reason`, báo NV |
+| `Submit` / `Approve` *(tên cũ)* | Bất kỳ bước | Duyệt **ở bước hiện tại** — không bao giờ nhảy qua bước HR |
 | `Cancel` / `Reject` *(tên cũ)* | Bất kỳ bước | Như từ chối ở bước hiện tại. AR đã submit: `doc.cancel()` |
 
-`Submit` gửi cho đơn còn ở bước trưởng bộ phận (bundle PWA cũ) **chỉ được hiểu là duyệt bước đó**,
-không bao giờ nhảy thẳng qua bước HR. Action gắn cứng một bước mà đơn đã sang bước khác → lỗi
-*"Tải lại danh sách"*.
+PWA hiện tại chỉ gửi action gắn cứng bước (`Manager Approve` / `HR Approve` / `Manager Reject` /
+`HR Reject`; nút duyệt HR của **đơn nghỉ** vẫn là `Submit` vì đó là tên transition của workflow). Tên
+cũ còn nhận cho bundle trong cache máy người dùng. Action gắn cứng một bước mà đơn đã ở bước khác —
+hai người mở cùng một đơn, hoặc đơn vừa bị đá về bước 1 — báo lỗi *"… Tải lại danh sách"* thay vì âm
+thầm làm ở bước kia.
 
-**Lên thẳng bước HR** (`_manager_stage_skipped(employee)`): ngoài chính nhân viên không còn
-`shift_request_approver` nào (Employee lẫn Department Approver) thì bước hiệu lực là *Chờ HR* dù nguồn
+**Lên thẳng bước HR** (`_manager_stage_skipped(employee, cfg)`): ngoài chính nhân viên không còn
+`shift_request_approver` nào **dùng được hộp duyệt** — tài khoản đang bật, có role trong `viewer_roles` và
+trong `approver_roles` (`_usable_approvers`) — thì bước hiệu lực là *Chờ HR* dù nguồn
 trạng thái ghi bước trưởng bộ phận — `_ar_stage` / `_ot_stage` nhận `skipped`, hộp duyệt dùng
-`_HAS_OTHER_APPROVER_SQL` (cùng luật), `before_submit` không hỏi bước 1. Không có nhánh này thì đơn
+`_has_other_approver_sql(cfg, params)` (cùng luật), `before_submit` không hỏi bước 1. Không có nhánh này thì đơn
 kẹt: người đó không được tự duyệt bước 1, còn HR không thấy đơn bước 1. Tính lúc đọc, không ghi vào
 đơn. Lúc nộp đơn, `new_request_recipients(doctype, employee)` báo HR thay cho người duyệt (chỉ khi bật
 2 cấp).
 
 **Ai được bấm** (`_can_act_two_level`, `stage` là bước hiệu lực):
 
-- Bước trưởng bộ phận: `shift_request_approver` của NV (Employee hoặc Department Approver); HR
-  Manager / System Manager bước vào thay. **Không tự duyệt** đơn của chính mình — so với tài khoản
-  của nhân viên đứng tên đơn (Administrator được miễn, như Frappe).
+- Bước trưởng bộ phận: `shift_request_approver` của NV (Employee hoặc Department Approver). Hàm này
+  cho HR Manager / System Manager bước vào thay, nhưng khi `restrict_to_leave_approver = 1` hộp duyệt
+  không hiện đơn bước 1 cho họ (`_APPROVER_MATCH_SQL`), nên thực tế chỉ gọi `act` trực tiếp mới làm
+  được; AR thì còn đường Desk submit (làm cả hai bước). **Không tự duyệt** đơn của chính mình — so với
+  tài khoản của nhân viên đứng tên đơn (Administrator được miễn, như Frappe).
 - Bước HR: HR Manager có tên trong `HR Policy.final_leave_approvers` của công ty NV (bảng trống =
   mọi HR Manager); System Manager luôn được. Tự duyệt được (như `allow_self_approval = 1` ở Leave).
 
@@ -374,7 +382,8 @@ Desk, API hay bulk đều dính. Người duyệt cuối submit thẳng đơn ch
   `Cancel`/`Reject` là huỷ đơn đã duyệt — người duyệt bấm trên màn hình cũ sẽ huỷ nhầm.
 - `cancel_my_overtime_request` đọc đơn `for_update`: HR đang duyệt (giữ khoá trong `act`) thì nhân viên
   đọc sau và thấy `Approved`, không đè `Cancelled` lên đơn vừa có hiệu lực.
-- `new_request_recipients` bỏ chính nhân viên khỏi danh sách báo khi bật 2 cấp.
+- `new_request_recipients` khi bật 2 cấp chỉ báo người duyệt được bước 1 (bỏ chính nhân viên, bỏ người
+  thiếu role / tài khoản khoá).
 
 **Không đổi:** quyền huỷ đơn đã duyệt (AR `Cancel`, OT `cancel_approved_request`) — hai bước chặn
 việc cấp hiệu lực, còn huỷ chỉ rút hiệu lực. Lưu ý với AR: `doc.cancel()` kéo theo huỷ `Attendance`,

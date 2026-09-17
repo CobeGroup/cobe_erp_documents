@@ -43,7 +43,8 @@ nav_order: 3
 Người duyệt chấm công gán qua khe **Shift Request Approver** (field trên hồ sơ Employee, hoặc bảng
 **Shift Request Approver** của Department). Khe này **tách riêng khỏi người duyệt nghỉ phép** (Leave
 Approver): công ty có thể để **cùng một người**, hoặc tách — vd đơn nghỉ phép về trưởng phòng, còn đơn
-chấm công bù/công tác về điều phối vận hành. HR Manager luôn duyệt thay được.
+chấm công bù/công tác về điều phối vận hành. Ở chế độ 1 bước, HR Manager duyệt thay được trên app;
+khi bật 2 cấp, đơn ở bước 1 chỉ hiện với người duyệt chấm công của nhân viên.
 
 ### Khi bật duyệt 2 cấp
 
@@ -62,10 +63,10 @@ Chờ HR duyệt ──────────────từ chối──► 
 
 | Bước | Ai duyệt | Được báo khi nào |
 |---|---|---|
-| **1 — Trưởng bộ phận** | Người duyệt chấm công của nhân viên. HR Manager được bước vào duyệt thay | Ngay khi nhân viên gửi đơn |
+| **1 — Trưởng bộ phận** | Người duyệt chấm công của nhân viên — trên app chỉ người này thấy đơn ở bước 1 | Ngay khi nhân viên gửi đơn |
 | **2 — HR** | HR Manager **có tên trong danh sách người duyệt cuối** ở [Chính sách chấm công](Desk-Admin-Policy.html) của công ty nhân viên — **cùng danh sách** với đơn nghỉ phép và đơn làm thêm. Danh sách trống thì mọi HR Manager duyệt được. System Manager luôn duyệt được | Ngay khi trưởng bộ phận duyệt xong |
 
-**Ba luật giống đơn nghỉ phép:**
+**Ba luật cần nhớ (hai luật đầu giống đơn nghỉ phép):**
 
 - **Không tự duyệt bước 1 cho đơn của chính mình.** Trưởng bộ phận là người duyệt của chính mình thì
   người duyệt khác của phòng duyệt bước 1. Bước HR thì được tự duyệt.
@@ -73,7 +74,9 @@ Chờ HR duyệt ──────────────từ chối──► 
   trưởng phòng hoặc HR đứng đầu tự là người duyệt chấm công của mình, giống đơn nghỉ của quản lý đi
   thẳng HR. HR đứng đầu tự duyệt được đơn của mình ở bước này. Khai thêm người duyệt cho nhân viên đó
   thì đơn đang chờ tự quay về bước 1.
-- **HR bước vào bước 1 vẫn là hai lần duyệt** — một lần cho bước trưởng bộ phận, một lần cho bước HR.
+- **HR không duyệt thay bước 1 trên app.** Người duyệt vắng lâu thì khai thêm người duyệt cho phòng.
+  Riêng trên Desk, HR có tên trong danh sách duyệt cuối bấm **Submit** là làm **cả hai bước một lần**
+  (mục C) — khác đơn nghỉ phép, nơi HR vẫn phải bấm hai lần.
 
 > ✏️ **Sửa đơn sau khi trưởng bộ phận đã duyệt** (đổi ngày, lý do, loại đơn…) thì đơn **quay về chờ
 > trưởng bộ phận duyệt lại** — HR chỉ duyệt đúng nội dung trưởng bộ phận đã xem. Ô *Bước duyệt* chỉ đổi
@@ -108,7 +111,8 @@ hiện phụ bên cạnh trong màn chi tiết), khoảng ngày + lý do:
   đó nhân viên **không có công** (kể cả khi đã check-in ngoài VP dựa trên đơn — với KTV hiện trường,
   xem [Guide KTV](Guide-KTV-ChamCong.html)).
 - Khi bật 2 cấp, nhân viên thấy trên Bảng công nhãn *Chờ duyệt* rồi *Chờ HR duyệt*, trước khi ngày đó
-  chuyển thành công.
+  chuyển thành công. Đơn lên thẳng HR thì nhân viên chỉ thấy *Chờ duyệt*. Tắt 2 cấp khi đơn đang *Chờ HR
+  duyệt* thì nhãn đó vẫn giữ tới khi đơn được xử, dù đơn đã về hộp của người duyệt chấm công.
 
 > 📱 App duyệt **từng phiếu một** — phù hợp nhịp hằng ngày (1-2 đơn lẻ tẻ). Cuối tuần/cuối tháng dồn
 > nhiều phiếu → dùng Desk bên dưới.

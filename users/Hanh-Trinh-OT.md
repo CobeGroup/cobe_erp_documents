@@ -130,7 +130,7 @@ bước nào cũng từ chối được, và phải ghi lý do).
 > đó** trên phiếu (dòng đỏ *"Lý do từ chối"*) để biết đường xử lý.
 
 **Ai là người duyệt?** Bước 1: `Shift Request Approver` (người duyệt chấm công) — **không phải**
-người duyệt nghỉ phép; HR Manager bước vào thay được. Bước cuối: HR Manager có tên trong danh sách
+người duyệt nghỉ phép. Bước cuối: HR Manager có tên trong danh sách
 người duyệt cuối của công ty — cùng danh sách với đơn nghỉ phép.
 
 > ⚙️ Hai bước này là cấu hình hiện tại của công ty — HR có thể chuyển về **1 bước** (trưởng bộ phận

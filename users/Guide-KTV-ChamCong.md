@@ -145,7 +145,8 @@ nhãn gì đặc biệt, cứ chấm như bình thường, hệ thống tự cho
 
 <img src="images/guide/dexuat/04-approved.png" width="240" alt="Sau duyệt — ngày hiện Có mặt">
 
-- **Từ chối** → đơn chuyển nhãn **Từ chối** (đỏ) và ngày đó **không có công** (vắng) — kể cả khi bạn
+- **Từ chối** → đơn **bị xoá, biến mất khỏi danh sách**, bạn nhận thông báo kèm lý do; ngày đó **không
+  có công** (vắng) — kể cả khi bạn
   đã check-in/out ngoài VP, vì các lần chấm đó dựa trên đơn. Nếu thực tế có đi làm: hỏi quản lý lý do,
   **gửi lại đơn mới** với lý do rõ hơn, hoặc nhờ HR chỉnh tay.
 

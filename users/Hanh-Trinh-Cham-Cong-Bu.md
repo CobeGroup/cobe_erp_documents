@@ -128,7 +128,8 @@ làm gì thêm. Đơn biến mất khỏi danh sách chờ, thay bằng dòng c�
 
 <img src="images/guide/dexuat/04-approved.png" width="260" alt="Sau duyệt — ngày 30/06 hiện Có mặt trên Bảng công">
 
-**Bị từ chối** (ở bước nào cũng vậy) → đơn chuyển nhãn **Từ chối** (đỏ), ngày đó **không có công**
+**Bị từ chối** (ở bước nào cũng vậy) → đơn **bị xoá, biến mất khỏi danh sách**; anh A nhận thông báo
+kèm lý do. Ngày đó **không có công**
 (để trống = vắng) — kể cả khi anh A đã check-in ngoài VP dựa trên đơn. Nếu thực tế có đi làm: hỏi
 lại người duyệt, **gửi đơn mới** với lý do/bằng chứng rõ hơn, hoặc nhờ HR chỉnh công tay.
 
@@ -143,7 +144,8 @@ lại người duyệt, **gửi đơn mới** với lý do/bằng chứng rõ h�
 | 🟡 **Chờ duyệt** | Đơn đang nằm chờ người duyệt | Chưa tính công; ngày tạm chưa có kết quả |
 | 🔵 **Chờ HR duyệt** | *(chỉ khi bật 2 cấp)* Trưởng bộ phận đã duyệt, đang chờ HR | **Vẫn chưa tính công** |
 | 🟢 *(đơn biến mất, hiện dòng công)* | **Đã duyệt** | Ngày tính **Có mặt (P)** / WFH / Nửa ngày theo ca chuẩn |
-| 🔴 **Từ chối** | Đơn bị đóng | Ngày **không có công** — gửi lại đơn mới nếu cần |
+| *(đơn biến mất, không có dòng công)* | **Bị từ chối** — kèm thông báo có lý do | Ngày **không có công** — gửi lại đơn mới nếu cần |
+| 🔴 **Từ chối** | Đơn **đã duyệt rồi bị HR huỷ** | Công của ngày đó bị gỡ |
 
 ---
 

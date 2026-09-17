@@ -136,7 +136,8 @@ flowchart TB
 | **Chờ duyệt** (vàng) | Đơn nằm trong danh sách, nhãn *Chờ duyệt* | **Chưa** tính công; ngày đó tạm thời chưa có kết quả |
 | **Chờ HR duyệt** (xanh dương) | *Chỉ khi công ty bật duyệt 2 cấp* — quản lý đã duyệt, đơn còn chờ HR | **Vẫn chưa** tính công |
 | **Đã duyệt** (xanh) | Đơn **biến mất**, thay bằng dòng công **Có mặt** (hoặc **WFH** / **Nửa ngày**) | Ngày được tính **Có mặt (P)**. Nếu bạn có check-in ngoài VP, các cảnh báo *"ngoài vùng / quên ra"* được **bỏ** |
-| **Từ chối** (đỏ) | Đơn còn đó với nhãn *Từ chối* | **Không** có công → ngày đó **để trống** trên bảng công (coi như **vắng**), trừ khi ngày đó có công hợp lệ khác. Hỏi quản lý lý do, sửa & gửi lại nếu cần |
+| **Bị từ chối** | Đơn **biến mất** khỏi danh sách; bạn nhận thông báo kèm lý do | **Không** có công → ngày đó **để trống** trên bảng công (coi như **vắng**), trừ khi ngày đó có công hợp lệ khác. Sửa & gửi lại đơn mới nếu cần |
+| **Từ chối** (đỏ) | Đơn **đã duyệt rồi bị HR huỷ** | Công của ngày đó bị gỡ |
 
 <img src="images/guide/dexuat/04-approved.png" width="240" alt="Sau khi duyệt — ngày hiện Có mặt">
 

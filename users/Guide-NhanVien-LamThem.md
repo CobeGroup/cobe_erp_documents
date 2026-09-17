@@ -116,7 +116,9 @@ Bấm vào đơn bất kỳ để xem chi tiết:
 - **Đã duyệt** + *"đã ghi nhận Xh"* — xong! Giờ này sẽ vào lương (hoặc làm căn cứ nghỉ bù).
 - **Từ chối** — trưởng bộ phận hoặc HR từ chối, kèm lý do; có thể tạo đơn mới nếu cần.
 
-Khi đơn được duyệt / từ chối, bạn nhận **thông báo đẩy** trên điện thoại ngay.
+Khi đơn được duyệt xong (bước HR) hoặc bị từ chối ở bất kỳ bước nào, bạn nhận **thông báo đẩy** trên
+điện thoại ngay. Trưởng bộ phận duyệt bước 1 thì không có thông báo — nhãn đơn đổi thành *Trưởng bộ
+phận đã duyệt · chờ HR*.
 
 ---
 
