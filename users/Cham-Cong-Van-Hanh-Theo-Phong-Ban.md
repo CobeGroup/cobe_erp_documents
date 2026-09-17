@@ -74,8 +74,9 @@ Tạo mỗi văn phòng 1 record: `office_label`, `company`, `location_latitude`
 - **Người duyệt chấm công bù / làm thêm giờ**: set `Employee.shift_request_approver` (hoặc bảng *Shift
   Request Approver* của Department) và gán role **Leave Approver** (để thấy tab *Cần duyệt* — đúng
   `viewer_roles` / `approver_roles` ở §1.4) cùng role **Attendance Request Approver** (quyền submit / xoá
-  đơn chấm công bù). Thiếu role thì người đó không thấy đơn; khi bật 2 cấp, đơn của nhân viên họ lên
-  thẳng HR. Khe này tách khỏi `leave_approver` — có thể cùng hoặc khác người.
+  đơn chấm công bù). Thiếu **Leave Approver**: không thấy tab Cần duyệt, và khi bật 2 cấp thì đơn của
+  nhân viên họ lên thẳng HR. Thiếu **Attendance Request Approver**: vẫn thấy đơn nhưng bấm Duyệt báo
+  thiếu quyền (chỉ ảnh hưởng chế độ 1 bước và bước cuối; bước 1 của 2 cấp không cần quyền này). Khe này tách khỏi `leave_approver` — có thể cùng hoặc khác người.
 - **HR** (duyệt bước 2 + duyệt thiết bị): gán role **HR Manager**.
 
 ### 1.4. HR Approval Inbox Settings (đã seed sẵn — kiểm tra)
@@ -257,7 +258,8 @@ Xem [hướng dẫn chi tiết](Desk-HR-BangCongThang.html).
 HR duyệt thiết bị → xong.
 
 **Mỗi ngày:** NV chấm công / xin nghỉ / chấm công bù → người duyệt xử lý trên app: nghỉ phép về
-**leave_approver** (bước 1) rồi HR submit (bước 2); chấm công bù và làm thêm giờ về **shift_request_approver**
-— 1 bước, hoặc thêm bước HR nếu bật duyệt 2 cấp (§1.4).
+**leave_approver** (bước 1) rồi HR submit (bước 2); chấm công bù và làm thêm giờ về
+**shift_request_approver** — chấm công bù đang **1 bước**, làm thêm giờ đang **2 cấp** (trưởng bộ phận
+rồi HR), đổi được ở §1.4.
 
 **Cuối tháng:** Earned Leave tự +1 quỹ phép · HR xem COBE HR Attendance Sheet.

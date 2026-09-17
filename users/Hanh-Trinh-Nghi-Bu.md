@@ -45,7 +45,7 @@ flowchart TB
   classDef hr fill:#f9f0ff,stroke:#9254de,color:#391085;
   classDef ok fill:#f6ffed,stroke:#54ab78,color:#135200;
   A["①  Làm thêm + khai phiếu OT<br/>quy đổi <b>Nghỉ bù</b>"]:::nv
-  B["②  Manager duyệt phiếu OT<br/>→ ghi nhận số giờ"]:::mg
+  B["②  Duyệt phiếu OT<br/>Trưởng bộ phận → <b>HR</b>"]:::mg
   C["<b>Giờ vào QUỸ</b><br/>(cộng dồn, hết hạn cuối kỳ)"]:::ok
   D["③  Xin nghỉ: Loại phép = <b>Nghỉ bù</b><br/>(không phải chọn ngày làm thêm nào)"]:::nv
   E["④  Manager → HR duyệt<br/>(2 bước như nghỉ phép)"]:::hr
@@ -56,7 +56,7 @@ flowchart TB
 | Bước | Ai làm | Ở đâu | Kết quả |
 |---|---|---|---|
 | ① Kiếm giờ | Nhân viên | App → **Làm thêm giờ**, quy đổi **Nghỉ bù** | Phiếu OT **Chờ duyệt** |
-| ② Duyệt OT | Trưởng Bộ Phận (`Shift Request Approver`) | App → **Cần duyệt** | Phiếu **Đã duyệt** → giờ vào **quỹ** |
+| ② Duyệt OT | Trưởng Bộ Phận (`Shift Request Approver`) → **HR** (người duyệt cuối) | App → **Cần duyệt** | Phiếu **Đã duyệt** (sau bước HR) → giờ vào **quỹ** |
 | ③ Tiêu giờ | Nhân viên | App → **Nghỉ phép**, loại **Nghỉ bù** | Đơn nghỉ **Chờ Manager** |
 | ④ Duyệt nghỉ | Trưởng Bộ Phận → HR | App / Desk | **Được nghỉ**, quỹ trừ 4h (nửa ngày) hoặc 8h (cả ngày) |
 
@@ -73,8 +73,10 @@ nhưng ở **Hình thức quy đổi** chọn **Nghỉ bù** thay vì *Tiền l�
 
 <img src="images/guide/overtime/03-ot-form-comp.png" width="260" alt="Form làm thêm — chọn Hình thức quy đổi = Nghỉ bù">
 
-Sau khi Manager duyệt, **số giờ được duyệt trên phiếu cộng vào quỹ Nghỉ bù** của anh An. Giờ chỉ
-vào quỹ khi **ngày làm thêm đã qua** — phiếu khai trước cho ngày chưa tới vẫn nằm chờ.
+Sau khi phiếu được duyệt **xong** — trưởng bộ phận duyệt bước 1 rồi HR duyệt bước cuối — **số giờ
+trên phiếu cộng vào quỹ Nghỉ bù** của anh An. Trưởng bộ phận duyệt xong mà HR chưa duyệt thì quỹ
+**chưa có gì**. Giờ cũng chỉ vào quỹ khi **ngày làm thêm đã qua** — phiếu khai trước cho ngày chưa
+tới vẫn nằm chờ.
 
 > 📘 Chi tiết cơ chế khai-sau, đối chiếu, trần giờ: [Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html).
 

@@ -379,7 +379,9 @@ Desk, API hay bulk đều dính. Người duyệt cuối submit thẳng đơn ch
     ngày, hình thức, lý do) hoặc khung giờ → về `Pending`, xoá `manager_approved_by/on`;
     `_reset_if_hours_changed` làm y vậy khi số giờ tính lại ra khác. Đơn đã xử xong mà nội dung không
     đổi → **không** gọi `_compute_expected_hours`, giữ `expected_hours` trong DB (kể cả giá trị gửi lên
-    qua REST). Nội dung đổi → `PermissionError`, riêng `privileged` thì được và số giờ tính lại.
+    qua REST). Nội dung đổi → `PermissionError` với MỌI người, kể cả System Manager: đổi `payout_type`
+    của đơn "Tiền lương" đã duyệt thành "Nghỉ bù" là giờ vừa nằm trong Overtime Slip vừa vào quỹ Nghỉ
+    bù. Đường đúng là **Huỷ duyệt** rồi khai đơn mới.
   - Mọi đường hợp lệ (hộp duyệt, huỷ duyệt, rút đơn, hết hạn) ghi bằng `db_set` / `db.set_value` nên
     không đi qua đây. So sánh theo kiểu field (form gửi `2` cho `2.0`, ngày giờ là chuỗi).
 

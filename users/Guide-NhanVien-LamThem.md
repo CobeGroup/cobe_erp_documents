@@ -31,7 +31,7 @@ Xem nhanh cả quy trình — tạo đơn quy đổi tiền, tạo đơn quy đ�
 ## Nguyên tắc quan trọng: đơn là giấy phép, chấm công là bằng chứng
 
 **Check-out muộn KHÔNG tự thành giờ làm thêm.** Chỉ ngày nào có đơn làm thêm
-**đã được Quản lý duyệt** thì giờ làm thêm hôm đó mới được tính:
+**đã được duyệt xong** (trưởng bộ phận rồi HR) thì giờ làm thêm hôm đó mới được tính:
 
 - **Khung sau giờ tan ca** (làm tối): giờ được công nhận = giờ bạn thực tế ở lại sau
   giờ tan ca (theo check-out), nhưng **tối đa bằng số giờ đã khai**. Khai 2 tiếng mà

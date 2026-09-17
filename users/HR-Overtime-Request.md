@@ -94,8 +94,9 @@ luật tính công ngày nghỉ) chỉ đọc `Approved`, nên hiệu lực ch�
 
 **Status và kết quả duyệt chỉ đổi qua mục Cần duyệt** (và các thao tác huỷ duyệt / rút đơn /
 hết hạn). Leave Approver và HR Manager có quyền ghi mọi đơn làm thêm, nên không chặn ở server thì
-gọi `/api/resource` là tự đặt được `Approved` mà không qua ai. Các chốt dưới — System Manager được miễn
-việc **chặn**, nhưng vẫn theo luật "quay về *Pending*" và "không tính lại số giờ":
+gọi `/api/resource` là tự đặt được `Approved` mà không qua ai. System Manager chỉ được miễn phần chặn
+**ô kết quả duyệt** (`status`, người duyệt…); các luật còn lại — khoá nội dung đơn đã xử xong, quay về
+*Pending*, không tính lại số giờ — áp cho cả họ:
 
 | Thao tác trên Desk / API | Kết quả |
 |---|---|
@@ -104,7 +105,7 @@ việc **chặn**, nhưng vẫn theo luật "quay về *Pending*" và "không t�
 | Đổi `attendance`, `granted_hours` (kết quả đối chiếu chấm công) | Không báo lỗi nhưng không ghi — luôn giữ giá trị trong DB, kể cả với System Manager |
 | Sửa đơn **đang chờ HR** (*Manager Approved*): đổi nhân viên, ngày, khung giờ, hình thức quy đổi hoặc lý do — hoặc lưu lại mà số giờ tính ra khác lúc duyệt (trần giờ / lịch nghỉ đã đổi) | Lưu được, đơn **quay về *Pending*** — trưởng bộ phận duyệt lại |
 | Sửa đơn **đã xử xong** (*Approved*, *Rejected*, *Cancelled*, *Expired*): đổi nhân viên, ngày, khung giờ, hình thức quy đổi | Bị chặn — cần đổi thì **Huỷ duyệt** rồi khai đơn mới |
-| Lưu lại đơn đã xử xong (vd sửa lý do) | Lưu được, **không tính lại** số giờ: trần giờ hay lịch nghỉ đổi về sau không làm đổi số giờ đơn đã duyệt. Gửi thẳng `expected_hours` lên cũng bị bỏ. System Manager sửa nội dung thì số giờ tính lại theo nội dung mới |
+| Lưu lại đơn đã xử xong (vd sửa lý do) | Lưu được, **không tính lại** số giờ: trần giờ hay lịch nghỉ đổi về sau không làm đổi số giờ đơn đã duyệt. Gửi thẳng `expected_hours` lên cũng bị bỏ |
 | Form mở từ trước lúc đối chiếu chấm công chạy | Lưu được; `attendance` và `granted_hours` giữ kết quả đối chiếu trong DB, không bị form cũ đè |
 
 Hai cấp là **công tắc** — HR Approval Inbox Settings → dòng *HR Overtime Request* → cột **Duyệt 2 cấp**
