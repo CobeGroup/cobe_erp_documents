@@ -6,9 +6,10 @@ sửa ở đây rồi chạy lại bộ sinh, đừng sửa thẳng trang.
 
 | Tệp | Nội dung |
 |---|---|
-| `phan-khu.yml` | Năm phân khu: mã, tên, màu, phạm vi, trang cũ dùng tạm |
+| `phan-khu.yml` | Năm phân khu: mã, tên, màu, phạm vi, ai làm |
 | `ban-do.yml` | Tầng 0 — ô và đường nối của bản đồ tổng |
-| `<X>-*.yml` | Tầng 1 và 2 của một phân khu: luồng chính, nội dung từng bước, thẻ tình huống, hỏi đáp |
+| `<X>-*.yml` | Tầng 1 và 2 của một phân khu: một hoặc nhiều luồng (`cac_luong`), nội dung từng bước, thẻ tình huống, phụ lục, hỏi đáp |
+| `tra-cuu.yml` | Các mục chung của trang *Khi gặp trục trặc*; phần tra theo thông báo và theo phân khu được sinh tự động |
 
 ```bash
 python3 _tools/quy_trinh/build.py            # sinh trang
@@ -19,7 +20,12 @@ Bộ sinh dừng và không ghi trang khi:
 
 - một chữ dài quá số dòng cho phép của ô — rút gọn chữ trong dữ liệu;
 - một bước trỏ tới thẻ tình huống không tồn tại, hoặc có thẻ chưa được gắn vào sơ đồ;
+- một cổng, bước quay về hoặc ô bản đồ trỏ tới bước không có ở phân khu đích;
 - hai đường nối cắt hoặc chạm nhau (kiểm bằng `_tools/svg_cross_check.py`).
 
-Thêm một phân khu mới: tạo `<X>-ten.yml` theo khuôn của `D-thu-tien.yml`. Khi tệp tồn tại,
-bản đồ tổng và các cổng của phân khu khác tự trỏ sang trang mới thay cho `trang_tam`.
+Các phần tử luồng dùng được: `cong_vao` (một hoặc nhiều cổng), `re` (điểm rẽ sang thẻ hoặc sang
+phân khu khác), `buoc` (có thể kèm `the`, `rong`, `vao_ben`, hoặc `sang` để làm ô chuyển sang phân
+khu khác), `song_song` (các nhánh chạy song song rồi gộp), `cong_ra`. Mã thẻ viết trong văn bản
+(`TT-05`, `HT-11`…) tự thành liên kết, kể cả thẻ của phân khu khác.
+
+Một mã thẻ chỉ có một thẻ duy nhất: thẻ đặt ở **nơi xử lý**, nơi **phát hiện** ghi trong `gap_o`.

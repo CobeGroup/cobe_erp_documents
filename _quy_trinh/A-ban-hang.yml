@@ -1,0 +1,420 @@
+# Phân khu A — Bán hàng. Khuôn dữ liệu: xem D-thu-tien.yml và README.md.
+
+ma: A
+ten: Bán hàng
+tien_to: BH
+trang: Quy-Trinh-A-Ban-Hang
+nav_order: 10
+ai_lam: 'Kinh doanh · Chăm sóc khách hàng · Quản trị bán hàng'
+nhan_vao_tu_ngoai: 'Khách hàng liên hệ qua tổng đài, mạng xã hội, website, hoặc được giới thiệu'
+gioi_thieu: >-
+  Từ lúc khách hàng để lại thông tin cho tới lúc đơn bán hàng được xác nhận và chuyển sang
+  bộ phận thực hiện. Đơn bán hàng là trục chính: mọi chứng từ phía sau đều tham chiếu về đơn.
+
+luong:
+  - buoc:
+      id: nguon
+      ten: 'Tiếp nhận khách tiềm năng'
+      phu: 'Tổng đài, mạng xã hội, website, giới thiệu, nhập tay'
+      ai: 'Kinh doanh · Chăm sóc khách hàng'
+      the: [BH-01, BH-02]
+      noi_dung: |
+        Mỗi lượt khách hàng để lại thông tin thành một **phiếu khách tiềm năng** (`Lead`):
+
+        | Cách lập | Ai lập | Áp dụng cho |
+        |---|---|---|
+        | **Tự động** | Hệ thống, qua tổng đài, mạng xã hội, hộp trò chuyện trên website | Khách gọi hoặc nhắn tin; nguồn được ghi sẵn |
+        | **Thủ công** | Nhân viên kinh doanh nhập trên Desk | Khách đến trực tiếp, khách được giới thiệu, danh sách thu tại hội chợ |
+
+        Ô **Nguồn khách hàng** (`utm_source`) quyết định hai việc: **công ty nào tiếp nhận** khách
+        hàng, và khách hàng có thuộc diện **được giới thiệu** hay không.
+
+  - buoc:
+      id: gioi-thieu
+      ten: 'Khai người giới thiệu, nếu có'
+      phu: 'Phải khai trước khi chuyển thành khách hàng'
+      ai: 'Kinh doanh'
+      the: [BH-03, BH-04]
+      noi_dung: |
+        Hệ thống **không tự biết** ai giới thiệu ai.
+
+        **Cách khai:** mở phiếu khách tiềm năng → ô **Nguồn khách hàng** chọn `Reference` → ô
+        **From Customer** hiện ra → chọn khách hàng đã giới thiệu → lưu.
+
+        > 📚 Điều kiện và mức thưởng: [Loyalty — Hướng dẫn cho Sales](Loyalty-Cho-Sales.html).
+
+  - buoc:
+      id: lien-he
+      ten: 'Bổ sung liên hệ và địa chỉ'
+      phu: 'Tìm theo số điện thoại trước khi lập mới'
+      ai: 'Kinh doanh'
+      the: [BH-05]
+      noi_dung: |
+        | Hồ sơ | Tên trên hệ thống | Dùng để |
+        |---|---|---|
+        | **Liên hệ** | `Contact` | Gọi điện, nhắn tin, in lên chứng từ |
+        | **Địa chỉ** | `Address` | Lắp đặt, giao hàng, xác định mã vùng của đơn vị vận chuyển |
+
+        ✅ **Luôn tìm theo số điện thoại trước khi lập mới.** Khách chuyển đổi từ phiếu khách tiềm
+        năng thường đã có sẵn liên hệ và địa chỉ.
+
+        > 💡 Hệ thống **tự liên kết hai chiều**: chỉ cần gắn một bên trong bảng **Links**, khi lưu hệ
+        > thống tự bổ sung bên còn lại.
+
+  - re:
+      id: dong-y
+      hoi: 'Khách hàng đồng ý mua?'
+      tiep: 'có'
+      nhanh: {nhan: 'chưa', the: BH-06}
+      noi_dung: |
+        | Trạng thái phiếu | Nghĩa |
+        |---|---|
+        | **Lead** | Mới tiếp nhận, chưa rõ nhu cầu |
+        | **Interested** | Có quan tâm, đang trao đổi |
+        | **Opportunity** | Đã lập cơ hội bán hàng cụ thể |
+        | **Converted** | Đã thành khách hàng |
+
+  - buoc:
+      id: chuyen-doi
+      ten: 'Chuyển thành khách hàng'
+      phu: 'Kiểm tích điểm, liên hệ chính, công ty'
+      ai: 'Kinh doanh'
+      the: [BH-07, BH-08, BH-09]
+      noi_dung: |
+        Hồ sơ khách hàng (`Customer`) giữ liên kết về phiếu gốc ở ô **Lead**. Hệ thống dùng liên kết
+        này để truy người giới thiệu, tự liên kết liên hệ và địa chỉ, và xác định nguồn khách hàng.
+
+        **Kiểm ngay ba thứ sau khi chuyển đổi:**
+
+        | # | Kiểm | Nếu bỏ qua |
+        |---|---|---|
+        | 1 | Đã gán **chương trình tích điểm** | Khách hàng không được cộng điểm, hệ thống không cảnh báo |
+        | 2 | Đã đặt **liên hệ chính** và **địa chỉ chính** | Lập đơn phải chọn thủ công, dễ chọn nhầm địa chỉ cũ |
+        | 3 | Ô **Công ty** đúng pháp nhân bán hàng | Đơn hàng, kho và hoá đơn lệch pháp nhân |
+
+  - buoc:
+      id: khai-don
+      ten: 'Lập đơn bán hàng'
+      phu: 'Đội bán hàng, phương thức thanh toán, địa chỉ'
+      ai: 'Kinh doanh · Nhân viên dịch vụ'
+      the: [BH-10, BH-11, BH-12]
+      vao_ben: {tu: E, buoc: dong-y, ten: 'Đơn từ phiếu nhắc hoặc phiếu sự cố'}
+      noi_dung: |
+        | Nguồn | Cách lập |
+        |---|---|
+        | Khách hàng liên hệ mua | Lập trực tiếp trên Desk |
+        | Từ phiếu nhắc bảo dưỡng | **Create → Sales Order** ngay trên phiếu nhắc |
+        | Từ phiếu sự cố | **Create → Sales Order** ngay trên phiếu sự cố |
+
+        Hai nguồn sau phải lập **bằng chức năng trên chứng từ gốc** để giữ liên kết ngược: phiếu gốc
+        tự sang *Converted* khi đơn được xác nhận và tự sang *Cancelled* nếu đơn bị huỷ.
+
+        **Ba chỗ hệ thống chặn nếu sai:**
+
+        | Nội dung | Quy tắc |
+        |---|---|
+        | **Sales Team** | Tối thiểu một người, không trùng người |
+        | **Payment Methods** | Tổng các dòng bằng tổng giá trị đơn (lệch tối đa 100 đồng); đơn từ phiếu sự cố được miễn |
+        | **Khách hàng, địa chỉ, liên hệ** | Phải trỏ tới hồ sơ tồn tại, liên kết đúng |
+
+  - buoc:
+      id: xac-nhan
+      ten: 'Rà soát rồi xác nhận đơn'
+      phu: 'Hàng hoá, giá, tài khoản ngân hàng, thông tin hoá đơn'
+      ai: 'Kinh doanh'
+      noi_dung: |
+        **Rà trước khi xác nhận** — sửa sau vẫn được nhưng thủ tục phức tạp hơn nhiều:
+
+        - Hàng hoá, số lượng, đơn giá, chiết khấu.
+        - Tài khoản ngân hàng nhận tiền — đơn đã có phiếu thu là không đổi được nữa.
+        - Thông tin xuất hoá đơn và biên bản bàn giao: tên công ty, mã số thuế, người đại diện.
+
+        Sau khi xác nhận, trạng thái do **tiến độ giao hàng và xuất hoá đơn** quyết định:
+
+        | Trạng thái | Nghĩa |
+        |---|---|
+        | **Draft** | Chưa xác nhận |
+        | **To Deliver and Bill** | Chưa giao, chưa xuất hoá đơn |
+        | **To Bill** | Đã giao đủ, chưa xuất hoá đơn đủ |
+        | **To Deliver** | Đã xuất hoá đơn đủ, chưa giao đủ |
+        | **Completed** | Đã giao đủ **và** xuất hoá đơn đủ — mốc sinh lịch bảo dưỡng và cộng điểm |
+        | **Closed** | Chủ động dừng phần còn lại |
+        | **On Hold** | Tạm dừng xử lý |
+        | **Cancelled** | Đã huỷ hiệu lực |
+
+  - re:
+      id: ban-giao
+      hoi: 'Cần người đến nhà khách hàng?'
+      tiep: 'có'
+      nhanh:
+        nhan: 'không'
+        cong: {sang: C, buoc: van-chuyen, ten: 'Giao thẳng hoặc gửi đơn vị vận chuyển'}
+      noi_dung: |
+        Một đơn có thể **không có phiếu công việc nào** (chỉ bán hàng), hoặc có một, hoặc nhiều.
+        Hệ thống không tự lập phiếu công việc; luôn phải có người thao tác.
+
+  - cong_ra:
+      - {sang: B, buoc: lap-wo, ten: 'Lập phiếu công việc'}
+
+ngoai_luong:
+  id: sua-don
+  ten: 'Sửa, đóng và huỷ đơn'
+  the: [BH-13, BH-14, BH-15, BH-16, BH-17]
+  noi_dung: |
+    Chọn phương án ít tác động tới chứng từ phía sau nhất:
+
+    | Cần sửa gì | Làm cách nào |
+    |---|---|
+    | Hàng hoá, số lượng, giá, chiết khấu | **Update Items** trên đơn |
+    | Loại đơn, tài khoản ngân hàng, phương thức thanh toán, thông tin hoá đơn | Sửa trên form rồi **Lưu** |
+    | Khách hàng, bảng giá, ngày đặt, hàng đã xuất kho | **Huỷ và lập lại** (Amend) |
+    | Dừng phần còn lại | **Actions → Close** |
+    | Tạm dừng xử lý | **Actions → Hold**, mở lại bằng **Actions → Re-open** |
+
+    **Trình tự huỷ ngược:**
+
+    ```
+    1. Phiếu thu       (Payment Entry)   → Cancel
+    2. Hoá đơn         (Sales Invoice)   → Cancel
+    3. Phiếu giao hàng (Delivery Note)   → Cancel
+    4. Đơn bán hàng    (Sales Order)     → Cancel
+    5. Trên đơn đã huỷ → Amend → bản mới ở trạng thái Nháp, mã có hậu tố -1
+    ```
+
+    📚 Thao tác từng tình huống kèm hình: [Sửa Sales Order](Sua-Sales-Order.html).
+
+the:
+  - ma: BH-01
+    ten: 'Danh sách nguồn có giá trị “(Tuyệt đối không chọn!)”'
+    gap_o: {buoc: nguon}
+    dau_hieu: 'Ô Nguồn khách hàng có những giá trị mang tiền tố “(Tuyệt đối không chọn!)”.'
+    nguyen_nhan: 'Đó là nguồn cũ được giữ lại để dữ liệu lịch sử không bị đứt liên kết.'
+    ai: 'Kinh doanh'
+    go:
+      - re:
+          hoi: 'Đã lỡ chọn trên phiếu mới?'
+          co: 'Sửa lại nguồn đúng trước khi chuyển đổi'
+          khong: 'Chọn nguồn không mang tiền tố đó'
+    quay_ve: {buoc: nguon}
+
+  - ma: BH-02
+    ten: 'Một số điện thoại ra nhiều phiếu khách tiềm năng'
+    gap_o: {buoc: nguon}
+    dau_hieu: 'Tìm theo số điện thoại thấy nhiều phiếu của cùng một người.'
+    nguyen_nhan: 'Khách hàng liên hệ nhiều lần qua nhiều kênh, mỗi lần hệ thống tự lập một phiếu.'
+    ai: 'Kinh doanh'
+    go:
+      - re:
+          hoi: 'Đã có phiếu Converted?'
+          co: 'Dùng phiếu Converted khớp thông tin nhất'
+          khong: 'Dùng phiếu mới nhất, giữ các phiếu kia làm lịch sử'
+    quay_ve: {buoc: nguon}
+
+  - ma: BH-03
+    ten: 'Không thấy ô From Customer'
+    gap_o: {buoc: gioi-thieu}
+    dau_hieu: 'Đã chọn nguồn giới thiệu nhưng ô From Customer không hiện.'
+    nguyen_nhan: 'Ô này chỉ hiện với hai nguồn Reference và Existing Customer.'
+    ai: 'Kinh doanh'
+    go:
+      - buoc: 'Kiểm lại giá trị ô Nguồn khách hàng'
+      - re:
+          hoi: 'Nguồn đang là Reference?'
+          co: 'Tải lại trang; vẫn không hiện thì báo quản trị viên'
+          khong: 'Chọn Reference, ô From Customer sẽ hiện'
+    quay_ve: {buoc: gioi-thieu}
+
+  - ma: BH-04
+    ten: 'Đã chuyển đổi rồi mới biết người giới thiệu'
+    gap_o: {buoc: gioi-thieu}
+    nguyen_nhan: 'Hệ thống truy người giới thiệu theo đường khách hàng → phiếu khách tiềm năng gốc. Khai sau khi chuyển đổi thì mắt xích này không còn đủ.'
+    ai: 'Quản trị viên'
+    go:
+      - buoc: 'Gửi quản trị viên mã khách hàng mới'
+      - buoc: 'Kèm mã khách hàng giới thiệu và mã đơn đầu tiên'
+      - buoc: 'Quản trị viên bổ sung liên kết thủ công'
+    canh_bao: 'Người giới thiệu chỉ được tính thưởng khi liên kết đã đủ.'
+    quay_ve: {buoc: chuyen-doi}
+
+  - ma: BH-05
+    ten: 'Trùng liên hệ hoặc địa chỉ'
+    gap_o: {buoc: lien-he}
+    dau_hieu: 'Một khách hàng có hai liên hệ hoặc hai địa chỉ giống nhau.'
+    nguyen_nhan: 'Lập mới mà không tìm theo số điện thoại trước.'
+    ai: 'Kinh doanh'
+    go:
+      - buoc: 'Xác định bản cũ đang gắn với khách hàng'
+      - buoc: 'Xoá bản vừa lập'
+      - buoc: 'Gắn lại bản cũ qua bảng Links'
+    quay_ve: {buoc: lien-he}
+
+  - ma: BH-06
+    ten: 'Khách hàng chưa quyết định mua'
+    gap_o: {buoc: dong-y}
+    dau_hieu: 'Khách hàng quan tâm nhưng chưa đồng ý.'
+    nguyen_nhan: 'Đây là trạng thái chờ, không phải lỗi; cần ghi nhận để theo dõi tiếp.'
+    ai: 'Kinh doanh'
+    go:
+      - re:
+          hoi: 'Thương vụ cần theo dõi nhiều bước?'
+          co: 'Lập cơ hội bán hàng (Opportunity)'
+          khong: 'Đặt trạng thái Interested, hẹn liên hệ lại'
+    quay_ve: {buoc: dong-y}
+
+  - ma: BH-07
+    ten: 'Báo “Could not find Row … Link Name” khi lưu'
+    gap_o: {buoc: khai-don}
+    thong_bao: '“Could not find Row #2: Link Name: …”'
+    nguyen_nhan: 'Hồ sơ khách hàng đang trỏ tới một phiếu khách tiềm năng đã bị đổi tên. Lỗi hiện ra khi lưu đơn, địa chỉ hoặc liên hệ.'
+    ai: 'Kinh doanh · Quản trị viên'
+    go:
+      - buoc: 'Tìm phiếu đúng theo số điện thoại'
+      - re:
+          hoi: 'Sửa được ô Lead trên hồ sơ khách hàng?'
+          co: 'Cập nhật ô Lead rồi lưu lại'
+          khong: 'Gửi quản trị viên mã khách hàng và mã phiếu đúng'
+    lien_quan: []
+    quay_ve: {buoc: khai-don}
+
+  - ma: BH-08
+    ten: 'Khách hàng bị xếp sai công ty'
+    gap_o: {buoc: chuyen-doi}
+    dau_hieu: 'Đơn, kho và hoá đơn lệch pháp nhân so với thực tế.'
+    nguyen_nhan: 'Nguồn khách hàng được khai cho nhiều công ty nên hệ thống không tự suy ra được.'
+    ai: 'Kinh doanh'
+    go:
+      - re:
+          hoi: 'Đã chuyển đổi chưa?'
+          co: 'Báo quản trị viên sửa ô Công ty'
+          khong: 'Sửa ô Công ty ngay trên phiếu'
+    quay_ve: {buoc: chuyen-doi}
+
+  - ma: BH-09
+    ten: 'Đơn hoàn tất nhưng khách hàng không được cộng điểm'
+    gap_o: {phan_khu: D, buoc: hoan-tat}
+    nguyen_nhan: 'Khách hàng chưa được gán chương trình tích điểm; hệ thống không cảnh báo khi thiếu.'
+    ai: 'Quản trị viên'
+    go:
+      - buoc: 'Báo quản trị viên gán chương trình tích điểm'
+      - buoc: 'Kiểm lại trên hồ sơ khách hàng'
+    canh_bao: 'Chỉ các đơn phát sinh sau khi gán mới được tính điểm.'
+    quay_ve: {buoc: chuyen-doi}
+
+  - ma: BH-10
+    ten: 'Báo thiếu hoặc trùng người trong Sales Team'
+    gap_o: {buoc: khai-don}
+    thong_bao: '“Bắt buộc phải có ít nhất 1 Sales Person trong Sales Team.”'
+    nguyen_nhan: 'Đội bán hàng chưa được khai, hoặc có hai dòng cùng một người (thông báo “Không thể chọn trùng người trong Sales Team”).'
+    ai: 'Kinh doanh'
+    go:
+      - re:
+          hoi: 'Bảng Sales Team đang trống?'
+          co: 'Thêm ít nhất một nhân sự'
+          khong: 'Xoá dòng trùng người'
+    quay_ve: {buoc: khai-don}
+
+  - ma: BH-11
+    ten: 'Báo tổng Payment Method lệch Grand Total'
+    gap_o: {buoc: khai-don}
+    thong_bao: '“Tổng tiền trong Payment Method phải bằng Grand Total…”'
+    nguyen_nhan: 'Tổng các dòng phương thức thanh toán lệch tổng giá trị đơn quá 100 đồng.'
+    ai: 'Kinh doanh'
+    go:
+      - buoc: 'Mở bảng Payment Methods'
+      - buoc: 'Sửa số tiền từng dòng cho khớp tổng đơn'
+      - buoc: 'Lưu lại'
+    canh_bao: 'Mỗi lần sửa làm đổi tổng giá trị đơn, bảng này phải cập nhật lại; nếu không, biên bản bàn giao in ra sai số tiền.'
+    quay_ve: {buoc: khai-don}
+
+  - ma: BH-12
+    ten: 'Đơn lập ngoài phiếu nhắc hoặc phiếu sự cố'
+    gap_o: {buoc: khai-don}
+    dau_hieu: 'Đơn đã xác nhận nhưng phiếu nhắc vẫn Open, hoặc đơn sửa chữa không truy được về sự cố.'
+    nguyen_nhan: 'Đơn được lập mới trên Desk thay vì bằng Create → Sales Order trên chứng từ gốc, nên mất liên kết ngược.'
+    ai: 'Kinh doanh · Quản trị viên'
+    go:
+      - re:
+          hoi: 'Đơn chưa có chứng từ nào phía sau?'
+          co: 'Huỷ đơn, lập lại từ chứng từ gốc'
+          khong: 'Nhờ quản trị viên gắn lại liên kết'
+    lien_quan: [SB-07, SB-15]
+    quay_ve: {buoc: khai-don}
+
+  - ma: BH-13
+    ten: 'Báo “Không cho phép thay đổi items…”'
+    gap_o: {buoc: sua-don}
+    thong_bao: '“Không cho phép thay đổi items (chỉ được phép thêm/xóa/thay đổi qty của Giảm giá hoặc phi vật lý)”'
+    nguyen_nhan: 'Hàng vật lý của đơn đã được xuất kho.'
+    ai: 'Kinh doanh · Kho'
+    go:
+      - re:
+          hoi: 'Chỉ cần bán thêm món mới?'
+          co: 'Lập đơn mới cho món thêm'
+          khong: 'Huỷ phiếu xuất kho hoặc phiếu giao hàng trước, rồi sửa'
+    quay_ve: {buoc: xac-nhan}
+
+  - ma: BH-14
+    ten: 'Báo không Close được vì đã có Delivery Note'
+    gap_o: {buoc: sua-don}
+    thong_bao: '“Không thể Close Sales Order này vì đã có Delivery Note”'
+    nguyen_nhan: 'Đơn còn phiếu giao hàng đang có hiệu lực.'
+    ai: 'Kinh doanh · Kỹ thuật viên'
+    go:
+      - buoc: 'Huỷ phiếu giao hàng'
+      - buoc: 'Đóng đơn bằng Actions → Close'
+    quay_ve: {buoc: xac-nhan}
+
+  - ma: BH-15
+    ten: 'Báo không đổi được Bank Account'
+    gap_o: {buoc: sua-don}
+    thong_bao: '“Không cho phép thay đổi Bank Account vì đã tạo phiếu thanh toán”'
+    nguyen_nhan: 'Đơn đã có phiếu thu.'
+    ai: 'Kinh doanh · Kế toán'
+    go:
+      - buoc: 'Huỷ phiếu thu'
+      - buoc: 'Sửa tài khoản ngân hàng trên đơn'
+      - buoc: 'Lập lại phiếu thu'
+    lien_quan: [TT-11]
+    quay_ve: {buoc: xac-nhan}
+
+  - ma: BH-16
+    ten: 'Ô dữ liệu bị khoá sau khi xác nhận'
+    gap_o: {buoc: sua-don}
+    dau_hieu: 'Không sửa được khách hàng, bảng giá hoặc ngày đặt.'
+    nguyen_nhan: 'Các ô này không cho sửa sau khi đơn đã xác nhận.'
+    ai: 'Kinh doanh'
+    go:
+      - buoc: 'Huỷ ngược phiếu thu, hoá đơn, phiếu giao hàng'
+      - buoc: 'Huỷ đơn'
+      - buoc: 'Amend để lập bản mới, mã có hậu tố -1'
+      - buoc: 'Sửa trên bản mới rồi xác nhận'
+    quay_ve: {buoc: xac-nhan}
+
+  - ma: BH-17
+    ten: 'Cần dừng hoặc tạm hoãn đơn'
+    gap_o: {buoc: sua-don}
+    dau_hieu: 'Khách hàng chỉ nhận một phần rồi thôi, hoặc cần hoãn xử lý.'
+    nguyen_nhan: 'Đây là thao tác thường, nhưng hay bị nhầm với huỷ đơn. Huỷ là xoá hiệu lực cả đơn.'
+    ai: 'Kinh doanh'
+    go:
+      - re:
+          hoi: 'Dừng hẳn phần còn lại?'
+          co: 'Actions → Close'
+          khong: 'Actions → Hold, mở lại bằng Re-open'
+    quay_ve: {buoc: xac-nhan}
+
+hoi_dap:
+  - hoi: 'Khách gọi lại lần hai, có phải lập phiếu mới không?'
+    dap: 'Không cần. Tìm theo số điện thoại, dùng lại phiếu cũ — xem BH-02.'
+  - hoi: 'Khách hàng cũ mua thêm máy, có phải lập lại từ khách tiềm năng không?'
+    dap: 'Không. Khách hàng đã có hồ sơ thì lập thẳng đơn mới.'
+  - hoi: 'Chưa biết địa chỉ lắp đặt, có chuyển đổi được không?'
+    dap: 'Được, nhưng phải bổ sung địa chỉ trước khi lập đơn, vì đơn cần địa chỉ để điều phối và giao hàng.'
+  - hoi: 'Đơn đã xác nhận rồi, khách đổi ý thêm một món, làm sao?'
+    dap: 'Dùng **Update Items** nếu hàng chưa xuất kho. Đã xuất kho rồi thì lập đơn mới cho món thêm — xem BH-13.'
+  - hoi: 'Đóng đơn và huỷ đơn khác nhau chỗ nào?'
+    dap: '**Đóng** giữ lại phần đã làm, chỉ dừng phần còn lại. **Huỷ** xoá hiệu lực toàn bộ đơn — xem BH-17.'
+  - hoi: 'Đơn bị huỷ nhầm, lấy lại được không?'
+    dap: 'Không khôi phục được, nhưng **Amend** trên đơn đã huỷ sẽ tạo bản mới giữ nguyên nội dung, mã có hậu tố `-1`.'
+  - hoi: 'Khách trả trước một phần, có ghi được lên đơn không?'
+    dap: 'Được. Khoản đặt cọc là một phiếu thu gắn với đơn — xem [phân khu D](Quy-Trinh-D-Thu-Tien.html#dong-thu).'

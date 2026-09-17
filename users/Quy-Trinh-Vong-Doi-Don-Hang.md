@@ -92,13 +92,13 @@ Không phải đơn nào cũng đi đủ mười mốc. Các nhánh rẽ thườ
 
 | Tình huống | Đơn đi hướng nào | Đọc ở đâu |
 |---|---|---|
-| Đơn chỉ bán hàng, không cần xuống hiện trường | Không có phiếu công việc; đi thẳng từ đơn sang giao hàng | [Chặng 5](Quy-Trinh-05-Giao-Hang-Thu-Tien.html) |
-| Khách hàng chỉ nhận một phần hàng | Phiếu giao hàng ghi số thực giao; phần chênh thành nghĩa vụ trả vật tư | [Chặng 4](Quy-Trinh-04-Vat-Tu.html#tra-ve) |
-| Khách hàng trả tiền làm nhiều lần | Mỗi lần một phiếu thu; đơn chỉ hoàn tất khi tổng đủ | [Chặng 5](Quy-Trinh-05-Giao-Hang-Thu-Tien.html#ba-truong-hop) |
-| Khách hàng đổi ý, không mua nữa | Đóng đơn hoặc huỷ đơn theo trình tự huỷ ngược | [Chặng 2](Quy-Trinh-02-Don-Hang.html#sua-don) |
-| Kỹ thuật viên tới nơi nhưng không làm được | Lịch hẹn sang *Không thực hiện được*, điều phối lập lịch mới | [Chặng 3](Quy-Trinh-03-Hien-Truong.html#hien-truong) |
-| Đơn phát sinh từ phiếu nhắc bảo dưỡng | Mốc 1 do nhân viên dịch vụ lập từ phiếu nhắc; các mốc sau không đổi | [Chặng 6](Quy-Trinh-06-Bao-Duong.html#don-moi) |
-| Đơn phát sinh từ phiếu sự cố | Mốc 1 và 2 có thể đảo: lập phiếu công việc trước, lập đơn sau khi biết phải bán gì | [Chặng 7](Quy-Trinh-07-Su-Co.html#don-moi) |
+| Đơn chỉ bán hàng, không cần xuống hiện trường | Không có phiếu công việc; giao thẳng hoặc gửi qua đơn vị vận chuyển | [phân khu C](Quy-Trinh-C-Kho-Giao-Nhan.html#gui-van-chuyen) |
+| Khách hàng chỉ nhận một phần hàng | Phiếu giao hàng ghi số thực giao; phần chênh thành nghĩa vụ trả vật tư | [phân khu C](Quy-Trinh-C-Kho-Giao-Nhan.html#tra-ve) |
+| Khách hàng trả tiền làm nhiều lần | Mỗi lần một phiếu thu; đơn chỉ hoàn tất khi tổng đủ | [phân khu D](Quy-Trinh-D-Thu-Tien.html#hinh-thuc) |
+| Khách hàng đổi ý, không mua nữa | Đóng đơn hoặc huỷ đơn theo trình tự huỷ ngược | [phân khu A](Quy-Trinh-A-Ban-Hang.html#sua-don) |
+| Kỹ thuật viên tới nơi nhưng không làm được | Lịch hẹn sang *Không thực hiện được*, điều phối lập lịch mới | [phân khu B](Quy-Trinh-B-Hien-Truong.html#hien-truong) |
+| Đơn phát sinh từ phiếu nhắc bảo dưỡng | Mốc 1 do nhân viên dịch vụ lập từ phiếu nhắc; các mốc sau không đổi | [phân khu E](Quy-Trinh-E-Sau-Ban-Hang.html#dong-y) |
+| Đơn phát sinh từ phiếu sự cố | Mốc 1 và 2 có thể đảo: lập phiếu công việc trước, lập đơn sau khi biết phải bán gì | [phân khu E](Quy-Trinh-E-Sau-Ban-Hang.html#den-tan-noi) |
 
 ---
 
@@ -117,7 +117,7 @@ mục một chu kỳ riêng:
 Đến hạn, mỗi lịch sinh một **phiếu nhắc**, phiếu nhắc được giao cho nhân viên chăm sóc khách
 hàng, khách hàng đồng ý thì lập **đơn mới** — và đơn mới lại đi đúng mười mốc trên.
 
-> 📖 Cơ chế nhắc và phân công: [Chặng 6 — Bảo dưỡng định kỳ](Quy-Trinh-06-Bao-Duong.html)
+> 📖 Cơ chế nhắc và phân công: [E · Sau bán hàng — bảo dưỡng định kỳ](Quy-Trinh-E-Sau-Ban-Hang.html#bao-duong)
 
 ---
 
@@ -132,16 +132,16 @@ Mở đơn, nhìn ba ô ở [mục 3](#trang-thai). Muốn biết chi tiết hơ
 **Đơn đã giao hàng, đã thu tiền, sao vẫn chưa Hoàn tất?**
 
 Thiếu hoá đơn. Hoá đơn chỉ được lập khi đã thu đủ **một trăm phần trăm** và tính trên phiếu
-thu **đã chính thức**. Xem [Chặng 5](Quy-Trinh-05-Giao-Hang-Thu-Tien.html#hoa-don).
+thu **đã chính thức**. Xem [phân khu D](Quy-Trinh-D-Thu-Tien.html#hoa-don).
 
 **Đơn đã Hoàn tất mà phiếu công việc vẫn chưa xong?**
 
-Hai chứng từ kết thúc riêng. Xem [sáu điều kiện hoàn thành phiếu công việc](Quy-Trinh-03-Hien-Truong.html#dieu-kien).
+Hai chứng từ kết thúc riêng. Xem [sáu điều kiện hoàn thành phiếu công việc](Quy-Trinh-B-Hien-Truong.html#du-dk-wo).
 
 **Tôi làm xong việc rồi, sao hệ thống vẫn báo còn nợ vật tư?**
 
 Phiếu trả còn ở trạng thái nháp, kho chưa duyệt. Xem [mục 2](#nghia-vu) và
-[Chặng 4](Quy-Trinh-04-Vat-Tu.html#tra-ve).
+[phân khu C](Quy-Trinh-C-Kho-Giao-Nhan.html#tra-ve).
 
 **Bao lâu thì đơn xong?**
 
@@ -151,7 +151,7 @@ hoặc chưa ai duyệt một phiếu nháp nào đó.
 **Đơn hàng lập nhầm thì làm sao?**
 
 Chưa phát sinh chứng từ nào thì huỷ đơn rồi lập lại. Đã phát sinh rồi thì phải huỷ ngược, xem
-[Chặng 2](Quy-Trinh-02-Don-Hang.html#sua-don).
+[phân khu A](Quy-Trinh-A-Ban-Hang.html#sua-don).
 
 ---
 
@@ -160,8 +160,9 @@ Chưa phát sinh chứng từ nào thì huỷ đơn rồi lập lại. Đã phá
 
 | Bạn phụ trách | Mở trang |
 |---|---|
-| Tiếp nhận khách hàng, lập đơn | [Chặng 1](Quy-Trinh-01-Khach-Hang.html) · [Chặng 2](Quy-Trinh-02-Don-Hang.html) |
-| Điều phối, kỹ thuật hiện trường | [Chặng 3](Quy-Trinh-03-Hien-Truong.html) · [Chặng 4](Quy-Trinh-04-Vat-Tu.html) |
-| Kho, kế toán | [Chặng 4](Quy-Trinh-04-Vat-Tu.html) · [Chặng 5](Quy-Trinh-05-Giao-Hang-Thu-Tien.html) |
-| Chăm sóc khách hàng, sự cố | [Chặng 6](Quy-Trinh-06-Bao-Duong.html) · [Chặng 7](Quy-Trinh-07-Su-Co.html) |
-| Gỡ tình huống bất thường | [Chặng 8](Quy-Trinh-08-Ngoai-Le.html) |
+| Tiếp nhận khách hàng, lập đơn | [A · Bán hàng](Quy-Trinh-A-Ban-Hang.html) |
+| Điều phối, kỹ thuật hiện trường | [B · Điều phối và hiện trường](Quy-Trinh-B-Hien-Truong.html) |
+| Kho, giao hàng, vật tư | [C · Kho và giao nhận](Quy-Trinh-C-Kho-Giao-Nhan.html) |
+| Thu tiền, kế toán | [D · Thu tiền và kế toán](Quy-Trinh-D-Thu-Tien.html) |
+| Chăm sóc khách hàng, sự cố | [E · Sau bán hàng](Quy-Trinh-E-Sau-Ban-Hang.html) |
+| Gỡ tình huống bất thường | [Khi gặp trục trặc](Quy-Trinh-Tra-Cuu.html) |

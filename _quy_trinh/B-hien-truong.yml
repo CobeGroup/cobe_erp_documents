@@ -1,0 +1,382 @@
+# Phân khu B — Điều phối và hiện trường. Khuôn dữ liệu: xem D-thu-tien.yml và README.md.
+
+ma: B
+ten: Điều phối và hiện trường
+tien_to: HT
+trang: Quy-Trinh-B-Hien-Truong
+nav_order: 20
+ai_lam: 'Điều phối · Kỹ thuật viên · Quản lý dịch vụ'
+gioi_thieu: >-
+  Từ lúc có một việc cần người đến nhà khách hàng cho tới lúc phiếu công việc được hoàn thành
+  và đóng lại. Ba chứng từ — đơn bán hàng, phiếu công việc, lịch hẹn — có trạng thái độc lập
+  với nhau và phải được kết thúc riêng.
+
+luong:
+  - cong_vao:
+      - {tu: A, buoc: ban-giao, ten: 'Đơn cần người đến'}
+      - {tu: E, buoc: den-tan-noi, ten: 'Sự cố cần đến tận nơi'}
+
+  - buoc:
+      id: lap-wo
+      ten: 'Lập phiếu công việc'
+      phu: 'Chọn đúng loại việc ngay từ đầu'
+      ai: 'Điều phối'
+      the: [HT-01, HT-02]
+      noi_dung: |
+        Phiếu công việc (`FS Work Order`) **không tự sinh**, luôn phải có người lập:
+
+        | Từ đâu | Thao tác |
+        |---|---|
+        | **Đơn bán hàng** | Mở đơn đã xác nhận → **Create → FS Work Order** |
+        | **Phiếu sự cố** | Mở phiếu sự cố → **Create → FS Work Order** |
+
+        Hệ thống tự điền công ty, khách hàng, địa chỉ, liên hệ và khoảng thời gian dự kiến. Phiếu mới
+        luôn ở trạng thái **New**.
+
+        **Loại việc** (`Work Type`) quyết định hệ thống đòi gì lúc hoàn thành phiếu:
+
+        | Loại việc | Thường đòi thêm |
+        |---|---|
+        | **Bảo dưỡng** | Giao vật tư và thu tiền |
+        | **Sự cố** | Đính kèm ảnh hiện trường |
+        | **Lắp đặt** | Giao hàng, nghiệm thu, thu tiền |
+        | **Khảo sát** | Không giao hàng, không thu tiền |
+
+  - buoc:
+      id: lap-sa
+      ten: 'Lập lịch hẹn, gán kỹ thuật viên'
+      phu: 'Màn hình điều phối /smart-scheduler'
+      ai: 'Điều phối'
+      the: [HT-03, HT-04, HT-05]
+      noi_dung: |
+        Từ phiếu công việc chưa đóng → **Create → Service Appointment**. Lịch hẹn
+        (`FS Service Appointment`) **tự đổi trạng thái** theo dữ liệu được khai:
+
+        | Trạng thái | Khi nào chuyển sang |
+        |---|---|
+        | **None** | Chưa có lịch, chưa có người |
+        | **Scheduled** | Đã có khung giờ hẹn |
+        | **Dispatched** | Đã có khung giờ **và** đã gán kỹ thuật viên |
+        | **In Progress** | Kỹ thuật viên bắt đầu di chuyển hoặc đã check-in |
+        | **Completed** | Kết thúc buổi làm việc và đủ điều kiện |
+        | **Cannot Complete** | Không làm được, có ghi lý do |
+        | **Canceled** | Huỷ, **bắt buộc nhập lý do** |
+
+        Một phiếu công việc có thể có nhiều lịch hẹn, ví dụ lần một khảo sát, lần hai lắp đặt.
+
+  - buoc:
+      id: nhan-vat-tu
+      ten: 'Nhận vật tư cho lịch hẹn'
+      sang: C
+      den: yeu-cau
+
+  - buoc:
+      id: hien-truong
+      ten: 'Làm việc tại nhà khách hàng'
+      phu: 'Di chuyển · check-in · bước công việc · ảnh · check-out'
+      ai: 'Kỹ thuật viên'
+      the: [HT-06, HT-07, HT-08]
+      noi_dung: |
+        Làm trên ứng dụng kỹ thuật viên `/technician`, **theo đúng thứ tự**:
+
+        | Bước | Thao tác | Hệ thống ghi nhận |
+        |---|---|---|
+        | 1 | Nhận thông báo công việc | Thông báo đẩy về điện thoại |
+        | 2 | **Bắt đầu di chuyển** | Lịch hẹn sang *In Progress*, ghi giờ bắt đầu |
+        | 3 | **Check-in** tại nhà khách hàng | Ghi vị trí và giờ có mặt |
+        | 4 | Làm các **bước công việc** | Đánh dấu từng đầu việc: xong, không xong, không áp dụng |
+        | 5 | **Đính kèm ảnh** nếu loại việc yêu cầu | Ảnh lưu vào lịch hẹn |
+        | 6 | Giao hàng và thu tiền nếu có | Phân khu C và D |
+        | 7 | **Check-out** | Ghi giờ kết thúc |
+
+  - re:
+      id: du-dk-sa
+      hoi: 'Đủ điều kiện hoàn thành lịch hẹn?'
+      tiep: 'đủ'
+      nhanh: {nhan: 'chưa', the: HT-09}
+      noi_dung: |
+        | Điều kiện | Báo lỗi khi thiếu |
+        |---|---|
+        | Lịch đang ở *In Progress* | *“must transition to In Progress before completing”* |
+        | Đã có giờ bắt đầu thực tế | *“Cannot complete: no Actual Start”* — xem HT-08 |
+        | **Mọi** kỹ thuật viên đã check-out hoặc đã bị loại khỏi lịch | *“all resources must be Checked-out or Canceled”* — xem HT-09 |
+        | Đủ yêu cầu của loại việc, ví dụ đã đính ảnh | *“no photo attached”* — xem HT-07 |
+
+  - buoc:
+      id: hoan-thanh-sa
+      ten: 'Hoàn thành lịch hẹn'
+      phu: 'Lịch hẹn xong chưa có nghĩa là phiếu công việc xong'
+      ai: 'Kỹ thuật viên'
+      the: [HT-10]
+      noi_dung: |
+        Lịch hẹn hoàn tất **không** tự chuyển phiếu công việc sang hoàn tất. Phiếu công việc còn
+        phải qua sáu điều kiện ở bước sau.
+
+  - buoc:
+      id: giao-thu
+      ten: 'Giao hàng và thu tiền'
+      sang: C
+      den: giao-hang
+
+  - re:
+      id: du-dk-wo
+      hoi: 'Phiếu công việc đủ sáu điều kiện?'
+      tiep: 'đủ'
+      nhanh: {nhan: 'chưa', the: HT-11}
+      noi_dung: |
+        | # | Điều kiện | Đang áp dụng |
+        |---|---|---|
+        | 1 | Trạng thái hiện tại cho phép chuyển sang *Completed* | Luôn kiểm |
+        | 2 | Mọi **bước công việc bắt buộc** đã xong hoặc không áp dụng | Luôn kiểm, nếu phiếu có bước công việc |
+        | 3 | Mọi **lịch hẹn** đã kết thúc, và có **ít nhất một** lịch hẹn | **Bật** |
+        | 4 | **Tiền mặt đã nộp** và **đơn hàng đã thu đủ** | **Bật** (kiểm *vật tư đã trả* đang tắt) |
+        | 5 | **Đơn bán hàng** liên kết đã *Hoàn tất* hoặc *Đóng đơn* | **Bật** |
+        | 6 | Yêu cầu riêng theo **loại việc** | Theo cấu hình từng loại việc |
+
+        > ⛔ **Điều kiện 4 và 5 tạo ra một trình tự bắt buộc:** phiếu công việc chỉ xong được **sau
+        > khi** đơn đã *Hoàn tất*, mà đơn chỉ hoàn tất khi đã giao đủ, thu đủ và có hoá đơn. Phần lớn
+        > phiếu không hoàn thành được là do chứng từ tiền, không phải do việc hiện trường.
+
+  - buoc:
+      id: hoan-thanh-wo
+      ten: 'Hoàn thành phiếu công việc'
+      phu: 'Thủ công, hoặc tự động sau ân hạn'
+      ai: 'Kỹ thuật viên · Điều phối'
+      the: [HT-12, HT-13]
+      noi_dung: |
+        | Đường | Cách làm |
+        |---|---|
+        | **Thủ công** | Chuyển trạng thái trên Desk, hoặc kỹ thuật viên chọn *Hoàn thành* trên ứng dụng |
+        | **Tự động** | Tác vụ chạy ban đêm rà các phiếu *New* và *In Progress*, đủ điều kiện thì hoàn thành giúp |
+
+        Tác vụ tự động còn chờ **thời gian ân hạn** tính từ lịch hẹn cuối cùng, và **bỏ qua hoàn
+        toàn** phiếu đang *On Hold*.
+
+  - buoc:
+      id: dong-wo
+      ten: 'Đóng phiếu công việc'
+      phu: 'Trạng thái cuối; mở lại được bằng Re-open'
+      ai: 'Điều phối'
+      noi_dung: |
+        **Close** là trạng thái cuối: chức năng tạo lịch hẹn bị ẩn. Cần làm tiếp thì dùng
+        **Re-open** — phiếu về đúng trạng thái trước khi đóng.
+
+ngoai_luong:
+  id: dong-mo
+  ten: 'Mở lại, đổi lịch và huỷ'
+  the: [HT-14, HT-15]
+  noi_dung: |
+    | Việc cần làm | Thao tác | Lưu ý |
+    |---|---|---|
+    | Sửa lịch hẹn đã hoàn tất | Chuyển *Completed → In Progress* | Dữ liệu thực tế **giữ nguyên** |
+    | Làm lại lịch hẹn đã huỷ | Chuyển về *Scheduled* | ⚠️ **Xoá sạch** dữ liệu check-in, check-out, thời gian |
+    | Cần thêm một buổi cho cùng vụ việc | Lập **lịch hẹn mới** | An toàn hơn mở lại lịch cũ |
+
+    **Trình tự huỷ:** lịch hẹn (bắt buộc nhập lý do) → phiếu công việc → đơn bán hàng.
+
+    > ⚠️ **Huỷ phiếu công việc không tự trả hàng về kho** — vật tư đã nhận vẫn phải hoàn trả, xem KG-18.
+
+phu_luc:
+  - id: ba-chung-tu
+    ten: 'Ba chứng từ, ba việc khác nhau'
+    noi_dung: |
+      | Chứng từ | Gõ tìm bằng | Nói về |
+      |---|---|---|
+      | **Đơn bán hàng** | `Sales Order` | Bán cái gì, bao nhiêu tiền, ai chịu trách nhiệm doanh thu |
+      | **Phiếu công việc** | `FS Work Order` | Vụ việc kỹ thuật: làm gì, ở đâu, gồm những đầu việc nào |
+      | **Lịch hẹn dịch vụ** | `FS Service Appointment` | Một buổi có mặt tại hiện trường: ai đi, lúc nào, kết quả ra sao |
+
+      Quan hệ là **một–nhiều ở cả hai tầng**: một đơn có thể nhiều phiếu công việc, một phiếu công
+      việc có thể nhiều lịch hẹn. Trạng thái ba chứng từ **độc lập** với nhau.
+
+the:
+  - ma: HT-01
+    ten: 'Chọn sai loại việc trên phiếu công việc'
+    gap_o: {buoc: lap-wo}
+    dau_hieu: 'Phiếu bị đòi ảnh, giao hàng hoặc thu tiền không liên quan, hoặc bỏ sót yêu cầu lẽ ra phải có.'
+    nguyen_nhan: 'Loại việc quyết định bộ yêu cầu khi hoàn thành phiếu; hệ thống không cảnh báo khi chọn sai.'
+    ai: 'Điều phối'
+    go:
+      - re:
+          hoi: 'Phiếu chưa có lịch hẹn hoàn tất?'
+          co: 'Sửa loại việc trên phiếu'
+          khong: 'Báo quản lý dịch vụ xử lý'
+    quay_ve: {buoc: lap-wo}
+
+  - ma: HT-02
+    ten: 'Đơn không hiện trên màn hình điều phối'
+    gap_o: {buoc: lap-wo}
+    dau_hieu: 'Đơn đã xác nhận nhưng điều phối không thấy để xếp lịch.'
+    nguyen_nhan: 'Chưa có phiếu công việc; hệ thống không tự lập phiếu từ đơn.'
+    ai: 'Điều phối'
+    go:
+      - buoc: 'Mở đơn đã xác nhận'
+      - buoc: 'Create → FS Work Order'
+    quay_ve: {buoc: lap-sa}
+
+  - ma: HT-03
+    ten: 'Không đổi được kỹ thuật viên hoặc khung giờ'
+    gap_o: {buoc: lap-sa}
+    nguyen_nhan: 'Lịch ở Completed, Cannot Complete hoặc Canceled không đổi được người; từ In Progress trở đi không đổi được giờ.'
+    ai: 'Điều phối'
+    go:
+      - re:
+          hoi: 'Lịch đã In Progress trở đi?'
+          co: 'Huỷ lịch kèm lý do, lập lịch mới'
+          khong: 'Sửa trực tiếp trên màn hình điều phối'
+    quay_ve: {buoc: lap-sa}
+
+  - ma: HT-04
+    ten: 'Không thấy chức năng tạo lịch hẹn'
+    gap_o: {buoc: lap-sa}
+    nguyen_nhan: 'Phiếu công việc đã ở trạng thái Closed.'
+    ai: 'Điều phối'
+    go:
+      - buoc: 'Mở phiếu công việc'
+      - buoc: 'Chọn Re-open'
+      - buoc: 'Tạo lịch hẹn như thường'
+    quay_ve: {buoc: lap-sa}
+
+  - ma: HT-05
+    ten: 'Nhiều kỹ thuật viên cùng một buổi'
+    gap_o: {buoc: lap-sa}
+    dau_hieu: 'Cần gán hai người trở lên, hoặc bỏ bớt một người khỏi lịch.'
+    nguyen_nhan: 'Mỗi người có một tỉ lệ đóng góp, tổng phải bằng 100% — đây là căn cứ tính công ca.'
+    ai: 'Điều phối'
+    go:
+      - buoc: 'Gán đủ người vào lịch hẹn'
+      - buoc: 'Chia tỉ lệ đóng góp cho đủ 100%'
+    quay_ve: {buoc: lap-sa}
+
+  - ma: HT-06
+    ten: 'Tới nơi nhưng không làm được'
+    gap_o: {buoc: hien-truong}
+    dau_hieu: 'Khách vắng nhà, thiếu vật tư, hoặc cần khảo sát lại.'
+    nguyen_nhan: 'Buổi làm việc không hoàn thành, cần ghi nhận đúng để lập buổi khác.'
+    ai: 'Kỹ thuật viên · Điều phối'
+    go:
+      - buoc: 'Chuyển lịch hẹn sang Cannot Complete, ghi lý do'
+      - buoc: 'Điều phối lập lịch hẹn mới trên cùng phiếu'
+    canh_bao: 'Không mở lại lịch cũ từ Cannot Complete: thao tác đó xoá dữ liệu check-in.'
+    quay_ve: {buoc: lap-sa}
+
+  - ma: HT-07
+    ten: 'Báo thiếu ảnh khi hoàn thành lịch hẹn'
+    gap_o: {buoc: du-dk-sa}
+    thong_bao: '“no photo attached (Work Type requires Photo)”'
+    nguyen_nhan: 'Loại việc của phiếu bắt buộc đính kèm ảnh hiện trường.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - buoc: 'Chụp và đính kèm ảnh vào lịch hẹn'
+      - buoc: 'Hoàn thành lại lịch hẹn'
+    quay_ve: {buoc: hoan-thanh-sa}
+
+  - ma: HT-08
+    ten: 'Báo chưa có giờ bắt đầu thực tế'
+    gap_o: {buoc: du-dk-sa}
+    thong_bao: '“Cannot complete: no Actual Start”'
+    nguyen_nhan: 'Lịch hẹn chưa từng được bắt đầu trên ứng dụng.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - buoc: 'Chọn Bắt đầu di chuyển để lịch sang In Progress'
+      - buoc: 'Hoàn thành lại lịch hẹn'
+    quay_ve: {buoc: hoan-thanh-sa}
+
+  - ma: HT-09
+    ten: 'Báo còn người chưa check-out'
+    gap_o: {buoc: du-dk-sa}
+    thong_bao: '“all resources must be Checked-out or Canceled. Pending: …”'
+    nguyen_nhan: 'Còn kỹ thuật viên trong lịch hẹn chưa check-out.'
+    ai: 'Kỹ thuật viên · Điều phối'
+    go:
+      - re:
+          hoi: 'Người đó có tham gia buổi làm việc?'
+          co: 'Người đó check-out trên ứng dụng'
+          khong: 'Điều phối loại khỏi lịch, chia lại tỉ lệ đóng góp'
+    quay_ve: {buoc: hoan-thanh-sa}
+
+  - ma: HT-10
+    ten: 'Cần sửa lịch hẹn đã hoàn tất'
+    gap_o: {buoc: hoan-thanh-sa}
+    dau_hieu: 'Phát hiện làm thiếu hoặc khai sai sau khi lịch hẹn đã Completed.'
+    nguyen_nhan: 'Lịch hẹn đã hoàn tất bị khoá; phải chuyển trạng thái để sửa.'
+    ai: 'Kỹ thuật viên · Điều phối'
+    go:
+      - buoc: 'Chuyển lịch hẹn từ Completed về In Progress'
+      - buoc: 'Bổ sung phần còn thiếu, dữ liệu cũ giữ nguyên'
+      - buoc: 'Hoàn thành lại'
+    quay_ve: {buoc: hoan-thanh-sa}
+
+  - ma: HT-11
+    ten: 'Phiếu công việc không hoàn thành được'
+    gap_o: {buoc: hoan-thanh-wo}
+    thong_bao: '“Không thể hoàn thành WO - …”'
+    nguyen_nhan: 'Còn thiếu một trong sáu điều kiện. Phổ biến nhất là chứng từ tiền: đơn còn nợ, tiền mặt chưa nộp, hoặc đơn chưa hoàn tất.'
+    ai: 'Kỹ thuật viên · Kế toán'
+    go:
+      - buoc: 'Bấm hoàn thành thủ công để đọc lý do'
+      - re:
+          hoi: 'Lý do nói về đơn, thu tiền hoặc nộp tiền?'
+          co: 'Mở thẻ tương ứng TT-08, TT-09, TT-13, TT-15'
+          khong: 'Bổ sung lịch hẹn, bước công việc hoặc ảnh còn thiếu'
+    quay_ve: {buoc: hoan-thanh-wo}
+
+  - ma: HT-12
+    ten: 'Đủ điều kiện nhưng tác vụ tự động vẫn bỏ qua'
+    gap_o: {buoc: hoan-thanh-wo}
+    nguyen_nhan: 'Phiếu đang On Hold, hoặc chưa hết thời gian ân hạn tính từ lịch hẹn cuối.'
+    ai: 'Điều phối'
+    go:
+      - re:
+          hoi: 'Phiếu đang On Hold?'
+          co: 'Chuyển phiếu về In Progress'
+          khong: 'Chờ đủ số ngày ân hạn, hoặc hoàn thành thủ công'
+    quay_ve: {buoc: hoan-thanh-wo}
+
+  - ma: HT-13
+    ten: 'Báo phiếu công việc không có lịch hẹn nào'
+    gap_o: {buoc: hoan-thanh-wo}
+    thong_bao: '“Work Order has no Service Appointments”'
+    nguyen_nhan: 'Điều kiện yêu cầu tối thiểu một lịch hẹn đang bật.'
+    ai: 'Điều phối'
+    go:
+      - buoc: 'Lập một lịch hẹn phản ánh đúng việc đã làm'
+      - buoc: 'Hoàn thành lịch hẹn đó'
+    quay_ve: {buoc: hoan-thanh-wo}
+
+  - ma: HT-14
+    ten: 'Mở lại lịch hẹn làm mất dữ liệu check-in'
+    gap_o: {buoc: dong-mo}
+    nguyen_nhan: 'Mở lại từ Canceled hoặc Cannot Complete sẽ xoá toàn bộ dữ liệu thực tế của buổi đó.'
+    ai: 'Điều phối'
+    go:
+      - buoc: 'Không mở lại lịch đã huỷ hoặc không làm được'
+      - buoc: 'Lập lịch hẹn mới trên cùng phiếu'
+    quay_ve: {buoc: lap-sa}
+
+  - ma: HT-15
+    ten: 'Không huỷ được lịch hẹn, phiếu công việc hoặc đơn'
+    gap_o: {buoc: dong-mo}
+    thong_bao: '“Cannot hủy Service Appointment when in status … Change status first.”'
+    nguyen_nhan: 'Các chứng từ khoá lẫn nhau: đơn còn phiếu công việc, phiếu còn lịch hẹn, hoặc lịch đang ở trạng thái khoá.'
+    ai: 'Điều phối'
+    go:
+      - buoc: 'Chuyển lịch hẹn khỏi trạng thái khoá'
+      - buoc: 'Huỷ lịch hẹn, nhập lý do'
+      - buoc: 'Huỷ phiếu công việc'
+      - buoc: 'Huỷ đơn nếu cần'
+    quay_ve: {buoc: dong-mo}
+
+hoi_dap:
+  - hoi: 'Một lần đi không xong việc, phải làm gì?'
+    dap: 'Lập **lịch hẹn mới** trên cùng phiếu công việc — xem HT-06.'
+  - hoi: 'Khách hẹn lại ngày khác thì sửa lịch hay huỷ lịch?'
+    dap: 'Lịch chưa *In Progress* thì sửa khung giờ. Đã *In Progress* rồi thì huỷ kèm lý do và lập lịch mới — xem HT-03.'
+  - hoi: 'Đi hai người thì ghi công thế nào?'
+    dap: 'Gán cả hai vào lịch hẹn, chia **tỉ lệ đóng góp** cộng lại bằng 100% — xem HT-05.'
+  - hoi: 'Lịch hẹn và đơn đã xong, sao phiếu công việc vẫn New?'
+    dap: 'Còn thiếu một trong sáu điều kiện, hoặc tác vụ tự động chưa tới lượt — xem HT-11 và HT-12.'
+  - hoi: 'Đóng phiếu công việc có đóng luôn đơn hàng không?'
+    dap: 'Không. Ba chứng từ độc lập, xem [phụ lục](#ba-chung-tu).'
+  - hoi: 'Khảo sát xong khách không mua, xử lý thế nào?'
+    dap: 'Hoàn thành lịch hẹn, rồi **Close** phiếu công việc. Đơn hàng nếu đã lập thì đóng hoặc huỷ theo BH-17.'

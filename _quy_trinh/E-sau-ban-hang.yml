@@ -1,0 +1,397 @@
+# Phân khu E — Sau bán hàng. Hai luồng. Khuôn dữ liệu: xem D-thu-tien.yml và README.md.
+
+ma: E
+ten: Sau bán hàng
+tien_to: SB
+trang: Quy-Trinh-E-Sau-Ban-Hang
+nav_order: 50
+ai_lam: 'Nhân viên dịch vụ · Nhân viên sự cố · Hệ thống tự động'
+gioi_thieu: >-
+  Hai luồng giữ khách hàng ở lại sau lần mua đầu tiên: nhắc bảo dưỡng theo chu kỳ, và tiếp nhận
+  khi khách hàng báo hỏng. Cả hai đều có thể mở ra một đơn bán hàng mới.
+
+cac_luong:
+  - id: bao-duong
+    ten: 'Bảo dưỡng định kỳ'
+    gioi_thieu: |
+      Máy lọc nước phải thay lõi và bảo dưỡng theo chu kỳ, nên mỗi đơn hoàn tất đều tự sinh lịch
+      chăm sóc cho kỳ sau. Có hai loại bản ghi:
+
+      | Loại | Gõ tìm bằng | Là gì |
+      |---|---|---|
+      | **Nhắc theo vật tư** | `Item Service Reminder` | Lịch của một vật tư trên một đơn: chu kỳ và ngày đến hạn kế tiếp |
+      | **Phiếu nhắc bảo dưỡng** | `Service Ticket Reminder` | Việc cần làm: liên hệ khách hàng, gom nhiều lịch nhắc |
+    luong:
+      - cong_vao:
+          - {tu: D, buoc: hoan-tat, ten: 'Đơn hàng đã hoàn tất'}
+
+      - buoc:
+          id: sinh-lich
+          ten: 'Sinh lịch nhắc theo từng vật tư'
+          phu: 'Tự động, theo chu kỳ khai cho mã hàng'
+          ai: 'Hệ thống'
+          the: [SB-01, SB-02]
+          noi_dung: |
+            Ngay khi đơn sang **Completed**, hệ thống rà từng món trong đơn:
+
+            | Loại món | Xử lý |
+            |---|---|
+            | Có khai **chu kỳ nhắc** | Sinh một dòng nhắc, đặt sẵn ngày đến hạn kế tiếp |
+            | Là **bộ sản phẩm** | Khai triển thành từng món thành phần rồi mới xét |
+            | Không khai chu kỳ | Bỏ qua |
+
+            **Tránh sinh phiếu thừa:** đơn có bán lõi lọc có chu kỳ nhắc thì không nhắc cho thân máy;
+            khi lịch nhắc lõi được sinh, các lịch nhắc thân máy đang chờ của cùng thiết bị được ngừng.
+            Đơn bán **thiết bị không kèm lõi** vẫn nhắc cho thân máy.
+
+      - buoc:
+          id: phieu-nhac
+          ten: 'Gom lịch nhắc theo khách hàng'
+          phu: 'Cùng địa chỉ, ngày đến hạn gần nhau'
+          ai: 'Hệ thống'
+          the: [SB-03, SB-04]
+          noi_dung: |
+            | Trường hợp | Xử lý |
+            |---|---|
+            | Khách chưa có phiếu đang mở | **Lập phiếu mới** |
+            | Có phiếu đang mở, **cùng địa chỉ**, ngày đến hạn **gần nhau** | **Bổ sung** vào phiếu đó |
+            | Có phiếu đang mở nhưng khác địa chỉ, hoặc ngày cách xa | **Lập phiếu mới** |
+
+            Khách còn phiếu chưa xử lý thì hệ thống **tạm hoãn** sinh vòng mới, để không gọi khách hai
+            lần cho cùng một lần đến.
+
+      - buoc:
+          id: phan-cong
+          ten: 'Phân người phụ trách'
+          phu: 'Sáu tiêu chí, hoặc chia đều theo tháng'
+          ai: 'Hệ thống · Quản lý dịch vụ'
+          the: [SB-05, SB-06]
+          noi_dung: |
+            | # | Tiêu chí | Ý nghĩa |
+            |---|---|---|
+            | 1 | **Đã chăm sóc khách này trước đây** | Trọng số cao nhất — khách quen giữ đúng người |
+            | 2 | **Chuyên môn** | Am hiểu dòng sản phẩm liên quan |
+            | 3 | **Hiệu suất** | Tỉ lệ chốt đơn gần đây |
+            | 4 | **Mức độ tương tác** | Đã trao đổi trên phiếu này gần đây |
+            | 5 | **Địa bàn** | Phụ trách đúng tỉnh hoặc quận của khách |
+            | 6 | **Cân bằng khối lượng** | Ai đang ít việc được cộng điểm, ai quá tải bị trừ |
+
+            Cơ chế **phân theo tháng** chia đều khối lượng từng tháng; hai cơ chế loại trừ nhau bằng một
+            tham số cấu hình. Người dùng luôn sửa được sau khi hệ thống phân.
+
+      - buoc:
+          id: lien-he
+          ten: 'Liên hệ khách hàng'
+          phu: 'Danh sách lọc theo ngày đến hạn'
+          ai: 'Nhân viên dịch vụ'
+          noi_dung: |
+            | Trạng thái | Nghĩa |
+            |---|---|
+            | **Open** | Chưa xử lý |
+            | **Under Care** | Đang chăm sóc, chưa chốt |
+            | **Converted** | Khách đồng ý, đã lập đơn mới |
+            | **Reschedule Reminder Date** | Khách hẹn dịp khác, dời ngày nhắc |
+            | **Contact Later** | Liên hệ lại sau |
+            | **Unable to Contact** | Không liên hệ được |
+            | **Lost** | Khách không có nhu cầu, có ghi lý do |
+            | **Disable** | Ngừng nhắc hẳn chuỗi này |
+            | **Cancelled** | Đơn đã lập nhưng bị huỷ |
+
+            📚 Lọc danh sách: [Lọc ticket bảo dưỡng](Loc-Ticket-Bao-Duong.html).
+
+      - song_song:
+          id: ket-qua
+          ten: 'Khách hàng trả lời thế nào?'
+          nhanh:
+            - id: dong-y
+              ten: 'Đồng ý'
+              buoc:
+                - ten: 'Lập đơn ngay trên phiếu nhắc'
+                  phu: 'Giữ liên kết ngược'
+                  the: [SB-07, SB-08]
+                - {ten: 'Phiếu tự sang Converted', phu: 'Khi đơn được xác nhận'}
+              noi_dung: |
+                Hệ thống điền sẵn khách hàng, địa chỉ, liên hệ. Đơn bị huỷ thì phiếu tự sang *Cancelled*.
+            - id: hen-lai
+              ten: 'Hẹn lại'
+              buoc:
+                - {ten: 'Dời ngày nhắc', phu: 'Reschedule hoặc Contact Later'}
+                - {ten: 'Không nghe máy', phu: 'Unable to Contact, nhắc lại vòng sau'}
+            - id: khong-nhu-cau
+              ten: 'Không có nhu cầu'
+              buoc:
+                - {ten: 'Chọn Lost kèm lý do', phu: 'Dữ liệu để cải thiện kịch bản bán hàng'}
+                - ten: 'Ngừng hẳn thì chọn Disable'
+                  phu: 'Chuỗi dừng, không sinh vòng mới'
+                  the: [SB-09]
+              noi_dung: |
+                Lý do **Lost** bắt buộc chọn: không có nhu cầu, đợi khách kiểm tra, chưa sắp xếp được thời
+                gian, mua bên ngoài, đã hẹn lại nhiều lần, không đồng ý đổi loại lõi.
+          gop:
+            ten: 'Vòng nhắc kế tiếp tự sinh theo chu kỳ'
+            phu: 'Tác vụ chạy hằng đêm; một đêm lỗi thì đêm sau xử lý bù'
+
+      - cong_ra:
+          - {sang: A, buoc: khai-don, ten: 'Đơn mới từ phiếu nhắc'}
+
+  - id: su-co
+    ten: 'Sự cố'
+    gioi_thieu: 'Mỗi lượt khách hàng báo hỏng thành một phiếu sự cố (`Issue`), kể cả khi thiết bị còn bảo hành.'
+    luong:
+      - buoc:
+          id: tiep-nhan
+          ten: 'Tiếp nhận, lập phiếu sự cố'
+          phu: 'Gắn về đơn hàng gốc của khách'
+          ai: 'Chăm sóc khách hàng'
+          the: [SB-10]
+          noi_dung: |
+            ✅ **Việc quan trọng nhất là gắn phiếu về đơn hàng gốc.** Nhờ đó người xử lý thấy ngay khách
+            đã mua thiết bị nào, lắp ngày nào, bảo dưỡng tới đâu, và các lần báo hỏng trước.
+
+      - buoc:
+          id: phan-loai
+          ten: 'Phân loại, gán người xử lý'
+          phu: 'Nhóm và Loại đều bắt buộc'
+          ai: 'Chăm sóc khách hàng'
+          the: [SB-11, SB-12]
+          noi_dung: |
+            | Ô | Nói về | Khai lúc nào |
+            |---|---|---|
+            | **Nhóm sự cố** (`Issue Group`) | Khách hàng phản ánh chuyện gì | Ngay khi tiếp nhận |
+            | **Loại sự cố** (`Issue Type`) | Hỏng ở bộ phận nào | Sau khi trao đổi thêm |
+
+            Chọn nhóm trước thì ô loại chỉ hiện các loại của nhóm đó; chọn loại trước thì hệ thống tự
+            điền nhóm. Người xử lý ghi ở ô **Handling Person**.
+
+            📚 Quản trị danh mục: [Phân loại sự cố](Phan-Loai-Su-Co.html).
+
+      - song_song:
+          id: hai-duong
+          ten: 'Cần đến tận nơi?'
+          nhanh:
+            - id: qua-dien-thoai
+              ten: 'Không — qua điện thoại'
+              buoc:
+                - {ten: 'Hướng dẫn khách hàng', phu: 'Thường là chưa quen dùng máy'}
+                - {ten: 'Ghi Resolution Details', phu: 'Kết quả xử lý'}
+            - id: den-tan-noi
+              ten: 'Có — cử người đến'
+              buoc:
+                - {ten: 'Phiếu công việc loại Sự cố', sang: B, den: lap-wo}
+                - {ten: 'Vật tư tính phí: lập đơn mới', sang: A, den: khai-don}
+              noi_dung: |
+                Chọn **Create → FS Work Order** ngay trên phiếu sự cố. Phát sinh vật tư tính phí thì lập
+                đơn bằng **Create → Sales Order** cũng ngay trên phiếu sự cố — đơn đó hoàn tất cũng sẽ
+                sinh lịch bảo dưỡng, đưa khách quay lại vòng chăm sóc.
+          gop:
+            ten: 'Đã có kết quả xử lý'
+            phu: 'Phiếu sự cố không tự đóng theo phiếu công việc'
+
+      - buoc:
+          id: dong-su-co
+          ten: 'Đóng phiếu sự cố'
+          phu: 'Đóng riêng, kèm ghi nhận kết quả'
+          ai: 'Nhân viên sự cố'
+          the: [SB-13, SB-14, SB-15, SB-16]
+          noi_dung: |
+            | Trạng thái | Nghĩa |
+            |---|---|
+            | **Open** | Đang mở |
+            | **Replied** | Đã phản hồi khách hàng |
+            | **On Hold** | Tạm dừng, chờ khách hoặc chờ linh kiện — phần tồn đọng thật, cần rà định kỳ |
+            | **Resolved** | Đã xử lý, chờ xác nhận |
+            | **Closed** | Đã đóng |
+
+            **Đo hiệu suất:** nhân viên sự cố tính hạn từ lúc mở phiếu, xong khi phiếu đóng hoặc có
+            phiếu công việc đầu tiên; kỹ thuật viên tính hạn từ lúc phiếu công việc được lập. Chi tiết:
+            [Hiệu suất xử lý sự cố](Hieu-Suat-Xu-Ly-Su-Co.html).
+
+the:
+  - ma: SB-01
+    ten: 'Khách đã mua nhưng không có phiếu nhắc'
+    gap_o: {buoc: sinh-lich}
+    nguyen_nhan: 'Đơn chưa ở trạng thái Completed — thường vì chưa xuất đủ hoá đơn.'
+    ai: 'Nhân viên dịch vụ · Kế toán'
+    go:
+      - buoc: 'Mở đơn, xem ba ô trạng thái'
+      - re:
+          hoi: 'Đơn đã Completed?'
+          co: 'Kiểm chu kỳ nhắc của mã hàng — SB-02'
+          khong: 'Xử lý phần hoá đơn — TT-14, TT-15'
+    quay_ve: {buoc: sinh-lich}
+
+  - ma: SB-02
+    ten: 'Đơn hoàn tất mà vẫn không sinh nhắc'
+    gap_o: {buoc: sinh-lich}
+    nguyen_nhan: 'Mặt hàng chưa được khai chu kỳ nhắc.'
+    ai: 'Quản trị viên'
+    go:
+      - buoc: 'Gửi quản trị viên mã hàng'
+      - buoc: 'Quản trị viên khai chu kỳ cho mã hàng'
+    quay_ve: {buoc: sinh-lich}
+
+  - ma: SB-03
+    ten: 'Một khách hàng có nhiều phiếu nhắc trùng'
+    gap_o: {buoc: phieu-nhac}
+    nguyen_nhan: 'Khác địa chỉ, hoặc ngày đến hạn cách xa nên hệ thống không gom được.'
+    ai: 'Nhân viên dịch vụ'
+    go:
+      - buoc: 'Chọn phiếu giữ lại'
+      - buoc: 'Đóng các phiếu thừa kèm ghi chú'
+    quay_ve: {buoc: lien-he}
+
+  - ma: SB-04
+    ten: 'Phiếu nhắc quá hạn rất lâu vẫn còn'
+    gap_o: {buoc: phieu-nhac}
+    nguyen_nhan: 'Tồn từ đợt rà soát dữ liệu cũ; tác vụ tự động không xử lý phần quá hạn quá lâu.'
+    ai: 'Quản lý dịch vụ'
+    go:
+      - buoc: 'Lọc danh sách phiếu quá hạn'
+      - buoc: 'Xử lý theo đợt có kiểm soát'
+    quay_ve: {buoc: lien-he}
+
+  - ma: SB-05
+    ten: 'Phiếu được phân cho người không phù hợp'
+    gap_o: {buoc: phan-cong}
+    nguyen_nhan: 'Chưa khai chuyên môn hoặc địa bàn phụ trách.'
+    ai: 'Quản lý dịch vụ'
+    go:
+      - buoc: 'Khai bổ sung chuyên môn, địa bàn'
+      - buoc: 'Phân lại thủ công các phiếu đã phân'
+    quay_ve: {buoc: phan-cong}
+
+  - ma: SB-06
+    ten: 'Nhân sự nghỉ việc, khách quen không được chuyển giao'
+    gap_o: {buoc: phan-cong}
+    nguyen_nhan: 'Số điện thoại công ty của người đó chưa được bàn giao cho người tiếp quản.'
+    ai: 'Quản lý dịch vụ'
+    go:
+      - buoc: 'Bàn giao số điện thoại theo quy trình'
+      - buoc: 'Hệ thống chuyển phiếu ở lần phân kế tiếp'
+    quay_ve: {buoc: phan-cong}
+
+  - ma: SB-07
+    ten: 'Đã lập đơn mà phiếu nhắc vẫn Open'
+    gap_o: {buoc: dong-y}
+    nguyen_nhan: 'Đơn được lập ngoài phiếu nhắc nên mất liên kết ngược.'
+    ai: 'Nhân viên dịch vụ · Quản trị viên'
+    go:
+      - re:
+          hoi: 'Đơn chưa có chứng từ nào phía sau?'
+          co: 'Huỷ đơn, lập lại từ phiếu nhắc'
+          khong: 'Nhờ quản trị viên gắn lại, hoặc đóng phiếu kèm ghi chú'
+    lien_quan: [BH-12]
+    quay_ve: {buoc: dong-y}
+
+  - ma: SB-08
+    ten: 'Khách chỉ đồng ý một phần hạng mục'
+    gap_o: {buoc: dong-y}
+    nguyen_nhan: 'Phiếu nhắc gom nhiều hạng mục; chốt cả phiếu sẽ đóng luôn phần khách chưa đồng ý.'
+    ai: 'Nhân viên dịch vụ'
+    go:
+      - buoc: 'Dùng chức năng Tách phiếu'
+      - buoc: 'Lập đơn cho phần đã đồng ý'
+      - buoc: 'Giữ phần còn lại để nhắc tiếp'
+    quay_ve: {buoc: lien-he}
+
+  - ma: SB-09
+    ten: 'Cần ngừng nhắc hẳn'
+    gap_o: {buoc: khong-nhu-cau}
+    dau_hieu: 'Khách chuyển nhà, bỏ dùng thiết bị, hoặc mua nơi khác.'
+    nguyen_nhan: 'Cần chặn cả các vòng nhắc sau, không chỉ phiếu hiện tại.'
+    ai: 'Nhân viên dịch vụ'
+    go:
+      - buoc: 'Chọn trạng thái Disable'
+      - buoc: 'Ghi lý do ngừng nhắc'
+    quay_ve: {buoc: lien-he}
+
+  - ma: SB-10
+    ten: 'Không biết khách đã mua thiết bị nào'
+    gap_o: {buoc: tiep-nhan}
+    nguyen_nhan: 'Phiếu sự cố chưa gắn về đơn hàng gốc.'
+    ai: 'Chăm sóc khách hàng'
+    go:
+      - buoc: 'Tra đơn của khách theo số điện thoại'
+      - buoc: 'Gắn đơn vào ô chứng từ tham chiếu'
+    quay_ve: {buoc: tiep-nhan}
+
+  - ma: SB-11
+    ten: 'Ô Loại sự cố trống sau khi chọn nhóm'
+    gap_o: {buoc: phan-loai}
+    nguyen_nhan: 'Nhóm đó chưa được khai loại nào.'
+    ai: 'Chăm sóc khách hàng · Quản trị viên'
+    go:
+      - re:
+          hoi: 'Có nhóm khác phù hợp?'
+          co: 'Chọn nhóm khác'
+          khong: 'Đề nghị quản trị viên khai loại cho nhóm'
+    quay_ve: {buoc: phan-loai}
+
+  - ma: SB-12
+    ten: 'Đổi nhóm làm mất loại đang chọn'
+    gap_o: {buoc: phan-loai}
+    nguyen_nhan: 'Loại cũ không thuộc nhóm mới. Trên phiếu đã lưu, hệ thống chỉ cảnh báo chứ không tự xoá.'
+    ai: 'Chăm sóc khách hàng'
+    go:
+      - re:
+          hoi: 'Biết chắc bộ phận hỏng?'
+          co: 'Chọn loại trước, nhóm tự điền'
+          khong: 'Chọn lại loại thuộc nhóm mới'
+    quay_ve: {buoc: phan-loai}
+
+  - ma: SB-13
+    ten: 'Phiếu công việc xong mà phiếu sự cố vẫn mở'
+    gap_o: {buoc: dong-su-co}
+    nguyen_nhan: 'Hai chứng từ có trạng thái độc lập.'
+    ai: 'Nhân viên sự cố'
+    go:
+      - buoc: 'Ghi kết quả vào phiếu sự cố'
+      - buoc: 'Đóng phiếu sự cố'
+    quay_ve: {buoc: dong-su-co}
+
+  - ma: SB-14
+    ten: 'Phiếu sự cố nằm On Hold rất lâu'
+    gap_o: {buoc: dong-su-co}
+    nguyen_nhan: 'Chờ linh kiện, chờ khách sắp xếp, hoặc bị quên theo dõi.'
+    ai: 'Quản lý dịch vụ'
+    go:
+      - buoc: 'Lọc danh sách On Hold định kỳ'
+      - re:
+          hoi: 'Đã xử lý xong trên thực tế?'
+          co: 'Đóng phiếu kèm kết quả'
+          khong: 'Liên hệ lại khách hoặc bên cung ứng'
+    quay_ve: {buoc: dong-su-co}
+
+  - ma: SB-15
+    ten: 'Đơn sửa chữa không truy được về sự cố'
+    gap_o: {phan_khu: A, buoc: khai-don}
+    nguyen_nhan: 'Đơn được lập thủ công trên Desk thay vì từ chức năng trên phiếu sự cố.'
+    ai: 'Quản trị viên'
+    go:
+      - buoc: 'Nhờ quản trị viên gắn lại liên kết'
+    lien_quan: [BH-12]
+    quay_ve: {buoc: dong-su-co}
+
+  - ma: SB-16
+    ten: 'Tỉ lệ đạt của một người giảm bất thường'
+    gap_o: {buoc: dong-su-co}
+    nguyen_nhan: 'Có trường hợp quá hạn chưa xong nằm trong mẫu số.'
+    ai: 'Quản lý dịch vụ'
+    go:
+      - buoc: 'Bấm vào con số trên báo cáo hiệu suất'
+      - buoc: 'Rà từng trường hợp quá hạn'
+    quay_ve: {buoc: dong-su-co}
+
+hoi_dap:
+  - hoi: 'Khách mới mua tháng trước, bao giờ hệ thống nhắc?'
+    dap: 'Theo chu kỳ của từng hạng mục, tính từ ngày đơn hoàn tất — lõi thô vài tháng, thân máy vài năm.'
+  - hoi: 'Khách bảo chưa cần thay, ghi thế nào?'
+    dap: '**Reschedule Reminder Date** nếu khách hẹn dịp khác, **Contact Later** nếu chỉ muốn gọi lại sau. Đừng dùng **Lost** cho hai trường hợp này.'
+  - hoi: 'Gọi ba lần không ai nghe thì sao?'
+    dap: 'Ghi **Unable to Contact**. Chuỗi vẫn sống và sẽ nhắc lại ở vòng sau.'
+  - hoi: 'Khách gọi báo hỏng nhưng máy còn bảo hành, có lập phiếu sự cố không?'
+    dap: 'Có. Mọi lượt báo hỏng đều lập phiếu. Bảo hành hay không chỉ quyết định có lập đơn bán hàng hay không.'
+  - hoi: 'Phiếu sự cố đóng rồi, khách gọi lại cùng lỗi đó?'
+    dap: 'Lập phiếu mới và gắn về cùng đơn hàng gốc. Lịch sử các lần báo hỏng nằm ở đó.'
+  - hoi: 'Chờ linh kiện thì để phiếu ở trạng thái gì?'
+    dap: '**On Hold**, nhưng phải rà lại định kỳ — xem SB-14.'

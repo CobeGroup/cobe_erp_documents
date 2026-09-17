@@ -1,0 +1,484 @@
+# Phân khu C — Kho và giao nhận. Hai luồng. Khuôn dữ liệu: xem D-thu-tien.yml và README.md.
+
+ma: C
+ten: Kho và giao nhận
+tien_to: KG
+trang: Quy-Trinh-C-Kho-Giao-Nhan
+nav_order: 30
+ai_lam: 'Kho · Kỹ thuật viên · Kinh doanh'
+gioi_thieu: >-
+  Hàng rời kho công ty theo một trong hai đường: kỹ thuật viên mang đi và giao tận tay, hoặc
+  gửi qua đơn vị vận chuyển. Hàng kỹ thuật viên mang theo vẫn nằm trên sổ sách, ở kho riêng
+  của người đó, cho tới khi giao cho khách hàng hoặc trả về kho.
+
+cac_luong:
+  - id: mang-hang
+    ten: 'Kỹ thuật viên mang hàng đi'
+    gioi_thieu: |
+      Mỗi kỹ thuật viên có một **kho riêng** (`Warehouse`) cho từng công ty. Hàng ở đó vẫn là tài
+      sản công ty, chỉ đổi vị trí lưu trữ.
+
+      | Trường hợp | Quy tắc |
+      |---|---|
+      | Một người, nhiều công ty | Mỗi công ty một kho |
+      | Kho hoàn trả mặc định | Khai riêng, **không trùng** kho của chính người đó |
+      | Chưa khai kho cho một công ty | Mọi thao tác vật tư ở công ty đó đều báo lỗi |
+    luong:
+      - cong_vao:
+          - {tu: B, buoc: lap-sa, ten: 'Lịch hẹn đã có kỹ thuật viên'}
+
+      - buoc:
+          id: yeu-cau
+          ten: 'Yêu cầu vật tư theo lịch hẹn'
+          phu: 'Ứng dụng tự gom danh sách cần mang'
+          ai: 'Kỹ thuật viên'
+          the: [KG-01, KG-02]
+          noi_dung: |
+            Trên ứng dụng: màn hình kho → **Yêu cầu hàng** → chọn lịch hẹn sắp làm. Hệ thống gom sẵn
+            vật tư từ phiếu công việc, từng dòng việc và đơn bán hàng liên kết (số còn phải giao).
+
+            | Hệ thống tự làm | Nghĩa là |
+            |---|---|
+            | **Khai triển bộ sản phẩm** | Dòng cha chỉ để tham khảo; các món thành phần hiện bên dưới, số lượng đã nhân theo bộ |
+            | **Trừ phần đã yêu cầu trước** | Được yêu cầu = cần − đã yêu cầu |
+
+            Vật tư tiêu hao và hàng dự phòng thì yêu cầu **không gắn lịch hẹn**: tìm món theo tên →
+            nhập số lượng → chọn kho đích → gửi. Loại này không sinh nghĩa vụ trả.
+
+      - buoc:
+          id: xuat-kho
+          ten: 'Kho xuất hàng sang kho kỹ thuật viên'
+          phu: 'Xuất từ nhiều kho, xuất nhiều lần'
+          ai: 'Kho'
+          the: [KG-03]
+          noi_dung: |
+            Nhân viên kho nhận yêu cầu trên `/master-stock` hoặc Desk, rồi lập phiếu xuất kho
+            (`Stock Entry`). Hệ thống theo dõi từng yêu cầu: chưa xuất, xuất một phần, xuất đủ — kỹ
+            thuật viên thấy ngay trên ứng dụng.
+
+      - buoc:
+          id: giao-hang
+          ten: 'Lập phiếu giao hàng, khách hàng ký'
+          phu: 'Giao đủ, hoặc giảm số lượng phần khách không nhận'
+          ai: 'Kỹ thuật viên'
+          the: [KG-04, KG-05]
+          noi_dung: |
+            Trên ứng dụng: mở lịch hẹn → tab **Đơn hàng** → **Giao hàng**.
+
+            | Điều kiện | Nội dung |
+            |---|---|
+            | Trạng thái đơn | Không thuộc *Closed*, *Cancelled*, *On Hold* |
+            | Kho | Kỹ thuật viên phải được khai kho cho công ty của đơn |
+            | Mỗi đơn | Phải giao ít nhất một món |
+
+            | Thao tác trên dòng | Nghĩa |
+            |---|---|
+            | Giữ nguyên số lượng | Giao đủ |
+            | Giảm số lượng | Giao một phần; phần chênh thành **hàng hoàn trả** |
+            | Đặt về 0 | Không giao món đó |
+
+            Khách hàng **ký trên màn hình**; chưa ký thì nút xác nhận không bật. Phiếu giao hàng
+            (`Delivery Note`) là điều kiện bắt buộc để được thu tiền.
+
+      - song_song:
+          id: sau-giao
+          ten: 'Khách hàng nhận đủ số hàng mang đến?'
+          noi_dung: |
+            ⚠️ **Nghĩa vụ trả phát sinh ngay lúc lập phiếu giao hàng**, không phải lúc trả hàng:
+
+            > **Số cần trả = số mang đi − số thực giao cho khách hàng**
+
+            Mỗi phần chênh có một **mã nghĩa vụ** riêng, ghi vào đơn bán hàng kèm người khai, kho lúc
+            khai và phiếu giao hàng đã làm phát sinh.
+          nhanh:
+            - id: nhan-du
+              ten: 'Nhận đủ'
+              buoc:
+                - {ten: 'Hàng trừ khỏi kho kỹ thuật viên', phu: 'Không phát sinh nghĩa vụ trả'}
+            - id: tra-ve
+              ten: 'Còn phần không giao'
+              buoc:
+                - ten: 'Nghĩa vụ trả tự phát sinh'
+                  phu: 'Số cần trả = mang đi − thực giao'
+                  the: [KG-06]
+                - ten: 'Lập phiếu trả từ ứng dụng'
+                  phu: 'Phiếu ở trạng thái nháp'
+                  the: [KG-07, KG-08, KG-09, KG-10]
+                - ten: 'Kho kiểm đếm và duyệt'
+                  phu: 'Duyệt xong nghĩa vụ mới hết'
+                  the: [KG-11, KG-12]
+              noi_dung: |
+                Màn hình **Trả vật tư** hiện ba con số cho mỗi nghĩa vụ:
+
+                | Con số | Nghĩa |
+                |---|---|
+                | **Cần trả** | Phần còn lại sau khi trừ các phiếu **đã duyệt** |
+                | **Đang chờ kho** | Phần đang nằm trong phiếu **nháp** |
+                | **Còn chọn được** | Cần trả − Đang chờ kho |
+
+                ⛔ **Phiếu trả nháp không làm thay đổi sổ kho.** Hàng vẫn tính ở kho kỹ thuật viên cho
+                tới khi kho duyệt; lúc duyệt hệ thống kiểm lại tồn kho lần nữa. Kỹ thuật viên xoá được
+                phiếu nháp **do chính mình lập**, xoá xong nghĩa vụ mở lại ngay.
+
+                📚 Chi tiết từng tình huống: [Trả vật tư về kho (FSMNext)](FSMNext-Tra-Vat-Tu.html).
+          gop:
+            ten: 'Phiếu giao hàng đã xác nhận'
+            phu: 'Phần không giao được theo dõi đến khi kho duyệt phiếu trả'
+
+      - cong_ra:
+          - {sang: D, buoc: co-phieu-giao, ten: 'Thu tiền cho phần đã giao'}
+          - {sang: B, buoc: hoan-thanh-wo, ten: 'Hoàn thành phiếu công việc'}
+
+    ngoai_luong:
+      id: vat-tu-khac
+      ten: 'Vật tư — tình huống ngoài luồng chính'
+      the: [KG-13, KG-14, KG-15, KG-16, KG-17, KG-18]
+
+  - id: gui-van-chuyen
+    ten: 'Gửi qua đơn vị vận chuyển'
+    gioi_thieu: 'Dùng khi khách hàng ở xa, hàng không cần lắp đặt, hoặc chỉ gửi vật tư lẻ.'
+    luong:
+      - cong_vao:
+          - {tu: A, buoc: ban-giao, ten: 'Đơn không cần người đến'}
+
+      - buoc:
+          id: van-chuyen
+          ten: 'Lập vận đơn từ đơn bán hàng'
+          phu: 'Khai kiện hàng và người trả cước trước khi đẩy đơn'
+          ai: 'Kinh doanh · Kho'
+          the: [KG-19]
+          noi_dung: |
+            Vận đơn (`DP Shipment`) lập từ đơn bán hàng. Tab kiện hàng và người trả cước phải đúng
+            **trước khi** đẩy đơn — đẩy rồi thì đơn vị vận chuyển tính cước theo số đã khai.
+
+      - buoc:
+          id: xac-nhan-vd
+          ten: 'Xác nhận vận đơn'
+          phu: 'Sinh đề nghị xuất kho, tồn kho chưa đổi'
+          ai: 'Kinh doanh'
+          the: [KG-20]
+
+      - buoc:
+          id: xuat-dvvc
+          ten: 'Kho xuất hàng cho đơn vị vận chuyển'
+          phu: 'Trừ kho nguồn, cộng kho của đơn vị vận chuyển'
+          ai: 'Kho'
+          the: [KG-21]
+
+      - buoc:
+          id: day-don
+          ten: 'Đẩy đơn, nhận mã vận đơn'
+          phu: 'Trạng thái tự cập nhật theo hành trình'
+          ai: 'Kho'
+
+      - song_song:
+          id: ket-cuc
+          ten: 'Vận đơn kết thúc thế nào?'
+          nhanh:
+            - id: giao-thanh-cong
+              ten: 'Giao thành công'
+              buoc:
+                - ten: 'Chứng từ tự phát sinh'
+                  phu: 'Phiếu giao hàng, hoá đơn, phiếu thu hộ'
+                  the: [KG-22]
+            - id: hoan-ve
+              ten: 'Hoàn về kho'
+              buoc:
+                - ten: 'Phiếu đảo tự phát sinh'
+                  phu: 'Hàng về lại kho nguồn'
+                  the: [KG-23]
+            - id: mat-hang
+              ten: 'Mất hàng'
+              buoc:
+                - {ten: 'Ghi nhận thất thoát', phu: 'Kế toán xử lý, không tự hoàn tồn kho'}
+          gop:
+            ten: 'Vận đơn kết thúc'
+            phu: 'Kết cục được ghi lại trên vận đơn'
+
+      - cong_ra:
+          - {sang: D, ten: 'Tiền thu hộ về tài khoản công ty'}
+
+phu_luc:
+  - id: tai-lieu-khac
+    ten: 'Tài liệu chi tiết'
+    noi_dung: |
+      | Chủ đề | Trang |
+      |---|---|
+      | Trả vật tư về kho, từng tình huống | [Trả vật tư về kho (FSMNext)](FSMNext-Tra-Vat-Tu.html) |
+      | Vận đơn, đối tác giao hàng, điểm gửi | [Quy trình vận đơn và giao nhận](Delivery_Partner-Quy-Trinh.html) |
+
+the:
+  - ma: KG-01
+    ten: 'Món đã yêu cầu đủ không chọn được'
+    gap_o: {buoc: yeu-cau}
+    dau_hieu: 'Món vẫn hiện trong danh sách nhưng bị khoá, kèm mã yêu cầu cũ.'
+    nguyen_nhan: 'Số được yêu cầu bằng số cần trừ số đã có trong các yêu cầu trước.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - buoc: 'Tra mã yêu cầu cũ ghi trên dòng'
+      - re:
+          hoi: 'Kho đã xuất yêu cầu cũ?'
+          co: 'Kiểm lại kho của mình, hàng đã về'
+          khong: 'Nhắc kho xử lý yêu cầu cũ'
+    quay_ve: {buoc: yeu-cau}
+
+  - ma: KG-02
+    ten: 'Mọi thao tác vật tư đều báo lỗi ở một công ty'
+    gap_o: {buoc: yeu-cau}
+    nguyen_nhan: 'Kỹ thuật viên chưa được khai kho riêng cho công ty đó.'
+    ai: 'Quản trị viên'
+    go:
+      - buoc: 'Gửi quản trị viên tên công ty đang lỗi'
+      - buoc: 'Quản trị viên khai kho cho công ty đó'
+      - buoc: 'Tải lại ứng dụng'
+    quay_ve: {buoc: yeu-cau}
+
+  - ma: KG-03
+    ten: 'Hàng được cấp ngoài phiếu yêu cầu'
+    gap_o: {buoc: xuat-kho}
+    nguyen_nhan: 'Hệ thống chỉ theo dõi phần đi qua phiếu yêu cầu; phần cấp ngoài luồng không để lại dấu vết.'
+    ai: 'Kho'
+    go:
+      - buoc: 'Lập bổ sung phiếu xuất kho cho phần đã cấp'
+      - buoc: 'Kiểm kê kho kỹ thuật viên'
+    quay_ve: {buoc: xuat-kho}
+
+  - ma: KG-04
+    ten: 'Không xác nhận được phiếu giao hàng'
+    gap_o: {buoc: giao-hang}
+    dau_hieu: 'Nút xác nhận báo lỗi khi có đơn bị giảm hết số lượng.'
+    nguyen_nhan: 'Mỗi đơn phải giao tối thiểu một món; không cho hoàn trả toàn bộ đơn.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - re:
+          hoi: 'Thực tế đơn đó có giao món nào?'
+          co: 'Sửa lại đúng số thực giao'
+          khong: 'Bỏ đơn đó khỏi lần giao này'
+    quay_ve: {buoc: giao-hang}
+
+  - ma: KG-05
+    ten: 'Nút xác nhận ở màn hình ký không bật'
+    gap_o: {buoc: giao-hang}
+    nguyen_nhan: 'Khách hàng chưa ký xác nhận trên màn hình.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - re:
+          hoi: 'Chữ ký đang bị lỗi nét?'
+          co: 'Xoá chữ ký rồi ký lại'
+          khong: 'Đề nghị khách hàng ký'
+    quay_ve: {buoc: giao-hang}
+
+  - ma: KG-06
+    ten: 'Không rõ vì sao có nghĩa vụ trả'
+    gap_o: {buoc: tra-ve}
+    dau_hieu: 'Màn hình Trả vật tư hiện món kỹ thuật viên không nhớ đã giữ lại.'
+    nguyen_nhan: 'Nghĩa vụ phát sinh ngay khi lập phiếu giao hàng — kể cả khi giảm số lượng do nhập nhầm.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - buoc: 'Mở phiếu giao hàng ghi trên dòng nghĩa vụ'
+      - re:
+          hoi: 'Số thực giao trên phiếu đúng thực tế?'
+          co: 'Mang phần dư về, lập phiếu trả'
+          khong: 'Báo điều phối để sửa phiếu giao hàng'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-07
+    ten: 'Dòng nghĩa vụ mờ và bị khoá'
+    gap_o: {buoc: tra-ve}
+    nguyen_nhan: 'Phần đó đang nằm trong một phiếu trả nháp chờ kho duyệt.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - buoc: 'Tra mã phiếu ghi trên dòng'
+      - re:
+          hoi: 'Phiếu nháp đó lập đúng?'
+          co: 'Chờ kho duyệt'
+          khong: 'Xoá phiếu nháp, nghĩa vụ mở lại'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-08
+    ten: 'Không xoá được phiếu trả nháp'
+    gap_o: {buoc: tra-ve}
+    nguyen_nhan: 'Chỉ người lập mới xoá được phiếu nháp của mình.'
+    ai: 'Kỹ thuật viên · Quản trị viên'
+    go:
+      - re:
+          hoi: 'Người lập phiếu còn làm việc?'
+          co: 'Nhờ người lập xoá'
+          khong: 'Nhờ quản trị viên xoá'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-09
+    ten: 'Phiếu trả được ghi vào kho của người khác'
+    gap_o: {buoc: tra-ve}
+    nguyen_nhan: 'Nghĩa vụ không khai kho đích nên hệ thống chọn kho đứng đầu danh sách.'
+    ai: 'Kỹ thuật viên · Quản trị viên'
+    go:
+      - buoc: 'Kiểm kho đích trước khi gửi phiếu'
+      - buoc: 'Đề nghị quản trị viên khai kho hoàn trả mặc định'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-10
+    ten: 'Báo đã trả đủ, hoặc vượt số còn lại'
+    gap_o: {buoc: tra-ve}
+    thong_bao: '“… đã được trả về kho rồi”'
+    nguyen_nhan: 'Nghĩa vụ đã có phiếu duyệt bù đủ, hoặc số trả lớn hơn phần cần trả trừ phần đang chờ kho.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - buoc: 'Xem ba con số Cần trả, Đang chờ kho, Còn chọn được'
+      - buoc: 'Giảm số lượng về tối đa phần còn chọn được'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-11
+    ten: 'Đã trả hàng nhưng nghĩa vụ vẫn còn'
+    gap_o: {buoc: tra-ve}
+    nguyen_nhan: 'Phiếu trả còn ở trạng thái nháp. Chỉ phiếu đã duyệt mới xoá nghĩa vụ.'
+    ai: 'Kho'
+    go:
+      - buoc: 'Kho mở phiếu trả nháp'
+      - buoc: 'Kiểm đếm hàng thực nhận'
+      - buoc: 'Duyệt phiếu'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-12
+    ten: 'Phiếu trả nháp tồn đọng từ lâu'
+    gap_o: {buoc: tra-ve}
+    nguyen_nhan: 'Phiếu tồn từ trước, trỏ vào nghĩa vụ đã được trả bằng một phiếu khác.'
+    ai: 'Kho'
+    go:
+      - re:
+          hoi: 'Nghĩa vụ của phiếu còn cần trả?'
+          co: 'Kiểm đếm rồi duyệt'
+          khong: 'Xoá phiếu, không duyệt'
+    canh_bao: 'Duyệt nhầm phiếu tồn đọng là trừ kho lần thứ hai.'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-13
+    ten: 'Nghĩa vụ trỏ tới mã vật tư không còn tồn tại'
+    gap_o: {buoc: vat-tu-khac}
+    nguyen_nhan: 'Nghĩa vụ ghi lại theo thời điểm giao hàng; đổi tên mã vật tư về sau không cập nhật ngược.'
+    ai: 'Bộ phận kỹ thuật'
+    go:
+      - buoc: 'Gửi mã nghĩa vụ, mã kho và ảnh màn hình'
+      - buoc: 'Bộ phận kỹ thuật chạy tác vụ xử lý dữ liệu'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-14
+    ten: 'Nghĩa vụ bộ sản phẩm không khớp thành phần'
+    gap_o: {buoc: vat-tu-khac}
+    nguyen_nhan: 'Hệ thống khai triển bộ theo cấu hình hiện tại, không theo cấu hình lúc giao hàng.'
+    ai: 'Kho · Kỹ thuật viên'
+    go:
+      - buoc: 'Mở phiếu giao hàng gốc'
+      - buoc: 'Đối chiếu thành phần thủ công'
+      - buoc: 'Trả đúng các món thực có'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-15
+    ten: 'Nghĩa vụ không ghi kho nguồn'
+    gap_o: {buoc: vat-tu-khac}
+    nguyen_nhan: 'Dữ liệu cũ, phát sinh trước khi hệ thống ghi nội dung này; nghĩa vụ hiện ở mọi kho của người đó.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - buoc: 'Chọn đúng kho đang giữ hàng khi lập phiếu trả'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-16
+    ten: 'Kho kỹ thuật viên âm tồn'
+    gap_o: {buoc: vat-tu-khac}
+    nguyen_nhan: 'Xuất hoặc giao vượt số lượng thực nhận.'
+    ai: 'Kho'
+    go:
+      - buoc: 'Kiểm kê lại kho đó'
+      - buoc: 'Lập phiếu điều chỉnh theo kết quả kiểm kê'
+    canh_bao: 'Chưa xử lý xong âm tồn thì chưa bật tham số kiểm soát tồn kho chặt.'
+    quay_ve: {buoc: xuat-kho}
+
+  - ma: KG-17
+    ten: 'Huỷ phiếu giao hàng sau khi đã trả vật tư'
+    gap_o: {buoc: vat-tu-khac}
+    dau_hieu: 'Hệ thống cảnh báo liệt kê từng món khi huỷ phiếu giao hàng.'
+    nguyen_nhan: 'Nghĩa vụ đã trả bằng phiếu duyệt được giữ làm dấu vết; hàng đang nằm ở kho công ty.'
+    ai: 'Kỹ thuật viên · Kho'
+    go:
+      - buoc: 'Đọc danh sách món trong cảnh báo'
+      - buoc: 'Lấy lại hàng từ kho công ty trước khi giao lại'
+    quay_ve: {buoc: giao-hang}
+
+  - ma: KG-18
+    ten: 'Huỷ phiếu công việc nhưng vật tư vẫn ở kho kỹ thuật viên'
+    gap_o: {phan_khu: B, buoc: dong-mo}
+    nguyen_nhan: 'Huỷ phiếu công việc không tự trả hàng về kho.'
+    ai: 'Kỹ thuật viên · Kho'
+    go:
+      - buoc: 'Lập phiếu trả cho phần vật tư đã nhận'
+      - buoc: 'Kho kiểm đếm và duyệt'
+    quay_ve: {buoc: tra-ve}
+
+  - ma: KG-19
+    ten: 'Đơn vị vận chuyển tính sai cước hoặc số kiện'
+    gap_o: {buoc: van-chuyen}
+    nguyen_nhan: 'Tab kiện hàng và người trả cước khai sai trước khi đẩy đơn.'
+    ai: 'Kinh doanh · Kho'
+    go:
+      - re:
+          hoi: 'Đã đẩy đơn chưa?'
+          co: 'Làm việc với đơn vị vận chuyển để điều chỉnh'
+          khong: 'Sửa tab kiện hàng và người trả cước'
+    quay_ve: {buoc: van-chuyen}
+
+  - ma: KG-20
+    ten: 'Vận đơn đã xác nhận mà tồn kho chưa đổi'
+    gap_o: {buoc: xac-nhan-vd}
+    nguyen_nhan: 'Đúng thiết kế: xác nhận vận đơn chỉ sinh đề nghị xuất kho.'
+    ai: 'Kho'
+    go:
+      - buoc: 'Kho lập phiếu xuất kho thật từ đề nghị'
+    quay_ve: {buoc: xuat-dvvc}
+
+  - ma: KG-21
+    ten: 'Đơn vị vận chuyển đến lấy hàng sai địa điểm'
+    gap_o: {buoc: xuat-dvvc}
+    nguyen_nhan: 'Kho nguồn chưa được khai điểm gửi hàng; hệ thống không cảnh báo khi thiếu.'
+    ai: 'Quản trị viên · Kho'
+    go:
+      - buoc: 'Khai điểm gửi hàng cho kho nguồn'
+      - buoc: 'Báo lại đơn vị vận chuyển địa điểm đúng'
+    quay_ve: {buoc: xuat-dvvc}
+
+  - ma: KG-22
+    ten: 'Giao thành công nhưng không thấy chứng từ tự sinh'
+    gap_o: {buoc: giao-thanh-cong}
+    nguyen_nhan: 'Vận đơn không gắn đơn bán hàng, hoặc kết nối trạng thái với đơn vị vận chuyển chưa bật.'
+    ai: 'Kinh doanh · Bộ phận kỹ thuật'
+    go:
+      - buoc: 'Kiểm bảng chứng từ nguồn trên vận đơn'
+      - re:
+          hoi: 'Vận đơn có gắn đơn bán hàng?'
+          co: 'Báo bộ phận kỹ thuật kiểm kết nối'
+          khong: 'Gắn đơn bán hàng vào vận đơn'
+    quay_ve: {buoc: ket-cuc}
+
+  - ma: KG-23
+    ten: 'Đơn vị vận chuyển huỷ khi hàng đã được lấy đi'
+    gap_o: {buoc: hoan-ve}
+    nguyen_nhan: 'Hàng đang trên đường hoàn về; huỷ vận đơn ngay sẽ làm sổ kho sai.'
+    ai: 'Kho'
+    go:
+      - buoc: 'Chưa huỷ vận đơn'
+      - buoc: 'Chờ kho nhận lại hàng thật'
+      - buoc: 'Huỷ vận đơn sau khi đã nhận hàng'
+    quay_ve: {buoc: ket-cuc}
+
+hoi_dap:
+  - hoi: 'Tôi trả hàng rồi, sao vẫn báo còn nợ vật tư?'
+    dap: 'Phiếu trả còn ở trạng thái **nháp**. Chỉ khi kho duyệt thì nghĩa vụ mới hết — xem KG-11.'
+  - hoi: 'Khách không nhận một món, tôi phải làm gì ngay tại chỗ?'
+    dap: 'Giảm số lượng trên phiếu giao hàng. Phần chênh tự thành nghĩa vụ trả; mang hàng về rồi lập phiếu trả.'
+  - hoi: 'Lấy dư vật tư mang theo xe, có phải trả không?'
+    dap: 'Phần yêu cầu không gắn lịch hẹn không sinh nghĩa vụ, nhưng vẫn nằm trong kho của bạn và vẫn phải kiểm kê.'
+  - hoi: 'Lập nhầm phiếu trả thì sao?'
+    dap: 'Phiếu còn nháp và do chính bạn lập thì xoá được, nghĩa vụ mở lại ngay. Kho đã duyệt rồi thì nhờ kho xử lý.'
+  - hoi: 'Bán một món lẻ gửi bưu điện, có cần phiếu công việc không?'
+    dap: 'Không. Đơn đó đi theo [luồng gửi qua đơn vị vận chuyển](#gui-van-chuyen).'
+  - hoi: 'Đơn vị vận chuyển báo huỷ, tôi huỷ vận đơn luôn được không?'
+    dap: 'Chỉ khi hàng chưa được lấy đi. Hàng đã lấy thì chờ kho nhận lại rồi mới huỷ — xem KG-23.'

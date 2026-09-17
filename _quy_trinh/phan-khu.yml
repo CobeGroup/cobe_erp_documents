@@ -1,35 +1,29 @@
 # Danh sách phân khu của nhánh "Quy trình hợp nhất".
 #
-# trang_tam: trang cũ dùng tạm khi phân khu chưa có tệp dữ liệu riêng.
-# Khi đã có _quy_trinh/<ma>-*.yml thì bộ sinh tự bỏ qua trang_tam.
+# Mỗi phân khu phải có tệp _quy_trinh/<ma>-*.yml tương ứng.
 
 - ma: A
   pham_vi: 'Tiếp nhận khách hàng, khai người giới thiệu, lập đơn, sửa, đóng và huỷ đơn'
   ai_lam: 'Kinh doanh · Chăm sóc khách hàng'
   ten: Bán hàng
   lop: qt-a
-  trang_tam: Quy-Trinh-01-Khach-Hang.html
 - ma: B
   pham_vi: 'Phiếu công việc, lịch hẹn, thao tác tại nhà khách hàng, hoàn thành phiếu'
   ai_lam: 'Điều phối · Kỹ thuật viên'
   ten: Điều phối và hiện trường
   lop: qt-b
-  trang_tam: Quy-Trinh-03-Hien-Truong.html
 - ma: C
   pham_vi: 'Cấp vật tư, giao hàng, trả vật tư về kho, gửi qua đơn vị vận chuyển'
   ai_lam: 'Kho · Kỹ thuật viên'
   ten: Kho và giao nhận
   lop: qt-c
-  trang_tam: Quy-Trinh-04-Vat-Tu.html
 - ma: D
   pham_vi: 'Tiền mặt, chuyển khoản, nộp tiền, hoá đơn, huỷ phiếu thu, trả hàng sau bán'
   ai_lam: 'Kỹ thuật viên · Kế toán'
   ten: Thu tiền và kế toán
   lop: qt-d
-  trang_tam: Quy-Trinh-05-Giao-Hang-Thu-Tien.html
 - ma: E
   pham_vi: 'Nhắc bảo dưỡng định kỳ, tiếp nhận và xử lý sự cố'
   ai_lam: 'Nhân viên dịch vụ · Nhân viên sự cố'
   ten: Sau bán hàng
   lop: qt-e
-  trang_tam: Quy-Trinh-06-Bao-Duong.html

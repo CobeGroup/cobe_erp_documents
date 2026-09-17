@@ -120,16 +120,16 @@
     .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
     .hot:hover { fill-opacity: .08; }
   </style>
-  <a href="../../../Quy-Trinh-01-Khach-Hang.html#nguon" target="_top"><title>Khách tiềm năng đến từ đâu</title><rect class="hot" x="70" y="50" width="200" height="60" rx="10" ry="10"/></a>
-  <a href="../../../Quy-Trinh-01-Khach-Hang.html#chuyen-doi" target="_top"><title>Chuyển thành khách hàng chính thức</title><rect class="hot" x="310" y="50" width="200" height="60" rx="10" ry="10"/></a>
-  <a href="../../../Quy-Trinh-07-Su-Co.html" target="_top"><title>Tiếp nhận sự cố</title><rect class="hot" x="550" y="50" width="200" height="60" rx="10" ry="10"/></a>
-  <a href="../../../Quy-Trinh-02-Don-Hang.html" target="_top"><title>Lập và xác nhận đơn bán hàng</title><rect class="hot" x="70" y="190" width="200" height="62" rx="10" ry="10"/></a>
-  <a href="../../../Quy-Trinh-03-Hien-Truong.html#lap-wo" target="_top"><title>Lập phiếu công việc</title><rect class="hot" x="310" y="190" width="200" height="62" rx="10" ry="10"/></a>
-  <a href="../../../Quy-Trinh-04-Vat-Tu.html#yeu-cau" target="_top"><title>Yêu cầu và cấp vật tư</title><rect class="hot" x="550" y="190" width="200" height="62" rx="10" ry="10"/></a>
-  <a href="../../../Quy-Trinh-03-Hien-Truong.html#lap-sa" target="_top"><title>Lập lịch hẹn và gán kỹ thuật viên</title><rect class="hot" x="790" y="190" width="200" height="62" rx="10" ry="10"/></a>
-  <a href="../../../Quy-Trinh-06-Bao-Duong.html#phieu-nhac" target="_top"><title>Phiếu nhắc bảo dưỡng</title><rect class="hot" x="70" y="350" width="200" height="62" rx="10" ry="10"/></a>
-  <a href="../../../Quy-Trinh-02-Don-Hang.html#trang-thai" target="_top"><title>Khi nào đơn được coi là hoàn tất</title><rect class="hot" x="310" y="350" width="200" height="62" rx="10" ry="10"/></a>
-  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#hoa-don" target="_top"><title>Hoá đơn và thu tiền</title><rect class="hot" x="550" y="350" width="200" height="62" rx="10" ry="10"/></a>
-  <a href="../../../Quy-Trinh-05-Giao-Hang-Thu-Tien.html#giao-hang" target="_top"><title>Lập phiếu giao hàng</title><rect class="hot" x="790" y="350" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-A-Ban-Hang.html#nguon" target="_top"><title>Khách tiềm năng đến từ đâu</title><rect class="hot" x="70" y="50" width="200" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-A-Ban-Hang.html#chuyen-doi" target="_top"><title>Chuyển thành khách hàng chính thức</title><rect class="hot" x="310" y="50" width="200" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-E-Sau-Ban-Hang.html#su-co" target="_top"><title>Tiếp nhận sự cố</title><rect class="hot" x="550" y="50" width="200" height="60" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-A-Ban-Hang.html#khai-don" target="_top"><title>Lập và xác nhận đơn bán hàng</title><rect class="hot" x="70" y="190" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-B-Hien-Truong.html#lap-wo" target="_top"><title>Lập phiếu công việc</title><rect class="hot" x="310" y="190" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-C-Kho-Giao-Nhan.html#yeu-cau" target="_top"><title>Yêu cầu và cấp vật tư</title><rect class="hot" x="550" y="190" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-B-Hien-Truong.html#lap-sa" target="_top"><title>Lập lịch hẹn và gán kỹ thuật viên</title><rect class="hot" x="790" y="190" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-E-Sau-Ban-Hang.html#phieu-nhac" target="_top"><title>Phiếu nhắc bảo dưỡng</title><rect class="hot" x="70" y="350" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-A-Ban-Hang.html#xac-nhan" target="_top"><title>Khi nào đơn được coi là hoàn tất</title><rect class="hot" x="310" y="350" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-D-Thu-Tien.html#hoa-don" target="_top"><title>Hoá đơn và thu tiền</title><rect class="hot" x="550" y="350" width="200" height="62" rx="10" ry="10"/></a>
+  <a href="../../../Quy-Trinh-C-Kho-Giao-Nhan.html#giao-hang" target="_top"><title>Lập phiếu giao hàng</title><rect class="hot" x="790" y="350" width="200" height="62" rx="10" ry="10"/></a>
   <!-- /VUNG-BAM -->
 </svg>

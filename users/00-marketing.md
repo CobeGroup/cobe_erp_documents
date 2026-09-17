@@ -15,4 +15,4 @@ Các tính năng phục vụ marketing và chăm sóc khách hàng: chương tr�
 - [Loyalty — Seed điểm cho đơn cũ (Go-live)](Loyalty-Seed-Don-Cu.html) — 🖼️ *hướng dẫn thực hành có hình*: nạp điểm cho đơn lịch sử + quy trình go-live an toàn.
 
 > 🔗 Các nguồn khách hàng và điều kiện chuyển đổi thành khách hàng chính thức: xem
-> [Quy trình hợp nhất · Chặng 1](Quy-Trinh-01-Khach-Hang.html).
+> [Quy trình hợp nhất · A · Bán hàng](Quy-Trinh-A-Ban-Hang.html).

@@ -1,0 +1,69 @@
+# Các mục chung của trang "Khi gặp trục trặc" (users/Quy-Trinh-Tra-Cuu.md).
+# Phần tra theo thông báo và theo phân khu do bộ sinh tự gom từ các thẻ tình huống.
+
+muc:
+  - id: nguyen-tac
+    ten: 'Bốn nguyên tắc khi gặp trục trặc'
+    noi_dung: |
+      | # | Nguyên tắc | Vì sao |
+      |---|---|---|
+      | 1 | **Chép nguyên văn thông báo** | Hệ thống nói rõ thiếu gì, và nói giống nhau trên Desk lẫn ứng dụng |
+      | 2 | **Tìm chứng từ phía sau đang khoá** | Muốn sửa một chứng từ, phải xử lý hết các chứng từ sinh ra sau nó |
+      | 3 | **Không xử lý vòng tránh** | Lập thêm đơn, phiếu trả hay phiếu thu để bù trừ làm sai sổ kho và công nợ |
+      | 4 | **Phân biệt bị chặn và không được cảnh báo** | Bị chặn thì thấy ngay; không được cảnh báo thì chỉ lộ ra khi khách khiếu nại |
+
+      Thứ tự các chứng từ khoá lẫn nhau:
+
+      ```
+      Phiếu thu  →  Hoá đơn  →  Phiếu giao hàng  →  Đơn bán hàng
+      Lịch hẹn   →  Phiếu công việc  →  Đơn bán hàng
+      ```
+
+  - id: khong-canh-bao
+    ten: 'Những thiếu sót hệ thống không cảnh báo'
+    noi_dung: |
+      | Khai thiếu | Hậu quả | Thẻ |
+      |---|---|---|
+      | Khách hàng chưa được gán chương trình tích điểm | Không được cộng điểm | [BH-09](Quy-Trinh-A-Ban-Hang-Tinh-Huong.html#bh-09) |
+      | Không khai người giới thiệu ở phiếu khách tiềm năng | Người giới thiệu không được tính thưởng | [BH-04](Quy-Trinh-A-Ban-Hang-Tinh-Huong.html#bh-04) |
+      | Lập đơn thủ công thay vì từ chứng từ gốc | Mất liên kết ngược, phiếu gốc không tự đóng | [BH-12](Quy-Trinh-A-Ban-Hang-Tinh-Huong.html#bh-12) |
+      | Chọn sai loại việc trên phiếu công việc | Bỏ sót yêu cầu bắt buộc, hoặc bị hỏi nội dung không liên quan | [HT-01](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-01) |
+      | Kho nguồn chưa khai điểm gửi hàng | Đơn vị vận chuyển đến lấy hàng sai địa điểm | [KG-21](Quy-Trinh-C-Kho-Giao-Nhan-Tinh-Huong.html#kg-21) |
+      | Mặt hàng chưa khai chu kỳ nhắc | Khách hàng không được nhắc bảo dưỡng | [SB-02](Quy-Trinh-E-Sau-Ban-Hang-Tinh-Huong.html#sb-02) |
+
+  - id: phan-quyen
+    ten: 'Phân quyền và giao diện'
+    noi_dung: |
+      | Hiện tượng | Nguyên nhân | Cách gỡ |
+      |---|---|---|
+      | Không thấy một chức năng lẽ ra phải có | Tài khoản chưa được cấp quyền | Đề nghị quản trị viên cấp vai trò tương ứng |
+      | Không thấy một tab hoặc một ô trên form | Ô bị ẩn theo cấu hình hiển thị | Dùng chế độ xem dạng báo cáo để thêm cột, hoặc nhờ quản trị viên đưa ô ra |
+      | Danh sách trống dù dữ liệu có tồn tại | Bộ lọc lưu từ phiên trước, hoặc giới hạn quyền theo người phụ trách | Xoá toàn bộ bộ lọc rồi xem lại |
+      | Giao diện vẫn là bản cũ sau khi hệ thống cập nhật | Trình duyệt giữ bản cũ trong bộ nhớ đệm | Tải lại trang bằng tổ hợp phím bỏ qua bộ nhớ đệm |
+
+  - id: khac-biet
+    ten: 'Khác biệt giữa các công ty'
+    noi_dung: |
+      | Nội dung | Tách theo công ty | Hệ quả |
+      |---|---|---|
+      | Kho, tồn kho, kho kỹ thuật viên | **Có** | Không chuyển thẳng hàng giữa hai công ty bằng phiếu chuyển kho thông thường |
+      | Tài khoản đơn vị vận chuyển và điểm gửi | **Có** | Chọn nhầm tài khoản của công ty khác sẽ bị từ chối khi lưu |
+      | Danh mục hàng hoá, danh mục sự cố | Dùng chung | Khai một lần, áp dụng cho mọi công ty |
+      | Cấu hình dịch vụ hiện trường | Dùng chung | Đổi một tham số là áp dụng cho tất cả |
+      | Nhân sự phụ trách, chuyên môn, địa bàn | Theo từng công ty hoặc để chung | Để trống nghĩa là áp dụng cho mọi công ty |
+
+      Dấu hiệu nhận biết nhanh: tên tài khoản và tên kho có **hậu tố viết tắt tên công ty**.
+
+  - id: dau-moi
+    ten: 'Đầu mối tiếp nhận'
+    noi_dung: |
+      | Loại vướng mắc | Đầu mối | Gửi kèm |
+      |---|---|---|
+      | Ô dữ liệu bị khoá, cần huỷ cả chuỗi chứng từ | Quản trị hệ thống | Mã chứng từ và nội dung cần sửa |
+      | Hoá đơn, phiếu thu, công nợ | Kế toán | Mã đơn, mã hoá đơn, mã phiếu thu |
+      | Tính lại hoa hồng, sửa đội bán hàng | Quản lý kinh doanh | Mã đơn |
+      | Sai danh mục: loại sự cố, chu kỳ nhắc, chuyên môn, địa bàn | Quản trị danh mục | Tên danh mục và giá trị đúng |
+      | Nghĩa vụ trỏ mã hàng không tồn tại, kho âm tồn | Bộ phận kỹ thuật | Mã nghĩa vụ, mã kho, ảnh màn hình |
+      | Không thấy chức năng, thiếu quyền | Quản trị hệ thống | Tên tài khoản và tên màn hình |
+
+      Luôn gửi kèm **nguyên văn thông báo lỗi** và **mã chứng từ**.

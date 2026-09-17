@@ -14,7 +14,7 @@ nav_order: 1
 Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước gỡ, và gỡ xong thì quay về bước nào.
 {: .fs-3 .text-grey-dk-000 }
 
-👉 [Sơ đồ phân khu D](Quy-Trinh-D-Thu-Tien.html) · [Bản đồ tổng](00-quy-trinh.html)
+👉 [Sơ đồ phân khu D](Quy-Trinh-D-Thu-Tien.html) · [Bản đồ tổng](00-quy-trinh.html) · [Tra theo thông báo lỗi](Quy-Trinh-Tra-Cuu.html)
 
 ---
 
@@ -63,8 +63,8 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <defs><marker id="qt-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/></marker><marker id="qt-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52a86a"/></marker></defs>
 <rect class="qt-nen" x="0" y="0" width="470" height="226"/>
 <polygon class="qt-re" points="12,35 37,10 213,10 238,35 213,60 37,60"/>
-<text class="qt-tb2" x="125" y="31" text-anchor="middle">Khách muốn trả</text>
-<text class="qt-tb2" x="125" y="48" text-anchor="middle">trước khi nhận hàng?</text>
+<text class="qt-tb2" x="125" y="31" text-anchor="middle">Khách muốn trả trước</text>
+<text class="qt-tb2" x="125" y="48" text-anchor="middle">khi nhận hàng?</text>
 <rect class="qt-trang" x="292" y="10" width="166" height="50" rx="10" ry="10"/>
 <text class="qt-tn" x="303" y="32" text-anchor="start">Lập phiếu giao</text>
 <text class="qt-tn" x="303" y="49" text-anchor="start">hàng trước</text>
@@ -210,8 +210,8 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <text class="qt-nhan" x="133" y="77" text-anchor="start">có</text>
 <line class="qt-mui" x1="125" y1="60" x2="125" y2="84" marker-end="url(#qt-ah)"/>
 <rect class="qt-ok" x="12" y="88" width="226" height="50" rx="10" ry="10"/>
-<text class="qt-tn" x="24" y="110" text-anchor="start">Huỷ các phiếu sai rồi</text>
-<text class="qt-tn" x="24" y="127" text-anchor="start">lập lại đúng từng đơn</text>
+<text class="qt-tn" x="24" y="110" text-anchor="start">Huỷ các phiếu sai rồi lập lại</text>
+<text class="qt-tn" x="24" y="127" text-anchor="start">đúng từng đơn</text>
 <line class="qt-mui" x1="125" y1="138" x2="125" y2="162" marker-end="url(#qt-ah)"/>
 <polyline class="qt-mui" points="375,60 375,191 242,191" marker-end="url(#qt-ah)"/>
 <a href="Quy-Trinh-D-Thu-Tien.html#dong-thu"><title>Quay về D·2 · Nhập các dòng thu</title>
@@ -251,8 +251,8 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <text class="qt-tn" x="24" y="49" text-anchor="start">nộp cho khoản này</text>
 <line class="qt-mui" x1="125" y1="60" x2="125" y2="84" marker-end="url(#qt-ah)"/>
 <polygon class="qt-re" points="12,113 37,88 213,88 238,113 213,138 37,138"/>
-<text class="qt-tb2" x="125" y="109" text-anchor="middle">Chưa quá 24 giờ và</text>
-<text class="qt-tb2" x="125" y="126" text-anchor="middle">chưa có phiếu nộp?</text>
+<text class="qt-tb2" x="125" y="109" text-anchor="middle">Chưa quá 24 giờ và chưa</text>
+<text class="qt-tb2" x="125" y="126" text-anchor="middle">có phiếu nộp?</text>
 <rect class="qt-trang" x="292" y="88" width="166" height="50" rx="10" ry="10"/>
 <text class="qt-tn" x="303" y="110" text-anchor="start">Chuyển kế toán</text>
 <text class="qt-tn" x="303" y="127" text-anchor="start">điều chỉnh</text>
@@ -358,8 +358,8 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <text class="qt-nhan" x="133" y="151" text-anchor="start">có</text>
 <line class="qt-mui" x1="125" y1="134" x2="125" y2="160" marker-end="url(#qt-ah)"/>
 <rect class="qt-ok" x="12" y="164" width="226" height="50" rx="10" ry="10"/>
-<text class="qt-tn" x="24" y="186" text-anchor="start">Đề nghị kế toán xác</text>
-<text class="qt-tn" x="24" y="203" text-anchor="start">nhận, không lập thêm</text>
+<text class="qt-tn" x="24" y="186" text-anchor="start">Đề nghị kế toán xác nhận,</text>
+<text class="qt-tn" x="24" y="203" text-anchor="start">không lập thêm</text>
 <line class="qt-mui" x1="125" y1="214" x2="125" y2="238" marker-end="url(#qt-ah)"/>
 <polyline class="qt-mui" points="375,136 375,267 242,267" marker-end="url(#qt-ah)"/>
 <a href="Quy-Trinh-D-Thu-Tien.html#tien-mat"><title>Quay về D·3a · Tiền mặt</title>
@@ -382,7 +382,7 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <div class="qt-the-khung">
 <div class="qt-the-tt">
 <table class="qt-the-bang">
-<tr><th>Gặp ở</th><td><a href="Quy-Trinh-03-Hien-Truong.html#dieu-kien">B · Hoàn thành phiếu công việc</a></td></tr>
+<tr><th>Gặp ở</th><td><a href="Quy-Trinh-B-Hien-Truong.html#hoan-thanh-wo">B·5 · Hoàn thành phiếu công việc</a></td></tr>
 <tr><th>Xử lý ở</th><td><a href="Quy-Trinh-D-Thu-Tien.html#tien-mat">D·3a · Tiền mặt</a></td></tr>
 <tr><th>Thông báo</th><td><span class="qt-thong-bao">“SO …: thu tiền mặt nhưng chưa có Internal Transfer về công ty”</span></td></tr>
 <tr><th>Nguyên nhân</th><td>Phiếu nộp chưa được xác nhận, hoặc được lập trên Desk mà không gắn với khoản thu.</td></tr>
@@ -400,8 +400,8 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <text class="qt-tn" x="24" y="49" text-anchor="start">nộp của khoản thu</text>
 <line class="qt-mui" x1="125" y1="60" x2="125" y2="84" marker-end="url(#qt-ah)"/>
 <polygon class="qt-re" points="12,113 37,88 213,88 238,113 213,138 37,138"/>
-<text class="qt-tb2" x="125" y="109" text-anchor="middle">Phiếu nộp gắn</text>
-<text class="qt-tb2" x="125" y="126" text-anchor="middle">đúng khoản thu?</text>
+<text class="qt-tb2" x="125" y="109" text-anchor="middle">Phiếu nộp gắn đúng</text>
+<text class="qt-tb2" x="125" y="126" text-anchor="middle">khoản thu?</text>
 <rect class="qt-trang" x="292" y="79.5" width="166" height="67" rx="10" ry="10"/>
 <text class="qt-tn" x="303" y="101.5" text-anchor="start">Huỷ phiếu; kỹ</text>
 <text class="qt-tn" x="303" y="118.5" text-anchor="start">thuật viên lập</text>
@@ -414,9 +414,9 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <text class="qt-tn" x="24" y="196.5" text-anchor="start">Xác nhận phiếu nộp</text>
 <line class="qt-mui" x1="125" y1="207.5" x2="125" y2="231.5" marker-end="url(#qt-ah)"/>
 <polyline class="qt-mui" points="375,146.5 375,260.5 242,260.5" marker-end="url(#qt-ah)"/>
-<a href="Quy-Trinh-03-Hien-Truong.html#dieu-kien"><title>Quay về B · Hoàn thành phiếu công việc</title>
+<a href="Quy-Trinh-B-Hien-Truong.html#hoan-thanh-wo"><title>Quay về B·5 · Hoàn thành phiếu công việc</title>
 <rect class="qt-cong" x="12" y="235.5" width="226" height="50" rx="10" ry="10"/>
-<text class="qt-tb2" x="24" y="257.5" text-anchor="start">↩ Quay về B</text>
+<text class="qt-tb2" x="24" y="257.5" text-anchor="start">↩ Quay về B·5</text>
 <text class="qt-tn" x="24" y="274.5" text-anchor="start">Hoàn thành phiếu công việc</text>
 </a>
 </svg>
@@ -434,7 +434,7 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <div class="qt-the-khung">
 <div class="qt-the-tt">
 <table class="qt-the-bang">
-<tr><th>Gặp ở</th><td><a href="Quy-Trinh-03-Hien-Truong.html#dieu-kien">B · Hoàn thành phiếu công việc</a></td></tr>
+<tr><th>Gặp ở</th><td><a href="Quy-Trinh-B-Hien-Truong.html#hoan-thanh-wo">B·5 · Hoàn thành phiếu công việc</a></td></tr>
 <tr><th>Xử lý ở</th><td><a href="Quy-Trinh-D-Thu-Tien.html#tien-mat">D·3a · Tiền mặt</a></td></tr>
 <tr><th>Thông báo</th><td><span class="qt-thong-bao">“SO …: đã trả về … nhưng thu … (thiếu …)”</span></td></tr>
 <tr><th>Nguyên nhân</th><td>Tổng đã nộp nhỏ hơn tổng đã thu. Hệ thống không có dung sai, lệch một đồng cũng bị chặn. Thường do phiếu nộp lập thủ công với số tiền làm tròn.</td></tr>
@@ -459,9 +459,9 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <rect class="qt-trang" x="12" y="166" width="226" height="33" rx="10" ry="10"/>
 <text class="qt-tn" x="24" y="188" text-anchor="start">Kế toán xác nhận phiếu nộp mới</text>
 <line class="qt-mui" x1="125" y1="199" x2="125" y2="223" marker-end="url(#qt-ah)"/>
-<a href="Quy-Trinh-03-Hien-Truong.html#dieu-kien"><title>Quay về B · Hoàn thành phiếu công việc</title>
+<a href="Quy-Trinh-B-Hien-Truong.html#hoan-thanh-wo"><title>Quay về B·5 · Hoàn thành phiếu công việc</title>
 <rect class="qt-cong" x="12" y="227" width="226" height="50" rx="10" ry="10"/>
-<text class="qt-tb2" x="24" y="249" text-anchor="start">↩ Quay về B</text>
+<text class="qt-tb2" x="24" y="249" text-anchor="start">↩ Quay về B·5</text>
 <text class="qt-tn" x="24" y="266" text-anchor="start">Hoàn thành phiếu công việc</text>
 </a>
 </svg>
@@ -544,15 +544,15 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <polygon class="qt-re" points="12,33 35,10 215,10 238,33 215,56 35,56"/>
 <text class="qt-tb2" x="125" y="37.5" text-anchor="middle">Đơn đã có phiếu thu?</text>
 <rect class="qt-trang" x="292" y="8" width="166" height="50" rx="10" ry="10"/>
-<text class="qt-tn" x="303" y="30" text-anchor="start">Chọn tài khoản</text>
-<text class="qt-tn" x="303" y="47" text-anchor="start">khác trên dòng thu</text>
+<text class="qt-tn" x="303" y="30" text-anchor="start">Chọn tài khoản khác</text>
+<text class="qt-tn" x="303" y="47" text-anchor="start">trên dòng thu</text>
 <line class="qt-mui" x1="238" y1="33" x2="288" y2="33" marker-end="url(#qt-ah)"/>
 <text class="qt-nhan" x="265" y="27" text-anchor="middle">không</text>
 <text class="qt-nhan" x="133" y="73" text-anchor="start">có</text>
 <line class="qt-mui" x1="125" y1="56" x2="125" y2="82" marker-end="url(#qt-ah)"/>
 <rect class="qt-ok" x="12" y="86" width="226" height="50" rx="10" ry="10"/>
-<text class="qt-tn" x="24" y="108" text-anchor="start">Kinh doanh huỷ phiếu thu,</text>
-<text class="qt-tn" x="24" y="125" text-anchor="start">sửa tài khoản trên đơn</text>
+<text class="qt-tn" x="24" y="108" text-anchor="start">Kinh doanh huỷ phiếu thu, sửa</text>
+<text class="qt-tn" x="24" y="125" text-anchor="start">tài khoản trên đơn</text>
 <line class="qt-mui" x1="125" y1="136" x2="125" y2="160" marker-end="url(#qt-ah)"/>
 <polyline class="qt-mui" points="375,58 375,189 242,189" marker-end="url(#qt-ah)"/>
 <a href="Quy-Trinh-D-Thu-Tien.html#chuyen-khoan"><title>Quay về D·3b · Chuyển khoản</title>
@@ -688,8 +688,8 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <text class="qt-nhan" x="133" y="73" text-anchor="start">có</text>
 <line class="qt-mui" x1="125" y1="56" x2="125" y2="80" marker-end="url(#qt-ah)"/>
 <rect class="qt-ok" x="12" y="84" width="226" height="50" rx="10" ry="10"/>
-<text class="qt-tn" x="24" y="106" text-anchor="start">Lập hoá đơn trên ứng</text>
-<text class="qt-tn" x="24" y="123" text-anchor="start">dụng từ phiếu giao hàng</text>
+<text class="qt-tn" x="24" y="106" text-anchor="start">Lập hoá đơn trên ứng dụng từ</text>
+<text class="qt-tn" x="24" y="123" text-anchor="start">phiếu giao hàng</text>
 <line class="qt-mui" x1="125" y1="134" x2="125" y2="158" marker-end="url(#qt-ah)"/>
 <polyline class="qt-mui" points="375,49.5 375,187 242,187" marker-end="url(#qt-ah)"/>
 <a href="Quy-Trinh-D-Thu-Tien.html#hoa-don"><title>Quay về D·4 · Hoá đơn phát sinh</title>
@@ -712,7 +712,7 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <div class="qt-the-khung">
 <div class="qt-the-tt">
 <table class="qt-the-bang">
-<tr><th>Gặp ở</th><td><a href="Quy-Trinh-03-Hien-Truong.html#dieu-kien">B · Hoàn thành phiếu công việc</a></td></tr>
+<tr><th>Gặp ở</th><td><a href="Quy-Trinh-B-Hien-Truong.html#hoan-thanh-wo">B·5 · Hoàn thành phiếu công việc</a></td></tr>
 <tr><th>Xử lý ở</th><td><a href="Quy-Trinh-D-Thu-Tien.html#hoan-tat">D·5 · Đơn chuyển sang Hoàn tất</a></td></tr>
 <tr><th>Thông báo</th><td><span class="qt-thong-bao">“Sales Order not completed: …”</span></td></tr>
 <tr><th>Nguyên nhân</th><td>Đơn chưa có hoá đơn đủ giá trị. Khi chưa hoàn tất, khách hàng chưa được cộng điểm và hệ thống chưa sinh lịch bảo dưỡng.</td></tr>
@@ -729,8 +729,8 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <polygon class="qt-re" points="12,33 35,10 215,10 238,33 215,56 35,56"/>
 <text class="qt-tb2" x="125" y="37.5" text-anchor="middle">Đơn đã thu đủ?</text>
 <rect class="qt-trang" x="292" y="8" width="166" height="50" rx="10" ry="10"/>
-<text class="qt-tn" x="303" y="30" text-anchor="start">Xử lý phần còn</text>
-<text class="qt-tn" x="303" y="47" text-anchor="start">nợ — xem TT-13</text>
+<text class="qt-tn" x="303" y="30" text-anchor="start">Xử lý phần còn nợ —</text>
+<text class="qt-tn" x="303" y="47" text-anchor="start">xem TT-13</text>
 <line class="qt-mui" x1="238" y1="33" x2="288" y2="33" marker-end="url(#qt-ah)"/>
 <text class="qt-nhan" x="265" y="27" text-anchor="middle">không</text>
 <text class="qt-nhan" x="133" y="73" text-anchor="start">có</text>
@@ -739,9 +739,9 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <text class="qt-tn" x="24" y="108" text-anchor="start">Lập hoá đơn — xem TT-14</text>
 <line class="qt-mui" x1="125" y1="119" x2="125" y2="143" marker-end="url(#qt-ah)"/>
 <polyline class="qt-mui" points="375,58 375,172 242,172" marker-end="url(#qt-ah)"/>
-<a href="Quy-Trinh-03-Hien-Truong.html#dieu-kien"><title>Quay về B · Hoàn thành phiếu công việc</title>
+<a href="Quy-Trinh-B-Hien-Truong.html#hoan-thanh-wo"><title>Quay về B·5 · Hoàn thành phiếu công việc</title>
 <rect class="qt-cong" x="12" y="147" width="226" height="50" rx="10" ry="10"/>
-<text class="qt-tb2" x="24" y="169" text-anchor="start">↩ Quay về B</text>
+<text class="qt-tb2" x="24" y="169" text-anchor="start">↩ Quay về B·5</text>
 <text class="qt-tn" x="24" y="186" text-anchor="start">Hoàn thành phiếu công việc</text>
 </a>
 </svg>
@@ -775,8 +775,8 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <text class="qt-tb2" x="125" y="31" text-anchor="middle">Quá 24 giờ hoặc</text>
 <text class="qt-tb2" x="125" y="48" text-anchor="middle">đã có phiếu nộp?</text>
 <rect class="qt-trang" x="292" y="10" width="166" height="50" rx="10" ry="10"/>
-<text class="qt-tn" x="303" y="32" text-anchor="start">Người lập phiếu</text>
-<text class="qt-tn" x="303" y="49" text-anchor="start">huỷ trên ứng dụng</text>
+<text class="qt-tn" x="303" y="32" text-anchor="start">Người lập phiếu huỷ</text>
+<text class="qt-tn" x="303" y="49" text-anchor="start">trên ứng dụng</text>
 <line class="qt-mui" x1="238" y1="35" x2="288" y2="35" marker-end="url(#qt-ah)"/>
 <text class="qt-nhan" x="265" y="29" text-anchor="middle">không</text>
 <text class="qt-nhan" x="133" y="77" text-anchor="start">có</text>

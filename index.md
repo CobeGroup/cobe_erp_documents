@@ -31,11 +31,14 @@ kỳ và sự cố. Đọc theo **ba tầng**: bản đồ tổng → sơ đồ 
 
 | Trang | Nội dung |
 |---|---|
-| [Bản đồ tổng](users/00-quy-trinh.html) | Năm phân khu trên một trang; bấm vào ô để mở bước, bấm tên phân khu để mở sơ đồ phân khu |
-| [D · Thu tiền và kế toán](users/Quy-Trinh-D-Thu-Tien.html) · [Thẻ tình huống](users/Quy-Trinh-D-Thu-Tien-Tinh-Huong.html) | Tiền mặt, chuyển khoản, cả hai; nộp tiền, hoá đơn, huỷ phiếu — mỗi trường hợp cần xử lý là một thẻ |
-| [Vòng đời một đơn hàng](users/Quy-Trinh-Vong-Doi-Don-Hang.html) | Bám theo một đơn qua mười mốc, từ lúc lập đơn tới lúc sinh lịch bảo dưỡng kỳ sau |
-| [Tổng quan toàn chuỗi](users/Quy-Trinh-Tong-Quan.html) | Tên chứng từ, ai làm trên màn hình nào, bốn nguyên tắc vận hành |
-| [Các chặng — bản cũ](users/Quy-Trinh-Ban-Cu.html) | Phân khu A, B, C, E đang chuyển sang cách tổ chức mới; tạm xem tại đây |
+| [Bản đồ tổng](users/00-quy-trinh.html) | Năm phân khu trên một trang; bấm ô để mở bước, bấm tên phân khu để mở sơ đồ phân khu |
+| [A · Bán hàng](users/Quy-Trinh-A-Ban-Hang.html) | Tiếp nhận khách hàng, người giới thiệu, lập đơn, sửa, đóng và huỷ đơn |
+| [B · Điều phối và hiện trường](users/Quy-Trinh-B-Hien-Truong.html) | Phiếu công việc, lịch hẹn, thao tác tại nhà khách, sáu điều kiện hoàn thành |
+| [C · Kho và giao nhận](users/Quy-Trinh-C-Kho-Giao-Nhan.html) | Cấp vật tư, giao hàng, trả vật tư về kho, gửi qua đơn vị vận chuyển |
+| [D · Thu tiền và kế toán](users/Quy-Trinh-D-Thu-Tien.html) | Tiền mặt, chuyển khoản, cả hai; nộp tiền, hoá đơn, huỷ phiếu thu |
+| [E · Sau bán hàng](users/Quy-Trinh-E-Sau-Ban-Hang.html) | Nhắc bảo dưỡng định kỳ; tiếp nhận và xử lý sự cố |
+| [Khi gặp trục trặc](users/Quy-Trinh-Tra-Cuu.html) | Tra theo thông báo lỗi hoặc theo phân khu, dẫn thẳng tới thẻ tình huống |
+| [Vòng đời một đơn hàng](users/Quy-Trinh-Vong-Doi-Don-Hang.html) · [Tổng quan](users/Quy-Trinh-Tong-Quan.html) | Đi theo một đơn qua mười mốc; tên chứng từ và ai làm trên màn hình nào |
 
 ---
 

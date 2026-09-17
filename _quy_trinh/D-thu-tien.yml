@@ -24,7 +24,7 @@ gioi_thieu: >-
 
 luong:
   - cong_vao:
-      - {tu: C, buoc: giao-hang, ten: Đã lập phiếu giao hàng, tam: "Quy-Trinh-05-Giao-Hang-Thu-Tien.html#giao-hang"}
+      - {tu: C, buoc: giao-hang, ten: Đã lập phiếu giao hàng}
 
   - re:
       id: co-phieu-giao
@@ -191,8 +191,8 @@ luong:
         | Hệ thống **sinh lịch bảo dưỡng** cho kỳ sau | Phân khu sau bán hàng |
 
   - cong_ra:
-      - {sang: B, buoc: hoan-thanh-wo, ten: Phiếu công việc được hoàn thành, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
-      - {sang: E, buoc: sinh-lich, ten: Sinh lịch bảo dưỡng kỳ sau, tam: "Quy-Trinh-06-Bao-Duong.html#sinh-lich"}
+      - {sang: B, buoc: hoan-thanh-wo, ten: Phiếu công việc được hoàn thành}
+      - {sang: E, buoc: sinh-lich, ten: Sinh lịch bảo dưỡng kỳ sau}
 
 ngoai_luong:
   id: ngoai-luong
@@ -308,7 +308,7 @@ the:
 
   - ma: TT-08
     ten: 'Đã nộp tiền nhưng hệ thống vẫn báo chưa nộp'
-    gap_o: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+    gap_o: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc}
     thong_bao: '“SO …: thu tiền mặt nhưng chưa có Internal Transfer về công ty”'
     nguyen_nhan: 'Phiếu nộp chưa được xác nhận, hoặc được lập trên Desk mà không gắn với khoản thu.'
     ai: 'Kế toán · Kỹ thuật viên'
@@ -318,11 +318,11 @@ the:
           hoi: "Phiếu nộp gắn đúng khoản thu?"
           co: "Xác nhận phiếu nộp"
           khong: "Huỷ phiếu; kỹ thuật viên lập lại từ ứng dụng"
-    quay_ve: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+    quay_ve: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc}
 
   - ma: TT-09
     ten: 'Báo “đã trả về … nhưng thu … (thiếu …)”'
-    gap_o: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+    gap_o: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc}
     thong_bao: '“SO …: đã trả về … nhưng thu … (thiếu …)”'
     nguyen_nhan: 'Tổng đã nộp nhỏ hơn tổng đã thu. Hệ thống không có dung sai, lệch một đồng cũng bị chặn. Thường do phiếu nộp lập thủ công với số tiền làm tròn.'
     ai: 'Kế toán · Kỹ thuật viên'
@@ -331,7 +331,7 @@ the:
       - buoc: 'Kỹ thuật viên lập lại phiếu nộp từ ứng dụng'
       - buoc: 'Kế toán xác nhận phiếu nộp mới'
     canh_bao: 'Không lập thêm một phiếu nộp lẻ để bù phần thiếu — hệ thống chặn phiếu nộp thứ hai cho cùng khoản thu.'
-    quay_ve: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+    quay_ve: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc}
 
   - ma: TT-10
     ten: 'Báo “Số dư tài khoản … không đủ” khi xác nhận phiếu nộp'
@@ -401,7 +401,7 @@ the:
 
   - ma: TT-15
     ten: 'Đơn đã giao đủ nhưng chưa Hoàn tất'
-    gap_o: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+    gap_o: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc}
     thong_bao: '“Sales Order not completed: …”'
     nguyen_nhan: 'Đơn chưa có hoá đơn đủ giá trị. Khi chưa hoàn tất, khách hàng chưa được cộng điểm và hệ thống chưa sinh lịch bảo dưỡng.'
     ai: 'Kế toán · Kỹ thuật viên'
@@ -410,7 +410,7 @@ the:
           hoi: "Đơn đã thu đủ?"
           co: "Lập hoá đơn — xem TT-14"
           khong: "Xử lý phần còn nợ — xem TT-13"
-    quay_ve: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+    quay_ve: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc}
 
   - ma: TT-16
     ten: 'Không huỷ được phiếu thu vừa lập'
@@ -460,7 +460,7 @@ hoi_dap:
   - hoi: 'Thu nhầm hình thức thì sửa sao?'
     dap: 'Trong 24 giờ và chưa có phiếu nộp thì huỷ rồi lập lại. Xem thẻ TT-05 và TT-12.'
   - hoi: 'Khách chỉ nhận một phần hàng, có thu tiền được không?'
-    dap: 'Được, thu theo phần đã giao. Phần không giao thuộc phân khu kho và giao nhận.'
+    dap: 'Được, thu theo phần đã giao. Phần không giao thành nghĩa vụ trả vật tư — xem [phân khu C](Quy-Trinh-C-Kho-Giao-Nhan.html#tra-ve).'
   - hoi: 'Đã thu đủ tiền, sao chưa thấy hoá đơn?'
     dap: 'Phần tiền mặt chờ tác vụ tự động, sớm nhất một ngày sau phiếu giao hàng. Cần ngay thì lập trên ứng dụng — xem thẻ TT-14.'
 

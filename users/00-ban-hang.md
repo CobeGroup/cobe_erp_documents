@@ -17,4 +17,4 @@ xử lý khi không sửa được trực tiếp.
 > Marketing & Khách hàng).
 
 > 🔗 Vị trí của đơn bán hàng trong toàn bộ dây chuyền, từ khách tiềm năng tới bảo dưỡng định
-> kỳ: xem [Quy trình hợp nhất · Chặng 2](Quy-Trinh-02-Don-Hang.html).
+> kỳ: xem [Quy trình hợp nhất · A · Bán hàng](Quy-Trinh-A-Ban-Hang.html).

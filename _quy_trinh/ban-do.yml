@@ -19,27 +19,27 @@ mo_ta: >-
   cần đến tận nơi thì đi vào điều phối.
 
 o:
-  - {o: A0, lan: A, hang: 0, kieu: buoc, chu: "Tiếp nhận khách hàng", den: {phan_khu: A, buoc: nguon, tam: "Quy-Trinh-01-Khach-Hang.html#nguon"}, canh_bao: true}
-  - {o: A1, lan: A, hang: 1, kieu: buoc, chu: "Lập đơn bán hàng", den: {phan_khu: A, buoc: khai-don, tam: "Quy-Trinh-02-Don-Hang.html#khai-don"}, canh_bao: true}
-  - {o: A2, lan: A, hang: 2, kieu: re, chu: "Cần đến nhà khách?", den: {phan_khu: A, buoc: ban-giao, tam: "Quy-Trinh-02-Don-Hang.html#ban-giao"}}
-  - {o: A3, lan: A, hang: 3, kieu: cong, chu: "Giao thẳng hoặc gửi đơn vị vận chuyển", den: {phan_khu: C, buoc: van-chuyen, tam: "Quy-Trinh-05-Giao-Hang-Thu-Tien.html#van-chuyen"}}
+  - {o: A0, lan: A, hang: 0, kieu: buoc, chu: "Tiếp nhận khách hàng", den: {phan_khu: A, buoc: nguon}, canh_bao: true}
+  - {o: A1, lan: A, hang: 1, kieu: buoc, chu: "Lập đơn bán hàng", den: {phan_khu: A, buoc: khai-don}, canh_bao: true}
+  - {o: A2, lan: A, hang: 2, kieu: re, chu: "Cần đến nhà khách?", den: {phan_khu: A, buoc: ban-giao}}
+  - {o: A3, lan: A, hang: 3, kieu: cong, chu: "Giao thẳng hoặc gửi đơn vị vận chuyển", den: {phan_khu: C, buoc: van-chuyen}}
 
-  - {o: E0, lan: E, hang: 0, kieu: buoc, chu: "Khách hàng báo hỏng", den: {phan_khu: E, buoc: tiep-nhan, tam: "Quy-Trinh-07-Su-Co.html#tiep-nhan"}, canh_bao: true}
-  - {o: E1, lan: E, hang: 1, kieu: re, chu: "Cần đến tận nơi?", den: {phan_khu: E, buoc: hai-duong, tam: "Quy-Trinh-07-Su-Co.html#hai-duong"}}
-  - {o: E2, lan: E, hang: 2, kieu: buoc, chu: "Hướng dẫn qua điện thoại, đóng phiếu", den: {phan_khu: E, buoc: hai-duong, tam: "Quy-Trinh-07-Su-Co.html#hai-duong"}}
+  - {o: E0, lan: E, hang: 0, kieu: buoc, chu: "Khách hàng báo hỏng", den: {phan_khu: E, buoc: tiep-nhan}, canh_bao: true}
+  - {o: E1, lan: E, hang: 1, kieu: re, chu: "Cần đến tận nơi?", den: {phan_khu: E, buoc: hai-duong}}
+  - {o: E2, lan: E, hang: 2, kieu: buoc, chu: "Hướng dẫn qua điện thoại, đóng phiếu", den: {phan_khu: E, buoc: qua-dien-thoai}}
 
-  - {o: B3, lan: B, hang: 3, kieu: buoc, chu: "Lập phiếu công việc và lịch hẹn", den: {phan_khu: B, buoc: lap-wo, tam: "Quy-Trinh-03-Hien-Truong.html#lap-wo"}, canh_bao: true}
-  - {o: C4, lan: C, hang: 4, kieu: buoc, chu: "Cấp vật tư cho kỹ thuật viên", den: {phan_khu: C, buoc: yeu-cau, tam: "Quy-Trinh-04-Vat-Tu.html#yeu-cau"}, canh_bao: true}
-  - {o: B5, lan: B, hang: 5, kieu: buoc, chu: "Làm việc tại nhà khách hàng", den: {phan_khu: B, buoc: hien-truong, tam: "Quy-Trinh-03-Hien-Truong.html#hien-truong"}, canh_bao: true}
-  - {o: C6, lan: C, hang: 6, kieu: buoc, chu: "Giao hàng, khách hàng ký nhận", den: {phan_khu: C, buoc: giao-hang, tam: "Quy-Trinh-05-Giao-Hang-Thu-Tien.html#giao-hang"}, canh_bao: true}
-  - {o: C7, lan: C, hang: 7, kieu: buoc, chu: "Trả phần không giao về kho", den: {phan_khu: C, buoc: tra-ve, tam: "Quy-Trinh-04-Vat-Tu.html#tra-ve"}, canh_bao: true}
+  - {o: B3, lan: B, hang: 3, kieu: buoc, chu: "Lập phiếu công việc và lịch hẹn", den: {phan_khu: B, buoc: lap-wo}, canh_bao: true}
+  - {o: C4, lan: C, hang: 4, kieu: buoc, chu: "Cấp vật tư cho kỹ thuật viên", den: {phan_khu: C, buoc: yeu-cau}, canh_bao: true}
+  - {o: B5, lan: B, hang: 5, kieu: buoc, chu: "Làm việc tại nhà khách hàng", den: {phan_khu: B, buoc: hien-truong}, canh_bao: true}
+  - {o: C6, lan: C, hang: 6, kieu: buoc, chu: "Giao hàng, khách hàng ký nhận", den: {phan_khu: C, buoc: giao-hang}, canh_bao: true}
+  - {o: C7, lan: C, hang: 7, kieu: buoc, chu: "Trả phần không giao về kho", den: {phan_khu: C, buoc: tra-ve}, canh_bao: true}
   - {o: D7, lan: D, hang: 7, kieu: buoc, chu: "Thu tiền tại nhà khách hàng", den: {phan_khu: D, buoc: hinh-thuc}, canh_bao: true}
   - {o: D8, lan: D, hang: 8, kieu: buoc, chu: "Nộp tiền mặt về công ty", den: {phan_khu: D, buoc: tien-mat}, canh_bao: true}
   - {o: D9, lan: D, hang: 9, kieu: buoc, chu: "Hoá đơn, đơn hoàn tất", den: {phan_khu: D, buoc: hoa-don}, canh_bao: true}
 
-  - {o: E10, lan: E, hang: 10, kieu: buoc, chu: "Nhắc bảo dưỡng đến kỳ", den: {phan_khu: E, buoc: phieu-nhac, tam: "Quy-Trinh-06-Bao-Duong.html#phieu-nhac"}, canh_bao: true}
-  - {o: E11, lan: E, hang: 11, kieu: re, chu: "Khách hàng đồng ý?", den: {phan_khu: E, buoc: lien-he, tam: "Quy-Trinh-06-Bao-Duong.html#lien-he"}}
-  - {o: E12, lan: E, hang: 12, kieu: buoc, chu: "Hẹn lại hoặc ngừng nhắc", den: {phan_khu: E, buoc: lien-he, tam: "Quy-Trinh-06-Bao-Duong.html#lien-he"}}
+  - {o: E10, lan: E, hang: 10, kieu: buoc, chu: "Nhắc bảo dưỡng đến kỳ", den: {phan_khu: E, buoc: phieu-nhac}, canh_bao: true}
+  - {o: E11, lan: E, hang: 11, kieu: re, chu: "Khách hàng đồng ý?", den: {phan_khu: E, buoc: ket-qua}}
+  - {o: E12, lan: E, hang: 12, kieu: buoc, chu: "Hẹn lại hoặc ngừng nhắc", den: {phan_khu: E, buoc: hen-lai}}
 
 noi:
   - {tu: A0, toi: A1}

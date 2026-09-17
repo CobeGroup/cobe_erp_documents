@@ -174,7 +174,7 @@ không ra.
 **Đơn đã xong hết việc mà phiếu công việc vẫn chưa đóng, có phải lỗi không?**
 
 Không. Xem [nguyên tắc 6.2](#nguyen-tac): hai chứng từ kết thúc riêng. Cách đóng phiếu công
-việc xem [Chặng 3](Quy-Trinh-03-Hien-Truong.html#dieu-kien).
+việc xem [phân khu B](Quy-Trinh-B-Hien-Truong.html#du-dk-wo).
 
 **Đã lập phiếu rồi mà số liệu không đổi?**
 
@@ -183,12 +183,12 @@ Nhiều khả năng phiếu còn ở trạng thái **nháp**. Xem [nguyên tắc
 **Lỡ sai ở đơn hàng đã giao hàng và xuất hoá đơn, sửa thế nào?**
 
 Phải huỷ ngược theo đúng thứ tự ở [nguyên tắc 6.1](#nguyen-tac). Trình tự chi tiết nằm ở
-[Chặng 2](Quy-Trinh-02-Don-Hang.html#sua-don).
+[phân khu A](Quy-Trinh-A-Ban-Hang.html#sua-don).
 
 **Công ty có nhiều pháp nhân, làm sao biết đơn thuộc pháp nhân nào?**
 
 Theo ô **Công ty** trên hồ sơ khách hàng, được suy ra từ nguồn khách hàng lúc tiếp nhận. Xem
-[Chặng 1](Quy-Trinh-01-Khach-Hang.html#nguon).
+[phân khu A](Quy-Trinh-A-Ban-Hang.html#nguon).
 
 ---
 
@@ -199,4 +199,4 @@ Theo ô **Công ty** trên hồ sơ khách hàng, được suy ra từ nguồn k
 |---|---|
 | Nắm mạch chung theo một đơn hàng cụ thể | [Vòng đời một đơn hàng](Quy-Trinh-Vong-Doi-Don-Hang.html) |
 | Làm đúng phần việc của mình | [Danh sách các chặng](00-quy-trinh.html) |
-| Gỡ một tình huống đang bị chặn | [Khi gặp trục trặc](Quy-Trinh-08-Ngoai-Le.html) |
+| Gỡ một tình huống đang bị chặn | [Khi gặp trục trặc](Quy-Trinh-Tra-Cuu.html) |
