@@ -52,7 +52,8 @@ của hai ngày khác nhau gộp lại đổi được 0,5 ngày, phần dư ở
 Một phiếu làm thêm (`HR Overtime Request`) cộng vào quỹ khi đủ **cả ba** điều kiện:
 
 1. Hình thức quy đổi là **Nghỉ bù** (không phải *Tiền lương*).
-2. Trạng thái **Đã duyệt** (`Approved`).
+2. Trạng thái **Đã duyệt** (`Approved`) — tức **HR đã duyệt bước cuối**. Phiếu mới qua trưởng bộ
+   phận (`Manager Approved`) chưa vào quỹ.
 3. **Ngày làm thêm đã tới** — phiếu khai trước cho ngày chưa làm vẫn nằm chờ.
 
 Số giờ vào quỹ là **số giờ được duyệt** trên phiếu (`expected_hours`), không phải số giờ
@@ -176,9 +177,9 @@ chế ra.
 
 | Tình huống | Hệ thống làm gì |
 |---|---|
-| Phiếu làm thêm quy đổi *Nghỉ bù* được duyệt, ngày làm thêm **đã qua** | Giờ vào quỹ **ngay**, dùng được liền |
+| Phiếu làm thêm quy đổi *Nghỉ bù* được **HR duyệt bước cuối**, ngày làm thêm **đã qua** | Giờ vào quỹ **ngay**, dùng được liền |
 | Phiếu được duyệt cho **ngày chưa tới** | Giờ **nằm chờ**. Tự vào quỹ khi qua ngày đó, không ai phải thao tác |
-| Phiếu còn **chờ duyệt** | Chưa có giờ nào |
+| Phiếu còn **chờ duyệt** — kể cả khi trưởng bộ phận đã duyệt, đang chờ HR | Chưa có giờ nào |
 | Phiếu bị **từ chối** hoặc **huỷ duyệt** | Không vào quỹ; nếu đã vào thì rút ra ngay |
 | Phiếu quy đổi **Tiền lương** | Không liên quan tới quỹ |
 | Nhân viên **không chấm công** ngày làm thêm đó | **Vẫn tính đủ** số giờ đã duyệt. Xác minh có làm thật hay không là việc của khâu duyệt phiếu |

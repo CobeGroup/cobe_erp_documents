@@ -104,7 +104,7 @@ Một `HR Overtime Request` vào quỹ khi đủ **cả bốn** điều kiện:
 | # | Điều kiện | Ghi chú |
 |---|---|---|
 | 1 | `payout_type = "Nghỉ bù"` | Phiếu quy đổi tiền lương không liên quan |
-| 2 | `status` là `Approved` **hoặc** `Expired` | Lô đã cắt vẫn phải nằm trong danh sách — xem 3.3 |
+| 2 | `status` là `Approved` **hoặc** `Expired` | Lô đã cắt vẫn phải nằm trong danh sách — xem 3.3. `Manager Approved` (trưởng bộ phận đã duyệt, chờ HR) **không** vào quỹ: phiếu duyệt hai bước, hiệu lực chỉ có ở bước HR |
 | 3 | `ot_date <= as_of` | Ngày làm thêm đã tới. Phiếu khai trước cho ngày tương lai nằm chờ |
 | 4 | `expected_hours > 0` | |
 
@@ -250,7 +250,8 @@ liệu production thấy 5 nhân viên âm, tổng 32 giờ, do khâu duyệt tr
 
 | Tình huống | Hệ thống hành xử |
 |---|---|
-| Phiếu làm thêm quy đổi *Nghỉ bù* được duyệt, ngày làm thêm **đã qua** | Giờ vào quỹ **ngay lập tức**, dùng được liền |
+| Phiếu làm thêm quy đổi *Nghỉ bù* được **HR duyệt bước cuối**, ngày làm thêm **đã qua** | Giờ vào quỹ **ngay lập tức**, dùng được liền |
+| Phiếu mới qua **bước trưởng bộ phận**, còn chờ HR | **Chưa** có giờ nào vào quỹ |
 | Phiếu được duyệt cho **ngày chưa tới** | Giờ **chưa** vào quỹ. Tự vào khi qua ngày đó, không cần thao tác gì |
 | Phiếu còn **chờ duyệt** | Không có giờ nào vào quỹ |
 | Phiếu bị **từ chối** hoặc **huỷ** | Không vào quỹ; nếu đã vào thì rút ra ngay |

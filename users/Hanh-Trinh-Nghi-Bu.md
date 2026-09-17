@@ -158,9 +158,9 @@ Bảng này trả lời thẳng những câu hay hỏi nhất, khỏi phải đo
 
 | Bạn làm gì | Quỹ ra sao |
 |---|---|
-| Phiếu làm thêm quy đổi *Nghỉ bù* **được duyệt**, ngày làm thêm **đã qua** | Cộng **ngay**, xin nghỉ được liền |
+| Phiếu làm thêm quy đổi *Nghỉ bù* **được HR duyệt** (bước cuối), ngày làm thêm **đã qua** | Cộng **ngay**, xin nghỉ được liền |
 | Phiếu được duyệt cho **ngày chưa tới** | **Chưa cộng**. Qua ngày đó tự cộng, bạn không phải làm gì |
-| Phiếu còn **chờ duyệt** | Chưa có gì |
+| Phiếu còn **chờ duyệt** — kể cả khi trưởng bộ phận đã duyệt, đang chờ HR | Chưa có gì |
 | Phiếu bị **từ chối** hoặc **huỷ duyệt** | Không cộng; đã cộng rồi thì rút ra |
 | Phiếu quy đổi **Tiền lương** | Không vào quỹ — giờ đó trả bằng tiền |
 | Hôm làm thêm bạn **quên chấm công** | **Vẫn cộng đủ** số giờ đã duyệt |
@@ -202,7 +202,7 @@ Bảng này trả lời thẳng những câu hay hỏi nhất, khỏi phải đo
 | Tình huống | Nguyên nhân / cách xử |
 |---|---|
 | *"Quỹ Nghỉ bù còn …h, chưa đủ để nghỉ … ngày"* | Quỹ thiếu giờ — làm thêm tiếp (bước ①②), hoặc xin **0,5 ngày** thay vì cả ngày |
-| Làm thêm rồi mà quỹ vẫn 0 | Phiếu OT quy đổi **Tiền lương** chứ không phải Nghỉ bù; hoặc **chưa được duyệt**; hoặc **ngày làm thêm chưa tới** |
+| Làm thêm rồi mà quỹ vẫn 0 | Phiếu OT quy đổi **Tiền lương** chứ không phải Nghỉ bù; hoặc **chưa được duyệt xong** (trưởng bộ phận duyệt rồi vẫn còn chờ HR); hoặc **ngày làm thêm chưa tới** |
 | Quỹ ít hơn số giờ đã khai | Phiếu bị **trần 4h/8h** cắt; hoặc lô giờ kỳ trước **đã hết hạn** |
 | Quỹ Nghỉ bù bỗng về 0 / mất | Đã qua **cuối kỳ** — giờ dư bị cắt. Lần sau xin nghỉ trong kỳ, để ý thông báo nhắc giữa tháng 6/12 |
 | Số dư âm trên Desk, tưởng bị phạt | Âm ở Desk là **đúng thiết kế** — không trừ lương, không trừ quỹ phép; xem quỹ thật ở màn hình Nghỉ phép trên app |

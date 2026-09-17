@@ -60,39 +60,52 @@ theo đơn).
 | Field | Kiểu | Ghi chú |
 |---|---|---|
 | `employee` / `employee_name` / `company` | Link/fetch | NV xin làm thêm |
-| `ot_date` | Date | Ngày làm thêm — **unique per employee** (đơn Pending/Approved) |
+| `ot_date` | Date | Ngày làm thêm — **unique per employee** (đơn Pending / Manager Approved / Approved) |
 | `windows` | Table (`HR Overtime Request Window`) | **Các khung giờ trong ngày** — mỗi lần làm thêm một dòng (từ giờ / đến giờ), theo thứ tự, không chồng lấn; chỉ khung cuối được vắt qua nửa đêm. Đơn cũ (trước 09/2026) không có bảng này |
 | `from_time` / `to_time` | Time | **Khung gộp** (đầu khung sớm nhất → cuối khung muộn nhất) — tự điền từ bảng khung giờ, giữ cho client cũ; đơn cũ dùng cặp này làm khung duy nhất |
 | `expected_hours` | Float | Tự tính từ các khung giờ, **đã loại phần lọt vào giờ làm chính thức** (ngày thường); **12h/ngày** chỉ là ngưỡng validate đầu vào (chặn nhập vô lý). TRẦN thực tế áp lên đơn là **4h ngày thường / 8h ngày lễ** (mặc định) — `cap_ot_hours` cắt giờ về trần lúc tạo đơn, tra theo **ngày làm thêm** trong bảng **Trần OT theo ngày hiệu lực** của `HR Policy` (`HR Policy Overtime Rule`) |
 | `payout_type` | Select | **Tiền lương** \| **Nghỉ bù** |
 | `reason` | Small Text | Nội dung công việc (bắt buộc) |
-| `status` | Select | **Pending** → **Approved** / **Rejected** (không dùng docstatus) |
-| `approved_by` / `approved_on` | Link/Datetime | Ai duyệt, lúc nào |
+| `status` | Select | **Pending** → **Manager Approved** → **Approved**; **Rejected** / **Cancelled** / **Expired** (không dùng docstatus). Chỉ đọc — đổi trạng thái qua luồng duyệt |
+| `manager_approved_by` / `manager_approved_on` | Link/Datetime | Trưởng bộ phận duyệt bước 1, lúc nào |
+| `approved_by` / `approved_on` | Link/Datetime | Người duyệt **bước cuối** (HR), lúc nào. Với đơn bị từ chối / huỷ duyệt: người thực hiện thao tác đó. `approved_on` cũng là mốc giờ vào quỹ Nghỉ bù |
 | `attendance` | Link Attendance | Gắn tự động khi đối chiếu |
 | `granted_hours` | Float | Giờ được công nhận sau đối chiếu |
 
-Người duyệt = **Shift Request Approver** (trên Employee hoặc Department) — cùng bộ
-với Attendance Request, tách khỏi Leave Approver. HR Manager override được.
+**Duyệt hai cấp**, như đơn nghỉ phép:
+
+- **Bước 1** — **Shift Request Approver** (trên Employee hoặc Department), cùng bộ với
+  Attendance Request, tách khỏi Leave Approver. HR Manager bước vào thay được. Không tự
+  duyệt bước này cho đơn của chính mình.
+- **Bước cuối** — HR Manager có tên trong **danh sách người duyệt cuối** của `HR Policy`
+  (cùng danh sách với đơn nghỉ phép; trống = mọi HR Manager). System Manager luôn duyệt được.
+
+`Manager Approved` là trạng thái CHỜ: mọi nơi dùng đơn (đối chiếu chấm công, quỹ Nghỉ bù,
+luật tính công ngày nghỉ) chỉ đọc `Approved`, nên hiệu lực chỉ phát sinh ở bước HR.
 
 ---
 
 ## 3. Vòng đời một đơn
 
 ```
-NV tạo trên PWA (status=Pending, notify người duyệt)
-  → Manager duyệt trên tab Cần duyệt
-      ├─ Approve → status=Approved (+ đối chiếu ngay nếu Attendance đã tồn tại)
-      └─ Reject  → status=Rejected (notify NV)
+NV tạo trên PWA (status=Pending, notify trưởng bộ phận)
+  → Trưởng bộ phận duyệt trên tab Cần duyệt
+      ├─ Manager Approve → status=Manager Approved (notify HR) — CHƯA có hiệu lực
+      └─ Manager Reject  → status=Rejected (notify NV kèm lý do)
+  → HR duyệt trên tab Cần duyệt
+      ├─ Submit    → status=Approved (+ đối chiếu ngay nếu Attendance đã tồn tại, notify NV)
+      └─ HR Reject → status=Rejected (notify NV kèm lý do)
   → Ngày làm thêm: Attendance được tạo (auto-attendance hằng giờ)
       → hook đối chiếu → ghi granted_hours + attendance vào đơn
 ```
 
-- NV tự **huỷ** được đơn khi còn Pending (thành Rejected).
+- NV tự **huỷ** được đơn khi còn chờ duyệt — ở bước trưởng bộ phận hay bước HR (thành Cancelled).
 - Đơn cho **ngày quá khứ** chỉ nhận trong hạn khai làm thêm — cột *Hạn khai làm thêm*
   của bảng **Hạn khai theo ngày hiệu lực** trong `HR Policy`, xét theo **ngày làm thêm**
-  (xem [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html)); app **chặn khai cho ngày
-  tương lai**.
-- Tối đa **10 đơn Pending**/NV (chống spam).
+  (xem [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html)). Khai trước cho ngày tương lai
+  thì không giới hạn.
+- Tối đa **10 đơn đang chờ duyệt**/NV, tính cả đơn đang chờ HR (chống spam).
+- Đơn đang chờ HR **vẫn giữ chỗ** ngày làm thêm: không khai được đơn thứ hai cho cùng ngày.
 
 ---
 
@@ -185,8 +198,9 @@ HR Manager mở **Desk → HR Overtime Request** khi cần:
 
 | Việc | Cách làm |
 |---|---|
-| Duyệt thay / sửa duyệt nhầm | Sửa field `status` (Pending/Approved/Rejected) — doctype không submittable nên sửa trực tiếp được |
-| Đơn quá hạn khai | HR tạo đơn hộ trên Desk (điền employee, ngày, giờ, payout) rồi set Approved — hook đối chiếu chạy khi có Attendance; nếu Attendance đã có thì sửa `status` qua PWA-approve không được, chạy đối chiếu bằng cách mở đơn và lưu lại hoặc nhờ dev gọi `apply_to_existing_attendance` |
+| Duyệt thay | Trên PWA, tab **Cần duyệt**. `status` là trường chỉ đọc — không sửa tay trên Desk được; mọi chuyển trạng thái đi qua luồng duyệt để có đủ hiệu lực đi kèm (đối chiếu chấm công, thông báo) |
+| Sửa duyệt nhầm | Đơn đã **Approved** → nút **Huỷ duyệt** (Desk hoặc tab *Đã duyệt · OT* trên PWA) — xem [Duyệt đơn làm thêm giờ §5](Duyet-Lam-Them.html#5-lỡ-duyệt-nhầm--huỷ-duyệt). Đơn còn chờ HR → HR **từ chối** ở bước 2 |
+| Đơn quá hạn khai | HR tạo đơn hộ trên Desk (điền employee, ngày, giờ, payout). Đơn tạo trên Desk **không tự báo** ai, nên nhắc trưởng bộ phận của nhân viên vào tab **Cần duyệt** duyệt bước 1 — hộp duyệt chỉ hiện đơn bước 1 cho đúng người duyệt của nhân viên, như đơn nghỉ phép. Sau đó HR duyệt bước cuối; đối chiếu chấm công chạy ngay lúc đó |
 | Kiểm tra giờ đã ghi nhận | Xem `granted_hours` + link `attendance` trên đơn; hoặc mở Attendance xem section **Overtime** |
 | Báo cáo OT tháng | List view HR Overtime Request lọc `status=Approved` + khoảng `ot_date`, tổng `granted_hours` |
 

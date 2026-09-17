@@ -29,7 +29,7 @@ nav_order: 8
 
 Khi công ty có policy WFH/công tác và muốn track rõ ràng ngày nào nhân viên nào được phép chấm công ngoài VP.
 
-**Cơ chế hiện tại:** mỗi lần đăng ký WFH = tạo **Attendance Request** (`reason = "Work From Home"`) qua form **"Đề xuất"** (1 hoặc nhiều ngày). Khi manager duyệt (submit AR), HRMS tự tạo bản ghi Attendance status `Work From Home` cho ngày đó.
+**Cơ chế hiện tại:** mỗi lần đăng ký WFH = tạo **Attendance Request** (`reason = "Work From Home"`) qua form **"Đề xuất"** (1 hoặc nhiều ngày). Đơn duyệt **hai bước** — trưởng bộ phận rồi HR, như đơn nghỉ phép. Khi HR duyệt bước cuối (submit AR), HRMS tự tạo bản ghi Attendance status `Work From Home` cho ngày đó.
 
 > doctype cũ **HR WFH Approval** đã bị bỏ — không còn endpoint `approve_wfh` / `reject_wfh` / `get_pending_for_me`. Mọi tham chiếu tới doctype này trong tài liệu/code cũ là lịch sử.
 
@@ -44,7 +44,7 @@ Nhân viên đăng ký qua PWA → mở form **"Đề xuất"** → chọn loạ
 3. Submit → app gọi `api.attendance_request.create_attendance_request` (reason=Work From Home):
    - Tạo Attendance Request 1 ngày (`from_date = to_date = ngày chọn`), `reason = "Work From Home"`, `docstatus = 0`
    - Nếu đã có AR WFH chưa hủy cho đúng ngày đó → trả `status = "exists"` (không tạo trùng)
-4. PWA hiển thị "Đang chờ manager duyệt"
+4. PWA hiển thị *Chờ trưởng bộ phận duyệt*, rồi *Chờ HR duyệt* khi trưởng bộ phận đã duyệt
 
 Danh sách đơn WFH của NV lấy qua `api.wfh.get_my_requests` (lọc các AR có `reason = "Work From Home"`).
 
@@ -61,7 +61,8 @@ Danh sách đơn WFH của NV lấy qua `api.wfh.get_my_requests` (lọc các AR
 | `reason` = `"Work From Home"` | Đánh dấu đây là đơn WFH |
 | `explanation` | Lý do WFH (NV nhập) |
 | `custom_work_location_label` | **Nhãn địa điểm** WFH (custom field — vd "Nhà riêng - Quận 7") |
-| `docstatus` | 0 = chờ duyệt, 1 = đã duyệt, 2 = hủy/từ chối |
+| `docstatus` | 0 = chờ duyệt, 1 = đã duyệt, 2 = đã huỷ (đơn bị từ chối thì bị **xoá**, không nằm ở 2) |
+| `custom_approval_state` | Khi `docstatus = 0`: *Pending Manager* (chờ trưởng bộ phận) / *Manager Approved* (chờ HR) |
 
 Nhãn địa điểm lưu ở custom field `custom_work_location_label` trên Attendance Request (xem `fixtures/custom_field.json`). Field này chỉ dùng audit + báo cáo, không enforce GPS.
 
@@ -71,14 +72,18 @@ Nhãn địa điểm lưu ở custom field `custom_work_location_label` trên At
 
 WFH duyệt **chung cơ chế với chấm công bù** — qua tab **"Cần duyệt"** trên my-workspace.
 
-1. Manager/HR mở PWA → tab **"Cần duyệt"**
-2. Đơn WFH hiện trong danh sách (collector Attendance Request, `docstatus = 0`)
-3. Review ngày + lý do + địa điểm
-4. **Duyệt** → app gọi `api.approval.act` với `action = "Submit"` → `doc.submit()`
-   - Khi submit, HRMS tự tạo Attendance status `Work From Home` cho ngày đó
-5. **Từ chối** → `action = "Cancel"` → `doc.cancel()` (docstatus = 2)
+1. **Trưởng bộ phận** mở PWA → tab **"Cần duyệt"** → thấy đơn *Chờ trưởng bộ phận duyệt* → review
+   ngày + lý do + địa điểm → **Duyệt (Trưởng bộ phận)** (`action = "Manager Approve"`). Đơn vẫn là
+   nháp, chuyển sang *Chờ HR duyệt*, HR được báo.
+2. **HR** (người duyệt cuối ở `HR Policy`) → tab **"Cần duyệt"** → **Duyệt (HR)** (`action = "Submit"`)
+   → `doc.submit()` → HRMS tự tạo Attendance status `Work From Home` cho ngày đó.
+3. **Từ chối** ở bước nào cũng được (`action = "Manager Reject"` / `"HR Reject"`, bắt buộc lý do) →
+   đơn nháp bị **xoá**, nhân viên nhận lý do.
 
-> Phân quyền: nếu config `restrict_to_leave_approver = 1`, chỉ Manager là `Employee.leave_approver` của NV mới duyệt được (trừ HR Manager / System Manager override).
+> Phân quyền: người duyệt bước 1 là **`shift_request_approver`** của nhân viên (trên Employee hoặc
+> bảng Department Approver) — không phải `leave_approver`. HR Manager / System Manager được bước vào
+> thay ở bước này. Bước cuối là người duyệt cuối của `HR Policy` (hoặc System Manager). Chi tiết:
+> [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html).
 
 ---
 
@@ -91,12 +96,19 @@ Check-in WFH (GPS + selfie) **vẫn là phần custom của app** (xem `api.atte
 3. Nếu có → cho phép "Bắt đầu ca WFH" → GPS audit (không enforce radius) + selfie nếu Policy bật `enable_selfie_capture`
 4. Nếu không có AR WFH duyệt → check-in WFH bị từ chối, hướng dẫn NV đăng ký WFH trước
 
+> ⚠️ **"Đã duyệt" ở đây là HR đã duyệt bước cuối** (`docstatus = 1`). Trưởng bộ phận duyệt bước 1
+> xong thì nhân viên **vẫn chưa** chấm công WFH được. Đơn WFH cần làm ngay trong ngày thì phải được
+> duyệt đủ hai bước trước giờ bắt đầu làm.
+
 ---
 
 ## 6. Hủy / từ chối
 
-- **Từ chối / hủy** (manager): qua tab "Cần duyệt" → `Cancel` (docstatus = 2)
-- Sau khi hủy, nếu cần WFH lại cùng ngày → NV tạo đơn WFH mới (đơn đã hủy `docstatus = 2` không chặn tạo mới)
+- **Từ chối** (đơn chưa duyệt xong, ở bước nào cũng vậy): tab "Cần duyệt" → **Từ chối** → đơn nháp bị xoá
+- **Huỷ đơn đã duyệt** (HR): Desk → mở đơn → **Cancel** (docstatus = 2) — Attendance WFH tự gỡ. Quyền
+  huỷ không đổi khi có duyệt hai bước; trên thực tế chỉ HR / System Manager huỷ được, vì huỷ đơn kéo
+  theo huỷ bản ghi công mà trưởng bộ phận không có quyền sửa
+- Sau khi từ chối / huỷ, nếu cần WFH lại cùng ngày → NV tạo đơn WFH mới (không bị chặn trùng)
 
 ---
 

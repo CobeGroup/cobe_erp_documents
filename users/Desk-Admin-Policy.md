@@ -32,7 +32,7 @@ nav_order: 2
 | **Lunch Break** | Khai giờ nghỉ trưa để tính công đúng |
 | **Overtime Notification** | Nhắc khi làm quá giờ · bảng **Trần OT theo ngày hiệu lực** (trần giờ/ngày + hệ số OT ngày nửa buổi) |
 | **Hạn khai bù sau khi việc đã xảy ra** | Bảng **Hạn khai theo ngày hiệu lực**: hạn nộp đơn nghỉ · hạn khai làm thêm · hạn nộp đơn chấm công — xem [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html) |
-| **Người duyệt cuối (cấp HR)** | Chỉ định ai chốt đơn nghỉ phép bước 2 |
+| **Người duyệt cuối (cấp HR)** | Chỉ định ai chốt bước 2 của đơn nghỉ phép, đơn chấm công bù / WFH và đơn làm thêm giờ |
 | **Giới hạn giờ check-in** | Chặn quẹt VÀO quá muộn |
 | **Check-in Whitelist** | Danh sách được phép chấm ngoại lệ |
 
@@ -54,12 +54,20 @@ nav_order: 2
 
 ## 4. Người duyệt cuối (cấp HR)
 
-Đơn nghỉ phép đi 2 bước: **Trưởng Bộ Phận → HR**. Bước HR là bước **chốt, trừ phép**.
+Ba loại đơn đi 2 bước **Trưởng Bộ Phận → HR**, và bước HR là bước **chốt, có hiệu lực**:
+
+| Đơn | Bước 1 (Trưởng Bộ Phận) | Bước HR chốt việc gì |
+|---|---|---|
+| **Nghỉ phép / Nghỉ bù** | `leave_approver` | Trừ phép / trừ quỹ Nghỉ bù, ghi ngày nghỉ |
+| **Chấm công bù / WFH** (`Attendance Request`) | *Shift Request Approver* — từ 09/2026 | Tạo công Có mặt / WFH, mở chấm công WFH |
+| **Làm thêm giờ** (`HR Overtime Request`) | *Shift Request Approver* — từ 09/2026 | Đối chiếu giờ vào chấm công, vào lương hoặc quỹ Nghỉ bù |
+
+Cả ba dùng **chung một bảng** người duyệt cuối bên dưới.
 
 Vấn đề: role `HR Manager` được cấp rộng — hiện có **14 tài khoản**, gồm cả tài khoản
 tích hợp hệ thống. Ai cũng nhận đơn thì không ai thấy mình là người chịu trách nhiệm.
 
-Bảng **Người duyệt cuối đơn nghỉ phép** khai **đích danh** ai nhận việc đó.
+Bảng **Người duyệt cuối (nghỉ phép, chấm công bù, làm thêm giờ)** khai **đích danh** ai nhận việc đó.
 
 ### Luật gọn trong một dòng
 
@@ -107,7 +115,8 @@ công ty nào chỉ ăn cho **nhân viên của công ty đó**.
 
 1. Desk → **HR Policy** → mở record của **đúng công ty**.
 2. Kéo tới mục **Người duyệt cuối (cấp HR)**.
-3. Ô **Người duyệt cuối đơn nghỉ phép** → gõ tên/email, chọn từ danh sách (chọn được nhiều).
+3. Ô **Người duyệt cuối (nghỉ phép, chấm công bù, làm thêm giờ)** → gõ tên/email, chọn từ danh sách
+   (chọn được nhiều).
 4. **Save.** Có hiệu lực ngay, không cần migrate hay restart.
 
 Muốn quay lại như cũ: **xoá hết dòng trong bảng** rồi Save — không phải sửa code.
@@ -116,21 +125,24 @@ Muốn quay lại như cũ: **xoá hết dòng trong bảng** rồi Save — kh�
 
 1. **Tab Cần duyệt** (app) — người ngoài danh sách không thấy đơn của công ty đó nữa.
 2. **Nút Duyệt / Từ chối** (app) — bấm sẽ báo *"Bạn không phải người duyệt đơn này ở bước hiện tại"*.
-3. **Nút workflow trên Desk** — chặn ở tầng document nên **Desk cũng không lách được**.
+3. **Nút trên Desk** — nút workflow của đơn nghỉ, và nút **Submit** của đơn chấm công bù (kể cả
+   Submit hàng loạt) — chặn ở tầng document nên **Desk cũng không lách được**.
 4. **Thông báo** — chỉ người trong danh sách nhận báo khi đơn lên bước HR.
-5. **Chuyển duyệt** — ở bước HR chỉ chọn được người trong danh sách (chuyển cho người
-   ngoài thì đơn **kẹt** không ai duyệt được).
+5. **Chuyển duyệt** (chỉ đơn nghỉ phép) — ở bước HR chỉ chọn được người trong danh sách
+   (chuyển cho người ngoài thì đơn **kẹt** không ai duyệt được).
 
 ### Danh sách này KHÔNG áp cho
 
 | | Vì sao |
 |---|---|
-| **Bước 1 (Trưởng Bộ Phận)** | Vẫn theo `leave_approver` như cũ; HR Manager ngoài danh sách vẫn duyệt thay được ở bước này |
-| **Đơn Chấm công bù / Làm thêm giờ** | Đi theo *Shift Request Approver*, không có bước HR |
+| **Bước 1 (Trưởng Bộ Phận)** | Theo `leave_approver` (nghỉ phép) hoặc *Shift Request Approver* (chấm công bù, làm thêm); HR Manager ngoài danh sách vẫn duyệt thay được ở bước này |
+| **Huỷ đơn đã duyệt** | Giữ nguyên quyền cũ của từng loại đơn — duyệt hai bước chặn việc **cấp** hiệu lực, còn huỷ chỉ **rút** hiệu lực |
 | **Đơn đã chuyển đích danh** | Người được chuyển tới quyết — nhưng chỉ chuyển được cho người trong danh sách (mục 5) |
 
 > ⚠️ **Khai ít nhất 2 người mỗi công ty.** Một người mà nghỉ việc / nghỉ phép dài là đơn
-> dồn không ai duyệt được — lúc đó chỉ System Manager gỡ kẹt, hoặc phải vào xoá bảng.
+> dồn không ai duyệt được — lúc đó chỉ System Manager gỡ kẹt, hoặc phải vào xoá bảng. Từ 09/2026
+> bảng này gánh cả đơn chấm công bù và làm thêm giờ — số đơn tới bước HR tăng nhiều lần (chấm
+> công bù khoảng 250 đơn/tháng), nên càng không nên để một người.
 
 ---
 

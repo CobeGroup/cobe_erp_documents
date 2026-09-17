@@ -12,9 +12,10 @@ nav_order: 4
 **Dành cho:** Trưởng Bộ Phận (người duyệt chấm công) · HR · **Thời lượng:** ~1 phút
 {: .fs-3 .text-grey-dk-000 }
 
-> Nhân viên **khai phiếu SAU khi đã làm thêm** → bạn duyệt trên tab **Cần duyệt** như
-> mọi loại đơn khác. Duyệt xong hệ thống tự lo phần còn lại: đối chiếu chấm công,
-> tính tiền theo hệ số, hoặc làm căn cứ nghỉ bù.
+> Đơn làm thêm **duyệt hai cấp**, giống đơn nghỉ phép: **trưởng bộ phận** duyệt trước,
+> **HR** duyệt bước cuối. Cả hai duyệt trên tab **Cần duyệt**. Chỉ khi HR duyệt xong,
+> hệ thống mới lo phần còn lại: đối chiếu chấm công, tính tiền theo hệ số, hoặc cộng
+> giờ vào quỹ Nghỉ bù.
 
 ---
 
@@ -28,11 +29,32 @@ Duyệt một đơn làm thêm + bật/tắt các loại thông báo (bật ti�
 
 ## 1. Ai duyệt đơn làm thêm?
 
-Người duyệt đơn làm thêm là **người duyệt chấm công** (Shift Request Approver — cùng
-người duyệt Chấm công bù / WFH), **không phải** người duyệt nghỉ phép. HR Manager
-luôn duyệt được thay khi cần.
+Đơn đi qua **hai bước**, mỗi bước một người:
 
-Khi nhân viên gửi đơn, bạn nhận **thông báo đẩy ngay** trên điện thoại.
+```
+Nhân viên gửi đơn
+      │
+      ▼
+Chờ trưởng bộ phận duyệt ──từ chối──► Bị từ chối
+      │ duyệt
+      ▼
+Chờ HR duyệt ──────────────từ chối──► Bị từ chối
+      │ duyệt
+      ▼
+Đã duyệt  ←  chỉ từ đây đơn mới có hiệu lực
+```
+
+| Bước | Ai duyệt | Được báo khi nào |
+|---|---|---|
+| **1 — Trưởng bộ phận** | **Người duyệt chấm công** của nhân viên (Shift Request Approver — cùng người duyệt Chấm công bù / WFH), **không phải** người duyệt nghỉ phép. HR Manager được bước vào duyệt thay | Ngay khi nhân viên gửi đơn |
+| **2 — HR** | HR Manager **có tên trong danh sách người duyệt cuối** ở [Chính sách chấm công](Desk-Admin-Policy.html) của công ty nhân viên — **cùng danh sách** với đơn nghỉ phép. Danh sách để trống thì mọi HR Manager duyệt được. System Manager luôn duyệt được | Ngay khi trưởng bộ phận duyệt xong |
+
+Hai luật giống hệt đơn nghỉ phép:
+
+- **Không tự duyệt bước 1 cho đơn của chính mình.** Trưởng bộ phận là người duyệt của
+  chính mình thì phải nhờ người khác. Bước HR thì được.
+- **HR bước vào bước 1 vẫn phải bấm hai lần** — một lần cho bước trưởng bộ phận, một
+  lần cho bước HR.
 
 ---
 
@@ -42,7 +64,15 @@ Mở tab **Cần duyệt** — đơn làm thêm có tag 🟠 **Làm thêm giờ*
 
 <img src="images/guide/overtime/05-duyet-inbox.png" width="240" alt="Inbox Cần duyệt có đơn Làm thêm giờ">
 
-Bấm vào đơn để xem chi tiết rồi **Duyệt** hoặc **Từ chối**:
+Bấm vào đơn để xem chi tiết. Nút hiện theo bước của đơn:
+
+| Đơn đang ở | Nhãn trên thẻ | Nút |
+|---|---|---|
+| Bước 1 | *Chờ trưởng bộ phận duyệt* | **Duyệt (Trưởng bộ phận)** · **Từ chối** |
+| Bước 2 | *Chờ HR duyệt* — kèm dòng *"… đã duyệt bước 1"* | **Duyệt (HR)** · **Từ chối** |
+
+Mỗi người chỉ thấy đơn ở **đúng bước của mình**: trưởng bộ phận không thấy đơn đã
+chuyển lên HR, HR không thấy đơn chưa qua trưởng bộ phận.
 
 <img src="images/guide/overtime/06-duyet-detail.png" width="240" alt="Chi tiết đơn làm thêm — nút Duyệt / Từ chối">
 
@@ -52,20 +82,27 @@ Bấm vào đơn để xem chi tiết rồi **Duyệt** hoặc **Từ chối**:
 |---|---|
 | **Ngày + các khung giờ (Xh)** | Một ngày có thể có **nhiều khung** — ví dụ `12:00–13:30 + 17:30–19:30`. Tổng là số giờ **tối đa** sẽ được tính; thực tế làm ít hơn thì tính ít hơn — không lo duyệt "hớ". **Riêng khung trưa** (12:00–13:30): chấm công không đo được giờ nghỉ trưa, nên chữ ký của bạn chính là căn cứ công nhận — chỉ duyệt khi biết nhân viên thực sự làm xuyên trưa |
 | **Quy đổi: Tiền lương** | Giờ OT sẽ vào lương kỳ tới (hệ số ×1.5 ngày thường / ×2.0 Chủ nhật **và Thứ 7 nửa buổi** / ×3.0 lễ) |
-| **Quy đổi: Nghỉ bù** | Không ra tiền — đơn này là căn cứ để nhân viên xin Nghỉ bù sau đó |
+| **Quy đổi: Nghỉ bù** | Không ra tiền — số giờ được cộng vào **quỹ Nghỉ bù** của nhân viên, 4 giờ đổi 0,5 ngày nghỉ |
 | **Lý do** | Nội dung công việc làm thêm — căn cứ chính để duyệt/từ chối |
 
-Nhân viên nhận thông báo ngay khi bạn duyệt / từ chối.
+**Nhân viên được báo khi nào:** khi đơn **bị từ chối** ở bất kỳ bước nào, và khi **HR
+duyệt xong**. Trưởng bộ phận duyệt bước 1 thì nhân viên không nhận thông báo, nhưng
+trên app đơn chuyển sang nhãn *"Trưởng bộ phận đã duyệt · chờ HR"*.
 
-> ✍️ **Từ chối phải nêu lý do.** Bấm **Từ chối** → hệ thống bắt nhập lý do trước khi
-> xác nhận. Lý do này đi kèm thông báo gửi về cho nhân viên, để họ biết vì sao đơn
-> bị từ chối và khai lại cho đúng nếu cần.
+> ✍️ **Từ chối phải nêu lý do**, ở cả hai bước. Bấm **Từ chối** → hệ thống bắt nhập lý
+> do trước khi xác nhận. Lý do này đi kèm thông báo gửi về cho nhân viên, để họ biết
+> vì sao đơn bị từ chối và khai lại cho đúng nếu cần.
+
+> ⏳ **Trưởng bộ phận duyệt xong, đơn vẫn CHƯA có hiệu lực.** Giờ làm thêm chưa vào
+> chấm công, chưa vào quỹ Nghỉ bù, ngày nghỉ chưa được tính công — cho tới khi HR duyệt.
+> Trong lúc chờ, nhân viên vẫn **tự rút đơn** được và **không khai được đơn thứ hai**
+> cho cùng ngày.
 
 ---
 
-## 3. Sau khi duyệt — hệ thống tự làm gì?
+## 3. Sau khi HR duyệt — hệ thống tự làm gì?
 
-Bạn **không phải theo dõi gì thêm**. Hôm nhân viên làm thêm:
+Không ai phải theo dõi gì thêm. Hôm nhân viên làm thêm:
 
 1. Nhân viên check-in/out như bình thường.
 2. Hệ thống đối chiếu **theo từng khung**: khung sau tan ca = min(giờ thực tế
@@ -75,7 +112,8 @@ Bạn **không phải theo dõi gì thêm**. Hôm nhân viên làm thêm:
    - Chỉ khai khung tối mà về đúng giờ → 0h; khung trưa thì về đúng giờ vẫn được tính.
    - Ở lại lâu hơn số giờ xin → chỉ tính đúng số giờ đã duyệt.
 3. Quy đổi **Tiền lương** → giờ OT vào **Overtime Slip** kỳ lương (HR chạy payroll là có).
-   Quy đổi **Nghỉ bù** → nhân viên xin Nghỉ bù, hệ thống **tự kiểm tra** phải có đơn này.
+   Quy đổi **Nghỉ bù** → số giờ đã duyệt vào **quỹ Nghỉ bù**, nhân viên dùng dần — xem
+   [Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html).
 
 > 💡 Vì có bước đối chiếu tự động, cảnh báo *"Làm thêm sau giờ"* sẽ **không** bắn cho
 > ngày đã có đơn duyệt — làm thêm có phép là chuyện bình thường, không phải bất thường.
@@ -84,9 +122,9 @@ Bạn **không phải theo dõi gì thêm**. Hôm nhân viên làm thêm:
 
 ## 4. Duyệt muộn có sao không?
 
-Không sao. Nhân viên vốn đã làm thêm xong mới khai đơn; khi bạn duyệt (trong hạn
-**1 ngày** mặc định kể từ ngày làm thêm), hệ thống **đối chiếu ngược ngay lúc duyệt**
-— giờ OT vẫn được ghi nhận đầy đủ.
+Không sao. Nhân viên vốn đã làm thêm xong mới khai đơn; khi HR duyệt bước cuối, hệ
+thống **đối chiếu ngược ngay lúc duyệt** — giờ OT vẫn được ghi nhận đầy đủ, dù hai bước
+duyệt cách nhau bao lâu.
 
 ---
 
@@ -101,15 +139,21 @@ thì tab *Cần duyệt* không còn thấy nữa, nhưng huỷ được ở hai
 
 Nút chỉ hiện khi đơn đang ở trạng thái *Approved*.
 
-**Ai bấm được:** đúng người duyệt được thì huỷ được — bạn huỷ được đơn của nhân viên
-mình phụ trách; HR Manager / System Manager huỷ được mọi đơn.
+**Ai bấm được:** trưởng bộ phận huỷ được đơn của nhân viên mình phụ trách; HR Manager /
+System Manager huỷ được mọi đơn. Luật này **không đổi** khi có duyệt hai cấp: hai cấp
+nhằm chặn việc đơn **có hiệu lực** khi HR chưa ký, còn huỷ duyệt chỉ **rút** hiệu lực —
+giống đơn nghỉ phép, trưởng bộ phận vẫn huỷ được đơn đã duyệt.
+
+> Phát hiện nhầm **trước khi** HR duyệt thì không cần huỷ duyệt: đơn chưa có hiệu lực gì,
+> chỉ cần HR **từ chối** ở bước 2 (kèm lý do) để nhân viên khai lại đơn đúng.
 
 **Hệ thống làm gì khi bạn bấm:**
 
 1. Kiểm tra trước, vướng thì báo đỏ và **không cho huỷ**:
    - Giờ OT đã nằm trong **Overtime Slip đã duyệt** → phải huỷ slip đó trước.
    - **Phiếu lương đã duyệt** phủ ngày đó → tiền có thể đã trả, xử lý phiếu lương trước.
-   - Đơn quy đổi Nghỉ bù mà nhân viên **đã dùng ngày đó để xin Nghỉ bù** → huỷ đơn nghỉ bù trước.
+   - Đơn quy đổi Nghỉ bù mà rút số giờ này ra thì **quỹ Nghỉ bù bị âm** so với các đơn
+     nghỉ bù nhân viên đã nộp → huỷ bớt đơn nghỉ bù trước, hoặc HR điều chỉnh quỹ.
 2. Qua được thì bắt **nhập lý do** (bắt buộc), rồi:
    - Gỡ giờ OT khỏi bản chấm công ngày đó → kỳ lương **không** còn tính khoản này.
    - Đơn chuyển sang trạng thái **Cancelled** (đóng hẳn), ghi lý do + lưu vết ai huỷ.
@@ -154,9 +198,12 @@ Hệ số ×2.0 là **cấu hình được** per company — xem
 
 | Tình huống | Cách xử |
 |---|---|
-| Không thấy đơn làm thêm trong Cần duyệt | Bạn chưa được gán làm **Shift Request Approver** của nhân viên đó → báo HR |
+| Trưởng bộ phận không thấy đơn trong Cần duyệt | Chưa được gán làm **Shift Request Approver** của nhân viên đó → báo HR. Hoặc đơn đã qua bước 1 (đang chờ HR) |
+| HR không thấy đơn trong Cần duyệt | Đơn chưa qua trưởng bộ phận; hoặc bạn không có tên trong danh sách người duyệt cuối của công ty nhân viên — xem [Chính sách chấm công](Desk-Admin-Policy.html) |
+| *"Bạn không phải người duyệt đơn này ở bước hiện tại"* | Đơn đã sang bước khác từ lúc bạn mở màn hình, hoặc bạn đang duyệt bước 1 cho đơn của chính mình. Tải lại danh sách |
+| Nhân viên kêu "trưởng bộ phận duyệt rồi mà chưa có giờ" | Đúng thiết kế — đơn còn chờ HR. Nhãn trên app: *Trưởng bộ phận đã duyệt · chờ HR* |
 | Nhân viên kêu "duyệt rồi mà 0 giờ" | Kiểm tra hôm đó có check-out không, check-out có sau giờ tan ca không |
-| Duyệt nhầm | Tab **Đã duyệt · OT** trong Cần duyệt → **Huỷ duyệt**; hoặc làm trên Desk — xem [mục 5](#5-lỡ-duyệt-nhầm--huỷ-duyệt) |
+| Duyệt nhầm | Còn chờ HR → báo HR **từ chối** ở bước 2. Đã duyệt xong → tab **Đã duyệt · OT** → **Huỷ duyệt** — xem [mục 5](#5-lỡ-duyệt-nhầm--huỷ-duyệt) |
 | Đơn quy đổi Nghỉ bù — duyệt xong còn phải duyệt gì nữa? | Còn **đơn Nghỉ bù** (2 bước Quản lý → HR) khi nhân viên xin nghỉ — xem [Duyệt nghỉ phép](Duyet-Nghi-Phep.html) |
 
 ---

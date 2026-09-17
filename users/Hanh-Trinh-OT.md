@@ -9,7 +9,7 @@ nav_order: 4
 # Hành trình một phiếu Làm thêm giờ
 {: .no_toc }
 
-**Theo chân 1 phiếu OT từ lúc khai đến lúc thành tiền / thành ngày nghỉ bù** · Nhân viên → Trưởng Bộ Phận → Chấm công
+**Theo chân 1 phiếu OT từ lúc khai đến lúc thành tiền / thành ngày nghỉ bù** · Nhân viên → Trưởng Bộ Phận → HR → Chấm công
 {: .fs-3 .text-grey-dk-000 }
 
 > Trang này kể **toàn cảnh** một phiếu làm thêm giờ. Có **2 điểm khác** mọi loại đơn khác:
@@ -38,8 +38,8 @@ flowchart TB
   classDef ok fill:#f6ffed,stroke:#54ab78,color:#135200;
   A["①  NV ở lại làm thêm<br/>chấm công / <b>check-out</b> như thường"]:::nv
   B["②  NV <b>KHAI</b> phiếu cho ngày ĐÃ làm<br/>(app · Thêm → Làm thêm giờ)<br/><b>trong hạn khai của công ty</b>"]:::nv
-  C["Phiếu: <b>Chờ duyệt</b>"]:::nv
-  D["③  Trưởng Bộ Phận duyệt<br/>(app · tab Cần duyệt)"]:::mg
+  C["Phiếu: <b>Chờ trưởng bộ phận duyệt</b>"]:::nv
+  D["③  Duyệt HAI BƯỚC<br/>Trưởng Bộ Phận → <b>HR</b><br/>(app · tab Cần duyệt)"]:::mg
   E["④  Hệ thống đối chiếu ngay<br/>giờ = min(bằng chứng theo từng khung, giờ khai, <b>trần 4h/8h</b>)"]:::sys
   F["Phiếu: <b>đã ghi nhận 2h</b>"]:::ok
   G["⑤a  Quy đổi <b>Tiền lương</b><br/>→ vào lương kỳ tới"]:::ok
@@ -52,9 +52,10 @@ flowchart TB
 | Bước | Ai làm | Ở đâu | Kết quả |
 |---|---|---|---|
 | ① Làm thêm | Nhân viên | Chấm công như thường (nhớ **check-out**) | Có giờ check-out thực tế |
-| ② Khai phiếu | Nhân viên | App → **Thêm → Làm thêm giờ** | Phiếu **Chờ duyệt** |
-| ③ Duyệt | Trưởng Bộ Phận (`Shift Request Approver`) | App → **Cần duyệt** | Phiếu **Đã duyệt** |
-| ④ Đối chiếu | **Hệ thống** (tự động, ngay lúc duyệt) | — | Phiếu có **số giờ công nhận** |
+| ② Khai phiếu | Nhân viên | App → **Thêm → Làm thêm giờ** | Phiếu **Chờ trưởng bộ phận duyệt** |
+| ③a Duyệt bước 1 | Trưởng Bộ Phận (`Shift Request Approver`) | App → **Cần duyệt** | Phiếu **Chờ HR duyệt** — chưa có hiệu lực |
+| ③b Duyệt bước cuối | HR (người duyệt cuối ở HR Policy) | App → **Cần duyệt** | Phiếu **Đã duyệt** |
+| ④ Đối chiếu | **Hệ thống** (tự động, ngay lúc HR duyệt) | — | Phiếu có **số giờ công nhận** |
 | ⑤ Quy đổi | HR (lương) / Nhân viên (nghỉ bù) | Payroll / App → Nghỉ phép | Thành tiền **hoặc** ngày nghỉ |
 
 > ⚠️ **Khai trước hay khai sau đều được** (khai trước như đơn nghỉ; khai bù trong hạn cấu
@@ -95,7 +96,7 @@ Form nói rõ luật khai-sau:
 > *(N = cột "Hạn khai làm thêm" trong bảng **Hạn khai theo ngày hiệu lực** của `HR Policy`,
 > xét theo NGÀY LÀM THÊM — xem [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html).)*
 
-Gửi xong, phiếu nằm trong danh sách với nhãn **Chờ duyệt** (vàng):
+Gửi xong, phiếu nằm trong danh sách với nhãn **Chờ trưởng bộ phận duyệt** (vàng):
 
 <img src="images/guide/overtime/01-ot-list.png" width="260" alt="Danh sách phiếu làm thêm — Chờ duyệt / Đã duyệt / Từ chối">
 
@@ -103,14 +104,21 @@ Gửi xong, phiếu nằm trong danh sách với nhãn **Chờ duyệt** (vàng)
 
 ---
 
-## ③ Trưởng Bộ Phận duyệt
+## ③ Duyệt hai bước: Trưởng Bộ Phận → HR
 
-Người duyệt nhận **thông báo đẩy** ngay + badge đỏ tab **Cần duyệt**. Phiếu OT có thẻ 🟠
-**Làm thêm giờ**, nằm chung hộp duyệt với nghỉ phép và chấm công bù.
+Giống đơn nghỉ phép, phiếu làm thêm đi qua **hai người duyệt**:
+
+1. **Trưởng Bộ Phận** nhận **thông báo đẩy** ngay khi phiếu được gửi + badge đỏ tab **Cần duyệt**,
+   bấm **Duyệt (Trưởng bộ phận)**. Phiếu chuyển sang **Chờ HR duyệt**.
+2. **HR** (người có tên trong danh sách người duyệt cuối ở HR Policy) nhận thông báo, bấm
+   **Duyệt (HR)**. Chỉ từ lúc này phiếu mới **có hiệu lực**.
+
+Phiếu OT có thẻ 🟠 **Làm thêm giờ**, nằm chung hộp duyệt với nghỉ phép và chấm công bù.
 
 <img src="images/guide/overtime/05-duyet-inbox.png" width="260" alt="Inbox Cần duyệt có phiếu Làm thêm giờ">
 
-Bấm vào phiếu → xem ngày, khung giờ, **hình thức quy đổi**, lý do → **Duyệt** hoặc **Từ chối**.
+Bấm vào phiếu → xem ngày, khung giờ, **hình thức quy đổi**, lý do → **Duyệt** hoặc **Từ chối** (ở
+bước nào cũng từ chối được, và phải ghi lý do).
 
 <img src="images/guide/overtime/06-duyet-detail.png" width="260" alt="Chi tiết phiếu làm thêm — nút Duyệt / Từ chối">
 
@@ -121,16 +129,21 @@ Bấm vào phiếu → xem ngày, khung giờ, **hình thức quy đổi**, lý 
 > ✍️ **Từ chối phải ghi lý do.** Khi bấm Từ chối, app bắt nhập lý do; nhân viên **nhận được lý do
 > đó** trên phiếu (dòng đỏ *"Lý do từ chối"*) để biết đường xử lý.
 
-**Ai là người duyệt?** `Shift Request Approver` (người duyệt chấm công) — **không phải**
-người duyệt nghỉ phép. HR Manager luôn duyệt thay được.
+**Ai là người duyệt?** Bước 1: `Shift Request Approver` (người duyệt chấm công) — **không phải**
+người duyệt nghỉ phép; HR Manager bước vào thay được. Bước cuối: HR Manager có tên trong danh sách
+người duyệt cuối của công ty — cùng danh sách với đơn nghỉ phép.
+
+> ⏳ **Trưởng Bộ Phận duyệt xong, phiếu CHƯA có hiệu lực.** Chưa đối chiếu giờ, chưa vào lương,
+> chưa cộng quỹ Nghỉ bù, ngày nghỉ chưa được tính công — cho tới khi HR duyệt. Trong lúc chờ,
+> bạn vẫn **tự huỷ phiếu** được và **không khai được phiếu thứ hai** cho cùng ngày.
 
 📘 Chi tiết: [Duyệt đơn làm thêm giờ](Duyet-Lam-Them.html) 🎬 *(có video)*
 
 ---
 
-## ④ Hệ thống tự đối chiếu — ngay lúc duyệt
+## ④ Hệ thống tự đối chiếu — ngay lúc HR duyệt
 
-Vì phiếu **khai sau khi đã làm**, chấm công của ngày đó **đã có sẵn**. Nên **ngay khi bấm Duyệt**,
+Vì phiếu **khai sau khi đã làm**, chấm công của ngày đó **đã có sẵn**. Nên **ngay khi HR bấm Duyệt**,
 hệ thống đối chiếu luôn — không cần chờ thêm:
 
 ```
@@ -217,10 +230,11 @@ hai buổi làm thêm mới đủ một ngày nghỉ; giờ lẻ không mất, n
 
 | Nhân viên thấy | Nghĩa | Làm gì tiếp |
 |---|---|---|
-| 🟡 **Chờ duyệt** | Đang chờ Trưởng Bộ Phận | Chờ; đổi ý thì bấm **Huỷ đơn** |
+| 🟡 **Chờ trưởng bộ phận duyệt** | Đang chờ bước 1 | Chờ; đổi ý thì bấm **Huỷ đơn** |
+| 🔵 **Trưởng bộ phận đã duyệt · chờ HR** | Qua bước 1, đang chờ HR. **Chưa có hiệu lực** | Chờ; đổi ý vẫn bấm **Huỷ đơn** được |
 | 🟢 **Đã duyệt** + *"đã ghi nhận Xh"* | Xong — giờ đã được chốt (đối chiếu ngay lúc duyệt) | Không phải làm gì (hoặc đi xin nghỉ bù nếu chọn nhánh ⑤b) |
 | 🟢 **Đã duyệt** + *ghi nhận 0h* | Duyệt rồi nhưng ngày đó **không có giờ dôi / quên check-out** | Tạo [Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) để có lại giờ về, rồi nhờ duyệt lại |
-| 🔴 **Từ chối / Đã huỷ** | Quản lý từ chối (kèm **lý do**), hoặc bạn tự huỷ | Đọc lý do từ chối; tạo phiếu mới nếu cần |
+| 🔴 **Từ chối / Đã huỷ** | Trưởng bộ phận hoặc HR từ chối (kèm **lý do**), hoặc bạn tự huỷ | Đọc lý do từ chối; tạo phiếu mới nếu cần |
 
 ---
 

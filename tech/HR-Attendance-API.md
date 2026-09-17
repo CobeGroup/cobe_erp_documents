@@ -96,8 +96,9 @@ Permissions: HR Manager + System Manager submit, Employee read own.
 WFH model hiện tại:
 - **Đăng ký WFH** = tạo `Attendance Request` (reason="Work From Home", 1 ngày
   `from_date = to_date`). Nhãn địa điểm lưu ở custom field `custom_work_location_label`.
-- **Duyệt** = submit Attendance Request qua tab "Cần duyệt" (`api.approval.act`). Khi
-  submit, HRMS **tự tạo Attendance status="Work From Home"** cho ngày đó.
+- **Duyệt** = hai bước qua tab "Cần duyệt" (`api.approval.act`): trưởng bộ phận rồi HR. Bước HR
+  submit Attendance Request, HRMS **tự tạo Attendance status="Work From Home"** cho ngày đó —
+  xem §"Duyệt hai bước" bên dưới.
 - **Check-in WFH** (GPS audit + selfie) = phần CUSTOM giữ lại, gate vào Attendance
   Request WFH đã duyệt (docstatus=1) phủ ngày hôm nay.
 
@@ -280,15 +281,58 @@ Endpoints (`api.attendance_request`):
   `{ from_date, to_date, reason="On Duty"|"Work From Home", explanation, half_day?, half_day_date?, work_location_label? }`
   → tạo Attendance Request (docstatus=0). Trả `{ success, name }`.
 - `GET get_my_attendance_requests?limit=50` — list đơn của NV (**cả On Duty lẫn WFH**),
-  kèm `reason`, `work_location_label`, `status` (Pending/Approved/Rejected từ docstatus).
-- **Duyệt**: tab **"Cần duyệt"** = `api.approval.act` (Submit Attendance Request → HRMS tạo Attendance).
+  kèm `reason`, `work_location_label`, `status` (`Pending` / `Manager Approved` / `Approved` /
+  `Rejected` — suy từ docstatus + `custom_approval_state`).
+- **Duyệt**: tab **"Cần duyệt"** = `api.approval.act`, **hai bước** (trưởng bộ phận → HR; bước HR mới
+  submit Attendance Request → HRMS tạo Attendance).
+
+#### Duyệt hai bước — Attendance Request & HR Overtime Request (từ 09/2026)
+
+Cùng khuôn với Leave Application, cùng tên state để PWA dùng chung một bộ nút:
+
+| Bước | `state` trong item của `get_my_pending_approvals` | Nguồn trạng thái |
+|---|---|---|
+| Chờ trưởng bộ phận | `Pending Manager` | AR: `docstatus = 0` và `custom_approval_state` rỗng / `Pending Manager` · OT: `status = Pending` |
+| Chờ HR | `Manager Approved` | AR: `docstatus = 0` và `custom_approval_state = Manager Approved` · OT: `status = Manager Approved` |
+
+`POST api.approval.act { doctype, name, action, reason }`:
+
+| `action` | Hợp lệ ở bước | Tác dụng |
+|---|---|---|
+| `Manager Approve` | Chờ trưởng bộ phận | AR: ghi `custom_approval_state`, `custom_manager_approved_by/_on` (vẫn nháp) · OT: `status = Manager Approved`, `manager_approved_by/_on`. Báo người duyệt cuối |
+| `Submit` | Chờ HR | AR: `doc.submit()` · OT: `status = Approved`, `approved_by/_on`, đối chiếu chấm công, báo NV |
+| `Manager Reject` / `HR Reject` | Đúng bước tên gọi | AR: xoá đơn nháp · OT: `status = Rejected`, `reject_reason`. Bắt buộc `reason`, báo NV |
+| `Cancel` / `Reject` *(tên cũ)* | Bất kỳ bước | Như từ chối ở bước hiện tại. AR đã submit: `doc.cancel()` |
+
+`Submit` gửi cho đơn còn ở bước trưởng bộ phận (bundle PWA cũ) **chỉ được hiểu là duyệt bước đó**,
+không bao giờ nhảy thẳng qua bước HR. Action gắn cứng một bước mà đơn đã sang bước khác → lỗi
+*"Tải lại danh sách"*.
+
+**Ai được bấm** (`_can_act_two_level`):
+
+- Bước trưởng bộ phận: `shift_request_approver` của NV (Employee hoặc Department Approver); HR
+  Manager / System Manager bước vào thay. **Không tự duyệt** đơn của chính mình — so với tài khoản
+  của nhân viên đứng tên đơn (Administrator được miễn, như Frappe).
+- Bước HR: HR Manager có tên trong `HR Policy.final_leave_approvers` của công ty NV (bảng trống =
+  mọi HR Manager); System Manager luôn được. Tự duyệt được (như `allow_self_approval = 1` ở Leave).
+
+**Chốt ở tầng document:** hook `Attendance Request.before_submit` chỉ cho người duyệt cuối submit —
+Desk, API hay bulk đều dính. Người duyệt cuối submit thẳng đơn chưa qua bước 1 = làm luôn bước 1
+(ghi tên vào `custom_manager_approved_by`), với luật không tự duyệt của bước 1.
+
+**Không đổi:** quyền huỷ đơn đã duyệt (AR `Cancel`, OT `cancel_approved_request`) — hai bước chặn
+việc cấp hiệu lực, còn huỷ chỉ rút hiệu lực. Lưu ý với AR: `doc.cancel()` kéo theo huỷ `Attendance`,
+nên ngoài cổng trong `_act_attendance_request` người huỷ còn cần quyền ghi `Attendance` — trên site
+hiện chỉ HR / System Manager có. Mọi nơi tiêu thụ đơn OT (đối chiếu chấm công, quỹ Nghỉ
+bù, luật tính công ngày nghỉ) chỉ đọc `status = Approved`, và check-in WFH chỉ mở với AR
+`docstatus = 1`, nên bước trưởng bộ phận không sinh hiệu lực nào.
 - **UI**: component chung `AttendanceRequestModal` mở từ **3 lối** — FAB **"Đề xuất"** tab **"Bảng công"**;
   link **"Đi công tác / làm ngoài? Đề xuất chấm công bù"** dưới nút chấm công tab **"Chấm công"**;
   hộp thoại **"Ngoài vùng văn phòng"** (nút "Tạo đề xuất") khi check-in bị chặn `OUT_OF_RANGE`.
   Modal chọn loại (On Duty / WFH — WFH chỉ hiện khi `enable_wfh_mode`), chọn ngày, lý do, (WFH) địa điểm.
   Đơn duyệt xong → Attendance hiện ngay trong Bảng công. **Không còn trang/tab riêng.**
 - Tab Bảng công là **MỘT danh sách hợp nhất** (bản ghi `Attendance` + đơn đề xuất chưa
-  duyệt Pending/Rejected — đơn Approved đã thành Attendance nên không lặp), mỗi item có
+  duyệt xong Pending/Manager Approved/Rejected — đơn Approved đã thành Attendance nên không lặp), mỗi item có
   status. **Bấm item → Modal chi tiết** (công: giờ vào/ra, giờ công, ca, cờ trễ/sớm,
   cảnh báo; đơn: loại, ngày, địa điểm WFH, lý do, trạng thái).
 

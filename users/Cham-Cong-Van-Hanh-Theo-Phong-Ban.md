@@ -36,7 +36,7 @@ Ví dụ cụ thể: **Phòng Sales** và **Phòng Bảo dưỡng (kỹ thuật 
 | **HR Checkin Phone Registration** | Đăng ký + duyệt **thiết bị** điện thoại của NV trước khi chấm công. |
 | **Cấp quỹ phép (Leave Allocation)** | Số dư phép. Phép năm tự cộng vào đây — **không qua duyệt**. |
 | **Đơn xin nghỉ (Leave Application)** | Khi NV **dùng** phép — qua **workflow 2 bước**. |
-| **Attendance Request** | Chấm công bù / công tác / WFH — duyệt 1 bước qua tab "Cần duyệt". |
+| **Attendance Request** | Chấm công bù / công tác / WFH — duyệt 2 bước (trưởng bộ phận → HR) qua tab "Cần duyệt". |
 
 **Ai thấy tab gì trên my-workspace:**
 - Tab **"Cần duyệt"**: user có role trong `viewer_roles` của HR Approval Inbox Settings (mặc định **Leave Approver / HR Manager / System Manager**).
@@ -231,6 +231,7 @@ Xem [hướng dẫn chi tiết](Desk-HR-BangCongThang.html).
 HR duyệt thiết bị → xong.
 
 **Mỗi ngày:** NV chấm công / xin nghỉ / chấm công bù → người duyệt xử lý trên app: nghỉ phép về
-**leave_approver** (bước 1) rồi HR submit (bước 2); chấm công bù về **shift_request_approver** (1 bước).
+**leave_approver** (bước 1) rồi HR submit (bước 2); chấm công bù và làm thêm giờ về **shift_request_approver**
+(bước 1) rồi HR (bước 2) — cùng danh sách người duyệt cuối với nghỉ phép.
 
 **Cuối tháng:** Earned Leave tự +1 quỹ phép · HR xem COBE HR Attendance Sheet.
