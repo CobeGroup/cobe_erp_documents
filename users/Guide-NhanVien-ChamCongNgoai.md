@@ -103,7 +103,9 @@ trên **Bảng công** với nhãn **"Đề xuất chấm bù"** + trạng thái
 
 <img src="images/guide/dexuat/03-pending.png" width="240" alt="Đơn đề xuất — trạng thái Chờ duyệt">
 
-> ⚠️ Nên tạo đơn **trong cùng tháng** với ngày cần bù. Ngoài tháng (đã chốt công) → báo **HR** xử lý tay.
+> ⚠️ Đơn khai lùi ngày có **hạn nộp** (số ngày do công ty cấu hình) và mỗi tháng có **hạn mức số đơn**;
+> quá hạn hoặc hết hạn mức thì app báo ngay khi gửi → nhờ **HR** xử lý tay. Không có luật "phải cùng
+> tháng".
 
 > 💡 **Mẹo:** Tạo đơn **trước hoặc ngay trong ngày** đi công tác. Khi đã có đơn (dù **chưa duyệt**),
 > app **cho phép bạn chấm công ngoài VP** cho ngày đó — tiện nếu bạn vẫn muốn chụp ảnh/ghi nhận giờ.
@@ -181,7 +183,7 @@ chấm công bù hiện **duyệt 1 bước** (khác nghỉ phép 2 bước):
 | Quên **cả check-in lẫn check-out** | Tạo **1 đơn** cho cả ngày là đủ — không cần check-in nữa, duyệt là có công |
 | Làm **nửa ngày ngoài**, nửa ngày ở VP | Tạo đơn **tích "Nửa ngày"**, ghi rõ lý do — quản lý duyệt sẽ tính nửa công |
 | Không thấy mục **WFH** trong "Loại đề xuất" | Công ty **chưa bật WFH** — báo HR bật `enable_wfh_mode` ([HR Policy](HR-Policy.html)) |
-| Cần xin bù **tháng trước** (đã chốt công) | Ngoài tháng → app có thể chặn; **báo HR** chỉnh tay trên Desk |
+| Cần xin bù **ngày đã lâu** | Quá **hạn nộp** của công ty (hoặc hết hạn mức đơn trong tháng) thì app chặn khi gửi → **báo HR** chỉnh tay trên Desk |
 
 ---
 

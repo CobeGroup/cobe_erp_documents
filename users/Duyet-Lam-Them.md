@@ -47,7 +47,7 @@ Chờ HR duyệt ──────────────từ chối──► 
 | Bước | Ai duyệt | Được báo khi nào |
 |---|---|---|
 | **1 — Trưởng bộ phận** | **Người duyệt chấm công** của nhân viên (Shift Request Approver — cùng người duyệt Chấm công bù / WFH), **không phải** người duyệt nghỉ phép. Trên app chỉ người này thấy đơn ở bước 1 | Ngay khi nhân viên gửi đơn |
-| **2 — HR** | HR Manager **có tên trong danh sách người duyệt cuối** ở [Chính sách chấm công](Desk-Admin-Policy.html) của công ty nhân viên — **cùng danh sách** với đơn nghỉ phép. Danh sách để trống thì mọi HR Manager duyệt được. System Manager luôn duyệt được | Ngay khi trưởng bộ phận duyệt xong |
+| **2 — HR** | HR Manager **có tên trong danh sách người duyệt cuối** ở [Chính sách chấm công](Desk-Admin-Policy.html) của công ty nhân viên — **cùng danh sách** với đơn nghỉ phép. Danh sách để trống thì mọi HR Manager duyệt được. System Manager duyệt thay được, trừ đơn của chính họ (bước cuối của đơn nghỉ cũng đòi role HR Manager) | Ngay khi trưởng bộ phận duyệt xong |
 
 > ⚙️ **Chế độ này bật/tắt được.** HR Approval Inbox Settings → dòng *HR Overtime Request* → cột
 > **Duyệt 2 cấp** (hiện đang **bật**). Bỏ tick thì đơn làm thêm quay về **1 bước**: trưởng bộ phận bấm
@@ -148,8 +148,8 @@ duyệt cách nhau bao lâu.
 Hay gặp nhất là **duyệt nhầm hình thức quy đổi** (Tiền lương ↔ Nghỉ bù). Đơn đã duyệt
 thì tab *Cần duyệt* không còn thấy nữa, nhưng huỷ được ở hai chỗ:
 
-- **Trên app** — vào **Cần duyệt** → chọn tab **"Đã duyệt · OT"** → bấm **Huỷ duyệt** ở đơn
-  cần sửa. Tab này liệt kê đơn đã duyệt trong 45 ngày gần đây của nhân viên có **bạn là người
+- **Trên app** — vào **Cần duyệt** → tab **"Đã duyệt"** → lọc **Làm thêm giờ** → bấm **Huỷ duyệt**
+  ở đơn cần sửa. Tab này liệt kê đơn đã duyệt trong 45 ngày gần đây của nhân viên có **bạn là người
   duyệt chấm công trên hồ sơ Employee** (HR Manager / System Manager thấy tất cả). Người duyệt
   chỉ được khai ở bảng của Department thì không thấy đơn ở đây — huỷ trên Desk.
 - **Trên Desk** — tìm **HR Overtime Request** → mở đơn → bấm nút đỏ **"Huỷ duyệt"**.
@@ -207,7 +207,7 @@ Nghĩa là nhân viên làm **trọn ngày Thứ 7** thì được:
 > sẽ bị cắt về 4h.
 
 Hệ số ×2.0 là **cấu hình được** per company — xem
-[Chính sách chấm công §5](Desk-Admin-Policy.html#5-hệ-số-ot-ngày-làm-nửa-buổi).
+[Chính sách chấm công §5](Desk-Admin-Policy.html#5-trần-ot--hệ-số-ngày-làm-nửa-buổi-bảng-theo-ngày-hiệu-lực).
 
 ---
 
@@ -223,7 +223,7 @@ Hệ số ×2.0 là **cấu hình được** per company — xem
 | Đơn của trưởng phòng hiện thẳng ở hộp HR | Đúng thiết kế — ngoài chính họ không còn ai duyệt chấm công cho họ (mục 1). Muốn có bước 1 thì khai thêm người duyệt cho phòng hoặc cho hồ sơ nhân viên |
 | Nhân viên kêu "trưởng bộ phận duyệt rồi mà chưa có giờ" | Đúng thiết kế — đơn còn chờ HR. Nhãn trên app: *Trưởng bộ phận đã duyệt · chờ HR* |
 | Nhân viên kêu "duyệt rồi mà 0 giờ" | Kiểm tra hôm đó có check-out không, check-out có sau giờ tan ca không |
-| Duyệt nhầm | Còn chờ HR → báo HR **từ chối** ở bước 2. Đã duyệt xong → tab **Đã duyệt · OT** → **Huỷ duyệt** — xem [mục 5](#5-lỡ-duyệt-nhầm--huỷ-duyệt) |
+| Duyệt nhầm | Còn chờ HR → báo HR **từ chối** ở bước 2. Đã duyệt xong → tab **Đã duyệt** + lọc **Làm thêm giờ** → **Huỷ duyệt** — xem [mục 5](#5-lỡ-duyệt-nhầm--huỷ-duyệt) |
 | Đơn quy đổi Nghỉ bù — duyệt xong còn phải duyệt gì nữa? | Còn **đơn Nghỉ bù** (2 bước Quản lý → HR) khi nhân viên xin nghỉ — xem [Duyệt nghỉ phép](Duyet-Nghi-Phep.html) |
 
 ---

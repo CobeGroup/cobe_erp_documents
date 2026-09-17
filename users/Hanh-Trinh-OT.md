@@ -84,13 +84,14 @@ mọi ngày. Chính giờ check-out này là **bằng chứng** để hệ thố
 ## ② Nhân viên KHAI phiếu — SAU khi đã làm
 
 Hôm sau (12/07) anh An mở app → tab **Thêm** → **Làm thêm giờ** → bấm **➕** → điền **Ngày làm thêm
-(đã làm) · Khung giờ · Hình thức quy đổi · Lý do** → **Gửi đơn**.
+· Khung giờ · Hình thức quy đổi · Lý do** → **Gửi đơn**.
 
 <img src="images/guide/overtime/02-ot-form.png" width="260" alt="Nhân viên khai phiếu làm thêm — form: Ngày làm thêm (đã làm)">
 
 Form nói rõ luật khai-sau:
 
-> ⏱️ **Chỉ khai cho ngày ĐÃ làm** — ô ngày **không cho chọn ngày mai trở đi**.
+> ⏱️ **Khai cho ngày đã làm hoặc ngày sắp làm.** Khai trước thì giờ vẫn chờ chấm công thật của ngày
+> đó mới được ghi nhận.
 > **Trong hạn:** quá hạn → app báo *"Chỉ được khai làm thêm trong vòng N ngày sau khi làm.
 > Quá hạn liên hệ HR."* → nhờ HR khai thủ công.
 > *(N = cột "Hạn khai làm thêm" trong bảng **Hạn khai theo ngày hiệu lực** của `HR Policy`,

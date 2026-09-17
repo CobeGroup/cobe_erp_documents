@@ -51,7 +51,7 @@ flowchart TD
 1. [Khi nào dùng](#1-khi-nào-dùng)
 2. [Duyệt: 1 bước hoặc 2 cấp](#2-duyệt-1-bước-hoặc-2-cấp)
 3. [Working hours được tính ra sao sau approve](#3-working-hours-được-tính-ra-sao-sau-approve)
-4. [Cảnh báo "Quên check-in/out" trên Attendance](#4-cảnh-báo-quên-check-inout-trên-attendance)
+4. [Cảnh báo `hr_warning_type` trên Attendance](#4-cảnh-báo-hr_warning_type-trên-attendance)
 5. [Các case thực tế](#5-các-case-thực-tế)
 
 ---

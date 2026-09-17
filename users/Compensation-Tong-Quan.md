@@ -38,7 +38,7 @@ Sau khi cài app `hr_for_cobegroup`, ngoài chấm công đã có ở [Chấm c�
 
 | Module | Cách dùng |
 |---|---|
-| **Overtime** | NV tạo đơn **HR Overtime Request** trên PWA (xin duyệt **trước** khi làm) → manager duyệt → hệ thống đối chiếu chấm công → **Overtime Slip** (HRMS native) → `Additional Salary` vào kỳ lương. Quy đổi được **tiền** hoặc **nghỉ bù** |
+| **Overtime** | NV tạo đơn **HR Overtime Request** trên PWA → duyệt **2 cấp** (trưởng bộ phận → HR) → hệ thống đối chiếu chấm công → **Overtime Slip** (HRMS native) → `Additional Salary` vào kỳ lương. Quy đổi được **tiền** hoặc **nghỉ bù** |
 | **WFH Salary** | Đếm ngày chấm công WFH → trừ % lương Basic / Allowance theo cấu hình |
 | **KPI Bonus** | Manager chấm điểm 0-100 mỗi kỳ → thưởng tự gộp vào Salary Slip |
 

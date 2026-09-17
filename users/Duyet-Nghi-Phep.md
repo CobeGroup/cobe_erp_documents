@@ -85,7 +85,8 @@ Cả Manager lẫn HR đều dùng **chung một màn hình** này — nút bấ
 ### A.1 — Mở tab "Cần duyệt"
 
 Thanh dưới có tab **Cần duyệt** kèm **badge đỏ** = số đơn đang chờ bạn. Mở lên thấy danh sách
-trộn **Nghỉ phép** + **Chấm công bù**, lọc nhanh bằng thanh **Tất cả / Nghỉ phép / Chấm công bù**.
+trộn **Nghỉ phép** + **Chấm công bù**, lọc nhanh bằng thanh **Tất cả / Nghỉ phép / Chấm công bù / Làm thêm giờ** (thanh này chỉ hiện những
+loại đơn đang có trong hộp).
 
 <img src="images/guide/duyet/01-inbox.png" width="260" alt="Inbox Cần duyệt — danh sách đơn chờ duyệt">
 

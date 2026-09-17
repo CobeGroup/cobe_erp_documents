@@ -79,7 +79,8 @@ theo đơn).
   người duyệt đó — HR không thấy, và đơn làm thêm không có đường duyệt trên Desk. Không tự
   duyệt bước này cho đơn của chính mình.
 - **Bước cuối** — HR Manager có tên trong **danh sách người duyệt cuối** của `HR Policy`
-  (cùng danh sách với đơn nghỉ phép; trống = mọi HR Manager). System Manager luôn duyệt được.
+  (cùng danh sách với đơn nghỉ phép; trống = mọi HR Manager). System Manager duyệt thay được, trừ
+  đơn của chính họ — hộp duyệt cũng ẩn đơn đó với họ.
 - **Lên thẳng bước cuối** — ngoài chính nhân viên không còn Shift Request Approver nào dùng được
   hộp duyệt (trên Employee lẫn Department; tài khoản đang bật, có role trong `viewer_roles` và
   `approver_roles`): đơn vẫn mang `status = Pending` nhưng được xử như đang ở bước HR — hiện trong
@@ -226,7 +227,7 @@ HR Manager mở **Desk → HR Overtime Request** khi cần:
 | Việc | Cách làm |
 |---|---|
 | Người duyệt bước 1 vắng | Khai thêm người duyệt cho phòng (bảng *Shift Request Approver* của Department) hoặc đổi người duyệt trên hồ sơ nhân viên — đơn đang chờ hiện ngay cho người mới. HR không duyệt thay bước 1 trên app được. `status` là trường chỉ đọc — không sửa tay trên Desk được; mọi chuyển trạng thái đi qua luồng duyệt để có đủ hiệu lực đi kèm (đối chiếu chấm công, thông báo) |
-| Sửa duyệt nhầm | Đơn đã **Approved** → nút **Huỷ duyệt** (Desk hoặc tab *Đã duyệt · OT* trên PWA) — xem [Duyệt đơn làm thêm giờ §5](Duyet-Lam-Them.html#5-lỡ-duyệt-nhầm--huỷ-duyệt). Đơn còn chờ HR → HR **từ chối** ở bước 2 |
+| Sửa duyệt nhầm | Đơn đã **Approved** → nút **Huỷ duyệt** (Desk hoặc tab *Đã duyệt* + lọc *Làm thêm giờ* trên PWA) — xem [Duyệt đơn làm thêm giờ §5](Duyet-Lam-Them.html#5-lỡ-duyệt-nhầm--huỷ-duyệt). Đơn còn chờ HR → HR **từ chối** ở bước 2 |
 | Đơn quá hạn khai | HR tạo đơn hộ trên Desk (điền employee, ngày, giờ, payout). Đơn tạo trên Desk **không tự báo** ai, nên nhắc trưởng bộ phận của nhân viên vào tab **Cần duyệt** duyệt bước 1 — hộp duyệt chỉ hiện đơn bước 1 cho đúng người duyệt của nhân viên, như đơn nghỉ phép. Sau đó HR duyệt bước cuối; đối chiếu chấm công chạy ngay lúc đó |
 | Kiểm tra giờ đã ghi nhận | Xem `granted_hours` + link `attendance` trên đơn; hoặc mở Attendance xem section **Overtime** |
 | Báo cáo OT tháng | List view HR Overtime Request lọc `status=Approved` + khoảng `ot_date`, tổng `granted_hours` |

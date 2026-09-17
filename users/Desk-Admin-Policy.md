@@ -92,7 +92,7 @@ Chi tiết từng trường hợp:
 | Có role HR Manager, **không có tên** | ❌ không thấy | ❌ bị chặn |
 | **Có tên** nhưng **không có** role HR Manager | ❌ | ❌ |
 | **Bảng để trống** | mọi HR Manager | mọi HR Manager |
-| System Manager | ✅ | ✅ *(cửa thoát hiểm)* |
+| System Manager | ✅ | ✅ *(cửa thoát hiểm — trừ đơn chấm công bù / làm thêm của chính họ)* |
 
 > Bảng này chỉ **THU HẸP** trong số HR Manager — **không cấp quyền** cho ai. Muốn ai đó
 > duyệt được thì phải **vừa** cấp role HR Manager **vừa** thêm tên vào đây.

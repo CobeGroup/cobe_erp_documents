@@ -14,7 +14,8 @@ nav_order: 2
 
 > Vừa làm thêm ngoài giờ? Cứ check-in/out như bình thường rồi **khai phiếu SAU khi
 > đã làm** — hệ thống đối chiếu với chấm công và quy đổi thành **tiền lương** hoặc
-> **nghỉ bù** theo lựa chọn của bạn. (Không khai được cho ngày trong tương lai.)
+> **nghỉ bù** theo lựa chọn của bạn. Khai cho ngày **sắp làm** cũng được — giờ chỉ được ghi nhận sau
+> khi ngày đó có chấm công thật.
 
 ---
 

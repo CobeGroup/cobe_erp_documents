@@ -526,7 +526,8 @@ Cả 2 hook không throw, để Salary Slip vẫn save được (chỉ ảnh hư
 - [ ] **PWA UI cho OT Request** — nhân viên xin OT từ phone thay vì Desk
 - [ ] **PWA UI cho KPI Score dashboard** — manager chấm điểm trên phone
 - [ ] **Score curve configurable** — chuyển từ hard-coded sang doctype HR KPI Score Curve, mỗi Company define curve riêng
-- [ ] **OT Request approver chain** — hiện 1 manager duyệt; cần multi-level approval cho OT lớn
+- [x] **OT Request approver chain** — từ 09/2026 duyệt **2 cấp** (trưởng bộ phận → HR duyệt cuối),
+  bật/tắt theo loại đơn ở HR Approval Inbox Settings — xem [HR Overtime Request](../users/HR-Overtime-Request.html)
 - [ ] **WFH Deduction breakdown** — tách thành nhiều row Deduction (mỗi component 1 row) thay vì gộp 1 row tổng để Salary Slip dễ đọc
 - [ ] **KPI Score weighted bonus** — bonus_pct theo công thức trọng số nhiều chỉ tiêu thay vì 1 score 0-100
 
