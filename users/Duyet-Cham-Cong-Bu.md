@@ -45,8 +45,11 @@ Người duyệt chấm công gán qua khe **Shift Request Approver** (field tr�
 Approver): công ty có thể để **cùng một người**, hoặc tách — vd đơn nghỉ phép về trưởng phòng, còn đơn
 chấm công bù/công tác về điều phối vận hành. Trên app, tab **Cần duyệt** chỉ hiện đơn cho đúng người
 duyệt chấm công của nhân viên — HR Manager không phải người duyệt thì không thấy, duyệt thay trên Desk
-(mục C). Người duyệt cần role **Leave Approver** (để thấy tab *Cần duyệt* — theo `viewer_roles` / `approver_roles` của HR Approval Inbox Settings) và role **Attendance Request Approver** (quyền submit / xoá đơn chấm công bù); thiếu role thì không thấy đơn, và khi bật 2 cấp
-đơn của nhân viên họ lên thẳng HR.
+(mục C). Người duyệt cần role **Leave Approver** — đây là role quyết định việc **thấy** tab *Cần duyệt*
+(theo `viewer_roles` / `approver_roles` của HR Approval Inbox Settings); thiếu nó thì không thấy đơn, và
+khi bật 2 cấp đơn của nhân viên họ lên thẳng HR. Duyệt xong đơn chấm công bù còn cần thêm role
+**Attendance Request Approver** (quyền submit / xoá đơn) — thiếu role này thì vẫn thấy đơn nhưng bấm
+Duyệt sẽ báo thiếu quyền.
 
 ### Khi bật duyệt 2 cấp
 
@@ -218,7 +221,6 @@ theo workflow nên dòng *Leave Application* không có cột này.
 | Quản lý bộ phận không thấy đơn trên app | Kiểm tra đã gán **Shift Request Approver** chưa — field trên **Employee** (Approvers) hoặc bảng **Shift Request Approver** của **Department**. Lưu ý khe này **tách khỏi Leave Approver** (duyệt nghỉ phép) — gán duyệt phép thôi là **chưa đủ**. Khi bật 2 cấp, đơn đã qua bước 1 cũng không còn hiện với trưởng bộ phận |
 | Người duyệt không thấy tab **Cần duyệt** | Tab hiện theo role **Leave Approver** / HR Manager / System Manager (cột *viewer_roles* ở mục E). Chỉ có **Attendance Request Approver** thì không thấy tab — báo quản trị cấp thêm Leave Approver |
 | Bấm **Duyệt** báo *"Bạn thiếu quyền duyệt xong đơn chấm công bù…"* | Thấy đơn (có Leave Approver) nhưng thiếu role **Attendance Request Approver** — role đó mới có quyền submit. Nhờ quản trị cấp role, hoặc để HR duyệt trên Desk |
-| Bấm **Duyệt** báo *"does not have doctype access via role permission"* | Thấy được đơn nhưng thiếu quyền duyệt: user chưa có role **Attendance Request Approver**. Leave Approver chỉ đủ để **thấy** tab, không đủ để duyệt chấm công bù — báo quản trị cấp role (xem [Cấp phép](Desk-HR-CapPhep.html), mục B2 bước 3) |
 | HR duyệt rồi mà NV chưa thấy "Có mặt" | Bảo NV kéo làm mới Bảng công; vẫn thiếu → xem đơn đã Submitted chưa |
 | Duyệt nhầm người / nhầm ngày | Desk → mở đơn → **Cancel** — công tự gỡ, không cần sửa tay |
 

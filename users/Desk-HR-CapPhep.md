@@ -60,7 +60,8 @@ Chuỗi ưu tiên: **Employee.leave_approver** (đặt riêng) → fallback **ng
    vào danh sách của phòng, không phải override.
 3. Cấp role **Attendance Request Approver** cho user đó — bước này **BẮT BUỘC**, không bỏ được.
    Role này cấp quyền duyệt (submit/huỷ) trên đơn; gán khe approver mà quên cấp role thì người duyệt
-   **vẫn thấy đơn nhưng bấm Duyệt là báo lỗi** *"does not have doctype access via role permission"*.
+   **vẫn thấy đơn nhưng bấm Duyệt là báo lỗi** *"Bạn thiếu quyền duyệt xong đơn chấm công bù: cần role
+   Attendance Request Approver…"* (đơn **làm thêm giờ** thì không cần role này).
    Có sẵn role **Leave Approver** cũng **không thay được** — Leave Approver chỉ làm tab **Cần duyệt**
    hiện ra, không đủ quyền duyệt chấm công bù.
 

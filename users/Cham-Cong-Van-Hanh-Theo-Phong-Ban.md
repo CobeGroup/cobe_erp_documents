@@ -74,9 +74,10 @@ Tạo mỗi văn phòng 1 record: `office_label`, `company`, `location_latitude`
 - **Người duyệt chấm công bù / làm thêm giờ**: set `Employee.shift_request_approver` (hoặc bảng *Shift
   Request Approver* của Department) và gán role **Leave Approver** (để thấy tab *Cần duyệt* — đúng
   `viewer_roles` / `approver_roles` ở §1.4) cùng role **Attendance Request Approver** (quyền submit / xoá
-  đơn chấm công bù). Thiếu **Leave Approver**: không thấy tab Cần duyệt, và khi bật 2 cấp thì đơn của
-  nhân viên họ lên thẳng HR. Thiếu **Attendance Request Approver**: vẫn thấy đơn nhưng bấm Duyệt báo
-  thiếu quyền (chỉ ảnh hưởng chế độ 1 bước và bước cuối; bước 1 của 2 cấp không cần quyền này). Khe này tách khỏi `leave_approver` — có thể cùng hoặc khác người.
+  **đơn chấm công bù**). Thiếu **Leave Approver**: không thấy tab Cần duyệt, và khi bật 2 cấp thì đơn của
+  nhân viên họ lên thẳng HR. Thiếu **Attendance Request Approver**: vẫn thấy đơn nhưng bấm Duyệt đơn
+  **chấm công bù** báo thiếu quyền (chế độ 1 bước và bước cuối của 2 cấp; bước 1 của 2 cấp chỉ ghi
+  trạng thái nên không cần). Đơn **làm thêm giờ** không dùng role này. Khe này tách khỏi `leave_approver` — có thể cùng hoặc khác người.
 - **HR** (duyệt bước 2 + duyệt thiết bị): gán role **HR Manager**.
 
 ### 1.4. HR Approval Inbox Settings (đã seed sẵn — kiểm tra)
@@ -173,7 +174,7 @@ check-in không thành Attendance → **báo cáo tháng (§6) trống**.
 1. **Tạo Employee** như §2 (Department = Bảo dưỡng/Kỹ thuật, set `leave_approver`).
    ⚠️ KTV tạo đơn **chấm công bù / công tác** thường xuyên → nhớ gán thêm **`shift_request_approver`**
    (field Employee hoặc bảng của Department) — khe duyệt AR **tách khỏi leave_approver**; người duyệt
-   cần role **Leave Approver** + **Attendance Request Approver** (§1.3). Xem [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html).
+   cần role **Leave Approver**, thêm **Attendance Request Approver** để duyệt xong đơn chấm công bù (§1.3). Xem [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html).
    ⚠️ KTV đi hiện trường **vẫn cần `Default Shift`** thì check-in mới sinh Attendance — có thể
    tạo **ca riêng "Ca KTV"** (giờ linh hoạt) + Holiday List, gán làm Default Shift (xem §1.6).
 2. **Gán role** cho User: **Employee** (+ role FSM nếu hệ FSM yêu cầu).
@@ -196,7 +197,9 @@ check-in không thành Attendance → **báo cáo tháng (§6) trống**.
 
 Manager duyệt **nghỉ phép** = người có role **Leave Approver** và là `leave_approver` của NV. Manager
 duyệt **chấm công bù / làm thêm giờ** = `shift_request_approver` của NV (trên Employee hoặc bảng của
-Department), cần role **Leave Approver** + **Attendance Request Approver** — hai khe này tách nhau (§1.3).
+Department), cần role **Leave Approver** để thấy và bấm được trong tab *Cần duyệt*; riêng **chấm công
+bù** cần thêm **Attendance Request Approver** vì bước duyệt xong là submit đơn. Đơn **làm thêm giờ**
+không cần role này (duyệt chỉ ghi trạng thái). Hai khe người duyệt tách nhau (§1.3).
 
 **Cách 1 — trên điện thoại (my-workspace → tab "Cần duyệt"):**
 - **Nghỉ phép** (đơn ở trạng thái *Pending Manager*): bấm đơn → **"Duyệt (Trưởng bộ phận)"**
