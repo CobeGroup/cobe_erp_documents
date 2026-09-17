@@ -80,10 +80,13 @@ theo đơn).
   duyệt bước này cho đơn của chính mình.
 - **Bước cuối** — HR Manager có tên trong **danh sách người duyệt cuối** của `HR Policy`
   (cùng danh sách với đơn nghỉ phép; trống = mọi HR Manager). System Manager luôn duyệt được.
-- **Lên thẳng bước cuối** — ngoài chính nhân viên không còn ai là Shift Request Approver của
-  họ (trên Employee lẫn Department): đơn vẫn mang `status = Pending` nhưng được xử như đang ở
-  bước HR — hiện trong hộp HR, HR được báo lúc gửi, `manager_approved_by` để trống. Tính lúc
-  đọc chứ không ghi vào đơn, nên khai thêm người duyệt là đơn quay về bước 1.
+- **Lên thẳng bước cuối** — ngoài chính nhân viên không còn Shift Request Approver nào dùng được
+  hộp duyệt (trên Employee lẫn Department; tài khoản đang bật, có role trong `viewer_roles` và
+  `approver_roles`): đơn vẫn mang `status = Pending` nhưng được xử như đang ở bước HR — hiện trong
+  hộp HR, HR được báo lúc gửi (trừ khi người nộp chính là người duyệt cuối duy nhất),
+  `manager_approved_by` để trống. Tính lúc đọc chứ không ghi vào đơn, nên khai thêm người duyệt (hoặc
+  cấp role) là đơn quay về bước 1. Khác chấm công bù: đơn làm thêm **không tạo được** khi nhân viên
+  chưa khai người duyệt nào.
 
 `Manager Approved` là trạng thái CHỜ: mọi nơi dùng đơn (đối chiếu chấm công, quỹ Nghỉ bù,
 luật tính công ngày nghỉ) chỉ đọc `Approved`, nên hiệu lực chỉ phát sinh ở bước HR.
@@ -96,8 +99,9 @@ việc **chặn**, nhưng vẫn theo luật "quay về *Pending*" và "không t�
 | Thao tác trên Desk / API | Kết quả |
 |---|---|
 | Tạo đơn mới kèm `status` khác *Pending* hoặc kèm sẵn kết quả duyệt | Bị chặn. Nút **Duplicate** không chép các ô này (`no_copy`) nên vẫn dùng được |
-| Đổi `status`, `approved_by/on`, `manager_approved_by/on`, `reject_reason`, `attendance`, `granted_hours` | Bị chặn |
-| Sửa đơn **đang chờ HR** (*Manager Approved*): đổi nhân viên, ngày, khung giờ, hình thức quy đổi hoặc lý do | Lưu được, đơn **quay về *Pending*** — trưởng bộ phận duyệt lại |
+| Đổi `status`, `approved_by/on`, `manager_approved_by/on`, `reject_reason` | Bị chặn |
+| Đổi `attendance`, `granted_hours` (kết quả đối chiếu chấm công) | Không báo lỗi nhưng không ghi — luôn giữ giá trị trong DB, kể cả với System Manager |
+| Sửa đơn **đang chờ HR** (*Manager Approved*): đổi nhân viên, ngày, khung giờ, hình thức quy đổi hoặc lý do — hoặc lưu lại mà số giờ tính ra khác lúc duyệt (trần giờ / lịch nghỉ đã đổi) | Lưu được, đơn **quay về *Pending*** — trưởng bộ phận duyệt lại |
 | Sửa đơn **đã xử xong** (*Approved*, *Rejected*, *Cancelled*, *Expired*): đổi nhân viên, ngày, khung giờ, hình thức quy đổi | Bị chặn — cần đổi thì **Huỷ duyệt** rồi khai đơn mới |
 | Lưu lại đơn đã xử xong (vd sửa lý do) | Lưu được, **không tính lại** số giờ: trần giờ hay lịch nghỉ đổi về sau không làm đổi số giờ đơn đã duyệt. Gửi thẳng `expected_hours` lên cũng bị bỏ. System Manager sửa nội dung thì số giờ tính lại theo nội dung mới |
 | Form mở từ trước lúc đối chiếu chấm công chạy | Lưu được; `attendance` và `granted_hours` giữ kết quả đối chiếu trong DB, không bị form cũ đè |
@@ -116,7 +120,7 @@ NV tạo trên PWA (status=Pending, notify trưởng bộ phận)
       ├─ Manager Approve → status=Manager Approved (notify HR) — CHƯA có hiệu lực
       └─ Manager Reject  → status=Rejected (notify NV kèm lý do)
   → HR duyệt trên tab Cần duyệt
-      ├─ Submit    → status=Approved (+ đối chiếu ngay nếu Attendance đã tồn tại, notify NV)
+      ├─ HR Approve → status=Approved (+ đối chiếu ngay nếu Attendance đã tồn tại, notify NV)
       └─ HR Reject → status=Rejected (notify NV kèm lý do)
   → Ngày làm thêm: Attendance được tạo (auto-attendance hằng giờ)
       → hook đối chiếu → ghi granted_hours + attendance vào đơn

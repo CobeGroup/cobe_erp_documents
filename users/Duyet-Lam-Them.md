@@ -62,7 +62,8 @@ Ba luật cần nhớ (hai luật đầu giống đơn nghỉ phép):
 - **Không còn ai khác duyệt bước 1 thì đơn lên thẳng HR** ngay khi gửi — HR nhận thông
   báo, đơn hiện ở bước HR với nhãn *Chờ HR duyệt* nhưng không có dòng *"… đã duyệt bước
   1"*. Đây là trường hợp trưởng phòng hoặc HR đứng đầu tự là người duyệt chấm công của
-  mình, giống đơn nghỉ của quản lý đi thẳng HR. HR đứng đầu tự duyệt được đơn của mình ở
+  mình, hoặc người được khai thiếu role / tài khoản bị khoá — giống đơn nghỉ của quản lý đi
+  thẳng HR. HR đứng đầu tự duyệt được đơn của mình ở
   bước này. Sau này khai thêm người duyệt cho nhân viên đó thì đơn đang chờ tự quay về
   bước 1.
 - **HR không duyệt thay bước 1 trên app** (hộp duyệt không hiện đơn bước 1 cho HR, và đơn
@@ -147,8 +148,10 @@ duyệt cách nhau bao lâu.
 Hay gặp nhất là **duyệt nhầm hình thức quy đổi** (Tiền lương ↔ Nghỉ bù). Đơn đã duyệt
 thì tab *Cần duyệt* không còn thấy nữa, nhưng huỷ được ở hai chỗ:
 
-- **Trên app** — vào **Cần duyệt** → chọn tab **"Đã duyệt · OT"** (liệt kê đơn bạn đã
-  duyệt trong 45 ngày gần đây) → bấm **Huỷ duyệt** ở đơn cần sửa.
+- **Trên app** — vào **Cần duyệt** → chọn tab **"Đã duyệt · OT"** → bấm **Huỷ duyệt** ở đơn
+  cần sửa. Tab này liệt kê đơn đã duyệt trong 45 ngày gần đây của nhân viên có **bạn là người
+  duyệt chấm công trên hồ sơ Employee** (HR Manager / System Manager thấy tất cả). Người duyệt
+  chỉ được khai ở bảng của Department thì không thấy đơn ở đây — huỷ trên Desk.
 - **Trên Desk** — tìm **HR Overtime Request** → mở đơn → bấm nút đỏ **"Huỷ duyệt"**.
 
 Nút chỉ hiện khi đơn đang ở trạng thái *Approved*.

@@ -162,7 +162,8 @@ nhưng khi duyệt cần để ý mấy điểm riêng:
 
 - **Căn cứ duyệt = quỹ giờ Nghỉ bù.** Hệ thống **tự kiểm tra**: nhân viên phải có đủ giờ
   trong quỹ (**4h = 0,5 ngày, 8h = 1 ngày**), mà quỹ chỉ nhận giờ từ
-  [HR Overtime Request](Duyet-Lam-Them.html) quy đổi **Nghỉ bù** đã được **bạn duyệt** và
+  [HR Overtime Request](Duyet-Lam-Them.html) quy đổi **Nghỉ bù** đã được **duyệt xong** (bạn duyệt
+  bước 1, rồi HR duyệt bước cuối) và
   đã qua ngày làm thêm — nhân viên không gửi được đơn "khống". Bạn chỉ cần cân nhắc
   **ngày nghỉ có hợp lý** không.
 - **Đơn nghỉ không còn chỉ vào một ngày làm thêm cụ thể** (từ 09/2026): một đơn nghỉ tiêu

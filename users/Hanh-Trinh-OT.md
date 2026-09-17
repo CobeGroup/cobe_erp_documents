@@ -127,7 +127,7 @@ bước nào cũng từ chối được, và phải ghi lý do).
 > cứng**: ngày thường tối đa **4h**, ngày lễ/nghỉ tối đa **8h** — khai quá cũng bị cắt về trần.
 
 > ✍️ **Từ chối phải ghi lý do.** Khi bấm Từ chối, app bắt nhập lý do; nhân viên **nhận được lý do
-> đó** trên phiếu (dòng đỏ *"Lý do từ chối"*) để biết đường xử lý.
+> đó** trong thông báo (phiếu trên app chỉ hiện nhãn *Bị từ chối*) để biết đường xử lý.
 
 **Ai là người duyệt?** Bước 1: `Shift Request Approver` (người duyệt chấm công) — **không phải**
 người duyệt nghỉ phép. Bước cuối: HR Manager có tên trong danh sách

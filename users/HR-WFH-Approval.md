@@ -43,10 +43,12 @@ Nhân viên đăng ký qua PWA → mở form **"Đề xuất"** → chọn loạ
 2. Chọn **ngày** WFH + nhập **địa điểm** (nhãn) + **lý do**
 3. Submit → app gọi `api.attendance_request.create_attendance_request` (reason=Work From Home):
    - Tạo Attendance Request 1 ngày (`from_date = to_date = ngày chọn`), `reason = "Work From Home"`, `docstatus = 0`
-   - Nếu đã có AR WFH chưa hủy cho đúng ngày đó → trả `status = "exists"` (không tạo trùng)
+   - Đơn trùng ngày bị HRMS chặn khi lưu (endpoint cũ `api.wfh.request_wfh` trả `status = "exists"` —
+     PWA hiện không còn gọi)
 4. PWA hiển thị *Chờ duyệt* (khi bật 2 cấp: *Chờ HR duyệt* sau khi trưởng bộ phận đã duyệt)
 
-Danh sách đơn WFH của NV lấy qua `api.wfh.get_my_requests` (lọc các AR có `reason = "Work From Home"`).
+Danh sách đơn của NV (cả công tác lẫn WFH) lấy qua `api.attendance_request.get_my_attendance_requests`.
+Endpoint cũ `api.wfh.get_my_requests` (chỉ WFH) vẫn còn nhưng PWA không gọi.
 
 ---
 
@@ -80,7 +82,7 @@ WFH duyệt **chung cơ chế với chấm công bù** — qua tab **"Cần duy�
 
 1. **Trưởng bộ phận** → **Duyệt (Trưởng bộ phận)** (`action = "Manager Approve"`). Đơn vẫn là nháp,
    chuyển sang *Chờ HR duyệt*, HR được báo.
-2. **HR** (người duyệt cuối ở `HR Policy`) → **Duyệt (HR)** (`action = "Submit"`) → `doc.submit()`.
+2. **HR** (người duyệt cuối ở `HR Policy`) → **Duyệt (HR)** (`action = "HR Approve"`) → `doc.submit()`.
 
 **Từ chối** ở bước nào cũng được (bắt buộc lý do) → đơn nháp bị **xoá**, nhân viên nhận lý do.
 

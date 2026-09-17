@@ -330,8 +330,9 @@ OT `status = Manager Approved`) được coi là đơn chờ bình thường.
 | `Submit` / `Approve` *(tên cũ)* | Bất kỳ bước | Duyệt **ở bước hiện tại** — không bao giờ nhảy qua bước HR |
 | `Cancel` / `Reject` *(tên cũ)* | Bất kỳ bước | Như từ chối ở bước hiện tại. AR đã submit: `doc.cancel()` |
 
-PWA hiện tại chỉ gửi action gắn cứng bước (`Manager Approve` / `HR Approve` / `Manager Reject` /
-`HR Reject`; nút duyệt HR của **đơn nghỉ** vẫn là `Submit` vì đó là tên transition của workflow). Tên
+Ở chế độ 2 cấp, PWA hiện tại chỉ gửi action gắn cứng bước (`Manager Approve` / `HR Approve` /
+`Manager Reject` / `HR Reject`; nút duyệt HR của **đơn nghỉ** vẫn là `Submit` vì đó là tên transition
+của workflow). Tên
 cũ còn nhận cho bundle trong cache máy người dùng. Action gắn cứng một bước mà đơn đã ở bước khác —
 hai người mở cùng một đơn, hoặc đơn vừa bị đá về bước 1 — báo lỗi *"… Tải lại danh sách"* thay vì âm
 thầm làm ở bước kia.
@@ -353,7 +354,10 @@ kẹt: người đó không được tự duyệt bước 1, còn HR không th�
   được; AR thì còn đường Desk submit (làm cả hai bước). **Không tự duyệt** đơn của chính mình — so với
   tài khoản của nhân viên đứng tên đơn (Administrator được miễn, như Frappe).
 - Bước HR: HR Manager có tên trong `HR Policy.final_leave_approvers` của công ty NV (bảng trống =
-  mọi HR Manager); System Manager luôn được. Tự duyệt được (như `allow_self_approval = 1` ở Leave).
+  mọi HR Manager) — người đó tự duyệt được đơn của mình (như `allow_self_approval = 1` ở Leave).
+  System Manager được, trừ đơn của chính họ: bước cuối của Leave đòi role HR Manager, nên System
+  Manager thuần không tự duyệt đơn mình (hộp duyệt cũng ẩn đơn đó với họ — `_own_hr_stage_sql`).
+  Đọc cấu hình hộp duyệt lỗi thì báo lỗi, không coi như công tắc tắt.
 
 **Chốt ở tầng document:** hook `Attendance Request.before_submit` chỉ cho người duyệt cuối submit —
 Desk, API hay bulk đều dính. Người duyệt cuối submit thẳng đơn chưa qua bước 1 = làm luôn bước 1
@@ -365,20 +369,24 @@ Desk, API hay bulk đều dính. Người duyệt cuối submit thẳng đơn ch
   lưu qua form/REST, ba ô bước duyệt trả về giá trị trong DB (đơn mới: `Pending Manager`, hai ô kia
   trống). Đơn đang `Manager Approved` mà đổi một trong `CONTENT_FIELDS` → về `Pending Manager`. So sánh
   theo kiểu field (ngày gửi lên là chuỗi). Chạy trước `before_submit`, nên hook đó đọc được giá trị thật.
-- `HR Overtime Request.validate` — miễn `flags.ignore_permissions` (code của app) và System Manager:
-  - `_guard_system_fields`: đơn mới phải `status = Pending` và chưa có kết quả duyệt (các ô này cũng
-    `no_copy`, nên Duplicate trên Desk không chép); đơn đã có mà đổi `status`, `approved_by/on`,
-    `manager_approved_by/on`, `reject_reason`, `attendance`, `granted_hours` → `PermissionError`.
-  - `_guard_content`: đơn `Manager Approved` mà đổi `REVIEWED_FIELDS` (nhân viên, ngày, hình thức, lý do)
-    hoặc khung giờ → về `Pending`, xoá `manager_approved_by/on`. Đơn đã xử xong mà đổi `EFFECT_FIELDS`
-    hoặc khung giờ → `PermissionError`; lưu lại thì **không** gọi `_compute_expected_hours` (trần giờ /
-    lịch nghỉ đổi về sau không được đổi số giờ đơn đã duyệt).
+- `HR Overtime Request.validate` (`privileged` = `flags.ignore_permissions` hoặc System Manager):
+  - `_guard_system_fields`: `COMPUTED_FIELDS` (`attendance`, `granted_hours`) luôn lấy lại giá trị DB —
+    với MỌI người, vì đối chiếu ghi chúng bằng `update_modified=False` nên form mở từ trước vẫn lưu
+    được và sẽ đè. Không `privileged`: đơn mới phải `status = Pending` và chưa có kết quả duyệt (các ô
+    này cũng `no_copy`, nên Duplicate trên Desk không chép); đơn đã có mà đổi `DECISION_FIELDS`
+    (`status`, `approved_by/on`, `manager_approved_by/on`, `reject_reason`) → `PermissionError`.
+  - `_guard_content` (áp cả `privileged`): đơn `Manager Approved` mà đổi `REVIEWED_FIELDS` (nhân viên,
+    ngày, hình thức, lý do) hoặc khung giờ → về `Pending`, xoá `manager_approved_by/on`;
+    `_reset_if_hours_changed` làm y vậy khi số giờ tính lại ra khác. Đơn đã xử xong mà nội dung không
+    đổi → **không** gọi `_compute_expected_hours`, giữ `expected_hours` trong DB (kể cả giá trị gửi lên
+    qua REST). Nội dung đổi → `PermissionError`, riêng `privileged` thì được và số giờ tính lại.
   - Mọi đường hợp lệ (hộp duyệt, huỷ duyệt, rút đơn, hết hạn) ghi bằng `db_set` / `db.set_value` nên
     không đi qua đây. So sánh theo kiểu field (form gửi `2` cho `2.0`, ngày giờ là chuỗi).
 
 **Nhỏ nhưng có chủ đích:**
 
-- Nút **Từ chối** của chế độ 1 bước gửi `Manager Reject`, không gửi `Reject`: với AR đã `docstatus = 1`,
+- Ở chế độ 1 bước, nút **Duyệt** gửi `Submit` (1 bước thì mọi tên duyệt đều là duyệt cuối); nút **Từ
+  chối** gửi `Manager Reject`, không gửi `Reject`: với AR đã `docstatus = 1`,
   `Cancel`/`Reject` là huỷ đơn đã duyệt — người duyệt bấm trên màn hình cũ sẽ huỷ nhầm.
 - `cancel_my_overtime_request` đọc đơn `for_update`: HR đang duyệt (giữ khoá trong `act`) thì nhân viên
   đọc sau và thấy `Approved`, không đè `Cancelled` lên đơn vừa có hiệu lực.

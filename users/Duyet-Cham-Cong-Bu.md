@@ -43,8 +43,10 @@ nav_order: 3
 Người duyệt chấm công gán qua khe **Shift Request Approver** (field trên hồ sơ Employee, hoặc bảng
 **Shift Request Approver** của Department). Khe này **tách riêng khỏi người duyệt nghỉ phép** (Leave
 Approver): công ty có thể để **cùng một người**, hoặc tách — vd đơn nghỉ phép về trưởng phòng, còn đơn
-chấm công bù/công tác về điều phối vận hành. Ở chế độ 1 bước, HR Manager duyệt thay được trên app;
-khi bật 2 cấp, đơn ở bước 1 chỉ hiện với người duyệt chấm công của nhân viên.
+chấm công bù/công tác về điều phối vận hành. Trên app, tab **Cần duyệt** chỉ hiện đơn cho đúng người
+duyệt chấm công của nhân viên — HR Manager không phải người duyệt thì không thấy, duyệt thay trên Desk
+(mục C). Người duyệt cần role **Leave Approver** (để thấy tab *Cần duyệt* — theo `viewer_roles` / `approver_roles` của HR Approval Inbox Settings) và role **Attendance Request Approver** (quyền submit / xoá đơn chấm công bù); thiếu role thì không thấy đơn, và khi bật 2 cấp
+đơn của nhân viên họ lên thẳng HR.
 
 ### Khi bật duyệt 2 cấp
 
@@ -71,8 +73,8 @@ Chờ HR duyệt ──────────────từ chối──► 
 - **Không tự duyệt bước 1 cho đơn của chính mình.** Trưởng bộ phận là người duyệt của chính mình thì
   người duyệt khác của phòng duyệt bước 1. Bước HR thì được tự duyệt.
 - **Không còn ai khác duyệt bước 1 thì đơn lên thẳng HR** ngay khi gửi, HR nhận thông báo — trường hợp
-  trưởng phòng hoặc HR đứng đầu tự là người duyệt chấm công của mình, giống đơn nghỉ của quản lý đi
-  thẳng HR. HR đứng đầu tự duyệt được đơn của mình ở bước này. Khai thêm người duyệt cho nhân viên đó
+  trưởng phòng hoặc HR đứng đầu tự là người duyệt chấm công của mình, nhân viên chưa được khai người
+  duyệt, hoặc người được khai thiếu role / tài khoản bị khoá; giống đơn nghỉ của quản lý đi thẳng HR. HR đứng đầu tự duyệt được đơn của mình ở bước này. Khai thêm người duyệt cho nhân viên đó
   thì đơn đang chờ tự quay về bước 1.
 - **HR không duyệt thay bước 1 trên app.** Người duyệt vắng lâu thì khai thêm người duyệt cho phòng.
   Riêng trên Desk, HR có tên trong danh sách duyệt cuối bấm **Submit** là làm **cả hai bước một lần**
@@ -164,7 +166,7 @@ nào lỗi sẽ báo riêng, các phiếu còn lại vẫn được duyệt:
 | Tình huống | Thao tác | Kết quả phía nhân viên |
 |---|---|---|
 | Từ chối đơn **chưa duyệt xong** (từng phiếu, ở bước nào cũng được) | App: nút **Từ chối** | Đơn bị xoá — ngày không có công, NV nhận lý do |
-| Từ chối **nhiều đơn** chưa duyệt | Desk: tick chọn → Actions → **Delete** | Đơn biến mất khỏi Bảng công của NV |
+| Từ chối **nhiều đơn** chưa duyệt | Desk: tick chọn → Actions → **Delete** | Đơn biến mất khỏi Bảng công của NV — **không** kèm lý do và **không** có thông báo (khác nút Từ chối trên app); báo nhân viên bằng kênh khác |
 | Thu hồi đơn **đã duyệt nhầm** | Desk: mở đơn (hoặc tick chọn) → **Cancel** | Công "Có mặt" đã tạo **tự gỡ**, ngày trả về trạng thái chưa có công |
 
 Quyền **Cancel** đơn đã duyệt **không đổi** khi có duyệt hai cấp — hai cấp nhằm chặn việc đơn **có

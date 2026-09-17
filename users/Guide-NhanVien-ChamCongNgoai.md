@@ -150,7 +150,7 @@ flowchart TB
 > chỉnh tay hoặc bạn **gửi lại đơn** với lý do rõ hơn.
 
 > 🔁 **Đơn bị từ chối có gửi lại được không?** Được — tạo **đơn mới** cho ngày đó với lý do/bằng chứng
-> rõ hơn (vd ảnh, lịch hẹn khách). Đơn cũ giữ nguyên trạng thái *Từ chối* để lưu vết.
+> rõ hơn (vd ảnh, lịch hẹn khách). Đơn cũ đã bị xoá khi từ chối; lý do nằm trong thông báo bạn nhận.
 
 ---
 

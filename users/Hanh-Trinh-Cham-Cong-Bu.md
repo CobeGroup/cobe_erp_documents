@@ -53,7 +53,8 @@ flowchart TB
 
 > 👥 **Người duyệt ở đây KHÔNG phải người duyệt nghỉ phép.** Đơn chấm công bù về khe
 > **Shift Request Approver** (HR gán trên Employee hoặc Department) — tách khỏi **Leave Approver**.
-> HR Manager luôn duyệt thay / hủy được.
+> HR duyệt thay trên Desk (Submit) và là người huỷ được đơn đã duyệt — trên app, HR chỉ thấy đơn
+> khi chính mình là người duyệt chấm công của nhân viên.
 
 ---
 

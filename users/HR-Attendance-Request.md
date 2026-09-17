@@ -122,7 +122,7 @@ Trưởng bộ phận → tab "Cần duyệt" → Duyệt (action="Manager Appro
   → VẪN docstatus = 0, custom_approval_state = "Manager Approved"
   → ghi custom_manager_approved_by / _on, báo HR
   ↓
-HR (người duyệt cuối) → tab "Cần duyệt" → Duyệt (action="Submit") → docstatus = 1
+HR (người duyệt cuối) → tab "Cần duyệt" → Duyệt (action="HR Approve") → docstatus = 1
   ↓
 HRMS tự tạo / update Attendance records cho khoảng ngày
 ```
@@ -141,9 +141,11 @@ sang đây là từ chối xong lại đi chấm công. Workflow còn chặn m�
 | `custom_approval_state` | *Pending Manager* / *Manager Approved*. Đơn nộp trước 09/2026 để trống = *Pending Manager*. Khi thêm cột, migrate điền *Pending Manager* cho **mọi** đơn cũ, kể cả đơn đã duyệt — nên ô này không hiện thành cột trên danh sách và chỉ hiện trên form khi đơn còn nháp |
 | `custom_manager_approved_by` / `_on` | Ai duyệt bước 1, lúc nào. HR submit thẳng thì ghi tên HR |
 
-**Lên thẳng bước HR:** ngoài chính nhân viên không còn Shift Request Approver nào (trên Employee lẫn
-Department) thì đơn được xử như đang ở bước HR dù ô vẫn ghi *Pending Manager* — hiện trong hộp HR, HR
-được báo lúc gửi, `before_submit` không hỏi bước 1. Không có nhánh này thì đơn kẹt: người đó không được
+**Lên thẳng bước HR:** ngoài chính nhân viên không còn Shift Request Approver nào dùng được hộp duyệt
+(trên Employee lẫn Department; tài khoản đang bật, có role trong `viewer_roles` và `approver_roles`) —
+kể cả chưa khai ai — thì đơn được xử như đang ở bước HR dù ô vẫn ghi *Pending Manager*: hiện trong hộp
+HR, HR được báo lúc gửi (trừ khi người nộp chính là người duyệt cuối duy nhất), `before_submit` không
+hỏi bước 1. Không có nhánh này thì đơn kẹt: người đó không được
 tự duyệt bước 1, HR thì không thấy đơn bước 1. Tính lúc đọc (`api.approval._manager_stage_skipped`),
 không ghi vào đơn — khai thêm người duyệt là đơn quay về bước 1.
 
@@ -176,17 +178,20 @@ luôn bước đó, và bước đó vẫn phải qua luật không tự duyệt
 3. **1 bước:** bấm **Duyệt** → `action = "Submit"` → `doc.submit()` → HRMS tạo Attendance (status
    `Present`, hoặc `Half Day` nếu đánh dấu nửa ngày)
 4. **2 cấp:** trưởng bộ phận bấm **Duyệt (Trưởng bộ phận)** (`action = "Manager Approve"`) → đơn lên
-   HR; HR bấm **Duyệt (HR)** (`action = "Submit"`) → `doc.submit()`. Ở chế độ này `Submit` gửi cho
-   đơn còn ở bước 1 (bundle PWA cũ) chỉ được hiểu là duyệt bước 1 — không nhảy qua bước HR.
+   HR; HR bấm **Duyệt (HR)** (`action = "HR Approve"` — chỉ hợp lệ ở bước HR) → `doc.submit()`. Tên
+   cũ `Submit` (bundle PWA cũ) nghĩa là "duyệt ở bước hiện tại", không bao giờ nhảy qua bước HR.
 
 > Phân quyền (từ 07/2026 — commit `6010839`): nếu config `restrict_to_leave_approver = 1`, người
 > duyệt AR = **`shift_request_approver`** — helper `_ar_approver_users()` hợp `Employee.shift_request_approver`
 > với mọi dòng child table `Department Approver` (`parentfield = shift_request_approver`) của phòng.
-> **TÁCH hẳn khỏi `leave_approver`** (nghỉ phép không đổi). HR Manager / System Manager luôn duyệt
-> thay được. Khi bật 2 cấp, đó là người duyệt **bước 1**; bước cuối là người duyệt cuối của `HR Policy`.
+> **TÁCH hẳn khỏi `leave_approver`** (nghỉ phép không đổi). HR Manager / System Manager được hàm kiểm
+> quyền cho qua, nhưng hộp duyệt chỉ hiện đơn cho đúng người duyệt — HR duyệt thay trên Desk. Khi bật 2
+> cấp, đó là người duyệt **bước 1**; bước cuối là người duyệt cuối của `HR Policy`, và Desk submit chỉ
+> còn dành cho người duyệt cuối.
 > Tab "Cần duyệt" hiện theo role trong **HR Approval Inbox Settings** (`viewer_roles` /
 > `approver_roles` của dòng AR, mặc định *Leave Approver, HR Manager, System Manager*). Người duyệt
-> còn cần role **`Attendance Request Approver`** để có quyền ghi / submit đơn.
+> còn cần role **`Attendance Request Approver`** (Custom DocPerm: submit, cancel, delete — không có
+> write; từ chối trên app là xoá đơn nên cần delete).
 
 ### Reject
 

@@ -189,7 +189,8 @@ Lắp máy / sửa chữa tới khuya thì hôm sau được **nghỉ bù**. Đ�
 4. Gửi → duyệt **2 bước** (Quản lý → HR) như nghỉ phép thường.
 
 > 💡 **Nghỉ bù không trừ phép năm, không trừ lương.** Chốt chặn là **quỹ giờ**: chỉ giờ trên
-> đơn làm thêm đã được quản lý duyệt mới vào quỹ — nên khai ngày + giờ cho chuẩn.
+> đơn làm thêm đã được duyệt xong (quản lý rồi HR, nếu công ty bật duyệt 2 cấp) mới vào quỹ — nên
+> khai ngày + giờ cho chuẩn.
 > Chi tiết: [Xin nghỉ phép §4](Guide-NhanVien-NghiPhep.html).
 
 ---
