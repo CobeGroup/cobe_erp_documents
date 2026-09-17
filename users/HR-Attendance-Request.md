@@ -138,8 +138,22 @@ sang đây là từ chối xong lại đi chấm công. Workflow còn chặn m�
 
 | Trường | Ý nghĩa |
 |---|---|
-| `custom_approval_state` | *Pending Manager* / *Manager Approved*. Đơn nộp trước 09/2026 để trống = *Pending Manager* |
+| `custom_approval_state` | *Pending Manager* / *Manager Approved*. Đơn nộp trước 09/2026 để trống = *Pending Manager*. Khi thêm cột, migrate điền *Pending Manager* cho **mọi** đơn cũ, kể cả đơn đã duyệt — nên ô này không hiện thành cột trên danh sách và chỉ hiện trên form khi đơn còn nháp |
 | `custom_manager_approved_by` / `_on` | Ai duyệt bước 1, lúc nào. HR submit thẳng thì ghi tên HR |
+
+**Lên thẳng bước HR:** ngoài chính nhân viên không còn Shift Request Approver nào (trên Employee lẫn
+Department) thì đơn được xử như đang ở bước HR dù ô vẫn ghi *Pending Manager* — hiện trong hộp HR, HR
+được báo lúc gửi, `before_submit` không hỏi bước 1. Không có nhánh này thì đơn kẹt: người đó không được
+tự duyệt bước 1, HR thì không thấy đơn bước 1. Tính lúc đọc (`api.approval._manager_stage_skipped`),
+không ghi vào đơn — khai thêm người duyệt là đơn quay về bước 1.
+
+**Chốt ô bước duyệt (hook `validate`, luôn chạy):** Frappe không chặn ô read-only ở server, nên nhân
+viên — có quyền ghi đơn của mình — gọi `/api/resource` là tự đặt được *Manager Approved*. Mỗi lần lưu
+qua form/REST, ba ô bước duyệt được trả về giá trị trong DB (đơn mới: *Pending Manager*, hai ô kia
+trống); chỉ hộp duyệt (`db_set`) và `before_submit` đổi được chúng. Đơn đang *Manager Approved* mà bị
+sửa nội dung (`employee`, `company`, ngày, nửa ngày, `reason`, `explanation`, `shift`,
+`include_holidays`, `custom_work_location_label`) thì quay về *Pending Manager* — HR chỉ duyệt đúng
+nội dung trưởng bộ phận đã xem.
 
 **Chốt ở controller (chỉ khi bật 2 cấp):** hook `before_submit` chỉ cho **người duyệt cuối** (HR Manager có tên trong
 danh sách người duyệt cuối của `HR Policy`, hoặc System Manager) submit — đường nào vào cũng dính:

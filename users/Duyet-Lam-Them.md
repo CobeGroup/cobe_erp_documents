@@ -54,10 +54,17 @@ Chờ HR duyệt ──────────────từ chối──► 
 > **Duyệt** là đơn có hiệu lực ngay, như trước 09/2026. Xem
 > [Vận hành chấm công theo phòng ban §1.4](Cham-Cong-Van-Hanh-Theo-Phong-Ban.html).
 
-Hai luật giống hệt đơn nghỉ phép:
+Ba luật giống đơn nghỉ phép:
 
 - **Không tự duyệt bước 1 cho đơn của chính mình.** Trưởng bộ phận là người duyệt của
-  chính mình thì phải nhờ người khác. Bước HR thì được.
+  chính mình thì người duyệt khác của phòng (bảng người duyệt chấm công trên
+  `Department`) duyệt bước 1. Bước HR thì được tự duyệt.
+- **Không còn ai khác duyệt bước 1 thì đơn lên thẳng HR** ngay khi gửi — HR nhận thông
+  báo, đơn hiện ở bước HR với nhãn *Chờ HR duyệt* nhưng không có dòng *"… đã duyệt bước
+  1"*. Đây là trường hợp trưởng phòng hoặc HR đứng đầu tự là người duyệt chấm công của
+  mình, giống đơn nghỉ của quản lý đi thẳng HR. HR đứng đầu tự duyệt được đơn của mình ở
+  bước này. Sau này khai thêm người duyệt cho nhân viên đó thì đơn đang chờ tự quay về
+  bước 1.
 - **HR bước vào bước 1 vẫn phải bấm hai lần** — một lần cho bước trưởng bộ phận, một
   lần cho bước HR.
 
@@ -77,7 +84,8 @@ Bấm vào đơn để xem chi tiết. Nút hiện theo bước của đơn:
 | Bước 2 | *Chờ HR duyệt* — kèm dòng *"… đã duyệt bước 1"* | **Duyệt (HR)** · **Từ chối** |
 
 Mỗi người chỉ thấy đơn ở **đúng bước của mình**: trưởng bộ phận không thấy đơn đã
-chuyển lên HR, HR không thấy đơn chưa qua trưởng bộ phận.
+chuyển lên HR, HR không thấy đơn chưa qua trưởng bộ phận — trừ đơn lên thẳng HR vì
+không còn ai khác duyệt bước 1 (mục 1).
 
 <img src="images/guide/overtime/06-duyet-detail.png" width="240" alt="Chi tiết đơn làm thêm — nút Duyệt / Từ chối">
 
@@ -206,6 +214,7 @@ Hệ số ×2.0 là **cấu hình được** per company — xem
 | Trưởng bộ phận không thấy đơn trong Cần duyệt | Chưa được gán làm **Shift Request Approver** của nhân viên đó → báo HR. Hoặc đơn đã qua bước 1 (đang chờ HR) |
 | HR không thấy đơn trong Cần duyệt | Đơn chưa qua trưởng bộ phận; hoặc bạn không có tên trong danh sách người duyệt cuối của công ty nhân viên — xem [Chính sách chấm công](Desk-Admin-Policy.html) |
 | *"Bạn không phải người duyệt đơn này ở bước hiện tại"* | Đơn đã sang bước khác từ lúc bạn mở màn hình, hoặc bạn đang duyệt bước 1 cho đơn của chính mình. Tải lại danh sách |
+| Đơn của trưởng phòng hiện thẳng ở hộp HR | Đúng thiết kế — ngoài chính họ không còn ai duyệt chấm công cho họ (mục 1). Muốn có bước 1 thì khai thêm người duyệt cho phòng hoặc cho hồ sơ nhân viên |
 | Nhân viên kêu "trưởng bộ phận duyệt rồi mà chưa có giờ" | Đúng thiết kế — đơn còn chờ HR. Nhãn trên app: *Trưởng bộ phận đã duyệt · chờ HR* |
 | Nhân viên kêu "duyệt rồi mà 0 giờ" | Kiểm tra hôm đó có check-out không, check-out có sau giờ tan ca không |
 | Duyệt nhầm | Còn chờ HR → báo HR **từ chối** ở bước 2. Đã duyệt xong → tab **Đã duyệt · OT** → **Huỷ duyệt** — xem [mục 5](#5-lỡ-duyệt-nhầm--huỷ-duyệt) |

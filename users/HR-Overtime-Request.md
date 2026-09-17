@@ -79,9 +79,19 @@ theo đơn).
   duyệt bước này cho đơn của chính mình.
 - **Bước cuối** — HR Manager có tên trong **danh sách người duyệt cuối** của `HR Policy`
   (cùng danh sách với đơn nghỉ phép; trống = mọi HR Manager). System Manager luôn duyệt được.
+- **Lên thẳng bước cuối** — ngoài chính nhân viên không còn ai là Shift Request Approver của
+  họ (trên Employee lẫn Department): đơn vẫn mang `status = Pending` nhưng được xử như đang ở
+  bước HR — hiện trong hộp HR, HR được báo lúc gửi, `manager_approved_by` để trống. Tính lúc
+  đọc chứ không ghi vào đơn, nên khai thêm người duyệt là đơn quay về bước 1.
 
 `Manager Approved` là trạng thái CHỜ: mọi nơi dùng đơn (đối chiếu chấm công, quỹ Nghỉ bù,
 luật tính công ngày nghỉ) chỉ đọc `Approved`, nên hiệu lực chỉ phát sinh ở bước HR.
+
+**Status và kết quả duyệt chỉ đổi qua mục Cần duyệt** (và các thao tác huỷ duyệt / rút đơn /
+hết hạn). Lưu đơn trên Desk hay gọi `/api/resource` mà đổi `status`, `approved_by/on`,
+`manager_approved_by/on`, `reject_reason`, `attendance`, `granted_hours` đều bị chặn — vì
+Leave Approver có quyền ghi mọi đơn làm thêm, không chặn thì tự đặt được `Approved` mà không
+qua ai. System Manager vẫn sửa tay được. Sửa các ô khác (lý do, khung giờ…) vẫn lưu bình thường.
 
 Hai cấp là **công tắc** — HR Approval Inbox Settings → dòng *HR Overtime Request* → cột **Duyệt 2 cấp**
 (hiện bật). Tắt thì duyệt 1 bước như trước: trưởng bộ phận duyệt là `Approved` ngay; đơn đang ở

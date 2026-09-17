@@ -38,7 +38,7 @@ flowchart TB
   classDef ok fill:#f6ffed,stroke:#54ab78,color:#135200;
   A["①  NV ở lại làm thêm<br/>chấm công / <b>check-out</b> như thường"]:::nv
   B["②  NV <b>KHAI</b> phiếu cho ngày ĐÃ làm<br/>(app · Thêm → Làm thêm giờ)<br/><b>trong hạn khai của công ty</b>"]:::nv
-  C["Phiếu: <b>Chờ trưởng bộ phận duyệt</b>"]:::nv
+  C["Phiếu: <b>Chờ duyệt</b>"]:::nv
   D["③  Duyệt HAI BƯỚC<br/>Trưởng Bộ Phận → <b>HR</b><br/>(app · tab Cần duyệt)"]:::mg
   E["④  Hệ thống đối chiếu ngay<br/>giờ = min(bằng chứng theo từng khung, giờ khai, <b>trần 4h/8h</b>)"]:::sys
   F["Phiếu: <b>đã ghi nhận 2h</b>"]:::ok
@@ -52,7 +52,7 @@ flowchart TB
 | Bước | Ai làm | Ở đâu | Kết quả |
 |---|---|---|---|
 | ① Làm thêm | Nhân viên | Chấm công như thường (nhớ **check-out**) | Có giờ check-out thực tế |
-| ② Khai phiếu | Nhân viên | App → **Thêm → Làm thêm giờ** | Phiếu **Chờ trưởng bộ phận duyệt** |
+| ② Khai phiếu | Nhân viên | App → **Thêm → Làm thêm giờ** | Phiếu **Chờ duyệt** |
 | ③a Duyệt bước 1 | Trưởng Bộ Phận (`Shift Request Approver`) | App → **Cần duyệt** | Phiếu **Chờ HR duyệt** — chưa có hiệu lực |
 | ③b Duyệt bước cuối | HR (người duyệt cuối ở HR Policy) | App → **Cần duyệt** | Phiếu **Đã duyệt** |
 | ④ Đối chiếu | **Hệ thống** (tự động, ngay lúc HR duyệt) | — | Phiếu có **số giờ công nhận** |
@@ -96,7 +96,7 @@ Form nói rõ luật khai-sau:
 > *(N = cột "Hạn khai làm thêm" trong bảng **Hạn khai theo ngày hiệu lực** của `HR Policy`,
 > xét theo NGÀY LÀM THÊM — xem [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html).)*
 
-Gửi xong, phiếu nằm trong danh sách với nhãn **Chờ trưởng bộ phận duyệt** (vàng):
+Gửi xong, phiếu nằm trong danh sách với nhãn **Chờ duyệt** (vàng):
 
 <img src="images/guide/overtime/01-ot-list.png" width="260" alt="Danh sách phiếu làm thêm — Chờ duyệt / Đã duyệt / Từ chối">
 
@@ -233,7 +233,7 @@ hai buổi làm thêm mới đủ một ngày nghỉ; giờ lẻ không mất, n
 
 | Nhân viên thấy | Nghĩa | Làm gì tiếp |
 |---|---|---|
-| 🟡 **Chờ trưởng bộ phận duyệt** | Đang chờ bước 1 | Chờ; đổi ý thì bấm **Huỷ đơn** |
+| 🟡 **Chờ duyệt** | Đang chờ bước 1 (trưởng bộ phận). Nếu ngoài bạn không còn ai duyệt chấm công cho bạn, phiếu đi thẳng tới HR | Chờ; đổi ý thì bấm **Huỷ đơn** |
 | 🔵 **Trưởng bộ phận đã duyệt · chờ HR** | Qua bước 1, đang chờ HR. **Chưa có hiệu lực** | Chờ; đổi ý vẫn bấm **Huỷ đơn** được |
 | 🟢 **Đã duyệt** + *"đã ghi nhận Xh"* | Xong — giờ đã được chốt (đối chiếu ngay lúc duyệt) | Không phải làm gì (hoặc đi xin nghỉ bù nếu chọn nhánh ⑤b) |
 | 🟢 **Đã duyệt** + *ghi nhận 0h* | Duyệt rồi nhưng ngày đó **không có giờ dôi / quên check-out** | Tạo [Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) để có lại giờ về, rồi nhờ duyệt lại |

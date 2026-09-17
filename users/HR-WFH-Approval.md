@@ -62,7 +62,7 @@ Danh sách đơn WFH của NV lấy qua `api.wfh.get_my_requests` (lọc các AR
 | `explanation` | Lý do WFH (NV nhập) |
 | `custom_work_location_label` | **Nhãn địa điểm** WFH (custom field — vd "Nhà riêng - Quận 7") |
 | `docstatus` | 0 = chờ duyệt, 1 = đã duyệt, 2 = đã huỷ (đơn bị từ chối thì bị **xoá**, không nằm ở 2) |
-| `custom_approval_state` | Chỉ có nghĩa khi bật 2 cấp và `docstatus = 0`: *Pending Manager* (chờ trưởng bộ phận) / *Manager Approved* (chờ HR) |
+| `custom_approval_state` | Chỉ có nghĩa khi bật 2 cấp và `docstatus = 0`: *Pending Manager* (chờ trưởng bộ phận) / *Manager Approved* (chờ HR). Chỉ đổi qua việc duyệt; sửa nội dung đơn đã *Manager Approved* thì quay về *Pending Manager*. Xem [HR Attendance Request](HR-Attendance-Request.html) |
 
 Nhãn địa điểm lưu ở custom field `custom_work_location_label` trên Attendance Request (xem `fixtures/custom_field.json`). Field này chỉ dùng audit + báo cáo, không enforce GPS.
 

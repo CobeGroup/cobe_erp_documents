@@ -90,7 +90,9 @@ Mặc định đã cấu hình 3 dòng (Leave Application, Attendance Request, H
 HR duyệt cuối = người có tên trong **Người duyệt cuối** của HR Policy (xem
 [Chính sách chấm công §4](Desk-Admin-Policy.html#4-người-duyệt-cuối-cấp-hr)). Save là có hiệu lực ngay.
 Đổi chế độ khi còn đơn chờ: 2 cấp → 1 bước thì đơn đang chờ HR quay về hộp của trưởng bộ phận, duyệt
-là xong; 1 bước → 2 cấp thì đơn chưa ai duyệt bắt đầu đi 2 bước.
+là xong; 1 bước → 2 cấp thì đơn chưa ai duyệt bắt đầu đi 2 bước. Khi bật 2 cấp, nhân viên mà ngoài
+chính họ không còn ai là người duyệt chấm công (trưởng phòng, HR đứng đầu) thì đơn lên thẳng HR — xem
+[Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html).
 
 ### 1.5. Phép năm tự cộng (Earned Leave — HRMS native)
 1. Desk → **Leave Type** (vd "Annual Leave"): bật `Is Earned Leave`, `Earned Leave Frequency = Monthly`,
@@ -189,8 +191,9 @@ Manager = người có role **Leave Approver** và là `leave_approver` của NV
 **Cách 1 — trên điện thoại (my-workspace → tab "Cần duyệt"):**
 - **Nghỉ phép** (đơn ở trạng thái *Pending Manager*): bấm đơn → **"Duyệt (Trưởng bộ phận)"**
   → đơn chuyển sang *Manager Approved* (chờ HR submit). Hoặc **"Từ chối"**.
-- **Chấm công bù / Công tác / WFH** (Attendance Request): bấm → **"Duyệt"** (Submit) hoặc **"Hủy"**.
-  Khi duyệt, HRMS tự tạo bản ghi Attendance (Present / WFH) cho ngày đó.
+- **Chấm công bù / Công tác / WFH** (Attendance Request): bấm → **"Duyệt"** hoặc **"Từ chối"** (đang
+  duyệt 1 bước — bật 2 cấp thì đi như nghỉ phép, xem §1.4). Duyệt xong, HRMS tự tạo bản ghi
+  Attendance (Present / WFH) cho ngày đó.
 
 **Cách 2 — trên Desk:** mở doctype tương ứng (Leave Application / Attendance Request) và thao tác workflow.
 

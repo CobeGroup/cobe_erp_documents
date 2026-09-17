@@ -290,9 +290,15 @@ Endpoints (`api.attendance_request`):
 
 **Công tắc theo từng loại đơn:** `HR Approval Inbox Doctype.two_level_approval` (cột *Duyệt 2 cấp* trên
 HR Approval Inbox Settings), mặc định 1; patch `v0_043` tắt riêng dòng Attendance Request (chốt
-17/09/2026: chấm công bù 1 bước, làm thêm 2 cấp). `_get_inbox_configs()` trả khoá `two_level`;
-thiếu cột (chưa migrate) thì coi như bật. `approval.two_level_enabled(doctype)` dùng cho chỗ không
-có sẵn cfg (hook `before_submit`); không có dòng cấu hình cũng coi như bật.
+17/09/2026: chấm công bù 1 bước, làm thêm 2 cấp). Patch nạp lại doctype (`reload_doc(force=True)`)
+trước khi ghi chứ không `return` khi thiếu cột — migrate có lúc bỏ qua JSON doctype mà Patch Log vẫn
+khoá patch. `_get_inbox_configs()` trả khoá `two_level`; thiếu cột thì coi như bật.
+`approval.two_level_enabled(doctype)` dùng cho chỗ không có sẵn cfg (hook `before_submit`); không có
+dòng cấu hình cũng coi như bật.
+
+> ⚠️ **Migrate là bắt buộc khi deploy.** Chỉ riêng cột công tắc có lớp chống thiếu cột; hộp duyệt,
+> danh sách đơn của nhân viên và hook còn đọc `custom_approval_state`, `custom_manager_approved_by`,
+> `HR Overtime Request.manager_approved_by`… — code chạy trước migrate thì các màn này báo lỗi SQL.
 
 **Tắt (1 bước)** — y như trước 09/2026: item mang `state = "Pending"`; mọi action duyệt (`Submit`,
 `Approve`, `Manager Approve`) là duyệt cuối, mọi action từ chối (`Cancel`, `Reject`, `Manager Reject`,
@@ -320,7 +326,15 @@ OT `status = Manager Approved`) được coi là đơn chờ bình thường.
 không bao giờ nhảy thẳng qua bước HR. Action gắn cứng một bước mà đơn đã sang bước khác → lỗi
 *"Tải lại danh sách"*.
 
-**Ai được bấm** (`_can_act_two_level`):
+**Lên thẳng bước HR** (`_manager_stage_skipped(employee)`): ngoài chính nhân viên không còn
+`shift_request_approver` nào (Employee lẫn Department Approver) thì bước hiệu lực là *Chờ HR* dù nguồn
+trạng thái ghi bước trưởng bộ phận — `_ar_stage` / `_ot_stage` nhận `skipped`, hộp duyệt dùng
+`_HAS_OTHER_APPROVER_SQL` (cùng luật), `before_submit` không hỏi bước 1. Không có nhánh này thì đơn
+kẹt: người đó không được tự duyệt bước 1, còn HR không thấy đơn bước 1. Tính lúc đọc, không ghi vào
+đơn. Lúc nộp đơn, `new_request_recipients(doctype, employee)` báo HR thay cho người duyệt (chỉ khi bật
+2 cấp).
+
+**Ai được bấm** (`_can_act_two_level`, `stage` là bước hiệu lực):
 
 - Bước trưởng bộ phận: `shift_request_approver` của NV (Employee hoặc Department Approver); HR
   Manager / System Manager bước vào thay. **Không tự duyệt** đơn của chính mình — so với tài khoản
@@ -331,6 +345,18 @@ không bao giờ nhảy thẳng qua bước HR. Action gắn cứng một bướ
 **Chốt ở tầng document:** hook `Attendance Request.before_submit` chỉ cho người duyệt cuối submit —
 Desk, API hay bulk đều dính. Người duyệt cuối submit thẳng đơn chưa qua bước 1 = làm luôn bước 1
 (ghi tên vào `custom_manager_approved_by`), với luật không tự duyệt của bước 1.
+
+**Chốt ô trạng thái** (Frappe không chặn ô read-only ở server):
+
+- `Attendance Request.validate` (`onduty_hooks._guard_approval_fields`, chạy cả khi tắt 2 cấp): mỗi lần
+  lưu qua form/REST, ba ô bước duyệt trả về giá trị trong DB (đơn mới: `Pending Manager`, hai ô kia
+  trống). Đơn đang `Manager Approved` mà đổi một trong `CONTENT_FIELDS` → về `Pending Manager`. So sánh
+  theo kiểu field (ngày gửi lên là chuỗi). Chạy trước `before_submit`, nên hook đó đọc được giá trị thật.
+- `HR Overtime Request.validate` (`_guard_system_fields`): đơn đã có mà đổi `status`, `approved_by/on`,
+  `manager_approved_by/on`, `reject_reason`, `attendance`, `granted_hours` qua `save()` →
+  `PermissionError`. Miễn: đơn mới, `flags.ignore_permissions`, System Manager. Mọi đường hợp lệ (hộp
+  duyệt, huỷ duyệt, rút đơn, hết hạn) ghi bằng `db_set` / `db.set_value` nên không đi qua đây. So
+  sánh theo kiểu field (form gửi `2` cho `2.0`).
 
 **Không đổi:** quyền huỷ đơn đã duyệt (AR `Cancel`, OT `cancel_approved_request`) — hai bước chặn
 việc cấp hiệu lực, còn huỷ chỉ rút hiệu lực. Lưu ý với AR: `doc.cancel()` kéo theo huỷ `Attendance`,

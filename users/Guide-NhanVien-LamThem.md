@@ -52,8 +52,8 @@ Vào tab **Thêm** (góc dưới phải) → chọn **Làm thêm giờ**:
 
 <img src="images/guide/overtime/01-ot-list.png" width="240" alt="Trang Làm thêm giờ — danh sách đơn + trạng thái">
 
-Danh sách hiện các đơn đã gửi với trạng thái: **Chờ trưởng bộ phận duyệt** / **Trưởng bộ phận đã
-duyệt · chờ HR** / **Đã duyệt** / **Từ chối**. Đơn duyệt **2 bước** — trưởng bộ phận rồi HR — và chỉ
+Danh sách hiện các đơn đã gửi với trạng thái: **Chờ duyệt** / **Trưởng bộ phận đã duyệt · chờ HR** /
+**Đã duyệt** / **Từ chối**. Đơn duyệt **2 bước** — trưởng bộ phận rồi HR — và chỉ
 có hiệu lực khi HR duyệt xong.
 Đơn đã duyệt và đã làm xong sẽ hiện thêm dòng xanh **"đã ghi nhận Xh"** — số giờ
 hệ thống chốt từ chấm công.
@@ -107,7 +107,8 @@ Bấm vào đơn bất kỳ để xem chi tiết:
 
 <img src="images/guide/overtime/04-ot-detail.png" width="240" alt="Chi tiết đơn làm thêm — giờ đã ghi nhận">
 
-- **Chờ trưởng bộ phận duyệt** — có thể bấm **Huỷ đơn** nếu đổi ý / khai nhầm.
+- **Chờ duyệt** — đang chờ trưởng bộ phận (hoặc HR, nếu ngoài bạn không còn ai duyệt chấm công cho
+  bạn). Có thể bấm **Huỷ đơn** nếu đổi ý / khai nhầm.
 - **Trưởng bộ phận đã duyệt · chờ HR** — **chưa** có hiệu lực, giờ chưa được ghi nhận. Vẫn bấm
   **Huỷ đơn** được nếu cần.
 - **Đã duyệt** + *"Chưa đối chiếu"* — đơn duyệt rồi nhưng chưa tới ngày làm, hoặc
