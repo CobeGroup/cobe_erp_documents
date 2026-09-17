@@ -1,8 +1,9 @@
 ---
 title: 3 · Điều phối và hiện trường
 layout: default
-parent: Quy trình hợp nhất
-nav_order: 4
+parent: Các chặng — bản cũ
+grand_parent: Quy trình hợp nhất
+nav_order: 3
 ---
 
 # Chặng 3 — Điều phối và hiện trường

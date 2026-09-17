@@ -1,8 +1,9 @@
 ---
 title: 2 · Đơn bán hàng
 layout: default
-parent: Quy trình hợp nhất
-nav_order: 3
+parent: Các chặng — bản cũ
+grand_parent: Quy trình hợp nhất
+nav_order: 2
 ---
 
 # Chặng 2 — Đơn bán hàng

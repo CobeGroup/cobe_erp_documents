@@ -1,8 +1,9 @@
 ---
 title: 1 · Từ khách tiềm năng đến khách hàng
 layout: default
-parent: Quy trình hợp nhất
-nav_order: 2
+parent: Các chặng — bản cũ
+grand_parent: Quy trình hợp nhất
+nav_order: 1
 ---
 
 # Chặng 1 — Từ khách tiềm năng đến khách hàng

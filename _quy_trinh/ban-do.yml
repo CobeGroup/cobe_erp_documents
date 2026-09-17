@@ -1,0 +1,69 @@
+# Tầng 0 — bản đồ tổng. Làn dọc là phân khu, thời gian chạy từ trên xuống.
+#
+# o:      id của ô
+# lan:    phân khu (A..E)        hang: số hàng, tính từ 0
+# kieu:   buoc | re | cong       (cong = ô trỏ sang nơi khác, viền đứt)
+# den:    nơi mở khi bấm — {phan_khu, buoc} và `tam` cho phân khu chưa dựng
+# canh_bao: true thì gắn dấu ⚠ (bước có tình huống rẽ nhánh)
+#
+# Đường nối: tu → toi, ra/vao là cạnh của ô (tren, duoi, trai, phai).
+# lech_ra / lech_vao dịch điểm ra/vào theo chiều ngang để hai đường không chạm nhau.
+# qua: {lan, canh: trai|phai, lech} — đoạn dọc đi riêng, tính theo mép làn.
+
+tieu_de: Bản đồ tổng của quy trình hợp nhất
+mo_ta: >-
+  Năm làn dọc là năm phân khu: bán hàng, điều phối và hiện trường, kho và giao nhận,
+  thu tiền và kế toán, sau bán hàng. Luồng chính chạy từ tiếp nhận khách hàng, lập đơn,
+  điều phối, cấp vật tư, làm việc tại nhà khách, giao hàng, thu tiền, nộp tiền, hoá đơn,
+  rồi sang nhắc bảo dưỡng; khách đồng ý thì quay lại lập đơn mới. Sự cố là đầu vào thứ hai,
+  cần đến tận nơi thì đi vào điều phối.
+
+o:
+  - {o: A0, lan: A, hang: 0, kieu: buoc, chu: "Tiếp nhận khách hàng", den: {phan_khu: A, buoc: nguon, tam: "Quy-Trinh-01-Khach-Hang.html#nguon"}, canh_bao: true}
+  - {o: A1, lan: A, hang: 1, kieu: buoc, chu: "Lập đơn bán hàng", den: {phan_khu: A, buoc: khai-don, tam: "Quy-Trinh-02-Don-Hang.html#khai-don"}, canh_bao: true}
+  - {o: A2, lan: A, hang: 2, kieu: re, chu: "Cần đến nhà khách?", den: {phan_khu: A, buoc: ban-giao, tam: "Quy-Trinh-02-Don-Hang.html#ban-giao"}}
+  - {o: A3, lan: A, hang: 3, kieu: cong, chu: "Giao thẳng hoặc gửi đơn vị vận chuyển", den: {phan_khu: C, buoc: van-chuyen, tam: "Quy-Trinh-05-Giao-Hang-Thu-Tien.html#van-chuyen"}}
+
+  - {o: E0, lan: E, hang: 0, kieu: buoc, chu: "Khách hàng báo hỏng", den: {phan_khu: E, buoc: tiep-nhan, tam: "Quy-Trinh-07-Su-Co.html#tiep-nhan"}, canh_bao: true}
+  - {o: E1, lan: E, hang: 1, kieu: re, chu: "Cần đến tận nơi?", den: {phan_khu: E, buoc: hai-duong, tam: "Quy-Trinh-07-Su-Co.html#hai-duong"}}
+  - {o: E2, lan: E, hang: 2, kieu: buoc, chu: "Hướng dẫn qua điện thoại, đóng phiếu", den: {phan_khu: E, buoc: hai-duong, tam: "Quy-Trinh-07-Su-Co.html#hai-duong"}}
+
+  - {o: B3, lan: B, hang: 3, kieu: buoc, chu: "Lập phiếu công việc và lịch hẹn", den: {phan_khu: B, buoc: lap-wo, tam: "Quy-Trinh-03-Hien-Truong.html#lap-wo"}, canh_bao: true}
+  - {o: C4, lan: C, hang: 4, kieu: buoc, chu: "Cấp vật tư cho kỹ thuật viên", den: {phan_khu: C, buoc: yeu-cau, tam: "Quy-Trinh-04-Vat-Tu.html#yeu-cau"}, canh_bao: true}
+  - {o: B5, lan: B, hang: 5, kieu: buoc, chu: "Làm việc tại nhà khách hàng", den: {phan_khu: B, buoc: hien-truong, tam: "Quy-Trinh-03-Hien-Truong.html#hien-truong"}, canh_bao: true}
+  - {o: C6, lan: C, hang: 6, kieu: buoc, chu: "Giao hàng, khách hàng ký nhận", den: {phan_khu: C, buoc: giao-hang, tam: "Quy-Trinh-05-Giao-Hang-Thu-Tien.html#giao-hang"}, canh_bao: true}
+  - {o: C7, lan: C, hang: 7, kieu: buoc, chu: "Trả phần không giao về kho", den: {phan_khu: C, buoc: tra-ve, tam: "Quy-Trinh-04-Vat-Tu.html#tra-ve"}, canh_bao: true}
+  - {o: D7, lan: D, hang: 7, kieu: buoc, chu: "Thu tiền tại nhà khách hàng", den: {phan_khu: D, buoc: hinh-thuc}, canh_bao: true}
+  - {o: D8, lan: D, hang: 8, kieu: buoc, chu: "Nộp tiền mặt về công ty", den: {phan_khu: D, buoc: tien-mat}, canh_bao: true}
+  - {o: D9, lan: D, hang: 9, kieu: buoc, chu: "Hoá đơn, đơn hoàn tất", den: {phan_khu: D, buoc: hoa-don}, canh_bao: true}
+
+  - {o: E10, lan: E, hang: 10, kieu: buoc, chu: "Nhắc bảo dưỡng đến kỳ", den: {phan_khu: E, buoc: phieu-nhac, tam: "Quy-Trinh-06-Bao-Duong.html#phieu-nhac"}, canh_bao: true}
+  - {o: E11, lan: E, hang: 11, kieu: re, chu: "Khách hàng đồng ý?", den: {phan_khu: E, buoc: lien-he, tam: "Quy-Trinh-06-Bao-Duong.html#lien-he"}}
+  - {o: E12, lan: E, hang: 12, kieu: buoc, chu: "Hẹn lại hoặc ngừng nhắc", den: {phan_khu: E, buoc: lien-he, tam: "Quy-Trinh-06-Bao-Duong.html#lien-he"}}
+
+noi:
+  - {tu: A0, toi: A1}
+  - {tu: A1, toi: A2}
+  - {tu: A2, toi: B3, ra: phai, vao: tren, nhan: "có"}
+  - {tu: A2, toi: A3, nhan: "không"}
+  - {tu: E0, toi: E1}
+  - {tu: E1, toi: B3, ra: trai, vao: tren, lech_vao: 32, nhan: "có"}
+  - {tu: E1, toi: E2, nhan: "không"}
+  - {tu: B3, toi: C4, ra: duoi, vao: trai}
+  - {tu: C4, toi: B5, ra: duoi, vao: phai}
+  - {tu: B5, toi: C6, ra: duoi, vao: trai}
+  - {tu: C6, toi: C7, nhan: "phần không giao", nhan_trai: true}
+  - {tu: C6, toi: D7, ra: phai, vao: tren, nhan: "phần đã giao"}
+  - {tu: D7, toi: D8, nhan: "tiền mặt"}
+  - {tu: D8, toi: D9}
+  - {tu: D7, toi: D9, ra: phai, vao: phai, qua: {lan: D, canh: phai, lech: 8}, nhan: "chuyển khoản"}
+  - {tu: D9, toi: E10, ra: duoi, vao: trai}
+  - {tu: E10, toi: E11}
+  - {tu: E11, toi: E12, nhan: "không"}
+
+vong:
+  tu: E11
+  toi: A1
+  qua_phai: {lan: E, canh: trai, lech: -12}
+  qua_trai: {x: 14}
+  nhan: có — lập đơn mới

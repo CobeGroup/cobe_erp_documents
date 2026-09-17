@@ -1,8 +1,9 @@
 ---
 title: 7 · Sự cố
 layout: default
-parent: Quy trình hợp nhất
-nav_order: 8
+parent: Các chặng — bản cũ
+grand_parent: Quy trình hợp nhất
+nav_order: 7
 ---
 
 # Chặng 7 — Sự cố

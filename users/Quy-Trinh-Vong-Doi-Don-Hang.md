@@ -2,7 +2,7 @@
 title: Vòng đời một đơn hàng
 layout: default
 parent: Quy trình hợp nhất
-nav_order: 1.5
+nav_order: 5
 ---
 
 # Vòng đời một đơn hàng

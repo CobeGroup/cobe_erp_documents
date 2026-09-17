@@ -1,7 +1,7 @@
 ---
 title: Tổng quan toàn chuỗi
 layout: default
-nav_order: 1
+nav_order: 80
 parent: Quy trình hợp nhất
 ---
 

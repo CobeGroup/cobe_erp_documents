@@ -1,8 +1,9 @@
 ---
 title: 5 · Giao hàng và thu tiền
 layout: default
-parent: Quy trình hợp nhất
-nav_order: 6
+parent: Các chặng — bản cũ
+grand_parent: Quy trình hợp nhất
+nav_order: 5
 ---
 
 # Chặng 5 — Giao hàng và thu tiền
@@ -10,6 +11,8 @@ nav_order: 6
 
 **Ai làm:** Kỹ thuật viên · Kho · Kế toán · Kinh doanh
 {: .fs-3 .text-grey-dk-000 }
+
+> 🔁 **Phần thu tiền, nộp tiền, hoá đơn đã chuyển sang bản mới:** [D · Thu tiền và kế toán](Quy-Trinh-D-Thu-Tien.html). Trang này giữ lại cho phần giao hàng cho tới khi phân khu C được chuyển xong.
 
 | Nhận vào | Bàn giao ra |
 |---|---|

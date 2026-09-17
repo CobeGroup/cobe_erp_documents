@@ -1,8 +1,9 @@
 ---
 title: 6 · Bảo dưỡng định kỳ
 layout: default
-parent: Quy trình hợp nhất
-nav_order: 7
+parent: Các chặng — bản cũ
+grand_parent: Quy trình hợp nhất
+nav_order: 6
 ---
 
 # Chặng 6 — Bảo dưỡng định kỳ và vòng lặp

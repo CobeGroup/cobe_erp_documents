@@ -1,8 +1,9 @@
 ---
 title: 4 · Vật tư của kỹ thuật viên
 layout: default
-parent: Quy trình hợp nhất
-nav_order: 5
+parent: Các chặng — bản cũ
+grand_parent: Quy trình hợp nhất
+nav_order: 4
 ---
 
 # Chặng 4 — Vật tư của kỹ thuật viên

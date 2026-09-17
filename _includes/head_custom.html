@@ -57,3 +57,114 @@
     });
   });
 </script>
+<style>
+  /* Sơ đồ "Quy trình hợp nhất" — sinh bởi _tools/quy_trinh/build.py.
+     Khối giữa hai dấu mốc được bộ sinh chép vào bản xem thử, giữ nguyên dấu mốc. */
+  /* QT-BAT-DAU */
+  .qt-svg { width: 100%; height: auto; display: block; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  .qt-svg .qt-nen { fill: #ffffff; }
+  .qt-svg .qt-lan-nen0 { fill: #f8fafc; }
+  .qt-svg .qt-lan-nen1 { fill: #ffffff; }
+  .qt-svg .qt-a { fill: #f5f0ff; stroke: #8b5cf6; stroke-width: 1.6; }
+  .qt-svg .qt-b { fill: #e6f4ff; stroke: #299dd8; stroke-width: 1.6; }
+  .qt-svg .qt-c { fill: #fff7e6; stroke: #d48806; stroke-width: 1.6; }
+  .qt-svg .qt-d { fill: #effaf3; stroke: #22a06b; stroke-width: 1.6; }
+  .qt-svg .qt-e { fill: #e6fffb; stroke: #13a8a8; stroke-width: 1.6; }
+  .qt-svg .qt-re { fill: #fffbe6; stroke: #d4b106; stroke-width: 1.6; }
+  .qt-svg .qt-trang { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.4; }
+  .qt-svg .qt-ok { fill: #effaf3; stroke: #22a06b; stroke-width: 1.4; }
+  .qt-svg .qt-the { fill: #fff1f0; stroke: #e5484d; stroke-width: 1.4; }
+  .qt-svg .qt-pill { fill: #fff1f0; stroke: #e5484d; stroke-width: 1; }
+  .qt-svg .qt-cong { fill: #ffffff; stroke: #64748b; stroke-width: 1.4; stroke-dasharray: 5 3; }
+  .qt-svg .qt-ngoai { fill: #fafafa; stroke: #cbd5e1; stroke-width: 1.2; stroke-dasharray: 5 3; }
+  .qt-svg .qt-tron { fill: #374151; }
+  .qt-svg .qt-canh { fill: #e5484d; }
+  .qt-svg .qt-tb { font-size: 13.5px; font-weight: 600; fill: #111827; }
+  .qt-svg .qt-tb2 { font-size: 12.5px; font-weight: 600; fill: #111827; }
+  .qt-svg .qt-tb3 { font-size: 12px; font-weight: 600; fill: #111827; }
+  .qt-svg .qt-tn { font-size: 12.5px; fill: #1f2937; }
+  .qt-svg .qt-lan-nho { font-size: 10px; font-weight: 700; fill: #64748b; letter-spacing: .06em; }
+  .qt-svg .qt-ts { font-size: 12px; fill: #4b5563; }
+  .qt-svg .qt-tt { font-size: 12.5px; font-weight: 700; fill: #c62828; }
+  .qt-svg .qt-tp { font-size: 11px; font-weight: 700; fill: #c62828; }
+  .qt-svg .qt-so { font-size: 12px; font-weight: 700; fill: #ffffff; }
+  .qt-svg .qt-canh-chu { font-size: 12px; font-weight: 800; fill: #ffffff; }
+  .qt-svg .qt-nhan { font-size: 11.5px; font-weight: 600; fill: #64748b; }
+  .qt-svg .qt-lan { font-size: 13px; font-weight: 700; fill: #475569; letter-spacing: .03em; }
+  .qt-svg .qt-vong-chu { font-size: 12px; font-weight: 600; fill: #2f7d4a; }
+  .qt-svg .qt-mui { stroke: #9ca3af; stroke-width: 1.8; fill: none; }
+  .qt-svg .qt-vong { stroke: #52a86a; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; }
+  .qt-svg a, .qt-svg a:hover { cursor: pointer; text-decoration: none; }
+  .qt-svg a:hover > rect, .qt-svg a:hover > polygon { stroke-width: 2.8; filter: brightness(0.97); }
+  .qt-svg a:focus { outline: none; }
+  .qt-svg a:focus-visible > rect, .qt-svg a:focus-visible > polygon { stroke: #1d4ed8; stroke-width: 3; }
+  /* QT-KET-THUC */
+
+  .qt-sodo { position: relative; margin: .75rem 0; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px; background: #fff; }
+  .qt-nut-phong { position: absolute; top: 6px; right: 6px; z-index: 2; font-size: .8rem; padding: 3px 10px;
+    border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: #334155; cursor: pointer; }
+  .qt-nut-phong:hover { background: #f1f5f9; }
+  #qt-toan-man { position: fixed; inset: 0; z-index: 9998; display: none; background: rgba(15, 23, 42, .78); }
+  #qt-toan-man.open { display: block; }
+  #qt-toan-man .qt-khung { position: absolute; inset: 44px 16px 16px; overflow: auto; background: #fff; border-radius: 8px; padding: 12px; }
+  #qt-toan-man .qt-khung .qt-svg { width: auto; max-width: none; margin: 0 auto; }
+  #qt-toan-man .qt-dong { position: absolute; top: 6px; right: 20px; color: #fff; font-size: 30px; line-height: 1; cursor: pointer; }
+  #qt-toan-man .qt-goi-y { position: absolute; top: 14px; left: 20px; color: #e2e8f0; font-size: .85rem; }
+
+  .qt-chu-giai { font-size: .85rem; color: #475569; line-height: 1.9; }
+  .qt-k { display: inline-block; width: 22px; height: 13px; margin: 0 4px 0 12px; vertical-align: -1px; border-radius: 3px; }
+  .qt-k:first-child { margin-left: 0; }
+  .qt-k-buoc { background: #e6f4ff; border: 1.5px solid #299dd8; }
+  .qt-k-re { background: #fffbe6; border: 1.5px solid #d4b106; clip-path: polygon(20% 0, 80% 0, 100% 50%, 80% 100%, 20% 100%, 0 50%); }
+  .qt-k-the { background: #fff1f0; border: 1.5px solid #e5484d; border-radius: 7px; }
+  .qt-k-cong { background: #fff; border: 1.5px dashed #64748b; }
+  .qt-k-canh { width: 14px; height: 14px; border-radius: 50%; background: #e5484d; }
+
+  .qt-re-khoi { margin: 1rem 0 1.5rem; padding: .6rem .9rem; border-left: 4px solid #d4b106; background: #fffbe6; border-radius: 0 6px 6px 0; }
+  .qt-the-khung { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: flex-start; margin: .5rem 0 1rem; }
+  .qt-the-tt { flex: 1 1 300px; min-width: 0; }
+  .qt-the-sd { flex: 0 1 470px; max-width: 470px; min-width: 0; margin: 0; }
+  .main-content table.qt-the-bang { display: table; width: 100%; margin: 0 0 .75rem; }
+  .main-content table.qt-the-bang th { width: 7.5rem; white-space: nowrap; vertical-align: top; }
+  .qt-thong-bao { font-style: italic; color: #b91c1c; }
+  .qt-canh-bao { padding: .5rem .75rem; background: #fff7ed; border-left: 4px solid #f59e0b; border-radius: 0 6px 6px 0; }
+  .qt-lien-quan { font-size: .9rem; color: #475569; }
+</style>
+<script>
+  /* Nút "Xem toàn màn hình" cho sơ đồ quy trình (sơ đồ SVG nội tuyến nên không dùng được lightbox ảnh). */
+  document.addEventListener('DOMContentLoaded', function () {
+    var khoi = document.querySelectorAll('.qt-sodo');
+    if (!khoi.length) return;
+    var ov = document.createElement('div');
+    ov.id = 'qt-toan-man';
+    ov.innerHTML = '<span class="qt-goi-y">Cuộn để xem hết · bấm ô để mở · Esc để đóng</span>' +
+                   '<span class="qt-dong" aria-label="Đóng">×</span><div class="qt-khung"></div>';
+    document.body.appendChild(ov);
+    var khung = ov.querySelector('.qt-khung');
+    function dong() { ov.classList.remove('open'); khung.innerHTML = ''; document.body.style.overflow = ''; }
+    ov.addEventListener('click', function (e) {
+      if (e.target === ov || e.target.classList.contains('qt-dong')) { dong(); return; }
+      /* Bấm liên kết trong sơ đồ: đóng lớp phủ trước để neo cùng trang còn cuộn tới được. */
+      if (e.target.closest && e.target.closest('a')) { dong(); }
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov.classList.contains('open')) dong(); });
+    khoi.forEach(function (k) {
+      var svg = k.querySelector('svg');
+      if (!svg || k.classList.contains('qt-the-sd')) return;
+      var nut = document.createElement('button');
+      nut.type = 'button';
+      nut.className = 'qt-nut-phong';
+      nut.textContent = '⛶ Xem toàn màn hình';
+      nut.addEventListener('click', function () {
+        var ban = svg.cloneNode(true);
+        ban.removeAttribute('aria-labelledby');
+        ban.querySelectorAll('[id]').forEach(function (n) { if (n.tagName !== 'marker') n.removeAttribute('id'); });
+        khung.innerHTML = '';
+        khung.appendChild(ban);
+        ov.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+      k.appendChild(nut);
+    });
+  });
+</script>

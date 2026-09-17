@@ -1,0 +1,466 @@
+# Phân khu D — Thu tiền và kế toán
+#
+# luong: đường chính, đọc từ trên xuống. Mỗi phần tử là một trong:
+#   cong_vao  — cổng nhận từ phân khu khác
+#   re        — điểm rẽ: đi tiếp xuống dưới, nhánh ngoại lệ rẽ phải sang thẻ tình huống
+#   buoc      — một bước; `the` gắn các thẻ tình huống xảy ra ở bước này
+#   song_song — rẽ thành nhiều nhánh chạy song song rồi gộp lại
+#   cong_ra   — các cổng bàn giao sang phân khu khác
+# ngoai_luong: tình huống không nằm trên đường chính (sửa, huỷ, trả hàng sau bán)
+# the: thẻ tình huống (tầng 2)
+#
+# `noi_dung` là markdown, hiện dưới mục của bước đó trên trang phân khu.
+
+ma: D
+ten: 'Thu tiền và kế toán'
+tien_to: TT
+trang: Quy-Trinh-D-Thu-Tien
+nav_order: 40
+ai_lam: Kỹ thuật viên · Kế toán · Kinh doanh
+gioi_thieu: >-
+  Từ lúc khách hàng đã nhận hàng cho tới lúc đơn được thu đủ, có hoá đơn và chuyển sang
+  Hoàn tất. Hai hình thức thanh toán đi theo hai đường xử lý khác nhau; khách hàng trả bằng
+  cả hai thì đi cả hai đường.
+
+luong:
+  - cong_vao:
+      - {tu: C, buoc: giao-hang, ten: Đã lập phiếu giao hàng, tam: "Quy-Trinh-05-Giao-Hang-Thu-Tien.html#giao-hang"}
+
+  - re:
+      id: co-phieu-giao
+      hoi: 'Đơn đã có phiếu giao hàng?'
+      tiep: có
+      nhanh: {nhan: chưa, the: TT-01}
+
+  - buoc:
+      id: mo-thu-tien
+      ten: 'Mở màn hình thu tiền'
+      phu: 'Ứng dụng kỹ thuật viên'
+      ai: 'Kỹ thuật viên'
+      the: [TT-02]
+      noi_dung: |
+        Trên ứng dụng kỹ thuật viên: mở lịch hẹn → **Thu tiền**.
+
+        Kỹ thuật viên phải được khai **tài khoản thu tiền** cho công ty của đơn. Chưa khai thì
+        màn hình không cho thao tác, kể cả khi đơn đã có phiếu giao hàng.
+
+  - buoc:
+      id: dong-thu
+      ten: 'Nhập các dòng thu'
+      phu: 'Mỗi dòng là một đơn, một hình thức, một số tiền'
+      ai: 'Kỹ thuật viên'
+      the: [TT-03, TT-04]
+      noi_dung: |
+        Màn hình thu tiền làm việc theo **dòng**. Mỗi dòng cho biết: thu cho đơn nào, bằng hình
+        thức nào, bao nhiêu tiền.
+
+        | Nội dung | Hệ thống xử lý |
+        |---|---|
+        | Dòng mặc định | Mỗi đơn còn nợ được nạp sẵn một dòng |
+        | Số tiền mặc định | Bằng đúng số còn nợ |
+        | Hình thức mặc định | **Chuyển khoản** nếu đơn có khai sẵn tài khoản ngân hàng, ngược lại **tiền mặt** |
+        | Thêm dòng | Được, dùng khi khách hàng trả bằng hai hình thức |
+        | Giới hạn | Một đơn không được có **hai dòng cùng hình thức** trong một lần thu |
+        | Số tiền nhỏ hơn số còn nợ | Được; phần còn lại thu ở lần sau |
+        | Kiểm tra cuối | Tổng các dòng không lớn hơn **tổng** số còn nợ của các đơn đang xử lý |
+
+        > ⚠️ Chốt cuối kiểm trên **tổng**, không kiểm từng đơn. Thu nhiều đơn một lúc thì phải đọc
+        > lại số tiền từng dòng trước khi xác nhận.
+
+  - song_song:
+      id: hinh-thuc
+      ten: 'Khách hàng trả bằng hình thức nào?'
+      ai: 'Kỹ thuật viên · Kế toán'
+      noi_dung: |
+        Hai hình thức khác nhau không chỉ ở cách khách hàng trả tiền, mà ở **ai phải làm tiếp** và
+        **lúc nào đơn được tính là đã thu**.
+
+        | | Tiền mặt | Chuyển khoản |
+        |---|---|---|
+        | Phiếu thu sau khi lập | Chính thức ngay | **Nháp** |
+        | Tiền vào đâu | Tài khoản của chính kỹ thuật viên | Tài khoản ngân hàng công ty |
+        | Nghĩa vụ cá nhân | **Có** — phải nộp về công ty | Không |
+        | Ai làm tiếp | Kỹ thuật viên nộp tiền, kế toán xác nhận | Kế toán đối chiếu sao kê rồi xác nhận |
+        | Đơn được tính đã thu | Ngay khi lập phiếu | Chỉ khi kế toán xác nhận |
+        | Hoá đơn phát sinh | Tác vụ tự động hằng ngày, sớm nhất một ngày sau phiếu giao hàng | Ngay lập tức khi kế toán xác nhận |
+      nhanh:
+        - id: tien-mat
+          ten: 'Tiền mặt'
+          buoc:
+            - ten: "Phiếu thu chính thức ngay"
+              phu: "Tiền vào tài khoản kỹ thuật viên"
+              the: [TT-05]
+            - ten: "Lập phiếu nộp từ ứng dụng"
+              phu: "Chọn đúng khoản thu cần nộp"
+              the: [TT-06, TT-07]
+            - ten: "Kế toán xác nhận phiếu nộp"
+              phu: "Công nợ cá nhân về không"
+              the: [TT-08, TT-09, TT-10]
+          noi_dung: |
+            Tiền mặt ở tài khoản kỹ thuật viên là **công nợ của người đó với công ty**. Nộp về bằng
+            phiếu nộp tiền (`Payment Entry` loại *Internal Transfer*).
+
+            | Quy tắc | Nội dung |
+            |---|---|
+            | Một phiếu nộp | Gắn **đúng một khoản thu**, số tiền bằng đúng khoản đó |
+            | Nộp gộp, nộp một phần | Ứng dụng không hỗ trợ |
+            | Ảnh chứng từ | Đính kèm được khi lập phiếu |
+            | Sau khi lập | **Nháp** — kế toán phải xác nhận |
+            | Chốt bảo vệ quỹ | Không nộp trùng một khoản; không nộp quá số đang giữ |
+
+            > ⛔ **Hệ thống đối chiếu theo liên kết, không theo số dư.** Phiếu nộp lập thẳng trên Desk,
+            > không gắn khoản thu, thì tiền về công ty nhưng **dấu nợ của khoản thu vẫn còn** — phiếu
+            > công việc tiếp tục bị chặn.
+
+            ✅ Luôn lập phiếu nộp **từ ứng dụng** và chọn đúng khoản thu.
+        - id: chuyen-khoan
+          ten: 'Chuyển khoản'
+          buoc:
+            - ten: "Chọn tài khoản, hiện mã QR"
+              phu: "Mã QR đúng tài khoản và số tiền"
+              the: [TT-11]
+            - ten: "Phiếu thu ở trạng thái nháp"
+              phu: "Chưa được tính là đã thu"
+              the: [TT-12]
+            - ten: "Kế toán đối chiếu và xác nhận"
+              phu: "Hoá đơn tự phát sinh ngay"
+          noi_dung: |
+            Dòng chuyển khoản bắt buộc chọn **tài khoản ngân hàng nhận tiền**. Chọn xong, ứng dụng hiện
+            **mã QR** đúng tài khoản và đúng số tiền để khách hàng quét.
+
+            Phiếu thu chuyển khoản nằm ở **nháp** cho tới khi kế toán đối chiếu sao kê và xác nhận.
+            Ngay khi xác nhận, hệ thống **tự lập hoá đơn** nếu đơn đã đủ tiền.
+        - id: ca-hai
+          ten: 'Cả hai hình thức'
+          buoc:
+            - ten: "Lập hai dòng trên cùng một đơn"
+              phu: "Một dòng tiền mặt, một dòng chuyển khoản"
+            - ten: "Mỗi phiếu đi theo nhánh riêng"
+              phu: "Như hai nhánh bên trái"
+            - ten: "Đơn đủ khi cả hai phiếu chính thức"
+              phu: "Còn một phiếu nháp là vẫn còn nợ"
+          noi_dung: |
+            Hệ thống hỗ trợ sẵn, không cần xin phép. Kết quả là **hai phiếu thu riêng**:
+
+            | Phần | Diễn biến |
+            |---|---|
+            | Tiền mặt | Chính thức ngay; kỹ thuật viên phải nộp về công ty, **không chờ** phần chuyển khoản |
+            | Chuyển khoản | Nằm ở nháp cho tới khi kế toán xác nhận |
+            | Hoá đơn | Phát sinh lúc phiếu sau cùng được xác nhận |
+      gop:
+        ten: 'Các phiếu thu đã lập xong'
+        phu: 'Khách hàng trả làm nhiều lần thì lặp lại từ bước nhập dòng thu'
+
+  - re:
+      id: du-tien
+      hoi: 'Phiếu thu chính thức đã đủ giá trị đơn?'
+      tiep: đủ
+      nhanh: {nhan: chưa, the: TT-13}
+
+  - buoc:
+      id: hoa-don
+      ten: 'Hoá đơn phát sinh'
+      phu: 'Tự động, hoặc lập trên ứng dụng'
+      ai: 'Hệ thống · Kỹ thuật viên'
+      the: [TT-14]
+      noi_dung: |
+        **Điều kiện:** đơn đã thu đủ **100%**, tính trên phiếu thu **đã chính thức**.
+
+        | Đường phát sinh | Ai làm | Lúc nào |
+        |---|---|---|
+        | Lập trên ứng dụng | Kỹ thuật viên chọn phiếu giao hàng rồi lập | Ngay tại hiện trường, sau khi thu đủ |
+        | Khi xác nhận phiếu thu chuyển khoản | Hệ thống | Ngay khi kế toán xác nhận |
+        | Tác vụ tự động hằng ngày | Hệ thống | Đơn đã giao đủ, thu đủ, qua ít nhất một ngày từ phiếu giao hàng cuối |
+
+        Mỗi phiếu giao hàng có **một hoá đơn riêng**; đơn giao nhiều lần sẽ có nhiều hoá đơn.
+
+  - buoc:
+      id: hoan-tat
+      ten: 'Đơn chuyển sang Hoàn tất'
+      phu: 'Cộng điểm tích luỹ · sinh lịch bảo dưỡng · phiếu công việc được phép hoàn thành'
+      ai: 'Hệ thống'
+      rong: true
+      the: [TT-15]
+      noi_dung: |
+        Hoá đơn đủ giá trị đơn kéo theo ba việc cùng lúc:
+
+        | Việc | Nơi tiếp nhận |
+        |---|---|
+        | Đơn sang **Hoàn tất** | Điều kiện để phiếu công việc được hoàn thành |
+        | Khách hàng được **cộng điểm tích luỹ** | Chương trình tích điểm |
+        | Hệ thống **sinh lịch bảo dưỡng** cho kỳ sau | Phân khu sau bán hàng |
+
+  - cong_ra:
+      - {sang: B, buoc: hoan-thanh-wo, ten: Phiếu công việc được hoàn thành, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+      - {sang: E, buoc: sinh-lich, ten: Sinh lịch bảo dưỡng kỳ sau, tam: "Quy-Trinh-06-Bao-Duong.html#sinh-lich"}
+
+ngoai_luong:
+  id: ngoai-luong
+  ten: 'Ngoài luồng chính'
+  the: [TT-16, TT-17, TT-18]
+  noi_dung: |
+    | Việc | Quy định |
+    |---|---|
+    | Huỷ phiếu thu trên ứng dụng | Trong **24 giờ** kể từ lúc lập, chỉ người lập, và khoản thu chưa có phiếu nộp |
+    | Quá hạn huỷ | Kế toán xử lý trên Desk |
+    | Đơn đã có hoá đơn | Huỷ ngược: hoá đơn trước, phiếu thu sau |
+
+    **Ba kiểu "trả hàng" cần phân biệt.** Chỉ kiểu thứ ba thuộc phân khu này:
+
+    | Cách gọi | Thực chất | Phân khu |
+    |---|---|---|
+    | Khách không nhận khi giao | Giảm số trên phiếu giao hàng | C · Kho và giao nhận |
+    | Kỹ thuật viên trả vật tư về kho | Chuyển hàng từ kho cá nhân về kho công ty | C · Kho và giao nhận |
+    | Khách trả hàng sau khi đã nhận | Đảo ngược nghiệp vụ bán: giảm doanh thu, thu hồi điểm | **D · Thu tiền và kế toán** |
+
+the:
+  - ma: TT-01
+    ten: 'Báo “Chưa tạo phiếu giao hàng” khi thu tiền'
+    gap_o: {buoc: co-phieu-giao}
+    thong_bao: '“Chưa tạo phiếu giao hàng cho … Vui lòng tạo phiếu giao hàng trước khi thanh toán.”'
+    nguyen_nhan: 'Hệ thống chỉ cho thu tiền sau khi đơn đã có phiếu giao hàng. Tham số cho phép thu trước đang tắt.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - re:
+          hoi: "Khách muốn trả trước khi nhận hàng?"
+          co: "Kinh doanh ghi nhận khoản đặt cọc trên đơn"
+          khong: "Lập phiếu giao hàng trước"
+    quay_ve: {buoc: mo-thu-tien}
+
+  - ma: TT-02
+    ten: 'Màn hình thu tiền không cho thao tác'
+    gap_o: {buoc: mo-thu-tien}
+    dau_hieu: 'Mở màn hình thu tiền nhưng không nhập được dòng thu nào.'
+    nguyen_nhan: 'Kỹ thuật viên chưa được khai tài khoản thu tiền cho công ty của đơn.'
+    ai: 'Quản trị viên'
+    go:
+      - buoc: 'Gửi quản trị viên mã đơn và ảnh màn hình'
+      - buoc: 'Quản trị viên khai tài khoản thu tiền cho công ty đó'
+      - buoc: 'Tải lại ứng dụng'
+    quay_ve: {buoc: mo-thu-tien}
+
+  - ma: TT-03
+    ten: 'Báo “đã có dòng Tiền mặt” khi thêm dòng thu'
+    gap_o: {buoc: dong-thu}
+    thong_bao: '“… đã có dòng "Tiền mặt". Không thể tạo 2 dòng cùng hình thức cho 1 SO.”'
+    nguyen_nhan: 'Trong một lần thu, mỗi đơn chỉ được một dòng cho mỗi hình thức.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - re:
+          hoi: "Khách trả thêm cùng hình thức?"
+          co: "Cộng dồn vào số tiền của dòng đã có"
+          khong: "Đổi hình thức của dòng mới"
+    quay_ve: {buoc: dong-thu}
+
+  - ma: TT-04
+    ten: 'Thu nhiều đơn một lần, chia sai tiền giữa các dòng'
+    gap_o: {buoc: dong-thu}
+    dau_hieu: 'Sau khi thu, một đơn thừa tiền còn một đơn vẫn còn nợ.'
+    nguyen_nhan: 'Chốt cuối chỉ so tổng tiền với tổng nợ của cả nhóm đơn, không so từng đơn.'
+    ai: 'Kỹ thuật viên · Kế toán'
+    go:
+      - re:
+          hoi: "Phiếu lập chưa quá 24 giờ?"
+          co: "Huỷ các phiếu sai rồi lập lại đúng từng đơn"
+          khong: "Chuyển kế toán điều chỉnh"
+    quay_ve: {buoc: dong-thu}
+
+  - ma: TT-05
+    ten: 'Chọn nhầm tiền mặt cho khoản khách đã chuyển khoản'
+    gap_o: {buoc: tien-mat}
+    dau_hieu: 'Kỹ thuật viên bị ghi công nợ cá nhân cho khoản tiền mình không giữ.'
+    nguyen_nhan: 'Dòng thu chọn hình thức tiền mặt, nên phiếu thu ghi tiền vào tài khoản kỹ thuật viên.'
+    ai: 'Kỹ thuật viên · Kế toán'
+    go:
+      - buoc: 'Không lập phiếu nộp cho khoản này'
+      - re:
+          hoi: "Chưa quá 24 giờ và chưa có phiếu nộp?"
+          co: "Huỷ phiếu, lập lại bằng chuyển khoản"
+          khong: "Chuyển kế toán điều chỉnh"
+    quay_ve: {buoc: dong-thu}
+
+  - ma: TT-06
+    ten: 'Đã đưa tiền mặt cho kế toán nhưng vẫn còn công nợ cá nhân'
+    gap_o: {buoc: tien-mat}
+    dau_hieu: 'Tài khoản trên ứng dụng vẫn hiện số dư dù tiền đã giao cho kế toán.'
+    nguyen_nhan: 'Chưa lập phiếu nộp, hoặc phiếu nộp còn ở trạng thái nháp.'
+    ai: 'Kỹ thuật viên · Kế toán'
+    go:
+      - re:
+          hoi: "Đã lập phiếu nộp chưa?"
+          co: "Đề nghị kế toán xác nhận phiếu nộp"
+          khong: "Lập phiếu nộp từ ứng dụng, chọn đúng khoản thu"
+    quay_ve: {buoc: tien-mat}
+
+  - ma: TT-07
+    ten: 'Báo “Công nợ … đã được trả qua …” khi lập phiếu nộp'
+    gap_o: {buoc: tien-mat}
+    thong_bao: '“Công nợ … đã được trả qua …”'
+    nguyen_nhan: 'Khoản thu này đã có một phiếu nộp, kể cả phiếu còn nháp.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - buoc: 'Tra phiếu nộp theo mã trong thông báo'
+      - re:
+          hoi: "Phiếu đó còn nháp?"
+          co: "Đề nghị kế toán xác nhận, không lập thêm"
+          khong: "Khoản đã nộp xong, không cần làm gì"
+    quay_ve: {buoc: tien-mat}
+
+  - ma: TT-08
+    ten: 'Đã nộp tiền nhưng hệ thống vẫn báo chưa nộp'
+    gap_o: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+    thong_bao: '“SO …: thu tiền mặt nhưng chưa có Internal Transfer về công ty”'
+    nguyen_nhan: 'Phiếu nộp chưa được xác nhận, hoặc được lập trên Desk mà không gắn với khoản thu.'
+    ai: 'Kế toán · Kỹ thuật viên'
+    go:
+      - buoc: 'Kế toán mở phiếu nộp của khoản thu'
+      - re:
+          hoi: "Phiếu nộp gắn đúng khoản thu?"
+          co: "Xác nhận phiếu nộp"
+          khong: "Huỷ phiếu; kỹ thuật viên lập lại từ ứng dụng"
+    quay_ve: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+
+  - ma: TT-09
+    ten: 'Báo “đã trả về … nhưng thu … (thiếu …)”'
+    gap_o: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+    thong_bao: '“SO …: đã trả về … nhưng thu … (thiếu …)”'
+    nguyen_nhan: 'Tổng đã nộp nhỏ hơn tổng đã thu. Hệ thống không có dung sai, lệch một đồng cũng bị chặn. Thường do phiếu nộp lập thủ công với số tiền làm tròn.'
+    ai: 'Kế toán · Kỹ thuật viên'
+    go:
+      - buoc: 'Kế toán huỷ phiếu nộp lập thủ công'
+      - buoc: 'Kỹ thuật viên lập lại phiếu nộp từ ứng dụng'
+      - buoc: 'Kế toán xác nhận phiếu nộp mới'
+    canh_bao: 'Không lập thêm một phiếu nộp lẻ để bù phần thiếu — hệ thống chặn phiếu nộp thứ hai cho cùng khoản thu.'
+    quay_ve: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+
+  - ma: TT-10
+    ten: 'Báo “Số dư tài khoản … không đủ” khi xác nhận phiếu nộp'
+    gap_o: {buoc: tien-mat}
+    thong_bao: '“Số dư tài khoản KTV … không đủ. Cần: …, Hiện có: …”'
+    nguyen_nhan: 'Số tiền định nộp lớn hơn số dư đang có — thường vì khoản này đã được nộp bằng một phiếu khác.'
+    ai: 'Kế toán'
+    go:
+      - buoc: 'Xem lịch sử phiếu nộp của tài khoản'
+      - re:
+          hoi: "Khoản này đã có phiếu nộp khác?"
+          co: "Xoá phiếu nháp thừa"
+          khong: "Đối chiếu lại số dư tài khoản"
+    quay_ve: {buoc: tien-mat}
+
+  - ma: TT-11
+    ten: 'Cần nhận tiền vào tài khoản ngân hàng khác'
+    gap_o: {buoc: chuyen-khoan}
+    dau_hieu: 'Khách hàng hoặc công ty yêu cầu chuyển vào tài khoản khác với tài khoản đang chọn.'
+    nguyen_nhan: 'Tài khoản chỉ được đổi khi công ty yêu cầu. Đơn đã có phiếu thu thì không đổi được tài khoản trên đơn.'
+    ai: 'Kỹ thuật viên · Kinh doanh'
+    go:
+      - re:
+          hoi: "Đơn đã có phiếu thu?"
+          co: "Kinh doanh huỷ phiếu thu, sửa tài khoản trên đơn"
+          khong: "Chọn tài khoản khác trên dòng thu"
+    quay_ve: {buoc: chuyen-khoan}
+
+  - ma: TT-12
+    ten: 'Chọn nhầm chuyển khoản cho khoản thu bằng tiền mặt'
+    gap_o: {buoc: chuyen-khoan}
+    dau_hieu: 'Phiếu thu nằm ở trạng thái nháp rất lâu; kế toán không tìm thấy giao dịch trong sao kê.'
+    nguyen_nhan: 'Dòng thu chọn hình thức chuyển khoản, trong khi khách hàng trả tiền mặt.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - buoc: 'Xoá phiếu thu nháp bị sai'
+      - buoc: 'Lập lại dòng thu bằng tiền mặt'
+      - buoc: 'Nộp tiền về công ty'
+    quay_ve: {buoc: tien-mat}
+
+  - ma: TT-13
+    ten: 'Đã thu tiền nhưng đơn vẫn hiện còn nợ'
+    gap_o: {buoc: du-tien}
+    thong_bao: '“SO …: còn nợ …”'
+    nguyen_nhan: 'Còn phiếu thu chuyển khoản ở trạng thái nháp. Hệ thống chỉ tính phiếu đã chính thức.'
+    ai: 'Kế toán'
+    go:
+      - buoc: 'Mở đơn, xem danh sách phiếu thu'
+      - re:
+          hoi: "Còn phiếu nháp?"
+          co: "Kế toán đối chiếu sao kê và xác nhận"
+          khong: "Thu nốt phần còn thiếu"
+    quay_ve: {buoc: du-tien}
+
+  - ma: TT-14
+    ten: 'Đã thu đủ mà chưa thấy hoá đơn'
+    gap_o: {buoc: hoa-don}
+    dau_hieu: 'Đơn đã thu đủ, đã giao đủ, nhưng chưa có hoá đơn.'
+    nguyen_nhan: 'Khoản thu tiền mặt không làm hoá đơn phát sinh ngay; tác vụ tự động chạy hằng ngày, sớm nhất một ngày sau phiếu giao hàng.'
+    ai: 'Kỹ thuật viên'
+    go:
+      - re:
+          hoi: "Cần hoá đơn ngay?"
+          co: "Lập hoá đơn trên ứng dụng từ phiếu giao hàng"
+          khong: "Chờ tác vụ tự động"
+    quay_ve: {buoc: hoa-don}
+
+  - ma: TT-15
+    ten: 'Đơn đã giao đủ nhưng chưa Hoàn tất'
+    gap_o: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+    thong_bao: '“Sales Order not completed: …”'
+    nguyen_nhan: 'Đơn chưa có hoá đơn đủ giá trị. Khi chưa hoàn tất, khách hàng chưa được cộng điểm và hệ thống chưa sinh lịch bảo dưỡng.'
+    ai: 'Kế toán · Kỹ thuật viên'
+    go:
+      - re:
+          hoi: "Đơn đã thu đủ?"
+          co: "Lập hoá đơn — xem TT-14"
+          khong: "Xử lý phần còn nợ — xem TT-13"
+    quay_ve: {phan_khu: B, buoc: hoan-thanh-wo, ten: Hoàn thành phiếu công việc, tam: "Quy-Trinh-03-Hien-Truong.html#dieu-kien"}
+
+  - ma: TT-16
+    ten: 'Không huỷ được phiếu thu vừa lập'
+    gap_o: {buoc: ngoai-luong}
+    dau_hieu: 'Chức năng huỷ phiếu thu trên ứng dụng báo lỗi.'
+    nguyen_nhan: 'Đã quá 24 giờ, hoặc khoản thu đã có phiếu nộp, hoặc người huỷ không phải người lập.'
+    ai: 'Kỹ thuật viên · Kế toán'
+    go:
+      - re:
+          hoi: "Quá 24 giờ hoặc đã có phiếu nộp?"
+          co: "Chuyển kế toán huỷ trên Desk"
+          khong: "Người lập phiếu huỷ trên ứng dụng"
+    quay_ve: {buoc: dong-thu}
+
+  - ma: TT-17
+    ten: 'Cần sửa phiếu thu khi đơn đã có hoá đơn'
+    gap_o: {buoc: ngoai-luong}
+    dau_hieu: 'Phiếu thu sai nhưng không huỷ được vì đơn đã có hoá đơn.'
+    nguyen_nhan: 'Hoá đơn và phiếu thu đang liên kết với nhau.'
+    ai: 'Kế toán'
+    go:
+      - buoc: 'Huỷ hoá đơn'
+      - buoc: 'Huỷ phiếu thu'
+      - buoc: 'Lập lại phiếu thu đúng'
+      - buoc: 'Hoá đơn phát sinh lại'
+    quay_ve: {buoc: hoa-don}
+
+  - ma: TT-18
+    ten: 'Khách hàng trả hàng sau khi đã nhận'
+    gap_o: {buoc: ngoai-luong}
+    dau_hieu: 'Đơn đã có hoá đơn, khách hàng mang trả lại hàng.'
+    nguyen_nhan: 'Đây là trả hàng sau bán, khác với việc kỹ thuật viên trả vật tư về kho.'
+    ai: 'Kế toán · Kinh doanh'
+    go:
+      - buoc: 'Lập phiếu giao hàng trả lại'
+      - buoc: 'Lập hoá đơn trả lại'
+      - buoc: 'Hệ thống tự thu hồi điểm tích luỹ'
+    quay_ve: {buoc: hoan-tat}
+
+hoi_dap:
+  - hoi: 'Khách đưa một nửa tiền mặt, một nửa chuyển khoản, ghi thế nào?'
+    dap: 'Lập hai dòng thu trên cùng đơn, mỗi hình thức một dòng. Xem [nhánh cả hai hình thức](#ca-hai).'
+  - hoi: 'Thu tiền mặt xong bao giờ phải nộp về công ty?'
+    dap: 'Càng sớm càng tốt, vì chưa nộp thì phiếu công việc không hoàn thành được. Nộp từ ứng dụng và chọn đúng khoản thu.'
+  - hoi: 'Khách chuyển khoản rồi, sao hệ thống vẫn nói chưa thu?'
+    dap: 'Phiếu thu chuyển khoản nằm ở nháp cho tới khi kế toán đối chiếu sao kê. Đó là bước bắt buộc — xem thẻ TT-13.'
+  - hoi: 'Thu nhầm hình thức thì sửa sao?'
+    dap: 'Trong 24 giờ và chưa có phiếu nộp thì huỷ rồi lập lại. Xem thẻ TT-05 và TT-12.'
+  - hoi: 'Khách chỉ nhận một phần hàng, có thu tiền được không?'
+    dap: 'Được, thu theo phần đã giao. Phần không giao thuộc phân khu kho và giao nhận.'
+  - hoi: 'Đã thu đủ tiền, sao chưa thấy hoá đơn?'
+    dap: 'Phần tiền mặt chờ tác vụ tự động, sớm nhất một ngày sau phiếu giao hàng. Cần ngay thì lập trên ứng dụng — xem thẻ TT-14.'
+

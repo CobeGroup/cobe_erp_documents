@@ -1,8 +1,9 @@
 ---
 title: 8 · Khi gặp trục trặc
 layout: default
-parent: Quy trình hợp nhất
-nav_order: 9
+parent: Các chặng — bản cũ
+grand_parent: Quy trình hợp nhất
+nav_order: 8
 ---
 
 # Chặng 8 — Khi gặp trục trặc
