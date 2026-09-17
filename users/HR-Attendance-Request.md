@@ -184,18 +184,23 @@ luôn bước đó, và bước đó vẫn phải qua luật không tự duyệt
 > với mọi dòng child table `Department Approver` (`parentfield = shift_request_approver`) của phòng.
 > **TÁCH hẳn khỏi `leave_approver`** (nghỉ phép không đổi). HR Manager / System Manager luôn duyệt
 > thay được. Khi bật 2 cấp, đó là người duyệt **bước 1**; bước cuối là người duyệt cuối của `HR Policy`.
-> Tab "Cần duyệt" hiện theo role trong **HR Approval Inbox Settings** — dòng AR đã thêm role
-> **`Attendance Request Approver`**.
+> Tab "Cần duyệt" hiện theo role trong **HR Approval Inbox Settings** (`viewer_roles` /
+> `approver_roles` của dòng AR, mặc định *Leave Approver, HR Manager, System Manager*). Người duyệt
+> còn cần role **`Attendance Request Approver`** để có quyền ghi / submit đơn.
 
 ### Reject
 
-Manager chọn **Cancel** (`api.approval.act`, `action = "Cancel"`). Xử lý tuỳ docstatus của đơn:
-- Đơn **Draft** (`docstatus == 0`, trường hợp thường gặp — đơn còn chờ duyệt) → code gọi **`doc.delete()`**
-  → **XOÁ hẳn** đơn (không set docstatus = 2; `cancel()` một draft sẽ lỗi *"Cannot cancel a draft"*).
-- Đơn **đã submit** (`docstatus == 1`, duyệt nhầm rồi mới thu hồi) → **`doc.cancel()`** → native revert
-  Attendance đã tạo.
+Người duyệt bấm **Từ chối** (`api.approval.act`): PWA gửi `action = "Manager Reject"` (1 bước và
+bước 1 của 2 cấp) hoặc `"HR Reject"` (bước HR). Bundle cũ còn gửi `"Cancel"` / `"Reject"`. Xử lý tuỳ
+docstatus của đơn:
+- Đơn **Draft** (`docstatus == 0`, đơn còn chờ duyệt) → code gọi **`doc.delete()`** → **XOÁ hẳn** đơn
+  (không set docstatus = 2; `cancel()` một draft sẽ lỗi *"Cannot cancel a draft"*).
+- Đơn **đã submit** (`docstatus == 1`) → chỉ tên cũ `Cancel` / `Reject` mới thành **`doc.cancel()`**
+  (native revert Attendance). `Manager Reject` / `HR Reject` bị từ chối với *"Đơn đã được duyệt xong"* —
+  nên người duyệt bấm Từ chối trên màn hình cũ, khi người khác vừa duyệt xong, không huỷ nhầm đơn.
+  Thu hồi đơn duyệt nhầm làm trên Desk (**Cancel**).
 
-**Reject bắt buộc kèm lý do** (mục 13): `Cancel`/`Reject` nằm trong `REJECT_ACTIONS` → thiếu `reason`
+**Reject bắt buộc kèm lý do** (mục 13): mọi tên từ chối nằm trong `REJECT_ACTIONS` → thiếu `reason`
 thì `frappe.throw("Vui lòng nhập lý do từ chối.")`. Lý do được **báo cho nhân viên** kèm thông báo
 (dòng *"Lý do: …"*). NV phải tạo đơn Chấm công bù mới nếu muốn lại.
 

@@ -292,9 +292,14 @@ Endpoints (`api.attendance_request`):
 HR Approval Inbox Settings), mặc định 1; patch `v0_043` tắt riêng dòng Attendance Request (chốt
 17/09/2026: chấm công bù 1 bước, làm thêm 2 cấp). Patch nạp lại doctype (`reload_doc(force=True)`)
 trước khi ghi chứ không `return` khi thiếu cột — migrate có lúc bỏ qua JSON doctype mà Patch Log vẫn
-khoá patch. `_get_inbox_configs()` trả khoá `two_level`; thiếu cột thì coi như bật.
-`approval.two_level_enabled(doctype)` dùng cho chỗ không có sẵn cfg (hook `before_submit`); không có
-dòng cấu hình cũng coi như bật.
+khoá patch. `_get_inbox_configs()` trả khoá `two_level`; thiếu cột (code chạy trước migrate) thì coi
+như **tắt** — chạy y như code cũ. `approval.two_level_enabled(doctype)` dùng cho chỗ không có sẵn cfg
+(hook `before_submit`, API nộp đơn): đọc cả dòng đang tắt khỏi hộp duyệt (`_get_inbox_configs(
+include_disabled=True)`) — HR bỏ tick *Enabled* để duyệt trên Desk thì công tắc vẫn có hiệu lực; không
+có dòng nào = 1 bước.
+
+Hộp duyệt gọi collector qua `_run_collector`: một loại đơn đọc lỗi thì chỉ mất loại đó (ghi Error Log),
+không kéo sập cả hộp — kể cả đơn nghỉ phép.
 
 > ⚠️ **Migrate là bắt buộc khi deploy.** Chỉ riêng cột công tắc có lớp chống thiếu cột; hộp duyệt,
 > danh sách đơn của nhân viên và hook còn đọc `custom_approval_state`, `custom_manager_approved_by`,
@@ -352,11 +357,24 @@ Desk, API hay bulk đều dính. Người duyệt cuối submit thẳng đơn ch
   lưu qua form/REST, ba ô bước duyệt trả về giá trị trong DB (đơn mới: `Pending Manager`, hai ô kia
   trống). Đơn đang `Manager Approved` mà đổi một trong `CONTENT_FIELDS` → về `Pending Manager`. So sánh
   theo kiểu field (ngày gửi lên là chuỗi). Chạy trước `before_submit`, nên hook đó đọc được giá trị thật.
-- `HR Overtime Request.validate` (`_guard_system_fields`): đơn đã có mà đổi `status`, `approved_by/on`,
-  `manager_approved_by/on`, `reject_reason`, `attendance`, `granted_hours` qua `save()` →
-  `PermissionError`. Miễn: đơn mới, `flags.ignore_permissions`, System Manager. Mọi đường hợp lệ (hộp
-  duyệt, huỷ duyệt, rút đơn, hết hạn) ghi bằng `db_set` / `db.set_value` nên không đi qua đây. So
-  sánh theo kiểu field (form gửi `2` cho `2.0`).
+- `HR Overtime Request.validate` — miễn `flags.ignore_permissions` (code của app) và System Manager:
+  - `_guard_system_fields`: đơn mới phải `status = Pending` và chưa có kết quả duyệt (các ô này cũng
+    `no_copy`, nên Duplicate trên Desk không chép); đơn đã có mà đổi `status`, `approved_by/on`,
+    `manager_approved_by/on`, `reject_reason`, `attendance`, `granted_hours` → `PermissionError`.
+  - `_guard_content`: đơn `Manager Approved` mà đổi `REVIEWED_FIELDS` (nhân viên, ngày, hình thức, lý do)
+    hoặc khung giờ → về `Pending`, xoá `manager_approved_by/on`. Đơn đã xử xong mà đổi `EFFECT_FIELDS`
+    hoặc khung giờ → `PermissionError`; lưu lại thì **không** gọi `_compute_expected_hours` (trần giờ /
+    lịch nghỉ đổi về sau không được đổi số giờ đơn đã duyệt).
+  - Mọi đường hợp lệ (hộp duyệt, huỷ duyệt, rút đơn, hết hạn) ghi bằng `db_set` / `db.set_value` nên
+    không đi qua đây. So sánh theo kiểu field (form gửi `2` cho `2.0`, ngày giờ là chuỗi).
+
+**Nhỏ nhưng có chủ đích:**
+
+- Nút **Từ chối** của chế độ 1 bước gửi `Manager Reject`, không gửi `Reject`: với AR đã `docstatus = 1`,
+  `Cancel`/`Reject` là huỷ đơn đã duyệt — người duyệt bấm trên màn hình cũ sẽ huỷ nhầm.
+- `cancel_my_overtime_request` đọc đơn `for_update`: HR đang duyệt (giữ khoá trong `act`) thì nhân viên
+  đọc sau và thấy `Approved`, không đè `Cancelled` lên đơn vừa có hiệu lực.
+- `new_request_recipients` bỏ chính nhân viên khỏi danh sách báo khi bật 2 cấp.
 
 **Không đổi:** quyền huỷ đơn đã duyệt (AR `Cancel`, OT `cancel_approved_request`) — hai bước chặn
 việc cấp hiệu lực, còn huỷ chỉ rút hiệu lực. Lưu ý với AR: `doc.cancel()` kéo theo huỷ `Attendance`,

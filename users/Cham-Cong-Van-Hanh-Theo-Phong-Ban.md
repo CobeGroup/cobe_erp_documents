@@ -71,6 +71,9 @@ Tạo mỗi văn phòng 1 record: `office_label`, `company`, `location_latitude`
 ### 1.3. Roles (Desk → User của manager/HR)
 - **Manager** (người duyệt bước 1): gán role **Leave Approver**, và set `Employee.leave_approver`
   của từng nhân viên = user manager đó.
+- **Người duyệt chấm công bù / làm thêm giờ**: gán role **Attendance Request Approver**, và set
+  `Employee.shift_request_approver` (hoặc bảng *Shift Request Approver* của Department). Khe này tách
+  khỏi `leave_approver` — có thể cùng hoặc khác người.
 - **HR** (duyệt bước 2 + duyệt thiết bị): gán role **HR Manager**.
 
 ### 1.4. HR Approval Inbox Settings (đã seed sẵn — kiểm tra)
@@ -186,7 +189,9 @@ check-in không thành Attendance → **báo cáo tháng (§6) trống**.
 
 ## 4. MANAGER cần làm gì để duyệt
 
-Manager = người có role **Leave Approver** và là `leave_approver` của NV.
+Manager duyệt **nghỉ phép** = người có role **Leave Approver** và là `leave_approver` của NV. Manager
+duyệt **chấm công bù / làm thêm giờ** = `shift_request_approver` của NV (trên Employee hoặc bảng của
+Department), cần role **Attendance Request Approver** — hai khe này tách nhau (§1.3).
 
 **Cách 1 — trên điện thoại (my-workspace → tab "Cần duyệt"):**
 - **Nghỉ phép** (đơn ở trạng thái *Pending Manager*): bấm đơn → **"Duyệt (Trưởng bộ phận)"**
@@ -197,7 +202,8 @@ Manager = người có role **Leave Approver** và là `leave_approver` của NV
 
 **Cách 2 — trên Desk:** mở doctype tương ứng (Leave Application / Attendance Request) và thao tác workflow.
 
-> Manager chỉ thấy đơn của **nhân viên mà mình là leave_approver** (do `restrict_to_leave_approver=1`).
+> Manager chỉ thấy đơn của nhân viên mình phụ trách (do `restrict_to_leave_approver=1`): đơn nghỉ theo
+> `leave_approver`, đơn chấm công bù / làm thêm theo `shift_request_approver`.
 
 ---
 

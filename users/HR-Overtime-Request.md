@@ -88,10 +88,16 @@ theo đơn).
 luật tính công ngày nghỉ) chỉ đọc `Approved`, nên hiệu lực chỉ phát sinh ở bước HR.
 
 **Status và kết quả duyệt chỉ đổi qua mục Cần duyệt** (và các thao tác huỷ duyệt / rút đơn /
-hết hạn). Lưu đơn trên Desk hay gọi `/api/resource` mà đổi `status`, `approved_by/on`,
-`manager_approved_by/on`, `reject_reason`, `attendance`, `granted_hours` đều bị chặn — vì
-Leave Approver có quyền ghi mọi đơn làm thêm, không chặn thì tự đặt được `Approved` mà không
-qua ai. System Manager vẫn sửa tay được. Sửa các ô khác (lý do, khung giờ…) vẫn lưu bình thường.
+hết hạn). Leave Approver và HR Manager có quyền ghi mọi đơn làm thêm, nên không chặn ở server thì
+gọi `/api/resource` là tự đặt được `Approved` mà không qua ai. Các chốt, System Manager được miễn:
+
+| Thao tác trên Desk / API | Kết quả |
+|---|---|
+| Tạo đơn mới kèm `status` khác *Pending* hoặc kèm sẵn kết quả duyệt | Bị chặn. Nút **Duplicate** không chép các ô này (`no_copy`) nên vẫn dùng được |
+| Đổi `status`, `approved_by/on`, `manager_approved_by/on`, `reject_reason`, `attendance`, `granted_hours` | Bị chặn |
+| Sửa đơn **đang chờ HR** (*Manager Approved*): đổi nhân viên, ngày, khung giờ, hình thức quy đổi hoặc lý do | Lưu được, đơn **quay về *Pending*** — trưởng bộ phận duyệt lại |
+| Sửa đơn **đã xử xong** (*Approved*, *Rejected*, *Cancelled*, *Expired*): đổi nhân viên, ngày, khung giờ, hình thức quy đổi | Bị chặn — cần đổi thì **Huỷ duyệt** rồi khai đơn mới |
+| Lưu lại đơn đã xử xong (vd sửa lý do) | Lưu được, **không tính lại** số giờ: trần giờ hay lịch nghỉ đổi về sau không làm đổi số giờ đơn đã duyệt |
 
 Hai cấp là **công tắc** — HR Approval Inbox Settings → dòng *HR Overtime Request* → cột **Duyệt 2 cấp**
 (hiện bật). Tắt thì duyệt 1 bước như trước: trưởng bộ phận duyệt là `Approved` ngay; đơn đang ở

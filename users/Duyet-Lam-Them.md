@@ -214,6 +214,7 @@ Hệ số ×2.0 là **cấu hình được** per company — xem
 | Trưởng bộ phận không thấy đơn trong Cần duyệt | Chưa được gán làm **Shift Request Approver** của nhân viên đó → báo HR. Hoặc đơn đã qua bước 1 (đang chờ HR) |
 | HR không thấy đơn trong Cần duyệt | Đơn chưa qua trưởng bộ phận; hoặc bạn không có tên trong danh sách người duyệt cuối của công ty nhân viên — xem [Chính sách chấm công](Desk-Admin-Policy.html) |
 | *"Bạn không phải người duyệt đơn này ở bước hiện tại"* | Đơn đã sang bước khác từ lúc bạn mở màn hình, hoặc bạn đang duyệt bước 1 cho đơn của chính mình. Tải lại danh sách |
+| Sửa đơn làm thêm trên Desk | Đơn đang chờ HR mà sửa ngày, khung giờ, hình thức hay lý do → quay về chờ trưởng bộ phận duyệt lại. Đơn đã duyệt / từ chối thì không sửa được các ô đó — cần đổi thì **Huỷ duyệt** rồi khai đơn mới. Xem [HR Overtime Request](HR-Overtime-Request.html) |
 | Đơn của trưởng phòng hiện thẳng ở hộp HR | Đúng thiết kế — ngoài chính họ không còn ai duyệt chấm công cho họ (mục 1). Muốn có bước 1 thì khai thêm người duyệt cho phòng hoặc cho hồ sơ nhân viên |
 | Nhân viên kêu "trưởng bộ phận duyệt rồi mà chưa có giờ" | Đúng thiết kế — đơn còn chờ HR. Nhãn trên app: *Trưởng bộ phận đã duyệt · chờ HR* |
 | Nhân viên kêu "duyệt rồi mà 0 giờ" | Kiểm tra hôm đó có check-out không, check-out có sau giờ tan ca không |
