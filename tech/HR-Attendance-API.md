@@ -313,14 +313,27 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
 - `onduty_hooks._cancel_attendance_without_basis` (gọi từ `_release_checkins`, tức `on_cancel` /
   `on_trash` của đơn) huỷ bản `Attendance` đã lỡ sinh từ chính các log đó. Điều kiện: từ `CUTOFF` trở
   đi; ngày không còn đơn chấm công bù / làm thêm nào đã duyệt; bản ghi có `attendance_request` **và**
-  `leave_application` trống; có ít nhất một log gắn vào và mọi log gắn vào đều thuộc
-  `REQUEST_GATED_SOURCES`. Vế `leave_application` là bắt buộc: nghỉ nửa ngày + công tác nửa ngày dùng
+  `leave_application` trống; có ít nhất một log gắn vào và mọi log gắn vào đều **không có bằng chứng
+  ở văn phòng** — cùng phép kiểm nhãn + toạ độ của luật ngày
+  (`eligibility.no_onsite_evidence_for_attendance`), vì bản ghi của người quẹt ngay tại văn phòng
+  trong ngày có đơn cũng mang nhãn ngoài VP (prod có 5 bản như vậy, và chúng không tự dựng lại khi
+  `process_attendance_after` của ca đã vượt qua ngày đó). Vế `leave_application` là bắt buộc: nghỉ nửa ngày + công tác nửa ngày dùng
   CHUNG một bản ghi, mà HRMS không gắn `attendance_request` khi trạng thái đã khớp — thiếu vế này là
   huỷ mất bản ghi của phép đã duyệt (prod có 31 bản dạng đó) và không dựng lại được, vì
-  `should_mark_attendance` từ chối ngày đã có phép. Huỷ hỏng (Attendance đã vào Overtime Slip đã
-  submit → `LinkExistsError`) thì ghi Error Log rồi đi tiếp, không chặn việc từ chối đơn.
-- `on_submit` của đơn gọi thêm `recompute_hours_from_checkins` cho khoảng ngày của đơn: job đối soát
-  chỉ quét 14 ngày gần đây, đơn duyệt muộn hơn thế thì ngày đó kẹt ở giờ ca phẳng.
+  `should_mark_attendance` từ chối ngày đã có phép. Việc huỷ chạy trong **savepoint**
+  (`_cancel_attendance`): `Document.cancel()` ghi `docstatus = 2` và gỡ link check-in TRƯỚC khi kiểm
+  liên kết, nên bản ghi vướng chứng từ khác (vd đã vào Overtime Slip đã submit → `LinkExistsError`)
+  mà chỉ nuốt lỗi trần thì còn lại bản huỷ nửa chừng; hỏng thì quay về nguyên trạng, ghi Error Log rồi
+  đi tiếp — không chặn việc từ chối đơn.
+- Nhóm có `whitelist_scope = "ALL"` (KTV / Sales được quẹt mọi nơi) **miễn** luật này: lần quẹt của
+  họ vốn hợp lệ không cần đơn, chỉ bị dán nhãn theo đơn vì nhánh remote xét trước whitelist.
+- Phép dò văn phòng trừ **dung sai GPS** đúng như cửa chấm công (`api.attendance._gps_tolerance_m`,
+  trần 50 m): lần quẹt được nhận là "ở văn phòng" lúc chấm thì ở đây cũng phải là bằng chứng.
+- `on_submit` của đơn gọi thêm `recompute_hours_from_checkins(from_date, to_date, employee=…)` cho
+  khoảng ngày của đơn: job đối soát chỉ quét 14 ngày gần đây, đơn duyệt muộn hơn thế thì ngày đó kẹt ở
+  giờ ca phẳng. Tham số `employee` là **bắt buộc ở đây** — bỏ trống thì duyệt một đơn sẽ ghi lại giờ
+  của mọi nhân viên trong khoảng (đo 08/2026: 267 bản ghi). Job nền và các patch vẫn gọi không truyền
+  `employee`, tức chạy toàn công ty đúng như cũ.
 
 > ⚠️ **Migrate là bắt buộc khi deploy.** Chỉ riêng cột công tắc có lớp chống thiếu cột; hộp duyệt,
 > danh sách đơn của nhân viên và hook còn đọc `custom_approval_state`, `custom_manager_approved_by`,

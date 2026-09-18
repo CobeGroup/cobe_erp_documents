@@ -177,9 +177,12 @@ hiệu lực** khi HR chưa ký, còn huỷ chỉ **rút** hiệu lực. Trên t
 được, từ trước tới nay: huỷ đơn kéo theo huỷ bản ghi công (`Attendance`), mà trưởng bộ phận không có
 quyền sửa bản ghi công. Trưởng bộ phận phát hiện nhầm thì báo HR.
 
-> ⚠️ Với KTV: đơn bị từ chối/hủy thì các lần **check-in ngoài VP dựa trên đơn đó mất chỗ dựa** —
-> ngày đó vắng toàn bộ. Nếu NV thực tế có đi làm, yêu cầu gửi lại đơn kèm bằng chứng hoặc HR chỉnh
-> công tay.
+> ⚠️ Đơn bị từ chối / huỷ thì các lần **check-in ngoài VP dựa trên đơn đó mất chỗ dựa** — ngày đó
+> không có công (kể cả bản ghi công đã lỡ sinh cũng bị thu hồi). Hai trường hợp **không** bị ảnh
+> hưởng: nhân viên có lần quẹt **tại văn phòng** trong ngày (hệ thống đối chiếu toạ độ chứ không chỉ
+> nhãn), và nhóm được HR mở quyền **quẹt mọi nơi** (KTV / Sales) — lần quẹt của họ vốn hợp lệ không
+> cần đơn. Nếu NV thực tế có đi làm mà ngày vẫn trống, yêu cầu gửi lại đơn kèm bằng chứng hoặc HR
+> chỉnh công thủ công.
 
 ---
 
