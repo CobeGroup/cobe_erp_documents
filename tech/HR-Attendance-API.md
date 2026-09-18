@@ -343,7 +343,13 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
 - Thu hồi được bản nào thì `_notify_withdrawn` báo cho nhân viên **đích danh ngày** đó (Notification
   Log → chuông + push), kể cả ngày mà **chính đơn đã tạo công** rồi HRMS huỷ theo lúc huỷ đơn
   (`_days_the_request_marked`, chỉ gom ở `on_cancel`) — đó là ca mất công rõ ràng nhất mà trước đây
-  im lặng nhất. Huỷ trên Desk không gửi thông báo nào, còn thông báo từ chối của app chỉ nói
+  im lặng nhất. Nhưng chỉ báo khi ngày đó THẬT SỰ mất công: không còn bản chấm công nào, và job
+  không dựng lại được (`_job_will_rebuild`: phải có log và luật ngày cho tính công). Ngày nhân viên
+  có ghé văn phòng quẹt vẫn được dựng lại trong vòng một giờ — đo trên prod, 104/365 ngày do đơn tạo
+  rơi vào nhóm này, tức cứ ba lần huỷ là một lần báo sai nếu không hỏi lại.
+- **Thứ tự trong `_release_checkins` là chốt thật:** thu hồi TRƯỚC, đối soát SAU. `reconcile_day`
+  chỉ đụng log chưa gắn bản chấm công, nên đối soát trước là log nằm lại ở cờ 0 (HRMS gỡ link nhưng
+  không đụng `skip_auto_attendance`) và job hàng giờ dựng lại đúng ngày vừa thu hồi. Huỷ trên Desk không gửi thông báo nào, còn thông báo từ chối của app chỉ nói
   về cái đơn; huỷ hỏng rồi quay lui thì không báo (hàm huỷ trả về việc nó làm được, không phải việc
   nó định làm).
 - **Lời báo về đơn sắp bị xoá KHÔNG được gắn `document_type`/`document_name`.** Từ chối = xoá đơn
