@@ -63,16 +63,59 @@ làm thêm hay không thuộc về **khâu duyệt phiếu**, không thuộc v�
 
 ---
 
-## 2. Xem quỹ của một nhân viên
+## 2. Xem quỹ — báo cáo và hồ sơ nhân viên
 
 **Nhân viên** tự xem trên ứng dụng: tab **Nghỉ phép** → chọn loại phép *Nghỉ bù*. Màn hình
 hiện số giờ còn lại, số ngày đổi được, và từng lô giờ kèm hạn dùng.
 
-**HR** xem nhanh cả công ty ở báo cáo **Bảng công** (`COBE HR Attendance Sheet`): hai cột
-**NB (cuối kỳ)** và **NB (tới hiện tại)** là số ngày nghỉ bù còn đổi được, lấy thẳng từ quỹ
-giờ. Đây là con số nhân viên cũng thấy trên ứng dụng.
+**HR và quản lý** có hai chỗ xem, cùng đọc từ một sổ nên không bao giờ lệch số với ứng
+dụng của nhân viên.
 
-Muốn lần lại quỹ hình thành thế nào thì tra hai bảng:
+### Báo cáo *Quỹ giờ Nghỉ bù*
+
+Vào **Báo cáo → Quỹ giờ Nghỉ bù** (`COBE Comp Leave Fund`). Báo cáo có hai chế độ:
+
+| Chế độ | Khi nào hiện | Đọc được gì |
+|---|---|---|
+| **Tổng hợp** | mặc định, khi chưa lọc một nhân viên cụ thể | mỗi người một dòng: số dư (giờ), số ngày đổi được, phần **sắp bị cắt** ở mốc kỳ, tổng đã cộng, tổng đã tiêu |
+| **Chi tiết** | khi lọc đúng một nhân viên, hoặc bật ô *Bung chi tiết lô & đơn* | bung từng lô giờ và từng khoản đã tiêu, kèm liên kết tới chứng từ gốc |
+
+Các ô lọc: *Tính tới ngày*, *Công ty*, *Phòng ban* (gồm cả phòng con), *Nhân viên*, *Chỉ
+người còn quỹ*, *Gồm NV đã nghỉ việc*.
+
+Cột **Ghi chú** gọi tên ba tình huống cần để mắt: người đang âm quỹ, người có giờ lẻ chưa
+đủ 4 giờ để đổi nửa ngày, và người sắp mất giờ khi còn dưới 45 ngày tới mốc cắt.
+
+Hai nút ở đầu báo cáo (chỉ HR thấy):
+
+- **Tạo phiếu điều chỉnh** — mở thẳng phiếu `HR Comp Leave Adjustment` đã điền sẵn nhân
+  viên đang chọn. Xem mục 4.
+- **Nhắc NV sắp mất giờ** — gửi thông báo cho đúng những người *đang hiện trên bảng* mà
+  còn giờ sắp bị cắt. Lọc phòng nào thì chỉ nhắc phòng đó. Mỗi người nhận một thông báo
+  trong ngày, bấm lại không gửi trùng.
+
+### Tab *Quỹ Nghỉ bù* trên hồ sơ nhân viên
+
+Mở hồ sơ nhân viên (`Employee`) → tab **Quỹ Nghỉ bù**, ngay cạnh tab *Attendance & Leaves*.
+Tab hiện số dư, số ngày đổi được, phần sắp bị cắt, rồi hai bảng: **Giờ vào quỹ** và **Đã
+tiêu** — mỗi dòng bấm được để mở chứng từ gốc.
+
+### Ai xem được của ai
+
+| Vai trò | Phạm vi |
+|---|---|
+| HR Manager, HR User, System Manager | toàn công ty |
+| Quản lý | chính mình và nhân viên dưới quyền — lấy theo ô *Leave Approver* hoặc *Reports To* trên hồ sơ |
+| Nhân viên | chỉ chính mình |
+
+Quản lý mở báo cáo mà thiếu người thì kiểm lại hai ô đó trên hồ sơ nhân viên: hệ thống
+nhận cấp dưới qua chúng, không qua phòng ban.
+
+### Đường tra cũ vẫn còn
+
+Báo cáo **Bảng công** (`COBE HR Attendance Sheet`) giữ hai cột **NB (cuối kỳ)** và **NB
+(tới hiện tại)** — số ngày nghỉ bù còn đổi được, cũng lấy thẳng từ quỹ giờ. Muốn tự lần
+lại phép tính thì tra hai bảng:
 
 - `HR Overtime Request` — lọc `payout_type = Nghỉ bù`, `status = Đã duyệt`, theo nhân
   viên. Cột *Số giờ dự kiến* là phần cộng vào quỹ.
