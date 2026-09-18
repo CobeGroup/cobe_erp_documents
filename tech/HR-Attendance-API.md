@@ -413,6 +413,20 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
   trần trong test trên site bản sao prod là thu hồi công thật của người thật (đã dính: 21 bản ghi
   phải dựng lại tay). Test phải luôn khoá `employee=`.
 
+**Soi chỗ chấm công ngoài văn phòng** — report `COBE Remote Checkin Audit`
+(`attendance/report/cobe_remote_checkin_audit`, vai trò System Manager / HR Manager / HR User):
+
+- Một dòng = một **ngày của một người**, chỉ gồm log có `custom_checkin_source` thuộc
+  `REQUEST_GATED_SOURCES`. Ba cột đo: khoảng cách tới `HR Office Location` đang bật gần nhất
+  (`utils.geo.haversine_distance_m`), số ngày lặp cùng một điểm (làm tròn `LAM_TRON = 4` số lẻ
+  ≈ 11 m), và số `FS Service Appointment` có giờ thực tế trong ngày.
+- Cột việc ngoài **tự tắt** khi site không cài fsmnext (`frappe.db.exists("DocType", …)`) — chấm
+  công không được phụ thuộc cứng vào app đó.
+- Ô *Chỉ dòng đáng xem* = lặp điểm ≥ `NGUONG_LAP_DIEM` **và** không có việc ngoài nào. Đo trên
+  prod 18/09/2026 với khoảng 01/08 → nay: 259 dòng, lọc còn 26 dòng của 4 người.
+- Report cố ý **không kết luận**: tỉnh chưa khai văn phòng cho ra đúng dấu vết như người chấm
+  công tại nhà (có người 28 ngày cùng một điểm nhưng ngày nào cũng có lịch dịch vụ chạy thật).
+
 > ⚠️ **Migrate là bắt buộc khi deploy.** Chỉ riêng cột công tắc có lớp chống thiếu cột; hộp duyệt,
 > danh sách đơn của nhân viên và hook còn đọc `custom_approval_state`, `custom_manager_approved_by`,
 > `HR Overtime Request.manager_approved_by`… — code chạy trước migrate thì danh sách đơn của nhân viên
