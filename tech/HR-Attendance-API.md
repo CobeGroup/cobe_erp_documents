@@ -344,7 +344,11 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
   Log → chuông + push), kể cả ngày mà **chính đơn đã tạo công** rồi HRMS huỷ theo lúc huỷ đơn
   (`_days_the_request_marked`, chỉ gom ở `on_cancel`) — đó là ca mất công rõ ràng nhất mà trước đây
   im lặng nhất. Nhưng chỉ báo khi ngày đó THẬT SỰ mất công: không còn bản chấm công nào, và job
-  không dựng lại được (`_job_will_rebuild`: phải có log và luật ngày cho tính công). Ngày nhân viên
+  không dựng lại được. `_job_will_rebuild` hỏi ĐỦ hai bên: luật ngày phải trả `COUNT` (so
+  "khác SKIP" là sai — `desired_skip` trả BA giá trị, ngày trước `CUTOFF` trả `LEAVE_ALONE`
+  và không ai dựng lại ngày đó), VÀ phía HRMS phải nhặt được log: chưa đóng cờ, thuộc ca có
+  bật chấm công tự động, không lệch ca, từ mốc `process_attendance_after` của ca trở đi (prod
+  đang có 3 ca 3 mốc khác nhau), ngày nghỉ thì ca phải cho chấm công ngày nghỉ. Ngày nhân viên
   có ghé văn phòng quẹt vẫn được dựng lại trong vòng một giờ — đo trên prod, 104/365 ngày do đơn tạo
   rơi vào nhóm này, tức cứ ba lần huỷ là một lần báo sai nếu không hỏi lại.
 - **Thứ tự trong `_release_checkins` là chốt thật:** thu hồi TRƯỚC, đối soát SAU. `reconcile_day`
