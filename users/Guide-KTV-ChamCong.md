@@ -54,8 +54,8 @@ flowchart TB
 | Tình huống | Việc cần làm | Công được tính |
 |---|---|---|
 | **Ngày thường** — sáng ghé VP lấy đồ/nhận việc, chiều làm xong ở khách | Check-in **tại VP**, check-out **tại hiện trường** (app tự cho qua) | Theo **giờ thật** từ lúc vào đến lúc ra |
-| **Ngày đi thẳng hiện trường** — job xa, đi sớm, không ghé VP | Tạo **Đề xuất chấm công bù / Công tác** cho ngày đó (trước hoặc trong ngày) | Đơn duyệt → **ca chuẩn** cả ngày (Có mặt) |
-| **Quên check-in / check-out** | Tạo **Đề xuất chấm công bù** cho ngày quên | Đơn duyệt → **ca chuẩn** (Có mặt) |
+| **Ngày đi thẳng hiện trường** — job xa, đi sớm, không ghé VP | Tạo **Đề xuất chấm công bù / Công tác** cho ngày đó **trước khi chấm công**, rồi vẫn **chấm công vào/ra như thường** ở hiện trường | Đơn duyệt → **ca chuẩn** cả ngày (Có mặt). Cả ngày **không chấm công lần nào** thì ngày đó **không có công** |
+| **Quên check-in / check-out** | Tạo **Đề xuất chấm công bù** cho **ngày đã qua** đó | Đơn duyệt → **ca chuẩn** (Có mặt). Đây là đường khai bù, có **hạn mức tháng** và **hạn nộp** |
 | **Làm khuya hôm trước** — muốn nghỉ hôm sau | Tạo đơn **Nghỉ bù** (tab Nghỉ phép — xem mục E) | Ngày nghỉ tính **On Leave**, không trừ phép năm |
 
 ---
@@ -143,6 +143,11 @@ nhãn gì đặc biệt, cứ chấm như bình thường, hệ thống tự cho
   Đơn biến mất khỏi danh sách chờ, thay bằng dòng công **Có mặt** trên Bảng công. Không có cảnh báo
   *đi trễ / về sớm / quên ra* cho ngày này.
 
+> ⚠️ **Đơn tạo cho hôm nay hoặc ngày tới chỉ mở quyền chấm công ngoài văn phòng — không thay cho việc
+> chấm công.** Ngày đó bạn vẫn phải **chấm công ít nhất một lần**; cả ngày không chấm lần nào thì sáng
+> hôm sau hệ thống gỡ ngày công đó và gửi thông báo cho bạn. Muốn tính công cho một ngày **đã qua**
+> thì gửi **đơn khai bù** (chọn đúng ngày đã qua).
+
 <img src="images/guide/dexuat/04-approved.png" width="240" alt="Sau duyệt — ngày hiện Có mặt">
 
 - **Từ chối** → đơn **bị xoá, biến mất khỏi danh sách**, bạn nhận thông báo kèm lý do; ngày đó **không
@@ -220,6 +225,7 @@ thêm bước cuối rồi ngày đó mới có công.
 | Bảng công gắn cảnh báo **"Không có ca"** | Hôm đó không có lịch hẹn dịch vụ trên hệ thống — báo điều phối tạo lịch hẹn, hoặc giải trình với HR |
 | Job kéo dài **nhiều ngày** ở tỉnh | Tạo **1 đơn** chọn khoảng ngày từ–đến là đủ, không cần mỗi ngày một đơn |
 | Đơn duyệt rồi mà Bảng công chưa thấy dòng **Có mặt** | Kéo làm mới danh sách; nếu vẫn thiếu sau vài phút → báo HR |
+| Đơn cho **hôm nay** đã duyệt, hôm sau ngày công **biến mất** | Hôm đó bạn không chấm công lần nào — đơn loại này chỉ mở quyền chấm ngoài VP. Gửi **đơn khai bù** cho ngày đã qua đó |
 
 ---
 

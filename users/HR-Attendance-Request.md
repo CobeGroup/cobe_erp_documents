@@ -66,6 +66,14 @@ Attendance Request (đơn "Chấm công bù") dùng cho các tình huống NV **
 | NV đi gặp khách hàng / công tác cả ngày | `On Duty` |
 | NV bù chấm công vì sự cố hệ thống | `On Duty` + `explanation` |
 
+> ⚠️ **NGÀY CHỌN quyết định đơn làm gì** (từ 18/09/2026). Đơn có `from_date` từ **hôm nay trở đi**
+> là **giấy phép chấm công ngoài văn phòng**: nó tắt kiểm tra vị trí cho ngày đó, không bị hạn mức
+> tháng, nhưng ngày đó **chỉ có công khi nhân viên chấm công ít nhất một lần**. Hết ngày không có
+> lần chấm nào thì bản Attendance do đơn tạo bị **thu hồi** và nhân viên nhận thông báo ghi rõ ngày
+> (`attendance.require_checkin`: job 02:20 quét 7 ngày + kiểm ngay lúc duyệt cho ngày đã qua).
+> Đơn khai bù cho **ngày đã qua** thì giữ nguyên cách cũ — duyệt là có công — và đó là đơn duy nhất
+> bị **hạn mức tháng** đếm. Luật chỉ áp từ ngày migrate trở đi (patch `v0_045` ghi mốc), không hồi tố.
+
 Khi NV tạo qua PWA (`api.attendance_request.create_attendance_request`), `reason` mặc định = **`On Duty`** → khi manager duyệt, HRMS đánh status **`Present`**. Nếu đơn đánh dấu `half_day` → status `Half Day`.
 
 > **WFH dùng CHUNG đơn này** với `reason = "Work From Home"` (hiện trong form Đề xuất khi
@@ -310,6 +318,10 @@ Desk → Attendance list → filter `hr_warning_type` để thấy:
 3. HRMS tạo 3 Attendance records (T2, T3, T4) với status = Present
 4. Hook fill working_hours = 9h (ca 8-17h) - 1h break = 8h cho mỗi ngày
 5. Salary Slip kỳ này tính bình thường — 3 ngày Present tương đương
+
+> ⚠️ Đơn này nộp **trước chuyến đi** nên là **giấy phép**: mỗi ngày T2/T3/T4 vẫn phải có **ít nhất một
+> lần chấm công** (ở Hà Nội cũng được — đơn đã tắt kiểm tra vị trí). Ngày nào không chấm lần nào thì
+> ngày đó bị thu hồi công, muốn tính lại phải gửi **đơn khai bù** cho đúng ngày đó.
 
 > **WFH** (làm tại nhà): chọn loại **"Làm việc tại nhà (WFH)"** ngay trong form Đề xuất này (khi `enable_wfh_mode` bật) — xem [Làm việc từ xa (WFH)](HR-WFH-Approval.html).
 

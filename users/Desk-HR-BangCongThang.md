@@ -264,7 +264,7 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 
 | Việc nhân viên làm | Trạng thái Attendance | Ô trên bảng |
 |---|---|---|
-| **Đề xuất chấm công bù / Công tác** được duyệt | Present | **P** (đơn cấp công đủ ca) |
+| **Đề xuất chấm công bù / Công tác** được duyệt | Present | **P** (đơn cấp công đủ ca). Đơn nộp cho **hôm nay / ngày tới** chỉ giữ được ô này nếu ngày đó **có chấm công ít nhất một lần** |
 | **Check-in ngoài VP** hợp lệ (KTV/Sales whitelist, hoặc ngày có đơn duyệt) | Present | **P** (ô giờ cho biết đủ/thiếu) |
 | **Đề xuất WFH** được duyệt | Work From Home | **WFH** |
 | **Nghỉ bù** (Leave Application loại "Nghỉ bù") được duyệt | On Leave | **NB** |

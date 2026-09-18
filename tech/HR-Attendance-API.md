@@ -274,6 +274,8 @@ Error codes phụ:
 
 **Một form "Đề xuất" duy nhất** tạo Attendance Request cho cả 2 loại (gộp, không tách):
 - `reason="On Duty"` (chấm công bù / công tác) → khi duyệt HRMS đánh **Present** (half_day → Half Day).
+  Đơn nộp cho **hôm nay / ngày tới** thì bản Present đó chỉ sống nếu ngày ấy có lần quẹt — xem
+  *Phiếu MỞ CỔNG phải có lần chấm công* bên dưới.
 - `reason="Work From Home"` (WFH) → status **WFH** + lưu `custom_work_location_label` (địa điểm).
 
 Endpoints (`api.attendance_request`):

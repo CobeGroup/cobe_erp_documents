@@ -130,11 +130,15 @@ flowchart TB
   classDef g fill:#f6ffed,stroke:#54ab78,color:#135200;
   classDef r fill:#fff1f0,stroke:#f5222d,color:#a8071a;
   S0["① Bạn gửi đơn<br/>Chờ duyệt"] --> S1{"② Quản lý<br/>quyết định"}
-  S1 -- "Duyệt" --> S2["③a Đã duyệt<br/>Hệ thống tự tạo công<br/>Ngày = Có mặt (P)"]
+  S1 -- "Duyệt" --> S2{"③ Trong ngày<br/>có chấm công không?"}
+  S2 -- "Có" --> S4["④a Ngày = Có mặt (P)"]
+  S2 -- "Không lần nào" --> S5["④b Ngày công bị gỡ<br/>Muốn tính thì gửi đơn khai bù"]
   S1 -- "Từ chối" --> S3["③b Từ chối<br/>Không có công<br/>Ngày để trống (vắng)"]
   class S0 p
   class S1 p
-  class S2 g
+  class S2 p
+  class S4 g
+  class S5 r
   class S3 r
 ```
 
@@ -142,7 +146,7 @@ flowchart TB
 |---|---|---|
 | **Chờ duyệt** (vàng) | Đơn nằm trong danh sách, nhãn *Chờ duyệt* | **Chưa** tính công; ngày đó tạm thời chưa có kết quả |
 | **Chờ HR duyệt** (xanh dương) | *Chỉ khi công ty bật duyệt 2 cấp* — quản lý đã duyệt, đơn còn chờ HR | **Vẫn chưa** tính công |
-| **Đã duyệt** (xanh) | Đơn **biến mất**, thay bằng dòng công **Có mặt** (hoặc **WFH** / **Nửa ngày**) | Ngày được tính **Có mặt (P)**. Nếu bạn có check-in ngoài VP, các cảnh báo *"ngoài vùng / quên ra"* được **bỏ** |
+| **Đã duyệt** (xanh) | Đơn **biến mất**, thay bằng dòng công **Có mặt** (hoặc **WFH** / **Nửa ngày**) | Ngày được tính **Có mặt (P)**. Nếu bạn có check-in ngoài VP, các cảnh báo *"ngoài vùng / quên ra"* được **bỏ**. Riêng đơn cho **hôm nay / ngày tới**: ngày đó chỉ giữ được công nếu bạn **có chấm công ít nhất một lần** |
 | **Bị từ chối** | Đơn **biến mất** khỏi danh sách; bạn nhận thông báo kèm lý do | **Không** có công → ngày đó **để trống** trên bảng công (coi như **vắng**), trừ khi ngày đó có công hợp lệ khác. Sửa & gửi lại đơn mới nếu cần |
 | **Từ chối** (đỏ) | Đơn **đã duyệt rồi bị HR huỷ** | Công của ngày đó bị gỡ |
 
@@ -151,6 +155,11 @@ flowchart TB
 > ✅ **Đã duyệt = xong.** Hệ thống **tự tạo bảng công "Có mặt"** cho đúng ca làm của bạn — bạn **không
 > cần** làm thêm gì. Ngày này sẽ hiện **P** (hoặc **WFH**) trên báo cáo
 > [Bảng công tháng (COBE HR Attendance Sheet)](Desk-HR-BangCongThang.html).
+
+> ⚠️ **Trừ một trường hợp: đơn tạo cho hôm nay hoặc ngày tới.** Đơn loại đó là **giấy phép chấm công
+> ngoài văn phòng**, không phải giấy xin công — bạn vẫn phải **chấm công như thường** ở nơi đang làm.
+> Cả ngày không chấm lần nào thì sáng hôm sau ngày công bị gỡ và bạn nhận thông báo; khi đó muốn tính
+> công phải gửi **đơn khai bù** cho đúng ngày đã qua đó (đơn khai bù có hạn mức tháng và hạn nộp).
 
 > ❌ **Bị từ chối thì sao?** Ngày đó **không được tính công** — trên bảng công ô ngày để **trống**
 > (coi như vắng). Nếu thực tế bạn **có đi làm** mà bị từ chối nhầm, báo **quản lý / HR** — HR có thể
@@ -168,7 +177,8 @@ chấm công bù hiện **duyệt 1 bước** (khác nghỉ phép 2 bước):
 
 <img src="images/guide/duyet/05-attendance.png" width="240" alt="Quản lý mở đơn chấm công bù — nút Duyệt / Hủy">
 
-- **Duyệt** → hệ thống tự tạo công **Có mặt** cho bạn.
+- **Duyệt** → hệ thống tự tạo công **Có mặt** cho bạn. Với đơn cho **hôm nay / ngày tới**, ngày đó chỉ
+  giữ được công nếu bạn **có chấm công ít nhất một lần**.
 - **Từ chối** → đơn bị đóng, bạn nhận lý do và không có công ngày đó.
 
 > 🔁 Nếu công ty **bật duyệt 2 cấp**: quản lý duyệt xong thì đơn chuyển *Chờ HR duyệt* và **chưa** có
@@ -185,7 +195,7 @@ chấm công bù hiện **duyệt 1 bước** (khác nghỉ phép 2 bước):
 | Đứng ngoài VP, app báo **"Ngoài vùng văn phòng"** | Đúng cơ chế. Đi công tác → bấm **Tạo đề xuất** ngay trên hộp thoại báo lỗi (hoặc dòng "Đề xuất chấm công bù" dưới nút chấm công) để tạo đơn cho ngày đó |
 | Đã gửi đơn nhưng **chưa thấy duyệt** | Quản lý có thể chưa mở app — chờ chút hoặc nhắc quản lý; đơn vẫn nằm ở *Chờ duyệt* |
 | Đơn **Đã duyệt** mà Bảng công vẫn trống | Kéo **làm mới** danh sách; đơn duyệt xong sẽ chuyển thành dòng công **Có mặt** |
-| Quên **cả check-in lẫn check-out** | Tạo **1 đơn** cho cả ngày là đủ — không cần check-in nữa, duyệt là có công |
+| Quên **cả check-in lẫn check-out** | Hôm sau tạo **1 đơn khai bù** cho **ngày đã qua** đó — loại này duyệt là có công, không cần chấm công nữa. (Đơn tạo cho **hôm nay** thì không thay được việc chấm công) |
 | Làm **nửa ngày ngoài**, nửa ngày ở VP | Tạo đơn **tích "Nửa ngày"**, ghi rõ lý do — quản lý duyệt sẽ tính nửa công |
 | Không thấy mục **WFH** trong "Loại đề xuất" | Công ty **chưa bật WFH** — báo HR bật `enable_wfh_mode` ([HR Policy](HR-Policy.html)) |
 | Cần xin bù **ngày đã lâu** | Quá **hạn nộp** của công ty (hoặc hết hạn mức đơn trong tháng) thì app chặn khi gửi → **báo HR** chỉnh tay trên Desk |
