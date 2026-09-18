@@ -304,12 +304,20 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
 **Quẹt theo đơn CHƯA DUYỆT không thành công** (chốt 18/09/2026) — luật nằm ở
 `attendance.eligibility`, không ở tầng duyệt:
 
-- `desired_skip` trả `SKIP` cho ngày thường khi `_no_onsite_evidence` đúng (mọi log của ngày có
-  `custom_checkin_source` thuộc `REQUEST_GATED_SOURCES` = *Remote-PWA*, *WFH-PWA*, và **không log nào
-  rơi vào bán kính một `HR Office Location` đang bật**) và ngày đó không có `Attendance Request`
-  docstatus 1 lẫn `HR Overtime Request` Approved. Nhãn nguồn chỉ ghi CỬA nào cho quẹt — hễ có đơn phủ
-  ngày là mọi lần quẹt hôm đó đều mang nhãn ngoài VP, kể cả khi đứng tại văn phòng — nên phải soi toạ
-  độ; đo 08-09/2026 có 28 log như vậy. Ngày có thêm log `Onsite-PWA` vẫn tính công như thường.
+- `desired_skip` trả `SKIP` cho ngày thường khi `_no_onsite_evidence` đúng (KHÔNG log nào của ngày
+  chứng minh được người đó ở văn phòng) và ngày đó không có `Attendance Request` docstatus 1 lẫn
+  `HR Overtime Request` Approved.
+- **Một lần quẹt là bằng chứng ở văn phòng khi** (`_is_onsite_evidence`): nguồn không phải cửa PWA
+  (*Manual-Desk*, máy chấm công, app khác), **hoặc** cửa đã dò ra văn phòng lúc quẹt
+  (`custom_office_location` có giá trị), **hoặc** toạ độ rơi vào bán kính một `HR Office Location`
+  đang bật. Log không có toạ độ dùng được (trống, hoặc (0,0) khi tắt theo dõi vị trí) thì vẫn tính là
+  bằng chứng — trừ nguồn quẹt-theo-đơn, vì cửa remote không bắt buộc GPS.
+- **Đừng tin nhãn nguồn.** Nhãn chỉ ghi CỬA nào cho quẹt: cửa *remote* (có đơn phủ ngày) dán
+  *Remote-PWA* cho cả lần quẹt ngay tại văn phòng (đo 08-09/2026: 28 log), còn cửa *skip* (nhóm quẹt
+  mọi nơi, và nhóm `OUT_ONLY` lúc quẹt RA) **bỏ hẳn kiểm vị trí mà vẫn dán *Onsite-PWA*** (đo: **891
+  log Onsite-PWA nằm ngoài mọi bán kính**, 38 nhân viên). Tin nhãn thì chỉ cần quẹt RA ở nhà sau khi
+  bị từ chối là ngày đó lại có công. Thêm nữa, Frappe tự điền option ĐẦU TIÊN cho Select bỏ trống nên
+  log do app khác tạo qua ORM cũng mang nhãn *Onsite-PWA*.
 - `onduty_hooks._cancel_attendance_without_basis` (gọi từ `_release_checkins`, tức `on_cancel` /
   `on_trash` của đơn) huỷ bản `Attendance` đã lỡ sinh từ chính các log đó. Điều kiện: từ `CUTOFF` trở
   đi; ngày không còn đơn chấm công bù / làm thêm nào đã duyệt; bản ghi có `attendance_request` **và**
@@ -333,7 +341,9 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
   Attendance record…", hay chính lời lỗi vừa bị nuốt) được cắt khỏi `frappe.local.message_log`: người
   bấm đang TỪ CHỐI ĐƠN, không nên thấy popup lỗi của một việc phụ đã xử lý xong.
 - Thu hồi được bản nào thì `_notify_withdrawn` báo cho nhân viên **đích danh ngày** đó (Notification
-  Log → chuông + push). Huỷ trên Desk không gửi thông báo nào, còn thông báo từ chối của app chỉ nói
+  Log → chuông + push), kể cả ngày mà **chính đơn đã tạo công** rồi HRMS huỷ theo lúc huỷ đơn
+  (`_days_the_request_marked`, chỉ gom ở `on_cancel`) — đó là ca mất công rõ ràng nhất mà trước đây
+  im lặng nhất. Huỷ trên Desk không gửi thông báo nào, còn thông báo từ chối của app chỉ nói
   về cái đơn; huỷ hỏng rồi quay lui thì không báo (hàm huỷ trả về việc nó làm được, không phải việc
   nó định làm).
 - **Lời báo về đơn sắp bị xoá KHÔNG được gắn `document_type`/`document_name`.** Từ chối = xoá đơn
