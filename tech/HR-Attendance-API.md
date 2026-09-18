@@ -326,13 +326,26 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
   (`_cancel_attendance`): `Document.cancel()` ghi `docstatus = 2` và gỡ link check-in TRƯỚC khi kiểm
   liên kết, nên bản ghi vướng chứng từ khác (vd đã vào Overtime Slip đã submit → `LinkExistsError`)
   mà chỉ nuốt lỗi trần thì còn lại bản huỷ nửa chừng; hỏng thì quay về nguyên trạng, ghi Error Log rồi
-  đi tiếp — không chặn việc từ chối đơn. Mọi lời nhắn sinh ra trong lúc huỷ (HRMS báo "Unlinked
+  đi tiếp — không chặn việc từ chối đơn. Savepoint **tự quản** (`frappe.db.savepoint` /
+  `rollback(save_point=…)` / `release_savepoint`) chứ không dùng contextmanager
+  `savepoint(catch=…)`: contextmanager nuốt lỗi ở `__exit__` nên `frappe.get_traceback()` gọi sau đó
+  trả về chuỗi RỖNG, Error Log chỉ còn mỗi tiêu đề. Mọi lời nhắn sinh ra trong lúc huỷ (HRMS báo "Unlinked
   Attendance record…", hay chính lời lỗi vừa bị nuốt) được cắt khỏi `frappe.local.message_log`: người
   bấm đang TỪ CHỐI ĐƠN, không nên thấy popup lỗi của một việc phụ đã xử lý xong.
 - Thu hồi được bản nào thì `_notify_withdrawn` báo cho nhân viên **đích danh ngày** đó (Notification
   Log → chuông + push). Huỷ trên Desk không gửi thông báo nào, còn thông báo từ chối của app chỉ nói
   về cái đơn; huỷ hỏng rồi quay lui thì không báo (hàm huỷ trả về việc nó làm được, không phải việc
   nó định làm).
+- **Lời báo về đơn sắp bị xoá KHÔNG được gắn `document_type`/`document_name`.** Từ chối = xoá đơn
+  nháp, mà `frappe.delete_doc` enqueue `delete_dynamic_links`, trong đó có
+  `delete_references("Notification Log", …)` — gắn link là lời báo bị xoá ngay sau khi tạo. Đo trên
+  prod: **0** lời báo "đơn chấm công bù bị từ chối" còn sống trên 1.145 dòng trỏ Attendance Request,
+  trong khi đơn nghỉ phép / làm thêm (không bị xoá khi từ chối) vẫn còn đủ — tức lý do từ chối mà
+  `_notify_ar_rejected` gửi kèm đã câm từ đầu. Bỏ link thì bộ lọc trùng của `create_notification` rơi
+  về (người nhận, tiêu đề) nên ngày phải nằm trong tiêu đề và phải truyền `allow_repeat=True`.
+- Ngày đã nằm trong **phiếu lương (`Salary Slip`) đã chốt** thì `_payroll_locked` bỏ qua, chỉ ghi
+  Error Log: luật này không có cửa sổ thời gian nào ngoài `CUTOFF`, nên một đơn bị huỷ nhiều tháng
+  sau sẽ sửa lặng lẽ kỳ đã trả lương.
 - Nhóm có `whitelist_scope = "ALL"` (KTV / Sales được quẹt mọi nơi) **miễn** luật này: lần quẹt của
   họ vốn hợp lệ không cần đơn, chỉ bị dán nhãn theo đơn vì nhánh remote xét trước whitelist.
 - Phép dò văn phòng trừ **dung sai GPS** đúng như cửa chấm công (`api.attendance._gps_tolerance_m`,
