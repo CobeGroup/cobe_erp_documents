@@ -329,6 +329,10 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
   đi tiếp — không chặn việc từ chối đơn. Mọi lời nhắn sinh ra trong lúc huỷ (HRMS báo "Unlinked
   Attendance record…", hay chính lời lỗi vừa bị nuốt) được cắt khỏi `frappe.local.message_log`: người
   bấm đang TỪ CHỐI ĐƠN, không nên thấy popup lỗi của một việc phụ đã xử lý xong.
+- Thu hồi được bản nào thì `_notify_withdrawn` báo cho nhân viên **đích danh ngày** đó (Notification
+  Log → chuông + push). Huỷ trên Desk không gửi thông báo nào, còn thông báo từ chối của app chỉ nói
+  về cái đơn; huỷ hỏng rồi quay lui thì không báo (hàm huỷ trả về việc nó làm được, không phải việc
+  nó định làm).
 - Nhóm có `whitelist_scope = "ALL"` (KTV / Sales được quẹt mọi nơi) **miễn** luật này: lần quẹt của
   họ vốn hợp lệ không cần đơn, chỉ bị dán nhãn theo đơn vì nhánh remote xét trước whitelist.
 - Phép dò văn phòng trừ **dung sai GPS** đúng như cửa chấm công (`api.attendance._gps_tolerance_m`,

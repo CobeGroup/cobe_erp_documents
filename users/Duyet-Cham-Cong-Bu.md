@@ -178,7 +178,8 @@ hiệu lực** khi HR chưa ký, còn huỷ chỉ **rút** hiệu lực. Trên t
 quyền sửa bản ghi công. Trưởng bộ phận phát hiện nhầm thì báo HR.
 
 > ⚠️ Đơn bị từ chối / huỷ thì các lần **check-in ngoài VP dựa trên đơn đó mất chỗ dựa** — ngày đó
-> không có công (kể cả bản ghi công đã lỡ sinh cũng bị thu hồi). Hai trường hợp **không** bị ảnh
+> không có công (kể cả bản ghi công đã lỡ sinh cũng bị thu hồi). Nhân viên **được thông báo đích danh
+> ngày bị rút công**, kể cả khi huỷ trên Desk. Hai trường hợp **không** bị ảnh
 > hưởng: nhân viên có lần quẹt **tại văn phòng** trong ngày (hệ thống đối chiếu toạ độ chứ không chỉ
 > nhãn), và nhóm được HR mở quyền **quẹt mọi nơi** (KTV / Sales) — lần quẹt của họ vốn hợp lệ không
 > cần đơn. Nếu NV thực tế có đi làm mà ngày vẫn trống, yêu cầu gửi lại đơn kèm bằng chứng hoặc HR
