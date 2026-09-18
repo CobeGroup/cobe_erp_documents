@@ -384,10 +384,15 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
 
 **Phiếu MỞ CỔNG phải có lần chấm công** (chốt 18/09/2026) — `attendance.require_checkin`:
 
-- Phân loại đơn theo **thời điểm nộp**, không theo `reason`: `from_date >= DATE(creation)` là phiếu
-  **mở cổng** (xin phép chấm công ngoài văn phòng cho hôm nay / ngày tới), ngược lại là **khai bù**.
-  Cùng một cột dùng chung với bộ đếm hạn mức (`utils.attendance_quota.count_used`) — hai luật phải
-  đọc cùng một định nghĩa, lệch nhau là có đường đi vòng.
+- Phân loại theo **thời điểm nộp**, không theo `reason`, và xét **từng NGÀY**:
+  `attendance_date >= DATE(ar.creation)` là ngày **mở cổng** (lúc nộp đơn ngày đó chưa qua), ngược
+  lại là ngày **khai bù**. Xét theo `from_date` của cả đơn thì thủng: một đơn được phủ 31 ngày
+  (`MAX_RANGE_DAYS`), nên đơn khai từ HÔM QUA tới 30 ngày TỚI bị xếp là khai bù — tốn đúng một suất
+  hạn mức mà miễn luật này cho cả 30 ngày chưa tới. Đo 19/09/2026: chưa ai đi cửa đó (453/455 đơn
+  phủ 1 ngày, đúng 1 đơn vắt ngang mốc tạo từ 07/2026) và hai cách cho cùng 90 ngày.
+- Bộ đếm hạn mức (`utils.attendance_quota.count_used`) vẫn phân loại theo `from_date` của cả ĐƠN:
+  nó trả lời "một tháng được khai mấy lần", không phải "ngày này có phải khai bù không". Hai câu hỏi
+  khác nhau nên hai phép xét khác nhau — chỗ này cố ý lệch, đừng "thống nhất" lại.
 - Phiếu mở cổng chỉ mở geofence. Hết ngày mà nhân viên **không có lần quẹt nào** thì bản chấm công
   do đơn tạo bị thu hồi (`_cancel_attendance`, dùng chung máy thu hồi của luồng huỷ đơn: savepoint +
   chốt chặn phiếu lương) và nhân viên nhận lời báo ghi rõ ngày. Phiếu khai bù **không** chịu luật này
