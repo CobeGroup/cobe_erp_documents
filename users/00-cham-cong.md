@@ -26,6 +26,7 @@ has_children: true
 
 ## Vào nhanh theo tình huống
 
+- 🆕 Muốn biết **đợt cập nhật 09/2026 đổi những gì** → **[Có gì mới — đợt 09/2026](Cham-Cong-Co-Gi-Moi-09-2026.html)**
 - 📱 Mới vào công ty, cần chấm công → **[Cài app & Chấm công](Guide-NhanVien-ChamCong.html)**
 - 🚗 Đi công tác / KTV làm hiện trường → **[Chấm công ngoài VP](Guide-NhanVien-ChamCongNgoai.html)** · **[KTV hiện trường](Guide-KTV-ChamCong.html)**
 - 🗺️ Muốn hiểu đề xuất chấm công bù được duyệt thế nào → **[Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html)**

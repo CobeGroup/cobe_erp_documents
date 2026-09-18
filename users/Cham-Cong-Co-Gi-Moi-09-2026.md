@@ -1,0 +1,135 @@
+---
+title: "Có gì mới — đợt 09/2026"
+layout: default
+parent: Chấm công & HR
+nav_order: 6
+---
+
+# Chấm công — có gì mới (đợt 09/2026)
+{: .no_toc }
+
+Năm thay đổi về phiếu chấm công và phê duyệt, cùng những việc phải làm khi đưa lên hệ thống
+{: .fs-3 .text-grey-dk-000 }
+
+<details open markdown="block">
+  <summary>Mục lục</summary>
+{: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+---
+
+## Tóm tắt
+
+| # | Thay đổi | Ai thấy khác biệt | Đọc thêm |
+|---|---|---|---|
+| ① | Phiếu **Làm thêm giờ** duyệt **hai cấp** (trưởng bộ phận → HR); **Chấm công bù** giữ **một bước**, có công tắc đổi | Người duyệt, HR | [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html) · [Duyệt làm thêm](Duyet-Lam-Them.html) |
+| ② | Đơn bị **từ chối / huỷ** thì ngày đó **không có công**, kể cả khi đã chấm công ngoài văn phòng theo đơn | Nhân viên, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) |
+| ③ | **Hạn mức tháng** chỉ đếm **đơn khai bù** cho ngày đã qua | Nhân viên hiện trường, HR | [Hạn mức đơn Chấm công bù](Desk-HR-HanMucChamCongBu.html) |
+| ④ | Đơn cho **hôm nay / ngày tới** là **giấy phép chấm công ngoài văn phòng**, không phải giấy xin công | Nhân viên hiện trường, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) |
+| ⑤ | Báo cáo mới: **nhân viên chấm công ngoài văn phòng ở đâu** | HR, quản lý | [Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html) |
+
+Kèm theo đợt này còn có **quỹ giờ Nghỉ bù mở cho HR và quản lý** —
+xem [Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html).
+
+---
+
+## ① Phiếu Làm thêm giờ duyệt hai cấp
+
+Trước đây mỗi loại đơn chỉ có một người duyệt. Nay phiếu **Làm thêm giờ** (`HR Overtime Request`)
+đi qua **hai cấp**: trưởng bộ phận duyệt trước, HR duyệt bước cuối; chỉ sau bước cuối thì giờ làm
+thêm mới vào quỹ Nghỉ bù hoặc vào bảng tính tiền.
+
+Phiếu **Chấm công bù** (`Attendance Request`) vẫn **một bước** như cũ. Chế độ này đặt **theo từng
+loại đơn** ở Desk → **HR Approval Inbox Settings** → cột *Duyệt 2 cấp*, HR đổi được bất cứ lúc nào.
+
+Hai điểm dễ hiểu nhầm:
+
+- **Sửa nội dung đơn sau khi trưởng bộ phận đã duyệt thì đơn quay về bước 1.** HR phải duyệt đúng
+  thứ trưởng bộ phận đã xem.
+- **HR duyệt trên Desk bằng nút Submit vẫn là một lần bấm** — hệ thống tự ghi nhận cả hai bước.
+
+## ② Đơn bị từ chối hoặc huỷ thì ngày đó không có công
+
+Nhân viên được phép chấm công ngoài văn phòng **ngay khi vừa gửi đơn**, chưa cần ai duyệt — đó là
+điều kiện để người đi hiện trường không phải chờ. Hệ quả trước đây: đơn bị từ chối xong, ngày đó
+**vẫn có công** dựng từ chính những lần chấm công mà đơn ấy mở đường.
+
+Nay đơn bị từ chối hoặc bị huỷ thì bản chấm công sinh ra từ các lần chấm đó **bị thu hồi**, và nhân
+viên **nhận thông báo ghi rõ ngày nào** không còn được tính công — kể cả khi HR huỷ đơn trên Desk.
+
+Ba trường hợp **không** bị ảnh hưởng:
+
+- nhân viên có lần chấm công **tại văn phòng** trong ngày — hệ thống đối chiếu **toạ độ**, không chỉ
+  nhìn nhãn nguồn chấm công;
+- nhóm được HR mở quyền **chấm công mọi nơi** (kỹ thuật viên / kinh doanh);
+- ngày đã nằm trong **phiếu lương đã chốt** — hệ thống không tự sửa lịch sử, chỉ ghi nhật ký để HR
+  xử lý thủ công.
+
+## ③ Hạn mức tháng chỉ đếm đơn khai bù
+
+Hạn mức số đơn Chấm công bù mỗi tháng trước đây đếm **mọi** đơn, nên nó chặn nhầm loại đơn mà kỹ
+thuật viên phải tạo gần như hằng ngày để chấm công ngoài văn phòng.
+
+Nay hạn mức **chỉ đếm đơn khai bù cho ngày đã qua**. Đơn nộp cho hôm nay hoặc ngày tới không bị đếm,
+không bị chặn, và ứng dụng cũng không còn hiện cảnh báo hết hạn mức khi chọn những ngày đó.
+
+## ④ Đơn cho hôm nay là giấy phép chấm công, không phải giấy xin công
+
+Đây là thay đổi ảnh hưởng tới thói quen hằng ngày nhiều nhất.
+
+| | Đơn xin chấm công ngoài văn phòng | Đơn khai bù |
+|---|---|---|
+| Ngày chọn | Hôm nay hoặc ngày tới | Ngày đã qua |
+| Tác dụng | Mở quyền chấm công ngoài vùng văn phòng | Cấp công cho ngày đó |
+| Bị hạn mức tháng | Không | Có |
+| Điều kiện để ngày đó có công | **Phải chấm công ít nhất một lần trong ngày** | Người duyệt đồng ý |
+
+Lý do: trước đây duyệt đơn là ngày đó có công, bất kể nhân viên có chấm công hay không. Đo trên dữ
+liệu thật ngày 18/09/2026, tính từ 01/08: **90 ngày công của 28 người** đến từ đơn loại này trên
+những ngày nhân viên **không chấm công lần nào**; không ai trong số đó thuộc diện không chấm công
+được — tất cả đều chấm công bình thường vào những ngày khác.
+
+Cách vận hành mới: ngày kết thúc mà không có lần chấm công nào thì ngày công do đơn tạo **bị thu
+hồi** và nhân viên nhận thông báo ghi rõ ngày. Muốn tính công cho ngày đã qua đó thì gửi **đơn khai
+bù** — đường này có hạn mức tháng, hạn nộp và phải được duyệt.
+
+Luật **chỉ áp dụng từ ngày đưa lên hệ thống trở đi**; những ngày công đã cấp trước đó giữ nguyên.
+
+## ⑤ Báo cáo soát chấm công ngoài văn phòng
+
+Luật ở mục ④ đóng được cửa "không chấm công lần nào", nhưng không phân biệt được người đang ở nhà
+khách với người chấm đúng một lần tại nhà. Báo cáo **COBE Remote Checkin Audit** bày ba con số cho
+mỗi ngày của mỗi người — khoảng cách tới văn phòng gần nhất, số ngày lặp lại cùng một điểm, và số
+lịch dịch vụ chạy thật trong ngày — để HR biết **nên hỏi ai**.
+
+Báo cáo cố ý không kết luận thay người đọc: một tỉnh chưa được khai văn phòng sẽ cho ra đúng dấu vết
+như người chấm công tại nhà. Chi tiết cách đọc:
+[Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html).
+
+---
+
+## Khi đưa lên hệ thống
+
+> ⚠️ **Bắt buộc chạy `bench migrate`**, không chỉ deploy mã nguồn. Đợt này có ba bản vá dữ liệu:
+> đặt chế độ duyệt một bước cho Chấm công bù, mở bảng quỹ giờ Nghỉ bù, và **ghi mốc ngày bắt đầu áp
+> luật ở mục ④** — thiếu bước migrate thì mốc không được ghi và các màn hình mới đọc thiếu cột.
+
+Việc HR làm thủ công sau khi lên:
+
+- Gán vai trò **người duyệt chấm công** cho các tài khoản còn thiếu.
+- Kiểm tra cột *Duyệt 2 cấp* trong **HR Approval Inbox Settings** đúng như mong muốn.
+- Xem **[Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html)** một lượt: nếu thấy cả
+  nhóm ở một tỉnh đều xa văn phòng và lặp cùng một điểm, hãy khai **Văn phòng** (`HR Office
+  Location`) cho tỉnh đó — nhóm ấy sẽ hết cần tạo đơn hằng ngày.
+- Báo cho nhân viên hiện trường về thay đổi ở mục ④ trước khi nó có hiệu lực.
+
+---
+
+## Liên quan
+
+- [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html)
+- [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html) · [Duyệt làm thêm giờ](Duyet-Lam-Them.html)
+- [Hạn mức đơn Chấm công bù](Desk-HR-HanMucChamCongBu.html)
+- [Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html)
