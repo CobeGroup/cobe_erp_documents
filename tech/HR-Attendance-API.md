@@ -313,22 +313,30 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
 - `onduty_hooks._cancel_attendance_without_basis` (gọi từ `_release_checkins`, tức `on_cancel` /
   `on_trash` của đơn) huỷ bản `Attendance` đã lỡ sinh từ chính các log đó. Điều kiện: từ `CUTOFF` trở
   đi; ngày không còn đơn chấm công bù / làm thêm nào đã duyệt; bản ghi có `attendance_request` **và**
-  `leave_application` trống; có ít nhất một log gắn vào và mọi log gắn vào đều **không có bằng chứng
-  ở văn phòng** — cùng phép kiểm nhãn + toạ độ của luật ngày
-  (`eligibility.no_onsite_evidence_for_attendance`), vì bản ghi của người quẹt ngay tại văn phòng
-  trong ngày có đơn cũng mang nhãn ngoài VP (prod có 5 bản như vậy, và chúng không tự dựng lại khi
-  `process_attendance_after` của ca đã vượt qua ngày đó). Vế `leave_application` là bắt buộc: nghỉ nửa ngày + công tác nửa ngày dùng
+  `leave_application` trống; **ngày đó không có bằng chứng đi làm nào ngoài các lần quẹt theo đơn** —
+  hỏi đúng câu mà luật ngày hỏi (`eligibility.no_onsite_evidence_for_day`, gồm cả miễn trừ nhóm
+  `whitelist_scope = ALL`); và bản ghi phải do **log dựng lên** (`_built_from_checkins`) chứ không
+  phải HR chấm thủ công. Hỏi theo NGÀY chứ không theo từng bản ghi vì bản ghi chỉ gom được log đã gắn
+  vào nó: hai bên lệch nhau thì thu hồi xong luật ngày lại dựng bản mới, mà ca có
+  `process_attendance_after` muộn hơn ngày đó thì **không dựng lại được** (prod: `ST - Kinh doanh` =
+  2026-08-17). Vế `leave_application` là bắt buộc: nghỉ nửa ngày + công tác nửa ngày dùng
   CHUNG một bản ghi, mà HRMS không gắn `attendance_request` khi trạng thái đã khớp — thiếu vế này là
   huỷ mất bản ghi của phép đã duyệt (prod có 31 bản dạng đó) và không dựng lại được, vì
   `should_mark_attendance` từ chối ngày đã có phép. Việc huỷ chạy trong **savepoint**
   (`_cancel_attendance`): `Document.cancel()` ghi `docstatus = 2` và gỡ link check-in TRƯỚC khi kiểm
   liên kết, nên bản ghi vướng chứng từ khác (vd đã vào Overtime Slip đã submit → `LinkExistsError`)
   mà chỉ nuốt lỗi trần thì còn lại bản huỷ nửa chừng; hỏng thì quay về nguyên trạng, ghi Error Log rồi
-  đi tiếp — không chặn việc từ chối đơn.
+  đi tiếp — không chặn việc từ chối đơn. Mọi lời nhắn sinh ra trong lúc huỷ (HRMS báo "Unlinked
+  Attendance record…", hay chính lời lỗi vừa bị nuốt) được cắt khỏi `frappe.local.message_log`: người
+  bấm đang TỪ CHỐI ĐƠN, không nên thấy popup lỗi của một việc phụ đã xử lý xong.
 - Nhóm có `whitelist_scope = "ALL"` (KTV / Sales được quẹt mọi nơi) **miễn** luật này: lần quẹt của
   họ vốn hợp lệ không cần đơn, chỉ bị dán nhãn theo đơn vì nhánh remote xét trước whitelist.
 - Phép dò văn phòng trừ **dung sai GPS** đúng như cửa chấm công (`api.attendance._gps_tolerance_m`,
-  trần 50 m): lần quẹt được nhận là "ở văn phòng" lúc chấm thì ở đây cũng phải là bằng chứng.
+  trần 50 m) và lấy **bán kính dự phòng** cùng nguồn (`office.allowed_radius_m` →
+  `HR Policy.default_radius_m` → 100 m): lần quẹt được nhận là "ở văn phòng" lúc chấm thì ở đây cũng
+  phải là bằng chứng.
+- Bằng chứng chỉ xét **toạ độ**, chưa xét wifi BSSID / WebRTC (hai cổng này đang tắt ở cả 3 HR Policy).
+  Bật một trong hai cho văn phòng sóng GPS xấu thì phải bổ sung ở đây, không thì hai bên lệch nhau.
 - `on_submit` của đơn gọi thêm `recompute_hours_from_checkins(from_date, to_date, employee=…)` cho
   khoảng ngày của đơn: job đối soát chỉ quét 14 ngày gần đây, đơn duyệt muộn hơn thế thì ngày đó kẹt ở
   giờ ca phẳng. Tham số `employee` là **bắt buộc ở đây** — bỏ trống thì duyệt một đơn sẽ ghi lại giờ
