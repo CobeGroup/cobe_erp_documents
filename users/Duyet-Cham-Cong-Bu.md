@@ -185,6 +185,23 @@ quyền sửa bản ghi công. Trưởng bộ phận phát hiện nhầm thì b�
 > cần đơn. Nếu NV thực tế có đi làm mà ngày vẫn trống, yêu cầu gửi lại đơn kèm bằng chứng hoặc HR
 > chỉnh công thủ công.
 
+### Duyệt đơn cho hôm nay / ngày tới ≠ cấp công
+
+Đơn nộp cho **hôm nay hoặc ngày tới** là đơn xin phép **chấm công ngoài văn phòng**, không phải đơn
+xin công. Duyệt đơn loại này chỉ mở quyền chấm công ở ngoài cho nhân viên; ngày đó **chỉ có công nếu
+nhân viên thật sự chấm công ít nhất một lần**. Không có lần chấm công nào thì sáng hôm sau hệ thống
+gỡ ngày công đó và báo cho nhân viên.
+
+Vì vậy:
+
+- Nhân viên có đi làm nhưng quên chấm công **ngày đã qua** thì phải gửi **đơn khai bù** (chọn đúng
+  ngày đã qua) — đó mới là loại đơn cấp công, và là loại bị hạn mức tháng.
+- Duyệt muộn một đơn xin chấm công ngoài văn phòng cho ngày đã qua **không** cứu được ngày đó nếu
+  nhân viên không chấm công lần nào: hệ thống gỡ công ngay tại thời điểm duyệt.
+- Luật này chỉ áp cho ngày **kể từ khi tính năng lên hệ thống** trở đi, không tính ngược về trước.
+
+---
+
 ---
 
 ## E. Bật / tắt duyệt 2 cấp (HR / quản trị)

@@ -380,6 +380,39 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
   của mọi nhân viên trong khoảng (đo 08/2026: 267 bản ghi). Job nền và các patch vẫn gọi không truyền
   `employee`, tức chạy toàn công ty đúng như cũ.
 
+**Phiếu MỞ CỔNG phải có lần chấm công** (chốt 18/09/2026) — `attendance.require_checkin`:
+
+- Phân loại đơn theo **thời điểm nộp**, không theo `reason`: `from_date >= DATE(creation)` là phiếu
+  **mở cổng** (xin phép chấm công ngoài văn phòng cho hôm nay / ngày tới), ngược lại là **khai bù**.
+  Cùng một cột dùng chung với bộ đếm hạn mức (`utils.attendance_quota.count_used`) — hai luật phải
+  đọc cùng một định nghĩa, lệch nhau là có đường đi vòng.
+- Phiếu mở cổng chỉ mở geofence. Hết ngày mà nhân viên **không có lần quẹt nào** thì bản chấm công
+  do đơn tạo bị thu hồi (`_cancel_attendance`, dùng chung máy thu hồi của luồng huỷ đơn: savepoint +
+  chốt chặn phiếu lương) và nhân viên nhận lời báo ghi rõ ngày. Phiếu khai bù **không** chịu luật này
+  — đó mới là đường dành cho người quên quẹt, và đường đó đã có hạn mức tháng + hạn nộp + duyệt.
+- Đo trên bản sao prod 18/09/2026, tính từ 01/08: **90 ngày công của 28 người** sinh ra từ phiếu mở
+  cổng mà ngày đó không có lần quẹt nào. Cả 28 người đều quẹt bình thường những ngày khác (không ai
+  thuộc diện "không quẹt được"). Chẻ theo dấu vết việc ngoài (`FS Service Appointment` có giờ thực
+  tế): 55 ngày/14 người có làm thật, 35 ngày/18 người không để lại dấu vết nào.
+- **Hai cửa gọi**: cron `20 2 * * *` quét `LOOKBACK_DAYS = 7` ngày vừa qua, và `on_submit` của đơn
+  (`enforce_for_request`) cho những ngày trong đơn đã qua — đơn duyệt muộn hơn cửa sổ quét thì công
+  không được sống lại chỉ vì người duyệt bấm trễ. `on_submit` gọi **trước** hai bước tính giờ; cả hai
+  bước đó lọc `docstatus = 1` nên bản vừa thu hồi không bị tính giờ rồi mới bỏ đi.
+- **Mốc hiệu lực nằm trong dữ liệu, không viết cứng**: patch `v0_045` ghi `frappe.db.set_default(
+  "cobe_require_checkin_since", today())` lúc migrate, `moc_hieu_luc()` tự ghi hôm nay nếu chưa có.
+  Deploy trễ mấy ngày cũng không rút công ngày nào trước đó — user chốt **không hồi tố**, 90 ngày cũ
+  giữ nguyên.
+- Không đụng: ngày còn `HR Overtime Request` Approved; bản ghi mang `leave_application` (nghỉ nửa
+  buổi dùng chung một bản ghi với công tác nửa buổi); ngày trong phiếu lương đã chốt; ngày hôm nay.
+  Đơn chấm công bù KHÁC phủ cùng ngày thì **không xảy ra được** — `validate_request_overlap` của HRMS
+  chặn mọi đơn trùng khoảng còn sống, đo trên prod: 0 cặp.
+- "Không có lần quẹt nào" xét cả log **gắn thẳng vào bản ghi** (`Employee Checkin.attendance`), không
+  chỉ log cùng ngày lịch: ca đêm có log rơi sang ngày hôm sau, lọc theo `DATE(time)` một mình là kết
+  tội oan.
+- ⚠️ `sweep(from, to)` **không truyền `employee` là quét cả công ty** — đúng ý cho cron, nhưng gọi
+  trần trong test trên site bản sao prod là thu hồi công thật của người thật (đã dính: 21 bản ghi
+  phải dựng lại tay). Test phải luôn khoá `employee=`.
+
 > ⚠️ **Migrate là bắt buộc khi deploy.** Chỉ riêng cột công tắc có lớp chống thiếu cột; hộp duyệt,
 > danh sách đơn của nhân viên và hook còn đọc `custom_approval_state`, `custom_manager_approved_by`,
 > `HR Overtime Request.manager_approved_by`… — code chạy trước migrate thì danh sách đơn của nhân viên

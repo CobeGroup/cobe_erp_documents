@@ -123,6 +123,12 @@ Nộp quá hạn mức thì đơn bị chặn lúc gửi:
 > Bạn đã dùng hết hạn mức đơn khai bù của tháng 10/2026: 5/5 đơn (tính cả đơn đang chờ
 > duyệt). Đơn nộp cho hôm nay hoặc ngày tới thì không bị hạn mức này. Cần thêm thì liên hệ HR.
 
+> ℹ️ **Đơn nộp cho hôm nay / ngày tới có phanh riêng.** Loại đơn đó là giấy xin phép chấm công
+> ngoài văn phòng nên không bị hạn mức — nhưng ngày đó chỉ có công khi nhân viên **thật sự chấm công
+> ít nhất một lần**; không chấm lần nào thì hệ thống gỡ ngày công vào sáng hôm sau và báo cho nhân
+> viên. Hạn mức vì vậy chỉ cần lo cho đường **khai bù** (ngày đã qua) — xem
+> [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html).
+
 **Được miễn hạn mức:** HR Manager, HR User, System Manager — để còn nhập thay khi có việc
 chính đáng. Đơn sửa lại (không đổi ngày bắt đầu) và đơn lập lại từ bản đã huỷ cũng không bị
 đếm lần nữa.

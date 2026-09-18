@@ -60,6 +60,24 @@ flowchart TB
 
 ## ① Nhân viên tạo Đề xuất
 
+### Hai loại đơn, hai luật khác nhau
+
+Cùng một biểu mẫu, nhưng **ngày được chọn** quyết định đơn thuộc loại nào:
+
+| | Đơn xin chấm công ngoài văn phòng | Đơn khai bù |
+|---|---|---|
+| Ngày chọn | Hôm nay hoặc ngày tới | Ngày đã qua |
+| Dùng khi | Sáng mai đi thẳng tới nhà khách; hôm nay ra ngoài và sẽ chấm công tại đó | Ngày trước có đi làm nhưng quên chấm công, hoặc máy không chấm được |
+| Tác dụng | **Mở quyền chấm công ngoài vùng văn phòng** cho ngày đó | **Cấp công** cho ngày đó |
+| Bị hạn mức tháng | Không | Có |
+| Điều kiện để ngày đó có công | **Phải có ít nhất một lần chấm công thật trong ngày** | Người duyệt đồng ý |
+
+Nói gọn: đơn cho hôm nay hoặc ngày tới là **giấy phép chấm công ở ngoài**, không phải giấy xin
+công. Tạo đơn rồi mà cả ngày không chấm công lần nào thì ngày đó **không có công**: sáng hôm sau
+hệ thống gỡ ngày công đó và gửi thông báo ghi rõ ngày. Muốn tính công cho một ngày đã qua thì gửi
+**đơn khai bù** — và đơn khai bù mới là loại bị hạn mức tháng.
+
+
 Anh A đang ở chỗ khách, mở app. Có **2 lối** cùng mở 1 form:
 
 - **Tab Chấm công:** bấm dòng **"Đi công tác / làm ngoài? Đề xuất chấm công bù"** ngay dưới nút chấm
@@ -79,7 +97,7 @@ Anh A đang ở chỗ khách, mở app. Có **2 lối** cùng mở 1 form:
 
 > 💡 Có đơn rồi (kể cả **chưa duyệt**), ngày đó anh A đã **chấm công ngoài VP được ngay** — hệ thống
 > tự cho qua kiểm tra vị trí. Nhưng công ngày này **không tính theo giờ chấm** mà chờ đơn duyệt
-> (xem bước ③). Chi tiết: [Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html).
+> (xem bước ③). Và đơn chỉ mở quyền chấm công: **vẫn phải chấm công** thì ngày đó mới có công. Chi tiết: [Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html).
 
 ### Hạn mức số đơn mỗi tháng
 
@@ -127,7 +145,10 @@ chọn → **Actions → Submit** — duyệt hàng loạt một phát. Chi ti�
 ## ③ Kết quả
 
 **Được duyệt** → hệ thống **tự tạo công "Có mặt" theo ca chuẩn** cho ngày 30/06 — anh A không phải
-làm gì thêm. Đơn biến mất khỏi danh sách chờ, thay bằng dòng công trên Bảng công; không có cảnh báo
+làm gì thêm. Riêng đơn nộp cho **hôm nay hoặc ngày tới**, ngày công này chỉ giữ được nếu trong
+ngày anh A **có chấm công ít nhất một lần** (ở đâu cũng được, kể cả ngoài văn phòng); không có lần
+chấm công nào thì sáng hôm sau hệ thống gỡ ngày công và báo cho anh A, khi đó muốn tính công phải
+gửi **đơn khai bù**. Đơn biến mất khỏi danh sách chờ, thay bằng dòng công trên Bảng công; không có cảnh báo
 *đi trễ / về sớm / quên ra* cho ngày này:
 
 <img src="images/guide/dexuat/04-approved.png" width="260" alt="Sau duyệt — ngày 30/06 hiện Có mặt trên Bảng công">
