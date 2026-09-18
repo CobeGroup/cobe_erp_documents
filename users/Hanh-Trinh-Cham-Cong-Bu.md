@@ -87,11 +87,14 @@ Công ty có thể đặt **số đơn Chấm công bù tối đa mỗi tháng**
 công ty. Khi có hạn mức, form hiện sẵn *tháng này đã dùng bao nhiêu trên bao nhiêu đơn* ngay
 lúc chọn khoảng ngày, và chặn khi hết:
 
-> Bạn đã dùng hết hạn mức đơn chấm công bù của tháng 10/2026: 5/5 đơn (tính cả đơn đang chờ
-> duyệt). Cần thêm thì liên hệ HR.
+> Bạn đã dùng hết hạn mức đơn khai bù của tháng 10/2026: 5/5 đơn (tính cả đơn đang chờ
+> duyệt). Đơn nộp cho hôm nay hoặc ngày tới thì không bị hạn mức này. Cần thêm thì liên hệ HR.
 
-Ba điều cần biết:
+Bốn điều cần biết:
 
+- **Chỉ đơn khai bù cho ngày ĐÃ QUA mới bị đếm.** Đơn nộp cho **hôm nay hoặc ngày tới** —
+  loại tạo trước để được chấm công ngoài văn phòng, ví dụ sáng mai đi thẳng tới nhà khách —
+  không bị đếm và không bao giờ bị chặn.
 - **Đơn đang chờ duyệt cũng tính**, không riêng đơn đã duyệt. Đơn bị từ chối hoặc đã huỷ thì
   không tính.
 - Đơn nhiều ngày tính vào **tháng của ngày đầu** đơn.

@@ -34,6 +34,11 @@ Hệ thống đã có **hạn nộp** (khai lùi tối đa bao nhiêu ngày sau 
 mấy ngày"*; hạn mức trả lời *"một tháng được khai mấy lần"*. Hai câu hỏi khác nhau nên là
 hai luật riêng, khai ở hai nơi.
 
+> ⚠️ **Hạn mức chỉ đếm đơn KHAI BÙ** — đơn nộp cho **ngày đã qua**. Đơn nộp cho **hôm nay
+> hoặc ngày tới** không bị đếm và không bao giờ bị chặn: đó là đơn **xin phép trước** để
+> chấm công ngoài văn phòng, kỹ thuật viên đi thẳng từ nhà tới nhà khách bắt buộc phải có
+> đơn thì mới quẹt được. Chặn nó là chặn việc hằng ngày chứ không hãm được lạm dụng.
+
 ---
 
 ## 2. Luật tra hạn mức
@@ -110,13 +115,13 @@ Hết 30/11 bản này tự mất hiệu lực, nhân viên quay về hạn mứ
 ## 4. Nhân viên thấy gì
 
 Trên ứng dụng, form **Đề xuất chấm công** hiện sẵn *tháng này đã dùng bao nhiêu trên bao
-nhiêu đơn*, ngay khi chọn khoảng ngày — để họ biết trước chứ không phải điền xong mới bị
+nhiêu đơn khai bù*, ngay khi chọn khoảng ngày — để họ biết trước chứ không phải điền xong mới bị
 chặn.
 
 Nộp quá hạn mức thì đơn bị chặn lúc gửi:
 
-> Bạn đã dùng hết hạn mức đơn chấm công bù của tháng 10/2026: 5/5 đơn (tính cả đơn đang chờ
-> duyệt). Cần thêm thì liên hệ HR.
+> Bạn đã dùng hết hạn mức đơn khai bù của tháng 10/2026: 5/5 đơn (tính cả đơn đang chờ
+> duyệt). Đơn nộp cho hôm nay hoặc ngày tới thì không bị hạn mức này. Cần thêm thì liên hệ HR.
 
 **Được miễn hạn mức:** HR Manager, HR User, System Manager — để còn nhập thay khi có việc
 chính đáng. Đơn sửa lại (không đổi ngày bắt đầu) và đơn lập lại từ bản đã huỷ cũng không bị
