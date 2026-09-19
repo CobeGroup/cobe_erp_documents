@@ -217,8 +217,11 @@ Doctypes** → dòng **Attendance Request** → cột **Duyệt 2 cấp**:
 Bấm **Save** là có hiệu lực ngay, không cần deploy hay restart. Bỏ tick cột **Enabled** (ẩn loại đơn
 khỏi tab Cần duyệt để duyệt hoàn toàn trên Desk) **không** làm mất công tắc này — chế độ vẫn theo cột
 *Duyệt 2 cấp*. Cột này đặt riêng cho từng dòng: dòng
-**HR Overtime Request** (làm thêm giờ) có công tắc riêng — hiện đang **bật**. Đơn nghỉ phép luôn 2 cấp
-theo workflow nên dòng *Leave Application* không có cột này.
+**HR Overtime Request** (làm thêm giờ) có công tắc riêng — hiện đang **bật**.
+
+> ⚠️ Dòng *Leave Application* **cũng hiện cột này và đang được tick**, nhưng tick đó **không có tác
+> dụng gì**: đơn nghỉ phép luôn đi hai bước theo workflow riêng của nó. Đừng bỏ tick để mong đơn nghỉ
+> về một bước — không đổi được ở đây.
 
 **Đổi chế độ khi đang có đơn chờ:**
 
