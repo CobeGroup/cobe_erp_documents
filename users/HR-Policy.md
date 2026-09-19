@@ -30,6 +30,7 @@ nav_order: 4
    - [3.5. Check-in Whitelist](#35-check-in-whitelist)
    - [3.6. Trần OT theo ngày hiệu lực](#36-trần-ot-theo-ngày-hiệu-lực)
    - [3.7. Hạn khai theo ngày hiệu lực](#37-hạn-khai-theo-ngày-hiệu-lực)
+   - [3.8. Người duyệt cuối (cấp HR)](#38-người-duyệt-cuối-cấp-hr)
 4. [Tab Hạn mức khai bù](#4-tab-hạn-mức-khai-bù)
 5. [Cấp phép năm (Earned Leave)](#5-cấp-phép-năm-earned-leave)
 6. [Kịch bản roll-out theo giai đoạn](#6-kịch-bản-roll-out-theo-giai-đoạn)
@@ -233,6 +234,30 @@ Miễn theo role: HR Manager / HR User / System Manager / Administrator. Hạn �
 khai chặt hơn hạn đơn nghỉ → cảnh báo (không chặn) lúc lưu.
 
 Chi tiết cho người vận hành: [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html).
+
+---
+
+### 3.8. Người duyệt cuối (cấp HR)
+
+`final_leave_approvers` (Table MultiSelect → `HR Policy Final Approver`) — ai chốt **bước HR** cho
+nhân viên của công ty này. Đọc bằng `utils.hr_policy.get_final_approvers`.
+
+| Trạng thái bảng | Nghĩa |
+|---|---|
+| Trống | `None` = **không giới hạn**: mọi HR Manager thấy và duyệt được |
+| Có tên | Chỉ những người đó (danh sách chỉ THU HẸP trong số HR Manager, không cấp quyền) |
+
+`validate` **cảnh báo** (không chặn) khi bảng có tên mà **không tên nào dùng được** — tài khoản
+tắt, hoặc thiếu role `HR Manager`. Khi đó `api.approval._final_approver_companies` loại công ty
+này khỏi danh sách của mọi HR Manager, còn người được khai thì thiếu role nên cũng không thấy →
+đơn bước HR của công ty đó **kẹt im lặng**, chỉ System Manager còn thấy. Kiểm bằng cách đọc thẳng
+`tabHas Role`, KHÔNG dùng `frappe.get_roles` — hai đường đó từng lệch nhau và làm hộp duyệt xếp
+đơn ở bước này mà `act` tính ra bước kia (vá ở `fbc9b23`).
+
+> Ô HTML `approval_mode_note` ngay trên bảng nhắc rằng **công tắc "Duyệt 2 cấp" không nằm ở đây**
+> mà ở `HR Approval Inbox Settings` (toàn cục, một giá trị cho cả ba công ty). Cố ý giữ một nguồn
+> duy nhất: hộp duyệt dựng MỘT câu truy vấn cho cả ba công ty và công tắc quyết định hình dạng cả
+> mệnh đề WHERE, nên mỗi công ty một chế độ sẽ buộc phải chép luật phân quyền sang Python.
 
 ---
 

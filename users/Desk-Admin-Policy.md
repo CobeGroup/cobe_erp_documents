@@ -60,6 +60,11 @@ nav_order: 2
 2 bước; chấm công bù và làm thêm giờ 2 bước khi bật cột **Duyệt 2 cấp** ở HR Approval Inbox Settings
 (xem [Vận hành chấm công theo phòng ban §1.4](Cham-Cong-Van-Hanh-Theo-Phong-Ban.html)):
 
+> ℹ️ **Công tắc *Duyệt 2 cấp* không nằm trong bản chính sách này** — nó ở `HR Approval Inbox
+> Settings`, cùng chỗ với quyền xem/duyệt từng loại đơn, và là **công tắc toàn cục** (một giá trị
+> cho cả ba công ty). Ngay trên màn chính sách có khối nhắc kèm đường dẫn sang đó, để khỏi phải
+> nhớ hai nơi. Phần khai **theo công ty** chính là bảng *Người duyệt cuối* ở mục này.
+
 | Đơn | Bước 1 (Trưởng Bộ Phận) | Bước HR chốt việc gì |
 |---|---|---|
 | **Nghỉ phép / Nghỉ bù** | `leave_approver` | Trừ phép / trừ quỹ Nghỉ bù, ghi ngày nghỉ |
@@ -101,6 +106,15 @@ Chi tiết từng trường hợp:
 >
 > Ngược lại, sau này **gỡ role HR Manager** của một người thì họ **tự rớt** khỏi luồng
 > duyệt, dù tên vẫn còn trong bảng — không cần nhớ vào đây xoá.
+
+> ⛔ **Nếu KHÔNG AI trong bảng dùng được** (tất cả đều thiếu role HR Manager, hoặc tài khoản đã
+> tắt) thì đơn ở **bước HR của công ty đó không hiện trong hộp duyệt của HR Manager nào** — chỉ
+> System Manager còn thấy. Đơn nằm im, không ai được báo. Đây **khác hẳn** với bảng để trống:
+> trống nghĩa là *mọi* HR Manager duyệt được.
+>
+> Từ 19/09/2026, **bấm Lưu** bản chính sách mà rơi vào trường hợp này thì hệ thống **cảnh báo
+> ngay tại chỗ**, nêu đích danh tài khoản hỏng và thiếu gì. Cảnh báo, không chặn — sửa bằng cách
+> cấp role HR Manager cho họ, hoặc xoá hết tên để trả về "mọi HR Manager".
 
 ### Khai theo TỪNG CÔNG TY
 
