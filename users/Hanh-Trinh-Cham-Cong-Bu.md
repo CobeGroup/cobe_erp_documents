@@ -101,8 +101,8 @@ Anh A đang ở chỗ khách, mở app. Có **2 lối** cùng mở 1 form:
 
 ### Hạn mức số ngày khai bù mỗi tháng
 
-Công ty có thể đặt **số ngày khai bù tối đa mỗi tháng** cho từng nhân viên hoặc cho cả công
-ty, **tính riêng cho từng loại đơn**. Khi có hạn mức, form hiện sẵn *tháng này đã khai bao
+Công ty có thể đặt **số ngày khai bù tối đa mỗi tháng** cho cả công ty, cho từng **bộ phận**,
+hoặc cho **riêng một người**, **tính riêng cho từng loại đơn**. Khi có hạn mức, form hiện sẵn *tháng này đã khai bao
 nhiêu trên bao nhiêu ngày* ngay lúc chọn khoảng ngày, kèm số ngày đơn đang điền sẽ tiêu, và
 chặn khi vượt:
 

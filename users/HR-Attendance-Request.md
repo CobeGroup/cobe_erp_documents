@@ -84,8 +84,8 @@ Khi NV tạo qua PWA (`api.attendance_request.create_attendance_request`), `reas
 Ràng buộc khi tạo đơn: một đơn phủ tối đa **31 ngày**, mỗi NV tối đa **10 đơn nháp** chờ
 duyệt, đơn **thừa** (mọi ngày đã có Attendance đúng trạng thái) bị chặn từ lúc tạo, và từ
 **14/09/2026** có thêm **hạn mức số NGÀY khai bù mỗi tháng**, tính riêng cho **từng loại đơn**
-(kể cả WFH, từ 19/09/2026), theo bản gán cho nhân viên hoặc công ty
-(`HR Attendance Request Quota`, có ngày hiệu lực như gán lịch nghỉ; chưa gán cho loại nào =
+(kể cả WFH, từ 19/09/2026), khai trong `HR Policy` → tab *Hạn mức khai bù* theo **nhân viên /
+bộ phận / cả công ty** (trống = tất cả, hẹp thắng rộng, có ngày hiệu lực; loại chưa có dòng nào =
 loại đó không giới hạn). Đếm NGÀY chứ không đếm đơn — một đơn phủ tới 31 ngày — và chỉ đếm
 những ngày đã qua tại lúc nộp đơn — xem [Hạn nộp phiếu & ràng buộc §7](HR-Filing-Deadline.html#7-hạn-mức-số-ngày-khai-bù-mỗi-tháng).
 

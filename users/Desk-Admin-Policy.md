@@ -36,11 +36,12 @@ nav_order: 2
 | **Giới hạn giờ check-in** | Chặn quẹt VÀO quá muộn |
 | **Check-in Whitelist** | Danh sách được phép chấm ngoại lệ |
 
-> **Hạn mức số ngày khai bù mỗi tháng** không nằm trong HR Policy mà ở doctype riêng
-> **Hạn mức ngày khai bù** (`HR Attendance Request Quota`): gán cho từng nhân viên hoặc cả
-> công ty, **riêng từng loại đơn**, có ngày hiệu lực từ/đến, Submit mới áp dụng — cùng cách dùng
-> với gán lịch nghỉ.
-> Chi tiết: [Hạn nộp phiếu & ràng buộc §7](HR-Filing-Deadline.html#7-hạn-mức-số-ngày-khai-bù-mỗi-tháng).
+> **Hạn mức số ngày khai bù mỗi tháng** nằm ở **tab riêng "Hạn mức khai bù"** của chính bản
+> chính sách này (chuyển về đây 19/09/2026, trước đó là một doctype rời phải Submit). Mỗi dòng
+> khai được theo **bộ phận** hoặc **đích danh nhân viên** — để trống là áp cho tất cả — và
+> **riêng từng loại đơn**, theo ngày hiệu lực. Lưu là có hiệu lực ngay.
+> Chi tiết: [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html) ·
+> [Hạn nộp phiếu & ràng buộc §7](HR-Filing-Deadline.html#7-hạn-mức-số-ngày-khai-bù-mỗi-tháng).
 
 ![Form HR Policy — feature flags & defaults](images/desk/admin-policy-form.png)
 

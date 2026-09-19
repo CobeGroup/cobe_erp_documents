@@ -9,8 +9,8 @@ nav_order: 3.8
 # Hạn mức ngày khai bù
 {: .no_toc }
 
-Một tháng mỗi nhân viên được khai bù bao nhiêu **ngày**, tính riêng cho **từng loại đơn** —
-khai bằng **Hạn mức ngày khai bù** (`HR Attendance Request Quota`)
+Một tháng mỗi nhân viên được khai bù bao nhiêu **ngày**, tính riêng cho **từng loại đơn** và
+khai được theo **bộ phận** — trong **Chính sách chấm công** (`HR Policy`) → tab *Hạn mức khai bù*
 {: .fs-3 .text-grey-dk-000 }
 
 <details open markdown="block">
@@ -43,27 +43,33 @@ hai luật riêng, khai ở hai nơi.
 
 ## 2. Luật tra hạn mức
 
-Bản ghi hạn mức gán cho **một nhân viên** hoặc **một công ty**, có ngày hiệu lực — cùng
-khuôn với gán lịch nghỉ (`Holiday List Assignment`), để HR chỉ phải nhớ một cách làm.
+Mỗi dòng trong bảng có hai ô phạm vi — *Bộ phận* và *Nhân viên* — và **để trống nghĩa là
+"tất cả"**. Cùng khuôn ngày hiệu lực với hai bảng bên cạnh trong cùng màn (*Hạn khai*,
+*Trần OT*), để HR chỉ phải nhớ một cách làm.
 
-Khi nhân viên nộp đơn, hệ thống tra theo thứ tự:
+Khi nhân viên nộp đơn, hệ thống tra theo thứ tự **hẹp trước, rộng sau**:
 
-1. **Bản gán cho chính nhân viên, đúng loại đơn** — bản đã Submit có *Hiệu lực từ ngày* lớn
-   nhất mà không muộn hơn ngày đang xét. Nếu bản đó đã quá *Hiệu lực đến ngày* thì coi như
-   nhân viên không có bản riêng và rơi xuống bậc 2 (không lấy bản cũ hơn — bản mới đã thay
-   bản cũ).
-2. **Bản gán cho công ty** của nhân viên, cùng loại đơn, theo cùng phép chọn.
-3. **Không có bản nào = không giới hạn.**
+1. **Dòng khai đích danh nhân viên đó**, đúng loại đơn.
+2. **Dòng khai bộ phận** của nhân viên (ô *Nhân viên* để trống), đúng loại đơn.
+3. **Dòng để trống cả hai ô** = áp cho mọi người trong công ty, đúng loại đơn.
+4. **Không dòng nào = không giới hạn.**
+
+Trong cùng một bậc: lấy dòng có *Hiệu lực từ ngày* lớn nhất mà không muộn hơn ngày đang xét.
+Dòng mới thay dòng cũ, **không cần xoá dòng cũ** — giữ lại là giữ luôn lịch sử luật.
+
+> ⚠️ **Bậc rộng không đỡ cho bậc hẹp.** Nhân viên có dòng riêng thì dòng của bộ phận không còn
+> được xét, kể cả khi dòng riêng chặt hơn. Nhờ vậy khai **0** cho một người mới miễn được hạn
+> mức chung — nếu bậc dưới còn đỡ thì không cách nào miễn cho ai.
 
 > ⚠️ **Mỗi loại đơn một sổ riêng.** Hạn mức khai cho *Chấm công bù* không ràng buộc đơn *Làm
-> việc tại nhà* và ngược lại. Loại nào chưa có bản gán nào thì loại đó **không giới hạn** —
-> nên khai một loại mà quên loại kia là để ngỏ loại kia, và hệ thống không nhắc.
+> việc tại nhà* và ngược lại. Loại nào chưa có dòng nào thì loại đó **không giới hạn** — khai
+> một loại mà quên loại kia là để ngỏ loại kia. Lúc Lưu, hệ thống **nhắc** loại nào chưa có dòng.
 
 > **Số 0 nghĩa là không giới hạn**, không phải "chặn sạch". Hai lý do: hệ thống lưu ô số
-> để trống thành 0, nên quên điền không được biến thành khoá cứng; và nhờ đó, gán một bản
-> **0** cho một nhân viên chính là cách **miễn** hạn mức chung của công ty cho đúng người
-> đó — người thường xuyên phải khai bù nhiều ngày trong tháng vì lý do chính đáng thì miễn
-> hạn mức cho riêng người đó, không phải nới trần của cả công ty.
+> để trống thành 0, nên quên điền không được biến thành khoá cứng; và nhờ đó, khai một dòng
+> **0** cho một nhân viên chính là cách **miễn** hạn mức chung cho đúng người đó — người thường
+> xuyên phải khai bù nhiều ngày vì lý do chính đáng thì miễn cho riêng họ, không phải nới trần
+> của cả công ty.
 
 ### Đếm cái gì
 
@@ -87,44 +93,57 @@ khai ngày 02/10 vẫn không bị đếm theo luật mới. Cùng nguyên tắc
 
 ## 3. Khai một hạn mức
 
-**Vào bằng đâu:** ô tìm kiếm trên Desk, gõ `HR Attendance Request Quota`; hoặc mở
-`/app/hr-attendance-request-quota`.
+**Vào bằng đâu:** Desk → **Chính sách chấm công** (`HR Policy`) của công ty → tab **Hạn mức
+khai bù** → bảng *Hạn mức ngày khai bù*. Mỗi công ty một bản chính sách, nên hạn mức nằm cùng
+chỗ với các luật chấm công khác của công ty đó.
 
-| Trường | Cách điền |
+| Ô trong dòng | Cách điền |
 |---|---|
-| Áp dụng cho | **Employee** (một người) hoặc **Company** (cả công ty) |
-| Gán cho | Chọn nhân viên hoặc công ty tương ứng |
-| Loại đơn | **On Duty** (Chấm công bù / Công tác) hoặc **Work From Home** (Làm việc tại nhà). Mỗi loại một bản gán riêng |
-| Hiệu lực từ ngày | Ngày đầu tiên luật này áp dụng |
-| Hiệu lực đến ngày | Bỏ trống = có hiệu lực tới khi có bản gán mới hơn cho cùng đối tượng và cùng loại. Điền nếu là hạn mức tạm thời, để nó tự hết mà không phải nhớ huỷ |
+| Hiệu lực từ ngày | Ngày đầu tiên dòng này áp dụng. **Bắt buộc** |
+| Loại đơn | **On Duty** (Chấm công bù / Công tác) hoặc **Work From Home** (Làm việc tại nhà). **Bắt buộc**, mỗi loại một dòng riêng |
+| Bộ phận | Để trống = mọi bộ phận. Điền để đặt hạn mức riêng cho một bộ phận |
+| Nhân viên | Để trống = mọi nhân viên. Điền để đặt ngoại lệ cho một người |
 | Số ngày tối đa mỗi tháng | Số **ngày**. **0 = không giới hạn** |
 
-Bản ghi phải **Submit** mới có hiệu lực. Hệ thống chặn hai bản cùng đối tượng, **cùng loại
-đơn**, cùng ngày hiệu lực — hai bản tranh nhau thì không đoán được bản nào thắng. Cùng người
-cùng ngày mà **khác loại** thì hợp lệ, đó là cách khai hai loại song song.
+**Lưu là có hiệu lực ngay** — không còn bước Submit như bản ghi rời trước đây.
+
+Hệ thống chặn năm kiểu khai sai ngay lúc Lưu:
+
+| Bị chặn | Vì sao |
+|---|---|
+| Hai dòng **cùng phạm vi, cùng loại đơn, cùng ngày hiệu lực** | Hai dòng cùng điều kiện thì thứ tự khai quyết định luật — không ai đoán được |
+| Một dòng khai **cả Nhân viên lẫn Bộ phận** | Bậc nhân viên đã thắng, để thêm bộ phận chỉ làm người đọc tưởng dòng hẹp hơn thực tế |
+| Nhân viên / bộ phận **của công ty khác** | Dòng đó vĩnh viễn không áp cho ai, vì luật chỉ đọc chính sách của công ty nhân viên |
+| Chọn một **nhóm bộ phận** (ví dụ *All Departments*) | Nhân viên được gán vào bộ phận **cụ thể**, nên dòng theo nhóm không áp cho ai — trong khi trông như vừa đặt trần chung. Muốn áp cho tất cả thì **bỏ trống** ô Bộ phận |
+| Số ngày **âm** | Mọi giá trị ≤ 0 được hiểu là "không giới hạn", nên −1 trông như siết chặt nhất mà thực ra TẮT |
+
+Cùng phạm vi mà **khác loại đơn**, hoặc cùng ngày mà **khác phạm vi**, đều hợp lệ — đó là cách
+khai nhiều tầng song song.
 
 ### Ví dụ
 
-**Đặt trần chung, mở riêng cho kỹ thuật viên đi tỉnh:**
+**Trần chung cho công ty, nới cho bộ phận Dịch vụ, miễn cho một kỹ thuật viên đi tỉnh:**
 
-| Áp dụng cho | Gán cho | Loại đơn | Hiệu lực từ | Số ngày tối đa |
+| Hiệu lực từ | Loại đơn | Bộ phận | Nhân viên | Số ngày tối đa |
 |---|---|---|---|---|
-| Company | Cobe Group | On Duty | 01/10/2026 | 5 |
-| Company | Cobe Group | Work From Home | 01/10/2026 | 8 |
-| Employee | (KTV đi tỉnh) | On Duty | 01/10/2026 | 0 |
+| 01/10/2026 | On Duty | *(trống)* | *(trống)* | 3 |
+| 01/10/2026 | Work From Home | *(trống)* | *(trống)* | 3 |
+| 01/10/2026 | On Duty | Dịch vụ - Bảo hành | *(trống)* | 8 |
+| 01/10/2026 | On Duty | *(trống)* | (KTV đi tỉnh) | 0 |
 
-Bản của nhân viên thắng bản của công ty, mà 0 nghĩa là không giới hạn — người đó khai bù bao
-nhiêu ngày cũng được, còn lại cả công ty tối đa 5 ngày khai bù và 8 ngày làm việc tại nhà mỗi
-tháng. **Không khai dòng nào cho một loại thì loại đó không giới hạn**, nên nếu chỉ khai dòng
-*On Duty* thì đơn WFH vẫn nộp bao nhiêu cũng được.
+Đọc từ hẹp ra rộng: kỹ thuật viên kia khai bù bao nhiêu ngày cũng được (0 = không giới hạn);
+người khác trong bộ phận Dịch vụ được 8 ngày; mọi người còn lại 3 ngày; và cả công ty 3 ngày
+làm việc tại nhà. **Không khai dòng nào cho một loại thì loại đó không giới hạn.**
 
-**Siết tạm một người trong hai tháng:**
+**Siết một bộ phận trong hai tháng rồi trả về trần chung:**
 
-| Áp dụng cho | Gán cho | Loại đơn | Hiệu lực từ | Hiệu lực đến | Số ngày tối đa |
-|---|---|---|---|---|---|
-| Employee | (nhân viên cần nhắc) | On Duty | 01/10/2026 | 30/11/2026 | 2 |
+| Hiệu lực từ | Loại đơn | Bộ phận | Nhân viên | Số ngày tối đa |
+|---|---|---|---|---|
+| 01/10/2026 | On Duty | Marketing | *(trống)* | 2 |
+| 01/12/2026 | On Duty | Marketing | *(trống)* | 5 |
 
-Hết 30/11 bản này tự mất hiệu lực, nhân viên quay về hạn mức của công ty.
+Từ 01/12 dòng thứ hai thắng (ngày hiệu lực lớn hơn) — không phải xoá dòng cũ, và tra lại một
+ngày trong tháng 10 vẫn ra đúng luật của tháng 10.
 
 ---
 
@@ -157,9 +176,11 @@ vì thêm ngày là xin thêm suất.
 
 | Tình huống | Nguyên nhân / cách xử |
 |---|---|
-| Đặt hạn mức rồi mà không thấy chặn | Bản ghi còn ở nháp — phải **Submit**. Hoặc ngày đầu của đơn nằm trước *Hiệu lực từ ngày* |
-| Nhân viên bị chặn dù công ty chưa đặt hạn mức | Có bản gán riêng cho người đó. Mở `HR Attendance Request Quota` lọc theo *Gán cho* để xem |
-| Muốn miễn cho một người | Gán cho người đó một bản **0 ngày** — 0 là không giới hạn, không phải cấm |
+| Đặt hạn mức rồi mà không thấy chặn | Ngày trong đơn nằm **trước** *Hiệu lực từ ngày* của dòng (luật không hồi tố). Hoặc nhân viên có dòng riêng / dòng bộ phận rộng hơn đang thắng |
+| Nhân viên bị chặn dù chưa đặt hạn mức chung | Có dòng khai riêng cho người đó, hoặc dòng cho **bộ phận** của họ. Mở tab *Hạn mức khai bù* xem cả bảng — cột *Bộ phận* và *Nhân viên* hiện ngay trên lưới |
+| Muốn miễn cho một người | Thêm dòng khai đích danh họ với **0 ngày** — 0 là không giới hạn, không phải cấm |
+| Đổi bộ phận của nhân viên | Hạn mức đi theo bộ phận **hiện tại** của họ, tính lúc nộp đơn. Chuyển bộ phận là đổi luôn hạn mức |
+| Nhân viên chưa khai bộ phận | Rơi xuống dòng để trống cả hai ô (trần chung của công ty), không phải thoát hạn mức |
 | Nhân viên nói "tôi mới nộp có 3 đơn" | Đếm **ngày**, không đếm đơn: một đơn ba ngày là ba suất. Đơn **đang chờ duyệt** cũng tính; đơn bị từ chối thì không |
 | Đặt hạn mức rồi mà đơn WFH vẫn nộp thoải mái | Chưa khai dòng nào cho loại **Work From Home** — mỗi loại một sổ riêng, loại chưa khai là không giới hạn |
 | Cần cho thêm ngày trong tháng này | Nâng số trên bản đang hiệu lực, hoặc khai bản mới hiệu lực từ đầu tháng; hoặc HR nhập thay (vai trò HR được miễn) |

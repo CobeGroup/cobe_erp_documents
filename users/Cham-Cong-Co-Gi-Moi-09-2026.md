@@ -26,7 +26,7 @@ Năm thay đổi về phiếu chấm công và phê duyệt, cùng những việ
 |---|---|---|---|
 | ① | Phiếu **Làm thêm giờ** duyệt **hai cấp** (trưởng bộ phận → HR); **Chấm công bù** giữ **một bước**, có công tắc đổi | Người duyệt, HR | [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html) · [Duyệt làm thêm](Duyet-Lam-Them.html) |
 | ② | Đơn bị **từ chối / huỷ** thì ngày đó **không có công**, kể cả khi đã chấm công ngoài văn phòng theo đơn | Nhân viên, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) |
-| ③ | **Hạn mức tháng** đếm **số ngày khai bù**, tính riêng từng loại đơn (kể cả WFH), và chỉ đếm ngày đã qua | Nhân viên hiện trường, HR | [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html) |
+| ③ | **Hạn mức tháng** đếm **số ngày khai bù**, tính riêng từng loại đơn (kể cả WFH), chỉ đếm ngày đã qua, và khai được **theo bộ phận** ngay trong Chính sách chấm công | Nhân viên hiện trường, HR | [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html) |
 | ④ | Đơn cho **hôm nay / ngày tới** là **giấy phép chấm công ngoài văn phòng**, không phải giấy xin công | Nhân viên hiện trường, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) |
 | ⑤ | Báo cáo mới: **nhân viên chấm công ngoài văn phòng ở đâu** | HR, quản lý | [Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html) |
 
@@ -72,7 +72,7 @@ Ba trường hợp **không** bị ảnh hưởng:
 Hạn mức trước đây đếm **số đơn** và đếm **mọi** đơn, nên vừa chặn nhầm loại đơn mà kỹ thuật viên
 phải tạo gần như hằng ngày để chấm công ngoài văn phòng, vừa để hở hai chỗ.
 
-Ba điều đổi:
+Bốn điều đổi:
 
 - **Chỉ đếm những ngày đã qua tại lúc nộp đơn.** Phần xin phép trước để chấm công ngoài văn phòng
   không bị đếm, không bị chặn, và ứng dụng cũng không còn hiện cảnh báo hết hạn mức cho những ngày đó.
@@ -81,6 +81,10 @@ Ba điều đổi:
 - **Mỗi loại đơn một hạn mức riêng, kể cả Làm việc tại nhà.** Trước đây đơn WFH **không ai đếm** dù
   nó cũng cấp công — đó là đường khai công không giới hạn. Nay HR đặt được số riêng cho nó; loại nào
   chưa đặt thì loại đó vẫn không giới hạn.
+- **Khai theo bộ phận, và khai ngay trong Chính sách chấm công.** Hạn mức chuyển từ một màn riêng
+  (phải Submit từng bản) vào **tab "Hạn mức khai bù"** của `HR Policy`. Mỗi dòng đặt được cho cả
+  công ty, cho một **bộ phận**, hoặc cho **đích danh một người** — hẹp thắng rộng, Lưu là có hiệu
+  lực ngay.
 
 ## ④ Đơn cho hôm nay là giấy phép chấm công, không phải giấy xin công
 
@@ -121,9 +125,10 @@ như người chấm công tại nhà. Chi tiết cách đọc:
 
 > ⚠️ **Bắt buộc chạy `bench migrate`**, không chỉ deploy mã nguồn. Đợt này có bốn bản vá dữ liệu:
 > đặt chế độ duyệt một bước cho Chấm công bù, mở bảng quỹ giờ Nghỉ bù, **ghi mốc ngày bắt đầu áp
-> luật ở mục ④**, và **chuyển hạn mức tháng sang đơn vị ngày kèm loại đơn** — thiếu bước migrate thì
-> mốc không được ghi, các màn hình mới đọc thiếu cột, và **đơn khai bù không lưu được** vì luật hạn
-> mức đọc hai cột mà bản vá chưa tạo.
+> luật ở mục ④**, và **chuyển hạn mức tháng vào Chính sách chấm công** (kèm đơn vị ngày, loại đơn,
+> bộ phận — bản vá tự mang 3 bản hạn mức đang có sang, rồi xoá màn cũ) — thiếu bước migrate thì mốc
+> không được ghi, tab mới không hiện, và **hạn mức tạm thời không áp cho ai** (hệ thống chọn cách
+> không chặn oan, chỉ ghi Error Log) cho tới khi migrate xong.
 
 Việc HR làm thủ công sau khi lên:
 
@@ -134,6 +139,10 @@ Việc HR làm thủ công sau khi lên:
   Location`) cho tỉnh đó — nhóm ấy sẽ hết cần tạo đơn hằng ngày.
 - **Khai hạn mức cho loại *Làm việc tại nhà*** nếu muốn hãm loại đơn đó: bản vá chỉ chuyển những
   bản đang có sang loại *Chấm công bù*, nên loại WFH vẫn đang **không giới hạn** cho tới khi HR khai.
+  Chỗ khai giờ ở `HR Policy` → tab **Hạn mức khai bù** (mỗi công ty một bản chính sách).
+- **Cân nhắc khai theo bộ phận.** Đo 19/09: khai bù dồn vào *Dịch vụ - Bảo hành* (84 đơn/29 người)
+  và *Marketing* (44 đơn/16 người); các bộ phận còn lại 1–7 đơn. Nới cho hai bộ phận đó và siết
+  phần còn lại sát hơn được, thay vì một con số cho tất cả.
 - Báo cho nhân viên hiện trường về thay đổi ở mục ④ trước khi nó có hiệu lực.
 
 ---

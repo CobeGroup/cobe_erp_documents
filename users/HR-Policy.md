@@ -30,9 +30,10 @@ nav_order: 4
    - [3.5. Check-in Whitelist](#35-check-in-whitelist)
    - [3.6. Trần OT theo ngày hiệu lực](#36-trần-ot-theo-ngày-hiệu-lực)
    - [3.7. Hạn khai theo ngày hiệu lực](#37-hạn-khai-theo-ngày-hiệu-lực)
-4. [Cấp phép năm (Earned Leave)](#4-cấp-phép-năm-earned-leave)
-5. [Kịch bản roll-out theo giai đoạn](#5-kịch-bản-roll-out-theo-giai-đoạn)
-6. [Lưu ý vận hành](#6-lưu-ý-vận-hành)
+4. [Tab Hạn mức khai bù](#4-tab-hạn-mức-khai-bù)
+5. [Cấp phép năm (Earned Leave)](#5-cấp-phép-năm-earned-leave)
+6. [Kịch bản roll-out theo giai đoạn](#6-kịch-bản-roll-out-theo-giai-đoạn)
+7. [Lưu ý vận hành](#7-lưu-ý-vận-hành)
 
 ---
 
@@ -47,11 +48,12 @@ List view hiển thị: `name` (vd `HRP-Cobegroup`), `company`, `enable_wfh_mode
 
 ## 2. Cấu trúc tab
 
-1 tab hiện tại:
+2 tab:
 
 | Tab | Section |
 |---|---|
-| **Attendance** | Feature Flags + Defaults + Lunch Break + Overtime Notification + Check-in Whitelist |
+| **Attendance** | Feature Flags + Defaults + Lunch Break + Overtime Notification + Người duyệt cuối + Giới hạn giờ check-in + Check-in Whitelist + Trần OT + Hạn khai |
+| **Hạn mức khai bù** | Bảng `HR Policy Attendance Quota` — số ngày khai bù tối đa mỗi tháng, theo loại đơn và theo phạm vi nhân viên / bộ phận / cả công ty |
 
 ---
 
@@ -234,7 +236,36 @@ Chi tiết cho người vận hành: [Hạn nộp phiếu & ràng buộc](HR-Fil
 
 ---
 
-## 4. Cấp phép năm (Earned Leave)
+## 4. Tab Hạn mức khai bù
+
+Bảng con `HR Policy Attendance Quota` (thêm 19/09/2026 — trước đó là doctype rời
+`HR Attendance Request Quota`, đã xoá bằng patch `v0_047`). Giới hạn **số NGÀY khai bù mỗi tháng
+dương lịch**, không phải số đơn.
+
+| Ô | Kiểu | Ý nghĩa |
+|---|---|---|
+| `effective_from` | Date, bắt buộc | Dòng áp cho các ngày từ đây trở đi. Dòng mới thay dòng cũ |
+| `request_type` | Select, bắt buộc | `On Duty` / `Work From Home`. Mỗi loại một sổ đếm riêng |
+| `department` | Link Department | Trống = mọi bộ phận |
+| `employee` | Link Employee | Trống = mọi nhân viên |
+| `max_days_per_month` | Int | **0 = không giới hạn** |
+
+Thứ tự tra (`utils/attendance_quota.resolve`): nhân viên → bộ phận → để trống cả hai → không
+dòng nào = không giới hạn. Bậc rộng **không** đỡ cho bậc hẹp.
+
+`validate` chặn: trùng (nhân viên, bộ phận, loại, ngày hiệu lực); khai cả nhân viên lẫn bộ phận
+trên một dòng; nhân viên/bộ phận của công ty khác; số âm. Và **nhắc** (không chặn) khi còn loại
+đơn chưa có dòng nào — loại chưa khai là không giới hạn.
+
+> ⚠️ Bảng chưa tồn tại (code lên trước `bench migrate`) thì luật **fail-open**: coi như không
+> giới hạn và ghi Error Log, thay vì để mọi đơn khai bù không lưu được. Đọc Error Log là cách
+> duy nhất nhận ra "migrate chưa xong".
+
+Chi tiết cho HR: [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html).
+
+---
+
+## 5. Cấp phép năm (Earned Leave)
 
 > **HR Policy KHÔNG còn cấu hình cấp phép.** Tab "Leave" + 4 field `leave_auto_*` đã gỡ (patch v0_009). Cấp phép tự động theo chấm công đã ngưng.
 
@@ -246,7 +277,7 @@ Chi tiết setup, workflow và audit ở [HR Leave Setup](HR-Leave-Setup.html).
 
 ---
 
-## 5. Kịch bản roll-out theo giai đoạn
+## 6. Kịch bản roll-out theo giai đoạn
 
 ### Giai đoạn 1 — Phase 1 baseline
 ```
@@ -272,7 +303,7 @@ Sẽ thêm tab Overtime / WFH Salary / Exclusions khi release Phase 2.
 
 ---
 
-## 6. Lưu ý vận hành
+## 7. Lưu ý vận hành
 
 - **Mỗi Company 1 record** — DB enforce unique trên `company`
 - **Employee chưa có Company** → throw "Employee {X} chưa có Company"

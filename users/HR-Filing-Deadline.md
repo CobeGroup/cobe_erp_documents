@@ -180,25 +180,28 @@ Bổ sung **14/09/2026**, đổi đơn vị và thêm chiều loại đơn **19/
 ngày"*; hạn mức trả lời *"một tháng được khai bù mấy NGÀY"*. Hai câu hỏi khác nhau nên là hai
 luật, cấu hình ở hai chỗ khác nhau.
 
-Cấu hình ở doctype **Hạn mức ngày khai bù** (`HR Attendance Request Quota`), gán cho
-**từng nhân viên** hoặc **cả công ty**, có ngày hiệu lực — cùng khuôn với gán lịch nghỉ
-(`Holiday List Assignment`): tạo bản ghi rồi **Submit** mới có hiệu lực, muốn bỏ thì **Cancel**.
+Cấu hình trong **Chính sách chấm công** (`HR Policy`) của công ty → tab **Hạn mức khai bù**
+(chuyển về đây 19/09/2026, trước đó là một doctype rời). **Lưu là có hiệu lực ngay**, không còn
+bước Submit.
 
-| Ô | Ý nghĩa |
+| Ô trong dòng | Ý nghĩa |
 |---|---|
-| **Áp dụng cho** | `Employee` (một nhân viên) hoặc `Company` (mặc định cho cả công ty) |
-| **Gán cho** | Mã nhân viên hoặc tên công ty |
-| **Loại đơn** | `On Duty` (*Chấm công bù / Công tác*) hoặc `Work From Home`. **Mỗi loại một bản gán riêng**; loại chưa gán bản nào = loại đó không giới hạn |
-| **Hiệu lực từ ngày** | Áp cho các **ngày** từ ngày này trở đi |
-| **Hiệu lực đến ngày** | Tuỳ chọn. Bỏ trống = tới khi có bản gán mới hơn cho cùng đối tượng và cùng loại |
+| **Hiệu lực từ ngày** | Áp cho các **ngày** từ ngày này trở đi. Bắt buộc |
+| **Loại đơn** | `On Duty` (*Chấm công bù / Công tác*) hoặc `Work From Home`. **Mỗi loại một dòng riêng**; loại chưa có dòng nào = loại đó không giới hạn |
+| **Bộ phận** | Để trống = mọi bộ phận |
+| **Nhân viên** | Để trống = mọi nhân viên. Điền để đặt ngoại lệ đích danh |
 | **Số ngày tối đa mỗi tháng** | Số **ngày** khai bù trong một tháng dương lịch. **0 = không giới hạn** |
 
-**Bản nào được áp.** Lấy **ngày đang xét** và **loại đơn** làm mốc, tra theo thứ tự:
+**Dòng nào được áp.** Lấy **ngày đang xét** và **loại đơn** làm mốc, tra từ hẹp ra rộng:
 
-1. Bản gán cho **chính nhân viên, đúng loại đơn**: bản đã Submit có *Hiệu lực từ ngày* lớn nhất
-   mà ≤ mốc. Bản đó đã quá *Hiệu lực đến ngày* thì coi như nhân viên không có bản riêng.
-2. Không có thì lấy bản gán cho **công ty** của nhân viên, cùng loại, cùng phép chọn.
-3. Không có nữa = **không giới hạn**.
+1. Dòng khai **đích danh nhân viên**, đúng loại đơn.
+2. Dòng khai **bộ phận** của nhân viên (ô nhân viên trống), cùng loại.
+3. Dòng **để trống cả hai ô** = cả công ty, cùng loại.
+4. Không dòng nào = **không giới hạn**.
+
+Trong cùng một bậc, dòng có *Hiệu lực từ ngày* lớn nhất mà ≤ mốc thắng. Bậc rộng **không** đỡ
+cho bậc hẹp: có dòng riêng thì dòng bộ phận thôi được xét, nhờ vậy khai 0 cho một người mới
+miễn được hạn mức chung.
 
 **Đếm cái gì.** Số **NGÀY** trong các đơn `Attendance Request` **cùng loại** của nhân viên, gồm
 cả đơn **đang chờ duyệt** lẫn đã duyệt, mà:

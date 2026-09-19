@@ -353,6 +353,6 @@ Director có thể không cần qua workflow. Workaround:
 
 ## Liên quan
 
-- [HR Policy — tab Leave](HR-Policy.html#4-tab-leave)
+- [HR Policy — Cấp phép năm (Earned Leave)](HR-Policy.html#5-cấp-phép-năm-earned-leave)
 - [Holiday & Shift Setup](HR-Holiday-Shift-Setup.html)
 - [Tổng quan Chấm công](Cham-Cong-Tong-Quan.html)
