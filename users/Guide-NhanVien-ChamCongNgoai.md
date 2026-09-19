@@ -103,9 +103,9 @@ trên **Bảng công** với nhãn **"Đề xuất chấm bù"** + trạng thái
 
 <img src="images/guide/dexuat/03-pending.png" width="240" alt="Đơn đề xuất — trạng thái Chờ duyệt">
 
-> ⚠️ Đơn khai lùi ngày có **hạn nộp** (số ngày do công ty cấu hình) và mỗi tháng có **hạn mức số đơn**;
-> quá hạn hoặc hết hạn mức thì app báo ngay khi gửi → nhờ **HR** xử lý tay. Không có luật "phải cùng
-> tháng".
+> ⚠️ Đơn khai lùi ngày có **hạn nộp** (số ngày do công ty cấu hình) và mỗi tháng có **hạn mức số
+> ngày** — riêng cho từng loại đơn, và một đơn nhiều ngày tốn nhiều suất. Quá hạn hoặc hết hạn mức
+> thì app báo ngay khi gửi → nhờ **HR** xử lý tay. Không có luật "phải cùng tháng".
 
 > 💡 **Mẹo:** Tạo đơn **trước hoặc ngay trong ngày** đi công tác. Khi đã có đơn (dù **chưa duyệt**),
 > app **cho phép bạn chấm công ngoài VP** cho ngày đó.

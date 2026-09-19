@@ -26,7 +26,7 @@ Năm thay đổi về phiếu chấm công và phê duyệt, cùng những việ
 |---|---|---|---|
 | ① | Phiếu **Làm thêm giờ** duyệt **hai cấp** (trưởng bộ phận → HR); **Chấm công bù** giữ **một bước**, có công tắc đổi | Người duyệt, HR | [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html) · [Duyệt làm thêm](Duyet-Lam-Them.html) |
 | ② | Đơn bị **từ chối / huỷ** thì ngày đó **không có công**, kể cả khi đã chấm công ngoài văn phòng theo đơn | Nhân viên, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) |
-| ③ | **Hạn mức tháng** chỉ đếm **đơn khai bù** cho ngày đã qua | Nhân viên hiện trường, HR | [Hạn mức đơn Chấm công bù](Desk-HR-HanMucChamCongBu.html) |
+| ③ | **Hạn mức tháng** đếm **số ngày khai bù**, tính riêng từng loại đơn (kể cả WFH), và chỉ đếm ngày đã qua | Nhân viên hiện trường, HR | [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html) |
 | ④ | Đơn cho **hôm nay / ngày tới** là **giấy phép chấm công ngoài văn phòng**, không phải giấy xin công | Nhân viên hiện trường, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) |
 | ⑤ | Báo cáo mới: **nhân viên chấm công ngoài văn phòng ở đâu** | HR, quản lý | [Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html) |
 
@@ -67,13 +67,20 @@ Ba trường hợp **không** bị ảnh hưởng:
 - ngày đã nằm trong **phiếu lương đã chốt** — hệ thống không tự sửa lịch sử, chỉ ghi nhật ký để HR
   xử lý thủ công.
 
-## ③ Hạn mức tháng chỉ đếm đơn khai bù
+## ③ Hạn mức tháng: đếm ngày, tính riêng từng loại đơn
 
-Hạn mức số đơn Chấm công bù mỗi tháng trước đây đếm **mọi** đơn, nên nó chặn nhầm loại đơn mà kỹ
-thuật viên phải tạo gần như hằng ngày để chấm công ngoài văn phòng.
+Hạn mức trước đây đếm **số đơn** và đếm **mọi** đơn, nên vừa chặn nhầm loại đơn mà kỹ thuật viên
+phải tạo gần như hằng ngày để chấm công ngoài văn phòng, vừa để hở hai chỗ.
 
-Nay hạn mức **chỉ đếm đơn khai bù cho ngày đã qua**. Đơn nộp cho hôm nay hoặc ngày tới không bị đếm,
-không bị chặn, và ứng dụng cũng không còn hiện cảnh báo hết hạn mức khi chọn những ngày đó.
+Ba điều đổi:
+
+- **Chỉ đếm những ngày đã qua tại lúc nộp đơn.** Phần xin phép trước để chấm công ngoài văn phòng
+  không bị đếm, không bị chặn, và ứng dụng cũng không còn hiện cảnh báo hết hạn mức cho những ngày đó.
+- **Đếm số ngày, không đếm số đơn.** Một đơn được phủ tới 31 ngày, nên "5 đơn mỗi tháng" thực chất
+  là tới 155 ngày công khai bù.
+- **Mỗi loại đơn một hạn mức riêng, kể cả Làm việc tại nhà.** Trước đây đơn WFH **không ai đếm** dù
+  nó cũng cấp công — đó là đường khai công không giới hạn. Nay HR đặt được số riêng cho nó; loại nào
+  chưa đặt thì loại đó vẫn không giới hạn.
 
 ## ④ Đơn cho hôm nay là giấy phép chấm công, không phải giấy xin công
 
@@ -112,9 +119,11 @@ như người chấm công tại nhà. Chi tiết cách đọc:
 
 ## Khi đưa lên hệ thống
 
-> ⚠️ **Bắt buộc chạy `bench migrate`**, không chỉ deploy mã nguồn. Đợt này có ba bản vá dữ liệu:
-> đặt chế độ duyệt một bước cho Chấm công bù, mở bảng quỹ giờ Nghỉ bù, và **ghi mốc ngày bắt đầu áp
-> luật ở mục ④** — thiếu bước migrate thì mốc không được ghi và các màn hình mới đọc thiếu cột.
+> ⚠️ **Bắt buộc chạy `bench migrate`**, không chỉ deploy mã nguồn. Đợt này có bốn bản vá dữ liệu:
+> đặt chế độ duyệt một bước cho Chấm công bù, mở bảng quỹ giờ Nghỉ bù, **ghi mốc ngày bắt đầu áp
+> luật ở mục ④**, và **chuyển hạn mức tháng sang đơn vị ngày kèm loại đơn** — thiếu bước migrate thì
+> mốc không được ghi, các màn hình mới đọc thiếu cột, và **đơn khai bù không lưu được** vì luật hạn
+> mức đọc hai cột mà bản vá chưa tạo.
 
 Việc HR làm thủ công sau khi lên:
 
@@ -123,6 +132,8 @@ Việc HR làm thủ công sau khi lên:
 - Xem **[Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html)** một lượt: nếu thấy cả
   nhóm ở một tỉnh đều xa văn phòng và lặp cùng một điểm, hãy khai **Văn phòng** (`HR Office
   Location`) cho tỉnh đó — nhóm ấy sẽ hết cần tạo đơn hằng ngày.
+- **Khai hạn mức cho loại *Làm việc tại nhà*** nếu muốn hãm loại đơn đó: bản vá chỉ chuyển những
+  bản đang có sang loại *Chấm công bù*, nên loại WFH vẫn đang **không giới hạn** cho tới khi HR khai.
 - Báo cho nhân viên hiện trường về thay đổi ở mục ④ trước khi nó có hiệu lực.
 
 ---
@@ -131,5 +142,5 @@ Việc HR làm thủ công sau khi lên:
 
 - [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html)
 - [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html) · [Duyệt làm thêm giờ](Duyet-Lam-Them.html)
-- [Hạn mức đơn Chấm công bù](Desk-HR-HanMucChamCongBu.html)
+- [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html)
 - [Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html)

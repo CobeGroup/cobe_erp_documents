@@ -89,7 +89,7 @@ Chờ HR duyệt ──────────────từ chối──► 
 
 > ⏳ **Trưởng bộ phận duyệt xong, đơn vẫn CHƯA có hiệu lực.** Chưa có công, và với đơn **WFH** thì
 > nhân viên **chưa chấm công WFH được** — nút chấm công WFH chỉ mở khi HR đã duyệt. Trong lúc chờ,
-> đơn vẫn **tính vào hạn mức số đơn/tháng** như đơn chờ duyệt bình thường.
+> đơn vẫn **tính vào hạn mức số ngày khai bù/tháng** như đơn chờ duyệt bình thường.
 
 ---
 

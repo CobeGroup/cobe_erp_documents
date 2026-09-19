@@ -76,5 +76,5 @@ Một mình thì mỗi con số đều vô nghĩa. Ghép lại mới thành câu
 ## Liên quan
 
 - [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) — hai loại đơn và luật của từng loại
-- [Hạn mức đơn Chấm công bù](Desk-HR-HanMucChamCongBu.html) — phanh của đường khai bù
+- [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html) — phanh của đường khai bù
 - [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html) — người duyệt cần biết gì

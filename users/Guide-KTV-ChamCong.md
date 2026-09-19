@@ -55,7 +55,7 @@ flowchart TB
 |---|---|---|
 | **Ngày thường** — sáng ghé VP lấy đồ/nhận việc, chiều làm xong ở khách | Check-in **tại VP**, check-out **tại hiện trường** (app tự cho qua) | Theo **giờ thật** từ lúc vào đến lúc ra |
 | **Ngày đi thẳng hiện trường** — job xa, đi sớm, không ghé VP | Tạo **Đề xuất chấm công bù / Công tác** cho ngày đó **trước khi chấm công**, rồi vẫn **chấm công vào/ra như thường** ở hiện trường | Đơn duyệt → **ca chuẩn** cả ngày (Có mặt). Cả ngày **không chấm công lần nào** thì ngày đó **không có công** |
-| **Quên check-in / check-out** | Tạo **Đề xuất chấm công bù** cho **ngày đã qua** đó | Đơn duyệt → **ca chuẩn** (Có mặt). Đây là đường khai bù, có **hạn mức tháng** và **hạn nộp** |
+| **Quên check-in / check-out** | Tạo **Đề xuất chấm công bù** cho **ngày đã qua** đó | Đơn duyệt → **ca chuẩn** (Có mặt). Đây là đường khai bù, có **hạn mức số ngày/tháng** và **hạn nộp** |
 | **Làm khuya hôm trước** — muốn nghỉ hôm sau | Tạo đơn **Nghỉ bù** (tab Nghỉ phép — xem mục E) | Ngày nghỉ tính **On Leave**, không trừ phép năm |
 
 ---

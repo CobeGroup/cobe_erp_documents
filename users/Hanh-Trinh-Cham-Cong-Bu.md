@@ -99,27 +99,31 @@ Anh A đang ở chỗ khách, mở app. Có **2 lối** cùng mở 1 form:
 > tự cho qua kiểm tra vị trí. Nhưng công ngày này **không tính theo giờ chấm** mà chờ đơn duyệt
 > (xem bước ③). Và đơn chỉ mở quyền chấm công: **vẫn phải chấm công** thì ngày đó mới có công. Chi tiết: [Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html).
 
-### Hạn mức số đơn mỗi tháng
+### Hạn mức số ngày khai bù mỗi tháng
 
-Công ty có thể đặt **số đơn Chấm công bù tối đa mỗi tháng** cho từng nhân viên hoặc cho cả
-công ty. Khi có hạn mức, form hiện sẵn *tháng này đã dùng bao nhiêu trên bao nhiêu đơn* ngay
-lúc chọn khoảng ngày, và chặn khi hết:
+Công ty có thể đặt **số ngày khai bù tối đa mỗi tháng** cho từng nhân viên hoặc cho cả công
+ty, **tính riêng cho từng loại đơn**. Khi có hạn mức, form hiện sẵn *tháng này đã khai bao
+nhiêu trên bao nhiêu ngày* ngay lúc chọn khoảng ngày, kèm số ngày đơn đang điền sẽ tiêu, và
+chặn khi vượt:
 
-> Bạn đã dùng hết hạn mức đơn khai bù của tháng 10/2026: 5/5 đơn (tính cả đơn đang chờ
-> duyệt). Đơn nộp cho hôm nay hoặc ngày tới thì không bị hạn mức này. Cần thêm thì liên hệ HR.
+> Hạn mức khai bù Chấm công bù tháng 10/2026 là 5 ngày. Tháng đó bạn đã khai 4 ngày (tính cả
+> đơn đang chờ duyệt), đơn này xin thêm 2 ngày. Ngày chưa qua tại lúc nộp đơn thì không bị hạn
+> mức. Cần thêm thì liên hệ HR.
 
-Bốn điều cần biết:
+Năm điều cần biết:
 
-- **Chỉ đơn khai bù cho ngày ĐÃ QUA mới bị đếm.** Đơn nộp cho **hôm nay hoặc ngày tới** —
-  loại tạo trước để được chấm công ngoài văn phòng, ví dụ sáng mai đi thẳng tới nhà khách —
-  không bị đếm và không bao giờ bị chặn.
+- **Đếm ngày, không đếm đơn.** Một đơn phủ ba ngày thì tiêu ba suất.
+- **Chỉ những ngày ĐÃ QUA tại lúc nộp đơn mới bị đếm.** Ngày **hôm nay hoặc ngày tới** —
+  phần xin phép trước để được chấm công ngoài văn phòng, ví dụ sáng mai đi thẳng tới nhà
+  khách — không bị đếm và không bao giờ bị chặn.
 - **Đơn đang chờ duyệt cũng tính**, không riêng đơn đã duyệt. Đơn bị từ chối hoặc đã huỷ thì
   không tính.
-- Đơn nhiều ngày tính vào **tháng của ngày đầu** đơn.
-- Đơn **Làm việc tại nhà** (WFH) đi luồng riêng, **không** trừ hạn mức này.
+- Đơn vắt qua hai tháng thì **mỗi ngày tính vào tháng của chính nó**.
+- Đơn **Làm việc tại nhà** (WFH) có **hạn mức riêng** — không trừ chung với Chấm công bù,
+  nhưng cũng bị giới hạn nếu công ty đặt số cho loại đó.
 
 Hết hạn mức mà vẫn còn việc chính đáng thì liên hệ HR — HR nhập thay được, hoặc nâng hạn mức
-cho tháng đó. Chưa đặt hạn mức = không giới hạn, đúng như trước nay.
+cho tháng đó. Chưa đặt hạn mức cho một loại = loại đó không giới hạn, đúng như trước nay.
 
 ---
 
@@ -209,5 +213,5 @@ Từ chối ở bước nào cũng vậy: đơn bị đóng, anh A nhận lý do
 - 🔧 [KTV hiện trường: Chấm công ngoài VP](Guide-KTV-ChamCong.html) — KTV dùng đề xuất cho ngày đi thẳng công trình
 - ✅ [Duyệt chấm công bù — từng phiếu & hàng loạt](Duyet-Cham-Cong-Bu.html) — phía người duyệt + bulk trên Desk
 - ⚙️ [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html) — HR gán Shift Request Approver
-- 🚦 HR: [Hạn mức đơn Chấm công bù theo tháng](Desk-HR-HanMucChamCongBu.html) — cách đặt và miễn trừ
+- 🚦 HR: [Hạn mức ngày khai bù theo tháng](Desk-HR-HanMucChamCongBu.html) — cách đặt và miễn trừ
 - 🔧 Kỹ thuật: [Attendance Request](HR-Attendance-Request.html)
