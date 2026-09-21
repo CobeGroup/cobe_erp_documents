@@ -393,6 +393,12 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
 - Bộ đếm hạn mức (`utils.attendance_quota`) xét **cùng một phép**: từ 19/09/2026 nó đếm **số NGÀY**
   và cũng chỉ đếm ngày đã qua tại lúc nộp (`backdated_days`). Hai luật dùng chung một định nghĩa
   "ngày này có phải khai bù không" — sửa một bên thì phải sửa cả bên kia.
+- **Miễn trừ của bộ đếm** (đổi 21/09/2026) — `onduty_hooks._duoc_mien_han_muc`: HR Manager / HR User /
+  System Manager chỉ được miễn hạn mức khi lập đơn **cho người khác**, so bằng `Employee.user_id` của
+  nhân viên ĐỨNG TÊN ĐƠN với `frappe.session.user`; `Administrator` miễn vô điều kiện. Trước đó cổng
+  chỉ đọc role người lưu, nên người giữ role HR tự cấp cho mình bao nhiêu ngày cũng lọt. Hạn NỘP
+  (`_validate_filing_deadline`) giữ miễn trừ theo role như cũ: quá hạn là chuyện thời điểm, sửa hộ
+  lúc nào cũng phải mở, còn hạn mức là chuyện chia phần.
 - Phiếu mở cổng chỉ mở geofence. Hết ngày mà nhân viên **không có lần quẹt nào** thì bản chấm công
   do đơn tạo bị thu hồi (`_cancel_attendance`, dùng chung máy thu hồi của luồng huỷ đơn: savepoint +
   chốt chặn phiếu lương) và nhân viên nhận lời báo ghi rõ ngày. Phiếu khai bù **không** chịu luật này

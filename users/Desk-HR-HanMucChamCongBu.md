@@ -165,10 +165,14 @@ Nộp quá hạn mức thì đơn bị chặn lúc gửi:
 > viên. Hạn mức vì vậy chỉ cần lo cho đường **khai bù** (ngày đã qua) — xem
 > [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html).
 
-**Được miễn hạn mức:** HR Manager, HR User, System Manager — để còn nhập thay khi có việc
-chính đáng; đây là van xả duy nhất khi nhân viên hết suất mà lý do chính đáng. Đơn lập lại từ
-bản đã huỷ không bị đếm lần nữa; còn đơn **sửa lại mà nong khoảng ngày ra** thì bị kiểm lại,
-vì thêm ngày là xin thêm suất.
+**Được miễn hạn mức:** HR Manager, HR User, System Manager — nhưng **chỉ khi lập đơn cho
+người khác**. Đây là van xả khi nhân viên hết suất mà lý do chính đáng, và nó đòi phải có
+người thứ hai biết chuyện. Người giữ vai trò HR **tự lập đơn cho chính mình** thì chịu hạn mức
+như mọi nhân viên khác; cần thêm suất cho bản thân thì nhờ một người HR khác lập hộ, hoặc khai
+một dòng đích danh mình trong bảng — cách nào cũng để lại dấu vết.
+
+Đơn lập lại từ bản đã huỷ không bị đếm lần nữa; còn đơn **sửa lại mà nong khoảng ngày ra** thì
+bị kiểm lại, vì thêm ngày là xin thêm suất.
 
 ---
 
@@ -183,8 +187,9 @@ vì thêm ngày là xin thêm suất.
 | Nhân viên chưa khai bộ phận | Rơi xuống dòng để trống cả hai ô (trần chung của công ty), không phải thoát hạn mức |
 | Nhân viên nói "tôi mới nộp có 3 đơn" | Đếm **ngày**, không đếm đơn: một đơn ba ngày là ba suất. Đơn **đang chờ duyệt** cũng tính; đơn bị từ chối thì không |
 | Đặt hạn mức rồi mà đơn WFH vẫn nộp thoải mái | Chưa khai dòng nào cho loại **Work From Home** — mỗi loại một sổ riêng, loại chưa khai là không giới hạn |
-| Cần cho thêm ngày trong tháng này | Nâng số trên bản đang hiệu lực, hoặc khai bản mới hiệu lực từ đầu tháng; hoặc HR nhập thay (vai trò HR được miễn) |
+| Cần cho thêm ngày trong tháng này | Nâng số trên bản đang hiệu lực, hoặc khai bản mới hiệu lực từ đầu tháng; hoặc HR lập hộ đơn cho nhân viên đó (vai trò HR được miễn khi lập cho người khác) |
 | Đơn vắt qua hai tháng | Mỗi ngày tính vào **tháng của chính nó**, và mỗi tháng xét theo hạn mức của tháng đó |
+| Người làm HR tự nộp đơn mà bị chặn | Đúng luật: miễn trừ chỉ áp khi lập đơn **cho người khác**. Nhờ một người HR khác lập hộ, hoặc khai một dòng đích danh mình |
 
 ---
 
