@@ -100,6 +100,16 @@ Mở hồ sơ nhân viên (`Employee`) → tab **Quỹ Nghỉ bù**, ngay cạnh
 Tab hiện số dư, số ngày đổi được, phần sắp bị cắt, rồi hai bảng: **Giờ vào quỹ** và **Đã
 tiêu** — mỗi dòng bấm được để mở chứng từ gốc.
 
+Hai bảng này **đối chiếu được với nhau**. Bảng *Giờ vào quỹ* có cột **Dùng cho đơn nào**,
+bảng *Đã tiêu* có cột **Lấy giờ từ phiếu nào**; mỗi ô liệt kê ngày, mã chứng từ bấm được và
+số giờ.
+
+> 💡 **Vì sao một phiếu 4 giờ lại hiện "đã dùng 2,50".** Quỹ trừ theo thứ tự *lô nào sắp hết
+> hạn thì tiêu trước*, nên một phiếu làm thêm có thể bị chia cho **hai đơn nghỉ** khác nhau.
+> Chỉ cần một phiếu có số giờ lẻ — ví dụ 5,5 giờ — là mọi lần trừ sau đó đều rơi vào giữa
+> phiếu. Không có chứng từ nào mang con số 2,50; nó là **phần còn lại của phép trừ**. Cột
+> *Dùng cho đơn nào* cho biết chính xác phần đó chạy sang đơn nghỉ nào.
+
 ### Ai xem được của ai
 
 | Vai trò | Phạm vi |
@@ -276,7 +286,8 @@ chế ra.
 | Quỹ ít hơn số giờ đã khai | Phiếu bị **trần 4 giờ/ngày thường, 8 giờ/ngày nghỉ** cắt bớt; hoặc lô của kỳ trước đã hết hạn |
 | Quản lý không huỷ duyệt được phiếu làm thêm | Huỷ sẽ rút giờ khỏi quỹ và làm nhân viên âm so với đơn nghỉ đã nộp. Huỷ đơn nghỉ trước, hoặc HR cộng bù bằng chứng từ điều chỉnh |
 | Nhân viên nghỉ rồi mới phát hiện thiếu giờ | Đơn đã duyệt không bị kiểm lại (cố ý, để còn huỷ/sửa được). Cân đối bằng chứng từ điều chỉnh số âm |
-| Cần cho nghỉ dù quỹ không đủ | HR tạo đơn thay trên Desk — vai trò HR được miễn kiểm quỹ. Nên kèm một chứng từ điều chỉnh để sổ không âm |
+| Cần cho nghỉ dù quỹ không đủ | HR tạo đơn **thay cho nhân viên** trên Desk — vai trò HR được miễn kiểm quỹ khi lập đơn cho người khác. Nên kèm một chứng từ điều chỉnh để sổ không âm |
+| Người làm HR tự nộp đơn nghỉ bù mà bị chặn thiếu giờ | Đúng luật từ 21/09/2026: miễn trừ chỉ áp khi lập đơn **cho người khác**. Tự nghỉ thì phải có giờ trong quỹ như mọi nhân viên — nhờ một người HR khác lập hộ, hoặc cộng giờ bằng chứng từ điều chỉnh có lý do rõ ràng |
 
 ---
 
