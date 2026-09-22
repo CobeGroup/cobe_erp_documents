@@ -287,6 +287,7 @@ chế ra.
 | Quản lý không huỷ duyệt được phiếu làm thêm | Huỷ sẽ rút giờ khỏi quỹ và làm nhân viên âm so với đơn nghỉ đã nộp. Huỷ đơn nghỉ trước, hoặc HR cộng bù bằng chứng từ điều chỉnh |
 | Nhân viên nghỉ rồi mới phát hiện thiếu giờ | Đơn đã duyệt không bị kiểm lại (cố ý, để còn huỷ/sửa được). Cân đối bằng chứng từ điều chỉnh số âm |
 | Cần cho nghỉ dù quỹ không đủ | HR tạo đơn **thay cho nhân viên** trên Desk — vai trò HR được miễn kiểm quỹ khi lập đơn cho người khác. Nên kèm một chứng từ điều chỉnh để sổ không âm |
+| Lập phiếu điều chỉnh cho **chính mình** bị chặn | Đúng luật từ 23/09/2026: mỗi lần chỉnh tay quỹ đều cần người thứ hai biết. Nhờ một người HR khác lập giúp |
 | Người làm HR tự nộp đơn nghỉ bù mà bị chặn thiếu giờ | Đúng luật từ 21/09/2026: miễn trừ chỉ áp khi lập đơn **cho người khác**. Tự nghỉ thì phải có giờ trong quỹ như mọi nhân viên — nhờ một người HR khác lập hộ, hoặc cộng giờ bằng chứng từ điều chỉnh có lý do rõ ràng |
 
 ---

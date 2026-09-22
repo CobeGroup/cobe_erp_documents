@@ -67,8 +67,9 @@ Attendance Request (đơn "Chấm công bù") dùng cho các tình huống NV **
 | NV bù chấm công vì sự cố hệ thống | `On Duty` + `explanation` |
 
 > ⚠️ **NGÀY CHỌN quyết định đơn làm gì** (từ 18/09/2026). Đơn có `from_date` từ **hôm nay trở đi**
-> là **giấy phép chấm công ngoài văn phòng**: nó tắt kiểm tra vị trí cho ngày đó, không bị hạn mức
-> tháng, nhưng ngày đó **chỉ có công khi nhân viên chấm công ít nhất một lần**. Hết ngày không có
+> là **giấy phép chấm công ngoài văn phòng**: nó tắt kiểm tra vị trí cho ngày đó, và ngày đó
+> **chỉ có công khi nhân viên chấm công ít nhất một lần**. Từ 23/09/2026 loại đơn này **cũng tiêu
+> hạn mức tháng** như đơn khai bù. Hết ngày không có
 > lần chấm nào thì bản Attendance do đơn tạo bị **thu hồi** và nhân viên nhận thông báo ghi rõ ngày
 > (`attendance.require_checkin`: job 02:20 quét 7 ngày + kiểm ngay lúc duyệt cho ngày đã qua).
 > Đơn khai bù cho **ngày đã qua** thì giữ nguyên cách cũ — duyệt là có công — và đó là đơn duy nhất
@@ -86,8 +87,8 @@ duyệt, đơn **thừa** (mọi ngày đã có Attendance đúng trạng thái)
 **14/09/2026** có thêm **hạn mức số NGÀY khai bù mỗi tháng**, tính riêng cho **từng loại đơn**
 (kể cả WFH, từ 19/09/2026), khai trong `HR Policy` → tab *Hạn mức khai bù* theo **nhân viên /
 bộ phận / cả công ty** (trống = tất cả, hẹp thắng rộng, có ngày hiệu lực; loại chưa có dòng nào =
-loại đó không giới hạn). Đếm NGÀY chứ không đếm đơn — một đơn phủ tới 31 ngày — và chỉ đếm
-những ngày đã qua tại lúc nộp đơn — xem [Hạn nộp phiếu & ràng buộc §7](HR-Filing-Deadline.html#7-hạn-mức-số-ngày-khai-bù-mỗi-tháng).
+loại đó không giới hạn). Đếm NGÀY chứ không đếm đơn — một đơn phủ tới 31 ngày — và từ 23/09/2026 đếm
+**mọi** ngày trong đơn, đã qua hay chưa — xem [Hạn nộp phiếu & ràng buộc §7](HR-Filing-Deadline.html#7-hạn-mức-số-ngày-khai-bù-mỗi-tháng).
 
 > 📅 **Ngày nghỉ trong khoảng đơn CÓ được đánh công** (từ bản cập nhật 09/2026): đơn tạo qua
 > app luôn bật `include_holidays`, nên duyệt đơn phủ Chủ nhật/ngày lễ sẽ tạo Attendance

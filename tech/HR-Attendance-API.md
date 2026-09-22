@@ -390,9 +390,11 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
   (`MAX_RANGE_DAYS`), nên đơn khai từ HÔM QUA tới 30 ngày TỚI bị xếp là khai bù — tốn đúng một suất
   hạn mức mà miễn luật này cho cả 30 ngày chưa tới. Đo 19/09/2026: chưa ai đi cửa đó (453/455 đơn
   phủ 1 ngày, đúng 1 đơn vắt ngang mốc tạo từ 07/2026) và hai cách cho cùng 90 ngày.
-- Bộ đếm hạn mức (`utils.attendance_quota`) xét **cùng một phép**: từ 19/09/2026 nó đếm **số NGÀY**
-  và cũng chỉ đếm ngày đã qua tại lúc nộp (`backdated_days`). Hai luật dùng chung một định nghĩa
-  "ngày này có phải khai bù không" — sửa một bên thì phải sửa cả bên kia.
+- Bộ đếm hạn mức (`utils.attendance_quota`) **KHÔNG còn dùng chung phép xét này** (đổi 23/09/2026):
+  nó đếm **mọi ngày trong đơn**, đã qua hay chưa. Lý do: đo tháng 9/2026 thấy 161/198 đơn là
+  xin-cho-chính-ngày-hôm-đó, tức hơn 80% lượng đơn nằm ngoài phanh. Chỗ chừa cho việc hằng ngày
+  chuyển sang cấu hình — dòng `0 = vô hạn` theo BỘ PHẬN (*Dịch vụ - Bảo hành* đang có). `backdated_days`
+  vẫn còn vì `require_checkin` đọc nó cho việc khác; hai luật nay hỏi hai câu khác nhau.
 - **Miễn trừ của bộ đếm** (đổi 21/09/2026) — `utils/hr_exemption.exempt_for`: HR Manager / HR User /
   System Manager chỉ được miễn khi lập chứng từ **cho người khác**, so bằng `Employee.user_id` của
   nhân viên ĐỨNG TÊN CHỨNG TỪ với `frappe.session.user`; `Administrator` miễn vô điều kiện. Trước đó
@@ -501,9 +503,12 @@ kẹt: người đó không được tự duyệt bước 1, còn HR không th�
   được; AR thì còn đường Desk submit (làm cả hai bước). **Không tự duyệt** đơn của chính mình — so với
   tài khoản của nhân viên đứng tên đơn (Administrator được miễn, như Frappe).
 - Bước HR: HR Manager có tên trong `HR Policy.final_leave_approvers` của công ty NV (bảng trống =
-  mọi HR Manager) — người đó tự duyệt được đơn của mình (như `allow_self_approval = 1` ở Leave).
-  System Manager được, trừ đơn của chính họ: bước cuối của Leave đòi role HR Manager, nên System
-  Manager thuần không tự duyệt đơn mình (hộp duyệt cũng ẩn đơn đó với họ — `_own_hr_stage_sql`).
+  mọi HR Manager) — nhưng **KHÔNG tự duyệt được đơn của chính mình** (siết 23/09/2026: 2 cấp thì bước
+  cuối phải là người khác; trước đó chỗ này sao chép `allow_self_approval = 1` của Leave, mà prod chỉ
+  khai đúng MỘT người duyệt cuối cho cả 3 công ty nên người đó không ai soi). Đơn của họ rơi về
+  System Manager — đo 23/09: 8 tài khoản đang bật.
+  Luật "không phải đơn của mình" nay áp cho MỌI vai ở bước cuối, kể cả System Manager, và hộp duyệt
+  cũng ẩn hẳn đơn của chính người đang xem — hiện ra chỉ để bấm rồi ăn lỗi.
   Đọc cấu hình hộp duyệt lỗi thì báo lỗi, không coi như công tắc tắt.
 
 **Chốt ở tầng document:** hook `Attendance Request.before_submit` chỉ cho người duyệt cuối submit —

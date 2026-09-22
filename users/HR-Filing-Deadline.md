@@ -206,8 +206,6 @@ miễn được hạn mức chung.
 **Đếm cái gì.** Số **NGÀY** trong các đơn `Attendance Request` **cùng loại** của nhân viên, gồm
 cả đơn **đang chờ duyệt** lẫn đã duyệt, mà:
 
-- ngày đó **đã qua tại thời điểm nộp đơn** — ngày từ hôm nộp trở đi là xin phép trước để chấm
-  công ngoài văn phòng, không đếm;
 - ngày đó rơi vào **tháng dương lịch đang xét**. Đơn vắt qua hai tháng thì mỗi ngày tính vào
   tháng của chính nó, và mỗi tháng xét theo hạn mức của tháng đó.
 
@@ -217,17 +215,19 @@ cả đơn **đang chờ duyệt** lẫn đã duyệt, mà:
 **Chỉ kiểm lúc nhân viên tạo đơn, hoặc đổi khoảng ngày của đơn.** Duyệt đơn đã tạo không kiểm
 lại — HR hạ hạn mức giữa tháng thì đơn nộp hợp lệ trước đó vẫn duyệt được. Đổi ngày (kể cả nong
 *đến ngày* ra) thì kiểm lại, không tính chính đơn đó. HR Manager / HR User / System Manager nhập
-thay không bị hạn mức, giống hạn nộp ([mục 4](#4-ai-không-bị-hạn--các-cửa-thoát)).
+thay không bị hạn mức, giống hạn nộp ([mục 4](#4-ai-không-bị-hạn--các-cửa-thoát)) — nhưng chỉ khi
+lập đơn **cho người khác**; tự lập cho chính mình thì chịu hạn mức như mọi nhân viên.
 
 **Trên app my-workspace**, form *Đề xuất chấm công* hiện dòng *"Tháng MM/YYYY: đã khai N/M ngày
 &lt;loại đơn&gt;, còn K. Đơn này xin J ngày"* theo tháng của ngày đang chọn; vượt hạn mức thì nút
 *Gửi đề xuất* bị khoá. Chốt chặn thật nằm ở tầng doctype nên đơn đi cửa Desk hay API cũng dính.
 
-**Gợi ý cấu hình.** Số liệu tháng 08/2026: khối văn phòng đa số khai 1–3 ngày/tháng, còn kỹ
-thuật viên các tỉnh tạo đơn gần như mọi ngày — nhưng phần lớn là **xin phép trước**, loại không
-bị đếm. Đo lại ngày 18/09/2026 khi chỉ đếm ngày đã qua: tháng 8 cao nhất một người 13 ngày,
-tháng 9 không ai chạm 5. Nên mức **5** là ngưỡng chỉ chặn trường hợp bất thường. Nhớ khai **cả
-hai loại**: bỏ trống loại `Work From Home` là để ngỏ loại đó.
+**Gợi ý cấu hình.** Từ 23/09/2026 **mọi ngày trong đơn đều bị đếm**, kể cả đơn xin cho chính hôm
+nay — nên con số phải đọc lại theo tổng lượng đơn, không còn theo riêng phần khai bù. Đo tháng
+9/2026: khối văn phòng 1–3 ngày/tháng, riêng kỹ thuật viên *Dịch vụ - Bảo hành* 32 người tạo 127
+đơn. Vì vậy bộ phận đi hiện trường **bắt buộc có dòng riêng `0 = không giới hạn`**; thiếu dòng đó
+là chặn việc hằng ngày của họ. Nhớ khai **cả hai loại**: bỏ trống loại `Work From Home` là để ngỏ
+loại đó.
 
 ---
 

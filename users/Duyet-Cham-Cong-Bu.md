@@ -36,7 +36,7 @@ nav_order: 3
 |---|---|---|
 | Ai duyệt | Người duyệt chấm công của nhân viên | Người duyệt chấm công → **HR** (người duyệt cuối) |
 | Duyệt xong bước đầu | **Có công ngay** | **Chưa có công** — chờ HR |
-| Tự duyệt đơn của chính mình | Không chặn (như trước) | **Bị chặn** ở bước đầu (không còn ai khác duyệt thì đơn lên thẳng HR) |
+| Tự duyệt đơn của chính mình | Không chặn (như trước) | **Bị chặn ở cả hai bước** (từ 23/09/2026) — đơn của bạn do người khác ký |
 | Submit trên Desk | Ai có quyền submit đều bấm được (như trước) | **Chỉ người duyệt cuối** |
 | Chấm công WFH mở khi | Người duyệt chấm công duyệt | **HR** duyệt |
 
@@ -73,8 +73,9 @@ Chờ HR duyệt ──────────────từ chối──► 
 
 **Ba luật cần nhớ (hai luật đầu giống đơn nghỉ phép):**
 
-- **Không tự duyệt bước 1 cho đơn của chính mình.** Trưởng bộ phận là người duyệt của chính mình thì
-  người duyệt khác của phòng duyệt bước 1. Bước HR thì được tự duyệt.
+- **Không tự duyệt đơn của chính mình, ở bất kỳ bước nào** (siết 23/09/2026 — trước đó bước HR còn
+  cho tự duyệt). Trưởng bộ phận là người duyệt của chính mình thì người duyệt khác của phòng duyệt
+  bước 1; còn người duyệt cuối thì đơn của họ do **System Manager** ký bước cuối.
 - **Không còn ai khác duyệt bước 1 thì đơn lên thẳng HR** ngay khi gửi, HR nhận thông báo — trường hợp
   trưởng phòng hoặc HR đứng đầu tự là người duyệt chấm công của mình, nhân viên chưa được khai người
   duyệt, hoặc người được khai thiếu role / tài khoản bị khoá; giống đơn nghỉ của quản lý đi thẳng HR. HR đứng đầu tự duyệt được đơn của mình ở bước này. Khai thêm người duyệt cho nhân viên đó
@@ -237,7 +238,7 @@ khỏi tab Cần duyệt để duyệt hoàn toàn trên Desk) **không** làm m
 |---|---|
 | Không thấy nút **Submit** trong Actions | Tài khoản thiếu quyền submit — báo quản trị cấp role |
 | *(2 cấp)* Bấm **Submit** báo *"Chỉ người duyệt cuối (HR) mới duyệt xong được đơn này"* | Bạn không phải người duyệt cuối của công ty nhân viên. Trưởng bộ phận duyệt bước 1 trên app; HR xem danh sách ở [Chính sách chấm công](Desk-Admin-Policy.html) |
-| *(2 cấp)* Bấm **Submit** báo *"Không tự duyệt được đơn của chính mình"* | Đơn của chính bạn chưa qua trưởng bộ phận — nhờ trưởng bộ phận duyệt bước 1 trước |
+| *(2 cấp)* Bấm **Submit** trên đơn của chính mình bị chặn | Đúng luật từ 23/09/2026: đơn của bạn phải do người khác ký. Bước 1 nhờ trưởng bộ phận; bước cuối nhờ **System Manager** nếu bạn chính là người duyệt cuối |
 | *(2 cấp)* HR không thấy đơn trên app | Đơn chưa qua trưởng bộ phận; hoặc bạn không có tên trong danh sách người duyệt cuối của công ty nhân viên |
 | *(2 cấp)* Trưởng bộ phận duyệt rồi mà NV vẫn chưa có công | Đúng thiết kế — đơn còn chờ HR. Nhãn trên app: *Chờ HR duyệt* |
 | Không rõ công ty đang dùng chế độ nào | Xem mục E — cột **Duyệt 2 cấp** của dòng *Attendance Request* |

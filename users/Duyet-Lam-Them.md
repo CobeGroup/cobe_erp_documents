@@ -56,9 +56,10 @@ Chờ HR duyệt ──────────────từ chối──► 
 
 Ba luật cần nhớ (hai luật đầu giống đơn nghỉ phép):
 
-- **Không tự duyệt bước 1 cho đơn của chính mình.** Trưởng bộ phận là người duyệt của
-  chính mình thì người duyệt khác của phòng (bảng người duyệt chấm công trên
-  `Department`) duyệt bước 1. Bước HR thì được tự duyệt.
+- **Không tự duyệt đơn của chính mình, ở bất kỳ bước nào** (siết 23/09/2026 — trước đó
+  bước HR còn cho tự duyệt). Trưởng bộ phận là người duyệt của chính mình thì người duyệt
+  khác của phòng (bảng người duyệt chấm công trên `Department`) duyệt bước 1; người duyệt
+  cuối thì đơn của họ do **System Manager** ký bước cuối.
 - **Không còn ai khác duyệt bước 1 thì đơn lên thẳng HR** ngay khi gửi — HR nhận thông
   báo, đơn hiện ở bước HR với nhãn *Chờ HR duyệt* nhưng không có dòng *"… đã duyệt bước
   1"*. Đây là trường hợp trưởng phòng hoặc HR đứng đầu tự là người duyệt chấm công của

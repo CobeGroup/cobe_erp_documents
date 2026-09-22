@@ -74,8 +74,10 @@ phải tạo gần như hằng ngày để chấm công ngoài văn phòng, vừ
 
 Bốn điều đổi:
 
-- **Chỉ đếm những ngày đã qua tại lúc nộp đơn.** Phần xin phép trước để chấm công ngoài văn phòng
-  không bị đếm, không bị chặn, và ứng dụng cũng không còn hiện cảnh báo hết hạn mức cho những ngày đó.
+- **Đếm mọi ngày trong đơn** (từ 23/09/2026), đã qua hay chưa. Trước đó chỉ ngày đã qua bị đếm, và
+  đo trên dữ liệu tháng 9 thì hơn 80% lượng đơn là xin cho chính ngày hôm đó — tức nằm ngoài phanh.
+  Bộ phận phải khai liên tục (kỹ thuật viên đi hiện trường) được chừa bằng một dòng **0 = không giới
+  hạn** khai theo bộ phận, chứ không chừa bằng luật nữa.
 - **Đếm số ngày, không đếm số đơn.** Một đơn được phủ tới 31 ngày, nên "5 đơn mỗi tháng" thực chất
   là tới 155 ngày công khai bù.
 - **Mỗi loại đơn một hạn mức riêng, kể cả Làm việc tại nhà.** Trước đây đơn WFH **không ai đếm** dù

@@ -106,9 +106,8 @@ hoặc cho **riêng một người**, **tính riêng cho từng loại đơn**. 
 nhiêu trên bao nhiêu ngày* ngay lúc chọn khoảng ngày, kèm số ngày đơn đang điền sẽ tiêu, và
 chặn khi vượt:
 
-> Hạn mức khai bù Chấm công bù tháng 10/2026 là 5 ngày. Tháng đó bạn đã khai 4 ngày (tính cả
-> đơn đang chờ duyệt), đơn này xin thêm 2 ngày. Ngày chưa qua tại lúc nộp đơn thì không bị hạn
-> mức. Cần thêm thì liên hệ HR.
+> Hạn mức Chấm công bù tháng 10/2026 là 5 ngày. Tháng đó bạn đã xin 4 ngày (tính cả đơn đang
+> chờ duyệt), đơn này xin thêm 2 ngày. Cần thêm thì liên hệ HR.
 
 Năm điều cần biết:
 

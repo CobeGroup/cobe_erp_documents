@@ -34,10 +34,16 @@ Hệ thống đã có **hạn nộp** (khai lùi tối đa bao nhiêu ngày sau 
 mấy ngày"*; hạn mức trả lời *"một tháng được khai bù mấy NGÀY"*. Hai câu hỏi khác nhau nên là
 hai luật riêng, khai ở hai nơi.
 
-> ⚠️ **Hạn mức chỉ đếm NGÀY KHAI BÙ** — ngày đã qua tại thời điểm nộp đơn. Ngày **hôm nay
-> hoặc ngày tới** không bị đếm và không bao giờ bị chặn: đó là đơn **xin phép trước** để
-> chấm công ngoài văn phòng, kỹ thuật viên đi thẳng từ nhà tới nhà khách bắt buộc phải có
-> đơn thì mới quẹt được. Chặn nó là chặn việc hằng ngày chứ không hãm được lạm dụng.
+> ⚠️ **Hạn mức đếm MỌI NGÀY trong đơn** (đổi 23/09/2026) — ngày đã qua hay chưa đều tính,
+> kể cả đơn xin cho chính hôm nay. Trước đó chỉ ngày đã qua bị đếm, và đo trên dữ liệu tháng
+> 9/2026 thì **161/198 đơn là xin cho chính ngày hôm đó**, tức hơn 80% lượng đơn nằm ngoài
+> mọi phanh.
+>
+> **Chỗ chừa cho việc hằng ngày nay nằm ở cấu hình, không nằm ở luật.** Kỹ thuật viên đi
+> thẳng từ nhà tới nhà khách phải có đơn mới quẹt được, nên bộ phận đó cần một dòng
+> **0 = không giới hạn** khai theo *Bộ phận*. Hiện *Dịch vụ - Bảo hành* đã có dòng như vậy.
+> **Xoá dòng đó là toàn bộ kỹ thuật viên hết đường quẹt ngoài văn phòng ngay hôm sau** —
+> kiểm lại trước khi sửa bảng.
 
 ---
 
@@ -77,7 +83,7 @@ Dòng mới thay dòng cũ, **không cần xoá dòng cũ** — giữ lại là 
 |---|---|
 | Đơn vị | **Số NGÀY**, không phải số đơn. Một đơn phủ ba ngày thì tiêu ba suất |
 | Loại đơn | Tính riêng từng loại: **Chấm công bù / Công tác** (*On Duty*) và **Làm việc tại nhà** (*Work From Home*) |
-| Ngày nào bị đếm | Chỉ những ngày **đã qua tại thời điểm nộp đơn**. Ngày từ hôm nộp trở đi là xin phép trước để chấm công ngoài văn phòng — không đếm |
+| Ngày nào bị đếm | **Mọi ngày trong đơn**, đã qua hay chưa (từ 23/09/2026). Bộ phận cần khai liên tục thì khai dòng **0 = không giới hạn** cho bộ phận đó |
 | Trạng thái | **Đang chờ duyệt và đã duyệt** đều đếm — không đếm đơn chờ thì nộp một lúc mười đơn nháp là lách xong |
 | Thuộc tháng nào | **Mỗi ngày tính vào tháng của chính nó.** Đơn vắt qua hai tháng thì mỗi tháng xét theo hạn mức của tháng đó |
 | Không đếm | Đơn bị từ chối (đã bị xoá) và đơn đã huỷ |
@@ -155,14 +161,12 @@ tiêu. Để họ biết trước chứ không phải điền xong mới bị ch
 
 Nộp quá hạn mức thì đơn bị chặn lúc gửi:
 
-> Hạn mức khai bù Chấm công bù tháng 10/2026 là 5 ngày. Tháng đó bạn đã khai 4 ngày (tính cả
-> đơn đang chờ duyệt), đơn này xin thêm 2 ngày. Ngày chưa qua tại lúc nộp đơn thì không bị hạn
-> mức. Cần thêm thì liên hệ HR.
+> Hạn mức Chấm công bù tháng 10/2026 là 5 ngày. Tháng đó bạn đã xin 4 ngày (tính cả đơn đang
+> chờ duyệt), đơn này xin thêm 2 ngày. Cần thêm thì liên hệ HR.
 
-> ℹ️ **Đơn nộp cho hôm nay / ngày tới có phanh riêng.** Loại đơn đó là giấy xin phép chấm công
-> ngoài văn phòng nên không bị hạn mức — nhưng ngày đó chỉ có công khi nhân viên **thật sự chấm công
-> ít nhất một lần**; không chấm lần nào thì hệ thống gỡ ngày công vào sáng hôm sau và báo cho nhân
-> viên. Hạn mức vì vậy chỉ cần lo cho đường **khai bù** (ngày đã qua) — xem
+> ℹ️ **Đơn nộp cho hôm nay / ngày tới còn một phanh thứ hai.** Ngoài hạn mức, ngày đó chỉ có
+> công khi nhân viên **thật sự chấm công ít nhất một lần**; không chấm lần nào thì hệ thống gỡ
+> ngày công vào sáng hôm sau và báo cho nhân viên — xem
 > [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html).
 
 **Được miễn hạn mức:** HR Manager, HR User, System Manager — nhưng **chỉ khi lập đơn cho
@@ -189,6 +193,7 @@ bị kiểm lại, vì thêm ngày là xin thêm suất.
 | Đặt hạn mức rồi mà đơn WFH vẫn nộp thoải mái | Chưa khai dòng nào cho loại **Work From Home** — mỗi loại một sổ riêng, loại chưa khai là không giới hạn |
 | Cần cho thêm ngày trong tháng này | Nâng số trên bản đang hiệu lực, hoặc khai bản mới hiệu lực từ đầu tháng; hoặc HR lập hộ đơn cho nhân viên đó (vai trò HR được miễn khi lập cho người khác) |
 | Đơn vắt qua hai tháng | Mỗi ngày tính vào **tháng của chính nó**, và mỗi tháng xét theo hạn mức của tháng đó |
+| Kỹ thuật viên báo bị chặn khi xin quẹt ngoài văn phòng | Kiểm dòng **bộ phận** của họ trong bảng: phải có dòng **0 = không giới hạn**. Từ 23/09/2026 đơn xin cho chính hôm nay cũng tiêu suất, nên bộ phận đi hiện trường bắt buộc phải có dòng riêng |
 | Người làm HR tự nộp đơn mà bị chặn | Đúng luật: miễn trừ chỉ áp khi lập đơn **cho người khác**. Nhờ một người HR khác lập hộ, hoặc khai một dòng đích danh mình |
 
 ---
