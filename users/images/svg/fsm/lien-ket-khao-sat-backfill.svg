@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" width="1000" height="360" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+  <style>
+    .box   { rx: 10; ry: 10; stroke-width: 1.6; }
+    .human { fill: #f9f0ff; stroke: #9254de; }
+    .auto  { fill: #e6f4ff; stroke: #299dd8; }
+    .done  { fill: #f6ffed; stroke: #54ab78; }
+    .warn  { fill: #fff7e6; stroke: #d46b08; }
+    .tb    { font-size: 14.5px; font-weight: 600; fill: #111827; }
+    .ts    { font-size: 12.5px; fill: #4b5563; }
+    .lane  { font-size: 12.5px; font-weight: 700; fill: #6b7280; letter-spacing: .04em; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.8; fill: none; }
+    .note  { font-size: 12.5px; fill: #92400e; }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <text class="lane" x="24" y="46">BẤM</text>
+  <text class="lane" x="24" y="164">HỆ THỐNG LÀM</text>
+  <text class="lane" x="24" y="290">NẾU SAI</text>
+
+  <rect class="box human" x="140" y="60" width="200" height="62"/>
+  <text class="tb" x="240" y="84" text-anchor="middle">Chế độ Thử khô</text>
+  <text class="ts" x="240" y="104" text-anchor="middle">chỉ đếm, không ghi gì</text>
+
+  <rect class="box human" x="400" y="60" width="200" height="62"/>
+  <text class="tb" x="500" y="84" text-anchor="middle">Chế độ Chạy thật</text>
+  <text class="ts" x="500" y="104" text-anchor="middle">ghi liên kết hàng loạt</text>
+
+  <rect class="box auto" x="140" y="146" width="460" height="76"/>
+  <text class="tb" x="370" y="172" text-anchor="middle">Chạy nền và ghi lại từng lần chạy</text>
+  <text class="ts" x="370" y="192" text-anchor="middle">chỉ nhận phiếu chưa có liên kết, và khách chỉ có đúng một đơn khảo sát trước đó</text>
+  <text class="ts" x="370" y="210" text-anchor="middle">phiếu phân tích nước chỉ gán khi khách có đúng một phiếu</text>
+
+  <rect class="box done" x="660" y="146" width="230" height="76"/>
+  <text class="tb" x="775" y="172" text-anchor="middle">Bản ghi lần chạy</text>
+  <text class="ts" x="775" y="192" text-anchor="middle">ứng viên · đã gán · kèm phiếu nước</text>
+  <text class="ts" x="775" y="210" text-anchor="middle">lỗi · thời gian bắt đầu và kết thúc</text>
+
+  <rect class="box warn" x="660" y="262" width="230" height="62"/>
+  <text class="tb" x="775" y="286" text-anchor="middle">Nút Hoàn tác</text>
+  <text class="ts" x="775" y="306" text-anchor="middle">gỡ đúng những liên kết lần đó đặt</text>
+
+  <line class="arrow" x1="240" y1="122" x2="240" y2="142" marker-end="url(#ah)"/>
+  <line class="arrow" x1="500" y1="122" x2="500" y2="142" marker-end="url(#ah)"/>
+  <line class="arrow" x1="600" y1="184" x2="656" y2="184" marker-end="url(#ah)"/>
+  <line class="arrow" x1="775" y1="222" x2="775" y2="258" marker-end="url(#ah)"/>
+
+  <text class="note" x="140" y="286">Phiếu nào đã được sửa thủ công sau lần chạy thì hoàn tác giữ nguyên,</text>
+  <text class="note" x="140" y="304">không ghi đè lựa chọn của người dùng.</text>
+</svg>

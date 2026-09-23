@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" width="1000" height="470" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+  <style>
+    .box   { rx: 10; ry: 10; stroke-width: 1.6; }
+    .human { fill: #f9f0ff; stroke: #9254de; }
+    .auto  { fill: #e6f4ff; stroke: #299dd8; }
+    .done  { fill: #f6ffed; stroke: #54ab78; }
+    .doc   { fill: #fffbe6; stroke: #d4b106; }
+    .t     { font-size: 14px; fill: #1f2937; }
+    .tb    { font-size: 14.5px; font-weight: 600; fill: #111827; }
+    .ts    { font-size: 12.5px; fill: #4b5563; }
+    .lane  { font-size: 12.5px; font-weight: 700; fill: #6b7280; letter-spacing: .04em; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.8; fill: none; }
+    .dash  { stroke: #9ca3af; stroke-width: 1.6; fill: none; stroke-dasharray: 5 4; }
+    .note  { font-size: 12.5px; fill: #92400e; }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <text class="lane" x="24" y="44">HIỆN TRƯỜNG</text>
+  <text class="lane" x="24" y="176">CHỨNG TỪ</text>
+  <text class="lane" x="24" y="300">LIÊN KẾT</text>
+  <text class="lane" x="24" y="414">AI ĐỌC ĐƯỢC</text>
+
+  <!-- hàng 1: việc ngoài hiện trường -->
+  <rect class="box human" x="150" y="58" width="210" height="62"/>
+  <text class="tb" x="255" y="82" text-anchor="middle">Kỹ thuật viên đi khảo sát</text>
+  <text class="ts" x="255" y="102" text-anchor="middle">chụp ảnh, ghi nhận, lấy mẫu nước</text>
+
+  <rect class="box human" x="420" y="58" width="180" height="62"/>
+  <text class="tb" x="510" y="82" text-anchor="middle">Tư vấn</text>
+  <text class="ts" x="510" y="102" text-anchor="middle">chọn đơn khảo sát để liên kết</text>
+
+  <rect class="box human" x="660" y="58" width="210" height="62"/>
+  <text class="tb" x="765" y="82" text-anchor="middle">Kỹ thuật viên đi lắp đặt</text>
+  <text class="ts" x="765" y="102" text-anchor="middle">mở tab Khảo sát trên ứng dụng</text>
+
+  <line class="arrow" x1="360" y1="89" x2="416" y2="89" marker-end="url(#ah)"/>
+  <line class="arrow" x1="600" y1="89" x2="656" y2="89" marker-end="url(#ah)"/>
+
+  <!-- hàng 2: chứng từ -->
+  <rect class="box doc" x="150" y="150" width="210" height="86"/>
+  <text class="tb" x="255" y="174" text-anchor="middle">Phiếu công việc — Khảo sát</text>
+  <text class="ts" x="255" y="194" text-anchor="middle">mô tả · kết quả khảo sát</text>
+  <text class="ts" x="255" y="212" text-anchor="middle">hạng mục · tệp đính kèm</text>
+
+  <rect class="box doc" x="150" y="252" width="210" height="52"/>
+  <text class="tb" x="255" y="274" text-anchor="middle">Phiếu phân tích nước</text>
+  <text class="ts" x="255" y="292" text-anchor="middle">chỉ tiêu · kết luận · giải pháp</text>
+
+  <rect class="box doc" x="660" y="150" width="210" height="62"/>
+  <text class="tb" x="765" y="174" text-anchor="middle">Phiếu công việc — Lắp đặt</text>
+  <text class="ts" x="765" y="194" text-anchor="middle">sinh ra sau, không biết gì về khảo sát</text>
+
+  <!-- hàng 3: liên kết -->
+  <rect class="box auto" x="420" y="252" width="180" height="62"/>
+  <text class="tb" x="510" y="276" text-anchor="middle">Hai ô liên kết</text>
+  <text class="ts" x="510" y="296" text-anchor="middle">đặt trên phiếu lắp đặt</text>
+
+  <path class="arrow" d="M360 193 L400 193 L400 276 L416 276" marker-end="url(#ah)"/>
+  <path class="arrow" d="M360 278 L416 278" marker-end="url(#ah)"/>
+  <path class="arrow" d="M600 276 L636 276 L636 200 L656 200" marker-end="url(#ah)"/>
+
+  <text class="note" x="420" y="336">Chỉ tư vấn / điều phối đặt được liên kết này</text>
+  <text class="note" x="420" y="354">Chỉ gợi ý đơn khảo sát của đúng khách hàng đó</text>
+
+  <!-- hàng 4: ai đọc được -->
+  <rect class="box done" x="150" y="388" width="300" height="56"/>
+  <text class="tb" x="300" y="410" text-anchor="middle">Tư vấn · điều phối — trên Desk</text>
+  <text class="ts" x="300" y="430" text-anchor="middle">tab Khảo sát trên phiếu lắp đặt</text>
+
+  <rect class="box done" x="560" y="388" width="310" height="56"/>
+  <text class="tb" x="715" y="410" text-anchor="middle">Kỹ thuật viên của đúng ca đó</text>
+  <text class="ts" x="715" y="430" text-anchor="middle">tab Khảo sát trên ứng dụng, chỉ đọc</text>
+
+  <path class="dash" d="M510 314 L510 360 L300 360 L300 384" marker-end="url(#ah)"/>
+  <path class="dash" d="M510 314 L510 360 L715 360 L715 384" marker-end="url(#ah)"/>
+</svg>
