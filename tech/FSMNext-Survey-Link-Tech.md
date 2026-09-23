@@ -65,9 +65,29 @@ fixtures của `fsmnext_extend_cobe`:
 | `cobe_water_analysis_report` | Link `Water Analysis Report` | Như trên |
 | `cobe_survey_panel_html` | HTML | Chỗ dựng nội dung trên Desk |
 
-**Không dùng `parent_work_order` / `root_work_order` có sẵn.** Hai trường đó đang là khoá gom
-cụm của màn hình điều phối (`sa.root_record = wo.root_work_order or wo.name`), gán vào đó sẽ
-trộn đơn khảo sát với đơn lắp đặt thành một cụm.
+### Ranh giới với `parent_work_order`
+
+`parent_work_order` diễn đạt gần đúng cùng một ý, và nghiệp vụ đã dùng nó cho đúng ý đó: trên
+dữ liệu hiện tại có 8 phiếu lắp đặt điền ô này, **cả 8 đều trỏ về một đơn khảo sát**. Nhưng
+tính năng này vẫn **ghi vào trường riêng**, vì `parent_work_order` kéo theo `root_work_order`
+(`FS Work Order.set_root_work_order`), rồi mọi ca của phiếu lấy `root_record` theo đó. Ba chỗ
+đọc `root_record` là ba thứ sẽ đổi hành vi nếu gán bừa:
+
+| Chỗ đọc | Hệ quả nếu đổi gốc |
+|---|---|
+| `sa.root_record = wo.root_work_order or wo.name` | Điều phối gom ca lắp đặt vào cụm của đơn khảo sát |
+| `force_close.py` — quét ca dang dở theo `root_record` | Đóng cưỡng bức đơn khảo sát kéo theo ca lắp đặt |
+| `work_condition.py` — tính lại điều kiện theo `root_record` | Điều kiện hoàn thành tính sai gốc |
+
+Chốt lại ranh giới, giữ nguyên khi sửa về sau:
+
+- `parent_work_order` = **quan hệ vận hành** (gom ca, phạm vi đóng phiếu, nghĩa vụ vật tư).
+- `cobe_survey_work_order` = **tham chiếu chỉ để đọc**, cố ý không chạm điều phối hay kho.
+
+Một chiều duy nhất được nối: `_get_links()` **đọc kèm** `parent_work_order` khi ô riêng còn
+trống và phiếu cha đúng loại `Khảo sát`, trả thêm cờ `inherited` để panel ghi rõ nguồn. Chiều
+ngược lại — ghi vào `parent_work_order` — thì không, và nút *Gỡ liên kết khảo sát* cũng chỉ
+hiện với liên kết do tư vấn gán.
 
 ---
 
@@ -125,8 +145,8 @@ theo đúng khuôn công cụ bảo trì của Service Reminder.
 | `survey_backfill.run_job` | Thân job, ghi tiến độ vào nhật ký |
 | `COBE Survey Backfill Run` | Nhật ký từng lần chạy, giữ danh sách đã gán |
 
-Điều kiện chọn ứng viên: phiếu chưa có liên kết, chưa huỷ, và khách hàng có **đúng một** đơn
-khảo sát tạo trước đó. Phiếu phân tích nước chỉ gán khi khách hàng có đúng một phiếu còn hiệu
+Điều kiện chọn ứng viên: phiếu chưa có liên kết, **`parent_work_order` không trỏ về một đơn
+khảo sát**, chưa huỷ, và khách hàng có **đúng một** đơn khảo sát tạo trước đó. Phiếu phân tích nước chỉ gán khi khách hàng có đúng một phiếu còn hiệu
 lực.
 
 ### Bốn điểm phải giữ khi sửa công cụ này
@@ -137,9 +157,24 @@ lực.
 | Đẩy job thất bại phải chuyển nhật ký sang `Failed` | Redis chết mà nhật ký nằm `Queued` thì nhìn như đang chạy |
 | Danh sách đã gán phải **cộng dồn** và ghi theo lô | Worker chạy lại job hoặc job bị dừng giữa chừng sẽ xoá mất đường hoàn tác |
 | Hoàn tác phải so giá trị hiện tại trước khi gỡ | Không ghi đè lựa chọn người dùng đã sửa thủ công sau lần chạy |
+| Bỏ qua phiếu đã có cha là đơn khảo sát | Tab đọc được rồi; gán thêm là tạo hai nguồn sự thật cho cùng một câu hỏi |
 
 Việc gán cố ý **không** đặt trong patch: đây là suy đoán từ dữ liệu, người dùng phải được quyền
 phủ quyết và hoàn tác.
+
+### Báo cáo Khảo sát đọc liên kết này
+
+`service_reminder.api.survey` trả lời câu hỏi "ca khảo sát này ra đơn nào". Trước đây nó chỉ
+đoán theo khách hàng + ngày, vì liên kết trực tiếp gần như không ai nhập. Nay thứ tự là:
+
+1. `sales_order` gắn thẳng trên đơn khảo sát;
+2. đơn bán hàng của phiếu trỏ ngược về ca này — qua `cobe_survey_work_order` **hoặc**
+   `parent_work_order`;
+3. mới tới suy đoán theo khách hàng + ngày.
+
+Bậc 2 chỉ ghép vào câu SQL khi `frappe.db.has_column("FS Work Order", "cobe_survey_work_order")`
+trả về đúng: `service_reminder` không phụ thuộc `fsmnext_extend_cobe`, site chưa migrate vẫn
+phải xem được báo cáo.
 
 ---
 

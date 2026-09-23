@@ -53,10 +53,35 @@ Trên phiếu công việc lắp đặt, ở góc phải phía trên có nhóm n
 | **Gỡ liên kết khảo sát** | Xoá liên kết hiện có; chỉ hiện khi phiếu đang có liên kết |
 
 Hộp thoại chỉ liệt kê những đơn khảo sát **của đúng khách hàng trên phiếu lắp đặt**, chưa bị
-huỷ, xếp mới nhất lên đầu, kèm ngày khảo sát và trạng thái để phân biệt. Ô phiếu phân tích nước
-được điền sẵn khi khách hàng chỉ có đúng một phiếu; khách có nhiều phiếu thì tư vấn tự chọn.
+huỷ, xếp mới nhất lên đầu, kèm ngày khảo sát và trạng thái để phân biệt.
+
+Hệ thống gợi ý sẵn một lựa chọn, tư vấn vẫn đổi được:
+
+| Ô | Được điền sẵn khi |
+|---|---|
+| Đơn khảo sát | Phiếu đã có liên kết cũ; hoặc ô **Đơn cha** đang trỏ về một đơn khảo sát; hoặc khách hàng chỉ có đúng một đơn khảo sát |
+| Phiếu phân tích nước | Khách hàng chỉ có đúng một phiếu |
+
+Khách có nhiều đơn khảo sát hoặc nhiều phiếu phân tích nước thì ô để trống, tư vấn tự chọn.
 
 Sau khi lưu, phiếu lắp đặt có thêm tab **Khảo sát**.
+
+### Phiếu gắn bằng ô Đơn cha từ trước
+
+Trước khi có nút này, một số phiếu lắp đặt đã được gắn đơn khảo sát qua ô **Đơn cha**
+(`Parent Work Order`). Những phiếu đó **vẫn xem được tab Khảo sát**, không cần gắn lại; tab ghi
+thêm dòng *Nguồn liên kết: suy ra từ ô Đơn cha* để người đọc biết đây không phải lựa chọn của tư
+vấn.
+
+Hai ô này khác nhau về mục đích, đừng dùng lẫn:
+
+| Ô | Dùng để làm gì |
+|---|---|
+| **Đơn cha** (`Parent Work Order`) | Quan hệ vận hành: gom ca cho điều phối, phạm vi đóng phiếu, quy nghĩa vụ vật tư |
+| **WO khảo sát** (nút *Khảo sát*) | Chỉ để đọc lại hồ sơ khảo sát; cố ý không tác động tới điều phối hay kho |
+
+Cần đọc lại hồ sơ khảo sát thì dùng nút **Khảo sát**. Đừng điền ô **Đơn cha** chỉ vì mục đích
+đó — ô ấy kéo theo cách hệ thống gom ca và tính nghĩa vụ vật tư của phiếu.
 
 ### Hệ thống từ chối trong những trường hợp nào
 
@@ -157,6 +182,7 @@ theo thứ tự:
 | Đơn khảo sát có đúng khách hàng đó không | Khách được tạo lại thì hai phiếu thuộc hai mã khách khác nhau |
 | Đơn khảo sát có bị huỷ không | Phiếu đã huỷ không được gợi ý |
 | Loại công việc của đơn khảo sát | Phải đúng loại `Khảo sát` |
+| Phiếu có sẵn ô **Đơn cha** trỏ về đơn khảo sát | Tab đã hiện sẵn rồi, không cần gắn thêm |
 
 ---
 
@@ -176,6 +202,10 @@ Không. Gỡ liên kết chỉ xoá mối nối; đơn khảo sát và phiếu p
 
 **Phiếu phân tích nước đang nháp có gắn được không?**
 Được, nhưng tab sẽ ghi rõ *Tình trạng phiếu: Nháp* để người đọc biết số liệu chưa chốt.
+
+**Phiếu của tôi đã có ô Đơn cha là đơn khảo sát, có phải gắn lại không?**
+Không. Tab Khảo sát tự đọc luôn ô đó. Chỉ gắn bằng nút **Khảo sát** khi muốn trỏ sang một đơn
+khảo sát khác với ô Đơn cha, hoặc muốn gắn thêm phiếu phân tích nước.
 
 **Đang xem tab Khảo sát thì tư vấn gỡ liên kết, ứng dụng có lỗi không?**
 Không. Lần mở sau tab biến mất và ứng dụng quay về tab Work Order.
