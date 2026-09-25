@@ -43,6 +43,19 @@ lưu số phiếu công việc. Vì vậy liên kết do **con người đặt**
 
 ---
 
+## Xem nhanh bằng video
+
+Toàn bộ thao tác gắn liên kết và đọc lại nội dung khảo sát, quay trên dữ liệu minh hoạ:
+
+<video src="images/guide/fsm/lien-ket-khao-sat.mp4" controls playsinline
+       poster="images/guide/fsm/lien-ket-khao-sat-poster.png"
+       style="width:100%;max-width:960px;height:auto;border:1px solid #d0d7de;border-radius:6px"></video>
+
+Video không có tiếng; lời dẫn nằm ở dải chữ cuối màn hình. Khách hàng, đơn khảo sát và phiếu
+phân tích nước trong video đều là dữ liệu minh hoạ, không phải khách thật.
+
+---
+
 ## 1. Tư vấn gắn đơn khảo sát
 
 Trên phiếu công việc lắp đặt, ở góc phải phía trên có nhóm nút **Khảo sát**:
