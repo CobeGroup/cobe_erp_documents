@@ -72,7 +72,7 @@ Hệ thống gợi ý sẵn một lựa chọn, tư vấn vẫn đổi được:
 
 | Ô | Được điền sẵn khi |
 |---|---|
-| Đơn khảo sát | Phiếu đã có liên kết cũ; hoặc ô **Đơn cha** đang trỏ về một đơn khảo sát; hoặc khách hàng chỉ có đúng một đơn khảo sát |
+| Đơn khảo sát | Phiếu đã có liên kết cũ; hoặc ô **Đơn cha** đang trỏ về một đơn khảo sát của **cùng khách hàng**; hoặc khách hàng chỉ có đúng một đơn khảo sát |
 | Phiếu phân tích nước | Khách hàng chỉ có đúng một phiếu |
 
 Khách có nhiều đơn khảo sát hoặc nhiều phiếu phân tích nước thì ô để trống, tư vấn tự chọn.
@@ -85,6 +85,11 @@ Trước khi có nút này, một số phiếu lắp đặt đã được gắn 
 (`Parent Work Order`). Những phiếu đó **vẫn xem được tab Khảo sát**, không cần gắn lại; tab ghi
 thêm dòng *Nguồn liên kết: suy ra từ ô Đơn cha* để người đọc biết đây không phải lựa chọn của tư
 vấn.
+
+Chỉ đọc khi đơn cha thuộc **đúng khách hàng trên phiếu**. Ô Đơn cha không có luật nào bắt cùng
+khách, nên nếu nó trỏ sang đơn khảo sát của khách khác thì tab **không hiện gì** — hồ sơ khách
+này không được phép lọt sang phiếu của khách kia. Trường hợp đó phiếu vẫn nằm trong danh sách
+gán hàng loạt, và tư vấn gắn tay bằng nút **Khảo sát** như bình thường.
 
 Hai ô này khác nhau về mục đích, đừng dùng lẫn:
 
@@ -195,7 +200,7 @@ theo thứ tự:
 | Đơn khảo sát có đúng khách hàng đó không | Khách được tạo lại thì hai phiếu thuộc hai mã khách khác nhau |
 | Đơn khảo sát có bị huỷ không | Phiếu đã huỷ không được gợi ý |
 | Loại công việc của đơn khảo sát | Phải đúng loại `Khảo sát` |
-| Phiếu có sẵn ô **Đơn cha** trỏ về đơn khảo sát | Tab đã hiện sẵn rồi, không cần gắn thêm |
+| Phiếu có sẵn ô **Đơn cha** trỏ về đơn khảo sát cùng khách | Tab đã hiện sẵn rồi, không cần gắn thêm |
 
 ---
 
@@ -215,6 +220,10 @@ Không. Gỡ liên kết chỉ xoá mối nối; đơn khảo sát và phiếu p
 
 **Phiếu phân tích nước đang nháp có gắn được không?**
 Được, nhưng tab sẽ ghi rõ *Tình trạng phiếu: Nháp* để người đọc biết số liệu chưa chốt.
+
+**Đơn cha của tôi là đơn khảo sát mà tab vẫn trống?**
+Kiểm tra khách hàng của hai phiếu. Tab chỉ đọc ô Đơn cha khi hai phiếu cùng một khách; khác
+khách thì cố ý không hiện. Gắn tay bằng nút **Khảo sát** là xong.
 
 **Phiếu của tôi đã có ô Đơn cha là đơn khảo sát, có phải gắn lại không?**
 Không. Tab Khảo sát tự đọc luôn ô đó. Chỉ gắn bằng nút **Khảo sát** khi muốn trỏ sang một đơn

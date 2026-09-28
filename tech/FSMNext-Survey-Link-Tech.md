@@ -85,7 +85,11 @@ Chốt lại ranh giới, giữ nguyên khi sửa về sau:
 - `cobe_survey_work_order` = **tham chiếu chỉ để đọc**, cố ý không chạm điều phối hay kho.
 
 Một chiều duy nhất được nối: `_get_links()` **đọc kèm** `parent_work_order` khi ô riêng còn
-trống và phiếu cha đúng loại `Khảo sát`, trả thêm cờ `inherited` để panel ghi rõ nguồn. Chiều
+trống, phiếu cha đúng loại `Khảo sát` **và cùng khách hàng**, trả thêm cờ `inherited` để panel
+ghi rõ nguồn. Điều kiện cùng khách không thừa: ô liên kết tường minh có luật kiểm chặn khác
+khách, còn `parent_work_order` thì fsmnext không ràng buộc gì — trên dữ liệu thật đã có phiếu
+trỏ về đơn khảo sát của khách khác. Thiếu nó là tab chiếu hồ sơ khách này sang phiếu khách kia,
+cho cả kỹ thuật viên được gán ca đó. Chiều
 ngược lại — ghi vào `parent_work_order` — thì không, và nút *Gỡ liên kết khảo sát* cũng chỉ
 hiện với liên kết do tư vấn gán.
 
@@ -146,7 +150,7 @@ theo đúng khuôn công cụ bảo trì của Service Reminder.
 | `COBE Survey Backfill Run` | Nhật ký từng lần chạy, giữ danh sách đã gán |
 
 Điều kiện chọn ứng viên: phiếu chưa có liên kết, **`parent_work_order` không trỏ về một đơn
-khảo sát**, chưa huỷ, và khách hàng có **đúng một** đơn khảo sát tạo trước đó. Phiếu phân tích nước chỉ gán khi khách hàng có đúng một phiếu còn hiệu
+khảo sát cùng khách** (khác khách thì tab không đọc, nên vẫn là ứng viên), chưa huỷ, và khách hàng có **đúng một** đơn khảo sát tạo trước đó. Phiếu phân tích nước chỉ gán khi khách hàng có đúng một phiếu còn hiệu
 lực.
 
 ### Bốn điểm phải giữ khi sửa công cụ này
@@ -175,6 +179,13 @@ phủ quyết và hoàn tác.
 Bậc 2 chỉ ghép vào câu SQL khi `frappe.db.has_column("FS Work Order", "cobe_survey_work_order")`
 trả về đúng: `service_reminder` không phụ thuộc `fsmnext_extend_cobe`, site chưa migrate vẫn
 phải xem được báo cáo.
+
+Bậc 2 là một **bảng dẫn xuất nối vào `FROM`**, khoá ghép gồm cả khách hàng, chứ không phải truy
+vấn con tương quan. Bản đầu viết kiểu `(SELECT … WHERE l.parent_work_order = k.name OR
+l.cobe_survey_work_order = k.name)`: chạy lại cho từng ca khảo sát, mà `OR` chặn index nên mỗi
+dòng quét cả bảng phiếu công việc — **28 giây một trang báo cáo, so với 0,02 giây khi chưa có
+nhánh này**. Bộ kiểm `service_reminder._t.verify_survey_report` gác cả hai điểm: ngưỡng thời
+gian và luật cùng khách hàng.
 
 ---
 
