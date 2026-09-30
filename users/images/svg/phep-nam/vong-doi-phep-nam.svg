@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 960 330" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+  <title>Vòng đời Phép Năm của một nhân viên</title>
+  <defs>
+    <marker id="mui" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="960" height="330" fill="#ffffff"/>
+
+  <!-- Hàng chính -->
+  <g font-size="14" text-anchor="middle">
+    <rect x="15" y="40" width="165" height="96" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+    <text x="97" y="68" font-weight="700" fill="#0f172a">1. Vào làm</text>
+    <text x="97" y="92" fill="#334155">HR tạo hồ sơ</text>
+    <text x="97" y="112" fill="#475569" font-size="12">Employee</text>
+
+    <rect x="205" y="40" width="175" height="96" rx="10" fill="#fef3c7" stroke="#d97706"/>
+    <text x="292" y="68" font-weight="700" fill="#0f172a">2. Hết thử việc</text>
+    <text x="292" y="92" fill="#334155">Confirmation Date</text>
+    <text x="292" y="112" fill="#475569" font-size="12">trống = vào làm + 2 tháng</text>
+
+    <rect x="405" y="40" width="175" height="96" rx="10" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="492" y="68" font-weight="700" fill="#0f172a">3. Hệ thống cấp phép</text>
+    <text x="492" y="92" fill="#334155">tự động, không cần duyệt</text>
+    <text x="492" y="112" fill="#475569" font-size="12">Leave Policy Assignment</text>
+
+    <rect x="605" y="40" width="160" height="96" rx="10" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="685" y="68" font-weight="700" fill="#0f172a">4. Cuối mỗi tháng</text>
+    <text x="685" y="92" fill="#334155">cộng 1 ngày phép</text>
+    <text x="685" y="112" fill="#475569" font-size="12">tới hết 31/12</text>
+
+    <rect x="790" y="40" width="155" height="96" rx="10" fill="#ede9fe" stroke="#7c3aed"/>
+    <text x="867" y="68" font-weight="700" fill="#0f172a">5. Ngày 01/01</text>
+    <text x="867" y="92" fill="#334155">cấp năm mới,</text>
+    <text x="867" y="112" fill="#475569" font-size="12">chuyển số dư năm cũ</text>
+  </g>
+  <g stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#mui)">
+    <line x1="180" y1="88" x2="201" y2="88"/>
+    <line x1="380" y1="88" x2="401" y2="88"/>
+    <line x1="580" y1="88" x2="601" y2="88"/>
+    <line x1="765" y1="88" x2="786" y2="88"/>
+    <path d="M867,136 C867,170 685,170 685,140"/>
+  </g>
+  <text x="776" y="178" font-size="12" fill="#64748b" text-anchor="middle">lặp lại mỗi năm</text>
+
+  <!-- Hàng phụ -->
+  <g font-size="13" text-anchor="middle">
+    <rect x="205" y="215" width="375" height="80" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-dasharray="6 4"/>
+    <text x="392" y="243" font-weight="700" fill="#0f172a">HR điền hoặc sửa Confirmation Date → Save</text>
+    <text x="392" y="266" fill="#334155">hệ thống tính lại phép theo ngày mới</text>
+    <text x="392" y="284" fill="#475569" font-size="12">(trừ khi nhân viên đã nghỉ phép trừ vào số dư)</text>
+
+    <rect x="15" y="215" width="165" height="80" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6 4"/>
+    <text x="97" y="243" font-weight="700" fill="#0f172a">Không phải</text>
+    <text x="97" y="262" font-weight="700" fill="#0f172a">nhân viên thật</text>
+    <text x="97" y="282" fill="#475569" font-size="12">tick cờ → không cấp</text>
+
+    <rect x="605" y="215" width="340" height="80" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6 4"/>
+    <text x="775" y="243" font-weight="700" fill="#0f172a">Xem số dư, lịch cộng phép</text>
+    <text x="775" y="266" fill="#334155">báo cáo Employee Leave Balance</text>
+    <text x="775" y="284" fill="#475569" font-size="12">Leave Ledger · Leave Policy Assignment</text>
+  </g>
+  <g stroke="#ea580c" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#mui)">
+    <line x1="392" y1="215" x2="392" y2="140"/>
+  </g>
+
+  <!-- VUNG-BAM: vẽ tay theo quy ước _tools/svg_hotspots.py -->
+  <style>
+    .hot { fill: #1d4ed8; fill-opacity: 0; cursor: pointer; pointer-events: all; }
+    .hot:hover { fill-opacity: .08; }
+  </style>
+  <a xlink:href="../../../Desk-Admin-Employee.html" href="../../../Desk-Admin-Employee.html" target="_top"><rect class="hot" x="15" y="40" width="165" height="96" rx="10"/></a>
+  <a xlink:href="../../../Desk-HR-CapPhep.html#het-thu-viec" href="../../../Desk-HR-CapPhep.html#het-thu-viec" target="_top"><rect class="hot" x="205" y="40" width="175" height="96" rx="10"/></a>
+  <a xlink:href="../../../Desk-HR-CapPhep.html#he-thong-cap" href="../../../Desk-HR-CapPhep.html#he-thong-cap" target="_top"><rect class="hot" x="405" y="40" width="175" height="96" rx="10"/></a>
+  <a xlink:href="../../../Desk-HR-CapPhep.html#he-thong-cap" href="../../../Desk-HR-CapPhep.html#he-thong-cap" target="_top"><rect class="hot" x="605" y="40" width="160" height="96" rx="10"/></a>
+  <a xlink:href="../../../Desk-HR-CapPhep.html#nam-moi" href="../../../Desk-HR-CapPhep.html#nam-moi" target="_top"><rect class="hot" x="790" y="40" width="155" height="96" rx="10"/></a>
+  <a xlink:href="../../../Desk-HR-CapPhep.html#doi-ngay" href="../../../Desk-HR-CapPhep.html#doi-ngay" target="_top"><rect class="hot" x="205" y="215" width="375" height="80" rx="10"/></a>
+  <a xlink:href="../../../Desk-HR-CapPhep.html#khong-cap" href="../../../Desk-HR-CapPhep.html#khong-cap" target="_top"><rect class="hot" x="15" y="215" width="165" height="80" rx="10"/></a>
+  <a xlink:href="../../../Desk-HR-KiemTraPhep.html#tinh-tu-ngay-nao" href="../../../Desk-HR-KiemTraPhep.html#tinh-tu-ngay-nao" target="_top"><rect class="hot" x="605" y="215" width="340" height="80" rx="10"/></a>
+  <!-- /VUNG-BAM -->
+</svg>

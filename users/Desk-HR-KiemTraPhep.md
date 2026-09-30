@@ -48,6 +48,26 @@ vẽ số dư theo loại — cột **đỏ dưới trục 0** chính là loại
 
 ---
 
+## 1b. Phép Năm của nhân viên tính từ ngày nào?
+{: #tinh-tu-ngay-nao }
+
+Mở danh sách **Phân bổ chính sách phép** (`Leave Policy Assignment`, `/app/leave-policy-assignment`)
+→ lọc theo **Employee**. Dòng ở trạng thái **Submitted** của năm nay cho biết:
+
+| Ô | Ý nghĩa |
+|---|---|
+| **Effective From** | Ngày bắt đầu tính Phép Năm (= ngày hết thử việc, hoặc 01/01 nếu hết thử việc từ năm trước) |
+| **Effective To** | 31/12 năm nay |
+| **Hệ thống tự cấp (theo ngày hết thử việc)** | Có tick = do hệ thống cấp, sẽ tự tính lại khi HR sửa Confirmation Date. Không tick = nạp từ trước hoặc HR tạo thủ công, luôn giữ nguyên |
+
+Muốn xem **lịch cộng phép các tháng tới**: mở dòng đó → mở **Leave Allocation** liên kết → bảng
+**Earned Leave Schedule** liệt kê từng ngày cộng; ngày đã cộng có tick *Is Allocated*.
+
+> 💡 Nhân viên mới vào làm chưa có dòng nào ở đây hoặc số dư đang là 0 là **bình thường** khi chưa
+> hết thử việc. Cách hệ thống cấp Phép Năm: [Cấp phép → Phép Năm được hệ thống tự cấp](Desk-HR-CapPhep.html#he-thong-cap).
+
+---
+
 ## 2. Soát đơn đang treo (Leave Application list)
 
 Mở `/app/leave-application` — cột **Status** tô màu theo trạng thái workflow:
@@ -105,7 +125,8 @@ Nguyên nhân hay gặp:
 
 | Hiện tượng | Nguyên nhân thật |
 |---|---|
-| NV "còn phép" mà app không cho tạo đơn | **Allocation kỳ này chưa cấp** hoặc đã **hết hạn** (phép năm ngoái không tự chuyển) → [Cấp phép](Desk-HR-CapPhep.html) |
+| NV "còn phép" mà app không cho tạo đơn | Ngày xin nghỉ **trước ngày hết thử việc** (ngoài kỳ Phép Năm), hoặc hồ sơ tick *Không tự cấp Phép Năm* → xem [mục 1b](#tinh-tu-ngay-nao) |
+| NV mới vào làm chưa có Phép Năm | **Bình thường** khi chưa hết thử việc — kiểm Confirmation Date trên hồ sơ ([Cấp phép](Desk-HR-CapPhep.html#het-thu-viec)) |
 | Số dư "tự nhiên" tăng lại | Đơn đã duyệt bị **Cancel** → hệ thống **xoá dòng trừ trong ledger**, số dư hồi lại — đúng thiết kế |
 | NV kêu đã xin nghỉ mà số dư chưa giảm | Đơn còn ở **Chờ trưởng bộ phận / Chờ HR duyệt** — chỉ trừ khi **Submitted** (mục 2) |
 | Số dư lẻ 0,5 | Đơn **nửa ngày** trừ 0,5 — không phải lỗi làm tròn |

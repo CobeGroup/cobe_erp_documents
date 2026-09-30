@@ -28,7 +28,12 @@ nav_order: 1
 6. (Tuỳ chọn) **Shift Request Approver** — người duyệt **chấm công bù / công tác** riêng cho NV này
    (cộng thêm vào danh sách của phòng, không phải override). Tách khỏi Leave Approver — xem
    [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html).
-7. Lưu.
+7. **Confirmation Date** (tab **Joining**) — ngày hết thử việc. Phép Năm tính từ ngày này; để trống
+   thì hệ thống lấy ngày vào làm + 2 tháng. Xem [Cấp phép → Khai ngày hết thử việc](Desk-HR-CapPhep.html#het-thu-viec).
+8. Lưu. Hệ thống tự cấp Phép Năm cho nhân viên (thông báo xanh ở góc màn hình).
+
+> 💡 Tài khoản không phải nhân viên thật (cộng tác viên, kho tạm, kiểm thử): tick **Không tự cấp
+> Phép Năm** trước khi lưu.
 
 ![Form Employee — company, department, user, leave approver](images/desk/admin-employee-form.png)
 
@@ -55,7 +60,7 @@ Mỗi người vẫn nên có **1 Employee chính + 1 user chính** để tính 
 |---|---|
 | "User X is already assigned to Employee Y" | User đã gắn Employee Active khác → dùng user khác / xử lý Employee cũ |
 | NV không chấm công ra công | Thiếu **Shift Assignment** hoặc chưa duyệt thiết bị |
-| NV không gửi được đơn nghỉ | Thiếu **Department + Leave Approver** hoặc thiếu số dư phép |
+| NV không gửi được đơn nghỉ | Thiếu **Department + Leave Approver** hoặc thiếu số dư phép (chưa hết thử việc → xem Confirmation Date) |
 
 ## Liên quan
 - [Employee & Department (kỹ thuật)](HR-Employee-Department-Setup.html) · [Ca làm việc & gán ca](Desk-Admin-Shift.html) · [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html)
