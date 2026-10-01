@@ -202,6 +202,10 @@ Giờ OT đã ghi nhận tự chảy vào kỳ lương, nhân hệ số theo quy
 Nhân viên **không phải làm gì thêm**. HR chạy lương là có dòng **"Lương làm thêm giờ"**
 trên phiếu lương.
 
+Từ ngày công **01/10/2026**, ngày làm thêm có trạng thái **Nửa ngày** (`Half Day`) — ví dụ
+vào trễ rồi ở lại làm thêm — vẫn được trả: làm thêm tính riêng, ngoài giờ hành chính. Xem
+[Chính sách chấm công §8](Desk-Admin-Policy.html#8-cách-tính-giờ-công-và-trạng-thái-công-từ-01102026).
+
 > 🔧 HR: xem [Cấu hình Overtime](HR-Overtime-Settings.html) — cần bật *Payroll Settings →
 > `create_overtime_slip`* để payroll tự gom. **Nếu công ty không tính lương trên hệ thống**,
 > bỏ qua phần này — số giờ vẫn nằm đủ trong phiếu để làm căn cứ tính tay
@@ -209,7 +213,10 @@ trên phiếu lương.
 
 ### ⑤b — Chọn **Nghỉ bù**
 
-Giờ trên phiếu OT đã duyệt (quy đổi **Nghỉ bù**) **cộng dồn vào quỹ giờ Nghỉ bù** của nhân viên.
+Giờ của phiếu OT đã duyệt (quy đổi **Nghỉ bù**) **cộng dồn vào quỹ giờ Nghỉ bù** của nhân viên.
+Từ ngày làm thêm **01/10/2026**, số giờ cộng vào quỹ là **số giờ đo được từ chấm công** ở bước ④
+(cùng cách đo với nhánh Tiền lương) — không quẹt thì không có giờ, và giờ chỉ vào quỹ sau khi
+bảng chấm công ngày đó được dựng (sáng hôm sau). Trước mốc: số giờ đã duyệt trên phiếu.
 Muốn nghỉ thì vào tab **Nghỉ phép** → tạo đơn → **Loại phép = Nghỉ bù** → chọn ngày muốn nghỉ.
 **Không phải chọn ngày làm thêm nào** — hệ thống tự trừ lô giờ sắp hết hạn trước.
 

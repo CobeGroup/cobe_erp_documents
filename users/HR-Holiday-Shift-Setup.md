@@ -290,11 +290,12 @@ Code: `hr_for_cobegroup/overrides/shift_type.py`, khai báo qua `override_doctyp
 |---|---|
 | `mark_absent_for_dates_with_no_attendance` | **no-op** → không tự chấm Vắng ngày trống |
 | `is_half_holiday` | Mở rộng: ngày có **đơn nghỉ nửa ngày đã duyệt** cũng chia đôi ngưỡng |
-| `get_attendance` | Ngày lễ/Chủ nhật → ép Present (để OT native trả tiền) |
+| `get_attendance` | Ngày lễ/Chủ nhật → ép Present (để OT native trả tiền). Từ ngày công 01/10/2026: xét ngưỡng bằng giờ công **thuần** (cắt khung ca hai đầu, trừ nghỉ trưa — `attendance.utils.net_shift_hours`) thay vì giờ thô ra − vào |
 | `get_employee_checkins` | Giữ trọn nhóm IN/OUT khi cửa sổ ca đổi giữa ngày |
 
 > **Đi trễ KHÔNG còn hạ nửa ngày công** (gỡ 30/07/2026). Trạng thái công chỉ còn
-> phụ thuộc số giờ làm thực so với `working_hours_threshold_for_half_day`. Cờ
+> phụ thuộc số giờ làm so với `working_hours_threshold_for_half_day` (từ 01/10/2026 là
+> giờ công thuần trong khung ca — [Chính sách chấm công §8](Desk-Admin-Policy.html#8-cách-tính-giờ-công-và-trạng-thái-công-từ-01102026)). Cờ
 > `late_entry` vẫn được ghi để app hiện tag *Đi trễ* và báo cáo đọc, nhưng không
 > đụng tới công nữa — kể cả khi Shift Type bật `Enable Late Entry Marking`.
 > Chi tiết + 12 bản ghi cũ bị ảnh hưởng: [Chính sách chấm công §7](Desk-Admin-Policy.html#7-đi-trễ-không-còn-bị-trừ-nửa-ngày-công).
@@ -429,7 +430,8 @@ Không có lỗi nào hiện ra, hệ thống chạy tiếp với list năm cũ:
 2. Scheduled job `Process Auto Attendance` chạy định kỳ.
 3. Job nhóm log theo (employee, ca, ngày) → tạo/cập nhật `Attendance`.
 4. Hook `Attendance.before_save` của Cobe: fill `working_hours` khi WFH/On Duty không
-   có log; cắt giờ theo giờ tan ca (trừ ngày nghỉ); trừ nghỉ trưa; set
+   có log; cắt giờ theo giờ tan ca và (từ ngày công 01/10/2026) theo giờ vào ca — trừ
+   ngày nghỉ; trừ nghỉ trưa; set
    `hr_warning_type`.
 
 ### Khi NV xin nghỉ

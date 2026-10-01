@@ -73,8 +73,10 @@ nhưng ở **Hình thức quy đổi** chọn **Nghỉ bù** thay vì *Tiền l�
 
 <img src="images/guide/overtime/03-ot-form-comp.png" width="260" alt="Form làm thêm — chọn Hình thức quy đổi = Nghỉ bù">
 
-Sau khi phiếu được duyệt **xong** — trưởng bộ phận duyệt bước 1 rồi HR duyệt bước cuối — **số giờ
-trên phiếu cộng vào quỹ Nghỉ bù** của anh An. Trưởng bộ phận duyệt xong mà HR chưa duyệt thì quỹ
+Sau khi phiếu được duyệt **xong** — trưởng bộ phận duyệt bước 1 rồi HR duyệt bước cuối — **giờ làm
+thêm cộng vào quỹ Nghỉ bù** của anh An. Từ ngày làm thêm **01/10/2026**, số giờ cộng là **số giờ
+đo được từ chấm công** hôm đó (giống làm thêm trả tiền), nên anh An phải check-in/check-out đầy
+đủ; giờ vào quỹ từ sáng hôm sau. Trước mốc này, số giờ cộng là số giờ đã duyệt trên phiếu. Trưởng bộ phận duyệt xong mà HR chưa duyệt thì quỹ
 **chưa có gì**. Giờ cũng chỉ vào quỹ khi **ngày làm thêm đã qua** — phiếu khai trước cho ngày chưa
 tới vẫn nằm chờ.
 
@@ -160,12 +162,12 @@ Bảng này trả lời thẳng những câu hay hỏi nhất, khỏi phải đo
 
 | Bạn làm gì | Quỹ ra sao |
 |---|---|
-| Phiếu làm thêm quy đổi *Nghỉ bù* **được HR duyệt** (bước cuối), ngày làm thêm **đã qua** | Cộng **ngay**, xin nghỉ được liền |
+| Phiếu làm thêm quy đổi *Nghỉ bù* **được HR duyệt** (bước cuối), ngày làm thêm **đã qua** | Ngày làm thêm từ 01/10/2026: cộng **số giờ đo được** khi bảng chấm công ngày đó đã dựng (sáng hôm sau). Trước mốc: cộng **ngay** số giờ đã duyệt |
 | Phiếu được duyệt cho **ngày chưa tới** | **Chưa cộng**. Qua ngày đó tự cộng, bạn không phải làm gì |
 | Phiếu còn **chờ duyệt** — kể cả khi trưởng bộ phận đã duyệt, đang chờ HR | Chưa có gì |
 | Phiếu bị **từ chối** hoặc **huỷ duyệt** | Không cộng; đã cộng rồi thì rút ra |
 | Phiếu quy đổi **Tiền lương** | Không vào quỹ — giờ đó trả bằng tiền |
-| Hôm làm thêm bạn **quên chấm công** | **Vẫn cộng đủ** số giờ đã duyệt |
+| Hôm làm thêm bạn **quên chấm công** | Ngày làm thêm từ 01/10/2026: **không có giờ** — liên hệ HR nếu có làm thật. Trước mốc: vẫn cộng đủ số giờ đã duyệt |
 | Làm thêm **nhiều lần trong một ngày** | Cộng dồn hết |
 
 ### Giờ ra khỏi quỹ

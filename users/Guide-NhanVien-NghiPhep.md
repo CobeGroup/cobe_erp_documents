@@ -163,8 +163,9 @@ Hôm trước **làm thêm giờ / làm khuya** (hay gặp ở kỹ thuật viê
 
 > ⚠️ **Bước 0 (khai SAU khi đã làm thêm):** khai đơn **Làm thêm giờ** với quy đổi
 > **"Nghỉ bù"** cho **ngày đã làm** (trong hạn khai của công ty) và được Quản lý duyệt — xem
-> [Xin làm thêm giờ](Guide-NhanVien-LamThem.html). Giờ được duyệt sẽ **cộng vào quỹ giờ Nghỉ
-> bù** của bạn. Quỹ chưa đủ giờ thì hệ thống **từ chối đơn Nghỉ bù ngay khi gửi**.
+> [Xin làm thêm giờ](Guide-NhanVien-LamThem.html). Giờ làm thêm sẽ **cộng vào quỹ giờ Nghỉ
+> bù** của bạn — từ ngày làm thêm 01/10/2026 là **số giờ đo được từ chấm công**, nên hôm làm
+> thêm phải check-in/check-out đầy đủ. Quỹ chưa đủ giờ thì hệ thống **từ chối đơn Nghỉ bù ngay khi gửi**.
 
 **Tỷ giá: 4 giờ = 0,5 ngày nghỉ · 8 giờ = 1 ngày.** Giờ lẻ **không mất** — nó nằm lại quỹ, cộng
 dồn qua nhiều ngày làm thêm cho tới khi đủ.
@@ -187,7 +188,7 @@ Có giờ trong quỹ rồi thì tạo đơn nghỉ y như nghỉ phép thườn
 | Trừ quỹ phép? | Có (hết quỹ là không xin được) | **Không** — không cần số dư |
 | Trừ lương? | Không | **Không** |
 | Cần khai gì thêm? | — | Không — chỉ cần **quỹ đủ giờ** |
-| Ai xác nhận làm thêm là có thật? | — | **Hệ thống tự kiểm**: chỉ giờ trên đơn Làm thêm giờ **đã duyệt** mới vào quỹ |
+| Ai xác nhận làm thêm là có thật? | — | **Hệ thống tự kiểm**: chỉ đơn Làm thêm giờ **đã duyệt** mới vào quỹ, và từ ngày làm thêm 01/10/2026 chỉ tính **số giờ đo được từ chấm công** |
 | Giờ lẻ có mất không? | — | **Không** — cộng dồn qua nhiều ngày, phần dư ở lại quỹ |
 | Đổi được bao nhiêu ngày? | — | Theo **quỹ giờ**: **4h = 0,5 ngày, 8h = 1 ngày**. Quỹ thiếu thì hệ thống báo ngay lúc gửi |
 | Có hết hạn không? | Theo chính sách phép năm | **Có** — giờ chưa dùng bị cắt cuối kỳ (30/06 và 31/12) |

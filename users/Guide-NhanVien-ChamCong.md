@@ -94,6 +94,10 @@ flowchart LR
 >
 > 💡 Ở lại **làm thêm** thì check-out muộn **không tự thành giờ OT** — phải
 > [khai phiếu Làm thêm giờ](Guide-NhanVien-LamThem.html) cho ngày đã làm mới được tính.
+>
+> 🕗 **Đến sớm cũng không được tính** (từ 01/10/2026): giờ công chỉ đếm trong khung ca
+> (ví dụ 08:00–17:30, trừ nghỉ trưa). Check-in sớm hơn giờ vào ca không cộng thêm giờ và
+> **không bù** được cho giờ về sớm. Chi tiết: [Chính sách chấm công §8](Desk-Admin-Policy.html#8-cách-tính-giờ-công-và-trạng-thái-công-từ-01102026).
 
 ---
 

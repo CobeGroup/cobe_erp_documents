@@ -149,7 +149,10 @@ Khi chạy Salary Slip (Process Payroll), hệ thống:
 ### 5.1. Cộng OT (Overtime Slip → Additional Salary)
 
 - **Overtime Slip** (tự tạo khi chạy Payroll Entry nếu bật `create_overtime_slip`, hoặc tạo tay)
-  quét Attendance đã submit có `overtime_type` + `actual_overtime_duration` trong kỳ
+  quét Attendance đã submit có `overtime_type` + `actual_overtime_duration` trong kỳ.
+  HRMS gốc chỉ nhận Attendance `Present`; Cobe nhận thêm `Half Day` từ ngày công
+  01/10/2026 (`CobeOvertimeSlip.get_attendance_records` + đè
+  `filter_employees_for_overtime_slip_creation`) — làm thêm tính ngoài giờ hành chính
 - Submit slip → HRMS tự tạo `Additional Salary` (component "Lương làm thêm giờ") đã nhân hệ số
 - Salary Slip gộp Additional Salary vào Earnings theo cơ chế chuẩn HRMS — không hook riêng
 

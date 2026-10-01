@@ -56,10 +56,17 @@ Một phiếu làm thêm (`HR Overtime Request`) cộng vào quỹ khi đủ **c
    phận (`Manager Approved`) chưa vào quỹ.
 3. **Ngày làm thêm đã tới** — phiếu khai trước cho ngày chưa làm vẫn nằm chờ.
 
-Số giờ vào quỹ là **số giờ được duyệt** trên phiếu (`expected_hours`), không phải số giờ
-đối chiếu được từ chấm công. Lý do: bảng chấm công dựng bằng tác vụ nền, đòi giờ có bằng
-chứng là bắt nhân viên chờ qua đêm mới xin nghỉ được. Việc xác minh nhân viên có thực sự
-làm thêm hay không thuộc về **khâu duyệt phiếu**, không thuộc về quỹ.
+Số giờ vào quỹ tuỳ theo **ngày làm thêm**:
+
+| Ngày làm thêm | Số giờ vào quỹ |
+|---|---|
+| Từ **01/10/2026** | **Số giờ đo được từ chấm công** — cùng cách đo với làm thêm trả tiền. Không có lần quẹt thì không có giờ |
+| Trước 01/10/2026 | Số giờ được duyệt trên phiếu (`expected_hours`), như trước |
+
+Với ngày làm thêm từ 01/10/2026, giờ chỉ vào quỹ sau khi **bảng chấm công của ngày đó đã
+được dựng** (tác vụ nền chạy ban đêm) — làm thêm hôm nay thì sáng hôm sau mới thấy giờ.
+Số giờ vào quỹ có thể **ít hơn** số giờ đã duyệt nếu nhân viên làm thêm ít hơn đã khai.
+Cách đo giờ: [Chính sách chấm công §8](Desk-Admin-Policy.html#8-cách-tính-giờ-công-và-trạng-thái-công-từ-01102026).
 
 ---
 
@@ -230,12 +237,12 @@ chế ra.
 
 | Tình huống | Hệ thống làm gì |
 |---|---|
-| Phiếu làm thêm quy đổi *Nghỉ bù* được **HR duyệt bước cuối**, ngày làm thêm **đã qua** | Giờ vào quỹ **ngay**, dùng được liền |
+| Phiếu làm thêm quy đổi *Nghỉ bù* được **HR duyệt bước cuối**, ngày làm thêm **đã qua** | Ngày làm thêm trước 01/10/2026: giờ vào quỹ **ngay**. Từ 01/10/2026: giờ vào quỹ khi bảng chấm công ngày đó đã dựng xong, theo số giờ **đo được** |
 | Phiếu được duyệt cho **ngày chưa tới** | Giờ **nằm chờ**. Tự vào quỹ khi qua ngày đó, không ai phải thao tác |
 | Phiếu còn **chờ duyệt** — kể cả khi trưởng bộ phận đã duyệt, đang chờ HR | Chưa có giờ nào |
 | Phiếu bị **từ chối** hoặc **huỷ duyệt** | Không vào quỹ; nếu đã vào thì rút ra ngay |
 | Phiếu quy đổi **Tiền lương** | Không liên quan tới quỹ |
-| Nhân viên **không chấm công** ngày làm thêm đó | **Vẫn tính đủ** số giờ đã duyệt. Xác minh có làm thật hay không là việc của khâu duyệt phiếu |
+| Nhân viên **không chấm công** ngày làm thêm đó | Ngày làm thêm từ 01/10/2026: **không có giờ** vào quỹ. Trường hợp có làm thật nhưng mất dữ liệu chấm công thì HR cộng tay bằng `HR Comp Leave Adjustment` (mục 4). Ngày trước 01/10/2026: vẫn tính đủ số giờ đã duyệt |
 | Nhiều phiếu **cùng một ngày** | Cộng dồn cả, mỗi phiếu là một lô riêng |
 | Quỹ đang **âm**, nhân viên làm thêm tiếp | Giờ mới **trả nợ trước**, chỉ phần thừa mới dùng được |
 
@@ -282,8 +289,8 @@ chế ra.
 | Tình huống | Nguyên nhân / cách xử |
 |---|---|
 | Nhân viên báo *"Quỹ Nghỉ bù còn …h, chưa đủ để nghỉ … ngày"* | Đúng luật: 4 giờ mới đổi được 0,5 ngày. Kiểm phiếu làm thêm của họ đã duyệt chưa, và có chọn đúng hình thức *Nghỉ bù* không |
-| Làm thêm rồi mà quỹ vẫn 0 | Phiếu quy đổi *Tiền lương*; hoặc phiếu chưa duyệt; hoặc ngày làm thêm chưa tới |
-| Quỹ ít hơn số giờ đã khai | Phiếu bị **trần 4 giờ/ngày thường, 8 giờ/ngày nghỉ** cắt bớt; hoặc lô của kỳ trước đã hết hạn |
+| Làm thêm rồi mà quỹ vẫn 0 | Phiếu quy đổi *Tiền lương*; hoặc phiếu chưa duyệt; hoặc ngày làm thêm chưa tới; hoặc (từ 01/10/2026) ngày đó **không có chấm công** / bảng chấm công chưa dựng xong |
+| Quỹ ít hơn số giờ đã khai | Phiếu bị **trần 4 giờ/ngày thường, 8 giờ/ngày nghỉ** cắt bớt; hoặc lô của kỳ trước đã hết hạn; hoặc (từ 01/10/2026) giờ **đo được từ chấm công** ít hơn số giờ đã khai — ví dụ check-out sớm hơn khung làm thêm |
 | Quản lý không huỷ duyệt được phiếu làm thêm | Huỷ sẽ rút giờ khỏi quỹ và làm nhân viên âm so với đơn nghỉ đã nộp. Huỷ đơn nghỉ trước, hoặc HR cộng bù bằng chứng từ điều chỉnh |
 | Nhân viên nghỉ rồi mới phát hiện thiếu giờ | Đơn đã duyệt không bị kiểm lại (cố ý, để còn huỷ/sửa được). Cân đối bằng chứng từ điều chỉnh số âm |
 | Cần cho nghỉ dù quỹ không đủ | HR tạo đơn **thay cho nhân viên** trên Desk — vai trò HR được miễn kiểm quỹ khi lập đơn cho người khác. Nên kèm một chứng từ điều chỉnh để sổ không âm |

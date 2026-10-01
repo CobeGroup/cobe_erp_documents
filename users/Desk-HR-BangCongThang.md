@@ -31,13 +31,20 @@ nav_order: 6.5
 
 ## 0. Bản Cobe — khác gì bản gốc
 
+> ⚠️ **Các cột số giờ đang tạm ẩn (từ 10/2026).** Báo cáo **không còn hiện** cột *Tổng giờ
+> thực*, ô số giờ của từng ngày (`1·g`) và cột *Giờ thực* ở chế độ *Chi tiết theo ngày* — ở mọi
+> chế độ xem **và cả file Excel xuất ra**. Lý do: giờ công ngày Thứ 7 nửa buổi chưa được cắt về
+> 12:00 nên tổng giờ bị cộng cả buổi chiều (đã trả bằng làm thêm). Các cột sẽ hiện lại khi phần
+> đó được sửa. Cột **Tổng giờ chuẩn** và **giờ vào / giờ ra** vẫn hiện bình thường. Ảnh chụp trong
+> tài liệu này chụp **trước** khi ẩn nên vẫn còn cột giờ.
+
 Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 
 | | **COBE HR Attendance Sheet** *(khuyên dùng)* | Monthly Attendance Sheet *(gốc HRMS)* |
 |---|---|---|
-| Cột đầu | Employee · **Mã NV** · Tên · **Cty Trực Thuộc** · Shift · **Tổng giờ chuẩn** · **Tổng giờ thực** · **4 cột số dư phép** | Employee · Tên · Shift |
+| Cột đầu | Employee · **Mã NV** · Tên · **Cty Trực Thuộc** · Shift · **Tổng giờ chuẩn** · ~~Tổng giờ thực~~ *(tạm ẩn)* · **4 cột số dư phép** | Employee · Tên · Shift |
 | **Chế độ xem** | **5 chế độ**: Chấm công · **Giờ vào-ra** · **Đầy đủ** · **Chi tiết theo ngày** · Tổng hợp | Chỉ 1 lưới + Summarized View |
-| Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`), chia 2–4 phần tuỳ chế độ: **mã** (`P`/`HD`/`WFH`/`L`…/`-`) · **giờ vào** · **giờ ra** · **số giờ** | 1 ô: chỉ ký hiệu `P`, `HD` |
+| Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`), chia 1–3 phần tuỳ chế độ: **mã** (`P`/`HD`/`WFH`/`L`…/`-`) · **giờ vào** · **giờ ra** *(phần số giờ đang tạm ẩn)* | 1 ô: chỉ ký hiệu `P`, `HD` |
 | Ký hiệu | Công `P` · nửa `HD` · WFH `WFH` · nghỉ `L`/`L/2`/`NB`/`KL`/`CĐ`/`BH`/`H` · `WO` · `-` không dữ liệu | Gộp chung `L` (On Leave) |
 | **Số dư phép** | **Có** — Phép Năm & Nghỉ bù còn lại, tại **2 mốc** (cuối kỳ / tới hiện tại) | Không có |
 | **Giờ vào/ra** | **Có** — lượt bấm thật, đỡ phải mở Employee Checkin | Không có |
@@ -126,9 +133,11 @@ Cùng một bộ lọc, ô **Chế độ xem** đổi bố cục lưới ngày. 
 
 | Chế độ | Mỗi ngày gồm | Dùng khi |
 |---|---|---|
-| **Chấm công** *(mặc định)* | **mã** + **số giờ** (2 cột) | Chốt công cuối tháng — gọn nhất, một màn thấy được nhiều ngày |
-| **Giờ vào-ra** | **giờ vào** + **giờ ra** + **số giờ** (3 cột) | Soi giờ hiện diện kiểu **máy chấm công**: ai vào muộn, ai về sớm |
-| **Đầy đủ** | **mã** + **giờ vào** + **giờ ra** + **số giờ** (4 cột) | Cần cả trạng thái lẫn giờ bấm — **lưới rộng gấp đôi**, phải cuộn ngang nhiều |
+| **Chấm công** *(mặc định)* | **mã** (1 cột) | Chốt công cuối tháng — gọn nhất, một màn thấy được nhiều ngày |
+| **Giờ vào-ra** | **giờ vào** + **giờ ra** (2 cột) | Soi giờ hiện diện kiểu **máy chấm công**: ai vào muộn, ai về sớm |
+| **Đầy đủ** | **mã** + **giờ vào** + **giờ ra** (3 cột) | Cần cả trạng thái lẫn giờ bấm — lưới rộng, phải cuộn ngang nhiều |
+
+> Cột **số giờ** của mỗi chế độ đang tạm ẩn — xem lưu ý đầu [mục 0](#0-bản-cobe--khác-gì-bản-gốc).
 | **Chi tiết theo ngày** | *(đổi hẳn bố cục)* **mỗi ngày 1 dòng** | Soi kỹ **1 nhân viên** — có thêm **số lượt bấm** và **đủ mốc giờ** trong ngày |
 | **Tổng hợp** | *(không có lưới ngày)* | Đếm nhanh số ngày từng loại (bản gốc HRMS) |
 
@@ -137,7 +146,7 @@ Cùng một bộ lọc, ô **Chế độ xem** đổi bố cục lưới ngày. 
 
 ### Giờ vào-ra — đọc như máy chấm công
 
-Mỗi ngày là cụm **giờ vào · giờ ra · tổng giờ**:
+Mỗi ngày là cụm **giờ vào · giờ ra** (phần tổng giờ đang tạm ẩn):
 
 ![Chế độ Giờ vào-ra — mỗi ngày một cụm: giờ bấm vào (xanh), giờ bấm ra (tím), tổng giờ](images/desk/hr-mas-cobe-clock.png)
 
@@ -165,7 +174,7 @@ Chọn 1 nhân viên ở ô *Employee* rồi chọn chế độ này:
 | **Ca** | Ca chấm công của ngày đó (trống = ngày không có bản chấm công) |
 | **Mã** | Y hệt mã ở lưới tháng (`P` / `HD` / `L` / `NB` / `H` / `WO` / `-`…) |
 | **Vào · Ra** | Lượt bấm vào sớm nhất / ra muộn nhất |
-| **Giờ thực** | Giờ công của ngày (theo bảng công) |
+| **Giờ thực** | *(tạm ẩn)* Giờ công của ngày (theo bảng công) |
 | **Giờ chuẩn** | Công chuẩn của ca ngày đó — nửa ngày & Thứ 7 nửa buổi thì bằng ½ |
 | **Số lượt** | Số lần bấm trong ngày (`0` = không bấm lần nào, vd ngày nghỉ hoặc ngày công đến từ đơn duyệt) |
 | **Các lượt bấm** | **Đủ mốc giờ** trong ngày, vd `07:41, 12:15, 13:02, 18:11` |
@@ -244,6 +253,9 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 > Attendance tay** trước khi chốt công.
 >
 > Phân biệt: `HD` mà ô giờ **> 0** là đi làm thật nhưng **giờ công không đủ ngưỡng** của ca.
+> Từ ngày công 01/10/2026, giờ công xét ngưỡng là **giờ hành chính trong khung ca** (đi sớm,
+> ở lại trễ không được tính) — xem [Chính sách chấm công §8](Desk-Admin-Policy.html#8-cách-tính-giờ-công-và-trạng-thái-công-từ-01102026).
+> Khi ô giờ đang tạm ẩn, xem giờ vào/ra ở chế độ *Giờ vào-ra* để phân biệt hai trường hợp.
 > Còn **nghỉ phép nửa ngày** hiện `L/2`, `NB`, `KL`… theo đúng loại phép, **không** hiện `HD`.
 >
 > Từ 30/07/2026 **đi trễ không còn tự hạ xuống `HD`** — chỉ thiếu giờ mới hạ. Tag *Đi trễ*
@@ -254,7 +266,7 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 > 🔢 Muốn **cộng nhanh số ngày từng loại** (Total Present / Leaves / Absent / Holidays + tách theo
 > từng loại phép: Phép năm · **Nghỉ bù** · Không lương…) thì chọn **Chế độ xem = Tổng hợp**
 > ([mục 3](#3-chế-độ-xem--5-cách-nhìn-cùng-một-kỳ)).
-> Lưới chi tiết có 2 cột tổng: **Tổng giờ chuẩn** (theo công chuẩn của ca) và **Tổng giờ thực** (giờ bấm máy), không có cột đếm theo loại.
+> Lưới chi tiết có cột tổng **Tổng giờ chuẩn** (theo công chuẩn của ca; *Tổng giờ thực* đang tạm ẩn), không có cột đếm theo loại.
 
 ---
 
@@ -310,9 +322,9 @@ check-in và không có đơn** sẽ hiện **`-`** (0 công) chứ **không** t
 
 ![Menu ⋮ — Print / PDF / Export / Setup Auto Email](images/desk/hr-mas-export.png)
 
-> 📤 **File xuất ra theo đúng chế độ đang xem**: *Chấm công* 2 cột/ngày (`1 T4`, `1·g`),
-> *Giờ vào-ra* 3 cột (`1 T4`, `1·ra`, `1·g`), *Đầy đủ* 4 cột (thêm `1·vào`). Cột số giờ luôn là
-> **số**, cộng/lọc trong Excel được.
+> 📤 **File xuất ra theo đúng chế độ đang xem**: *Chấm công* 1 cột/ngày (`1 T4`),
+> *Giờ vào-ra* 2 cột (`1 T4`, `1·ra`), *Đầy đủ* 3 cột (thêm `1·vào`). Cột số giờ (`1·g`) và
+> *Tổng giờ thực* **không có trong file** khi các cột giờ đang tạm ẩn.
 
 > 📬 Mẹo: **Setup Auto Email** (cùng menu ⋮) đặt lịch gửi bảng công tự động hằng tháng vào mail
 > HR/kế toán — khỏi phải nhớ export tay.

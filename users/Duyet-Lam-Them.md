@@ -128,8 +128,12 @@ Không ai phải theo dõi gì thêm. Hôm nhân viên làm thêm:
    - Chỉ khai khung tối mà về đúng giờ → 0h; khung trưa thì về đúng giờ vẫn được tính.
    - Ở lại lâu hơn số giờ xin → chỉ tính đúng số giờ đã duyệt.
 3. Quy đổi **Tiền lương** → giờ OT vào **Overtime Slip** kỳ lương (HR chạy payroll là có).
-   Quy đổi **Nghỉ bù** → số giờ đã duyệt vào **quỹ Nghỉ bù**, nhân viên dùng dần — xem
-   [Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html).
+   Quy đổi **Nghỉ bù** → giờ vào **quỹ Nghỉ bù**, nhân viên dùng dần — xem
+   [Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html). Từ ngày làm thêm **01/10/2026**, số giờ vào
+   quỹ là số giờ **đo được** ở bước 2, giống nhánh Tiền lương (trước mốc: số giờ đã duyệt).
+4. Làm thêm được tính **riêng, ngoài giờ hành chính**: từ ngày công 01/10/2026, ngày đó dù
+   là **Nửa ngày** (`Half Day`) vẫn được trả làm thêm — xem
+   [Chính sách chấm công §8](Desk-Admin-Policy.html#8-cách-tính-giờ-công-và-trạng-thái-công-từ-01102026).
 
 > 💡 Vì có bước đối chiếu tự động, cảnh báo *"Làm thêm sau giờ"* sẽ **không** bắn cho
 > ngày đã có đơn duyệt — làm thêm có phép là chuyện bình thường, không phải bất thường.

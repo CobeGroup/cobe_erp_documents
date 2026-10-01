@@ -93,7 +93,7 @@ Chặn chấm liên tục trong N giây.
 
 ### 3.3. Lunch Break
 
-> **working_hours = min(last_out, shift_end) - first_in - lunch_break.** Cobe **cap** `working_hours` về giờ ca chuẩn — NV làm thêm sau giờ tan ca KHÔNG tự cộng vào working_hours. Sau khi Attendance insert, hệ thống tự **notify** NV nếu vượt 30 phút sau shift end để NV biết submit OT Request.
+> **working_hours = min(last_out, shift_end) - max(first_in, shift_start) - lunch_break** (từ ngày công 01/10/2026; trước đó chưa có vế `max(first_in, shift_start)` — check-in sớm vẫn được tính). Trạng thái Present/Half Day xét theo cùng con số này — xem [Chính sách chấm công §8](Desk-Admin-Policy.html#8-cách-tính-giờ-công-và-trạng-thái-công-từ-01102026). Cobe **cap** `working_hours` về giờ ca chuẩn — NV làm thêm sau giờ tan ca KHÔNG tự cộng vào working_hours. Sau khi Attendance insert, hệ thống tự **notify** NV nếu vượt 30 phút sau shift end để NV biết submit OT Request.
 
 > **Trừ giờ nghỉ trưa tự động vào `working_hours` của Attendance.**
 

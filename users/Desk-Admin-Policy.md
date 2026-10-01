@@ -242,6 +242,91 @@ Shift Type (`working_hours_threshold_for_half_day`) — xem [Ca làm việc](Des
 > làm **12 nhân viên** bị Nửa ngày dù làm đủ 8,5–9,5 tiếng. Các bản ghi đó **không
 > tự sửa** — HR muốn trả lại thì chỉnh tay trên Desk.
 
+Từ ngày công **01/10/2026**, "số giờ làm" dùng để xét ngưỡng là **giờ hành chính
+thuần** — xem mục 8. Cờ *Đi trễ* vẫn không tự hạ công, nhưng vào trễ làm **giảm giờ công**,
+nên vào trễ quá nhiều thì ngày đó có thể xuống Nửa ngày vì **thiếu giờ**.
+
+## 8. Cách tính giờ công và trạng thái công (từ 01/10/2026)
+
+Áp dụng cho ngày công từ **01/10/2026**. Các ngày trước mốc này giữ nguyên cách tính
+cũ, không tính lại.
+
+### Giờ công = giờ hành chính trong khung ca
+
+Giờ công (`working_hours` trên bản chấm công — `Attendance`) chỉ đếm phần thời gian
+**nằm trong khung ca** theo quy định công ty, và **trừ giờ nghỉ trưa**:
+
+| Trường hợp | Cách tính |
+|---|---|
+| Check-in **sớm** hơn giờ vào ca | **Không tính** phần sớm — đếm từ giờ vào ca |
+| Check-in **trễ** | Bị trừ đúng số giờ trễ |
+| Check-out **trễ** hơn giờ tan ca | **Không tính** phần trễ — đếm tới giờ tan ca |
+| Check-out **sớm** | Bị trừ đúng số giờ về sớm |
+| Giờ nghỉ trưa | Trừ phần thời gian làm việc trùng với khung nghỉ trưa |
+
+**Không dùng đi sớm hay ở lại trễ để bù** cho giờ thiếu. Quy định này nhằm tránh làm
+sai lệch số liệu giờ làm việc. Muốn được tính phần giờ ngoài khung ca thì lập **đơn
+làm thêm giờ** (`HR Overtime Request`) — xem [Duyệt làm thêm](Duyet-Lam-Them.html).
+
+Ví dụ với ca 08:00–17:30, nghỉ trưa 12:00–13:30:
+
+| Vào | Ra | Giờ công |
+|---|---|---|
+| 08:00 | 17:30 | 8,0h |
+| 07:00 | 17:30 | 8,0h — phần 07:00–08:00 không tính |
+| 07:00 | 16:30 | 7,0h — đi sớm không bù cho về sớm |
+| 08:30 | 17:30 | 7,5h |
+| 08:00 | 19:00 | 8,0h — phần sau 17:30 là làm thêm, cần đơn |
+
+Ngày lễ và Chủ Nhật **không** áp khung ca: cả ngày đi làm là làm thêm.
+
+### Trạng thái công xét theo cùng con số đó
+
+Trạng thái **Có mặt** (`Present`) hay **Nửa ngày** (`Half Day`) được xét bằng chính
+giờ công ở trên, so với ngưỡng khai trên ca (`Shift Type` →
+`working_hours_threshold_for_half_day`). Đi sớm hay ở lại trễ **không** kéo một ngày
+thiếu giờ lên thành Có mặt.
+
+Ngưỡng vẫn được chia đôi cho ngày làm nửa buổi (Thứ 7 khối văn phòng) và ngày có đơn
+nghỉ nửa ngày đã duyệt, như trước.
+
+> ⚠️ **Ngưỡng 7,5h trên ca 8 giờ công.** Với ca 08:00–17:30 nghỉ trưa 1,5h, giờ công tối đa
+> là **8,0h**. Nếu ngưỡng nửa ngày của ca là **7,5h** thì vào trễ **quá 30 phút** (hoặc về
+> sớm quá 30 phút, hoặc cộng cả hai) là ngày đó xuống **Nửa ngày** — đi sớm hay ở lại trễ
+> không bù được. Ví dụ: vào 08:45, ra 17:30 → 7,25h → Nửa ngày. Muốn nới thì HR hạ
+> **ngưỡng nửa ngày** trên ca (`Shift Type` → `working_hours_threshold_for_half_day`) — xem
+> [Ca làm việc](Desk-Admin-Shift.html).
+
+### Làm thêm giờ tính riêng, ngoài giờ hành chính
+
+Giờ hành chính và giờ làm thêm là **hai phần tách biệt**:
+
+- **Làm thêm trả tiền:** ngày công là Nửa ngày vẫn được trả tiền làm thêm nếu có đơn
+  làm thêm đã duyệt. Ví dụ: vào trễ 09:00 rồi ở lại làm thêm tới 20:00 — ngày công là
+  Nửa ngày, phần làm thêm sau 17:30 vẫn vào **phiếu làm thêm** (`Overtime Slip`).
+- **Làm thêm quy đổi Nghỉ bù:** giờ cộng vào quỹ Nghỉ bù là giờ **đo được từ chấm
+  công**, giống làm thêm trả tiền — không còn lấy theo số giờ đã duyệt. Không có lần
+  quẹt thì không có giờ. Chi tiết: [Quỹ Nghỉ bù](Desk-HR-QuyNghiBu.html).
+
+### Hỏi đáp
+
+**Tôi đến sớm 1 tiếng, về sớm 1 tiếng thì có đủ công không?**
+Không. Phần đến sớm không được tính, nên ngày đó thiếu 1 tiếng giờ công.
+
+**Ở lại muộn có được tính không?**
+Chỉ khi có đơn làm thêm giờ được duyệt. Không có đơn thì phần sau giờ tan ca không
+được tính.
+
+**Vào trễ có bị Nửa ngày không?**
+Có thể, nếu giờ công còn lại dưới ngưỡng của ca. Cờ *Đi trễ* tự nó không hạ công — chỉ
+số giờ công thiếu mới hạ.
+
+**Ngày Nửa ngày có mất tiền làm thêm không?**
+Không. Làm thêm được tính riêng, ngoài giờ hành chính.
+
+**Các ngày tháng 9/2026 trở về trước có bị tính lại không?**
+Không. Quy định chỉ áp từ ngày công 01/10/2026.
+
 ---
 
 ## ⚠️ Lỗi thường gặp

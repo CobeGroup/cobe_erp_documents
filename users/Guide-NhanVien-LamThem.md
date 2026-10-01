@@ -39,6 +39,9 @@ Xem nhanh cả quy trình — tạo đơn quy đổi tiền, tạo đơn quy đ�
 - **Khung xuyên trưa** (làm không nghỉ trưa): khai **khung riêng đúng giờ nghỉ trưa**
   (ví dụ 12:00 → 13:30). Được tính khi hôm đó bạn **check-in/check-out đầy đủ** và
   Quản lý duyệt — tối đa bằng độ dài giờ nghỉ trưa.
+- **Đi sớm không phải làm thêm:** từ 01/10/2026, phần check-in sớm hơn giờ vào ca không
+  được tính vào giờ công và không bù cho giờ về sớm — muốn tính thì khai đơn làm thêm.
+  Xem [Chính sách chấm công §8](Desk-Admin-Policy.html#8-cách-tính-giờ-công-và-trạng-thái-công-từ-01102026).
 - **Trần cứng mỗi ngày:** ngày thường tối đa **4h**, ngày lễ/nghỉ tối đa **8h**.
   Khai vượt trần thì hệ thống tự cắt về trần.
 - Khai trước cho ngày sắp làm thêm được (như đơn nghỉ); khai bổ sung cho ngày đã làm
@@ -91,12 +94,14 @@ Muốn đổi giờ làm thêm lấy **ngày nghỉ** thay vì tiền? Làm y h�
 
 1. **Hình thức quy đổi** — chọn **Nghỉ bù**.
 2. Gửi đơn → Quản lý duyệt như thường.
-3. Sau khi qua ngày làm thêm, giờ được duyệt **cộng vào quỹ giờ Nghỉ bù**. Vào tab
+3. Sau khi qua ngày làm thêm, giờ làm thêm **cộng vào quỹ giờ Nghỉ bù**. Vào tab
    **Nghỉ phép** tạo đơn **Nghỉ bù** và chọn ngày muốn nghỉ — không phải chỉ ra ngày
    làm thêm nào.
 
-> ⚠️ **Chỉ giờ trên đơn làm thêm (quy đổi Nghỉ bù) ĐÃ DUYỆT mới vào quỹ**, và chỉ khi
-> ngày làm thêm đã qua. Tỷ giá **4 giờ = 0,5 ngày nghỉ, 8 giờ = 1 ngày**; quỹ thiếu giờ
+> ⚠️ **Chỉ đơn làm thêm (quy đổi Nghỉ bù) ĐÃ DUYỆT mới vào quỹ**, và chỉ khi ngày làm
+> thêm đã qua. Từ ngày làm thêm **01/10/2026**, số giờ vào quỹ là **số giờ đo được từ
+> chấm công** như làm thêm trả tiền — hôm đó phải check-in/check-out đầy đủ, và giờ
+> vào quỹ từ sáng hôm sau. Tỷ giá **4 giờ = 0,5 ngày nghỉ, 8 giờ = 1 ngày**; quỹ thiếu giờ
 > thì hệ thống từ chối đơn nghỉ bù ngay khi gửi. Giờ lẻ **không mất** — cộng dồn qua
 > nhiều ngày. Xem chi tiết: [Xin nghỉ phép & nghỉ bù](Guide-NhanVien-NghiPhep.html).
 
