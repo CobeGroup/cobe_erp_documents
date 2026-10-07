@@ -197,7 +197,17 @@ Phiếu trả ở trạng thái **nháp không làm thay đổi sổ kho**. Hàn
 cho tới khi nhân viên kho bấm duyệt.
 
 Khi duyệt, hệ thống kiểm tra lần nữa: gộp số lượng theo từng cặp (kho, vật tư) rồi so với tồn
-kho thực tế; thiếu thì chặn duyệt kèm thông báo *"Không đủ tồn kho … tại kho KTV …"*.
+kho **tại ngày giờ ghi sổ của phiếu** và tại mọi thời điểm sau đó; thiếu thì chặn duyệt kèm
+thông báo *"Không đủ tồn kho … tại kho KTV …, có thể xuất tại dd/mm hh:mm: n"*.
+
+> ⚠️ **Giữ ngày ghi sổ cũ khi duyệt là nguồn sai phổ biến.** Phiếu kỹ thuật viên lập ngày 3,
+> kho duyệt ngày 5 nhưng tích *Edit Posting Date and Time* để giữ ngày 3: nếu ngày 3 kho chưa có
+> hàng (hàng về ngày 4) thì sổ kho ngày 3 âm dù hôm nay đang dương. Hệ thống chặn trường hợp này;
+> bỏ tích để phiếu ghi sổ theo ngày duyệt, hoặc chờ đúng ngày có hàng.
+
+Quy tắc **kho kỹ thuật viên không âm** áp dụng cho mọi chứng từ xuất khỏi kho kỹ thuật viên —
+phiếu giao hàng, phiếu chuyển kho, xuất vật tư — dù lập từ ứng dụng, màn điều phối hay Desk, và
+cho cả việc **huỷ phiếu nhập** vào kho kỹ thuật viên khi hàng nhập đó đã được xuất đi sau đó.
 
 > 📌 Chốt tồn kho **lúc tạo phiếu** chặt hơn chốt **lúc duyệt**, vì nó còn trừ thêm phần đã cam
 > kết ở các phiếu nháp khác. Nhờ vậy kỹ thuật viên được nhắc trước, và nhân viên kho không còn

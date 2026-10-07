@@ -221,6 +221,56 @@ thị dư còn hơn giấu mất hàng kỹ thuật viên đang thật sự gi�
 
 ---
 
+## 4b. Kho kỹ thuật viên không âm — chốt cuối cùng cho mọi đường
+
+`fsmnext_extend_cobe/api/stock_validators.py`, gắn qua `hooks.py` của app đó:
+
+| Hook | Hàm | Chặn gì |
+|---|---|---|
+| `Stock Entry.before_submit`, `Delivery Note.before_submit` | `validate_no_negative_ktv_stock` | Xuất khỏi kho kỹ thuật viên làm sổ âm **tại mốc ghi sổ** hoặc bất kỳ mốc nào sau đó |
+| `Stock Entry.before_cancel` | `validate_no_negative_ktv_stock_on_cancel` | Huỷ phiếu **nhập** vào kho kỹ thuật viên khi số đó đã được xuất đi sau mốc nhập |
+
+Vì sao cần dù các chốt ở §3 đã có: chốt §3 nằm trong mã của **từng đường tạo** (ứng dụng, điều
+phối) và chỉ bảo vệ **lúc tạo**. Đo 90 ngày (bản 07/10/2026) trên kho kỹ thuật viên đang hoạt
+động: 37 phiếu giao + 24 phiếu chuyển kho làm sổ âm. Phân loại:
+
+- 28 phiếu giao từ ứng dụng trước khi `_validate_stock_availability` lên (09/09); 0 phiếu sau đó.
+- 9 phiếu giao từ màn điều phối (`ma_create_delivery_note` không có chốt) và Desk (không hook).
+- 14 phiếu chuyển kho **ghi lùi ngày**: kỹ thuật viên lập nháp, kho duyệt vài ngày sau với
+  *Edit Posting Date and Time* — hook cũ đọc `Bin.actual_qty` **hiện tại** (đã dương nhờ hàng
+  mới về) nên cho qua, trong khi sổ tại mốc ghi âm. Cả 3 phiếu âm sau 09/09 đều kiểu này.
+- 6 phiếu âm hồi tố vì kho **huỷ phiếu nhập** sau khi kỹ thuật viên đã xuất.
+- 1 phiếu giao hợp lệ lúc duyệt, âm vì 8 ngày sau có phiếu xuất ghi lùi về trước nó.
+
+Cách tính (cùng luật với `validate_negative_qty_in_future_sle` của ERPNext, đang bị tắt vì
+`Stock Settings.allow_negative_stock = 1` toàn site):
+
+```
+available(kho, món, mốc) = min( qty_after của dòng sổ cuối cùng ≤ mốc,
+                               min qty_after của các dòng > mốc, tới trước Stock Reconciliation kế tiếp )
+chặn khi  Σ qty xuất của chứng từ cho (kho, món)  >  available        (so theo float_precision)
+```
+
+Số lượng lấy theo **stock UOM**: `Stock Entry Detail.transfer_qty`, `Delivery Note Item.stock_qty`,
+`Packed Item.qty`. Bộ sản phẩm chỉ ghi sổ qua `packed_items`; dòng packed **không ghi kho** thì
+ERPNext lấy kho của dòng cha (`selling_controller.get_item_list`) — dữ liệu thật có 41 dòng như
+vậy, nên validator cũng phải lấy kho dòng cha. Thành phần không quản kho (`is_stock_item = 0`)
+không có dòng sổ, không đếm. Huỷ: `before_cancel` chạy trước `on_cancel`, dòng sổ của chính
+phiếu còn `is_cancelled = 0`; các dòng cùng mốc nhưng `creation` nhỏ hơn đứng trước nó trong sổ
+nên không bị rút. Trước khi đọc sổ, khoá dòng `tabBin` (`FOR UPDATE`) để hai phiếu rút cùng
+(kho, món) submit đồng thời không cùng lọt.
+
+Bộ kiểm `plans/return-flow-audit/e2e_ktv_stock_guard.py` (workspace phát triển, rollback):
+16 kiểm — lùi ngày, điều phối, bộ sản phẩm có/không kho, cộng dồn, huỷ nhập, hook đã gắn; chạy
+lại 90 ngày lịch sử: 61/61 chứng từ từng làm âm bị bắt (59 lúc duyệt, 2 tại thủ phạm sau), 0/300
+chứng từ bình thường bị bắt oan.
+
+Tác động vận hành khi lên: **42/78 phiếu trả nháp** đang chờ vượt tồn hiện tại sẽ bị chặn lúc
+duyệt (danh sách `4_phieu_tra_nhap_vuot_ton_se_bi_chan.csv`), và 7 Bin âm ở kho kỹ thuật viên
+đang hoạt động cần Stock Reconciliation trước (`5_bin_am_kho_ktv_can_kiem_ke.csv`).
+
+---
+
 ## 5. Huỷ phiếu giao hàng
 
 `cancel_delivery_note` trong `technician_api/delivery_note.py`:
