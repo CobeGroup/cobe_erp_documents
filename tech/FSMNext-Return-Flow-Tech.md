@@ -295,11 +295,15 @@ return cint(row[0][0])
 1. `bench migrate` — các patch ở nhóm `post_model_sync`:
    - `set_return_guard_defaults` — mặc định hai cờ, **không ghi đè** giá trị đã có;
    - `set_return_not_held_close_days` — mặc định 14 ngày, không ghi đè;
-   - `add_return_ledger_indexes` — chỉ mục `FS Work Order.sales_order`,
-     `FS Work Order Line Item.order` (từ khoá SQL, phải tự `ALTER TABLE … ADD INDEX`) và
-     `Material Request Item.fs_work_order`. Trên **site mới** cột `fs_work_order` chưa tồn tại
-     lúc patch chạy (custom field đồng bộ **sau** patch), patch bỏ qua; chỉ mục khi đó do
-     fixture tạo nhờ `search_index = 1` trong `fixtures/custom_field.json`.
+   - Ba chỉ mục `FS Work Order.sales_order`, `FS Work Order Line Item.order`,
+     `Material Request Item.fs_work_order` được khai bằng `search_index = 1` **trong JSON
+     doctype** (hai cột đầu) và **trong fixture Custom Field** (cột thứ ba), để Frappe tự tạo
+     khi đồng bộ schema. Patch `add_return_ledger_indexes` chỉ là lưới đỡ cho site mà sync
+     doctype bị bỏ qua. **Không được tạo chỉ mục chỉ bằng patch**: Frappe xoá mọi chỉ mục tên
+     `<cột>_index` trên cột có `search_index = 0` mỗi lần bảng được alter lại — diễn tập migrate
+     trên bản sao dữ liệu thật (07/10/2026) đã mất chỉ mục `sales_order` ngay trong cùng lần
+     migrate, vì fixture Custom Field của `fsmnext_extend_cobe` làm `updatedb("FS Work Order")`
+     sau patch.
    - Job `close_not_held_return_obligations` đã có trong `scheduler_events.daily`; không cần
      thao tác thêm.
 2. **Kiểm tra trường đã đồng bộ vào meta chưa.** Thay đổi trong tệp JSON của doctype hay bị
