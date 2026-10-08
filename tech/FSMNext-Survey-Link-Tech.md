@@ -19,8 +19,8 @@ nav_order: 12
 ## 1. Vì sao phải đặt ra điểm mở rộng
 
 Nội dung cần hiển thị nằm ở ba ứng dụng khác nhau: đơn khảo sát và tệp đính kèm thuộc `fsmnext`,
-bảng hạng mục khảo sát thuộc `fsmnext_extend_cobe`, còn phiếu phân tích nước (`Water Analysis
-Report`) thuộc `poe_management`. `fsmnext` là ứng dụng nền, không được biết tới `poe_management`,
+bảng hạng mục khảo sát thuộc `fsmnext_extend_cobe`, còn phiếu khảo sát nước (`Water Diagnosis
+Report`) và phiếu phân tích nước (`Water Analysis Report`) thuộc `poe_management`. `fsmnext` là ứng dụng nền, không được biết tới `poe_management`,
 nên tính năng không thể viết thẳng vào màn hình lịch hẹn.
 
 Giải pháp: `fsmnext` mở một điểm mở rộng chung, phía Cobe đăng ký một nhà cung cấp nội dung.
@@ -64,6 +64,25 @@ fixtures của `fsmnext_extend_cobe`:
 | `cobe_survey_work_order` | Link `FS Work Order` | Chỉ đọc trên giao diện, `allow_on_submit` |
 | `cobe_water_analysis_report` | Link `Water Analysis Report` | Như trên |
 | `cobe_survey_panel_html` | HTML | Chỗ dựng nội dung trên Desk |
+
+### Phiếu khảo sát nước không có trường riêng
+
+`Water Diagnosis Report` là phiếu kỹ thuật viên lập trên ứng dụng ngay trong ca khảo sát; nó
+trỏ về đơn khảo sát bằng `fs_work_order`, và trên dữ liệu thật là quan hệ **1-1** (444 phiếu
+cho 444 đơn khác nhau). Vì vậy panel **suy ra** phiếu này từ đơn khảo sát đã gắn
+(`_find_diagnosis`) thay vì mở thêm ô chọn thứ ba: phiếu đã huỷ bị bỏ qua, còn nhiều hơn một
+thì lấy phiếu đã duyệt mới nhất. Hộp thoại chỉ đánh cờ `has_diagnosis` trên từng đơn khảo sát
+để tư vấn biết đơn nào có phiếu.
+
+Khác với `Water Analysis Report`, phiếu này được lập cho **phần lớn** đơn khảo sát (442 trên
+1.036), còn phiếu lab chỉ có khi khách gửi mẫu. Nhầm hai phiếu là lý do hay gặp nhất của câu hỏi
+"đã có phiếu nước mà sao không chọn được".
+
+Thứ tự khối trong `_build_panel`: đơn khảo sát → phiếu khảo sát nước (suy từ đơn khảo sát) →
+phiếu phân tích nước (ô riêng). Hai ô liên kết độc lập: chỉ gắn `cobe_water_analysis_report` mà
+để trống `cobe_survey_work_order` thì panel chỉ có phần lab, không có phần khảo sát nước vì
+không có đơn khảo sát để suy ra. `_diagnosis_blocks` đọc bằng `ignore_permissions=True` như
+`_report_blocks`, vì quyền đã chốt ở `_check_can_view`.
 
 ### Ranh giới với `parent_work_order`
 
@@ -193,7 +212,7 @@ gian và luật cùng khách hàng.
 
 | Lệnh | Phạm vi |
 |---|---|
-| `bench --site <site> execute fsmnext_extend_cobe.fsmnext_extend_cobe.api.test_survey_link.run_checks` | Luật liên kết, dựng panel, quyền xem, tình huống hỏng |
+| `bench --site <site> execute fsmnext_extend_cobe.fsmnext_extend_cobe.api.test_survey_link.run_checks` | Luật liên kết, dựng panel, quyền xem, phiếu khảo sát nước đi theo đơn khảo sát, tình huống hỏng |
 | `…test_survey_link.run_technician_checks` | Endpoint ứng dụng kỹ thuật viên và quyền theo lịch hẹn |
 | `…test_survey_backfill.run_checks` | Thử khô, chạy thật, hoàn tác, quyền chạy |
 

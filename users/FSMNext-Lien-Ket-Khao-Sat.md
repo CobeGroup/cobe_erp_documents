@@ -9,8 +9,8 @@ nav_order: 8
 
 > Đối tượng: **tư vấn**, **điều phối**, **kỹ thuật viên (KTV)**, **quản lý dịch vụ**.
 > Tài liệu mô tả cách gắn một đơn khảo sát đã thực hiện trước đó vào đơn lắp đặt phát sinh sau,
-> để kỹ thuật viên đi lắp xem lại được tệp đính kèm, ghi nhận hiện trường và phiếu phân tích
-> nước của lần khảo sát.
+> để kỹ thuật viên đi lắp xem lại được tệp đính kèm, ghi nhận hiện trường, phiếu khảo sát nước
+> và phiếu phân tích nước của lần khảo sát.
 >
 > Tài liệu này mở rộng **[Quy trình dịch vụ hiện trường](FSMNext-Quy-Trinh-Dich-Vu.html)**.
 
@@ -24,7 +24,8 @@ nav_order: 8
 | Lịch hẹn | `FS Service Appointment` |
 | Loại công việc | `FS Work Type` — ở đây là `Khảo sát` và `Lắp đặt` |
 | Hạng mục khảo sát | `FS WO Reference Item` |
-| Phiếu phân tích nước | `Water Analysis Report` |
+| Phiếu phân tích nước | `Water Analysis Report` — phòng lab phân tích mẫu |
+| Phiếu khảo sát nước | `Water Diagnosis Report` — kỹ thuật viên đo tại hiện trường khi khảo sát |
 | Cấu hình FSMNext của Cobe | `COBE FSM Settings` |
 | Nhật ký gán hàng loạt | `COBE Survey Backfill Run` |
 
@@ -62,7 +63,7 @@ Trên phiếu công việc lắp đặt, ở góc phải phía trên có nhóm n
 
 | Mục | Tác dụng |
 |---|---|
-| **Chọn WO khảo sát** | Mở hộp thoại chọn đơn khảo sát và phiếu phân tích nước |
+| **Chọn WO khảo sát** | Mở hộp thoại chọn đơn khảo sát và, nếu có, phiếu phân tích nước của phòng lab |
 | **Gỡ liên kết khảo sát** | Xoá liên kết hiện có; chỉ hiện khi phiếu đang có liên kết |
 
 Hộp thoại chỉ liệt kê những đơn khảo sát **của đúng khách hàng trên phiếu lắp đặt**, chưa bị
@@ -78,6 +79,42 @@ Hệ thống gợi ý sẵn một lựa chọn, tư vấn vẫn đổi được:
 Khách có nhiều đơn khảo sát hoặc nhiều phiếu phân tích nước thì ô để trống, tư vấn tự chọn.
 
 Sau khi lưu, phiếu lắp đặt có thêm tab **Khảo sát**.
+
+### Hai loại phiếu nước, chỉ chọn một loại
+
+Hệ thống có hai chứng từ về nước, dễ nhầm với nhau:
+
+| Phiếu | Ai lập | Lập khi nào | Gắn với | Trong hộp thoại |
+|---|---|---|---|---|
+| **Phiếu khảo sát nước** (`Water Diagnosis Report`) | Kỹ thuật viên, trên ứng dụng | Ngay tại hiện trường, trong ca khảo sát | Đúng một đơn khảo sát | **Không có ô chọn.** Tab Khảo sát tự đọc theo đơn khảo sát đã gắn |
+| **Phiếu phân tích nước** (`Water Analysis Report`) | Phòng lab | Sau khi nhận mẫu nước | Khách hàng, không ghi số đơn khảo sát | Ô **Phiếu phân tích nước**, tư vấn chọn |
+
+Hai phiếu khác nhau ở chỗ gắn: phiếu khảo sát nước luôn ghi số đơn khảo sát, nên hệ thống tự
+tìm được. Phiếu phân tích nước chỉ ghi khách hàng; khách khảo sát hai lần và gửi mẫu hai lần thì
+hệ thống không tự biết phiếu nào thuộc lần nào, vì vậy phiếu này do tư vấn chọn.
+
+Đơn khảo sát nào có phiếu khảo sát nước thì trong danh sách chọn có ghi thêm *có phiếu khảo sát
+nước*. Ô **Phiếu phân tích nước** để *-- Không chọn --* là bình thường khi khách không gửi mẫu
+tới phòng lab; phần lớn đơn khảo sát chỉ có phiếu khảo sát nước của kỹ thuật viên.
+
+### Khi khách có phiếu phân tích nước của phòng lab
+
+Ô **Phiếu phân tích nước** liệt kê các phiếu của đúng khách hàng trên phiếu lắp đặt, chưa bị
+huỷ, xếp mới nhất lên đầu, kèm ngày báo cáo và loại nước. Khách chỉ có đúng một phiếu thì hệ
+thống chọn sẵn; nhiều phiếu thì tư vấn đối chiếu ngày báo cáo với ngày khảo sát rồi chọn.
+Phiếu còn nháp vẫn gắn được, tab sẽ ghi rõ tình trạng để người đọc biết số liệu chưa chốt.
+
+Hai ô trong hộp thoại độc lập với nhau. Tab Khảo sát hiện theo những gì đã gắn:
+
+| Đã gắn | Tab Khảo sát hiện |
+|---|---|
+| Đơn khảo sát và phiếu phân tích nước | Đơn khảo sát, phiếu khảo sát nước của kỹ thuật viên (nếu có), rồi phiếu phân tích nước |
+| Chỉ đơn khảo sát | Đơn khảo sát và phiếu khảo sát nước của kỹ thuật viên (nếu có) |
+| Chỉ phiếu phân tích nước | Chỉ phần phiếu phân tích nước; không có phiếu khảo sát nước vì không có đơn khảo sát để suy ra |
+| Không gắn gì | Tab không xuất hiện |
+
+Có cả hai loại phiếu nước thì tab hiện cả hai, phần kỹ thuật viên đo tại hiện trường đứng trước,
+phần phòng lab đứng sau.
 
 ### Phiếu gắn bằng ô Đơn cha từ trước
 
@@ -127,6 +164,12 @@ Cùng một nội dung trên Desk và trên ứng dụng kỹ thuật viên:
 | **Kết quả khảo sát** | Phần tổng kết sau khi làm việc của đơn khảo sát |
 | **Hạng mục khảo sát** | Bảng mã hàng và tên hàng đã ghi nhận khi khảo sát |
 | **Đính kèm khi khảo sát** | Ảnh và tệp gắn trên đơn khảo sát và các dòng của nó; bấm vào ảnh để phóng to |
+| **Phiếu khảo sát nước** | Số phiếu, ngày khảo sát, hình thức, khảo sát viên — phiếu kỹ thuật viên lập tại hiện trường |
+| **Chất lượng nguồn nước** | Loại nước, pH, TDS, độ cứng, CaCO₃, Clo dư, Sắt/Mangan, Amoni |
+| **Tình trạng hiện tại** | Các dấu hiệu khách nêu: cặn, mùi, khô da, ăn mòn inox… |
+| **Thông tin công trình** | Loại nhà, số phòng tắm, số người, khoảng cách bồn/phao/ống thoát, mái che, điện-nước-wifi |
+| **Phương án lắp đặt** | Kết luận, vị trí dự kiến, sản phẩm dự kiến, loại và đường kính ống, chi phí vật tư phát sinh |
+| **Vật tư phát sinh** | Bảng vật tư kỹ thuật viên dự trù khi khảo sát |
 | **Phiếu phân tích nước** | Số phiếu, tình trạng phiếu, ngày báo cáo, ngày nhận mẫu, loại nước, mô tả mẫu |
 | **Kết quả phân tích** | Bảng chỉ tiêu · kết quả · đơn vị · định mức cho phép |
 | **Vấn đề · Kết luận · Giải pháp** | Phần nhận định trên phiếu phân tích nước |
@@ -168,7 +211,7 @@ cụ gán hàng loạt ở **COBE FSM Settings → nhóm nút Khảo sát**:
 Công cụ chỉ nhận những phiếu **chưa có liên kết** và khách hàng chỉ có **đúng một** đơn khảo sát
 tạo trước đó — trường hợp không thể nhầm. Khách có nhiều đơn khảo sát thì công cụ bỏ qua, để tư
 vấn tự chọn. Phiếu phân tích nước cũng chỉ được gán khi khách hàng có đúng một phiếu còn hiệu
-lực.
+lực. Phiếu khảo sát nước của kỹ thuật viên không cần gán: gán xong đơn khảo sát là tab tự đọc.
 
 **Trình tự nên làm:**
 
@@ -209,6 +252,10 @@ theo thứ tự:
 **Một đơn lắp đặt gắn được mấy đơn khảo sát?**
 Một. Nếu khách có nhiều lần khảo sát, tư vấn chọn lần đúng với công trình đang lắp.
 
+**Khách có phiếu phân tích nước của phòng lab thì làm gì?**
+Chọn ở ô **Phiếu phân tích nước** trong cùng hộp thoại. Khách có đúng một phiếu thì hệ thống đã
+chọn sẵn. Phiếu khảo sát nước của kỹ thuật viên vẫn tự hiện theo đơn khảo sát, tab sẽ có cả hai.
+
 **Một đơn khảo sát dùng cho nhiều đơn lắp đặt được không?**
 Được. Nhiều phiếu lắp đặt cùng trỏ về một đơn khảo sát là bình thường.
 
@@ -217,6 +264,10 @@ Không. Kỹ thuật viên chỉ đọc. Việc gắn thuộc tư vấn và đi�
 
 **Gỡ liên kết có mất dữ liệu khảo sát không?**
 Không. Gỡ liên kết chỉ xoá mối nối; đơn khảo sát và phiếu phân tích nước vẫn nguyên.
+
+**Đơn khảo sát đã có phiếu khảo sát nước mà ô Phiếu phân tích nước vẫn trống?**
+Đúng như vậy. Ô đó chỉ dành cho phiếu của phòng lab. Phiếu khảo sát nước kỹ thuật viên lập tại
+hiện trường tự hiện trong tab Khảo sát ngay khi gắn đơn khảo sát, không cần chọn gì thêm.
 
 **Phiếu phân tích nước đang nháp có gắn được không?**
 Được, nhưng tab sẽ ghi rõ *Tình trạng phiếu: Nháp* để người đọc biết số liệu chưa chốt.
