@@ -42,6 +42,10 @@ nav_order: 2
 > **riêng từng loại đơn**, theo ngày hiệu lực. Lưu là có hiệu lực ngay.
 > Chi tiết: [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html) ·
 > [Hạn nộp phiếu & ràng buộc §7](HR-Filing-Deadline.html#7-hạn-mức-số-ngày-khai-bù-mỗi-tháng).
+>
+> Cùng tab đó có section **Ứng trước Nghỉ bù**: ai được nghỉ bù khi quỹ giờ chưa đủ, và quỹ được
+> âm tối đa bao nhiêu ngày — theo công ty, bộ phận hoặc từng người, theo ngày hiệu lực. **Không
+> dòng nào = không ai được ứng.** Chi tiết: [Quỹ giờ Nghỉ bù §5](Desk-HR-QuyNghiBu.html#ung-truoc).
 
 ![Form HR Policy — feature flags & defaults](images/desk/admin-policy-form.png)
 

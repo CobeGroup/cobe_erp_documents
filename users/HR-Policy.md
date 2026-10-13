@@ -32,6 +32,7 @@ nav_order: 4
    - [3.7. Hạn khai theo ngày hiệu lực](#37-hạn-khai-theo-ngày-hiệu-lực)
    - [3.8. Người duyệt cuối (cấp HR)](#38-người-duyệt-cuối-cấp-hr)
 4. [Tab Hạn mức khai bù](#4-tab-hạn-mức-khai-bù)
+   - [4.1. Ứng trước Nghỉ bù](#ung-truoc-nghi-bu)
 5. [Cấp phép năm (Earned Leave)](#5-cấp-phép-năm-earned-leave)
 6. [Kịch bản roll-out theo giai đoạn](#6-kịch-bản-roll-out-theo-giai-đoạn)
 7. [Lưu ý vận hành](#7-lưu-ý-vận-hành)
@@ -54,7 +55,7 @@ List view hiển thị: `name` (vd `HRP-Cobegroup`), `company`, `enable_wfh_mode
 | Tab | Section |
 |---|---|
 | **Attendance** | Feature Flags + Defaults + Lunch Break + Overtime Notification + Người duyệt cuối + Giới hạn giờ check-in + Check-in Whitelist + Trần OT + Hạn khai |
-| **Hạn mức khai bù** | Bảng `HR Policy Attendance Quota` — số ngày khai bù tối đa mỗi tháng, theo loại đơn và theo phạm vi nhân viên / bộ phận / cả công ty |
+| **Hạn mức khai bù** | Bảng `HR Policy Attendance Quota` — số ngày khai bù tối đa mỗi tháng, theo loại đơn và theo phạm vi nhân viên / bộ phận / cả công ty. Section **Ứng trước Nghỉ bù**: bảng `HR Policy Comp Leave Advance` (mục 4.1) |
 
 ---
 
@@ -287,6 +288,34 @@ trên một dòng; nhân viên/bộ phận của công ty khác; số âm. Và *
 > duy nhất nhận ra "migrate chưa xong".
 
 Chi tiết cho HR: [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html).
+
+### 4.1. Ứng trước Nghỉ bù {#ung-truoc-nghi-bu}
+
+Section **Ứng trước Nghỉ bù**, bảng con `comp_leave_advance_rules` (`HR Policy Comp Leave
+Advance`, thêm 12/10/2026). Cho nhân viên nghỉ bù khi quỹ giờ chưa đủ: quỹ được **âm** tới hạn mức,
+giờ làm thêm quy đổi Nghỉ bù về sau tự trả vào phần âm.
+
+| Ô | Kiểu | Ý nghĩa |
+|---|---|---|
+| `effective_from` (*Hiệu lực từ ngày*) | Date, bắt buộc | Dòng áp cho đơn nghỉ có **ngày bắt đầu** từ đây trở đi. Dòng mới thay dòng cũ cùng bậc |
+| `department` (*Bộ phận*) | Link Department | Trống = mọi bộ phận. Không chọn bộ phận nhóm |
+| `employee` (*Nhân viên*) | Link Employee | Trống = mọi nhân viên |
+| `max_advance_days` (*Số ngày được ứng tối đa*) | Float, bước 0,5 | Quỹ được âm tối đa bấy nhiêu ngày (× 8 giờ). **0 = không cho ứng** |
+
+Khác bảng hạn mức khai bù ở hai điểm: **không dòng nào / dòng 0 = KHÔNG cho ứng** (bảng khai bù
+thì 0 = không giới hạn), và chốt *không ai tự khai luật cho chính mình* chặn cả **dòng cả công ty**
+— chỉ System Manager sửa được dòng áp cho chính mình. Thứ tự tra giống bảng khai bù: nhân viên →
+bộ phận → cả công ty (`utils/attendance_quota.pick_scoped_row`).
+
+`validate` chặn: thiếu ngày hiệu lực, số âm, số không chia hết 0,5, khai cả nhân viên lẫn bộ phận
+trên một dòng, bộ phận nhóm, nhân viên/bộ phận của công ty khác, trùng (nhân viên, bộ phận, ngày
+hiệu lực).
+
+Patch `v0_053` khai sẵn **bộ phận "Dịch vụ - Bảo hành" = 1 ngày**, hiệu lực ngày migrate, cho công
+ty chưa có dòng nào. Đọc bảng lỗi (chưa migrate) thì luật **không cho ứng** — hành vi cũ.
+
+Luật đầy đủ (nợ treo sang tháng, quyết toán cuối năm): [Quỹ giờ Nghỉ bù §5](Desk-HR-QuyNghiBu.html#ung-truoc) ·
+kỹ thuật: [Sổ giờ Nghỉ bù](../tech/HR-Comp-Leave-Ledger.html).
 
 ---
 

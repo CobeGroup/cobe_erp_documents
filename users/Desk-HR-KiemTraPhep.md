@@ -131,6 +131,7 @@ Nguyên nhân hay gặp:
 | NV kêu đã xin nghỉ mà số dư chưa giảm | Đơn còn ở **Chờ trưởng bộ phận / Chờ HR duyệt** — chỉ trừ khi **Submitted** (mục 2) |
 | Số dư lẻ 0,5 | Đơn **nửa ngày** trừ 0,5 — không phải lỗi làm tròn |
 | Loại Nghỉ bù âm | **Bình thường** (mục 1) — không cần xử lý |
+| Phép năm **giảm giữa tháng 1** mà không có đơn nghỉ, số lẻ kiểu 11,88 | Nợ Nghỉ bù **ứng trước** của năm cũ đã được [quyết toán](Desk-HR-QuyNghiBu.html#quyet-toan) — trừ Phép năm đúng số giờ nợ. Leave Ledger có dòng *Leave Adjustment* lý do *"Quyết toán nợ Nghỉ bù HR-CLS-…"* |
 
 ---
 

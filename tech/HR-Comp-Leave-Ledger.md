@@ -306,6 +306,108 @@ Chạy **sau** `super().validate()`, vì trước đó HRMS chưa tính xong `to
 Qua hết các cửa thì so `số ngày × 8` với số dư **đã loại chính đơn này ra**. Thiếu thì chặn,
 kèm số dư hiện có, số giờ cần và số ngày tối đa đổi được.
 
+**Ứng trước (từ 12/10/2026).** Thiếu giờ chưa phải là chặn ngay: hàm hỏi tiếp
+`utils/comp_leave_advance.evaluate`. Không có phiếu ứng, không có bảng mới trong sổ — sổ vốn
+đã cho lô làm SAU ngày nghỉ trả vào khoản tiêu trước đó (điều kiện duy nhất là lô còn hạn tại
+`claimed_on`), nên "ứng" chỉ là cho quỹ ròng được âm tới một hạn mức.
+
+| Bước | Luật |
+|---|---|
+| Hạn mức | Bảng `comp_leave_advance_rules` (`HR Policy Comp Leave Advance`) trong HR Policy, tra bằng `attendance_quota.pick_scoped_row`: nhân viên > bộ phận > công ty, dòng hiệu lực tại `from_date` của đơn. `max_advance_days × 8` giờ. **0 hoặc không dòng = không cho ứng** |
+| Tháng đã qua | `from_date` trước ngày 1 của tháng hôm nay → không ứng (`reason = "past_month"`). Nợ của đơn đó sinh ra đã là nợ treo; thiếu chốt này thì rút đơn ứng cũ rồi nộp lại dài hơn là né được chốt nợ treo |
+| Nợ treo | Khoản tiêu có `date` (ngày nghỉ) trước ngày 1 của tháng **hôm nay** mà `_allocate` còn để `shortfall > 0`. Có nợ treo → chặn (`reason = "carried"`) |
+| Nợ của chính đơn đang sửa | Sổ của cửa quỹ loại đơn đang sửa ra (`exclude_leave`), nên nợ treo mà **bản đã lưu** của nó mang bị che. `_own_carried_comp_debt` dựng thêm sổ có bản đã lưu và cộng khoản của chính đơn — không thì dời đơn ứng 29/09 sang 02/10 là xoá được nợ |
+| Vượt hạn mức | `số dư ròng − số giờ cần < −hạn mức` → chặn (`reason = "over_limit"`). Hạn mức là mức âm của **quỹ**, cộng dồn qua mọi đơn |
+| Cho qua | Ghi `Leave Application.custom_comp_advance_hours = cần − max(số dư, 0)` |
+
+Vì sao đo nợ trên tổng `shortfall` chứ không lần theo từng đơn ứng: `_allocate` phân bổ khoản
+tiêu theo `(date, source)`, nên giờ làm thêm mới luôn trả vào khoản tiêu **sớm nhất** còn thiếu
+— nợ tháng trước được trả trước nợ tháng này, và phần `shortfall` dồn về các khoản muộn nhất.
+Một đơn nghỉ thường nộp sau vẫn có thể "ăn" lô mà nhân viên định dùng trả nợ; từng dòng nhìn
+như lệch nhưng tổng đúng, và tổng là thứ quyết định ai đang nợ.
+
+Cửa HR lập thay người khác vẫn miễn chặn, nhưng vẫn ghi `custom_comp_advance_hours` để số
+liệu ứng không thủng. Hộp duyệt (`api/approval._collect_leave_application`) nối
+`· ứng trước Xh` vào dòng tóm tắt. Số này KHÔNG đọc từ cột `custom_comp_advance_hours` mà tính
+lại từ sổ lúc mở hộp (`comp_leave_advance.unfunded_by_leave`): mỗi đơn chờ được phân bổ SAU các
+đơn nộp trước nó, trên đủ lô kể cả lô đã cắt kỳ — nên nhãn rơi đúng đơn ứng và tự giảm khi OT
+mới được duyệt. `api/leave.get_comp_leave_ledger` (PWA) và
+`api/comp_leave.get_fund` (tab Employee) trả thêm `advance_limit_hours`, `carried_debt_hours`,
+`spendable_hours` từ `comp_leave_advance.summary`.
+
+Mặc định (patch `v0_053.seed_comp_leave_advance`): bộ phận có `department_name` "Dịch vụ -
+Bảo hành" được 1 ngày, hiệu lực từ ngày migrate; ghi thẳng dòng bảng con bằng `db_insert`, không
+qua `HR Policy.save()` để một dòng cũ không hợp lệ không làm chết migrate. Chốt tự-khai của bảng
+này chặn cả dòng cả công ty (`HRPolicy.BANG_CHAN_CA_DONG_CONG_TY`).
+
+`funded_on(..., advance_limit=)`: người có hạn mức ứng thì "ngày nộp được" là ngày đầu cửa ứng
+mở (`_advance_open_on` — cùng luật với `evaluate`), nên không được nới hạn nộp vì chờ OT.
+
+**Quyết toán cuối năm — `HR Comp Leave Settlement`.** Hai mốc: `settlement_date` (cắt nợ,
+31/12) và `posting_date` (ghi sổ, 15/01). Nợ = tổng `shortfall` của khoản tiêu có ngày ≤ mốc cắt,
+đo trên sổ phân bổ lại tại mốc cắt (xem `compute()` bên dưới) — lô làm thêm sau mốc không vào. Submit sinh:
+
+| Chứng từ | Vì sao chọn cách này |
+|---|---|
+| `Leave Adjustment` Reduce trên allocation Phép Năm phủ **ngày ghi sổ** | HRMS chỉ cộng bút toán Allocation / Adjustment / Application khi tính số dư — `Leave Ledger Entry` mang `transaction_type` tự chế bị bỏ qua câm. Luật một-phiếu-mỗi-allocation của HRMS được nới cho phiếu của quyết toán (`overrides/leave_adjustment.CobeLeaveAdjustment`, cờ `from_comp_leave_settlement`; phiếu tay chỉ bị phiếu tay khác chặn). Phép Năm là earned leave cộng cuối tháng, chuyển sang không trần/không hạn (đo 13/10/2026), nên ngày 15/01 allocation mới = số phép còn lại của năm cũ. Có allocation ở mốc cắt mà không có ở ngày ghi sổ → throw (allocation năm mới chưa dựng), không lặng lẽ thành Nghỉ không lương. Trừ trên allocation năm mới (đã gồm phần chuyển sang) nên không đua với `utils.annual_leave.run` 01:15 ngày 01/01 — phần chuyển sang chỉ tính một lần lúc dựng allocation, trừ vào năm cũ sau mốc đó là trừ hụt, huỷ thì trả không thật. Mức trừ = `get_leave_balance_on(..., consider_all_leaves_in_the_allocation_period=True)` (đơn đã duyệt cho ngày SAU ngày ghi sổ, như Tết, đã cam kết phép — cùng cách HRMS đo lúc duyệt) − đơn Phép năm NHÁP còn sống trong kỳ (status Open **hoặc Approved**: bước "Manager Approved" của workflow 2 cấp là nháp status Approved, `get_leaves_pending_approval_for_period` của HRMS bỏ sót). Làm tròn XUỐNG theo `Leave Adjustment.precision("leaves_to_adjust")` — Property Setter (fixture) nâng field lên **5** chữ số: sổ đo tới 0,01h = 0,00125 ngày nên trừ đúng tuyệt đối; để mặc định `float_precision` 2 thì mọi khoản nợ không chia hết 0,08h rơi 0,01–0,07h sang Nghỉ không lương dù Phép năm còn thừa (rà soát 13/10/2026) |
+| `HR Comp Leave Adjustment` +nợ, `expiry_date` = mốc cắt, `comp_leave_settlement` = chứng từ | `credit_lots` gắn `only_for` = tập khoản trong bảng `debts`; `_allocate` không cho khoản khác ăn lô này. Hạn lô không đủ chặn: đơn Tết LẬP từ tháng 12 có `claimed_on` trước mốc cắt |
+
+Phần Phép năm không đủ ghi `unpaid_days` / `unpaid_hours` — chỉ là dữ liệu cho tính lương sau này,
+kỳ lương chứa `posting_date`, kèm ô `salary_slip` (allow_on_submit) để phần lương đánh dấu đã
+khấu trừ. Job `scheduled/settle_comp_leave.run` chạy 00:45 mỗi đêm, chỉ làm việc từ 15/01 tới hết
+tháng 1; bỏ qua người đã có chứng từ cho mốc đó **kể cả đã huỷ** (HR đang xử tay — huỷ trả lại
+Phép năm và nợ QUAY LẠI quỹ, không tự xoá nợ), và người đã nghỉ việc trước hoặc đúng mốc cắt.
+Nhiều chứng từ cùng mốc là hợp lệ: chứng từ sau chỉ thấy phần chưa quyết toán (quyết toán bổ sung).
+
+`compute()` phân bổ lại sổ (`credit_lots` + `debits` + `_allocate`) **bỏ hẳn đơn Nghỉ bù chưa
+docstatus 1** — không chỉ bỏ khỏi danh sách quyết toán: để đơn chờ giữ chỗ lô giờ lúc tính là đẩy
+nợ sang đơn đã duyệt đứng sau, đơn chờ bị từ chối là Phép năm trừ oan. Đơn chờ ghi ra
+`pending_note`. Ứng viên của job gồm cả người chỉ nợ do `HR Comp Leave Adjustment` âm.
+`assert_not_settled(employee, ngày, nhãn)` chặn huỷ MỌI đơn Nghỉ bù / phiếu trừ quỹ có ngày ≤ mốc
+cắt của một chứng từ quyết toán đang hiệu lực — huỷ khoản không nợ cũng nhả lô cho khoản đã quyết
+toán. Phiếu cộng không chặn (huỷ chỉ làm tăng nợ, và chứng từ phải tự huỷ được phiếu xoá nợ của nó).
+
+Rà soát 13/10/2026 (lượt 6): `_own_carried_comp_debt` trả nợ treo của sổ CÓ bản đã lưu (mọi
+khoản, không riêng đơn đang sửa — dời đơn chờ đang giữ lô làm nợ của đơn khác biến mất),
+`evaluate` gộp theo khoản lấy mức thiếu lớn hơn; `_only_shrinks` cho qua lượt THU HẸP đơn đang sống
+(cùng `from_date`, không kéo dài, giờ không tăng; đơn đã chết thì không tính — không thì mở lại lỗ
+`_reopened`); hộp duyệt tính "ứng trước" trực tiếp từ sổ (`comp_leave_advance.unfunded_by_leave`):
+mỗi đơn đo trên quỹ chỉ gồm các đơn NỘP TRƯỚC nó (theo `creation`), như cửa quỹ lúc nộp — không
+đọc `shortfall` từng dòng (sổ dồn phần thiếu về đơn có ngày nghỉ muộn nhất) và không đọc ảnh chụp
+`custom_comp_advance_hours`; quyết toán chỉ đòi Phép năm năm mới khi CÓ nợ; `HRCompLeaveSettlement.before_cancel` chặn tự huỷ
+chứng từ của mình. Giới hạn đã biết: đơn vắt qua mốc cắt được tính trọn theo `from_date`.
+
+Rà soát 13/10/2026 (lượt 3) vá thêm:
+
+- Job bỏ qua người đã có chứng từ đã ghi sổ rồi huỷ — soi phiếu xoá nợ thật trỏ về chứng từ
+  (`settle_comp_leave._already_handled`), vì nháp bị `Discard` cũng mang docstatus 2.
+  `comp_leave_settlement` trên phiếu điều chỉnh chỉ chứng từ quyết toán gắn được (cờ
+  `from_comp_leave_settlement`); phiếu tay mang link bị xoá link.
+- `HRCompLeaveAdjustment.before_cancel` chặn tự huỷ phiếu quỹ của chính mình (huỷ phiếu trừ = tự
+  xoá nợ, gỡ chặn nợ treo).
+- `CobeLeaveApplication._dying_save`: cửa thoát "đổi status sang Rejected/Cancelled" của cửa quỹ và
+  hạn nộp chỉ mở khi `workflow_state` cũng chết — sổ chỉ đọc `workflow_state`, nên `PUT` vừa kéo
+  dài đơn vừa đặt status Rejected mà workflow còn sống là đơn vẫn tiêu quỹ.
+- `_dying_save`: `workflow_state` RỖNG chỉ tính là "không workflow" khi doctype thật sự không có
+  workflow — Frappe điền lại state đầu tiên ở `validate_workflow`, chạy SAU `validate`.
+- `CobeLeaveApplication._validate_state_matches_status` (đầu `validate`): bước workflow đã chết
+  (Rejected/Cancelled/Withdrawn) thì `status` phải là Rejected/Cancelled. Sổ chỉ đọc
+  `workflow_state`, HRMS ghi nghỉ theo `status` + docstatus: Leave Approver lưu đơn mình sang
+  "Rejected" (Save, vẫn nháp) rồi submit với status "Approved" là nghỉ thật mà quỹ không thấy, và
+  bỏ luôn bước HR. Prod 13/10/2026 không có dòng lệch nào.
+- Cửa quỹ chạy lại khi `half_day_date` hoặc `total_leave_days` (HRMS tính lại trước cửa quỹ) đổi:
+  xoá `half_day_date` của đơn nửa ngày nhiều ngày là HRMS đếm lại cả ngày, +4h không qua cửa.
+  Số ngày giảm thì `_only_shrinks` cho qua; tăng (kể cả do lịch nghỉ đổi) thì người duyệt không
+  phải HR bị chặn như nhân viên — đúng, vì duyệt là cộng phần giờ chưa có vào sổ.
+- Đơn đã bị từ chối (workflow Rejected là docstatus 1) huỷ được trong kỳ đã quyết toán —
+  `before_cancel` đọc `workflow_state` ĐÃ LƯU (`desk.form.save.cancel` gán state client gửi).
+- `unfunded_by_leave` phân bổ thật (đơn xét xếp cuối, đủ lô kể cả lô đã cắt kỳ) thay vì so với
+  số dư hôm nay — lô trả cho đơn chờ mà đã bị cắt 30/06 / 31/12 làm nhãn "ứng trước" hiện oan.
+
+Rà soát 12/10/2026 còn vá: `CobeLeaveApplication._reopened` — đơn Rejected/Cancelled được đặt lại
+status sống thì cả cửa quỹ lẫn hạn nộp kiểm lại (lưu đổi ngày kèm status Rejected rồi đặt lại Open
+là né được cả hai); `_keep_saved_advance_hours` — Frappe không chặn ô read_only ở server.
+
 > **Lưu ý về đường duyệt:** khi quản lý bấm duyệt, không có trường ngày nào đổi nên validator
 > thoát ở cửa thứ hai. Một đơn đã nộp hợp lệ **không bị chặn lại lúc duyệt**, kể cả khi quỹ
 > trong thời gian chờ đã bị đơn khác ăn mất — vì đơn này đã giữ chỗ từ lúc nộp.

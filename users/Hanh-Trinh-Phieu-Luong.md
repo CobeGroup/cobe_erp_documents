@@ -243,6 +243,7 @@ Mọi khoản phát sinh một lần đi qua **Additional Salary**: chọn nhân
 | Quên chấm công | ❌ | *Consider Unmarked Attendance As = **Present*** → không bị trừ |
 | Làm thêm giờ đã duyệt | ✅ | Overtime Slip → Additional Salary "Lương làm thêm giờ" |
 | Nghỉ bù (đổi OT lấy ngày nghỉ) | ❌ | không ra tiền — đã quy đổi thành ngày nghỉ |
+| Nợ Nghỉ bù **ứng trước** hết năm chưa bù, Phép năm không đủ trừ | ⚠️ **chưa tự vào** | [chứng từ quyết toán](Desk-HR-QuyNghiBu.html#quyet-toan) (`HR Comp Leave Settlement`) chỉ **ghi** số *Nghỉ không lương (ngày)*, ghi sổ ngày 15/01. Phiếu lương chưa đọc chứng từ này — kế toán khấu trừ tay theo số đó, rồi điền ô *Phiếu lương đã khấu trừ* trên chứng từ để không trừ hai lần |
 | Thưởng / hoa hồng | ✅ | Additional Salary (**Thưởng**) |
 | Tạm ứng / thu hồi | ✅ | Additional Salary (**Tạm ứng**) |
 | Tăng lương giữa tháng | ⚠️ **không** ăn vào tháng đó | phiếu chỉ nhận Assignment có **From Date ≤ ngày đầu kỳ**. Đặt From Date 15/08 → tháng 8 vẫn tính lương cũ, lương mới ăn từ tháng 9. Muốn ăn ngay thì để **From Date = ngày 01** |

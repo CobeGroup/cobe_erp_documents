@@ -167,11 +167,22 @@ nhưng khi duyệt cần để ý mấy điểm riêng:
   bước 1, rồi HR duyệt bước cuối) và
   đã qua ngày làm thêm — nhân viên không gửi được đơn "khống". Bạn chỉ cần cân nhắc
   **ngày nghỉ có hợp lý** không.
+- **Đơn ứng trước** — nhân viên được công ty cho [ứng trước](Desk-HR-QuyNghiBu.html#ung-truoc)
+  (thường là làm ca, bảo dưỡng, trực) gửi được đơn khi quỹ **chưa đủ giờ**, trong hạn mức HR cài.
+  Hộp duyệt ghi thêm **"· ứng trước Xh"** ở dòng tóm tắt: X là số giờ đơn này nghỉ bằng giờ
+  **chưa có**, nhân viên sẽ làm thêm bù lại sau. Hệ thống đã chặn sẵn phần vượt hạn mức và người còn
+  nợ từ tháng trước; bạn chỉ cân nhắc như đơn thường. Số giờ trong nhãn có thể **giảm dần** khi phiếu
+  làm thêm mới của nhân viên được duyệt.
+- **Bấm duyệt mà báo quỹ thiếu?** Xảy ra khi số ngày của đơn **tăng lên** sau lúc gửi (vd HR sửa
+  lịch nghỉ của nhân viên làm một ngày nghỉ thành ngày làm). Duyệt là tiêu thêm phần giờ chưa có,
+  nên hệ thống kiểm lại như đơn mới: từ chối đơn, hoặc báo HR xử lý.
 - **Đơn nghỉ không còn chỉ vào một ngày làm thêm cụ thể** (từ 09/2026): một đơn nghỉ tiêu
   giờ gom từ nhiều ngày, hệ thống tự trừ lô sắp hết hạn trước. Muốn xem nhân viên còn bao
   nhiêu giờ thì mở Desk → *HR Overtime Request* lọc theo người, hoặc nhờ HR tra quỹ.
 - **Không trừ quỹ phép, không trừ lương** — số dư loại "Nghỉ bù" âm là **bình thường** (âm bao nhiêu
-  = đã nghỉ bù bấy nhiêu ngày, mang tính thống kê). Đừng từ chối đơn chỉ vì "hết số dư".
+  = đã nghỉ bù bấy nhiêu ngày, mang tính thống kê). Đừng từ chối đơn chỉ vì "hết số dư". Ngoại lệ
+  duy nhất: giờ **ứng trước** mà hết năm chưa bù được [quyết toán](Desk-HR-QuyNghiBu.html#quyet-toan)
+  — trừ Phép năm, thiếu nữa mới tính Nghỉ không lương.
 - **Từ chối đơn Nghỉ bù** cũng **bắt buộc nhập lý do** (bỏ trống bị chặn) và **lý do gửi cho nhân
   viên** kèm thông báo — như mọi đơn nghỉ phép.
 - **Duyệt nhầm?** HR **Cancel** đơn trên Desk — ngày công "On Leave" tự gỡ, đảo ngược sạch.
@@ -245,6 +256,11 @@ Bấm vào ngày trong thông báo là **mở thẳng bản chấm công** để
 | Không thấy tab **Cần duyệt** trên app | Bạn chưa được cấp quyền duyệt — báo HR thêm role/cấu hình ở **HR Approval Inbox Settings** |
 | Duyệt xong (Manager) đơn **vẫn "chờ"** | Đúng — đó là **bước 1**; đơn còn chờ **HR Submit bước 2** mới trừ phép |
 | Trên Desk không thấy nút **Submit / HR Reject** | Tài khoản thiếu role **HR Manager**, hoặc đơn chưa ở trạng thái **Manager Approved** |
+| *"Đơn nghỉ đang ở bước … — không submit thẳng được"* | Đã bấm nút **Submit** chung của form thay vì nút duyệt của quy trình. Dùng **Actions → Manager Approve** (bước 1) rồi **Actions → Submit** (bước HR), hoặc duyệt trên app |
+| *"Đơn đang ở bước … — không sửa được nữa"* | Nhân viên sửa đơn sau khi quản lý đã duyệt. Rút đơn rồi nộp đơn mới |
+| *"Không sửa được … Cần đổi thì báo HR"* khi lưu hồ sơ nhân viên / bộ phận | Người duyệt, ô *gửi thẳng HR* trên hồ sơ đã có, và bảng người duyệt của bộ phận chỉ HR đổi |
+| *"… không phải người duyệt nghỉ của …"* khi lưu đơn | Người duyệt trên đơn phải là người duyệt nghỉ trên hồ sơ nhân viên hoặc của bộ phận. Cần đổi thì HR sửa hồ sơ, hoặc dùng nút **Chuyển duyệt** |
+| Quản lý không thấy / không mở được đơn của một nhân viên trong phòng | Từ 10/2026 quản lý chỉ đụng tới đơn mà mình là **người duyệt** (ô *Leave Approver* trên đơn) hoặc đơn được chuyển cho mình. HR gán đúng người duyệt nghỉ trên hồ sơ nhân viên, hoặc chuyển đơn cho quản lý đó |
 | Có role **HR Manager** nhưng **không thấy đơn nào ở bước HR** | Bạn không có tên trong **Người duyệt cuối** của công ty đó — đúng thiết kế. Cần duyệt thì báo HR thêm tên vào [HR Policy](Desk-Admin-Policy.html#4-người-duyệt-cuối-cấp-hr) |
 | Bấm duyệt báo *"Bạn không phải người duyệt đơn này ở bước hiện tại"* | Như trên — đơn ở bước HR và bạn ngoài danh sách người duyệt cuối |
 | **Chuyển duyệt** không thấy ai để chọn | Người nhận phải có quyền duyệt **cùng cấp + cùng phòng** với nhân viên. Ở **bước HR**, chỉ chuyển được cho người trong **danh sách người duyệt cuối** — chuyển cho người ngoài thì đơn kẹt |

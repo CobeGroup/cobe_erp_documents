@@ -202,3 +202,4 @@ bị kiểm lại, vì thêm ngày là xin thêm suất.
 - 📋 [Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) — góc nhìn nhân viên
 - ⏱️ [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html) — luật còn lại của cùng loại đơn
 - 🔧 [Attendance Request (kỹ thuật)](HR-Attendance-Request.html)
+- ⏳ [Ứng trước Nghỉ bù](Desk-HR-QuyNghiBu.html#ung-truoc) — bảng nằm cùng tab *Hạn mức khai bù*, nhưng **không dòng nào = không cho ứng** (ngược với bảng này)

@@ -103,6 +103,23 @@ thường bị trần 4h/ngày nên thường phải gom hai buổi mới đủ 
 8h thì một buổi là đủ. Trường hợp đặc biệt (mất bằng chứng chấm công, phiếu cũ) liên hệ HR — HR
 có thể **điều chỉnh quỹ** bằng chứng từ *HR Comp Leave Adjustment* trên Desk.
 
+### Ứng trước — nghỉ trước, làm thêm bù sau
+
+Nhân viên làm ca, bảo dưỡng, trực có thể được công ty cho **ứng trước**: nghỉ khi quỹ chưa đủ
+giờ, rồi làm thêm quy đổi Nghỉ bù để bù lại. Có được ứng hay không, và tối đa bao nhiêu ngày, do
+HR cài theo công ty, bộ phận hoặc từng người. Nếu được, khung **Quỹ Nghỉ bù** trên màn hình xin
+nghỉ ghi *"Bạn được ứng trước tối đa … ngày"* kèm số ngày **còn xin được**.
+
+- Ứng nhiều đơn trong tháng thì hạn mức tính **tổng**: được ứng 1 ngày mà đã ứng 0,5 ngày thì chỉ
+  còn 0,5 ngày.
+- Giờ làm thêm về sau **tự trả** vào phần đã ứng, không phải làm gì thêm.
+- Sang tháng mới mà **chưa bù xong** thì phần nợ vẫn giữ nguyên, nhưng **không ứng thêm** được
+  cho tới khi bù hết.
+- Chỉ ứng được cho ngày nghỉ của **tháng hiện tại** trở đi. Nộp đơn cho ngày của tháng đã qua
+  thì quỹ phải đủ giờ.
+- Hết năm vẫn còn nợ thì phần đó **trừ vào Phép năm** đúng số giờ (8 giờ = 1 ngày phép); Phép năm
+  không đủ thì phần còn lại tính **Nghỉ không lương**.
+
 Qua được kiểm tra, đơn đi tiếp **2 bước Manager → HR** y như [đơn nghỉ phép thường](Hanh-Trinh-Nghi-Phep.html).
 
 ---
@@ -206,10 +223,13 @@ Bảng này trả lời thẳng những câu hay hỏi nhất, khỏi phải đo
 | Tình huống | Nguyên nhân / cách xử |
 |---|---|
 | *"Quỹ Nghỉ bù còn …h, chưa đủ để nghỉ … ngày"* | Quỹ thiếu giờ — làm thêm tiếp (bước ①②), hoặc xin **0,5 ngày** thay vì cả ngày |
+| *"… vượt hạn mức ứng"* | Đã ứng tới mức công ty cho phép — làm thêm bù bớt rồi xin tiếp, hoặc xin ít ngày hơn |
+| *"Bạn còn nợ …h Nghỉ bù ứng trước từ tháng trước"* | Phần ứng tháng trước chưa bù xong — làm thêm quy đổi Nghỉ bù để trả hết, rồi mới ứng tiếp được |
+| *"Ngày … thuộc tháng đã qua — … không được ứng trước"* | Nộp đơn cho ngày của tháng đã qua thì quỹ phải đủ giờ. Trường hợp đặc biệt liên hệ HR |
 | Làm thêm rồi mà quỹ vẫn 0 | Phiếu OT quy đổi **Tiền lương** chứ không phải Nghỉ bù; hoặc **chưa được duyệt xong** (trưởng bộ phận duyệt rồi vẫn còn chờ HR); hoặc **ngày làm thêm chưa tới** |
 | Quỹ ít hơn số giờ đã khai | Phiếu bị **trần 4h/8h** cắt; hoặc lô giờ kỳ trước **đã hết hạn** |
 | Quỹ Nghỉ bù bỗng về 0 / mất | Đã qua **cuối kỳ** — giờ dư bị cắt. Lần sau xin nghỉ trong kỳ, để ý thông báo nhắc giữa tháng 6/12 |
-| Số dư âm trên Desk, tưởng bị phạt | Âm ở Desk là **đúng thiết kế** — không trừ lương, không trừ quỹ phép; xem quỹ thật ở màn hình Nghỉ phép trên app |
+| Số dư âm trên Desk, tưởng bị phạt | Âm ở Desk là **đúng thiết kế** — không trừ lương, không trừ quỹ phép; xem quỹ thật ở màn hình Nghỉ phép trên app. Ngoại lệ duy nhất: giờ **ứng trước** mà hết năm chưa bù thì trừ Phép năm, thiếu nữa mới tính Nghỉ không lương |
 | *"Đơn Nghỉ bù từ ngày … đã quá hạn nộp"* | Nộp trễ quá hạn công ty đặt (tính từ ngày nghỉ hoặc lúc quỹ đủ giờ, mốc muộn hơn) → liên hệ HR tạo thủ công |
 | *"Attendance … is already marked …"* khi xin nghỉ bù | Hôm đó **đã chấm công**. Rất hay gặp vì nghỉ bù thường xin ngay trong ngày: làm sáng → trưa xin nghỉ chiều. Tích **Nghỉ nửa ngày** là gửi được (buổi đã làm vẫn tính công). Xin **cả ngày** cho hôm đã đi làm thì không được |
 

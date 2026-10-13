@@ -28,6 +28,12 @@ nav_order: 1
 6. (Tuỳ chọn) **Shift Request Approver** — người duyệt **chấm công bù / công tác** riêng cho NV này
    (cộng thêm vào danh sách của phòng, không phải override). Tách khỏi Leave Approver — xem
    [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html).
+
+> 🔒 Trên hồ sơ **đã có**, chỉ **HR** (HR Manager / HR User / System Manager) đổi được *Leave
+> Approver*, *Shift Request Approver*, *Expense Approver*, *Reports To* và ô *Nghỉ phép gửi thẳng
+> HR*. Trưởng bộ
+> phận vẫn đặt được các ô này **lúc lập hồ sơ người mới**. Không ai tự đổi tài khoản, bộ phận, công
+> ty hay người duyệt trên hồ sơ **của chính mình**.
 7. **Confirmation Date** (tab **Joining**) — ngày hết thử việc. Phép Năm tính từ ngày này; để trống
    thì hệ thống lấy ngày vào làm + 2 tháng. Xem [Cấp phép → Khai ngày hết thử việc](Desk-HR-CapPhep.html#het-thu-viec).
 8. Lưu. Hệ thống tự cấp Phép Năm cho nhân viên (thông báo xanh ở góc màn hình).

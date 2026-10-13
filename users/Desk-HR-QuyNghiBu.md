@@ -198,7 +198,8 @@ thiệp tay đi qua chứng từ **Điều chỉnh quỹ Nghỉ bù** (`HR Comp 
 
 Chứng từ phải **Submit** mới vào quỹ; huỷ (`Cancel`) là rút khỏi quỹ. Hệ thống chặn số 0 và
 số lớn hơn 200 giờ (chặn gõ nhầm — 200 giờ đã là 25 ngày nghỉ). Nếu khoản trừ đẩy nhân viên
-xuống âm, hệ thống báo ngay lúc Submit.
+xuống âm, hệ thống báo ngay lúc Submit. Không ai tự **lập** hay tự **huỷ** chứng từ trên quỹ
+**của chính mình** — huỷ một phiếu trừ quỹ cũng là xoá nợ của mình. Nhờ một người HR khác.
 
 **Khi nào dùng:**
 
@@ -208,7 +209,160 @@ xuống âm, hệ thống báo ngay lúc Submit.
 
 ---
 
-## 5. Đợt chốt số dư khi áp luật mới
+## 5. Ứng trước — nghỉ trước, làm thêm bù sau {#ung-truoc}
+
+Nhân viên làm ca, bảo dưỡng, trực thường xuyên hay phải nghỉ một buổi giữa tháng rồi mới có
+ca làm thêm để bù. Mặc định quỹ phải **đủ giờ ngay lúc nộp đơn**; muốn cho một nhóm người
+được nghỉ trước thì HR khai **hạn mức ứng trước** cho họ. Khi đó quỹ được **âm** tới hạn mức,
+và giờ làm thêm quy đổi *Nghỉ bù* về sau tự trả vào phần âm.
+
+Không có phiếu ứng riêng: nhân viên vẫn nộp đơn *Nghỉ bù* như thường, hệ thống tự nhận ra
+đơn nào là ứng.
+
+### Khai hạn mức
+
+**HR Policy** của công ty → tab **Hạn mức khai bù** → mục **Ứng trước Nghỉ bù**, bảng
+*Hạn mức ứng trước Nghỉ bù*:
+
+| Cột | Ý nghĩa |
+|---|---|
+| Hiệu lực từ ngày | Dòng áp cho **đơn nghỉ** từ ngày này trở đi. Dòng mới thay dòng cũ, không cần xoá dòng cũ |
+| Bộ phận | Trống = mọi bộ phận |
+| Nhân viên | Trống = mọi nhân viên. Khai đích danh để đặt ngoại lệ cho một người |
+| Số ngày được ứng tối đa | Quỹ được âm tối đa bấy nhiêu ngày. Bước 0,5 ngày (= 4 giờ). **0 = không cho ứng** |
+
+Thứ tự ưu tiên y như bảng hạn mức khai bù phía trên: dòng *Nhân viên* thắng dòng *Bộ phận*,
+dòng *Bộ phận* thắng dòng để trống cả hai.
+
+> **Số 0 ở đây nghĩa ngược với bảng hạn mức khai bù.** Ở bảng khai bù, 0 là *không giới
+> hạn*; ở bảng ứng trước, 0 là *không cho ứng*. Không có dòng nào cũng là không ai được ứng.
+> Muốn cả bộ phận được ứng nhưng trừ một người, khai dòng bộ phận rồi thêm dòng đích danh
+> người đó với số 0.
+
+**Mặc định khi cập nhật hệ thống:** chỉ bộ phận *Dịch vụ - Bảo hành* được ứng tối đa
+**1 ngày**, hiệu lực từ ngày cập nhật. Mọi bộ phận khác không có dòng nào, tức không được ứng.
+
+| Hiệu lực từ ngày | Bộ phận | Nhân viên | Số ngày được ứng tối đa |
+|---|---|---|---|
+| (ngày cập nhật) | Dịch vụ - Bảo hành - TGĐG | | 1 |
+
+Bảng này chịu chốt **không ai tự khai luật cho chính mình**, chặt hơn các bảng hạn mức khác:
+HR không thêm, sửa hay xoá được dòng áp cho chính mình, cho bộ phận của mình, **và cả dòng cả
+công ty** của công ty mình — vì mặc định không ai được ứng, nên mở cho cả công ty cũng là tự
+mở cho mình. Những dòng đó chỉ **System Manager** khai được.
+
+### Hệ thống chốt thế nào
+
+| Tình huống | Hệ thống làm gì |
+|---|---|
+| Quỹ đủ giờ | Như thường, đơn không phải là ứng |
+| Quỹ thiếu, nhân viên **không có** hạn mức ứng | Chặn như trước: *"Quỹ Nghỉ bù còn …h, chưa đủ để nghỉ …"* |
+| Quỹ thiếu, sau đơn này quỹ âm **trong** hạn mức | Cho nộp. Phần thiếu ghi vào ô **Giờ Nghỉ bù ứng trước** trên đơn |
+| Sau đơn này quỹ âm **quá** hạn mức | Chặn: *"… vượt hạn mức ứng"*, kèm số ngày còn xin được |
+| Hai đơn ứng trong cùng tháng | Hạn mức tính trên **tổng** phần âm, không tính riêng từng đơn. Hạn mức 1 ngày thì ứng 0,5 + 0,5 là hết |
+| Còn nợ giờ từ **tháng trước** | **Không ứng thêm** được, kể cả khi còn hạn mức — phải làm thêm bù hết phần nợ cũ trước |
+| Đơn cho ngày thuộc **tháng đã qua** (nộp bù đầu tháng cho cuối tháng trước) | **Không được ứng** — quỹ phải đủ giờ. Ca cần thiết thì HR lập đơn thay |
+| Sửa ngày một đơn ứng tháng trước sang tháng này | Vẫn bị tính là **nợ tháng trước** — sửa đơn không phải đường xoá nợ, kể cả nợ của đơn khác mà đơn đó đang "giữ chỗ" |
+| Sửa **giảm** một đơn đã nộp (cùng ngày bắt đầu, ít ngày hơn — ví dụ cả ngày thành nửa ngày) | Luôn được, kể cả khi đang nợ hay đơn thuộc tháng đã qua — sửa giảm không làm nợ lớn thêm |
+| Số ngày của đơn **tăng** sau khi nộp (kéo dài ngày về, bỏ ô *Half Day Date*, hoặc HR sửa lịch nghỉ làm một ngày nghỉ thành ngày làm) | Kiểm lại như một lần xin mới — kể cả lúc **quản lý bấm duyệt**: duyệt là tiêu thêm phần giờ chưa có. Bước HR duyệt được miễn như khi HR lập đơn thay |
+| Người có hạn mức ứng **nộp đơn trễ** | Hạn nộp tính từ ngày nghỉ như phép thường — họ nộp được ngay bằng ứng trước, nên không được nới hạn vì "chờ làm thêm cho đủ giờ" |
+| Sang tháng mà chưa bù xong | Nợ **không bị xoá**, treo sang tháng sau. Giờ làm thêm mới trả vào khoản nợ cũ nhất trước |
+| HR lập đơn thay nhân viên | Không bị chặn (như trước), nhưng phần thiếu vẫn được ghi vào ô *Giờ Nghỉ bù ứng trước* |
+| Hạn mức đổi giữa chừng | Áp theo dòng hiệu lực tại **ngày nghỉ** của đơn, không áp ngược cho đơn cũ |
+
+Người duyệt thấy đơn ứng ngay trong hộp duyệt: dòng tóm tắt có thêm *"· ứng trước Xh"* — số giờ
+quỹ **chưa có** cho đơn đó, tính **ngay lúc mở hộp duyệt** theo thứ tự **nộp đơn**: hai đơn cùng
+tranh một phần giờ thì đơn nộp sau mới là đơn ứng. Làm thêm được duyệt sau khi nộp đơn sẽ làm con
+số này giảm. Ô *Giờ Nghỉ bù ứng trước* trên đơn thì là con số **lúc nộp** (hoặc lần sửa ngày gần nhất).
+Nhân viên thấy hạn mức của mình và số ngày còn xin được ở khung **Quỹ Nghỉ bù** khi chọn loại
+*Nghỉ bù* trên ứng dụng.
+
+### Hết năm vẫn còn nợ — chứng từ Quyết toán nợ Nghỉ bù {#quyet-toan}
+
+Nợ còn lại tới **31/12** được quyết toán bằng chứng từ **Quyết toán nợ Nghỉ bù**
+(`HR Comp Leave Settlement`, mở ở `/app/hr-comp-leave-settlement`). Chứng từ có hai mốc ngày:
+
+| Mốc | Ý nghĩa |
+|---|---|
+| **Ngày cắt nợ** (31/12) | Chỉ tính nợ của đơn nghỉ và giờ làm thêm **tới hết ngày này**. Làm thêm tháng 1 không trả cho nợ năm cũ — giờ làm thêm tháng 12 được duyệt muộn sau ngày ghi sổ thì vào quỹ năm mới |
+| **Ngày ghi sổ** (15/01) | Ngày trừ Phép năm, và là kỳ lương đọc phần Nghỉ không lương |
+
+Chờ tới 15/01 mới ghi sổ để phiếu làm thêm tháng 12 kịp duyệt và có chấm công — không thì giờ
+làm thêm cuối năm bị bỏ sót và Phép năm bị trừ oan.
+
+Khi submit, chứng từ:
+
+1. **Trừ vào Phép năm** đúng số giờ nợ, quy ra ngày theo 8 giờ = 1 ngày, **không làm tròn lên
+   0,5**. Trừ trên phiếu cấp Phép năm **đang dùng ở ngày ghi sổ** (năm mới, đã gồm phần chuyển
+   từ năm cũ) bằng một phiếu **Leave Adjustment** loại *Reduce*. Phép năm được cộng dần vào
+   cuối mỗi tháng và chuyển hết sang năm sau, nên ngày 15/01 số phép trên phiếu năm mới chính là
+   **số phép còn lại của năm cũ** — người đã nghỉ hết phép năm cũ thì toàn bộ nợ thành Nghỉ không
+   lương. Nếu phiếu cấp Phép năm năm mới **chưa được tạo**, chứng từ dừng lại báo lỗi (không tự
+   chuyển hết sang Nghỉ không lương) và đợt chạy đêm sau thử lại. Chỉ trừ phần Phép năm **chưa ai
+   giữ**: các đơn Phép năm đã duyệt cho ngày phía sau (ví dụ nghỉ Tết) và các đơn đang chờ duyệt
+   — kể cả đơn đã qua bước trưởng bộ phận — được chừa ra, để chúng vẫn duyệt và vẫn nghỉ được.
+2. Phép năm **không đủ** thì phần còn lại ghi thành **Nghỉ không lương** (số ngày và số giờ)
+   ngay trên chứng từ. Hiện chưa có phiếu lương chạy trong hệ thống, nên đây là **dữ liệu sẵn
+   cho tính lương**: khi làm phần lương, kỳ lương chứa *Ngày ghi sổ* đọc chứng từ này để khấu
+   trừ, rồi ghi tên phiếu lương vào ô *Phiếu lương đã khấu trừ* để không trừ hai lần.
+3. Một phiếu **Điều chỉnh quỹ Nghỉ bù** cộng đúng số giờ nợ để xoá nợ khỏi quỹ. Giờ của phiếu
+   này **chỉ trả cho đúng các khoản nợ được quyết toán** — huỷ một đơn đã quyết toán không biến
+   thành giờ dùng cho đơn khác.
+
+Số ngày trừ Phép năm tính **đúng tới từng phần trăm giờ**: phiếu trừ Phép năm (`Leave
+Adjustment`) được đặt 5 chữ số lẻ. Ví dụ nợ 2,5 giờ: trừ đúng 0,3125 ngày phép, không có Nghỉ
+không lương. Nghỉ không lương chỉ phát sinh khi Phép năm **không đủ**.
+
+Chứng từ liệt kê **các khoản còn thiếu giờ** (đơn nghỉ, hoặc phiếu điều chỉnh trừ quỹ) để HR
+đối chiếu.
+
+Chỉ tính đơn Nghỉ bù **đã duyệt xong**; đơn còn chờ duyệt được coi như **chưa có** khi tính nợ
+(nó có thể bị từ chối hay rút sau đó). Các đơn này được ghi vào ô *Chưa quyết toán (đơn còn chờ
+duyệt)* để HR theo dõi; nếu sau đó được duyệt mà thiếu giờ thì phần nợ **ở lại quỹ** — HR lập
+quyết toán tay.
+
+**Ai lập:**
+
+- **Cuối năm**: hệ thống tự lập và submit đêm **15/01** cho mốc 31/12; các đêm sau trong tháng 1
+  chạy lại để bù nếu đêm đó lỡ. Đợt này gồm người có đơn Nghỉ bù và người bị **phiếu điều chỉnh
+  trừ quỹ** đẩy xuống âm. Người **đã nghỉ việc** trước hoặc đúng 31/12 không nằm trong đợt này.
+- **Quyết toán bổ sung**: đơn còn chờ duyệt lúc chạy, sau đó được duyệt mà thiếu giờ — HR lập
+  thêm một chứng từ cùng *Ngày cắt nợ* 31/12. Chứng từ sau chỉ tính phần nợ **chưa** quyết toán,
+  không trừ trùng.
+- **Nhân viên nghỉ việc giữa năm**: HR lập tay, *Loại quyết toán* = *Nghỉ việc*, *Ngày cắt nợ* =
+  ngày nghỉ việc. Các số tự tính khi lưu.
+
+**Huỷ** chứng từ (chỉ **HR Manager** / **System Manager**; không ai tự huỷ chứng từ **của chính
+mình** — trừ System Manager) là huỷ luôn phiếu trừ Phép năm và
+phiếu xoá nợ: Phép năm được trả lại và **nợ quay lại quỹ** — giờ làm thêm mới sẽ trả dần, và đó là
+nợ tháng trước nên người đó không ứng thêm được. Đợt chạy đêm sau **không tự lập lại** cho người
+đó, để HR quyết: lập lại tay, hoặc **xoá nợ hẳn** bằng một phiếu *Điều chỉnh quỹ Nghỉ bù* cộng
+đúng số giờ nợ. Huỷ chứng từ **không** tự xoá nợ. Chứng từ **nháp** bị bỏ (`Discard`) thì không
+tính — đợt chạy đêm vẫn quyết toán người đó như thường.
+
+**Trong kỳ đã quyết toán, không huỷ thẳng được đơn Nghỉ bù hay phiếu điều chỉnh trừ quỹ nào** —
+kể cả đơn không nợ (riêng đơn đã bị **từ chối** thì huỷ được, vì nó không còn trong quỹ): huỷ một đơn cũ là nhả giờ của nó cho đơn đã quyết toán đứng sau, và Phép năm
+hoá ra bị trừ oan. Hệ thống báo tên chứng từ quyết toán và yêu cầu huỷ chứng từ đó trước — Phép
+năm được trả lại — rồi mới huỷ đơn, và lập lại quyết toán nếu còn nợ.
+
+> Đơn nghỉ **vắt qua 31/12** (ví dụ 30/12 → 02/01) được tính trọn vào năm cũ theo ngày bắt đầu:
+> phần thiếu giờ của cả đơn được quyết toán ở mốc 31/12.
+
+> HRMS gốc chỉ cho **một** phiếu *Leave Adjustment* trên mỗi phiếu cấp Phép năm. Hệ thống nới
+> luật đó cho phiếu do chứng từ quyết toán sinh ra, nên quyết toán bổ sung, quyết toán nghỉ việc
+> và phiếu HR chỉnh tay cùng tồn tại được. Hai phiếu **chỉnh tay** trên cùng một phiếu cấp thì
+> vẫn bị chặn như trước.
+
+### Xem ai đang ứng
+
+- Báo cáo **Quỹ giờ Nghỉ bù**: người đang ứng có số dư âm.
+- Tab **Quỹ Nghỉ bù** trên hồ sơ nhân viên: hiện *"Đang ứng trước …h"* kèm hạn mức hiện tại,
+  và tách riêng phần **nợ từ tháng trước**.
+- Danh sách **Quyết toán nợ Nghỉ bù**: ai đã bị trừ Phép năm / ghi Nghỉ không lương, năm nào.
+
+---
+
+## 6. Đợt chốt số dư khi áp luật mới
 
 Khi luật quỹ giờ lên hệ thống, những nhân viên từng được duyệt nhiều ngày hơn số giờ có sẽ
 hiện ra **số âm**. Các đơn đó đều đã nghỉ xong nên không thu lại được; để nguyên thì giờ
@@ -228,12 +382,12 @@ lúc chạy còn phát sinh phiếu mới.
 
 ---
 
-## 6. Hệ thống hành xử thế nào trong từng tình huống
+## 7. Hệ thống hành xử thế nào trong từng tình huống
 
 Ba bảng dưới đây gom toàn bộ luật lại thành câu trả lời trực tiếp, để HR khỏi phải suy từ cơ
 chế ra.
 
-### 6.1 Khi giờ vào quỹ
+### 7.1 Khi giờ vào quỹ
 
 | Tình huống | Hệ thống làm gì |
 |---|---|
@@ -246,20 +400,20 @@ chế ra.
 | Nhiều phiếu **cùng một ngày** | Cộng dồn cả, mỗi phiếu là một lô riêng |
 | Quỹ đang **âm**, nhân viên làm thêm tiếp | Giờ mới **trả nợ trước**, chỉ phần thừa mới dùng được |
 
-### 6.2 Khi giờ ra khỏi quỹ
+### 7.2 Khi giờ ra khỏi quỹ
 
 | Tình huống | Hệ thống làm gì |
 |---|---|
 | Nhân viên **nộp** đơn nghỉ bù | Trừ quỹ **ngay lúc nộp**, chưa cần duyệt — để người ta không nộp chồng nhiều đơn rồi cùng được duyệt |
 | Đơn bị **từ chối** | Trả giờ lại quỹ |
 | Nhân viên **tự thu hồi** đơn | Trả giờ lại quỹ |
-| Đơn đã duyệt rồi **huỷ** | Trả giờ lại quỹ |
+| Đơn đã duyệt rồi **huỷ** | Trả giờ lại quỹ. Riêng đơn nằm trong kỳ **đã quyết toán** (mục 5) thì phải huỷ chứng từ quyết toán trước |
 | **Sửa** ngày hoặc số ngày của đơn cũ | Kiểm lại quỹ, nhưng bỏ chính đơn đó ra khi đo để nó không tự chặn mình |
 | Nghỉ **nửa ngày** | Trừ 4 giờ |
 | Nghỉ đúng **ngày nửa buổi** (Thứ 7 khối văn phòng) | Trừ 4 giờ, dù có tick *nửa ngày* hay không |
 | Đơn **vắt qua ngày lễ / Chủ Nhật** | Ngày nghỉ không bị tính, đơn trừ **ít giờ hơn** số ngày trên lịch |
 | Đơn nghỉ **nhiều ngày** | Trừ `số ngày × 8` giờ, gom từ **nhiều** ngày làm thêm khác nhau |
-| **Không đủ** giờ | Chặn ngay lúc lưu, báo rõ còn bao nhiêu và cần bao nhiêu |
+| **Không đủ** giờ | Chặn ngay lúc lưu, báo rõ còn bao nhiêu và cần bao nhiêu — trừ khi nhân viên có hạn mức ứng trước (mục 5) |
 | **HR** lập đơn thay nhân viên | **Miễn** kiểm quỹ — đường xử tay cho ca oan |
 | Hai đơn nộp gần nhau, riêng lẻ thì đủ, cộng lại thì không | Đơn thứ hai **bị chặn** |
 | Đơn đã duyệt xong mới phát hiện thiếu giờ | **Không** bị lật lại. Cân đối bằng chứng từ điều chỉnh số âm |
@@ -268,7 +422,7 @@ chế ra.
 > trước; cùng hạn thì lô có ngày làm thêm sớm hơn đi trước. Nhờ vậy giờ cũ luôn được dùng
 > trước khi bị cắt.
 
-### 6.3 Khi tới mốc hết hạn
+### 7.3 Khi tới mốc hết hạn
 
 | Tình huống | Hệ thống làm gì |
 |---|---|
@@ -284,17 +438,23 @@ chế ra.
 
 ---
 
-## 7. Sự cố hay gặp
+## 8. Sự cố hay gặp {#su-co}
 
 | Tình huống | Nguyên nhân / cách xử |
 |---|---|
-| Nhân viên báo *"Quỹ Nghỉ bù còn …h, chưa đủ để nghỉ … ngày"* | Đúng luật: 4 giờ mới đổi được 0,5 ngày. Kiểm phiếu làm thêm của họ đã duyệt chưa, và có chọn đúng hình thức *Nghỉ bù* không |
+| Nhân viên báo *"Quỹ Nghỉ bù còn …h, chưa đủ để nghỉ … ngày"* | Đúng luật: 4 giờ mới đổi được 0,5 ngày. Kiểm phiếu làm thêm của họ đã duyệt chưa, và có chọn đúng hình thức *Nghỉ bù* không. Người này chưa có hạn mức ứng trước — xem mục 5 nếu cần cho ứng |
+| Huỷ đơn Nghỉ bù báo *"… nằm trong kỳ đã quyết toán nợ Nghỉ bù"* | Đúng luật (mục 5): huỷ chứng từ quyết toán trước — Phép năm được trả lại — rồi huỷ đơn, và lập lại quyết toán nếu còn nợ |
+| Chứng từ quyết toán báo *"chưa có phiếu cấp Phép năm phủ ngày ghi sổ"* | Phép năm năm mới chưa được cấp cho người đó. Cấp xong thì đợt chạy đêm sau (trong tháng 1) tự quyết toán lại |
+| Nhân viên được ứng mà vẫn báo *"Còn nợ Nghỉ bù tháng trước"* | Đúng luật: còn nợ từ tháng trước thì không ứng thêm. Họ phải làm thêm bù hết phần nợ cũ, hoặc chỉ xin trong số giờ đang có |
 | Làm thêm rồi mà quỹ vẫn 0 | Phiếu quy đổi *Tiền lương*; hoặc phiếu chưa duyệt; hoặc ngày làm thêm chưa tới; hoặc (từ 01/10/2026) ngày đó **không có chấm công** / bảng chấm công chưa dựng xong |
 | Quỹ ít hơn số giờ đã khai | Phiếu bị **trần 4 giờ/ngày thường, 8 giờ/ngày nghỉ** cắt bớt; hoặc lô của kỳ trước đã hết hạn; hoặc (từ 01/10/2026) giờ **đo được từ chấm công** ít hơn số giờ đã khai — ví dụ check-out sớm hơn khung làm thêm |
 | Quản lý không huỷ duyệt được phiếu làm thêm | Huỷ sẽ rút giờ khỏi quỹ và làm nhân viên âm so với đơn nghỉ đã nộp. Huỷ đơn nghỉ trước, hoặc HR cộng bù bằng chứng từ điều chỉnh |
 | Nhân viên nghỉ rồi mới phát hiện thiếu giờ | Đơn đã duyệt không bị kiểm lại (cố ý, để còn huỷ/sửa được). Cân đối bằng chứng từ điều chỉnh số âm |
-| Cần cho nghỉ dù quỹ không đủ | HR tạo đơn **thay cho nhân viên** trên Desk — vai trò HR được miễn kiểm quỹ khi lập đơn cho người khác. Nên kèm một chứng từ điều chỉnh để sổ không âm |
-| Lập phiếu điều chỉnh cho **chính mình** bị chặn | Đúng luật từ 23/09/2026: mỗi lần chỉnh tay quỹ đều cần người thứ hai biết. Nhờ một người HR khác lập giúp |
+| Cần cho nghỉ dù quỹ không đủ | Nếu là nhu cầu thường xuyên của cả nhóm (làm ca, trực), khai **hạn mức ứng trước** (mục 5). Ca lẻ: HR tạo đơn **thay cho nhân viên** trên Desk — vai trò HR được miễn kiểm quỹ khi lập đơn cho người khác. Nên kèm một chứng từ điều chỉnh để sổ không âm |
+| Lập — hoặc **huỷ** — phiếu điều chỉnh cho **chính mình** bị chặn | Đúng luật (lập: từ 23/09/2026; huỷ cũng vậy — huỷ phiếu trừ quỹ là tự xoá nợ): mỗi lần chỉnh tay quỹ đều cần người thứ hai biết. Nhờ một người HR khác |
+| Quản lý bấm duyệt đơn Nghỉ bù mà báo quỹ thiếu / vượt hạn mức ứng | Số ngày của đơn đã **tăng** sau lúc nộp (ví dụ lịch nghỉ của nhân viên vừa được sửa). Duyệt là tiêu thêm giờ chưa có nên bị kiểm lại (mục 5) — từ chối đơn, hoặc HR lập lại đơn thay |
+| Lưu đơn báo *"Đơn đang ở bước … nên không thể mang trạng thái …"* | Đơn đã bị từ chối / rút / huỷ mà ai đó đổi trạng thái về *Approved* hay *Open*. Đơn đã đóng không mở lại được — nộp đơn mới |
+| Phép năm của nhân viên có số lẻ (11,88…) sau giữa tháng 1 | Đã bị quyết toán nợ ứng trước — trừ đúng số giờ nợ (mục 5). Bình thường |
 | Người làm HR tự nộp đơn nghỉ bù mà bị chặn thiếu giờ | Đúng luật từ 21/09/2026: miễn trừ chỉ áp khi lập đơn **cho người khác**. Tự nghỉ thì phải có giờ trong quỹ như mọi nhân viên — nhờ một người HR khác lập hộ, hoặc cộng giờ bằng chứng từ điều chỉnh có lý do rõ ràng |
 
 ---

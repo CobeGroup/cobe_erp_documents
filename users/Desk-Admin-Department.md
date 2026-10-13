@@ -36,6 +36,10 @@ nav_order: 1.5
 
 > ⚠️ Hệ thống lấy **dòng ĐẦU TIÊN** trong Leave Approvers làm người duyệt mặc định. Các dòng sau chỉ là danh sách approver hợp lệ, không tự luân phiên.
 
+> 🔒 Các bảng người duyệt (Leave / Shift Request / Expense Approvers) chỉ **HR** (HR Manager / HR
+> User / System Manager) sửa được — người khác có quyền sửa phòng ban (vd vai trò của app LMS) lưu
+> sẽ bị chặn *"Không sửa được … Cần đổi thì báo HR"*.
+
 ### 🔑 Người duyệt PHẢI có ROLE tương ứng (rất hay quên)
 
 Workflow duyệt phép **chặn theo role**, không chỉ theo bảng Leave Approvers:

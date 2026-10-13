@@ -165,7 +165,8 @@ Hôm trước **làm thêm giờ / làm khuya** (hay gặp ở kỹ thuật viê
 > **"Nghỉ bù"** cho **ngày đã làm** (trong hạn khai của công ty) và được Quản lý duyệt — xem
 > [Xin làm thêm giờ](Guide-NhanVien-LamThem.html). Giờ làm thêm sẽ **cộng vào quỹ giờ Nghỉ
 > bù** của bạn — từ ngày làm thêm 01/10/2026 là **số giờ đo được từ chấm công**, nên hôm làm
-> thêm phải check-in/check-out đầy đủ. Quỹ chưa đủ giờ thì hệ thống **từ chối đơn Nghỉ bù ngay khi gửi**.
+> thêm phải check-in/check-out đầy đủ. Quỹ chưa đủ giờ thì hệ thống **từ chối đơn Nghỉ bù ngay khi gửi**
+> — trừ khi công ty cho bạn **ứng trước** (mục [4.1](#ung-truoc)).
 
 **Tỷ giá: 4 giờ = 0,5 ngày nghỉ · 8 giờ = 1 ngày.** Giờ lẻ **không mất** — nó nằm lại quỹ, cộng
 dồn qua nhiều ngày làm thêm cho tới khi đủ.
@@ -186,12 +187,33 @@ Có giờ trong quỹ rồi thì tạo đơn nghỉ y như nghỉ phép thườn
 | | Phép năm | **Nghỉ bù** |
 |---|---|---|
 | Trừ quỹ phép? | Có (hết quỹ là không xin được) | **Không** — không cần số dư |
-| Trừ lương? | Không | **Không** |
+| Trừ lương? | Không | **Không** — riêng giờ **ứng trước** mà hết năm chưa bù: trừ Phép năm, thiếu nữa mới tính Nghỉ không lương (mục 4.1) |
 | Cần khai gì thêm? | — | Không — chỉ cần **quỹ đủ giờ** |
 | Ai xác nhận làm thêm là có thật? | — | **Hệ thống tự kiểm**: chỉ đơn Làm thêm giờ **đã duyệt** mới vào quỹ, và từ ngày làm thêm 01/10/2026 chỉ tính **số giờ đo được từ chấm công** |
 | Giờ lẻ có mất không? | — | **Không** — cộng dồn qua nhiều ngày, phần dư ở lại quỹ |
-| Đổi được bao nhiêu ngày? | — | Theo **quỹ giờ**: **4h = 0,5 ngày, 8h = 1 ngày**. Quỹ thiếu thì hệ thống báo ngay lúc gửi |
+| Đổi được bao nhiêu ngày? | — | Theo **quỹ giờ**: **4h = 0,5 ngày, 8h = 1 ngày**, cộng hạn mức **ứng trước** nếu công ty cho. Quỹ thiếu thì hệ thống báo ngay lúc gửi |
 | Có hết hạn không? | Theo chính sách phép năm | **Có** — giờ chưa dùng bị cắt cuối kỳ (30/06 và 31/12) |
+
+### 4.1. Ứng trước — nghỉ trước, làm thêm bù sau {#ung-truoc}
+
+Nhân viên làm ca, bảo dưỡng, trực có thể được công ty cho **ứng trước**: nghỉ bù khi quỹ **chưa
+đủ giờ**, rồi làm thêm quy đổi Nghỉ bù để bù lại. Ai được ứng và ứng tối đa bao nhiêu ngày do HR
+cài theo công ty, bộ phận hoặc từng người. Người không được cài thì vẫn như cũ: quỹ thiếu là không
+gửi được.
+
+Được ứng thì khi chọn loại **"Nghỉ bù"**, khung quỹ ghi *"Bạn được **ứng trước** tối đa … ngày …
+Hiện xin được tối đa … ngày"*. Gửi đơn như bình thường, không cần làm gì thêm.
+
+| Luật | Nghĩa là |
+|---|---|
+| Hạn mức tính **tổng** | Được ứng 1 ngày mà đã ứng 0,5 ngày thì chỉ còn 0,5 ngày, dù là nhiều đơn |
+| Làm thêm về sau **tự trả** | Giờ làm thêm quy đổi Nghỉ bù được duyệt tự trả vào phần đã ứng trước, rồi mới thành giờ mới trong quỹ |
+| Nợ **sang tháng** thì khoá ứng | Hết tháng mà chưa bù đủ thì phần nợ vẫn giữ, nhưng **không ứng thêm** được cho tới khi bù hết |
+| Chỉ ứng cho **tháng hiện tại trở đi** | Đơn cho ngày của tháng đã qua (nộp bù) thì quỹ phải đủ giờ |
+| Hết năm vẫn còn nợ | Phần giờ còn nợ tính tới 31/12 được **trừ vào Phép năm** đúng số giờ (8 giờ = 1 ngày phép), giữa tháng 1 năm sau. Phép năm không đủ thì phần còn lại tính **Nghỉ không lương** |
+
+> 💡 Sửa **giảm** đơn đã gửi (cả ngày → nửa ngày, rút ngắn ngày về) luôn được, kể cả khi đang
+> nợ. Còn **dời** đơn sang ngày khác hay **kéo dài** đơn thì hệ thống kiểm lại như một lần xin mới.
 
 ---
 
@@ -221,6 +243,9 @@ phải chọn gì — **chọn đúng loại phép là form tự đổi**:
 | Đơn vẫn "Chờ" sau khi Quản lý duyệt | Còn chờ **HR duyệt bước 2** mới chính thức |
 | Không thấy loại **"Nghỉ bù"** | Công ty chưa bật Leave Type Nghỉ bù → báo HR |
 | "Quỹ Nghỉ bù còn …h, chưa đủ để nghỉ … ngày" | Quỹ thiếu giờ → [khai đơn làm thêm](Guide-NhanVien-LamThem.html) cho ngày đã làm (trong hạn khai của công ty), hoặc xin **0,5 ngày** thay vì cả ngày |
+| "… — vượt hạn mức ứng" | Bạn được ứng trước nhưng đơn này vượt hạn mức. Câu báo ghi số ngày còn xin được — xin ít ngày hơn, hoặc làm thêm bù bớt phần đã ứng |
+| "Bạn còn nợ …h Nghỉ bù ứng trước từ tháng trước …" | Phần ứng của tháng trước chưa bù đủ → làm thêm quy đổi Nghỉ bù để trả hết mới ứng tiếp được (mục 4.1) |
+| "Ngày … thuộc tháng đã qua — … không được ứng trước" | Nộp đơn cho ngày của tháng đã qua thì quỹ phải đủ giờ. Trường hợp đặc biệt liên hệ HR |
 | Làm thêm rồi mà quỹ vẫn 0 giờ | Đơn làm thêm quy đổi **Tiền lương** chứ không phải Nghỉ bù; hoặc **chưa được duyệt**; hoặc **ngày làm thêm chưa tới** |
 | "Đơn nghỉ từ ngày … đã quá hạn nộp" | Công ty đặt hạn nộp đơn sau khi đã nghỉ — quá hạn thì liên hệ HR tạo thủ công. Riêng Nghỉ bù: hạn tính từ ngày nghỉ **hoặc** lúc quỹ gom đủ giờ, mốc nào muộn hơn |
 | Đơn trừ **ít ngày hơn** số ngày mình chọn | **Đúng, không phải lỗi** — Chủ Nhật và ngày lễ không trừ phép, Thứ 7 nửa buổi chỉ trừ 0.5. Xem bảng ở mục 2 |

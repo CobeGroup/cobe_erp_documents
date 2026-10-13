@@ -26,6 +26,7 @@ has_children: true
 
 ## Vào nhanh theo tình huống
 
+- 🆕 Muốn biết **đợt cập nhật 10/2026 đổi những gì** (ứng trước Nghỉ bù, quyết toán cuối năm, chốt đơn nghỉ) → **[Có gì mới — đợt 10/2026](Cham-Cong-Co-Gi-Moi-10-2026.html)**
 - 🆕 Muốn biết **đợt cập nhật 09/2026 đổi những gì** → **[Có gì mới — đợt 09/2026](Cham-Cong-Co-Gi-Moi-09-2026.html)**
 - 📱 Mới vào công ty, cần chấm công → **[Cài app & Chấm công](Guide-NhanVien-ChamCong.html)**
 - 🚗 Đi công tác / KTV làm hiện trường → **[Chấm công ngoài VP](Guide-NhanVien-ChamCongNgoai.html)** · **[KTV hiện trường](Guide-KTV-ChamCong.html)**
@@ -35,6 +36,7 @@ has_children: true
 - ⏱️ Làm thêm giờ, đổi tiền/nghỉ bù → **[Hành trình một phiếu Làm thêm giờ](Hanh-Trinh-OT.html)** · **[Hành trình một ngày Nghỉ bù](Hanh-Trinh-Nghi-Bu.html)**
 - ✅ Là người duyệt, có đơn chờ → **[Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html)** · **[Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html)**
 - 🏦 Là HR, cần xem hoặc sửa **quỹ giờ Nghỉ bù** → **[Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html)**
+- ⏳ Là HR, muốn cho nhân viên làm ca / trực **nghỉ bù trước, làm thêm bù sau**, hoặc xem **quyết toán nợ cuối năm** → **[Ứng trước Nghỉ bù](Desk-HR-QuyNghiBu.html#ung-truoc)**
 - 🚦 Là HR, muốn giới hạn **số ngày khai bù mỗi tháng** → **[Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html)**
 - 🔎 Là HR, muốn biết nhân viên **chấm công ngoài văn phòng ở đâu** → **[Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html)**
 

@@ -2,7 +2,7 @@
 title: "Có gì mới — đợt 09/2026"
 layout: default
 parent: Chấm công & HR
-nav_order: 6
+nav_order: 7
 ---
 
 # Chấm công — có gì mới (đợt 09/2026)

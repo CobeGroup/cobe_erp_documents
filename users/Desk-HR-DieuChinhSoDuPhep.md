@@ -126,6 +126,19 @@ Muốn đổi con số:
 > 📌 Thông báo lỗi gợi ý *"Please amend existing adjustment"* — nhưng role **HR Manager / HR User
 > không có quyền Amend** trên doctype này. Đi đường **Cancel → tạo mới** như trên.
 
+### Phiếu do quyết toán nợ Nghỉ bù sinh ra {#phieu-quyet-toan}
+
+Giữa tháng 1, hệ thống tự [quyết toán nợ Nghỉ bù ứng trước](Desk-HR-QuyNghiBu.html#quyet-toan)
+của năm cũ bằng một phiếu **Leave Adjustment** loại **Reduce** trên Phép năm năm mới. Lý do ghi
+*"Quyết toán nợ Nghỉ bù HR-CLS-…"*. Phiếu này khác phiếu chỉnh tay ở ba điểm:
+
+- **Không tính vào luật một phiếu.** Phiếu quyết toán và phiếu HR chỉnh tay cùng tồn tại được
+  trên một allocation. Luật một phiếu vẫn áp **giữa các phiếu chỉnh tay** với nhau.
+- **Số ngày lẻ tới 5 chữ số.** Nợ trừ đúng từng giờ (1 giờ = 0,125 ngày), nên ô *Leaves to
+  Adjust* nhận 5 chữ số lẻ. Báo cáo phép vẫn hiện số dư làm tròn 2 chữ số (11,875 hiện 11,88).
+- **Đừng huỷ thẳng.** Muốn trả lại Phép năm thì huỷ **chứng từ quyết toán**
+  (`HR Comp Leave Settlement`); chứng từ tự huỷ phiếu này và nợ quay lại quỹ Nghỉ bù.
+
 ---
 
 ## 5. ĐỪNG sửa thẳng Leave Allocation
@@ -171,7 +184,8 @@ Vì vậy: trước khi bấm Reduce, hãy xem số dư **cuối kỳ** trong re
 | *No leave allocation found for … on given date* | NV chưa có Leave Allocation cho loại phép đó phủ Posting Date → cấp Allocation trước, hoặc sửa Posting Date về trong kỳ |
 | Dropdown **Leave Type** trống trơn | NV chưa có Leave Allocation nào cả |
 | Dropdown **Leave Type** hiện trùng tên 2 dòng | Mỗi Allocation một dòng (vd kỳ 6 tháng đầu + 6 tháng cuối) — chọn dòng nào cũng được, allocation thật do **Posting Date** quyết |
-| *Leave Adjustment for this allocation already exists* | Đã có phiếu Submitted → **Cancel** nó rồi tạo mới (mục 4) |
+| *Leave Adjustment for this allocation already exists* | Đã có phiếu **chỉnh tay** Submitted → **Cancel** nó rồi tạo mới (mục 4). Phiếu của quyết toán nợ Nghỉ bù không tính |
+| Phép năm có số lẻ như 11,875 | Đã bị [quyết toán nợ Nghỉ bù](#phieu-quyet-toan) trừ đúng số giờ nợ — bình thường |
 | *Reduction is more than … available leave balance …* | Reduce vượt số dư tại Posting Date → giảm số, hoặc chuyển sang Nghỉ Không Lương |
 | *Enter a non-zero value to adjust* | Bỏ trống / để 0 ô *Leaves to Adjust* |
 | *Allocation is greater than the maximum allowed …* | Vượt **Maximum Leave Allocation Allowed** của Leave Type → chỉnh trần ở [Loại phép](Desk-HR-LoaiPhep.html) hoặc giảm số |
