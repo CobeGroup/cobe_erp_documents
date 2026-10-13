@@ -147,8 +147,12 @@ flowchart TB
 | **Chờ duyệt** (vàng) | Đơn nằm trong danh sách, nhãn *Chờ duyệt* | **Chưa** tính công; ngày đó tạm thời chưa có kết quả |
 | **Chờ HR duyệt** (xanh dương) | *Chỉ khi công ty bật duyệt 2 cấp* — quản lý đã duyệt, đơn còn chờ HR | **Vẫn chưa** tính công |
 | **Đã duyệt** (xanh) | Đơn **biến mất**, thay bằng dòng công **Có mặt** (hoặc **WFH** / **Nửa ngày**) | Ngày được tính **Có mặt (P)**. Nếu bạn có check-in ngoài VP, các cảnh báo *"ngoài vùng / quên ra"* được **bỏ**. Riêng đơn cho **hôm nay / ngày tới**: ngày đó chỉ giữ được công nếu bạn **có chấm công ít nhất một lần** |
-| **Bị từ chối** | Đơn **biến mất** khỏi danh sách; bạn nhận thông báo kèm lý do | **Không** có công → ngày đó **để trống** trên bảng công (coi như **vắng**), trừ khi ngày đó có công hợp lệ khác. Sửa & gửi lại đơn mới nếu cần |
-| **Từ chối** (đỏ) | Đơn **đã duyệt rồi bị HR huỷ** | Công của ngày đó bị gỡ |
+| **Từ chối** (đỏ) | Đơn rời *Bảng công*, sang tab **Đơn bù → Từ chối** kèm **người từ chối** và **lý do**; bạn cũng nhận thông báo | **Không** có công → ngày đó **để trống** trên bảng công (coi như **vắng**), trừ khi ngày đó có công hợp lệ khác. Sửa & gửi lại đơn mới nếu cần |
+| **Đã hủy** (xám) | Đơn **đã duyệt rồi bị huỷ** — tab **Đơn bù → Đã hủy**, kèm người huỷ và lý do | Công của ngày đó bị gỡ |
+
+> 📂 **Tab "Đơn bù"** (cạnh *Chấm công* · *Bảng công*) liệt kê mọi đề xuất của bạn, chia **4 tab** — **Chờ
+> duyệt** · **Đã duyệt** · **Từ chối** · **Đã hủy** — mỗi đơn ghi **ai đã duyệt / từ chối / huỷ, lúc nào**.
+> Tab này không theo khoảng ngày ở đầu trang.
 
 <img src="images/guide/dexuat/04-approved.png" width="240" alt="Sau khi duyệt — ngày hiện Có mặt">
 
@@ -166,7 +170,8 @@ flowchart TB
 > chỉnh tay hoặc bạn **gửi lại đơn** với lý do rõ hơn.
 
 > 🔁 **Đơn bị từ chối có gửi lại được không?** Được — tạo **đơn mới** cho ngày đó với lý do/bằng chứng
-> rõ hơn (vd ảnh, lịch hẹn khách). Đơn cũ đã bị xoá khi từ chối; lý do nằm trong thông báo bạn nhận.
+> rõ hơn (vd ảnh, lịch hẹn khách). Đơn cũ vẫn xem lại được ở tab **Đơn bù → Từ chối**, kèm người từ
+> chối và lý do.
 
 ---
 

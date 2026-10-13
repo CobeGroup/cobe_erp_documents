@@ -156,8 +156,8 @@ gửi **đơn khai bù**. Đơn biến mất khỏi danh sách chờ, thay bằn
 
 <img src="images/guide/dexuat/04-approved.png" width="260" alt="Sau duyệt — ngày 30/06 hiện Có mặt trên Bảng công">
 
-**Bị từ chối** (ở bước nào cũng vậy) → đơn **bị xoá, biến mất khỏi danh sách**; anh A nhận thông báo
-kèm lý do. Ngày đó **không có công**
+**Bị từ chối** (ở bước nào cũng vậy) → đơn rời *Bảng công*, nằm ở tab **Đơn bù → Từ chối** kèm người
+từ chối và lý do; anh A cũng nhận thông báo. Ngày đó **không có công**
 (để trống = vắng) — kể cả khi anh A đã check-in ngoài VP dựa trên đơn: lần chấm công đó dựa vào đơn,
 đơn mất thì nó cũng mất căn cứ (công đã lỡ sinh cũng bị thu hồi, và anh A nhận thông báo ghi rõ ngày
 nào bị rút công). Ngày anh A **có ghé văn phòng
@@ -176,8 +176,8 @@ lại người duyệt, **gửi đơn mới** với lý do/bằng chứng rõ h�
 | 🟡 **Chờ duyệt** | Đơn đang nằm chờ người duyệt | Chưa tính công; ngày tạm chưa có kết quả |
 | 🔵 **Chờ HR duyệt** | *(chỉ khi bật 2 cấp)* Trưởng bộ phận đã duyệt, đang chờ HR | **Vẫn chưa tính công** |
 | 🟢 *(đơn biến mất, hiện dòng công)* | **Đã duyệt** | Ngày tính **Có mặt (P)** / WFH / Nửa ngày theo ca chuẩn |
-| *(đơn biến mất, không có dòng công)* | **Bị từ chối** — kèm thông báo có lý do | Ngày **không có công** — gửi lại đơn mới nếu cần |
-| 🔴 **Từ chối** | Đơn **đã duyệt rồi bị HR huỷ** | Công của ngày đó bị gỡ |
+| 🔴 **Từ chối** *(tab Đơn bù)* | **Bị từ chối** — ghi người từ chối, bước và lý do | Ngày **không có công** — gửi lại đơn mới nếu cần |
+| ⚪ **Đã hủy** *(tab Đơn bù)* | Đơn **đã duyệt rồi bị huỷ** — ghi người huỷ và lý do | Công của ngày đó bị gỡ |
 
 ---
 

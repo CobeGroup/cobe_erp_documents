@@ -31,6 +31,8 @@ Mở tab **Nghỉ phép**:
 - **Số dư phép**: ngay đầu trang, mỗi loại phép là **một chip riêng** hiện số ngày **còn lại theo từng loại** (vd `Phép năm: 6,0 ngày`). Chip **xanh** = còn phép, **xám** = đã hết (0).
 - **Đơn xin nghỉ**: danh sách đơn đã gửi, chia **4 tab** — **Chờ duyệt** · **Đã duyệt** · **Từ chối** · **Đã hủy**.
   Mở app lên, nếu không còn đơn nào đang chờ thì app tự nhảy sang tab có đơn, khỏi phải bấm tìm.
+- Mỗi đơn ghi **ai đã xử lý, lúc nào**: *Quản lý duyệt: …*, *HR duyệt: …*, *HR từ chối: …*, *Huỷ bởi: …*
+  (đơn gửi thẳng HR ghi *Bỏ qua bước quản lý*). Bấm vào đơn để xem đủ các bước.
 
 <img src="images/guide/nhanvien/10-leave-list.png" width="240" alt="Số dư phép + danh sách đơn">
 
@@ -210,6 +212,7 @@ Hiện xin được tối đa … ngày"*. Gửi đơn như bình thường, kh�
 | Làm thêm về sau **tự trả** | Giờ làm thêm quy đổi Nghỉ bù được duyệt tự trả vào phần đã ứng trước, rồi mới thành giờ mới trong quỹ |
 | Nợ **sang tháng** thì khoá ứng | Hết tháng mà chưa bù đủ thì phần nợ vẫn giữ, nhưng **không ứng thêm** được cho tới khi bù hết |
 | Chỉ ứng cho **tháng hiện tại trở đi** | Đơn cho ngày của tháng đã qua (nộp bù) thì quỹ phải đủ giờ |
+| Đơn ứng **không vắt qua 31/12** | Nghỉ từ cuối năm sang đầu năm sau mà quỹ chưa đủ thì tách hai đơn: một đơn tới 31/12, một đơn từ 01/01 — mỗi phần được tính vào đúng năm của nó |
 | Hết năm vẫn còn nợ | Phần giờ còn nợ tính tới 31/12 được **trừ vào Phép năm** đúng số giờ (8 giờ = 1 ngày phép), giữa tháng 1 năm sau. Phép năm không đủ thì phần còn lại tính **Nghỉ không lương** |
 
 > 💡 Sửa **giảm** đơn đã gửi (cả ngày → nửa ngày, rút ngắn ngày về) luôn được, kể cả khi đang
@@ -246,6 +249,7 @@ phải chọn gì — **chọn đúng loại phép là form tự đổi**:
 | "… — vượt hạn mức ứng" | Bạn được ứng trước nhưng đơn này vượt hạn mức. Câu báo ghi số ngày còn xin được — xin ít ngày hơn, hoặc làm thêm bù bớt phần đã ứng |
 | "Bạn còn nợ …h Nghỉ bù ứng trước từ tháng trước …" | Phần ứng của tháng trước chưa bù đủ → làm thêm quy đổi Nghỉ bù để trả hết mới ứng tiếp được (mục 4.1) |
 | "Ngày … thuộc tháng đã qua — … không được ứng trước" | Nộp đơn cho ngày của tháng đã qua thì quỹ phải đủ giờ. Trường hợp đặc biệt liên hệ HR |
+| "… đơn ứng trước không được vắt qua 31/12" | Tách thành hai đơn: một đơn tới 31/12, một đơn từ 01/01 (mục 4.1) |
 | Làm thêm rồi mà quỹ vẫn 0 giờ | Đơn làm thêm quy đổi **Tiền lương** chứ không phải Nghỉ bù; hoặc **chưa được duyệt**; hoặc **ngày làm thêm chưa tới** |
 | "Đơn nghỉ từ ngày … đã quá hạn nộp" | Công ty đặt hạn nộp đơn sau khi đã nghỉ — quá hạn thì liên hệ HR tạo thủ công. Riêng Nghỉ bù: hạn tính từ ngày nghỉ **hoặc** lúc quỹ gom đủ giờ, mốc nào muộn hơn |
 | Đơn trừ **ít ngày hơn** số ngày mình chọn | **Đúng, không phải lỗi** — Chủ Nhật và ngày lễ không trừ phép, Thứ 7 nửa buổi chỉ trừ 0.5. Xem bảng ở mục 2 |

@@ -121,12 +121,13 @@ số giờ.
 
 | Vai trò | Phạm vi |
 |---|---|
-| HR Manager, HR User, System Manager | toàn công ty |
-| Quản lý | chính mình và nhân viên dưới quyền — lấy theo ô *Leave Approver* hoặc *Reports To* trên hồ sơ |
+| HR Manager, HR User, System Manager, Payroll Officer | toàn công ty |
+| Quản lý | chính mình và nhân viên dưới quyền — người có mình ở ô *Leave Approver* hoặc *Shift Request Approver* trên hồ sơ, người có *Reports To* trỏ về mình, và cả bộ phận nếu mình nằm trong bảng *Leave Approvers* / *Shift Request Approver* của bộ phận (`Department`) |
 | Nhân viên | chỉ chính mình |
 
-Quản lý mở báo cáo mà thiếu người thì kiểm lại hai ô đó trên hồ sơ nhân viên: hệ thống
-nhận cấp dưới qua chúng, không qua phòng ban.
+Quản lý mở báo cáo mà thiếu người thì kiểm lại các ô đó trên hồ sơ nhân viên hoặc bảng người duyệt
+của bộ phận. Cùng một định nghĩa "dưới quyền" này áp cho bảng công, đơn chấm công bù và đơn làm thêm
+trên Desk (từ đợt 10/2026).
 
 ### Đường tra cũ vẫn còn
 

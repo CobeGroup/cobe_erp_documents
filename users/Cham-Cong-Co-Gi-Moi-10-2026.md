@@ -29,6 +29,8 @@ nav_order: 6
 | ③ | Đơn nghỉ phải **đi đủ hai bước duyệt** — không còn submit thẳng từ bước quản lý | Người duyệt, HR | [Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html) |
 | ④ | Nhân viên chỉ **xem và sửa** được đơn nghỉ **của mình** hoặc đơn **mình duyệt** | Nhân viên, quản lý | [Hành trình một đơn nghỉ phép](Hanh-Trinh-Nghi-Phep.html) |
 | ⑤ | Thêm các chốt **không tự phục vụ** quanh quỹ Nghỉ bù | HR | [Quỹ giờ Nghỉ bù — Sự cố hay gặp](Desk-HR-QuyNghiBu.html#su-co) |
+| ⑥ | Nhân viên **không xem được** bảng công, đơn chấm công bù, đơn làm thêm, số dư phép **của người khác** — trừ quản lý và HR | Nhân viên, quản lý dùng Desk | Mục ⑥ bên dưới |
+| ⑦ | Ứng dụng chấm công ghi **ai đã duyệt / từ chối / huỷ** từng đơn; màn Làm thêm và tab mới **Đơn bù** chia 4 nhóm | Mọi nhân viên | [Xin làm thêm giờ §4](Guide-NhanVien-LamThem.html) · [Chấm công ngoài VP & đề xuất bù §C](Guide-NhanVien-ChamCongNgoai.html) |
 
 ---
 
@@ -50,6 +52,8 @@ Luật chính:
 - Hết tháng mà chưa bù đủ thì phần nợ **treo sang tháng sau** và **không ứng thêm** được cho tới
   khi bù hết.
 - Đơn cho ngày của **tháng đã qua** không được ứng — quỹ phải đủ giờ.
+- Đơn ứng **không vắt qua 31/12** — nghỉ từ cuối năm sang đầu năm sau thì tách hai đơn, để quyết
+  toán cuối năm chỉ tính phần thuộc năm cũ.
 - Không ai tự khai hạn mức áp cho chính mình, kể cả dòng cả công ty — chỉ System Manager.
 
 Nhân viên thấy hạn mức và số ngày còn xin được ở khung **Quỹ Nghỉ bù** trên ứng dụng. Người
@@ -91,6 +95,10 @@ ty**, kể cả lý do nghỉ. Nay mỗi người chỉ đụng tới:
 | Đơn mình là **người duyệt** (*Leave Approver* trên đơn) | Xem, duyệt, từ chối, chuyển, **huỷ đơn đã duyệt** trên Desk — như cũ. Không xoá được đơn của người khác |
 | Đơn được **chuyển đích danh** cho mình | Xem và xử lý |
 | Đơn mình **đã chuyển đi** cho người khác | Chỉ còn xem lại |
+| Đơn được chuyển cho mình và **mình đã duyệt** | Vẫn xem lại được |
+
+Nhân viên **không chia sẻ** (*Share*) được đơn nghỉ của mình cho người khác — chia sẻ là trao quyền
+sửa, người được chia sẻ có vai trò *Leave Approver* là bấm duyệt được.
 
 Người duyệt của đơn cũng không còn tự đổi được: nhân viên chỉ chọn được **người duyệt nghỉ trên hồ
 sơ** của mình hoặc người duyệt nghỉ của **bộ phận**. Cần đổi người duyệt thì báo HR.
@@ -113,8 +121,14 @@ Mỗi lần chỉnh tay quỹ Nghỉ bù đều phải có người thứ hai bi
   lúc lập) và sửa các ô khác như trước.
 - Trên **hồ sơ của chính mình**, người không phải HR còn không đổi được tài khoản, bộ phận, công ty,
   ô *Không tự cấp Phép Năm*; và không gắn tài khoản của mình vào hồ sơ người khác.
-- **Đơn đã qua bước quản lý duyệt thì nhân viên không sửa được nữa** — cần đổi thì rút đơn rồi nộp
-  đơn mới. Trước đây sửa được qua Desk / API, HR duyệt thứ quản lý chưa từng thấy.
+- **Đơn đã qua bước quản lý duyệt thì không ai ngoài HR sửa được nữa** — kể cả người duyệt bước 1.
+  Nhân viên cần đổi thì rút đơn rồi nộp đơn mới. Trước đây sửa được qua Desk / API, HR duyệt thứ
+  quản lý chưa từng thấy.
+- Ở bước quản lý, chỉ **người duyệt ghi trên đơn** (hoặc người được chuyển đích danh) bấm duyệt /
+  từ chối được — có vai trò *Leave Approver* thôi chưa đủ. Người duyệt cũng không *Chuyển duyệt*
+  đơn **của chính mình** cho đồng nghiệp.
+- Trên hồ sơ **người khác**, người không phải HR không đổi được bộ phận, công ty và tài khoản đăng
+  nhập; lập hồ sơ mới không được mang tài khoản đã gắn với hồ sơ khác. **Gộp bộ phận** chỉ HR làm.
 - Không ai tự đẩy đơn nghỉ của mình qua bước duyệt bằng cách sửa trạng thái — mọi bước chuyển phải
   là nút của quy trình duyệt, và không tự duyệt đơn của chính mình.
 - Ô **chuyển đơn** (người được chuyển, người chuyển, lý do) chỉ nút *Chuyển duyệt* ghi được — sửa
@@ -126,18 +140,57 @@ Mỗi lần chỉnh tay quỹ Nghỉ bù đều phải có người thứ hai bi
 
 ---
 
+## ⑥ Nhân viên không xem được chấm công và đơn từ của người khác
+
+Trước đây tài khoản nhân viên trên Desk xem được **bảng công** (`Attendance`) và **đơn chấm công bù /
+WFH** (`Attendance Request`) của cả công ty, xem được **số dư phép** của bất kỳ ai; người có vai trò
+*Leave Approver* xem được mọi **đơn làm thêm** (`HR Overtime Request`). Nay mỗi người chỉ thấy:
+
+| Ai | Thấy dữ liệu của |
+|---|---|
+| **HR** (*HR Manager*, *HR User*), **System Manager**, **Payroll Officer** | Cả công ty, như cũ |
+| **Quản lý** | Chính mình + người mình quản lý: người có mình là *người duyệt nghỉ* hoặc *người duyệt chấm công* trên hồ sơ, người *báo cáo trực tiếp* cho mình, và cả bộ phận nếu mình nằm trong bảng *người duyệt nghỉ* / *người duyệt chấm công* của bộ phận |
+| Nhân viên khác | Chỉ của mình |
+
+Ô **lịch chấm công một năm** trên form hồ sơ nhân viên (Desk) cũng chỉ hiện với người mình được xem —
+mở hồ sơ đồng nghiệp vẫn được, nhưng ô lịch để trống.
+
+Ba báo cáo HRMS đọc thẳng dữ liệu cả công ty — *Shift Attendance*, *Employee Leave Balance*, *Employee
+Leave Balance Summary* — nay chỉ nhóm HR ở bảng trên mở được. Quản lý xem số liệu người mình quản lý ở *Quỹ Nghỉ bù*
+(`COBE Comp Leave Fund`) như trước — nay quỹ cũng tính cả người mình duyệt chấm công và người trong
+bộ phận mình duyệt. Ứng dụng chấm công **không đổi**: mỗi người vẫn thấy đủ dữ liệu của mình.
+
+## ⑦ Nhân viên thấy ai đã duyệt, ai đã từ chối
+
+Trên ứng dụng chấm công, mỗi đơn **nghỉ phép**, **làm thêm** và **chấm công bù / WFH** ghi từng bước:
+*Quản lý duyệt: …*, *HR duyệt: …*, *HR từ chối: …*, *Huỷ bởi: …* kèm ngày giờ, và lý do từ chối / huỷ.
+
+- Màn **Làm thêm giờ** chia **4 tab** *Chờ duyệt · Đã duyệt · Từ chối · Đã hủy* như màn Nghỉ phép.
+- Màn **Chấm công** có thêm tab **Đơn bù** — mọi đề xuất chấm công bù / WFH, cũng 4 tab.
+- Đơn chấm công bù **bị từ chối** trước đây bị xoá không dấu vết (lý do chỉ nằm trong thông báo). Nay hệ
+  thống giữ lại một bản ghi *Đơn chấm công bị từ chối* (`HR Attendance Request Rejection`) — ai từ chối,
+  bước nào, lý do — để nhân viên xem lại. Đơn từ chối **trước** đợt cập nhật thì không có bản ghi này.
+- Đơn chấm công bù **đã duyệt rồi bị huỷ** trước đây hiện nhầm là *Từ chối*; nay là *Đã hủy*.
+
 ## Khi đưa lên hệ thống
 
 - **Deploy rồi chạy `bench migrate`.** Migrate tạo hai chứng từ mới, bảng *Hạn mức ứng trước Nghỉ
   bù*, ô *Giờ Nghỉ bù ứng trước* trên đơn nghỉ, độ chính xác 5 chữ số cho ô *Leaves to Adjust* của
-  `Leave Adjustment`, và khai sẵn dòng *Dịch vụ - Bảo hành* = 1 ngày.
+  `Leave Adjustment`, khai sẵn dòng *Dịch vụ - Bảo hành* = 1 ngày, tạo bảng *Đơn chấm công bị từ chối*
+  và thu ba báo cáo số dư phép / chấm công của HRMS về cho HR (mục ⑥, ⑦). Ứng dụng chấm công cũng
+  phải lên bản build mới thì mới có tab *Đơn bù* và dòng *ai đã duyệt*.
 - **Xem lại bảng *Hạn mức ứng trước Nghỉ bù*** của từng công ty: dòng mặc định có đúng bộ phận,
   đúng số ngày không; bộ phận nào khác cần cho ứng.
 - **Báo cho nhân viên bộ phận được ứng** về luật ở mục ①, nhất là luật *nợ treo sang tháng thì
   không ứng thêm* và *hết năm trừ Phép năm*.
-- **Báo trưởng bộ phận**: từ đợt này đổi người duyệt trên hồ sơ nhân viên đã có phải nhờ HR.
+- **Báo trưởng bộ phận**: từ đợt này đổi người duyệt trên hồ sơ nhân viên đã có phải nhờ HR; trên
+  Desk họ chỉ còn thấy bảng công / đơn từ của người mình quản lý (mục ⑥) — ai thiếu người thì kiểm
+  tra *người duyệt nghỉ*, *người duyệt chấm công*, *báo cáo cho* trên hồ sơ nhân viên.
 - **Gán người duyệt nghỉ** (*Leave Approver*) cho mọi nhân viên còn trống trên hồ sơ: từ đợt này
   quản lý chỉ thấy đơn mà họ là người duyệt (mục ④); đơn không có người duyệt thì chỉ HR xử lý được.
+- Hồ sơ đang tự làm người duyệt của chính mình (*Leave Approver* = tài khoản của chính nhân viên
+  đó) giữ nguyên: đơn của họ do HR xử lý. Riêng *HR Manager* vẫn ký được đơn của chính mình ở bước
+  HR — đây là ngoại lệ có chủ đích.
 - **Trước 15/01 hằng năm**: kiểm tra Phép năm năm mới đã được cấp cho mọi người. Chưa có Phép năm
   năm mới thì chứng từ quyết toán của người đó dừng lại báo lỗi, đêm sau thử lại.
 - **Kế toán**: từ kỳ lương tháng 1, đọc danh sách *Quyết toán nợ Nghỉ bù* có *Nghỉ không lương*

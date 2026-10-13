@@ -34,6 +34,11 @@ nav_order: 1
 > HR*. Trưởng bộ
 > phận vẫn đặt được các ô này **lúc lập hồ sơ người mới**. Không ai tự đổi tài khoản, bộ phận, công
 > ty hay người duyệt trên hồ sơ **của chính mình**.
+>
+> Trên hồ sơ **người khác**, người không phải HR cũng không đổi được *Department*, *Company* và
+> *User ID* — đổi bộ phận là đổi người duyệt nghỉ mặc định của người đó. Lập hồ sơ mới thì *User ID*
+> không được trùng tài khoản đã gắn với một hồ sơ khác, kể cả hồ sơ đã nghỉ việc. Cần chuyển phòng
+> hay gắn lại tài khoản thì báo HR.
 7. **Confirmation Date** (tab **Joining**) — ngày hết thử việc. Phép Năm tính từ ngày này; để trống
    thì hệ thống lấy ngày vào làm + 2 tháng. Xem [Cấp phép → Khai ngày hết thử việc](Desk-HR-CapPhep.html#het-thu-viec).
 8. Lưu. Hệ thống tự cấp Phép Năm cho nhân viên (thông báo xanh ở góc màn hình).
