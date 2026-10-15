@@ -126,8 +126,8 @@ số giờ.
 | Nhân viên | chỉ chính mình |
 
 Quản lý mở báo cáo mà thiếu người thì kiểm lại các ô đó trên hồ sơ nhân viên hoặc bảng người duyệt
-của bộ phận. Cùng một định nghĩa "dưới quyền" này áp cho bảng công, đơn chấm công bù và đơn làm thêm
-trên Desk (từ đợt 10/2026).
+của bộ phận. Cùng một định nghĩa "dưới quyền" này áp cho bảng công, đơn chấm công bù, đơn làm thêm
+và bảng gán ca (`Shift Assignment`) trên Desk (từ đợt 10/2026).
 
 ### Đường tra cũ vẫn còn
 

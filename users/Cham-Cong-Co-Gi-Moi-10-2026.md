@@ -144,7 +144,8 @@ Mỗi lần chỉnh tay quỹ Nghỉ bù đều phải có người thứ hai bi
 
 Trước đây tài khoản nhân viên trên Desk xem được **bảng công** (`Attendance`) và **đơn chấm công bù /
 WFH** (`Attendance Request`) của cả công ty, xem được **số dư phép** của bất kỳ ai; người có vai trò
-*Leave Approver* xem được mọi **đơn làm thêm** (`HR Overtime Request`). Nay mỗi người chỉ thấy:
+*Leave Approver* xem được mọi **đơn làm thêm** (`HR Overtime Request`); ai cũng xem được **bảng gán
+ca** (`Shift Assignment`) của cả công ty. Nay mỗi người chỉ thấy:
 
 | Ai | Thấy dữ liệu của |
 |---|---|
