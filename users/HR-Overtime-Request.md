@@ -68,7 +68,7 @@ theo đơn).
 | `reason` | Small Text | Nội dung công việc (bắt buộc) |
 | `status` | Select | **Pending** → **Manager Approved** → **Approved**; **Rejected** / **Cancelled** / **Expired** (không dùng docstatus). Chỉ đọc — đổi trạng thái qua luồng duyệt |
 | `manager_approved_by` / `manager_approved_on` | Link/Datetime | Trưởng bộ phận duyệt bước 1, lúc nào |
-| `approved_by` / `approved_on` | Link/Datetime | Người duyệt **bước cuối** (HR), lúc nào. Với đơn bị từ chối / huỷ duyệt: người thực hiện thao tác đó. `approved_on` cũng là mốc giờ vào quỹ Nghỉ bù |
+| `approved_by` / `approved_on` | Link/Datetime | Người duyệt **bước cuối** (HR), lúc nào. Với đơn bị từ chối: người từ chối. Huỷ duyệt **không** đổi hai ô này — người huỷ và lý do nằm ở bình luận "Huỷ duyệt bởi …" trên đơn (từ 16/10/2026; 2 đơn huỷ trước đó đã mất tên người duyệt). `approved_on` cũng là mốc giờ vào quỹ Nghỉ bù |
 | `attendance` | Link Attendance | Gắn tự động khi đối chiếu |
 | `granted_hours` | Float | Giờ được công nhận sau đối chiếu |
 
