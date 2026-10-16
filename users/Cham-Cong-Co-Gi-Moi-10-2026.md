@@ -31,6 +31,7 @@ nav_order: 6
 | ⑤ | Thêm các chốt **không tự phục vụ** quanh quỹ Nghỉ bù | HR | [Quỹ giờ Nghỉ bù — Sự cố hay gặp](Desk-HR-QuyNghiBu.html#su-co) |
 | ⑥ | Nhân viên **không xem được** bảng công, đơn chấm công bù, đơn làm thêm, số dư phép **của người khác** — trừ quản lý và HR | Nhân viên, quản lý dùng Desk | Mục ⑥ bên dưới |
 | ⑦ | Ứng dụng chấm công ghi **ai đã duyệt / từ chối / huỷ** từng đơn; màn Làm thêm và tab mới **Đơn bù** chia 4 nhóm | Mọi nhân viên | [Xin làm thêm giờ §4](Guide-NhanVien-LamThem.html) · [Chấm công ngoài VP & đề xuất bù §C](Guide-NhanVien-ChamCongNgoai.html) |
+| ⑧ | **Thông tin cá nhân** trên hồ sơ nhân viên (ngày sinh, điện thoại, địa chỉ, ngân hàng…) và **phiếu chi phí / tạm ứng** chỉ HR và người liên quan xem; **chỉ HR lập hồ sơ nhân viên mới** | Nhân viên, quản lý dùng Desk | Mục ⑧ bên dưới |
 
 ---
 
@@ -173,18 +174,40 @@ Trên ứng dụng chấm công, mỗi đơn **nghỉ phép**, **làm thêm** v�
   bước nào, lý do — để nhân viên xem lại. Đơn từ chối **trước** đợt cập nhật thì không có bản ghi này.
 - Đơn chấm công bù **đã duyệt rồi bị huỷ** trước đây hiện nhầm là *Từ chối*; nay là *Đã hủy*.
 
+## ⑧ Thông tin cá nhân và chi phí chỉ người liên quan xem
+
+**Hồ sơ nhân viên** (`Employee`): trước đây tài khoản nào cũng mở được hồ sơ của mọi người và thấy
+ngày sinh, số điện thoại, email riêng, địa chỉ, người liên hệ khẩn cấp, tài khoản ngân hàng, hộ chiếu,
+bảo hiểm y tế, tình trạng hôn nhân, lý do nghỉ việc… Nay các ô đó **chỉ HR** (*HR Manager*, *HR User*,
+*Payroll Officer*) thấy. Người khác mở hồ sơ vẫn thấy tên, mã nhân viên, bộ phận, chức danh, email công
+ty, người duyệt — đủ để chọn nhân viên trong các chứng từ khác.
+
+- Áp cho **cả hồ sơ của chính mình** trên Desk. Nhân viên xem thông tin của mình ở ứng dụng chấm công
+  (mục *Thêm → Hồ sơ*), không đổi.
+- **Chỉ HR lập hồ sơ nhân viên mới** (Desk hoặc *Tạo nhân sự nhanh*). Trưởng bộ phận lập trên Desk sẽ
+  nhận thông báo *Chỉ HR lập hồ sơ nhân viên mới* — gửi thông tin người mới cho HR. Trưởng bộ phận
+  vẫn sửa được tên hiển thị, trạng thái, email công ty như trước.
+
+**Phiếu chi phí** (`Expense Claim`) và **phiếu tạm ứng** (`Employee Advance`): trước đây nhân viên nào
+cũng xem được phiếu và số tiền của người khác. Nay mỗi người thấy phiếu của mình; quản lý thấy của
+người mình quản lý (như mục ⑥); **người duyệt chi phí** thấy phiếu mình được ghi là người duyệt, phiếu
+của người có mình ở ô *Expense Approver* trên hồ sơ, và của bộ phận mà mình nằm trong bảng *Expense
+Approvers*; HR thấy hết.
+
 ## Khi đưa lên hệ thống
 
 - **Deploy rồi chạy `bench migrate`.** Migrate tạo hai chứng từ mới, bảng *Hạn mức ứng trước Nghỉ
   bù*, ô *Giờ Nghỉ bù ứng trước* trên đơn nghỉ, độ chính xác 5 chữ số cho ô *Leaves to Adjust* của
   `Leave Adjustment`, khai sẵn dòng *Dịch vụ - Bảo hành* = 1 ngày, tạo bảng *Đơn chấm công bị từ chối*
-  và thu ba báo cáo số dư phép / chấm công của HRMS về cho HR (mục ⑥, ⑦). Ứng dụng chấm công cũng
+  và thu ba báo cáo số dư phép / chấm công của HRMS về cho HR (mục ⑥, ⑦), chuyển các ô thông tin cá
+  nhân trên hồ sơ nhân viên sang chỉ HR xem (mục ⑧). Ứng dụng chấm công cũng
   phải lên bản build mới thì mới có tab *Đơn bù* và dòng *ai đã duyệt*.
 - **Xem lại bảng *Hạn mức ứng trước Nghỉ bù*** của từng công ty: dòng mặc định có đúng bộ phận,
   đúng số ngày không; bộ phận nào khác cần cho ứng.
 - **Báo cho nhân viên bộ phận được ứng** về luật ở mục ①, nhất là luật *nợ treo sang tháng thì
   không ứng thêm* và *hết năm trừ Phép năm*.
-- **Báo trưởng bộ phận**: từ đợt này đổi người duyệt trên hồ sơ nhân viên đã có phải nhờ HR; trên
+- **Báo trưởng bộ phận**: từ đợt này lập hồ sơ nhân viên mới và đổi người duyệt trên hồ sơ đã có
+  phải nhờ HR (mục ⑧); trên
   Desk họ chỉ còn thấy bảng công / đơn từ của người mình quản lý (mục ⑥) — ai thiếu người thì kiểm
   tra *người duyệt nghỉ*, *người duyệt chấm công*, *báo cáo cho* trên hồ sơ nhân viên.
 - **Gán người duyệt nghỉ** (*Leave Approver*) cho mọi nhân viên còn trống trên hồ sơ: từ đợt này

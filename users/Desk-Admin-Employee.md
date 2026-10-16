@@ -29,16 +29,19 @@ nav_order: 1
    (cộng thêm vào danh sách của phòng, không phải override). Tách khỏi Leave Approver — xem
    [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html).
 
-> 🔒 Trên hồ sơ **đã có**, chỉ **HR** (HR Manager / HR User / System Manager) đổi được *Leave
-> Approver*, *Shift Request Approver*, *Expense Approver*, *Reports To* và ô *Nghỉ phép gửi thẳng
-> HR*. Trưởng bộ
-> phận vẫn đặt được các ô này **lúc lập hồ sơ người mới**. Không ai tự đổi tài khoản, bộ phận, công
-> ty hay người duyệt trên hồ sơ **của chính mình**.
+> 🔒 **Chỉ HR** (HR Manager / HR User / System Manager / Payroll Officer) lập được hồ sơ nhân viên
+> mới (từ 16/10/2026). Trên hồ sơ **đã có**, chỉ HR đổi được *Leave Approver*, *Shift Request
+> Approver*, *Expense Approver*, *Reports To* và ô *Nghỉ phép gửi thẳng HR*. Không ai tự đổi tài
+> khoản, bộ phận, công ty hay người duyệt trên hồ sơ **của chính mình**.
 >
 > Trên hồ sơ **người khác**, người không phải HR cũng không đổi được *Department*, *Company* và
-> *User ID* — đổi bộ phận là đổi người duyệt nghỉ mặc định của người đó. Lập hồ sơ mới thì *User ID*
+> *User ID* — đổi bộ phận là đổi người duyệt nghỉ mặc định của người đó. *User ID* của hồ sơ mới
 > không được trùng tài khoản đã gắn với một hồ sơ khác, kể cả hồ sơ đã nghỉ việc. Cần chuyển phòng
 > hay gắn lại tài khoản thì báo HR.
+>
+> 🔒 **Thông tin cá nhân chỉ HR thấy**: ngày sinh, điện thoại, email riêng, địa chỉ, người liên hệ khẩn
+> cấp, lương (CTC), ngân hàng, hộ chiếu, bảo hiểm y tế, hôn nhân, sức khoẻ, học vấn, kinh nghiệm cũ và
+> các ô nghỉ việc. Người khác — kể cả chính chủ trên Desk — mở hồ sơ không thấy các ô này.
 7. **Confirmation Date** (tab **Joining**) — ngày hết thử việc. Phép Năm tính từ ngày này; để trống
    thì hệ thống lấy ngày vào làm + 2 tháng. Xem [Cấp phép → Khai ngày hết thử việc](Desk-HR-CapPhep.html#het-thu-viec).
 8. Lưu. Hệ thống tự cấp Phép Năm cho nhân viên (thông báo xanh ở góc màn hình).
