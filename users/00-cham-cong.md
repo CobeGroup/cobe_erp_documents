@@ -39,6 +39,7 @@ has_children: true
 - ⏳ Là HR, muốn cho nhân viên làm ca / trực **nghỉ bù trước, làm thêm bù sau**, hoặc xem **quyết toán nợ cuối năm** → **[Ứng trước Nghỉ bù](Desk-HR-QuyNghiBu.html#ung-truoc)**
 - 🚦 Là HR, muốn giới hạn **số ngày khai bù mỗi tháng** → **[Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html)**
 - 🔎 Là HR, muốn biết nhân viên **chấm công ngoài văn phòng ở đâu** → **[Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html)**
+- 🟡 Là HR, thấy log chấm công mang nhãn **Off-Shift** và ngày đó mất công → **[Log chấm công Off-Shift](Desk-HR-LogOffShift.html)**
 
 ---
 

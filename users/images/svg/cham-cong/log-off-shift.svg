@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 960 330" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+  <title>Log chấm công Off-Shift: vì sao mất công và bốn bước khôi phục</title>
+  <defs>
+    <marker id="mred" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/>
+    </marker>
+    <marker id="mgreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#15803d"/>
+    </marker>
+    <style>
+      a rect { cursor: pointer; }
+      a:hover rect { stroke-width: 3; }
+    </style>
+  </defs>
+  <rect width="960" height="330" fill="#ffffff"/>
+
+  <!-- Hàng 1: chuỗi nguyên nhân -->
+  <text x="15" y="28" font-size="13" font-weight="700" fill="#b91c1c">VÌ SAO NGÀY ĐÓ MẤT CÔNG</text>
+  <g font-size="13" text-anchor="middle">
+    <a xlink:href="../../../Desk-HR-LogOffShift.html#vi-sao" href="../../../Desk-HR-LogOffShift.html#vi-sao" target="_top">
+      <rect x="15" y="40" width="215" height="78" rx="10" fill="#fef2f2" stroke="#dc2626"/>
+      <text x="122" y="66" font-weight="700" fill="#0f172a">Nhân viên quẹt sớm</text>
+      <text x="122" y="86" fill="#334155">trước khi cửa sổ ca mở</text>
+      <text x="122" y="104" fill="#475569" font-size="12">Employee Checkin</text>
+    </a>
+    <a xlink:href="../../../Desk-HR-LogOffShift.html#vi-sao" href="../../../Desk-HR-LogOffShift.html#vi-sao" target="_top">
+      <rect x="255" y="40" width="215" height="78" rx="10" fill="#fef2f2" stroke="#dc2626"/>
+      <text x="362" y="66" font-weight="700" fill="#0f172a">Log mang nhãn Off-Shift</text>
+      <text x="362" y="86" fill="#334155">ô Shift để trống</text>
+      <text x="362" y="104" fill="#475569" font-size="12">gắn một lần, không tự tính lại</text>
+    </a>
+    <a xlink:href="../../../Desk-HR-LogOffShift.html#vi-sao" href="../../../Desk-HR-LogOffShift.html#vi-sao" target="_top">
+      <rect x="495" y="40" width="215" height="78" rx="10" fill="#fef2f2" stroke="#dc2626"/>
+      <text x="602" y="66" font-weight="700" fill="#0f172a">Chấm công tự động</text>
+      <text x="602" y="86" fill="#334155">không nhìn thấy log này</text>
+      <text x="602" y="104" fill="#475569" font-size="12">chỉ nhặt log đã có ca</text>
+    </a>
+    <a xlink:href="../../../Desk-HR-LogOffShift.html#vi-sao" href="../../../Desk-HR-LogOffShift.html#vi-sao" target="_top">
+      <rect x="735" y="40" width="210" height="78" rx="10" fill="#fff7ed" stroke="#ea580c"/>
+      <text x="840" y="66" font-weight="700" fill="#0f172a">Ngày đó ra 0 giờ</text>
+      <text x="840" y="86" fill="#334155">hoặc không có công</text>
+      <text x="840" y="104" fill="#475569" font-size="12">log ra đứng một mình</text>
+    </a>
+  </g>
+  <g stroke="#b91c1c" stroke-width="2" fill="none" marker-end="url(#mred)">
+    <line x1="230" y1="79" x2="251" y2="79"/>
+    <line x1="470" y1="79" x2="491" y2="79"/>
+    <line x1="710" y1="79" x2="731" y2="79"/>
+  </g>
+
+  <!-- Hàng 2: bốn bước khôi phục -->
+  <text x="15" y="178" font-size="13" font-weight="700" fill="#15803d">BỐN BƯỚC KHÔI PHỤC — ĐÚNG THỨ TỰ</text>
+  <g font-size="13" text-anchor="middle">
+    <a xlink:href="../../../Desk-HR-LogOffShift.html#buoc-1" href="../../../Desk-HR-LogOffShift.html#buoc-1" target="_top">
+      <rect x="15" y="190" width="170" height="90" rx="10" fill="#f0fdf4" stroke="#16a34a"/>
+      <text x="100" y="216" font-weight="700" fill="#0f172a">1. Nới cửa sổ ca</text>
+      <text x="100" y="236" fill="#334155">phút nhận check-in</text>
+      <text x="100" y="254" fill="#334155">trước giờ vào</text>
+      <text x="100" y="272" fill="#475569" font-size="12">Shift Type</text>
+    </a>
+    <a xlink:href="../../../Desk-HR-LogOffShift.html#buoc-2" href="../../../Desk-HR-LogOffShift.html#buoc-2" target="_top">
+      <rect x="210" y="190" width="170" height="90" rx="10" fill="#f0fdf4" stroke="#16a34a"/>
+      <text x="295" y="216" font-weight="700" fill="#0f172a">2. Gắn lại ca</text>
+      <text x="295" y="236" fill="#334155">chọn log Off-Shift</text>
+      <text x="295" y="254" fill="#334155">Actions → Fetch Shifts</text>
+      <text x="295" y="272" fill="#475569" font-size="12">Employee Checkin</text>
+    </a>
+    <a xlink:href="../../../Desk-HR-LogOffShift.html#buoc-3" href="../../../Desk-HR-LogOffShift.html#buoc-3" target="_top">
+      <rect x="405" y="190" width="170" height="90" rx="10" fill="#f0fdf4" stroke="#16a34a"/>
+      <text x="490" y="216" font-weight="700" fill="#0f172a">3. Huỷ bản 0 giờ</text>
+      <text x="490" y="236" fill="#334155">bản chấm công sai</text>
+      <text x="490" y="254" fill="#334155">của ngày đó → Cancel</text>
+      <text x="490" y="272" fill="#475569" font-size="12">Attendance</text>
+    </a>
+    <a xlink:href="../../../Desk-HR-LogOffShift.html#buoc-4" href="../../../Desk-HR-LogOffShift.html#buoc-4" target="_top">
+      <rect x="600" y="190" width="170" height="90" rx="10" fill="#f0fdf4" stroke="#16a34a"/>
+      <text x="685" y="216" font-weight="700" fill="#0f172a">4. Chấm công lại</text>
+      <text x="685" y="236" fill="#334155">mở ca → nút</text>
+      <text x="685" y="254" fill="#334155">Mark Attendance</text>
+      <text x="685" y="272" fill="#475569" font-size="12">Shift Type</text>
+    </a>
+    <a xlink:href="../../../Desk-HR-LogOffShift.html#kiem-tra" href="../../../Desk-HR-LogOffShift.html#kiem-tra" target="_top">
+      <rect x="795" y="190" width="150" height="90" rx="10" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+      <text x="870" y="222" font-weight="700" fill="#0f172a">Có công</text>
+      <text x="870" y="242" fill="#334155">Present, đủ giờ</text>
+      <text x="870" y="260" fill="#334155">vào và ra</text>
+      <text x="870" y="276" fill="#475569" font-size="12">Attendance</text>
+    </a>
+  </g>
+  <g stroke="#15803d" stroke-width="2" fill="none" marker-end="url(#mgreen)">
+    <line x1="185" y1="235" x2="206" y2="235"/>
+    <line x1="380" y1="235" x2="401" y2="235"/>
+    <line x1="575" y1="235" x2="596" y2="235"/>
+    <line x1="770" y1="235" x2="791" y2="235"/>
+  </g>
+  <text x="480" y="312" font-size="12" fill="#64748b" text-anchor="middle">Làm bước 3 trước bước 2 thì log ra lại sinh bản 0 giờ mới; làm bước 2 mà bỏ bước 1 thì nhãn Off-Shift vẫn còn nguyên.</text>
+</svg>

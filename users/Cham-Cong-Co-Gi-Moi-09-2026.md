@@ -29,6 +29,7 @@ Năm thay đổi về phiếu chấm công và phê duyệt, cùng những việ
 | ③ | **Hạn mức tháng** đếm **số ngày khai bù**, tính riêng từng loại đơn (kể cả WFH), chỉ đếm ngày đã qua, và khai được **theo bộ phận** ngay trong Chính sách chấm công | Nhân viên hiện trường, HR | [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html) |
 | ④ | Đơn cho **hôm nay / ngày tới** là **giấy phép chấm công ngoài văn phòng**, không phải giấy xin công | Nhân viên hiện trường, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) |
 | ⑤ | Báo cáo mới: **nhân viên chấm công ngoài văn phòng ở đâu** | HR, quản lý | [Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html) |
+| ⑥ | **Không ai tự đặt luật chấm công cho chính mình** trong Chính sách chấm công — kể cả vai trò HR | HR | [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html#không-ai-tự-khai-luật-cho-chính-mình) |
 
 Kèm theo đợt này còn có **quỹ giờ Nghỉ bù mở cho HR và quản lý** —
 xem [Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html).
@@ -121,6 +122,25 @@ Báo cáo cố ý không kết luận thay người đọc: một tỉnh chưa �
 như người chấm công tại nhà. Chi tiết cách đọc:
 [Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html).
 
+## ⑥ Không ai tự đặt luật chấm công cho chính mình
+
+Hai bảng trong **Chính sách chấm công** khai đích danh từng nhân viên: *Hạn mức ngày khai bù*
+và *Check-in Whitelist* (bỏ geofence). Quyền sửa màn này thuộc vai trò **HR Manager**, nên
+trước đây người phải gác hạn mức cũng tự nới được hạn mức cho mình — một dòng **0 = không giới
+hạn** đứng tên mình là miễn vĩnh viễn, còn một dòng whitelist thì bỏ geofence hẳn, khỏi cần
+đơn nào nữa.
+
+Từ nay mọi thay đổi chạm vào **dòng đứng tên chính người đang khai** — thêm, sửa hay xoá — đều
+bị chặn; chỉ **System Manager** đi qua. Khai cho người khác, cho bộ phận hay cho cả công ty thì
+không đổi gì. Cần nới cho bản thân thì nhờ một người HR khác khai, đúng nguyên tắc đã áp cho
+đơn chấm công và cho phiếu điều chỉnh quỹ Nghỉ bù: mỗi lần tự phục vụ đều phải có người thứ hai
+biết.
+
+Kèm theo là một lỗi im lặng đã được sửa: ô *Nhân viên* để trống bị hệ thống điền sẵn hồ sơ của
+người đang khai, nếu người đó có gán **User Permission** trên `Employee`. Dòng khai với ý "cả
+công ty" vì thế trở thành dòng đích danh — cả công ty vẫn không giới hạn, còn người khai thì tự
+nhận trần, không một lời báo.
+
 ---
 
 ## Khi đưa lên hệ thống
@@ -134,6 +154,9 @@ như người chấm công tại nhà. Chi tiết cách đọc:
 
 Việc HR làm thủ công sau khi lên:
 
+- **Rà lại hai bảng khai đích danh** trong Chính sách chấm công (*Hạn mức ngày khai bù* và
+  *Check-in Whitelist*): dòng nào mang tên chính người đã khai nó mà không ai cố ý đặt thì đó
+  là dấu vết của lỗi ô-để-trống-bị-điền-sẵn ở mục ⑥.
 - Gán vai trò **người duyệt chấm công** cho các tài khoản còn thiếu.
 - Kiểm tra cột *Duyệt 2 cấp* trong **HR Approval Inbox Settings** đúng như mong muốn.
 - Xem **[Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html)** một lượt: nếu thấy cả

@@ -138,7 +138,11 @@ HR (người duyệt cuối) → tab "Cần duyệt" → Duyệt (action="HR App
 HRMS tự tạo / update Attendance records cho khoảng ngày
 ```
 
-Từ chối ở bước nào cũng **xoá đơn nháp** (giữ như trước) và báo nhân viên kèm lý do.
+Từ chối ở bước nào cũng **giữ đơn nháp** và chuyển `custom_approval_state` sang *Rejected* (từ 29/10/2026;
+trước đó đơn bị xoá), ghi người / thời điểm / bước / lý do từ chối, báo nhân viên kèm lý do. Đơn đã từ chối
+là bản ghi lịch sử: không lưu lại được, không submit được, không xoá được (chặn ở server, mọi vai trò);
+không chiếm hạn mức, không tính là đơn đang chờ, không còn là giấy phép chấm công ngoài văn phòng, và
+không chặn nhân viên nộp đơn mới cho cùng ngày. Đơn đã huỷ (docstatus 2) cũng không xoá được.
 
 **Không dùng Frappe Workflow** như Leave Application, vì Attendance Request là doctype submittable
 của HRMS — submit là tạo Attendance ngay. Workflow của Leave đặt "Rejected" ở docstatus 1; chép
@@ -149,8 +153,9 @@ sang đây là từ chối xong lại đi chấm công. Workflow còn chặn m�
 
 | Trường | Ý nghĩa |
 |---|---|
-| `custom_approval_state` | *Pending Manager* / *Manager Approved*. Đơn nộp trước 09/2026 để trống = *Pending Manager*. Khi thêm cột, migrate điền *Pending Manager* cho **mọi** đơn cũ, kể cả đơn đã duyệt — nên ô này không hiện thành cột trên danh sách và chỉ hiện trên form khi đơn còn nháp |
+| `custom_approval_state` | *Pending Manager* / *Manager Approved* / *Rejected*. Đơn nộp trước 09/2026 để trống = *Pending Manager*. Khi thêm cột, migrate điền *Pending Manager* cho **mọi** đơn cũ, kể cả đơn đã duyệt — nên ô này không hiện thành cột trên danh sách và chỉ hiện trên form khi đơn còn nháp. Danh sách Desk hiện nhãn *Từ chối* đỏ cho đơn nháp mang *Rejected* |
 | `custom_manager_approved_by` / `_on` | Ai duyệt bước 1, lúc nào. HR submit thẳng thì ghi tên HR |
+| `custom_rejected_by` / `_on` / `_stage` / `custom_reject_reason` | Ai từ chối, lúc nào, ở bước nào (*Quản lý* / *HR* — cùng nhãn nhân viên thấy trên ứng dụng), lý do. Chỉ có giá trị khi *Rejected* |
 
 **Lên thẳng bước HR:** ngoài chính nhân viên không còn Shift Request Approver nào dùng được hộp duyệt
 (trên Employee lẫn Department; tài khoản đang bật, có role trong `viewer_roles` và `approver_roles`) —

@@ -284,7 +284,8 @@ Endpoints (`api.attendance_request`):
   → tạo Attendance Request (docstatus=0). Trả `{ success, name }`.
 - `GET get_my_attendance_requests?limit=50` — list đơn của NV (**cả On Duty lẫn WFH**),
   kèm `reason`, `work_location_label`, `status` (`Pending` / `Manager Approved` / `Approved` /
-  `Rejected` — suy từ docstatus + `custom_approval_state`).
+  `Rejected` / `Cancelled` — suy từ docstatus + `custom_approval_state`; `Rejected` = nháp mang
+  `custom_approval_state = Rejected`, kèm `status_reason` = lý do và `trail` có bước từ chối).
 - **Duyệt**: tab **"Cần duyệt"** = `api.approval.act`, 1 bước hoặc 2 cấp theo công tắc (bước cuối mới
   submit Attendance Request → HRMS tạo Attendance).
 
@@ -469,13 +470,17 @@ OT `status = Manager Approved`) được coi là đơn chờ bình thường.
 | Chờ trưởng bộ phận | `Pending Manager` | AR: `docstatus = 0` và `custom_approval_state` rỗng / `Pending Manager` · OT: `status = Pending` |
 | Chờ HR | `Manager Approved` | AR: `docstatus = 0` và `custom_approval_state = Manager Approved` · OT: `status = Manager Approved` |
 
+Đơn nháp đã bị từ chối (AR: `custom_approval_state = Rejected`, từ 29/10/2026) không ở bước nào: rơi khỏi
+hộp chờ, hiện ở tab `rejected` của `get_my_handled_approvals` cho người từ chối và trưởng bộ phận đã duyệt
+bước 1 (`state = Rejected`, `outcome_reason` = lý do, `handled_on` = `custom_rejected_on`).
+
 `POST api.approval.act { doctype, name, action, reason }`:
 
 | `action` | Hợp lệ ở bước | Tác dụng |
 |---|---|---|
 | `Manager Approve` | Chờ trưởng bộ phận | AR: ghi `custom_approval_state`, `custom_manager_approved_by/_on` (vẫn nháp) · OT: `status = Manager Approved`, `manager_approved_by/_on`. Báo người duyệt cuối |
 | `HR Approve` | Chờ HR | AR: `doc.submit()` · OT: `status = Approved`, `approved_by/_on`, đối chiếu chấm công, báo NV |
-| `Manager Reject` / `HR Reject` | Đúng bước tên gọi | AR: xoá đơn nháp · OT: `status = Rejected`, `reject_reason`. Bắt buộc `reason`, báo NV |
+| `Manager Reject` / `HR Reject` | Đúng bước tên gọi | AR: giữ đơn nháp, `custom_approval_state = Rejected` + `custom_rejected_by/_on/_stage`, `custom_reject_reason` (trước 29/10/2026: xoá đơn) · OT: `status = Rejected`, `reject_reason`. Bắt buộc `reason`, báo NV |
 | `Submit` / `Approve` *(tên cũ)* | Bất kỳ bước | Duyệt **ở bước hiện tại** — không bao giờ nhảy qua bước HR |
 | `Cancel` / `Reject` *(tên cũ)* | Bất kỳ bước | Như từ chối ở bước hiện tại. AR đã submit: `doc.cancel()` |
 

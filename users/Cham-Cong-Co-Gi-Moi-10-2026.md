@@ -169,9 +169,13 @@ Trên ứng dụng chấm công, mỗi đơn **nghỉ phép**, **làm thêm** v�
 
 - Màn **Làm thêm giờ** chia **4 tab** *Chờ duyệt · Đã duyệt · Từ chối · Đã hủy* như màn Nghỉ phép.
 - Màn **Chấm công** có thêm tab **Đơn bù** — mọi đề xuất chấm công bù / WFH, cũng 4 tab.
-- Đơn chấm công bù **bị từ chối** trước đây bị xoá không dấu vết (lý do chỉ nằm trong thông báo). Nay hệ
-  thống giữ lại một bản ghi *Đơn chấm công bị từ chối* (`HR Attendance Request Rejection`) — ai từ chối,
-  bước nào, lý do — để nhân viên xem lại. Đơn từ chối **trước** đợt cập nhật thì không có bản ghi này.
+- Đơn chấm công bù **bị từ chối** trước đây bị xoá không dấu vết (lý do chỉ nằm trong thông báo). Từ
+  29/10/2026 đơn được **giữ nguyên** với trạng thái *Từ chối* — ai từ chối, bước nào, lúc nào, lý do — và
+  hiện trên ứng dụng như mọi đơn khác; đơn ấy không sửa, không duyệt, không xoá được, cần chấm công bù
+  cho ngày đó thì tạo đơn mới. Đơn từ chối trong khoảng 13/10–29/10 còn bản ghi vết *Đơn chấm công bị
+  từ chối* (`HR Attendance Request Rejection`); đơn từ chối **trước 13/10** không có vết nào.
+- Đơn chấm công bù **đã huỷ** hoặc **đã bị từ chối** không xoá được nữa, kể cả HR Manager — giữ lại để tra
+  cứu. Đơn đang chờ duyệt vẫn rút / xoá được như trước.
 - Đơn chấm công bù **đã duyệt rồi bị huỷ** trước đây hiện nhầm là *Từ chối*; nay là *Đã hủy*.
 
 ## ⑧ Thông tin cá nhân và chi phí chỉ người liên quan xem

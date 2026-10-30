@@ -33,9 +33,9 @@ nav_order: 6.5
 
 > ⚠️ **Các cột số giờ đang tạm ẩn (từ 10/2026).** Báo cáo **không còn hiện** cột *Tổng giờ
 > thực*, ô số giờ của từng ngày (`1·g`) và cột *Giờ thực* ở chế độ *Chi tiết theo ngày* — ở mọi
-> chế độ xem **và cả file Excel xuất ra**. Lý do: giờ công ngày Thứ 7 nửa buổi chưa được cắt về
-> 12:00 nên tổng giờ bị cộng cả buổi chiều (đã trả bằng làm thêm). Các cột sẽ hiện lại khi phần
-> đó được sửa. Cột **Tổng giờ chuẩn** và **giờ vào / giờ ra** vẫn hiện bình thường. Ảnh chụp trong
+> chế độ xem **và cả file Excel xuất ra**. Lý do: trước ngày công 01/10/2026, giờ công ngày Thứ 7
+> nửa buổi không được cắt về 12:00 nên tổng giờ bị cộng cả buổi chiều (đã trả bằng làm thêm). Từ
+> 01/10/2026 giờ công Thứ 7 đã cắt đúng 12:00; các cột hiện lại khi HR quyết định. Cột **Tổng giờ chuẩn** và **giờ vào / giờ ra** vẫn hiện bình thường. Ảnh chụp trong
 > tài liệu này chụp **trước** khi ẩn nên vẫn còn cột giờ.
 
 Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:

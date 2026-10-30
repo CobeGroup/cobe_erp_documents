@@ -63,8 +63,8 @@ Endpoint cũ `api.wfh.get_my_requests` (chỉ WFH) vẫn còn nhưng PWA không 
 | `reason` = `"Work From Home"` | Đánh dấu đây là đơn WFH |
 | `explanation` | Lý do WFH (NV nhập) |
 | `custom_work_location_label` | **Nhãn địa điểm** WFH (custom field — vd "Nhà riêng - Quận 7") |
-| `docstatus` | 0 = chờ duyệt, 1 = đã duyệt, 2 = đã huỷ (đơn bị từ chối thì bị **xoá**, không nằm ở 2) |
-| `custom_approval_state` | Chỉ có nghĩa khi bật 2 cấp và `docstatus = 0`: *Pending Manager* (chờ trưởng bộ phận) / *Manager Approved* (chờ HR). Chỉ đổi qua việc duyệt; sửa nội dung đơn đã *Manager Approved* thì quay về *Pending Manager*. Xem [HR Attendance Request](HR-Attendance-Request.html) |
+| `docstatus` | 0 = chờ duyệt **hoặc đã bị từ chối** (phân biệt bằng `custom_approval_state`), 1 = đã duyệt, 2 = đã huỷ. Từ 29/10/2026 đơn bị từ chối **giữ nguyên** ở 0; trước mốc đó đơn bị xoá |
+| `custom_approval_state` | Chỉ có nghĩa khi `docstatus = 0`: *Pending Manager* (chờ trưởng bộ phận) / *Manager Approved* (chờ HR, khi bật 2 cấp) / *Rejected* (đã bị từ chối — kèm `custom_rejected_by`, `custom_rejected_on`, `custom_rejected_stage`, `custom_reject_reason`). Chỉ đổi qua việc duyệt; sửa nội dung đơn đã *Manager Approved* thì quay về *Pending Manager*. Xem [HR Attendance Request](HR-Attendance-Request.html) |
 
 Nhãn địa điểm lưu ở custom field `custom_work_location_label` trên Attendance Request (xem `fixtures/custom_field.json`). Field này chỉ dùng audit + báo cáo, không enforce GPS.
 
@@ -84,7 +84,10 @@ WFH duyệt **chung cơ chế với chấm công bù** — qua tab **"Cần duy�
    chuyển sang *Chờ HR duyệt*, HR được báo.
 2. **HR** (người duyệt cuối ở `HR Policy`) → **Duyệt (HR)** (`action = "HR Approve"`) → `doc.submit()`.
 
-**Từ chối** ở bước nào cũng được (bắt buộc lý do) → đơn nháp bị **xoá**, nhân viên nhận lý do.
+**Từ chối** ở bước nào cũng được (bắt buộc lý do) → đơn nháp **giữ nguyên**, chuyển sang *Rejected* kèm
+người từ chối, thời điểm, bước và lý do; nhân viên nhận lý do và vẫn xem được đơn trên ứng dụng. Đơn đã
+từ chối không sửa, không duyệt, không xoá được — cần làm lại thì tạo đơn mới cho cùng ngày (đơn bị từ
+chối không tính là trùng ngày). Trước 29/10/2026 từ chối là xoá đơn.
 
 > Phân quyền: người duyệt bước 1 là **`shift_request_approver`** của nhân viên (trên Employee hoặc
 > bảng Department Approver) — không phải `leave_approver`. Trên app, đơn ở bước này chỉ hiện với người
@@ -113,10 +116,13 @@ Check-in WFH (GPS + selfie) **vẫn là phần custom của app** (xem `api.atte
 
 ## 6. Hủy / từ chối
 
-- **Từ chối** (đơn chưa duyệt xong, ở bước nào cũng vậy): tab "Cần duyệt" → **Từ chối** → đơn nháp bị xoá
-- **Huỷ đơn đã duyệt** (HR): Desk → mở đơn → **Cancel** (docstatus = 2) — Attendance WFH tự gỡ. Quyền
-  huỷ không đổi khi có duyệt hai bước; trên thực tế chỉ HR / System Manager huỷ được, vì huỷ đơn kéo
-  theo huỷ bản ghi công mà trưởng bộ phận không có quyền sửa
+- **Từ chối** (đơn chưa duyệt xong, ở bước nào cũng vậy): tab "Cần duyệt" → **Từ chối** → đơn nháp giữ
+  nguyên với trạng thái *Rejected* (Desk hiện nhãn *Từ chối* đỏ), người từ chối thấy lại ở tab **Từ chối**
+  của màn Duyệt đơn, nhân viên thấy ở tab **Từ chối** của màn Đơn bù
+- **Huỷ đơn đã duyệt**: Desk → mở đơn → **Cancel** (docstatus = 2) — Attendance WFH tự gỡ. HR huỷ
+  được mọi đơn; trưởng bộ phận chỉ huỷ được đơn mình duyệt **một bước** và chưa thuộc kỳ công đã
+  khoá. Ngày đã có phiếu lương đã duyệt thì không ai huỷ được — xem
+  [Chính sách chấm công §9](Desk-Admin-Policy.html#9-khoá-kỳ-công)
 - Sau khi từ chối / huỷ, nếu cần WFH lại cùng ngày → NV tạo đơn WFH mới (không bị chặn trùng)
 
 ---

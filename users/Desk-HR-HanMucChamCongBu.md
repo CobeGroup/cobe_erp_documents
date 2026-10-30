@@ -113,7 +113,7 @@ chỗ với các luật chấm công khác của công ty đó.
 
 **Lưu là có hiệu lực ngay** — không còn bước Submit như bản ghi rời trước đây.
 
-Hệ thống chặn năm kiểu khai sai ngay lúc Lưu:
+Hệ thống chặn sáu kiểu khai sai ngay lúc Lưu:
 
 | Bị chặn | Vì sao |
 |---|---|
@@ -122,6 +122,7 @@ Hệ thống chặn năm kiểu khai sai ngay lúc Lưu:
 | Nhân viên / bộ phận **của công ty khác** | Dòng đó vĩnh viễn không áp cho ai, vì luật chỉ đọc chính sách của công ty nhân viên |
 | Chọn một **nhóm bộ phận** (ví dụ *All Departments*) | Nhân viên được gán vào bộ phận **cụ thể**, nên dòng theo nhóm không áp cho ai — trong khi trông như vừa đặt trần chung. Muốn áp cho tất cả thì **bỏ trống** ô Bộ phận |
 | Số ngày **âm** | Mọi giá trị ≤ 0 được hiểu là "không giới hạn", nên −1 trông như siết chặt nhất mà thực ra TẮT |
+| Thêm / sửa / xoá **dòng khai đích danh chính người đang khai** | Không ai tự đặt luật chấm công cho mình — xem mục bên dưới |
 
 Cùng phạm vi mà **khác loại đơn**, hoặc cùng ngày mà **khác phạm vi**, đều hợp lệ — đó là cách
 khai nhiều tầng song song.
@@ -151,6 +152,25 @@ làm việc tại nhà. **Không khai dòng nào cho một loại thì loại đ
 Từ 01/12 dòng thứ hai thắng (ngày hiệu lực lớn hơn) — không phải xoá dòng cũ, và tra lại một
 ngày trong tháng 10 vẫn ra đúng luật của tháng 10.
 
+### Không ai tự khai luật cho chính mình
+
+Từ 23/09/2026, người đang khai **không thêm, không sửa, không xoá được dòng đứng tên chính
+mình** — ở cả bảng *Hạn mức ngày khai bù* lẫn bảng **Check-in Whitelist** (bỏ geofence). Chỉ
+vai trò **System Manager** đi qua chốt này; vai trò HR thì không.
+
+Lý do: quyền sửa `HR Policy` nằm ở vai trò HR Manager, tức chính những người phải gác hạn mức
+cũng sửa được hạn mức. Một dòng **0 = không giới hạn** đứng tên mình là miễn hạn mức vĩnh viễn,
+và một dòng whitelist còn rộng hơn — bỏ geofence thì khỏi cần đơn nào nữa.
+
+Vẫn làm được như thường: khai cho **người khác**, khai cho **bộ phận**, khai cho **cả công ty**.
+Cần nới cho bản thân thì nhờ một người HR khác khai — để mỗi lần nới đều có người thứ hai biết.
+
+> ℹ️ Ô *Nhân viên* để trống thì ở lại trống. Trước 23/09/2026, người khai có gán **User
+> Permission** trên `Employee` (thường là hồ sơ của chính họ) sẽ bị hệ thống điền sẵn tên mình
+> vào ô đang trống — dòng khai với ý "cả công ty" lặng lẽ thành dòng đích danh, khiến cả công
+> ty vẫn không giới hạn còn người khai thì tự nhận trần. Đã sửa; nếu thấy dòng nào mang tên
+> người khai mà không ai cố ý đặt, đó là dấu vết của lỗi này.
+
 ---
 
 ## 4. Nhân viên thấy gì
@@ -172,8 +192,9 @@ Nộp quá hạn mức thì đơn bị chặn lúc gửi:
 **Được miễn hạn mức:** HR Manager, HR User, System Manager — nhưng **chỉ khi lập đơn cho
 người khác**. Đây là van xả khi nhân viên hết suất mà lý do chính đáng, và nó đòi phải có
 người thứ hai biết chuyện. Người giữ vai trò HR **tự lập đơn cho chính mình** thì chịu hạn mức
-như mọi nhân viên khác; cần thêm suất cho bản thân thì nhờ một người HR khác lập hộ, hoặc khai
-một dòng đích danh mình trong bảng — cách nào cũng để lại dấu vết.
+như mọi nhân viên khác; cần thêm suất cho bản thân thì **nhờ một người HR khác** lập đơn hộ
+hoặc khai dòng hộ — tự khai dòng đích danh mình trong bảng thì bị chặn (xem
+[Không ai tự khai luật cho chính mình](#không-ai-tự-khai-luật-cho-chính-mình)).
 
 Đơn lập lại từ bản đã huỷ không bị đếm lần nữa; còn đơn **sửa lại mà nong khoảng ngày ra** thì
 bị kiểm lại, vì thêm ngày là xin thêm suất.
@@ -194,12 +215,13 @@ bị kiểm lại, vì thêm ngày là xin thêm suất.
 | Cần cho thêm ngày trong tháng này | Nâng số trên bản đang hiệu lực, hoặc khai bản mới hiệu lực từ đầu tháng; hoặc HR lập hộ đơn cho nhân viên đó (vai trò HR được miễn khi lập cho người khác) |
 | Đơn vắt qua hai tháng | Mỗi ngày tính vào **tháng của chính nó**, và mỗi tháng xét theo hạn mức của tháng đó |
 | Kỹ thuật viên báo bị chặn khi xin quẹt ngoài văn phòng | Kiểm dòng **bộ phận** của họ trong bảng: phải có dòng **0 = không giới hạn**. Từ 23/09/2026 đơn xin cho chính hôm nay cũng tiêu suất, nên bộ phận đi hiện trường bắt buộc phải có dòng riêng |
-| Người làm HR tự nộp đơn mà bị chặn | Đúng luật: miễn trừ chỉ áp khi lập đơn **cho người khác**. Nhờ một người HR khác lập hộ, hoặc khai một dòng đích danh mình |
+| Người làm HR tự nộp đơn mà bị chặn | Đúng luật: miễn trừ chỉ áp khi lập đơn **cho người khác**. Nhờ một người HR khác lập hộ |
+| Báo *"Dòng khai cho chính mình"* khi Lưu chính sách | Đúng luật: không ai tự đặt luật chấm công cho mình. Nhờ một người HR khác khai dòng đó, hoặc nhờ System Manager |
 
 ---
 
 ## Liên quan
 - 📋 [Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) — góc nhìn nhân viên
 - ⏱️ [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html) — luật còn lại của cùng loại đơn
-- 🔧 [Attendance Request (kỹ thuật)](HR-Attendance-Request.html)
 - ⏳ [Ứng trước Nghỉ bù](Desk-HR-QuyNghiBu.html#ung-truoc) — bảng nằm cùng tab *Hạn mức khai bù*, nhưng **không dòng nào = không cho ứng** (ngược với bảng này)
+- 🔧 [Attendance Request (kỹ thuật)](HR-Attendance-Request.html)

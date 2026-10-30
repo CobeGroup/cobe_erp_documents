@@ -52,6 +52,7 @@ trạng thái, mỗi dòng là một ngày:
 | Hiện tượng | Cách xử |
 |---|---|
 | Có check-in nhưng không thấy Attendance | Chưa chạy **Process Auto Attendance**, hoặc chưa gán **Shift** cho NV |
+| Log check-in mang nhãn **Off-Shift**, ngày đó ra 0 giờ hoặc không có công | NV quẹt ngoài cửa sổ ca; sửa ca xong vẫn không tự tính lại → [Log chấm công Off-Shift](Desk-HR-LogOffShift.html) |
 | NV nghỉ nhưng bị tính Vắng | Hiếm (presence-based) — kiểm có Attendance Absent tạo tay/sai shift |
 | Cả phòng thiếu công 1 ngày | Kiểm ngày đó có là **lễ trong Holiday List** / lỗi Shift Assignment |
 

@@ -33,6 +33,7 @@ nav_order: 2
 | **Overtime Notification** | Nhắc khi làm quá giờ · bảng **Trần OT theo ngày hiệu lực** (trần giờ/ngày + hệ số OT ngày nửa buổi) |
 | **Hạn khai bù sau khi việc đã xảy ra** | Bảng **Hạn khai theo ngày hiệu lực**: hạn nộp đơn nghỉ · hạn khai làm thêm · hạn nộp đơn chấm công — xem [Hạn nộp phiếu & ràng buộc](HR-Filing-Deadline.html) |
 | **Người duyệt cuối (cấp HR)** | Chỉ định ai chốt bước 2 của đơn nghỉ phép, đơn chấm công bù / WFH và đơn làm thêm giờ |
+| **Khoá kỳ công** | Từ ngày nào trưởng bộ phận hết huỷ được đơn chấm công bù đã duyệt — xem [mục 9](#9-khoá-kỳ-công) |
 | **Giới hạn giờ check-in** | Chặn quẹt VÀO quá muộn |
 | **Check-in Whitelist** | Danh sách được phép chấm ngoại lệ |
 
@@ -159,7 +160,7 @@ Muốn quay lại như cũ: **xoá hết dòng trong bảng** rồi Save — kh�
 | | Vì sao |
 |---|---|
 | **Bước 1 (Trưởng Bộ Phận)** | Theo `leave_approver` (nghỉ phép) hoặc *Shift Request Approver* (chấm công bù, làm thêm). Trên app, đơn ở bước này chỉ hiện với đúng người duyệt của nhân viên — người duyệt vắng lâu thì khai thêm người duyệt cho phòng |
-| **Huỷ đơn đã duyệt** | Giữ nguyên quyền cũ của từng loại đơn — duyệt hai bước chặn việc **cấp** hiệu lực, còn huỷ chỉ **rút** hiệu lực |
+| **Huỷ đơn đã duyệt** | Đơn nghỉ phép, đơn làm thêm giữ nguyên quyền cũ. Đơn chấm công bù / WFH đã qua bước HR thì chỉ HR huỷ được, bất kể người đó có tên trong danh sách hay không — xem [mục 9](#9-khoá-kỳ-công) |
 | **Đơn đã chuyển đích danh** | Người được chuyển tới quyết — nhưng chỉ chuyển được cho người trong danh sách (mục 5) |
 
 > ⚠️ **Khai ít nhất 2 người mỗi công ty.** Một người mà nghỉ việc / nghỉ phép dài là đơn
@@ -284,6 +285,12 @@ Ví dụ với ca 08:00–17:30, nghỉ trưa 12:00–13:30:
 
 Ngày lễ và Chủ Nhật **không** áp khung ca: cả ngày đi làm là làm thêm.
 
+**Ngày làm nửa buổi** (Thứ 7 khối văn phòng — khai bằng dòng *Half Day* trong lịch nghỉ):
+khung hành chính chỉ là **buổi sáng, tới giờ bắt đầu nghỉ trưa** (ví dụ 08:00–12:00,
+tối đa 4h). Làm buổi chiều là **làm thêm**, cần đơn — giờ làm thêm tính từ sau 12:00 và
+**không tính giờ nghỉ trưa** (ca trực 13:30–17:30 = 4h). Riêng giới hạn **chặn quẹt vào**
+(mục 6) vẫn theo giờ tan của ca, để người trực chiều vẫn quẹt vào được.
+
 ### Trạng thái công xét theo cùng con số đó
 
 Trạng thái **Có mặt** (`Present`) hay **Nửa ngày** (`Half Day`) được xét bằng chính
@@ -328,8 +335,44 @@ số giờ công thiếu mới hạ.
 **Ngày Nửa ngày có mất tiền làm thêm không?**
 Không. Làm thêm được tính riêng, ngoài giờ hành chính.
 
+**Thứ 7 làm cả ngày thì giờ công là bao nhiêu?**
+Giờ công (hành chính) tối đa 4h cho buổi sáng. Buổi chiều tính bằng đơn làm thêm, đo
+riêng theo giờ quẹt, không bị buổi sáng ảnh hưởng.
+
 **Các ngày tháng 9/2026 trở về trước có bị tính lại không?**
 Không. Quy định chỉ áp từ ngày công 01/10/2026.
+
+---
+
+## 9. Khoá kỳ công
+
+Áp cho việc **huỷ đơn chấm công bù / WFH đã duyệt** (`Attendance Request`). Huỷ đơn là gỡ luôn
+chấm công (`Attendance`) của những ngày trong đơn, nên đơn của kỳ đã chốt phải do HR huỷ.
+
+| Ô | Ý nghĩa |
+|---|---|
+| **Ngày chốt công hằng tháng** | Bắt buộc, từ 1 đến 28, mặc định **1**. Từ ngày này của tháng sau, tháng trước bị khoá. Để 1 = sang tháng mới là tháng cũ khoá ngay; để 5 = tới hết mùng 4 trưởng bộ phận vẫn huỷ được đơn của tháng trước |
+| **Khoá thêm đến hết ngày** | Không bắt buộc. Khoá tới hết một ngày cụ thể — dùng cho tháng chốt lệch lịch (Tết, chốt sớm). Kỳ khoá tính tới mốc **muộn hơn** trong hai ô, nên ô này chỉ khoá thêm, không mở lại kỳ đã khoá |
+
+**Ai huỷ được đơn chấm công bù đã duyệt** — trên app lẫn trên Desk (nút **Cancel**):
+
+| Người huỷ | Được huỷ khi |
+|---|---|
+| **HR Manager / HR User / System Manager** | Luôn được, trừ ngày đã nằm trong **phiếu lương đã duyệt** (`Salary Slip`) |
+| **Trưởng bộ phận** (người duyệt chấm công của nhân viên) | Đơn được duyệt **một bước**, không phải đơn của chính mình, và ngày đầu của đơn chưa nằm trong kỳ đã khoá |
+
+Đơn đã qua **bước HR** của duyệt hai cấp thì trưởng bộ phận không huỷ được, kể cả khi sau đó
+công tắc *Duyệt 2 cấp* bị tắt: luật đọc theo đường đơn đã đi, không theo công tắc lúc huỷ.
+
+**Hỏi đáp**
+
+**Ngày đã có phiếu lương thì làm sao huỷ đơn?**
+Huỷ phiếu lương (`Salary Slip`) của kỳ đó trước, huỷ đơn, rồi lập lại phiếu lương. Không ai
+huỷ thẳng được, kể cả System Manager.
+
+**Đơn phủ hai tháng thì tính thế nào?**
+Chỉ cần một ngày của đơn nằm trong kỳ đã khoá là trưởng bộ phận không huỷ được cả đơn — huỷ đơn
+là huỷ hết, không huỷ được một phần.
 
 ---
 
@@ -340,6 +383,7 @@ Không. Quy định chỉ áp từ ngày công 01/10/2026.
 | Company mới không có chính sách | Tự tạo 1 record HR Policy cho company đó |
 | Bật/tắt flag không ăn | Sửa **đúng record của company** nhân viên đang thuộc |
 | Tìm mục cấp phép trong Policy | Không còn ở đây — dùng Leave Allocation/Policy Assignment |
+| Trưởng bộ phận báo *"Kỳ công đến hết ngày … đã khoá"* khi huỷ đơn | Đúng luật [mục 9](#9-khoá-kỳ-công) — HR huỷ giúp, hoặc nới **Ngày chốt công hằng tháng** nếu tháng này chốt muộn |
 
 ## Liên quan
 - [HR Policy (kỹ thuật)](HR-Policy.html)

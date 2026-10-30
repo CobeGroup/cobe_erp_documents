@@ -87,6 +87,7 @@ Gọi **X** = ngày ca mới có hiệu lực. **X phải từ ngày mai trở �
 | Hiện tượng | Cách xử |
 |---|---|
 | Có check-in mà không ra công | NV **chưa được gán Shift Assignment** |
+| Check-in mang nhãn **Off-Shift** (quẹt sớm hơn cửa sổ ca) | Nới ô *Begin check-in before shift start time* rồi gắn lại ca cho log cũ → [Log chấm công Off-Shift](Desk-HR-LogOffShift.html) |
 | NV văn phòng bị Half Day **mỗi thứ 7** | Holiday List Assignment đang trỏ list **không có** thứ 7 nửa ngày, hoặc list đã hết năm |
 | Ngày lễ vẫn thiếu công | Holiday List Assignment trỏ sai list, hoặc list chưa có ngày lễ đó |
 | Lỡ gắn Holiday List vào Shift Type | Xoá trống ô đó — lịch nghỉ chỉ đi qua Holiday List Assignment |

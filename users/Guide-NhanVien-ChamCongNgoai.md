@@ -46,7 +46,7 @@ flowchart LR
 
 | Bạn gặp tình huống | Việc cần làm |
 |---|---|
-| Quên check-in / check-out một ngày | Tạo **Đề xuất chấm công bù** cho ngày đó |
+| Quên check-in / check-out một ngày | **Từ hôm sau** mới tạo **Đề xuất chấm công bù** cho ngày đã qua đó — đừng tạo đơn cho hôm nay, xem [Quên chấm công hôm nay](#quen-cham-cong-hom-nay) |
 | Đi công tác, gặp khách ở xa cả ngày | Tạo **Đề xuất chấm công bù** (Công tác) |
 | Được duyệt làm việc tại nhà | Tạo **Đề xuất WFH** (nếu công ty bật WFH) |
 | Bạn là KTV / Sales được phép ra-vào ngoài VP | Đã được HR mở quyền sẵn — xem [mục A](#a-khi-nào-được-chấm-công-ngoài-văn-phòng) |
@@ -92,11 +92,13 @@ Nếu bạn **không thuộc 2 nhóm sau** mà đứng ngoài VP bấm chấm c�
 <img src="images/guide/dexuat/02-form.png" width="240" alt="Form Đề xuất chấm công bù">
 
 - **Loại đề xuất:**
-  - **Chấm công bù / Công tác** — quên check-in hoặc đi làm ngoài → ngày tính **Có mặt**.
+  - **Chấm công bù / Công tác** — chọn **ngày đã qua** là khai bù ngày quên chấm công; chọn **hôm nay /
+    ngày tới** là xin phép chấm công ngoài văn phòng (vẫn phải chấm công thì mới có công).
   - **Làm việc tại nhà (WFH)** — chỉ hiện nếu công ty bật WFH; cần nhập thêm **địa điểm**.
 - **Khoảng ngày:** chọn **1 ngày** (vd hôm nay) hoặc **nhiều ngày** liên tục cần xin công.
 - **Nửa ngày:** tích nếu chỉ xin **nửa công** (chỉ áp dụng khi chọn đúng 1 ngày).
-- **Lý do:** ghi rõ để quản lý duyệt nhanh — vd *"Đi công tác HCM gặp khách ABC"*, *"Quên check-out chiều"*.
+- **Lý do:** ghi rõ để quản lý duyệt nhanh — vd *"Đi công tác HCM gặp khách ABC"* (đơn cho hôm nay), *"Hôm qua quên check-in vì
+  điện thoại hết pin"* (đơn khai bù cho ngày đã qua).
 
 **Bước 3 —** Bấm **Gửi đề xuất**. App báo **"Đã gửi đề xuất, chờ quản lý duyệt"**. Đơn xuất hiện
 trên **Bảng công** với nhãn **"Đề xuất chấm bù"** + trạng thái **Chờ duyệt** (màu vàng):
@@ -114,6 +116,24 @@ trên **Bảng công** với nhãn **"Đề xuất chấm bù"** + trạng thái
 > giấy phép, lần chấm công chỉ là bằng chứng giờ giấc. Đơn bị từ chối thì ngày đó **không có công**,
 > kể cả khi bạn đã chấm công đủ vào/ra. Ngày bạn có chấm công **tại văn phòng** thì vẫn tính như
 > thường, không phụ thuộc đơn.
+
+### Quên chấm công hôm nay thì làm gì?
+{: #quen-cham-cong-hom-nay }
+
+Điện thoại hết pin, mất sóng, hoặc đơn giản là quên — **đừng tạo đơn cho chính hôm nay** để thay cho
+việc chấm công. Đơn cho hôm nay chỉ là giấy phép chấm công ở ngoài: duyệt xong vẫn thấy công, nhưng
+cả ngày không có lần chấm nào thì **2 giờ 20 sáng hôm sau hệ thống gỡ công** của ngày đó.
+
+| Tình trạng hôm nay | Việc cần làm |
+|---|---|
+| Vẫn còn chấm công được (sạc được pin, mượn được sóng, đang ở VP) | **Chấm công ngay**, dù muộn — một lần là đủ để giữ công. Đang ở ngoài VP thì tạo đơn cho hôm nay trước rồi chấm |
+| Hôm nay không chấm được lần nào | **Sáng hôm sau** tạo **đơn khai bù** cho ngày hôm nay (lúc đó đã là ngày đã qua). Đơn khai bù duyệt là có công, không cần chấm công — đổi lại nó tính vào **hạn mức tháng** và có **hạn nộp** |
+
+> ⚠️ **Lỡ tạo đơn cho hôm nay rồi và nhận thông báo *"Ngày … không được tính công vì không có lần chấm
+> công nào"*:** bạn **không tự gửi lại đơn được**, vì đơn cũ vẫn còn hiệu lực và app sẽ báo trùng
+> ngày. Nhờ **quản lý hoặc HR huỷ đơn cũ**, rồi gửi **đơn khai bù** cho ngày đó (HR khai hộ thì không
+> tính vào hạn mức của bạn). Công khai bù là **8 giờ, không có giờ vào/ra** vì hôm đó không có lần
+> chấm nào.
 
 ---
 
@@ -163,7 +183,8 @@ flowchart TB
 > ⚠️ **Trừ một trường hợp: đơn tạo cho hôm nay hoặc ngày tới.** Đơn loại đó là **giấy phép chấm công
 > ngoài văn phòng**, không phải giấy xin công — bạn vẫn phải **chấm công như thường** ở nơi đang làm.
 > Cả ngày không chấm lần nào thì sáng hôm sau ngày công bị gỡ và bạn nhận thông báo; khi đó muốn tính
-> công phải gửi **đơn khai bù** cho đúng ngày đã qua đó (đơn khai bù có hạn mức tháng và hạn nộp).
+> công phải nhờ **quản lý / HR huỷ đơn cũ**, rồi gửi **đơn khai bù** cho đúng ngày đã qua đó (đơn khai
+> bù có hạn mức tháng và hạn nộp). Xem [Quên chấm công hôm nay](#quen-cham-cong-hom-nay).
 
 > ❌ **Bị từ chối thì sao?** Ngày đó **không được tính công** — trên bảng công ô ngày để **trống**
 > (coi như vắng). Nếu thực tế bạn **có đi làm** mà bị từ chối nhầm, báo **quản lý / HR** — HR có thể
@@ -200,7 +221,8 @@ chấm công bù hiện **duyệt 1 bước** (khác nghỉ phép 2 bước):
 | Đứng ngoài VP, app báo **"Ngoài vùng văn phòng"** | Đúng cơ chế. Đi công tác → bấm **Tạo đề xuất** ngay trên hộp thoại báo lỗi (hoặc dòng "Đề xuất chấm công bù" dưới nút chấm công) để tạo đơn cho ngày đó |
 | Đã gửi đơn nhưng **chưa thấy duyệt** | Quản lý có thể chưa mở app — chờ chút hoặc nhắc quản lý; đơn vẫn nằm ở *Chờ duyệt* |
 | Đơn **Đã duyệt** mà Bảng công vẫn trống | Kéo **làm mới** danh sách; đơn duyệt xong sẽ chuyển thành dòng công **Có mặt** |
-| Quên **cả check-in lẫn check-out** | Hôm sau tạo **1 đơn khai bù** cho **ngày đã qua** đó — loại này duyệt là có công, không cần chấm công nữa. (Đơn tạo cho **hôm nay** thì không thay được việc chấm công) |
+| Quên **cả check-in lẫn check-out** | Hôm sau tạo **1 đơn khai bù** cho **ngày đã qua** đó — loại này duyệt là có công, không cần chấm công nữa. (Đơn tạo cho **hôm nay** thì không thay được việc chấm công — xem [Quên chấm công hôm nay](#quen-cham-cong-hom-nay)) |
+| Đơn cho hôm nay **đã duyệt** mà sáng hôm sau công bị gỡ, kèm thông báo *"không có lần chấm công nào"* | Hôm đó bạn không chấm lần nào. Nhờ **quản lý / HR huỷ đơn cũ**, rồi gửi **đơn khai bù** cho ngày đó — tự gửi ngay thì app báo trùng đơn |
 | Làm **nửa ngày ngoài**, nửa ngày ở VP | Tạo đơn **tích "Nửa ngày"**, ghi rõ lý do — quản lý duyệt sẽ tính nửa công |
 | Không thấy mục **WFH** trong "Loại đề xuất" | Công ty **chưa bật WFH** — báo HR bật `enable_wfh_mode` ([HR Policy](HR-Policy.html)) |
 | Cần xin bù **ngày đã lâu** | Quá **hạn nộp** của công ty (hoặc hết hạn mức đơn trong tháng) thì app chặn khi gửi → **báo HR** chỉnh tay trên Desk |

@@ -197,7 +197,7 @@ List). Ngày này hệ thống xử **khác cả ngày thường lẫn Chủ nh�
 | | Nghĩa vụ trong ngày | Giờ OT được tính từ | Hệ số |
 |---|---|---|---|
 | Ngày thường | Trọn ca (VD 8h) | Sau giờ tan ca (17:30) | ×1.5 |
-| **Thứ 7 nửa buổi** | **Nửa ca (VD 4h)** | **Sau khi đã đủ nửa ca** | **×2.0** |
+| **Thứ 7 nửa buổi** | **Buổi sáng — tới giờ nghỉ trưa (12:00)** | **Sau 12:00, không tính giờ nghỉ trưa** | **×2.0** |
 | Chủ nhật / lễ | Không có | Từ giờ đầu tiên | ×2.0 / ×3.0 |
 
 Nghĩa là nhân viên làm **trọn ngày Thứ 7** thì được:
@@ -205,8 +205,14 @@ Nghĩa là nhân viên làm **trọn ngày Thứ 7** thì được:
 - **0,5 ngày công** cho buổi sáng — phần nghĩa vụ, nằm trong bảng công như bình thường;
 - phần vượt quá nửa buổi vào **đơn làm thêm** (tiền hoặc nghỉ bù).
 
-*Ví dụ thật:* quẹt vào 07:57, ra 17:42 → giờ công 8,04h. Trừ nghĩa vụ nửa buổi
-4h còn **4,04h**, xin 4h nên ghi nhận đúng **4h**.
+*Ví dụ:* quẹt vào 07:57, ra 17:42, khai làm thêm 13:30–17:30 → giờ công buổi sáng
+**4h** (08:00–12:00), phần có mặt sau 12:00 trừ giờ nghỉ trưa 12:00–13:30 là 4,2h,
+khai 4h nên ghi nhận đúng **4h**.
+
+Từ ngày công **01/10/2026**, giờ làm thêm chiều Thứ 7 được đo **riêng**, không phụ
+thuộc buổi sáng: vào trễ buổi sáng chỉ làm giảm giờ công buổi sáng, không trừ vào giờ
+làm thêm buổi chiều. Trước mốc này hệ thống lấy "giờ công cả ngày − 4h" nên vào trễ
+buổi sáng bị trừ luôn vào làm thêm. Chi tiết: [Chính sách chấm công §8](Desk-Admin-Policy.html#8-cách-tính-giờ-công-và-trạng-thái-công-từ-01102026).
 
 > ⚠️ **Trần OT Thứ 7 là 4h** (dùng trần ngày thường, không phải trần lễ 8h) — vì
 > buổi làm thêm thực tế là 13:30–17:30. Ai khai từ 12:00 là tính cả giờ nghỉ trưa,

@@ -21,6 +21,7 @@ has_children: true
 | Hiểu loại phép, cấp số dư, cách trừ phép | **[Loại phép & số dư (cấp / trừ)](Desk-HR-LoaiPhep.html)** |
 | Cộng / trừ tay vài phần ngày phép cho 1 người | **[Điều chỉnh số dư phép thủ công (± 0,5 ngày)](Desk-HR-DieuChinhSoDuPhep.html)** |
 | Xem ai đi làm, sửa công, xử lý quên chấm | **[Theo dõi & sửa chấm công](Desk-HR-ChamCong.html)** |
+| Nhân viên quẹt sớm, log mang nhãn **Off-Shift**, ngày đó mất công | **[Log chấm công Off-Shift](Desk-HR-LogOffShift.html)** |
 | Duyệt bước HR cho đơn nghỉ phép / WFH / chấm bù | **[Duyệt nghỉ phép / WFH (bước HR)](Desk-HR-DuyetDon.html)** |
 | Kiểm số dư phép, soát đơn treo, truy vết số dư sai | **[Kiểm tra phép & báo cáo phép](Desk-HR-KiemTraPhep.html)** |
 | Xem bảng công tháng, số dư phép, báo cáo nhân sự | **[Báo cáo (HR)](Desk-HR-BaoCao.html)** |

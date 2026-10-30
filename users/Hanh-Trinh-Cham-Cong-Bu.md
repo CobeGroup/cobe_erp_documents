@@ -77,6 +77,11 @@ công. Tạo đơn rồi mà cả ngày không chấm công lần nào thì ngà
 hệ thống gỡ ngày công đó và gửi thông báo ghi rõ ngày. Muốn tính công cho một ngày đã qua thì gửi
 **đơn khai bù** — và đơn khai bù mới là loại bị hạn mức tháng.
 
+> ⚠️ **Hôm nay quên chấm công** (hết pin, mất sóng…) thì **đừng tạo đơn cho hôm nay**: còn chấm được
+> thì chấm ngay một lần; không chấm được thì **sáng hôm sau** gửi đơn khai bù cho ngày đó. Lỡ tạo đơn
+> cho hôm nay và bị gỡ công thì phải nhờ **quản lý / HR huỷ đơn cũ** trước — đơn cũ còn hiệu lực nên
+> tự gửi đơn khai bù sẽ bị báo trùng ngày. Chi tiết: [Quên chấm công hôm nay](Guide-NhanVien-ChamCongNgoai.html#quen-cham-cong-hom-nay).
+
 
 Anh A đang ở chỗ khách, mở app. Có **2 lối** cùng mở 1 form:
 
