@@ -436,6 +436,61 @@ không kéo sập cả hộp — kể cả đơn nghỉ phép.
 - ⚠️ `sweep(from, to)` **không truyền `employee` là quét cả công ty** — đúng ý cho cron, nhưng gọi
   trần trong test trên site bản sao prod là thu hồi công thật của người thật (đã dính: 21 bản ghi
   phải dựng lại tay). Test phải luôn khoá `employee=`.
+- **Phiếu mất hết công thì huỷ luôn phiếu** (30/10/2026) — `cancel_fully_revoked_requests`, gọi ở
+  ba chỗ: cuối `sweep` cho các phiếu vừa bị thu hồi trong lượt đó, cuối job đêm `run()` quét **cả
+  site** (dọn phiếu duyệt muộn bị thu hồi lúc submit), và patch `v0_056` một lần cho tồn đọng.
+  **KHÔNG** huỷ trong `enforce_for_request` (`sweep(..., cancel_requests=False)`): hàm đó chạy trong
+  `on_submit` của chính phiếu — huỷ ở đó là DB docstatus 2 trong khi bản trong bộ nhớ còn 1, Frappe ghi
+  Version 0→1 (`save_version` chạy sau `on_submit`) **sau** Version 1→2, và mã gọi `doc.submit()` chạy
+  tiếp như đơn vừa duyệt. Lý do của luật: thu hồi công mà để phiếu ở docstatus 1 là HRMS
+  `validate_request_overlap` chặn đơn khai bù cùng ngày; đo bản sao prod 19/09–28/10: 75 ngày thu
+  hồi/36 người, 1 khai bù lại, 66 phiếu kẹt. Điều kiện (`fully_revoked_requests`, SQL): `to_date <
+  hôm nay`, `from_date >= mốc hiệu lực`, có bản `Attendance` docstatus 2 trỏ về phiếu với
+  `attendance_date >= DATE(creation)` (đúng ngày mở cổng), **không** còn bản `Attendance` docstatus 1
+  nào của nhân viên trong `[from_date, to_date]` — nguồn nào cũng vậy, HR huỷ bản của phiếu rồi chấm
+  tay thì ngày vẫn có công (prod có 2 ca) — **trừ** bản công nghỉ phép (`leave_application` có giá trị)
+  không trỏ về phiếu: nghỉ duyệt trước phiếu thì HRMS `has_leave_record` bỏ qua ngày đó, bản nghỉ không
+  phải nguồn công thay phiếu, không loại ra là phiếu nhiều ngày kẹt mãi; bản nghỉ phép **còn trỏ về
+  phiếu** (đơn nghỉ duyệt SAU phiếu — `LeaveApplication.update_attendance` đổi trạng thái nhưng giữ
+  `attendance_request`) thì vẫn chặn, vì huỷ phiếu là HRMS `on_cancel` huỷ luôn bản nghỉ đó. Không có
+  `HR Overtime Request` Approved nào trong khoảng phiếu (cùng luật `_con_nguon_cong_khac` của `sweep`;
+  prod có 1 ca HR huỷ tay bản công rồi OT mới duyệt — HR-ARQ-26-09-00182 — phiếu rỗng nhưng ngày vẫn
+  có công). Và không một `Employee Checkin` nào có `DATE(time)` **hoặc `DATE(shift_start)`** trong
+  khoảng đó, hoặc gắn `custom_wfh_approval` = phiếu — `shift_start` vì ca đêm có log OUT rơi sang ngày
+  sau `to_date`, mà HR huỷ tay bản công là HRMS gỡ `ec.attendance` nên không còn gì níu log vào khoảng
+  phiếu. Mỗi phiếu huỷ trong savepoint riêng, mọi bước (đọc, huỷ, Comment, báo người duyệt) đều trong
+  `try` → hỏng là lùi phiếu đó, Error Log, đi tiếp; bước dọn trong `run()` cũng bọc `try` để không kéo
+  đổ bước thu hồi của đêm (scheduler rollback cả transaction khi job ném lỗi). Phiếu lương đã duyệt
+  phủ phiếu (`request_cancel._salary_slip_covering`) → bỏ qua nhưng ghi Comment một lần
+  (`SLIP_BLOCK_NOTE`) để HR biết phải huỷ tay sau khi huỷ phiếu lương, không im lặng mỗi đêm.
+  Bản công bị HR huỷ TAY (không phải job) cũng rơi vào diện huỷ phiếu — chấp nhận: phiếu rỗng, không log;
+  HR muốn phiếu chết hẳn thì huỷ phiếu chứ không chỉ huỷ bản công.
+  Huỷ với `doc.flags.cobe_system_cancel = True`: `request_cancel.before_cancel` cho qua (không có
+  người bấm để xét quyền), `onduty_hooks._release_checkins` tắt `_notify_withdrawn` (lời báo của
+  `require_checkin._notify` nói rõ hơn và nay **gắn link phiếu** — phiếu huỷ không xoá được nên link
+  không bay). Lý do ghi Comment `AR_CANCEL_REASON_PREFIX + "Hệ thống huỷ phiếu: …"` SAU khi cancel
+  xong (PWA đọc qua `status_reason`; trail hiện *Huỷ bởi: Hệ thống* vì Version 1→2 owner Administrator).
+  Người đã duyệt (`custom_manager_approved_by` + owner Version 0→1, thiếu Version thì `modified_by`;
+  trừ Administrator và chính nhân viên) nhận `_notify_approver` không lọc `kind` — giải thích cho một
+  việc đã xảy ra với quyết định của họ. **Patch `v0_056` không gửi thông báo nào**: không báo người
+  duyệt (chuyện cũ dồn một lúc), và không báo nhân viên ngay vì `frappe.modules.patch_handler.run_single`
+  đặt `conf.developer_mode = 0` suốt lúc chạy patch — patch không phân biệt được máy dev với prod, mà
+  bản sao prod ở máy dev còn HR Push Settings bật + token thiết bị thật (diễn tập migrate local 30/10/2026
+  sinh 35 Notification Log cho người thật, chỉ không thành push vì hàng đợi local nghẹt). Nhân viên được
+  báo bù ở job đêm: `notify_unannounced_cancellations` dò phiếu docstatus 2 có Comment `SYSTEM_CANCEL_NOTE`
+  mà chưa có Notification Log gắn phiếu với tiêu đề `MISSING_SUBJECT` (cùng `_()` hai bên) — lượt báo hụt
+  thì đêm sau bù. Vì dấu "đã báo" gắn theo PHIẾU nên `notify_cancelled` gửi **mỗi phiếu một lời**, không
+  gom nhiều phiếu của một người vào một lời. Ngày nêu trong
+  lời báo chỉ gồm ngày **mở cổng** (`attendance_date >= DATE(creation)`) — bản công ngày lùi của phiếu
+  bị HR huỷ vì lý do khác không mang lời "không có lần chấm công nào". Hai lời báo cho nhân viên, không
+  lẫn: phiếu vừa huỷ → "nộp khai bù được ngay" (có link, chỉ liệt kê ngày của phiếu đã huỷ); phiếu còn
+  sống (thu hồi lúc duyệt muộn, phiếu nhiều ngày mất một phần, phiếu chưa kết thúc) → "phiếu kết thúc
+  mà không còn ngày có công thì hệ thống tự huỷ rồi báo lại; còn ngày có công mà cần khai bù thì nhờ
+  quản lý/HR huỷ phiếu cũ trước". Một lời cho mọi ca phiếu sống vì lúc báo chưa biết phiếu sẽ ra sao
+  ("huỷ đêm nay" sai khi phiếu còn phủ ngày tới; "nhờ HR huỷ" sai khi đêm sau hệ thống tự huỷ). Cùng một
+  đêm một người có cả phiếu huỷ lẫn phiếu sống thì lời của phiếu huỷ (mỗi phiếu một lời) tách khỏi lời
+  của ngày thuộc phiếu sống. Phiếu
+  nhiều ngày mất công một phần → còn bản docstatus 1 trỏ về phiếu → không khớp điều kiện, giữ nguyên.
 
 **Soi chỗ chấm công ngoài văn phòng** — report `COBE Remote Checkin Audit`
 (`attendance/report/cobe_remote_checkin_audit`, vai trò System Manager / HR Manager / HR User):

@@ -222,7 +222,7 @@ chấm công bù hiện **duyệt 1 bước** (khác nghỉ phép 2 bước):
 | Đã gửi đơn nhưng **chưa thấy duyệt** | Quản lý có thể chưa mở app — chờ chút hoặc nhắc quản lý; đơn vẫn nằm ở *Chờ duyệt* |
 | Đơn **Đã duyệt** mà Bảng công vẫn trống | Kéo **làm mới** danh sách; đơn duyệt xong sẽ chuyển thành dòng công **Có mặt** |
 | Quên **cả check-in lẫn check-out** | Hôm sau tạo **1 đơn khai bù** cho **ngày đã qua** đó — loại này duyệt là có công, không cần chấm công nữa. (Đơn tạo cho **hôm nay** thì không thay được việc chấm công — xem [Quên chấm công hôm nay](#quen-cham-cong-hom-nay)) |
-| Đơn cho hôm nay **đã duyệt** mà sáng hôm sau công bị gỡ, kèm thông báo *"không có lần chấm công nào"* | Hôm đó bạn không chấm lần nào. Nhờ **quản lý / HR huỷ đơn cũ**, rồi gửi **đơn khai bù** cho ngày đó — tự gửi ngay thì app báo trùng đơn |
+| Đơn cho hôm nay **đã duyệt** mà sáng hôm sau công bị gỡ, kèm thông báo *"không có lần chấm công nào"* | Hôm đó bạn không chấm lần nào. Đơn cũ đã được **hệ thống huỷ** cùng lúc (nằm ở tab *Đã hủy*, có ghi lý do), nên nếu hôm đó có đi làm, bạn gửi **đơn khai bù** cho ngày đó được ngay — vẫn theo hạn nộp và hạn mức tháng |
 | Làm **nửa ngày ngoài**, nửa ngày ở VP | Tạo đơn **tích "Nửa ngày"**, ghi rõ lý do — quản lý duyệt sẽ tính nửa công |
 | Không thấy mục **WFH** trong "Loại đề xuất" | Công ty **chưa bật WFH** — báo HR bật `enable_wfh_mode` ([HR Policy](HR-Policy.html)) |
 | Cần xin bù **ngày đã lâu** | Quá **hạn nộp** của công ty (hoặc hết hạn mức đơn trong tháng) thì app chặn khi gửi → **báo HR** chỉnh tay trên Desk |

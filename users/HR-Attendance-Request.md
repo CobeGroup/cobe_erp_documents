@@ -72,6 +72,13 @@ Attendance Request (đơn "Chấm công bù") dùng cho các tình huống NV **
 > hạn mức tháng** như đơn khai bù. Hết ngày không có
 > lần chấm nào thì bản Attendance do đơn tạo bị **thu hồi** và nhân viên nhận thông báo ghi rõ ngày
 > (`attendance.require_checkin`: job 02:20 quét 7 ngày + kiểm ngay lúc duyệt cho ngày đã qua).
+> Từ **30/10/2026**, phiếu mà **mọi ngày** đều bị thu hồi như vậy được hệ thống **huỷ luôn** (docstatus 2,
+> Comment *"Lý do huỷ: Hệ thống huỷ phiếu: không có lần chấm công nào trong ngày …"*) để nhân viên nộp
+> được đơn khai bù cùng ngày — trước đó phiếu còn sống nên HRMS báo trùng đơn và gần như không ai sửa
+> (bản sao prod 19/09–28/10: 75 ngày thu hồi, 1 khai bù lại). Người đã duyệt (trưởng bộ phận, người
+> submit) nhận thông báo giải thích kèm link phiếu. Phiếu nhiều ngày mới mất công một phần, ngày có đơn
+> làm thêm đã duyệt, hoặc đã nằm trong phiếu lương đã duyệt, thì giữ nguyên. Patch `v0_056` huỷ bù các phiếu
+> kẹt từ 19/09: không báo người duyệt; nhân viên được báo ở lần chạy job đêm kế tiếp sau khi migrate.
 > Đơn khai bù cho **ngày đã qua** thì giữ nguyên cách cũ — duyệt là có công — và đó là đơn duy nhất
 > bị **hạn mức tháng** đếm. Luật chỉ áp từ ngày migrate trở đi (patch `v0_045` ghi mốc), không hồi tố.
 

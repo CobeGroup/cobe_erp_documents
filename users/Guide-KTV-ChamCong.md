@@ -225,7 +225,7 @@ thêm bước cuối rồi ngày đó mới có công.
 | Bảng công gắn cảnh báo **"Không có ca"** | Hôm đó không có lịch hẹn dịch vụ trên hệ thống — báo điều phối tạo lịch hẹn, hoặc giải trình với HR |
 | Job kéo dài **nhiều ngày** ở tỉnh | Tạo **1 đơn** chọn khoảng ngày từ–đến là đủ, không cần mỗi ngày một đơn |
 | Đơn duyệt rồi mà Bảng công chưa thấy dòng **Có mặt** | Kéo làm mới danh sách; nếu vẫn thiếu sau vài phút → báo HR |
-| Đơn cho **hôm nay** đã duyệt, hôm sau ngày công **biến mất** | Hôm đó bạn không chấm công lần nào — đơn loại này chỉ mở quyền chấm ngoài VP. Nhờ **quản lý / HR huỷ đơn cũ** (tự gửi ngay sẽ bị báo trùng đơn), rồi gửi **đơn khai bù** cho ngày đã qua đó |
+| Đơn cho **hôm nay** đã duyệt, hôm sau ngày công **biến mất** | Hôm đó bạn không chấm công lần nào — đơn loại này chỉ mở quyền chấm ngoài VP. Đơn cũ đã được **hệ thống huỷ** cùng lúc (tab *Đã hủy*), nên nếu có đi làm thật thì gửi ngay **đơn khai bù** cho ngày đã qua đó |
 | Hôm nay **quên chấm công** (hết pin, mất sóng…) | **Đừng tạo đơn cho hôm nay** thay cho chấm công. Còn chấm được thì chấm ngay một lần; không chấm được thì **sáng hôm sau** gửi đơn khai bù — xem [Quên chấm công hôm nay](Guide-NhanVien-ChamCongNgoai.html#quen-cham-cong-hom-nay) |
 
 ---

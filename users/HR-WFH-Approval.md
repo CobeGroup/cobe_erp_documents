@@ -123,6 +123,10 @@ Check-in WFH (GPS + selfie) **vẫn là phần custom của app** (xem `api.atte
   được mọi đơn; trưởng bộ phận chỉ huỷ được đơn mình duyệt **một bước** và chưa thuộc kỳ công đã
   khoá. Ngày đã có phiếu lương đã duyệt thì không ai huỷ được — xem
   [Chính sách chấm công §9](Desk-Admin-Policy.html#9-khoá-kỳ-công)
+- **Hệ thống tự huỷ** (từ 30/10/2026): đơn nộp cho hôm nay / ngày tới mà cả ngày không có lần chấm công
+  nào thì job 02:20 thu hồi công **và huỷ luôn đơn**, ghi lý do vào Comment, báo nhân viên lẫn người đã
+  duyệt. Có vậy nhân viên mới nộp được đơn khai bù cùng ngày — xem
+  [Đơn chấm công bù](HR-Attendance-Request.html)
 - Sau khi từ chối / huỷ, nếu cần WFH lại cùng ngày → NV tạo đơn WFH mới (không bị chặn trùng)
 
 ---

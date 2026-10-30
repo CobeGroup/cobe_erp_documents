@@ -32,6 +32,7 @@ nav_order: 6
 | ⑥ | Nhân viên **không xem được** bảng công, đơn chấm công bù, đơn làm thêm, số dư phép **của người khác** — trừ quản lý và HR | Nhân viên, quản lý dùng Desk | Mục ⑥ bên dưới |
 | ⑦ | Ứng dụng chấm công ghi **ai đã duyệt / từ chối / huỷ** từng đơn; màn Làm thêm và tab mới **Đơn bù** chia 4 nhóm | Mọi nhân viên | [Xin làm thêm giờ §4](Guide-NhanVien-LamThem.html) · [Chấm công ngoài VP & đề xuất bù §C](Guide-NhanVien-ChamCongNgoai.html) |
 | ⑧ | **Thông tin cá nhân** trên hồ sơ nhân viên (ngày sinh, điện thoại, địa chỉ, ngân hàng…) và **phiếu chi phí / tạm ứng** chỉ HR và người liên quan xem; **chỉ HR lập hồ sơ nhân viên mới** | Nhân viên, quản lý dùng Desk | Mục ⑧ bên dưới |
+| ⑨ | Đơn chấm công ngoài văn phòng **mất công vì không chấm lần nào** thì **đơn cũng bị huỷ**, nhân viên nộp khai bù được ngay; người đã duyệt nhận thông báo giải thích | Nhân viên, người duyệt | Mục ⑨ bên dưới |
 
 ---
 
@@ -198,13 +199,37 @@ người mình quản lý (như mục ⑥); **người duyệt chi phí** thấy
 của người có mình ở ô *Expense Approver* trên hồ sơ, và của bộ phận mà mình nằm trong bảng *Expense
 Approvers*; HR thấy hết.
 
+## ⑨ Đơn mất công thì đơn cũng được huỷ, để nộp khai bù được ngay
+
+Từ 09/2026, đơn chấm công bù / công tác nộp cho **hôm nay hoặc ngày tới** chỉ mở quyền chấm công ngoài
+văn phòng; hết ngày không chấm lần nào thì ngày công do đơn tạo bị thu hồi lúc 02:20 sáng hôm sau
+(xem [đợt 09/2026 mục ④](Cham-Cong-Co-Gi-Moi-09-2026.html)). Nhưng **đơn vẫn còn hiệu lực**, nên khi
+nhân viên gửi đơn khai bù cho đúng ngày đó, hệ thống báo *trùng đơn*; muốn sửa phải nhờ quản lý hoặc HR
+huỷ đơn cũ trước. Trên thực tế gần như không ai đi đường này: từ 19/09 đến 28/10 có 75 ngày công bị thu
+hồi của 36 người, chỉ 1 ngày được khai bù lại.
+
+Từ 30/10/2026:
+
+- Ngày bị thu hồi công mà **mọi ngày trong đơn** đều rơi vào trường hợp đó thì **đơn được hệ thống huỷ
+  ngay cùng lúc**. Đơn nằm ở tab *Đã hủy* của màn Đơn bù, dòng *Huỷ bởi: Hệ thống* kèm lý do *không có lần
+  chấm công nào trong ngày …*.
+- Thông báo cho nhân viên nói rõ: ngày đó không có công, đơn đã huỷ, **nếu hôm đó có đi làm thì gửi đơn
+  khai bù được ngay** — vẫn theo hạn nộp và hạn mức tháng của công ty.
+- **Người đã duyệt** đơn (trưởng bộ phận, HR) nhận một thông báo riêng giải thích vì sao đơn mình duyệt
+  bị huỷ và rằng họ không cần làm gì thêm; đơn khai bù mới (nếu có) sẽ về hộp duyệt như bình thường.
+- Đơn phủ nhiều ngày mà mới mất công một phần, ngày có đơn làm thêm đã duyệt, hoặc ngày đã nằm trong
+  phiếu lương đã duyệt, thì **không** tự huỷ — HR xử lý tay như trước.
+- Các đơn đã kẹt từ 19/09 được huỷ bù khi đưa bản này lên; nhân viên liên quan nhận thông báo ở lần chạy
+  02:20 kế tiếp, người duyệt thì không (chuyện cũ dồn một lúc).
+
 ## Khi đưa lên hệ thống
 
 - **Deploy rồi chạy `bench migrate`.** Migrate tạo hai chứng từ mới, bảng *Hạn mức ứng trước Nghỉ
   bù*, ô *Giờ Nghỉ bù ứng trước* trên đơn nghỉ, độ chính xác 5 chữ số cho ô *Leaves to Adjust* của
   `Leave Adjustment`, khai sẵn dòng *Dịch vụ - Bảo hành* = 1 ngày, tạo bảng *Đơn chấm công bị từ chối*
   và thu ba báo cáo số dư phép / chấm công của HRMS về cho HR (mục ⑥, ⑦), chuyển các ô thông tin cá
-  nhân trên hồ sơ nhân viên sang chỉ HR xem (mục ⑧). Ứng dụng chấm công cũng
+  nhân trên hồ sơ nhân viên sang chỉ HR xem (mục ⑧), và huỷ bù các đơn chấm công ngoài văn phòng đã mất
+  hết công mà còn treo từ 19/09 (mục ⑨, patch `v0_056`). Ứng dụng chấm công cũng
   phải lên bản build mới thì mới có tab *Đơn bù* và dòng *ai đã duyệt*.
 - **Xem lại bảng *Hạn mức ứng trước Nghỉ bù*** của từng công ty: dòng mặc định có đúng bộ phận,
   đúng số ngày không; bộ phận nào khác cần cho ứng.
