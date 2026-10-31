@@ -154,8 +154,9 @@ Hay gặp nhất là **duyệt nhầm hình thức quy đổi** (Tiền lương 
 thì tab *Cần duyệt* không còn thấy nữa, nhưng huỷ được ở hai chỗ:
 
 - **Trên app** — vào **Cần duyệt** → tab **"Đã duyệt"** → lọc **Làm thêm giờ** → bấm **Huỷ duyệt**
-  ở đơn cần sửa. Tab này liệt kê đơn đã duyệt có **ngày làm thêm** trong 45 ngày gần đây (không phải
-  ngày duyệt — đơn khai bù cho ngày cũ vừa duyệt xong sẽ không nằm ở đây, huỷ duyệt trên Desk) của
+  ở đơn cần sửa. Tab này liệt kê đơn đã duyệt có **ngày làm thêm** nằm trong **khoảng ngày** chọn ở ô
+  phía trên (mặc định từ đầu tháng trước đến cuối tháng sau; tính theo ngày làm thêm, không theo ngày
+  duyệt — đơn khai bù cho ngày cũ thì chọn khoảng ngày lùi về tháng đó) của
   nhân viên có **bạn là người duyệt chấm công trên hồ sơ Employee** (HR Manager / System Manager thấy tất cả). Người duyệt
   chỉ được khai ở bảng của Department thì không thấy đơn ở đây — huỷ trên Desk.
 - **Trên Desk** — tìm **HR Overtime Request** → mở đơn → bấm nút đỏ **"Huỷ duyệt"**.

@@ -105,6 +105,18 @@ Nay màn **Duyệt đơn** có **4 tab**:
 Ba tab sau là **nhật ký của riêng bạn**: chỉ hiện đơn **chính bạn** đã bấm duyệt/từ chối/huỷ,
 không phải mọi đơn của công ty.
 
+**Chọn khoảng ngày.** Ở ba tab này có ô **Từ ngày → Đến ngày** phía trên danh sách. Danh sách chỉ
+gồm đơn có **ngày của đơn** (ngày nghỉ, ngày chấm công bù, ngày làm thêm) nằm trong khoảng đã chọn —
+đơn nghỉ kéo dài nhiều ngày chỉ cần một ngày rơi vào khoảng là được liệt kê. Khoảng ngày tính theo
+ngày của đơn, **không** theo ngày bạn bấm duyệt: muốn rà đơn của kỳ công tháng 9 thì chọn
+01/09 → 30/09, kể cả những đơn được duyệt muộn sang tháng 10.
+
+- Mặc định: từ **đầu tháng trước** đến **cuối tháng sau** — đủ để thấy các đơn vừa xử, kể cả đơn khai
+  bù cho tháng trước và đơn xin nghỉ trước cho tháng sau.
+- Tab **Chờ duyệt** không có ô này: đơn đang chờ luôn hiện đủ.
+- Danh sách dài được chia trang, mỗi trang 30 đơn.
+- Nếu hiện cảnh báo *"Khoảng ngày quá rộng, danh sách chưa đủ"* thì thu hẹp khoảng ngày lại.
+
 Đơn được xếp theo **trạng thái hiện tại**, không phải theo việc bạn đã bấm gì. Bạn duyệt một đơn,
 sau đó HR huỷ đơn ấy → nó chuyển từ tab *Đã duyệt* sang tab **Đã hủy** của bạn, để bạn thấy đúng
 tình trạng bây giờ.
