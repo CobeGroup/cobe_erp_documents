@@ -16,7 +16,7 @@ nav_order: 6.5
 > **đối chiếu công cuối tháng**, xuất Excel gửi kế toán.
 
 > 🟢 **Dùng bản Cobe: `COBE HR Attendance Sheet`** (KHÔNG phải bản gốc HRMS "Monthly
-> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Cty Trực Thuộc**, **Số công**, **Tổng giờ chuẩn** + **Tổng giờ
+> Attendance Sheet"). Bản Cobe thêm **Mã NV**, **Cty Trực Thuộc**, **Số công**, **Nghỉ hưởng lương**, **Tổng công**, **Tổng giờ chuẩn** + **Tổng giờ
 > thực**, **4 cột số dư phép**, **ký hiệu tiếng Việt theo loại phép**, và ô **"Chế độ xem"** để đổi
 > bảng công thành **bảng giờ vào/ra kiểu máy chấm công** — xem [mục 0](#0-bản-cobe--khác-gì-bản-gốc).
 
@@ -42,7 +42,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 
 | | **COBE HR Attendance Sheet** *(khuyên dùng)* | Monthly Attendance Sheet *(gốc HRMS)* |
 |---|---|---|
-| Cột đầu | Employee · **Mã NV** · Tên · **Cty Trực Thuộc** · Shift · **Số công** · **Tổng giờ chuẩn** · ~~Tổng giờ thực~~ *(tạm ẩn)* · **4 cột số dư phép** | Employee · Tên · Shift |
+| Cột đầu | Employee · **Mã NV** · Tên · **Cty Trực Thuộc** · Shift · **Số công** · **Nghỉ hưởng lương** · **Tổng công** · **Tổng giờ chuẩn** · ~~Tổng giờ thực~~ *(tạm ẩn)* · **4 cột số dư phép** | Employee · Tên · Shift |
 | **Chế độ xem** | **5 chế độ**: Chấm công · **Giờ vào-ra** · **Đầy đủ** · **Chi tiết theo ngày** · Tổng hợp | Chỉ 1 lưới + Summarized View |
 | Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`), chia 1–3 phần tuỳ chế độ: **mã** (`P`/`HD`/`WFH`/`L`…/`-`) · **giờ vào** · **giờ ra** *(phần số giờ đang tạm ẩn)* | 1 ô: chỉ ký hiệu `P`, `HD` |
 | Ký hiệu | Công `P` · nửa `HD` · WFH `WFH` · có mặt ngày nửa buổi `P:2` · có mặt CN/lễ `P0` · nghỉ `L`/`L/2`/`NB`/`NB/2`/`KL`/`KL/2`/`CĐ`/`BH`/`H` · `WO` · `-` không dữ liệu (kể cả sáng Thứ 7 nửa buổi) | Gộp chung `L` (On Leave); CN/T7 đi làm cũng chỉ là `P` |
@@ -63,7 +63,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 > 💡 **Xuất Excel** thì mỗi ngày ra **nhiều cột riêng** (`1 T4` = mã, `1·vào`, `1·ra`, `1·g` = số giờ)
 > nên cộng/lọc theo cột giờ từng ngày được — trên màn gộp lại 1 ô cho gọn, nhưng dữ liệu vẫn tách.
 >
-> 💡 **Số công và hai cột tổng giờ** — đừng nhầm:
+> 💡 **Số công, Nghỉ hưởng lương, Tổng công và hai cột tổng giờ** — đừng nhầm:
 > - **Số công** *(từ 03/11/2026)* = **công làm việc** trong kỳ, **không gồm nghỉ phép**, quy đổi theo **loại ngày** của từng nhân viên:
 >
 >   | Loại ngày | Có mặt (`P` / `WFH`) | Nửa ngày công (`HD`) |
@@ -73,11 +73,24 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 >   | Ngày **nghỉ trọn** (Chủ nhật, lễ) — ký hiệu `P0` | **0** — cả ngày là làm thêm, đã trả nơi khác | 0 |
 >
 >   Nghỉ phép nửa ngày (`L/2`, `NB/2`…) chỉ tính nửa còn lại **nếu nửa đó có đi làm**; nửa đó vắng thì 0.
->   Ngày nghỉ bù / phép năm là công **có lương** nhưng **không nằm trong Số công** — đếm ở cột phép của chế độ *Tổng hợp*; cộng vào Số công là tính hai lần.
+>   Ngày nghỉ bù / phép năm là công **có lương** nhưng **không nằm trong Số công** — chúng nằm ở cột **Nghỉ hưởng lương** bên cạnh.
+> - **Nghỉ hưởng lương** *(từ 03/11/2026)* = ngày **không đi làm nhưng vẫn được trả lương**:
+>
+>   | Trường hợp | Tính |
+>   |---|---|
+>   | Nghỉ phép **có lương** trọn ngày (Phép Năm, Nghỉ bù, Nghỉ Ốm, Nghỉ Việc Riêng) | **1** — Thứ 7 nửa buổi **0,5** (đúng số ngày phép đã trừ quỹ) |
+>   | Nghỉ phép có lương **nửa ngày** | **0,5** |
+>   | **Ngày lễ** trong thời gian còn làm việc | **1** — kể cả hôm đó có đi làm (giờ làm hôm đó là làm thêm, trả riêng qua đơn làm thêm) |
+>   | Lễ rơi đúng **Chủ nhật** mà lịch nghỉ đã có **ngày nghỉ bù lễ** (vd Giỗ Tổ 26/04/2026 → nghỉ bù 27/04) | **0** cho ngày Chủ nhật — ngày nghỉ bù mới là ngày được trả, tính cả hai là trả lễ hai lần |
+>   | Nghỉ **không lương**, Nghỉ chế độ **BHXH** | **0** |
+>
+>   Loại phép nào có lương đọc từ cờ **"Is Leave Without Pay"** trên từng *Leave Type* — tick nhầm cờ này thì cột hụt theo, nên soát cờ khi thêm loại phép mới.
+>   Nhân viên đổi ca giữa tháng có **2 dòng**: ngày nghỉ trọn và ngày lễ chỉ cộng ở **dòng đầu**, không cộng hai lần.
+> - **Tổng công** = **Số công + Nghỉ hưởng lương** — số ngày công **được trả lương** trong kỳ. **Lập bảng lương từ cột này.**
 > - **Tổng giờ chuẩn** = **Số công × giờ chuẩn của CA**. Giờ chuẩn ca = *(giờ ra − giờ vào) − nghỉ trưa*, **suy động từ cấu hình mỗi Shift Type** — ca khác nhau có giờ chuẩn khác nhau. Đổi giờ ca trong cấu hình thì cột này **tự đúng theo**. Ngày nửa buổi = ½ ca; Chủ nhật / lễ đi làm = 0 (trước 03/11/2026 cột này cộng trọn ca cho Chủ nhật có mặt — sai).
 > - **Tổng giờ thực** = cộng **số giờ bấm máy** thực tế mọi ngày trong kỳ (đúng những gì check-in/out ghi lại).
 >
-> Dùng **Số công** để lập bảng lương; **Tổng giờ chuẩn** khi cần đơn vị giờ; **Tổng giờ thực** để soi giờ hiện diện thật.
+> Dùng **Tổng công** để lập bảng lương; **Số công** khi chỉ cần số ngày thực đi làm; **Tổng giờ chuẩn** khi cần đơn vị giờ; **Tổng giờ thực** để soi giờ hiện diện thật.
 >
 > ⚠️ **Vì sao có cột Số công:** bản ghi chấm công ngày Chủ nhật / Thứ 7 đi làm vẫn là *Present* (phải giữ — đơn làm thêm đọc giờ thực từ đó), nên trước đây ô hiện `P` và HR dễ đếm thành **1 công**, trong khi 8 giờ Chủ nhật (hoặc 4 giờ chiều Thứ 7) đã vào **quỹ Nghỉ bù** — tức **cộng hai lần**. Luật: *giờ làm thêm trả bằng Nghỉ bù không tính công, chỉ cộng quỹ; ngày khác dùng quỹ mới tính công* — xem [Hành trình một ngày Nghỉ bù](Hanh-Trinh-Nghi-Bu.html#so-cong).
 >
@@ -192,6 +205,7 @@ Chọn 1 nhân viên ở ô *Employee* rồi chọn chế độ này:
 | **Giờ thực** | *(tạm ẩn)* Giờ công của ngày (theo bảng công) |
 | **Giờ chuẩn** | Công chuẩn của ca ngày đó — nửa ngày & Thứ 7 nửa buổi thì bằng ½; Chủ nhật / lễ đi làm = `0` |
 | **Công** | Công làm việc của ngày đó: 1 · 0,5 · 0,25 · 0 — cùng luật với cột *Số công* ở lưới tháng. Ngày có bản chấm công mà không được công (vd `P0` Chủ nhật đi làm, ngày nghỉ phép) hiện **`0`**; ô **trống** nghĩa là ngày đó không có bản chấm công nào |
+| **Nghỉ HL** | Nghỉ hưởng lương của ngày đó (phép có lương 1 · 0,5; ngày lễ 1) — cùng luật với cột *Nghỉ hưởng lương* ở lưới tháng. **Công + Nghỉ HL** = công được trả lương của ngày |
 | **Số lượt** | Số lần bấm trong ngày (`0` = không bấm lần nào, vd ngày nghỉ hoặc ngày công đến từ đơn duyệt) |
 | **Các lượt bấm** | **Đủ mốc giờ** trong ngày, vd `07:41, 12:15, 13:02, 18:11` |
 
@@ -209,7 +223,7 @@ Mỗi nhân viên còn 1 dòng tổng: Total Present / Leaves / Absent / Holiday
 >
 > ⚠️ **Total Present ở đây đếm SỐ BẢN GHI có mặt, mỗi ngày = 1** — kể cả Thứ 7 nửa buổi (lẽ ra 0,5) và
 > Chủ nhật / lễ đi làm thêm (lẽ ra 0). HRMS không đọc cờ nửa buổi, và Chủ nhật đi làm vẫn là bản ghi
-> *Present*. **Không lập bảng lương từ Total Present**; lấy cột **Số công** ở chế độ *Chấm công*. Báo cáo
+> *Present*. **Không lập bảng lương từ Total Present**; lấy cột **Tổng công** ở chế độ *Chấm công*. Báo cáo
 > in sẵn lời nhắc này ngay trên bảng. Số ngày nghỉ (*Nghỉ bù*, *Phép Năm*…) ở đây cũng đếm theo bản ghi:
 > nghỉ bù 0,5 ngày rơi đúng Thứ 7 nửa buổi vẫn đếm 1.
 
@@ -290,8 +304,8 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 > 🔢 Muốn **cộng nhanh số ngày từng loại** (Total Present / Leaves / Absent / Holidays + tách theo
 > từng loại phép: Phép năm · **Nghỉ bù** · Không lương…) thì chọn **Chế độ xem = Tổng hợp**
 > ([mục 3](#3-chế-độ-xem--5-cách-nhìn-cùng-một-kỳ)).
-> Nhưng **Total Present** đếm bản ghi (Thứ 7 nửa buổi = 1, Chủ nhật đi làm = 1) — **số công lấy ở cột
-> Số công** của lưới chi tiết. Lưới chi tiết còn có **Tổng giờ chuẩn** (= Số công × giờ chuẩn ca; *Tổng giờ thực* đang tạm ẩn), không có cột đếm theo loại phép.
+> Nhưng **Total Present** đếm bản ghi (Thứ 7 nửa buổi = 1, Chủ nhật đi làm = 1) — **lập lương lấy cột
+> Tổng công** của lưới chi tiết (Số công + Nghỉ hưởng lương). Lưới chi tiết còn có **Tổng giờ chuẩn** (= Số công × giờ chuẩn ca; *Tổng giờ thực* đang tạm ẩn), không có cột đếm theo loại phép.
 
 ---
 

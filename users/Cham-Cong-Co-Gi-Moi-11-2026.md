@@ -27,7 +27,7 @@ nav_order: 5.5
 | ① | Đơn chấm công bù / công tác / WFH nộp cho **chính hôm nay** được **tính công khi duyệt**, không cần lần chấm công — như đơn khai bù. Chỉ đơn **xin trước cho ngày tới** mới phải có lần chấm công | Nhân viên hiện trường, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) · [Quên chấm công hôm nay](Guide-NhanVien-ChamCongNgoai.html#quen-cham-cong-hom-nay) |
 | ② | Các đơn nộp trong ngày mà hệ thống đã huỷ theo luật cũ được **khôi phục**, ngày đó có công lại; nhân viên nhận thông báo | Nhân viên từng bị gỡ công | Mục ② bên dưới |
 | ③ | Thông báo *"Ngày … không được tính công"* nói **liên hệ HR** khi ngày đó đã quá hạn nộp, thay vì *"nộp khai bù được ngay"* | Nhân viên hiện trường | Mục ③ bên dưới |
-| ④ | Bảng công có cột **Số công**: Thứ 7 nửa buổi đi làm = **0,5** (`P:2`), Chủ nhật / lễ đi làm = **0** (`P0`) — giờ làm thêm đã vào quỹ Nghỉ bù thì không đếm thành công nữa; cột *Tổng giờ chuẩn* không còn cộng trọn ca cho Chủ nhật | HR lập bảng lương, kế toán | Mục ④ bên dưới · [Bảng công tháng](Desk-HR-BangCongThang.html) |
+| ④ | Bảng công có cột **Số công**: Thứ 7 nửa buổi đi làm = **0,5** (`P:2`), Chủ nhật / lễ đi làm = **0** (`P0`) — giờ làm thêm đã vào quỹ Nghỉ bù thì không đếm thành công nữa; cột *Tổng giờ chuẩn* không còn cộng trọn ca cho Chủ nhật. Thêm cột **Nghỉ hưởng lương** (phép có lương, ngày lễ) và **Tổng công** = Số công + Nghỉ hưởng lương — **lập lương từ Tổng công** | HR lập bảng lương, kế toán | Mục ④ bên dưới · [Bảng công tháng](Desk-HR-BangCongThang.html) |
 
 ---
 
@@ -105,8 +105,12 @@ Dữ liệu gốc không sai — bản ghi *có mặt* ngày Chủ nhật phải
 Từ đợt này `COBE HR Attendance Sheet`:
 
 - Thêm cột **Số công** = công làm việc đã quy đổi theo loại ngày của từng nhân viên (ngày thường 1,
-  nửa buổi 0,5, nghỉ trọn 0; nửa ngày công bằng một nửa số đó). Không gồm nghỉ phép — ngày nghỉ bù /
-  phép năm đếm ở cột phép của chế độ *Tổng hợp*.
+  nửa buổi 0,5, nghỉ trọn 0; nửa ngày công bằng một nửa số đó). Không gồm nghỉ phép.
+- Thêm cột **Nghỉ hưởng lương** = ngày không đi làm nhưng vẫn được trả lương: phép có lương trọn ngày
+  1 (Thứ 7 nửa buổi 0,5), nửa ngày 0,5, ngày lễ 1; nghỉ không lương / BHXH 0. Ngày **dùng quỹ Nghỉ
+  bù** được tính công ở đây — đúng vế sau của luật trên.
+- Thêm cột **Tổng công** = Số công + Nghỉ hưởng lương. **Lập bảng lương từ cột này**, không từ Số công
+  (Số công một mình thiếu toàn bộ ngày nghỉ có lương).
 - Ô ngày có mặt mang hậu tố theo loại ngày: **`P:2`** (nửa buổi), **`P0`** (Chủ nhật / lễ, màu xám);
   Thứ 7 nửa buổi không có bản chấm công hiện **`-`** (đỏ, không có dữ liệu) như ngày thường, thay vì `H`:
   buổi sáng là buổi làm việc, không phải ngày lễ. Dấu `:` đọc là **chia** (P chia 2 =
@@ -114,7 +118,7 @@ Từ đợt này `COBE HR Attendance Sheet`:
   ký hiệu phép nửa ngày (`L/2`, `NB/2`) nên đã đổi.
 - **Tổng giờ chuẩn** = Số công × giờ chuẩn ca; Chủ nhật có mặt không còn cộng trọn ca.
 - Nghỉ phép nửa ngày mà nửa còn lại **vắng** (không có lần chấm công) không còn được cộng nửa công.
-- Chế độ **Tổng hợp** (bảng gốc HRMS) in sẵn lời nhắc: *Total Present* đếm bản ghi, không phải số công.
+- Chế độ **Tổng hợp** (bảng gốc HRMS) in sẵn lời nhắc: *Total Present* đếm bản ghi, không phải số công; lập lương lấy **Tổng công**.
 
 Chi tiết cách đọc: [Bảng công tháng §0 và §5](Desk-HR-BangCongThang.html); luật công và quỹ:
 [Hành trình một ngày Nghỉ bù — Giờ làm thêm và số công](Hanh-Trinh-Nghi-Bu.html#so-cong).
