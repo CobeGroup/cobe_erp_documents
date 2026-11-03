@@ -8,7 +8,7 @@ nav_order: 5.5
 # Chấm công — có gì mới (đợt 11/2026)
 {: .no_toc }
 
-Đơn chấm công cho hôm nay được tính công khi duyệt, các đơn bị huỷ vì luật cũ được khôi phục, và thông báo huỷ đơn nói đúng việc cần làm
+Đơn chấm công cho hôm nay được tính công khi duyệt, các đơn bị huỷ vì luật cũ được khôi phục, thông báo huỷ đơn nói đúng việc cần làm, và bảng công có cột Số công không đếm trùng với quỹ Nghỉ bù
 {: .fs-3 .text-grey-dk-000 }
 
 <details open markdown="block">
@@ -27,6 +27,7 @@ nav_order: 5.5
 | ① | Đơn chấm công bù / công tác / WFH nộp cho **chính hôm nay** được **tính công khi duyệt**, không cần lần chấm công — như đơn khai bù. Chỉ đơn **xin trước cho ngày tới** mới phải có lần chấm công | Nhân viên hiện trường, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) · [Quên chấm công hôm nay](Guide-NhanVien-ChamCongNgoai.html#quen-cham-cong-hom-nay) |
 | ② | Các đơn nộp trong ngày mà hệ thống đã huỷ theo luật cũ được **khôi phục**, ngày đó có công lại; nhân viên nhận thông báo | Nhân viên từng bị gỡ công | Mục ② bên dưới |
 | ③ | Thông báo *"Ngày … không được tính công"* nói **liên hệ HR** khi ngày đó đã quá hạn nộp, thay vì *"nộp khai bù được ngay"* | Nhân viên hiện trường | Mục ③ bên dưới |
+| ④ | Bảng công có cột **Số công**: Thứ 7 nửa buổi đi làm = **0,5** (`P/2`), Chủ nhật / lễ đi làm = **0** (`P/0`) — giờ làm thêm đã vào quỹ Nghỉ bù thì không đếm thành công nữa; cột *Tổng giờ chuẩn* không còn cộng trọn ca cho Chủ nhật | HR lập bảng lương, kế toán | Mục ④ bên dưới · [Bảng công tháng](Desk-HR-BangCongThang.html) |
 
 ---
 
@@ -88,6 +89,33 @@ kiểm tra **hạn nộp đơn khai bù** của công ty trước khi hướng d
 Trước đây thông báo luôn ghi *"nộp được ngay"*, nhân viên làm theo thì bị chặn *Quá hạn nộp đơn chấm
 công*.
 
+## ④ Bảng công: cột Số công, Thứ 7 nửa buổi = 0,5, Chủ nhật = 0
+
+Nhân viên phát hiện: ngày Thứ 7 nửa buổi ở lại cả ngày và Chủ nhật đi làm đều có bản ghi *có mặt*,
+bảng công in **`P`**, HR đếm mỗi `P` = **1 công** — trong khi buổi chiều Thứ 7 (4 giờ) và cả ngày Chủ
+nhật (8 giờ) đã được khai làm thêm và vào **quỹ Nghỉ bù**. Khi dùng quỹ đó nghỉ, ngày nghỉ lại được
+tính công lần nữa: **cộng hai lần**.
+
+Dữ liệu gốc không sai — bản ghi *có mặt* ngày Chủ nhật phải tồn tại vì phiếu làm thêm đọc giờ thực từ
+đó, và quỹ Nghỉ bù cộng đúng. Sai ở cách bảng công **đọc** bản ghi đó. Luật chốt:
+
+> Giờ làm thêm quy đổi Nghỉ bù **không tính công**, chỉ cộng quỹ. Ngày khác **dùng quỹ** mới tính công.
+> Phần giờ chuẩn của ngày đó vẫn tính công: Thứ 7 nửa buổi = 0,5 (buổi sáng), Chủ nhật / lễ = 0.
+
+Từ đợt này `COBE HR Attendance Sheet`:
+
+- Thêm cột **Số công** = công làm việc đã quy đổi theo loại ngày của từng nhân viên (ngày thường 1,
+  nửa buổi 0,5, nghỉ trọn 0; nửa ngày công bằng một nửa số đó). Không gồm nghỉ phép — ngày nghỉ bù /
+  phép năm đếm ở cột phép của chế độ *Tổng hợp*.
+- Ô ngày có mặt mang hậu tố theo loại ngày: **`P/2`** (nửa buổi), **`P/0`** (Chủ nhật / lễ, màu xám);
+  Thứ 7 nửa buổi không có bản chấm công hiện **`H/2`** thay vì `H`.
+- **Tổng giờ chuẩn** = Số công × giờ chuẩn ca; Chủ nhật có mặt không còn cộng trọn ca.
+- Nghỉ phép nửa ngày mà nửa còn lại **vắng** (không có lần chấm công) không còn được cộng nửa công.
+- Chế độ **Tổng hợp** (bảng gốc HRMS) in sẵn lời nhắc: *Total Present* đếm bản ghi, không phải số công.
+
+Chi tiết cách đọc: [Bảng công tháng §0 và §5](Desk-HR-BangCongThang.html); luật công và quỹ:
+[Hành trình một ngày Nghỉ bù — Giờ làm thêm và số công](Hanh-Trinh-Nghi-Bu.html#so-cong).
+
 ---
 
 ## Khi đưa lên hệ thống
@@ -100,6 +128,11 @@ công*.
   thủ công các ngày nhân viên có đi làm thật.
 - **Nhắc nhân viên hiện trường**: quên chấm công thì lập đơn **ngay trong ngày** là được; chỉ đơn xin
   trước cho ngày mai mới cần chấm công tại nơi làm.
+- **HR rà lại các tháng đã trả lương** (từ 07/2026) theo luật ở mục ④: ngày Thứ 7 nửa buổi và Chủ nhật
+  / lễ có bản ghi *có mặt* — nếu bảng lương đã đếm 1 công thì điều chỉnh. Xuất từ `COBE HR Attendance
+  Sheet` bản mới, lọc ô `P/2`, `P/0`. Cũng xem những ngày Thứ 7 có đơn làm thêm buổi chiều được duyệt
+  nhưng chấm công cho thấy về trưa.
+- **Bảng công không cần migrate** — report đọc từ mã nguồn; chỉ cần deploy và xoá cache.
 
 ---
 
@@ -108,4 +141,5 @@ công*.
 - [Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html) · [KTV hiện trường](Guide-KTV-ChamCong.html)
 - [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) · [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html)
 - [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html) · [Đơn chấm công bù (Attendance Request)](HR-Attendance-Request.html)
+- [Bảng công tháng (COBE HR Attendance Sheet)](Desk-HR-BangCongThang.html) · [Hành trình một ngày Nghỉ bù](Hanh-Trinh-Nghi-Bu.html)
 - [Có gì mới — đợt 10/2026](Cham-Cong-Co-Gi-Moi-10-2026.html) · [Có gì mới — đợt 09/2026](Cham-Cong-Co-Gi-Moi-09-2026.html)

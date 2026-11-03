@@ -45,7 +45,10 @@ Xem nhanh cả quy trình — tạo đơn quy đổi tiền, tạo đơn quy đ�
 - **Thứ 7 làm nửa buổi:** buổi sáng (tới giờ nghỉ trưa 12:00) là giờ làm chính thức,
   không khai làm thêm được — app báo lỗi nếu khung khai nằm hết trong buổi sáng. Làm
   buổi chiều thì khai khung sau giờ nghỉ trưa (ví dụ 13:30 → 17:30); giờ nghỉ trưa
-  không được tính, trừ khi khai thành khung riêng đúng giờ nghỉ trưa.
+  không được tính, trừ khi khai thành khung riêng đúng giờ nghỉ trưa. Ngày đó được
+  **0,5 công** (buổi sáng); buổi chiều **không tính công**, chỉ trả bằng tiền hoặc giờ
+  Nghỉ bù theo phiếu. Chủ nhật / ngày lễ đi làm: **0 công**, cả ngày là làm thêm — xem
+  [Giờ làm thêm và số công](Hanh-Trinh-Nghi-Bu.html#so-cong).
 - **Trần cứng mỗi ngày:** ngày thường tối đa **4h**, ngày lễ/nghỉ tối đa **8h**.
   Khai vượt trần thì hệ thống tự cắt về trần.
 - Khai trước cho ngày sắp làm thêm được (như đơn nghỉ); khai bổ sung cho ngày đã làm

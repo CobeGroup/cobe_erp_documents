@@ -205,6 +205,25 @@ Bảng này trả lời thẳng những câu hay hỏi nhất, khỏi phải đo
 > trước**, nên giờ cũ luôn được dùng trước khi mất. Ô *Ngày làm thêm để bù* đã bỏ khỏi màn
 > hình xin nghỉ.
 
+### Giờ làm thêm và số công — không tính hai lần
+{: #so-cong }
+
+Giờ làm thêm quy đổi *Nghỉ bù* **không tính công** ngày hôm đó, chỉ cộng quỹ; **ngày khác dùng quỹ**
+(đơn nghỉ loại *Nghỉ bù* được duyệt) **mới tính công**. Phần giờ chuẩn của ngày đó vẫn tính công
+như thường:
+
+| Ngày | Công tính ngay | Vào quỹ (nếu khai làm thêm quy đổi Nghỉ bù) |
+|---|---|---|
+| Ngày thường | 1 | giờ làm thêm ngoài ca (tối, xuyên trưa) |
+| **Thứ 7 nửa buổi** (khối văn phòng) | **0,5** — buổi sáng là giờ chuẩn | 4 giờ = 0,5 ngày (buổi chiều) |
+| **Chủ nhật / ngày lễ** | **0** | 8 giờ = 1 ngày |
+| Ngày **nghỉ bù** | 1 (0,5 nếu nửa ngày) — tính công lúc này | trừ quỹ |
+
+Trên bảng công (`COBE HR Attendance Sheet`) ngày Thứ 7 đi làm hiện **`P/2`**, Chủ nhật đi làm hiện
+**`P/0`**, và cột **Số công** đã quy đổi sẵn — xem
+[Bảng công tháng](Desk-HR-BangCongThang.html#5-đọc-lưới-ngày--các-mã-trạng-thái). Bản ghi *có mặt*
+ngày Chủ nhật vẫn tồn tại vì phiếu làm thêm đọc giờ thực từ đó; nó không phải một công.
+
 ### Vài tình huống dễ nhầm
 
 | Tình huống | Kết quả |
