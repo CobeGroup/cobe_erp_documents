@@ -45,7 +45,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | Cột đầu | Employee · **Mã NV** · Tên · **Cty Trực Thuộc** · Shift · **Số công** · **Tổng giờ chuẩn** · ~~Tổng giờ thực~~ *(tạm ẩn)* · **4 cột số dư phép** | Employee · Tên · Shift |
 | **Chế độ xem** | **5 chế độ**: Chấm công · **Giờ vào-ra** · **Đầy đủ** · **Chi tiết theo ngày** · Tổng hợp | Chỉ 1 lưới + Summarized View |
 | Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`), chia 1–3 phần tuỳ chế độ: **mã** (`P`/`HD`/`WFH`/`L`…/`-`) · **giờ vào** · **giờ ra** *(phần số giờ đang tạm ẩn)* | 1 ô: chỉ ký hiệu `P`, `HD` |
-| Ký hiệu | Công `P` · nửa `HD` · WFH `WFH` · có mặt ngày nửa buổi `P:2` · có mặt CN/lễ `P0` · nghỉ `L`/`L/2`/`NB`/`KL`/`CĐ`/`BH`/`H`/`H:2` · `WO` · `-` không dữ liệu | Gộp chung `L` (On Leave); CN/T7 đi làm cũng chỉ là `P` |
+| Ký hiệu | Công `P` · nửa `HD` · WFH `WFH` · có mặt ngày nửa buổi `P:2` · có mặt CN/lễ `P0` · nghỉ `L`/`L/2`/`NB`/`KL`/`CĐ`/`BH`/`H` · `WO` · `-` không dữ liệu (kể cả sáng Thứ 7 nửa buổi) | Gộp chung `L` (On Leave); CN/T7 đi làm cũng chỉ là `P` |
 | **Số dư phép** | **Có** — Phép Năm & Nghỉ bù còn lại, tại **2 mốc** (cuối kỳ / tới hiện tại) | Không có |
 | **Giờ vào/ra** | **Có** — lượt bấm thật, đỡ phải mở Employee Checkin | Không có |
 | Lọc Company | **Bỏ trống = gộp MỌI công ty** | Bắt buộc chọn |
@@ -88,7 +88,8 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 >   không bị rớt xuống `HD:2`
 > - Ở lại **cả ngày** Thứ 7 thì vẫn **0,5 công**: buổi chiều là làm thêm, khai đơn làm thêm để
 >   nhận tiền hoặc giờ Nghỉ bù
-> - Thứ 7 **không có bản chấm công** hiện **`H:2`** (nửa lễ, buổi làm không có dữ liệu — 0 công), không hiện `H`
+> - Thứ 7 **không có bản chấm công** hiện **`-`** (đỏ, không có dữ liệu — 0 công) như ngày thường, không hiện `H`:
+>   buổi sáng là buổi làm việc, thiếu dữ liệu thì HR cần kiểm tra
 >
 > Người **làm cả ngày Thứ 7** (thường là khối hiện trường/kho — lịch nghỉ không đánh dấu nửa buổi) thì Thứ 7 vẫn tính
 > **nguyên ngày** như bình thường (`P`, 1 công). **Chủ nhật / ngày lễ** đi làm hiện **`P0`**, 0 công với mọi nhóm.
@@ -258,7 +259,6 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 | **WFH** | **Làm việc ở nhà** — hưởng 70%/ngày thường | giờ thực (nếu có) | mục 4 |
 | **P:2** | **Có mặt ngày làm nửa buổi** (Thứ 7 khối văn phòng) = **0,5 công**; buổi chiều là làm thêm, không phải công. `HD:2` = nửa ngày công trên ngày nửa buổi (0,25); `WFH:2` tương tự. Dấu `:` đọc là **chia** (P chia 2 = nửa công), khác `L/2`, `NB/2` là **nghỉ phép nửa ngày** | số giờ thực | — |
 | **P0** | **Có mặt ngày nghỉ trọn** (Chủ nhật, lễ) = **0 công** — cả ngày là làm thêm, trả bằng tiền hoặc quỹ Nghỉ bù theo đơn làm thêm. Màu xám để không đọc nhầm thành `P`. `HD0`, `WFH0` tương tự | số giờ thực | — |
-| **H:2** | Ngày làm nửa buổi **không có bản chấm công** (0 công) — khác `H` là lễ trọn | — | — |
 | **NB** | Nghỉ bù | — | mục 5 |
 | **L** | Phép năm (đã duyệt) | — | mục 6 |
 | **L/2** | Phép năm nửa ngày | giờ nửa đã làm (nếu có) | mục 7 |
@@ -266,7 +266,7 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 | **KL** | Nghỉ không lương | — | mục 9 |
 | **CĐ** | Nghỉ chế độ có lương (ma chay/cưới hỏi/sinh con…) | — | mục 10 |
 | **BH** | Nghỉ chế độ BHXH | — | mục 11 |
-| **-** | **Không có dữ liệu chấm công / vắng** (0 công) | — | mục 12 |
+| **-** | **Không có dữ liệu chấm công / vắng** (0 công) — kể cả sáng Thứ 7 làm nửa buổi | — | mục 12 |
 | **WO** | Nghỉ tuần (vd Chủ nhật) | — | — |
 
 > ⚠️ **`HD` kèm ô giờ `0,0` = NV chỉ bấm giờ VÀO, không bấm giờ RA** — không phải nghỉ nửa ngày.

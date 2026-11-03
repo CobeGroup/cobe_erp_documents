@@ -108,7 +108,8 @@ Từ đợt này `COBE HR Attendance Sheet`:
   nửa buổi 0,5, nghỉ trọn 0; nửa ngày công bằng một nửa số đó). Không gồm nghỉ phép — ngày nghỉ bù /
   phép năm đếm ở cột phép của chế độ *Tổng hợp*.
 - Ô ngày có mặt mang hậu tố theo loại ngày: **`P:2`** (nửa buổi), **`P0`** (Chủ nhật / lễ, màu xám);
-  Thứ 7 nửa buổi không có bản chấm công hiện **`H:2`** thay vì `H`. Dấu `:` đọc là **chia** (P chia 2 =
+  Thứ 7 nửa buổi không có bản chấm công hiện **`-`** (đỏ, không có dữ liệu) như ngày thường, thay vì `H`:
+  buổi sáng là buổi làm việc, không phải ngày lễ. Dấu `:` đọc là **chia** (P chia 2 =
   nửa công); `0` là không tính công. Bản phát hành đầu dùng `P/2` / `P/0`, nhìn dễ lẫn nhau và lẫn với
   ký hiệu phép nửa ngày (`L/2`, `NB/2`) nên đã đổi.
 - **Tổng giờ chuẩn** = Số công × giờ chuẩn ca; Chủ nhật có mặt không còn cộng trọn ca.
