@@ -36,6 +36,7 @@ Xếp theo chữ cái đầu của thông báo. Dấu `…` là chỗ hệ thố
 | *“Bắt buộc phải có ít nhất 1 Sales Person trong Sales Team.”* | [BH-10 · Báo thiếu hoặc trùng người trong Sales Team](Quy-Trinh-A-Ban-Hang-Tinh-Huong.html#bh-10) | A |
 | *“Cannot complete: no Actual Start”* | [HT-08 · Báo chưa có giờ bắt đầu thực tế](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-08) | B |
 | *“Cannot hủy Service Appointment when in status … Change status first.”* | [HT-15 · Không huỷ được lịch hẹn, phiếu công việc hoặc đơn](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-15) | B |
+| *“… chưa check-in nên không thể check-out.”* | [HT-17 · Báo chưa check-in nên không check-out được](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-17) | B |
 | *“Chưa tạo phiếu giao hàng cho … Vui lòng tạo phiếu giao hàng trước khi thanh toán.”* | [TT-01 · Báo “Chưa tạo phiếu giao hàng” khi thu tiền](Quy-Trinh-D-Thu-Tien-Tinh-Huong.html#tt-01) | D |
 | *“Could not find Row #2: Link Name: …”* | [BH-07 · Báo “Could not find Row … Link Name” khi lưu](Quy-Trinh-A-Ban-Hang-Tinh-Huong.html#bh-07) | A |
 | *“Công nợ … đã được trả qua …”* | [TT-07 · Báo “Công nợ … đã được trả qua …” khi lập phiếu nộp](Quy-Trinh-D-Thu-Tien-Tinh-Huong.html#tt-07) | D |
@@ -43,6 +44,7 @@ Xếp theo chữ cái đầu của thông báo. Dấu `…` là chỗ hệ thố
 | *“Không cho phép thay đổi items (chỉ được phép thêm/xóa/thay đổi qty của Giảm giá hoặc phi vật lý)”* | [BH-13 · Báo “Không cho phép thay đổi items…”](Quy-Trinh-A-Ban-Hang-Tinh-Huong.html#bh-13) | A |
 | *“Không thể Close Sales Order này vì đã có Delivery Note”* | [BH-14 · Báo không Close được vì đã có Delivery Note](Quy-Trinh-A-Ban-Hang-Tinh-Huong.html#bh-14) | A |
 | *“Không thể hoàn thành WO - …”* | [HT-11 · Phiếu công việc không hoàn thành được](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-11) | B |
+| *“Lệnh công việc … đã có Service Appointment …”* | [HT-16 · Cảnh báo phiếu công việc đã có lịch hẹn](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-16) | B |
 | *“no photo attached (Work Type requires Photo)”* | [HT-07 · Báo thiếu ảnh khi hoàn thành lịch hẹn](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-07) | B |
 | *“Sales Order not completed: …”* | [TT-15 · Đơn đã giao đủ nhưng chưa Hoàn tất](Quy-Trinh-D-Thu-Tien-Tinh-Huong.html#tt-15) | D |
 | *“SO …: còn nợ …”* | [TT-13 · Đã thu tiền nhưng đơn vẫn hiện còn nợ](Quy-Trinh-D-Thu-Tien-Tinh-Huong.html#tt-13) | D |
@@ -102,6 +104,8 @@ Xếp theo chữ cái đầu của thông báo. Dấu `…` là chỗ hệ thố
 | [HT-13](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-13) | Báo phiếu công việc không có lịch hẹn nào | [B·5 · Hoàn thành phiếu công việc](Quy-Trinh-B-Hien-Truong.html#hoan-thanh-wo) |
 | [HT-14](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-14) | Mở lại lịch hẹn làm mất dữ liệu check-in | [B · Mở lại, đổi lịch và huỷ](Quy-Trinh-B-Hien-Truong.html#dong-mo) |
 | [HT-15](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-15) | Không huỷ được lịch hẹn, phiếu công việc hoặc đơn | [B · Mở lại, đổi lịch và huỷ](Quy-Trinh-B-Hien-Truong.html#dong-mo) |
+| [HT-16](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-16) | Cảnh báo phiếu công việc đã có lịch hẹn | [B·2 · Lập lịch hẹn, gán kỹ thuật viên](Quy-Trinh-B-Hien-Truong.html#lap-sa) |
+| [HT-17](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-17) | Báo chưa check-in nên không check-out được | [B·3 · Làm việc tại nhà khách hàng](Quy-Trinh-B-Hien-Truong.html#hien-truong) |
 
 ### C · Kho và giao nhận
 {: #pk-c }

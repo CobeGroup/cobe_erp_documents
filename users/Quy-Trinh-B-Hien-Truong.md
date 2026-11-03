@@ -36,11 +36,11 @@ Từ lúc có một việc cần người đến nhà khách hàng cho tới lú
 {: #so-do }
 
 <div class="qt-sodo">
-<svg xmlns="http://www.w3.org/2000/svg" class="qt-svg" viewBox="0 0 760 1319" width="760" height="1319" role="img" aria-labelledby="qt-t-pk-B qt-d-pk-B">
+<svg xmlns="http://www.w3.org/2000/svg" class="qt-svg" viewBox="0 0 760 1371" width="760" height="1371" role="img" aria-labelledby="qt-t-pk-B qt-d-pk-B">
 <title id="qt-t-pk-B">Sơ đồ phân khu B — Điều phối và hiện trường</title>
 <desc id="qt-d-pk-B">Đường chính đọc từ trên xuống. Ô chữ nhật là bước, ô sáu cạnh là điểm rẽ, nhãn đỏ là thẻ tình huống, ô viền đứt là cổng sang phân khu khác.</desc>
 <defs><marker id="qt-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/></marker><marker id="qt-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52a86a"/></marker></defs>
-<rect class="qt-nen" x="0" y="0" width="760" height="1319"/>
+<rect class="qt-nen" x="0" y="0" width="760" height="1371"/>
 <a href="Quy-Trinh-A-Ban-Hang.html#ban-giao"><title>Mở phân khu A</title>
 <rect class="qt-cong" x="50" y="20" width="152" height="71" rx="10" ry="10"/>
 <text class="qt-tb2" x="126" y="51.5" text-anchor="middle">▶ Từ A · Bán hàng</text>
@@ -71,7 +71,7 @@ Từ lúc có một việc cần người đến nhà khách hàng cho tới lú
 </a>
 <line class="qt-mui" x1="210" y1="209" x2="210" y2="235" marker-end="url(#qt-ah)"/>
 <a href="#lap-sa"><title>B·2 · Lập lịch hẹn, gán kỹ thuật viên</title>
-<rect class="qt-b" x="50" y="239" width="320" height="88" rx="10" ry="10"/>
+<rect class="qt-b" x="50" y="239" width="320" height="114" rx="10" ry="10"/>
 <circle class="qt-tron" cx="74" cy="263" r="12"/>
 <text class="qt-so" x="74" y="267" text-anchor="middle">2</text>
 <text class="qt-tb" x="96" y="267" text-anchor="start">Lập lịch hẹn, gán kỹ thuật viên</text>
@@ -89,119 +89,127 @@ Từ lúc có một việc cần người đến nhà khách hàng cho tới lú
 <rect class="qt-pill" x="237.3" y="295" width="62.7" height="20" rx="10" ry="10"/>
 <text class="qt-tp" x="268.6" y="309" text-anchor="middle">⚠ HT-05</text>
 </a>
-<line class="qt-mui" x1="210" y1="327" x2="210" y2="353" marker-end="url(#qt-ah)"/>
-<a href="Quy-Trinh-C-Kho-Giao-Nhan.html#yeu-cau"><title>Mở phân khu C</title>
-<rect class="qt-cong" x="50" y="357" width="320" height="54" rx="10" ry="10"/>
-<text class="qt-tb2" x="210" y="380" text-anchor="middle">▷ Nhận vật tư cho lịch hẹn</text>
-<text class="qt-ts" x="210" y="396" text-anchor="middle">Phân khu C · Kho và giao nhận</text>
+<a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-16"><title>Mở thẻ HT-16</title>
+<rect class="qt-pill" x="96" y="321" width="62.7" height="20" rx="10" ry="10"/>
+<text class="qt-tp" x="127.3" y="335" text-anchor="middle">⚠ HT-16</text>
 </a>
-<line class="qt-mui" x1="210" y1="411" x2="210" y2="437" marker-end="url(#qt-ah)"/>
+<line class="qt-mui" x1="210" y1="353" x2="210" y2="379" marker-end="url(#qt-ah)"/>
+<a href="Quy-Trinh-C-Kho-Giao-Nhan.html#yeu-cau"><title>Mở phân khu C</title>
+<rect class="qt-cong" x="50" y="383" width="320" height="54" rx="10" ry="10"/>
+<text class="qt-tb2" x="210" y="406" text-anchor="middle">▷ Nhận vật tư cho lịch hẹn</text>
+<text class="qt-ts" x="210" y="422" text-anchor="middle">Phân khu C · Kho và giao nhận</text>
+</a>
+<line class="qt-mui" x1="210" y1="437" x2="210" y2="463" marker-end="url(#qt-ah)"/>
 <a href="#hien-truong"><title>B·3 · Làm việc tại nhà khách hàng</title>
-<rect class="qt-b" x="50" y="441" width="320" height="104" rx="10" ry="10"/>
-<circle class="qt-tron" cx="74" cy="465" r="12"/>
-<text class="qt-so" x="74" y="469" text-anchor="middle">3</text>
-<text class="qt-tb" x="96" y="469" text-anchor="start">Làm việc tại nhà khách hàng</text>
-<text class="qt-ts" x="96" y="485" text-anchor="start">Di chuyển · check-in · bước</text>
-<text class="qt-ts" x="96" y="501" text-anchor="start">công việc · ảnh · check-out</text>
+<rect class="qt-b" x="50" y="467" width="320" height="130" rx="10" ry="10"/>
+<circle class="qt-tron" cx="74" cy="491" r="12"/>
+<text class="qt-so" x="74" y="495" text-anchor="middle">3</text>
+<text class="qt-tb" x="96" y="495" text-anchor="start">Làm việc tại nhà khách hàng</text>
+<text class="qt-ts" x="96" y="511" text-anchor="start">Di chuyển · check-in · bước</text>
+<text class="qt-ts" x="96" y="527" text-anchor="start">công việc · ảnh · check-out</text>
 </a>
 <a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-06"><title>Mở thẻ HT-06</title>
-<rect class="qt-pill" x="96" y="513" width="62.7" height="20" rx="10" ry="10"/>
-<text class="qt-tp" x="127.3" y="527" text-anchor="middle">⚠ HT-06</text>
+<rect class="qt-pill" x="96" y="539" width="62.7" height="20" rx="10" ry="10"/>
+<text class="qt-tp" x="127.3" y="553" text-anchor="middle">⚠ HT-06</text>
 </a>
 <a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-07"><title>Mở thẻ HT-07</title>
-<rect class="qt-pill" x="166.7" y="513" width="62.7" height="20" rx="10" ry="10"/>
-<text class="qt-tp" x="198" y="527" text-anchor="middle">⚠ HT-07</text>
+<rect class="qt-pill" x="166.7" y="539" width="62.7" height="20" rx="10" ry="10"/>
+<text class="qt-tp" x="198" y="553" text-anchor="middle">⚠ HT-07</text>
 </a>
 <a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-08"><title>Mở thẻ HT-08</title>
-<rect class="qt-pill" x="237.3" y="513" width="62.7" height="20" rx="10" ry="10"/>
-<text class="qt-tp" x="268.6" y="527" text-anchor="middle">⚠ HT-08</text>
+<rect class="qt-pill" x="237.3" y="539" width="62.7" height="20" rx="10" ry="10"/>
+<text class="qt-tp" x="268.6" y="553" text-anchor="middle">⚠ HT-08</text>
 </a>
-<line class="qt-mui" x1="210" y1="545" x2="210" y2="571" marker-end="url(#qt-ah)"/>
+<a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-17"><title>Mở thẻ HT-17</title>
+<rect class="qt-pill" x="96" y="565" width="62.7" height="20" rx="10" ry="10"/>
+<text class="qt-tp" x="127.3" y="579" text-anchor="middle">⚠ HT-17</text>
+</a>
+<line class="qt-mui" x1="210" y1="597" x2="210" y2="623" marker-end="url(#qt-ah)"/>
 <a href="#du-dk-sa"><title>Đủ điều kiện hoàn thành lịch hẹn?</title>
-<polygon class="qt-re" points="50,602 77,575 343,575 370,602 343,629 77,629"/>
-<text class="qt-tb" x="210" y="598" text-anchor="middle">Đủ điều kiện hoàn</text>
-<text class="qt-tb" x="210" y="616" text-anchor="middle">thành lịch hẹn?</text>
+<polygon class="qt-re" points="50,654 77,627 343,627 370,654 343,681 77,681"/>
+<text class="qt-tb" x="210" y="650" text-anchor="middle">Đủ điều kiện hoàn</text>
+<text class="qt-tb" x="210" y="668" text-anchor="middle">thành lịch hẹn?</text>
 </a>
 <a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-09"><title>Mở thẻ HT-09</title>
-<rect class="qt-the" x="420" y="575" width="320" height="54" rx="10" ry="10"/>
-<text class="qt-tt" x="434" y="594" text-anchor="start">⚠ HT-09</text>
-<text class="qt-ts" x="434" y="611" text-anchor="start">Báo còn người chưa check-out</text>
+<rect class="qt-the" x="420" y="627" width="320" height="54" rx="10" ry="10"/>
+<text class="qt-tt" x="434" y="646" text-anchor="start">⚠ HT-09</text>
+<text class="qt-ts" x="434" y="663" text-anchor="start">Báo còn người chưa check-out</text>
 </a>
-<line class="qt-mui" x1="370" y1="602" x2="416" y2="602" marker-end="url(#qt-ah)"/>
-<text class="qt-nhan" x="395" y="595" text-anchor="middle">chưa</text>
-<text class="qt-nhan" x="220" y="647" text-anchor="start">đủ</text>
-<line class="qt-mui" x1="210" y1="629" x2="210" y2="655" marker-end="url(#qt-ah)"/>
+<line class="qt-mui" x1="370" y1="654" x2="416" y2="654" marker-end="url(#qt-ah)"/>
+<text class="qt-nhan" x="395" y="647" text-anchor="middle">chưa</text>
+<text class="qt-nhan" x="220" y="699" text-anchor="start">đủ</text>
+<line class="qt-mui" x1="210" y1="681" x2="210" y2="707" marker-end="url(#qt-ah)"/>
 <a href="#hoan-thanh-sa"><title>B·4 · Hoàn thành lịch hẹn</title>
-<rect class="qt-b" x="50" y="659" width="320" height="104" rx="10" ry="10"/>
-<circle class="qt-tron" cx="74" cy="683" r="12"/>
-<text class="qt-so" x="74" y="687" text-anchor="middle">4</text>
-<text class="qt-tb" x="96" y="687" text-anchor="start">Hoàn thành lịch hẹn</text>
-<text class="qt-ts" x="96" y="703" text-anchor="start">Lịch hẹn xong chưa có nghĩa</text>
-<text class="qt-ts" x="96" y="719" text-anchor="start">là phiếu công việc xong</text>
+<rect class="qt-b" x="50" y="711" width="320" height="104" rx="10" ry="10"/>
+<circle class="qt-tron" cx="74" cy="735" r="12"/>
+<text class="qt-so" x="74" y="739" text-anchor="middle">4</text>
+<text class="qt-tb" x="96" y="739" text-anchor="start">Hoàn thành lịch hẹn</text>
+<text class="qt-ts" x="96" y="755" text-anchor="start">Lịch hẹn xong chưa có nghĩa</text>
+<text class="qt-ts" x="96" y="771" text-anchor="start">là phiếu công việc xong</text>
 </a>
 <a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-10"><title>Mở thẻ HT-10</title>
-<rect class="qt-pill" x="96" y="731" width="62.7" height="20" rx="10" ry="10"/>
-<text class="qt-tp" x="127.3" y="745" text-anchor="middle">⚠ HT-10</text>
+<rect class="qt-pill" x="96" y="783" width="62.7" height="20" rx="10" ry="10"/>
+<text class="qt-tp" x="127.3" y="797" text-anchor="middle">⚠ HT-10</text>
 </a>
-<line class="qt-mui" x1="210" y1="763" x2="210" y2="789" marker-end="url(#qt-ah)"/>
+<line class="qt-mui" x1="210" y1="815" x2="210" y2="841" marker-end="url(#qt-ah)"/>
 <a href="Quy-Trinh-C-Kho-Giao-Nhan.html#giao-hang"><title>Mở phân khu C</title>
-<rect class="qt-cong" x="50" y="793" width="320" height="54" rx="10" ry="10"/>
-<text class="qt-tb2" x="210" y="816" text-anchor="middle">▷ Giao hàng và thu tiền</text>
-<text class="qt-ts" x="210" y="832" text-anchor="middle">Phân khu C · Kho và giao nhận</text>
+<rect class="qt-cong" x="50" y="845" width="320" height="54" rx="10" ry="10"/>
+<text class="qt-tb2" x="210" y="868" text-anchor="middle">▷ Giao hàng và thu tiền</text>
+<text class="qt-ts" x="210" y="884" text-anchor="middle">Phân khu C · Kho và giao nhận</text>
 </a>
-<line class="qt-mui" x1="210" y1="847" x2="210" y2="873" marker-end="url(#qt-ah)"/>
+<line class="qt-mui" x1="210" y1="899" x2="210" y2="925" marker-end="url(#qt-ah)"/>
 <a href="#du-dk-wo"><title>Phiếu công việc đủ sáu điều kiện?</title>
-<polygon class="qt-re" points="50,904 77,877 343,877 370,904 343,931 77,931"/>
-<text class="qt-tb" x="210" y="900" text-anchor="middle">Phiếu công việc</text>
-<text class="qt-tb" x="210" y="918" text-anchor="middle">đủ sáu điều kiện?</text>
+<polygon class="qt-re" points="50,956 77,929 343,929 370,956 343,983 77,983"/>
+<text class="qt-tb" x="210" y="952" text-anchor="middle">Phiếu công việc</text>
+<text class="qt-tb" x="210" y="970" text-anchor="middle">đủ sáu điều kiện?</text>
 </a>
 <a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-11"><title>Mở thẻ HT-11</title>
-<rect class="qt-the" x="420" y="877" width="320" height="54" rx="10" ry="10"/>
-<text class="qt-tt" x="434" y="896" text-anchor="start">⚠ HT-11</text>
-<text class="qt-ts" x="434" y="913" text-anchor="start">Phiếu công việc không hoàn thành được</text>
+<rect class="qt-the" x="420" y="929" width="320" height="54" rx="10" ry="10"/>
+<text class="qt-tt" x="434" y="948" text-anchor="start">⚠ HT-11</text>
+<text class="qt-ts" x="434" y="965" text-anchor="start">Phiếu công việc không hoàn thành được</text>
 </a>
-<line class="qt-mui" x1="370" y1="904" x2="416" y2="904" marker-end="url(#qt-ah)"/>
-<text class="qt-nhan" x="395" y="897" text-anchor="middle">chưa</text>
-<text class="qt-nhan" x="220" y="949" text-anchor="start">đủ</text>
-<line class="qt-mui" x1="210" y1="931" x2="210" y2="957" marker-end="url(#qt-ah)"/>
+<line class="qt-mui" x1="370" y1="956" x2="416" y2="956" marker-end="url(#qt-ah)"/>
+<text class="qt-nhan" x="395" y="949" text-anchor="middle">chưa</text>
+<text class="qt-nhan" x="220" y="1001" text-anchor="start">đủ</text>
+<line class="qt-mui" x1="210" y1="983" x2="210" y2="1009" marker-end="url(#qt-ah)"/>
 <a href="#hoan-thanh-wo"><title>B·5 · Hoàn thành phiếu công việc</title>
-<rect class="qt-b" x="50" y="961" width="320" height="88" rx="10" ry="10"/>
-<circle class="qt-tron" cx="74" cy="985" r="12"/>
-<text class="qt-so" x="74" y="989" text-anchor="middle">5</text>
-<text class="qt-tb" x="96" y="989" text-anchor="start">Hoàn thành phiếu công việc</text>
-<text class="qt-ts" x="96" y="1005" text-anchor="start">Thủ công, hoặc tự động sau ân hạn</text>
+<rect class="qt-b" x="50" y="1013" width="320" height="88" rx="10" ry="10"/>
+<circle class="qt-tron" cx="74" cy="1037" r="12"/>
+<text class="qt-so" x="74" y="1041" text-anchor="middle">5</text>
+<text class="qt-tb" x="96" y="1041" text-anchor="start">Hoàn thành phiếu công việc</text>
+<text class="qt-ts" x="96" y="1057" text-anchor="start">Thủ công, hoặc tự động sau ân hạn</text>
 </a>
 <a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-12"><title>Mở thẻ HT-12</title>
-<rect class="qt-pill" x="96" y="1017" width="62.7" height="20" rx="10" ry="10"/>
-<text class="qt-tp" x="127.3" y="1031" text-anchor="middle">⚠ HT-12</text>
+<rect class="qt-pill" x="96" y="1069" width="62.7" height="20" rx="10" ry="10"/>
+<text class="qt-tp" x="127.3" y="1083" text-anchor="middle">⚠ HT-12</text>
 </a>
 <a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-13"><title>Mở thẻ HT-13</title>
-<rect class="qt-pill" x="166.7" y="1017" width="62.7" height="20" rx="10" ry="10"/>
-<text class="qt-tp" x="198" y="1031" text-anchor="middle">⚠ HT-13</text>
+<rect class="qt-pill" x="166.7" y="1069" width="62.7" height="20" rx="10" ry="10"/>
+<text class="qt-tp" x="198" y="1083" text-anchor="middle">⚠ HT-13</text>
 </a>
-<line class="qt-mui" x1="210" y1="1049" x2="210" y2="1075" marker-end="url(#qt-ah)"/>
+<line class="qt-mui" x1="210" y1="1101" x2="210" y2="1127" marker-end="url(#qt-ah)"/>
 <a href="#dong-wo"><title>B·6 · Đóng phiếu công việc</title>
-<rect class="qt-b" x="50" y="1079" width="320" height="58" rx="10" ry="10"/>
-<circle class="qt-tron" cx="74" cy="1103" r="12"/>
-<text class="qt-so" x="74" y="1107" text-anchor="middle">6</text>
-<text class="qt-tb" x="96" y="1107" text-anchor="start">Đóng phiếu công việc</text>
-<text class="qt-ts" x="96" y="1123" text-anchor="start">Trạng thái cuối; mở lại được bằng Re-open</text>
+<rect class="qt-b" x="50" y="1131" width="320" height="58" rx="10" ry="10"/>
+<circle class="qt-tron" cx="74" cy="1155" r="12"/>
+<text class="qt-so" x="74" y="1159" text-anchor="middle">6</text>
+<text class="qt-tb" x="96" y="1159" text-anchor="start">Đóng phiếu công việc</text>
+<text class="qt-ts" x="96" y="1175" text-anchor="start">Trạng thái cuối; mở lại được bằng Re-open</text>
 </a>
 <a href="#dong-mo"><title>Mở lại, đổi lịch và huỷ</title>
-<rect class="qt-ngoai" x="20" y="1173" width="720" height="126" rx="12" ry="12"/>
-<text class="qt-lan" x="36" y="1199" text-anchor="start">Mở lại, đổi lịch và huỷ</text>
+<rect class="qt-ngoai" x="20" y="1225" width="720" height="126" rx="12" ry="12"/>
+<text class="qt-lan" x="36" y="1251" text-anchor="start">Mở lại, đổi lịch và huỷ</text>
 </a>
 <a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-14"><title>Mở thẻ HT-14</title>
-<rect class="qt-the" x="36" y="1213" width="218.7" height="66" rx="10" ry="10"/>
-<text class="qt-tt" x="48" y="1232" text-anchor="start">⚠ HT-14</text>
-<text class="qt-ts" x="48" y="1249" text-anchor="start">Mở lại lịch hẹn làm</text>
-<text class="qt-ts" x="48" y="1265" text-anchor="start">mất dữ liệu check-in</text>
+<rect class="qt-the" x="36" y="1265" width="218.7" height="66" rx="10" ry="10"/>
+<text class="qt-tt" x="48" y="1284" text-anchor="start">⚠ HT-14</text>
+<text class="qt-ts" x="48" y="1301" text-anchor="start">Mở lại lịch hẹn làm</text>
+<text class="qt-ts" x="48" y="1317" text-anchor="start">mất dữ liệu check-in</text>
 </a>
 <a href="Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-15"><title>Mở thẻ HT-15</title>
-<rect class="qt-the" x="270.7" y="1213" width="218.7" height="66" rx="10" ry="10"/>
-<text class="qt-tt" x="282.7" y="1232" text-anchor="start">⚠ HT-15</text>
-<text class="qt-ts" x="282.7" y="1249" text-anchor="start">Không huỷ được lịch hẹn, phiếu</text>
-<text class="qt-ts" x="282.7" y="1265" text-anchor="start">công việc hoặc đơn</text>
+<rect class="qt-the" x="270.7" y="1265" width="218.7" height="66" rx="10" ry="10"/>
+<text class="qt-tt" x="282.7" y="1284" text-anchor="start">⚠ HT-15</text>
+<text class="qt-ts" x="282.7" y="1301" text-anchor="start">Không huỷ được lịch hẹn, phiếu</text>
+<text class="qt-ts" x="282.7" y="1317" text-anchor="start">công việc hoặc đơn</text>
 </a>
 </svg>
 </div>
@@ -261,11 +269,17 @@ Từ phiếu công việc chưa đóng → **Create → Service Appointment**. L
 
 Một phiếu công việc có thể có nhiều lịch hẹn, ví dụ lần một khảo sát, lần hai lắp đặt.
 
+**Tiền công của phiếu chia theo lịch hẹn.** Tổng tiền công của phiếu được chia **đều** cho mọi
+lịch hẹn chưa huỷ, kể cả lịch chưa làm hoặc *Cannot Complete*, rồi chia tiếp theo tỉ lệ đóng
+góp của từng kỹ thuật viên trong lịch. Vì vậy khi phiếu đã có lịch hẹn chưa huỷ, hệ thống hiện
+cảnh báo lúc tạo thêm lịch — xem [HT-16](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-16).
+
 **Tình huống ở bước này:**
 
 - ⚠ [HT-03 · Không đổi được kỹ thuật viên hoặc khung giờ](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-03)
 - ⚠ [HT-04 · Không thấy chức năng tạo lịch hẹn](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-04)
 - ⚠ [HT-05 · Nhiều kỹ thuật viên cùng một buổi](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-05)
+- ⚠ [HT-16 · Cảnh báo phiếu công việc đã có lịch hẹn](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-16)
 
 ---
 
@@ -286,13 +300,18 @@ Làm trên ứng dụng kỹ thuật viên `/technician`, **theo đúng thứ t�
 | 4 | Làm các **bước công việc** | Đánh dấu từng đầu việc: xong, không xong, không áp dụng |
 | 5 | **Đính kèm ảnh** nếu loại việc yêu cầu | Ảnh lưu vào lịch hẹn |
 | 6 | Giao hàng và thu tiền nếu có | Phân khu C và D |
-| 7 | **Check-out** | Ghi giờ kết thúc |
+| 7 | **Check-out** | Ghi giờ kết thúc; chỉ làm được **sau khi đã check-in** — xem [HT-17](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-17) |
+
+Vị trí check-in được đối chiếu với toạ độ địa chỉ khách hàng để đánh dấu *có mặt tại nhà
+khách*. Quản lý xem tổng hợp theo từng kỹ thuật viên ở
+[Báo cáo khoảng cách check-in](FSMNext-Khoang-Cach-Check-In.html).
 
 **Tình huống ở bước này:**
 
 - ⚠ [HT-06 · Tới nơi nhưng không làm được](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-06)
 - ⚠ [HT-07 · Báo thiếu ảnh khi hoàn thành lịch hẹn](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-07)
 - ⚠ [HT-08 · Báo chưa có giờ bắt đầu thực tế](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-08)
+- ⚠ [HT-17 · Báo chưa check-in nên không check-out được](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-17)
 
 ---
 
@@ -373,7 +392,8 @@ toàn** phiếu đang *On Hold*.
 |---|---|---|
 | Sửa lịch hẹn đã hoàn tất | Chuyển *Completed → In Progress* | Dữ liệu thực tế **giữ nguyên** |
 | Làm lại lịch hẹn đã huỷ | Chuyển về *Scheduled* | ⚠️ **Xoá sạch** dữ liệu check-in, check-out, thời gian |
-| Cần thêm một buổi cho cùng vụ việc | Lập **lịch hẹn mới** | An toàn hơn mở lại lịch cũ |
+| Cần thêm một buổi cho cùng vụ việc | Lập **lịch hẹn mới** | An toàn hơn mở lại lịch cũ; tiền công chia đều cho các buổi — xem [HT-16](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-16) |
+| Nhân bản một lịch hẹn | Trên Desk: menu **⋯ → Duplicate** | Bản sao **không** mang theo check-in, check-out, giờ thực tế và dấu đóng cưỡng bức; kỹ thuật viên về *Assigned* |
 
 **Trình tự huỷ:** lịch hẹn (bắt buộc nhập lý do) → phiếu công việc → đơn bán hàng.
 
@@ -414,6 +434,14 @@ Lịch chưa *In Progress* thì sửa khung giờ. Đã *In Progress* rồi thì
 **Đi hai người thì ghi công thế nào?**
 
 Gán cả hai vào lịch hẹn, chia **tỉ lệ đóng góp** cộng lại bằng 100% — xem [HT-05](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-05).
+
+**Thêm lịch hẹn cho cùng phiếu thì tiền công tính thế nào?**
+
+Tiền công của phiếu chia **đều** cho mọi lịch hẹn chưa huỷ, rồi theo tỉ lệ đóng góp trong từng lịch. Lịch tạo nhầm cần huỷ ngay — xem [HT-16](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-16).
+
+**Quên check-in, đến lúc ra về mới nhớ thì làm gì?**
+
+Check-in trên ứng dụng rồi mới check-out; hệ thống không nhận check-out khi chưa có giờ check-in — xem [HT-17](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html#ht-17).
 
 **Lịch hẹn và đơn đã xong, sao phiếu công việc vẫn New?**
 

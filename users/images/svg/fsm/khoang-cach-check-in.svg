@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 370" width="940" height="370" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Cách dùng báo cáo khoảng cách check-in</title>
+  <desc id="d">Bước một, xem chế độ Theo kỹ thuật viên để thấy tỉ lệ check-in theo từng nấc khoảng cách của mỗi người. Bước hai, chọn người có tỉ lệ cách xa cao bất thường. Bước ba, mở chế độ Chi tiết lọc theo người đó, các lượt xa nhất đứng đầu. Bước bốn, mở bản đồ của từng lượt để xem đường từ điểm check-in tới địa chỉ khách hàng. Kết luận có hai hướng: địa chỉ khách hàng được định vị sai thì sửa toạ độ trên địa chỉ; kỹ thuật viên thật sự ở nơi khác thì trao đổi với kỹ thuật viên và quản lý trực tiếp.</desc>
+  <style>
+    .box   { rx: 10; ry: 10; stroke-width: 1.6; }
+    .human { fill: #f9f0ff; stroke: #9254de; }
+    .auto  { fill: #e6f4ff; stroke: #299dd8; }
+    .done  { fill: #f6ffed; stroke: #54ab78; }
+    .warn  { fill: #fff7e6; stroke: #d46b08; }
+    .tb    { font-size: 14.5px; font-weight: 600; fill: #111827; }
+    .ts    { font-size: 12.5px; fill: #4b5563; }
+    .lane  { font-size: 12.5px; font-weight: 700; fill: #6b7280; letter-spacing: .04em; }
+    .lbl   { font-size: 12px; font-style: italic; fill: #6b7280; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.8; fill: none; }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="940" height="370" fill="#ffffff"/>
+
+  <text class="lane" x="20" y="100">XEM</text>
+  <text class="lane" x="20" y="116">TỔNG HỢP</text>
+  <text class="lane" x="20" y="198">SOI TỪNG</text>
+  <text class="lane" x="20" y="214">LƯỢT</text>
+  <text class="lane" x="20" y="316">KẾT LUẬN</text>
+
+  <!-- Hàng 1 -->
+  <rect class="box auto" x="120" y="66" width="240" height="70"/>
+  <text class="tb" x="240" y="94" text-anchor="middle">Chế độ Theo kỹ thuật viên</text>
+  <text class="ts" x="240" y="115" text-anchor="middle">tỉ lệ theo từng nấc khoảng cách</text>
+
+  <rect class="box human" x="400" y="66" width="220" height="70"/>
+  <text class="tb" x="510" y="94" text-anchor="middle">Chọn người cần soi</text>
+  <text class="ts" x="510" y="115" text-anchor="middle">tỉ lệ cách xa cao bất thường</text>
+
+  <rect class="box auto" x="660" y="66" width="250" height="70"/>
+  <text class="tb" x="785" y="94" text-anchor="middle">Chế độ Chi tiết</text>
+  <text class="ts" x="785" y="115" text-anchor="middle">lọc theo người đó · xa nhất đứng đầu</text>
+
+  <path class="arrow" d="M360,101 L398,101" marker-end="url(#ah)"/>
+  <path class="arrow" d="M620,101 L658,101" marker-end="url(#ah)"/>
+  <path class="arrow" d="M785,136 L785,166" marker-end="url(#ah)"/>
+
+  <!-- Hàng 2 -->
+  <rect class="box human" x="660" y="168" width="250" height="70"/>
+  <text class="tb" x="785" y="196" text-anchor="middle">Mở Bản đồ từng lượt</text>
+  <text class="ts" x="785" y="217" text-anchor="middle">đường từ điểm check-in tới nhà khách</text>
+
+  <!-- Hàng 3 -->
+  <path class="arrow" d="M660,203 L510,203 L510,276" marker-end="url(#ah)"/>
+  <text class="lbl" x="522" y="248">điểm check-in đúng nhà,</text>
+  <text class="lbl" x="522" y="263">toạ độ khách lệch</text>
+  <path class="arrow" d="M785,238 L785,276" marker-end="url(#ah)"/>
+  <text class="lbl" x="797" y="262">khoảng cách là thật</text>
+
+  <rect class="box done" x="400" y="278" width="220" height="76"/>
+  <text class="tb" x="510" y="304" text-anchor="middle">Địa chỉ định vị sai</text>
+  <text class="ts" x="510" y="324" text-anchor="middle">sửa toạ độ trên địa chỉ</text>
+  <text class="ts" x="510" y="342" text-anchor="middle">khách hàng (Address)</text>
+
+  <rect class="box warn" x="660" y="278" width="250" height="76"/>
+  <text class="tb" x="785" y="304" text-anchor="middle">Có mặt ở nơi khác</text>
+  <text class="ts" x="785" y="324" text-anchor="middle">trao đổi với kỹ thuật viên</text>
+  <text class="ts" x="785" y="342" text-anchor="middle">và quản lý trực tiếp</text>
+</svg>

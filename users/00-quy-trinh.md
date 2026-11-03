@@ -223,7 +223,7 @@ Toàn bộ dây chuyền, từ lúc khách hàng để lại số điện thoạ
 | Phân khu | Phạm vi | Ai làm | Thẻ tình huống |
 |---|---|---|---|
 | **[A · Bán hàng](Quy-Trinh-A-Ban-Hang.html)** | Tiếp nhận khách hàng, khai người giới thiệu, lập đơn, sửa, đóng và huỷ đơn | Kinh doanh · Chăm sóc khách hàng | [BH-01 … BH-17](Quy-Trinh-A-Ban-Hang-Tinh-Huong.html) |
-| **[B · Điều phối và hiện trường](Quy-Trinh-B-Hien-Truong.html)** | Phiếu công việc, lịch hẹn, thao tác tại nhà khách hàng, hoàn thành phiếu | Điều phối · Kỹ thuật viên | [HT-01 … HT-15](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html) |
+| **[B · Điều phối và hiện trường](Quy-Trinh-B-Hien-Truong.html)** | Phiếu công việc, lịch hẹn, thao tác tại nhà khách hàng, hoàn thành phiếu | Điều phối · Kỹ thuật viên | [HT-01 … HT-17](Quy-Trinh-B-Hien-Truong-Tinh-Huong.html) |
 | **[C · Kho và giao nhận](Quy-Trinh-C-Kho-Giao-Nhan.html)** | Cấp vật tư, giao hàng, trả vật tư về kho, gửi qua đơn vị vận chuyển | Kho · Kỹ thuật viên | [KG-01 … KG-23](Quy-Trinh-C-Kho-Giao-Nhan-Tinh-Huong.html) |
 | **[D · Thu tiền và kế toán](Quy-Trinh-D-Thu-Tien.html)** | Tiền mặt, chuyển khoản, nộp tiền, hoá đơn, huỷ phiếu thu, trả hàng sau bán | Kỹ thuật viên · Kế toán | [TT-01 … TT-18](Quy-Trinh-D-Thu-Tien-Tinh-Huong.html) |
 | **[E · Sau bán hàng](Quy-Trinh-E-Sau-Ban-Hang.html)** | Nhắc bảo dưỡng định kỳ, tiếp nhận và xử lý sự cố | Nhân viên dịch vụ · Nhân viên sự cố | [SB-01 … SB-16](Quy-Trinh-E-Sau-Ban-Hang-Tinh-Huong.html) |

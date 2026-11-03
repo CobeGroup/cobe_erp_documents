@@ -197,6 +197,8 @@ Khi bạn đổi trạng thái WO sang **Completed** mà chưa đủ điều ki�
 |---|---|---|
 | *"Cannot complete: no Actual Start (SA not started)"* | Lịch hẹn chưa được bắt đầu | KTV **check-in** (hoặc bấm bắt đầu di chuyển) để Lịch hẹn vào *In Progress* |
 | *"...all resources must be Checked-out or Canceled. Pending: ..."* | Còn KTV chưa check-out | Cho các KTV còn lại check-out, hoặc huỷ họ khỏi lịch |
+| *"… chưa check-in nên không thể check-out."* | KTV bấm check-out khi chưa check-in trong lịch hẹn này | KTV **check-in** trước rồi mới check-out; người không tham gia buổi làm việc thì điều phối huỷ khỏi lịch |
+| *"Lệnh công việc … đã có Service Appointment …"* (cảnh báo khi tạo lịch) | Phiếu công việc đã có lịch hẹn chưa huỷ; tiền công của phiếu sẽ chia đều cho mọi lịch hẹn chưa huỷ | Cần thêm buổi thật sự thì giữ; tạo nhầm thì **huỷ ngay** lịch vừa tạo kèm lý do |
 | *"...no photo attached (Work Type requires Photo)"* | Loại công việc này bắt buộc có ảnh | Đính kèm ảnh hiện trường |
 | *"Cancellation Reason is required before canceling"* | Huỷ lịch mà chưa ghi lý do | Nhập **Lý do huỷ** |
 | *"Total Contribution ... must be exactly 100%"* | Tổng % đóng góp của các KTV ≠ 100% | Chỉnh lại cho tổng đúng 100% |
@@ -276,6 +278,8 @@ Bảng gộp để **Ctrl+F** theo đúng chữ bạn nhìn thấy trên màn h�
 | `chưa có Internal Transfer về công ty` | [1 – Bước 5](#bước-5--đơn-hàng-còn-nợ-tiền-hay-gặp-7822-lần) |
 | `Chưa trả kho đủ` · `Số lượng trả vượt quá yêu cầu` | [5](#5-trả-hàng--vật-tư-bị-chặn) |
 | `no Actual Start` · `all resources must be Checked-out` · `no photo attached` | [3](#3-lịch-hẹn-sa-không-complete-được) |
+| `chưa check-in nên không thể check-out` · `cannot check out without checking in first` | [3](#3-lịch-hẹn-sa-không-complete-được) |
+| `đã có Service Appointment` · `already has Service Appointment` | [3](#3-lịch-hẹn-sa-không-complete-được) |
 | `Cancellation Reason is required` | [3](#3-lịch-hẹn-sa-không-complete-được) |
 | `linked to FS Work Order` · `linked to Service Appointment` · `Change status first` | [4](#4-không-huỷ-được-phiếu) |
 | `Đã quá thời gian cho phép hủy` | [4](#4-không-huỷ-được-phiếu) |

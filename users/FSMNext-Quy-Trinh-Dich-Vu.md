@@ -63,7 +63,7 @@ flowchart TD
 
 1. [Vòng đời Phiếu công việc (WO)](#1-vòng-đời-phiếu-công-việc-wo)
 2. [Vòng đời Lịch hẹn dịch vụ (SA)](#2-vòng-đời-lịch-hẹn-dịch-vụ-sa)
-3. [Tạo phiếu: WO từ SO, SA từ WO](#3-tạo-phiếu-wo-từ-so-sa-từ-wo)
+3. [Tạo phiếu: WO từ SO, SA từ WO](#3-tạo-phiếu-wo-từ-so-sa-từ-wo) — gồm [tiền công KTV khi một WO có nhiều SA](#tien-cong-nhieu-sa)
 4. [Hoàn thành SA](#4-hoàn-thành-sa)
 5. [Hoàn thành WO — 6 điều kiện](#5-hoàn-thành-wo--6-điều-kiện)
 6. [Trả vật tư / hoàn hàng](#6-trả-vật-tư--hoàn-hàng) — *chi tiết: [Trả vật tư về kho](FSMNext-Tra-Vat-Tu.html)*
@@ -165,6 +165,8 @@ stateDiagram-v2
 - SA **tự động** nhảy trạng thái sớm: có lịch → **Scheduled**; có lịch + phân KTV → **Dispatched**.
 - KTV **bắt đầu di chuyển** hoặc **check-in** → SA tự lên **In Progress** (ghi *Actual Start*).
 - SA chỉ **Completed** khi: đã có *Actual Start*, **mọi KTV đã Check-out** (hoặc bị huỷ khỏi lịch), và đủ yêu cầu theo *Work Type* (ví dụ **bắt buộc có ảnh**).
+- KTV chỉ **check-out** được khi đã **check-in** trong chính lịch hẹn đó. Quy tắc áp dụng cho cả ứng dụng KTV lẫn Desk.
+- Vị trí check-in được đối chiếu với toạ độ địa chỉ khách hàng để đánh dấu *có mặt tại nhà khách* — quản lý xem tổng hợp ở [Báo cáo khoảng cách check-in](FSMNext-Khoang-Cach-Check-In.html).
 - Huỷ SA (đổi sang **Canceled**) **bắt buộc nhập Lý do huỷ**.
 
 **Chuỗi thao tác của KTV tại hiện trường:**
@@ -199,8 +201,32 @@ flowchart LR
 - **Tạo WO từ SO:** mở SO (đã Submit) → nút **FS Work Order** (nhóm *Create*). Hệ thống tự điền công ty, khách hàng, địa chỉ, liên hệ, ngày bắt đầu/kết thúc; WO ở trạng thái **New**.
 - **Tạo SA từ WO:** mở WO (chưa Closed) → nút **Service Appointment**. SA mới tự gắn về WO qua trường liên kết cha (*parent_record*). Khi SA được **Submit**, hệ thống ghi tên SA vào trường **service_appointment** của WO.
 - **WO không tự sinh từ SO**, và **SA không tự sinh từ WO** — đều do người dùng bấm tạo. Vì vậy một SO có thể có 0, 1 hay nhiều WO; một WO có thể có nhiều SA.
+- Một WO có **một hoặc nhiều dòng công việc** (Work Order Line Item — WOLI); mỗi dòng là một đầu việc hoặc một món vật tư.
 
-> ℹ️ FSMNext **không có** nút "Nhân bản/Duplicate" riêng cho WO/SA. Để "tạo lại" một phiếu đã huỷ, xem [§9](#9-tạo-lại--mở-lại-phiếu).
+> ℹ️ FSMNext **không có** nút "Nhân bản" riêng cho WO/SA; Desk chỉ có lệnh chung **⋯ → Duplicate**. Bản sao SA tạo bằng lệnh này **không** mang theo dữ liệu buổi làm việc của bản gốc (xem [§9](#9-tạo-lại--mở-lại-phiếu)).
+
+### Tiền công KTV khi một WO có nhiều SA
+{: #tien-cong-nhieu-sa }
+
+Tiền công **thuộc về WO**, tính từ các dòng công việc (WOLI) và các khoản điều chỉnh, rồi được phân bổ xuống từng KTV:
+
+| Bước | Cách chia |
+|---|---|
+| 1 | Tổng tiền công của WO chia **đều** cho **mọi SA chưa huỷ** của WO — kể cả SA chưa làm, đang chờ hoặc *Cannot Complete* |
+| 2 | Phần của mỗi SA chia tiếp theo **% đóng góp** của từng KTV trong SA (tổng phải đúng 100%) |
+
+Hệ quả cần nhớ:
+
+- **Thêm SA không làm tăng tổng tiền công của WO**, nhưng làm **giảm phần của các SA đã có**. Một SA tạo nhầm mà không huỷ vẫn được chia tiền công dù không ai làm.
+- Vì vậy, khi tạo SA cho một WO **đã có SA chưa huỷ**, hệ thống hiện **cảnh báo** liệt kê các SA đang có (trên Desk và trên màn hình điều phối `/smart-scheduler`): *“Lệnh công việc … đã có Service Appointment …”*. Cần thêm một buổi thật sự thì giữ SA mới; tạo nhầm thì **huỷ ngay** kèm lý do.
+- Phân bổ được tính lại mỗi khi SA, WO hoặc dòng công việc thay đổi.
+
+**Đọc báo cáo Master View** (`/fsm-report` → *Master View*): mỗi dòng là một tổ hợp **WO × SA × KTV**.
+
+| Cột | Ghi ở đâu | Cộng cột có đúng không |
+|---|---|---|
+| **Tổng tiền**, **Đã thu / Tổng** (của SO) | Chỉ ở **dòng đầu** của mỗi SO; các dòng sau hiện dấu `〃` (trên tệp Excel thì để trống) | Đúng |
+| **Compensation** | Mỗi dòng là phần tiền công của đúng KTV đó trong đúng SA đó | Đúng |
 
 ---
 
@@ -216,6 +242,8 @@ Hệ thống chặn **Completed** nếu còn một trong các vướng mắc sau
 | Đủ yêu cầu theo Work Type (vd **ảnh**) | *"...no photo attached (Work Type requires Photo)"* |
 
 > Huỷ SA thì bắt buộc **Cancellation Reason** — nếu bỏ trống: *"Cancellation Reason is required before canceling"*.
+>
+> KTV bấm check-out khi chưa check-in sẽ bị chặn: *"… chưa check-in nên không thể check-out."* — check-in trước rồi mới check-out; người không tham gia buổi làm việc thì điều phối huỷ người đó khỏi lịch.
 
 ---
 
@@ -339,7 +367,7 @@ flowchart LR
 
 ## 9. Tạo lại / mở lại phiếu
 
-FSMNext **không có nút "Nhân bản"** riêng. Có 3 cách xử lý tuỳ tình huống:
+FSMNext **không có nút "Nhân bản"** riêng. Có các cách xử lý tuỳ tình huống:
 
 | Tình huống | Cách làm |
 |---|---|
@@ -347,9 +375,12 @@ FSMNext **không có nút "Nhân bản"** riêng. Có 3 cách xử lý tuỳ tì
 | SA đã **Completed** nhưng cần sửa | Change Status **Completed → In Progress** (dữ liệu thực tế được giữ) |
 | SA đã **Canceled / Cannot Complete** cần làm lại | Change Status về **Scheduled/Dispatched** → **reset** toàn bộ dữ liệu thực tế (check-in/out, giờ) và KTV về "Assigned" để làm lại từ đầu |
 | SA cũ đã huỷ, cần **lịch mới** cho cùng WO | Mở WO → nút **Service Appointment** tạo SA mới (tự gắn về WO cũ) |
+| Cần một SA giống hệt SA đang có | Desk: mở SA → **⋯ → Duplicate**. Bản sao **không** mang theo giờ và vị trí check-in/check-out, giờ thực tế, lý do huỷ và dấu đóng cưỡng bức; mọi KTV về *Assigned* |
 | Phiếu đã **Cancel (docstatus 2)** cần bản mới | Dùng cơ chế **Amend** chuẩn của hệ thống (mở bản đã huỷ → *Amend* → tạo bản nháp mới) |
 
 > ⚠️ Mở lại SA từ Canceled/Cannot Complete sẽ **xoá sạch dữ liệu check-in/check-out cũ** — KTV phải check-in lại. Cân nhắc trước khi mở lại thay vì tạo SA mới.
+>
+> ⚠️ Tạo SA mới (kể cả bằng Duplicate) cho một WO đã có SA chưa huỷ sẽ **chia lại tiền công** của WO — xem [Tiền công KTV khi một WO có nhiều SA](#tien-cong-nhieu-sa).
 
 ---
 
@@ -382,5 +413,6 @@ Các cờ trong **FSM Settings** (Single doctype) quyết định phiếu "chặ
 
 - **[Trả vật tư về kho (FSMNext)](FSMNext-Tra-Vat-Tu.html)** — nghĩa vụ trả hàng, bốn chốt chặn lúc tạo phiếu, huỷ phiếu giao sau khi đã trả hàng, tình huống ngoại lệ
 - **[Tự xử lý sự cố dịch vụ (FSMNext)](FSMNext-Xu-Ly-Su-Co.html)** — cây quyết định "WO kẹt New", tra lỗi theo triệu chứng, cách đọc FS Scheduler Log
+- **[Báo cáo khoảng cách check-in (FSMNext)](FSMNext-Khoang-Cach-Check-In.html)** — KTV check-in cách nhà khách bao xa, cách phân biệt địa chỉ định vị sai với có mặt ở nơi khác
 - [Auto-Assign Ticket & SIM](Service_Reminder_Auto_Assign.html) — tự động phân bổ ticket bảo dưỡng
 - [Quy tắc phân bổ bảo dưỡng](QUY_TAC_PHAN_BO_BAO_DUONG.html) — thuật toán chọn KTV

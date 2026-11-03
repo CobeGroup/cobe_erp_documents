@@ -38,6 +38,8 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 | [HT-13](#ht-13) | Báo phiếu công việc không có lịch hẹn nào | [B·5 · Hoàn thành phiếu công việc](Quy-Trinh-B-Hien-Truong.html#hoan-thanh-wo) |
 | [HT-14](#ht-14) | Mở lại lịch hẹn làm mất dữ liệu check-in | [B · Mở lại, đổi lịch và huỷ](Quy-Trinh-B-Hien-Truong.html#dong-mo) |
 | [HT-15](#ht-15) | Không huỷ được lịch hẹn, phiếu công việc hoặc đơn | [B · Mở lại, đổi lịch và huỷ](Quy-Trinh-B-Hien-Truong.html#dong-mo) |
+| [HT-16](#ht-16) | Cảnh báo phiếu công việc đã có lịch hẹn | [B·2 · Lập lịch hẹn, gán kỹ thuật viên](Quy-Trinh-B-Hien-Truong.html#lap-sa) |
+| [HT-17](#ht-17) | Báo chưa check-in nên không check-out được | [B·3 · Làm việc tại nhà khách hàng](Quy-Trinh-B-Hien-Truong.html#hien-truong) |
 
 ---
 
@@ -399,8 +401,8 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <text class="qt-nhan" x="133" y="77" text-anchor="start">có</text>
 <line class="qt-mui" x1="125" y1="60" x2="125" y2="92.5" marker-end="url(#qt-ah)"/>
 <rect class="qt-ok" x="12" y="96.5" width="226" height="50" rx="10" ry="10"/>
-<text class="qt-tn" x="24" y="118.5" text-anchor="start">Người đó check-out</text>
-<text class="qt-tn" x="24" y="135.5" text-anchor="start">trên ứng dụng</text>
+<text class="qt-tn" x="24" y="118.5" text-anchor="start">Người đó check-in nếu</text>
+<text class="qt-tn" x="24" y="135.5" text-anchor="start">chưa, rồi check-out</text>
 <line class="qt-mui" x1="125" y1="146.5" x2="125" y2="170.5" marker-end="url(#qt-ah)"/>
 <polyline class="qt-mui" points="375,68.5 375,199.5 242,199.5" marker-end="url(#qt-ah)"/>
 <a href="Quy-Trinh-B-Hien-Truong.html#hoan-thanh-sa"><title>Quay về B·4 · Hoàn thành lịch hẹn</title>
@@ -672,6 +674,102 @@ Mỗi thẻ gồm: gặp ở đâu, dấu hiệu, nguyên nhân, các bước g�
 <rect class="qt-cong" x="12" y="271" width="226" height="50" rx="10" ry="10"/>
 <text class="qt-tb2" x="24" y="293" text-anchor="start">↩ Quay về B</text>
 <text class="qt-tn" x="24" y="310" text-anchor="start">Mở lại, đổi lịch và huỷ</text>
+</a>
+</svg>
+</div>
+</div>
+
+[↑ Danh mục thẻ](#danh-muc)
+{: .fs-2 }
+
+---
+
+## HT-16 · Cảnh báo phiếu công việc đã có lịch hẹn
+{: #ht-16 }
+
+<div class="qt-the-khung">
+<div class="qt-the-tt">
+<table class="qt-the-bang">
+<tr><th>Ở bước</th><td><a href="Quy-Trinh-B-Hien-Truong.html#lap-sa">B·2 · Lập lịch hẹn, gán kỹ thuật viên</a></td></tr>
+<tr><th>Thông báo</th><td><span class="qt-thong-bao">“Lệnh công việc … đã có Service Appointment …”</span></td></tr>
+<tr><th>Nguyên nhân</th><td>Phiếu đã có lịch hẹn chưa huỷ. Tiền công của phiếu chia đều cho mọi lịch hẹn chưa huỷ, nên thêm lịch sẽ làm giảm phần của các buổi đã có.</td></tr>
+<tr><th>Ai xử lý</th><td>Điều phối</td></tr>
+</table>
+<p class="qt-canh-bao">⚠️ Lịch tạo nhầm mà không huỷ vẫn được chia tiền công dù không ai làm.</p>
+</div>
+<div class="qt-the-sd qt-sodo">
+<svg xmlns="http://www.w3.org/2000/svg" class="qt-svg" viewBox="0 0 470 226" width="470" height="226" role="img" aria-labelledby="qt-t-the-ht-16 qt-d-the-ht-16">
+<title id="qt-t-the-ht-16">Các bước gỡ tình huống HT-16</title>
+<desc id="qt-d-the-ht-16">Các bước xử lý tình huống HT-16: Cảnh báo phiếu công việc đã có lịch hẹn</desc>
+<defs><marker id="qt-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/></marker><marker id="qt-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52a86a"/></marker></defs>
+<rect class="qt-nen" x="0" y="0" width="470" height="226"/>
+<polygon class="qt-re" points="12,35 37,10 213,10 238,35 213,60 37,60"/>
+<text class="qt-tb2" x="125" y="31" text-anchor="middle">Cần thêm một</text>
+<text class="qt-tb2" x="125" y="48" text-anchor="middle">buổi thật sự?</text>
+<rect class="qt-trang" x="292" y="10" width="166" height="50" rx="10" ry="10"/>
+<text class="qt-tn" x="303" y="32" text-anchor="start">Huỷ lịch vừa</text>
+<text class="qt-tn" x="303" y="49" text-anchor="start">tạo, nhập lý do</text>
+<line class="qt-mui" x1="238" y1="35" x2="288" y2="35" marker-end="url(#qt-ah)"/>
+<text class="qt-nhan" x="265" y="29" text-anchor="middle">không</text>
+<text class="qt-nhan" x="133" y="77" text-anchor="start">có</text>
+<line class="qt-mui" x1="125" y1="60" x2="125" y2="84" marker-end="url(#qt-ah)"/>
+<rect class="qt-ok" x="12" y="88" width="226" height="50" rx="10" ry="10"/>
+<text class="qt-tn" x="24" y="110" text-anchor="start">Giữ lịch mới, gán</text>
+<text class="qt-tn" x="24" y="127" text-anchor="start">người như thường</text>
+<line class="qt-mui" x1="125" y1="138" x2="125" y2="162" marker-end="url(#qt-ah)"/>
+<polyline class="qt-mui" points="375,60 375,191 242,191" marker-end="url(#qt-ah)"/>
+<a href="Quy-Trinh-B-Hien-Truong.html#lap-sa"><title>Quay về B·2 · Lập lịch hẹn, gán kỹ thuật viên</title>
+<rect class="qt-cong" x="12" y="166" width="226" height="50" rx="10" ry="10"/>
+<text class="qt-tb2" x="24" y="188" text-anchor="start">↩ Quay về B·2</text>
+<text class="qt-tn" x="24" y="205" text-anchor="start">Lập lịch hẹn, gán kỹ thuật viên</text>
+</a>
+</svg>
+</div>
+</div>
+
+[↑ Danh mục thẻ](#danh-muc)
+{: .fs-2 }
+
+---
+
+## HT-17 · Báo chưa check-in nên không check-out được
+{: #ht-17 }
+
+<div class="qt-the-khung">
+<div class="qt-the-tt">
+<table class="qt-the-bang">
+<tr><th>Ở bước</th><td><a href="Quy-Trinh-B-Hien-Truong.html#hien-truong">B·3 · Làm việc tại nhà khách hàng</a></td></tr>
+<tr><th>Thông báo</th><td><span class="qt-thong-bao">“… chưa check-in nên không thể check-out.”</span></td></tr>
+<tr><th>Nguyên nhân</th><td>Kỹ thuật viên chưa check-in trong lịch hẹn này. Hệ thống chỉ ghi nhận check-out khi đã có giờ check-in.</td></tr>
+<tr><th>Ai xử lý</th><td>Kỹ thuật viên · Điều phối</td></tr>
+</table>
+</div>
+<div class="qt-the-sd qt-sodo">
+<svg xmlns="http://www.w3.org/2000/svg" class="qt-svg" viewBox="0 0 470 234" width="470" height="234" role="img" aria-labelledby="qt-t-the-ht-17 qt-d-the-ht-17">
+<title id="qt-t-the-ht-17">Các bước gỡ tình huống HT-17</title>
+<desc id="qt-d-the-ht-17">Các bước xử lý tình huống HT-17: Báo chưa check-in nên không check-out được</desc>
+<defs><marker id="qt-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/></marker><marker id="qt-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52a86a"/></marker></defs>
+<rect class="qt-nen" x="0" y="0" width="470" height="234"/>
+<polygon class="qt-re" points="12,35 37,10 213,10 238,35 213,60 37,60"/>
+<text class="qt-tb2" x="125" y="31" text-anchor="middle">Người đó có mặt</text>
+<text class="qt-tb2" x="125" y="48" text-anchor="middle">ở buổi làm việc?</text>
+<rect class="qt-trang" x="292" y="1.5" width="166" height="67" rx="10" ry="10"/>
+<text class="qt-tn" x="303" y="23.5" text-anchor="start">Điều phối loại</text>
+<text class="qt-tn" x="303" y="40.5" text-anchor="start">khỏi lịch, chia lại</text>
+<text class="qt-tn" x="303" y="57.5" text-anchor="start">tỉ lệ đóng góp</text>
+<line class="qt-mui" x1="238" y1="35" x2="288" y2="35" marker-end="url(#qt-ah)"/>
+<text class="qt-nhan" x="265" y="29" text-anchor="middle">không</text>
+<text class="qt-nhan" x="133" y="77" text-anchor="start">có</text>
+<line class="qt-mui" x1="125" y1="60" x2="125" y2="92.5" marker-end="url(#qt-ah)"/>
+<rect class="qt-ok" x="12" y="96.5" width="226" height="50" rx="10" ry="10"/>
+<text class="qt-tn" x="24" y="118.5" text-anchor="start">Check-in trên ứng</text>
+<text class="qt-tn" x="24" y="135.5" text-anchor="start">dụng rồi check-out</text>
+<line class="qt-mui" x1="125" y1="146.5" x2="125" y2="170.5" marker-end="url(#qt-ah)"/>
+<polyline class="qt-mui" points="375,68.5 375,199.5 242,199.5" marker-end="url(#qt-ah)"/>
+<a href="Quy-Trinh-B-Hien-Truong.html#hien-truong"><title>Quay về B·3 · Làm việc tại nhà khách hàng</title>
+<rect class="qt-cong" x="12" y="174.5" width="226" height="50" rx="10" ry="10"/>
+<text class="qt-tb2" x="24" y="196.5" text-anchor="start">↩ Quay về B·3</text>
+<text class="qt-tn" x="24" y="213.5" text-anchor="start">Làm việc tại nhà khách hàng</text>
 </a>
 </svg>
 </div>

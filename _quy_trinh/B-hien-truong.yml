@@ -47,7 +47,7 @@ luong:
       ten: 'Lập lịch hẹn, gán kỹ thuật viên'
       phu: 'Màn hình điều phối /smart-scheduler'
       ai: 'Điều phối'
-      the: [HT-03, HT-04, HT-05]
+      the: [HT-03, HT-04, HT-05, HT-16]
       noi_dung: |
         Từ phiếu công việc chưa đóng → **Create → Service Appointment**. Lịch hẹn
         (`FS Service Appointment`) **tự đổi trạng thái** theo dữ liệu được khai:
@@ -64,6 +64,11 @@ luong:
 
         Một phiếu công việc có thể có nhiều lịch hẹn, ví dụ lần một khảo sát, lần hai lắp đặt.
 
+        **Tiền công của phiếu chia theo lịch hẹn.** Tổng tiền công của phiếu được chia **đều** cho mọi
+        lịch hẹn chưa huỷ, kể cả lịch chưa làm hoặc *Cannot Complete*, rồi chia tiếp theo tỉ lệ đóng
+        góp của từng kỹ thuật viên trong lịch. Vì vậy khi phiếu đã có lịch hẹn chưa huỷ, hệ thống hiện
+        cảnh báo lúc tạo thêm lịch — xem HT-16.
+
   - buoc:
       id: nhan-vat-tu
       ten: 'Nhận vật tư cho lịch hẹn'
@@ -75,7 +80,7 @@ luong:
       ten: 'Làm việc tại nhà khách hàng'
       phu: 'Di chuyển · check-in · bước công việc · ảnh · check-out'
       ai: 'Kỹ thuật viên'
-      the: [HT-06, HT-07, HT-08]
+      the: [HT-06, HT-07, HT-08, HT-17]
       noi_dung: |
         Làm trên ứng dụng kỹ thuật viên `/technician`, **theo đúng thứ tự**:
 
@@ -87,7 +92,11 @@ luong:
         | 4 | Làm các **bước công việc** | Đánh dấu từng đầu việc: xong, không xong, không áp dụng |
         | 5 | **Đính kèm ảnh** nếu loại việc yêu cầu | Ảnh lưu vào lịch hẹn |
         | 6 | Giao hàng và thu tiền nếu có | Phân khu C và D |
-        | 7 | **Check-out** | Ghi giờ kết thúc |
+        | 7 | **Check-out** | Ghi giờ kết thúc; chỉ làm được **sau khi đã check-in** — xem HT-17 |
+
+        Vị trí check-in được đối chiếu với toạ độ địa chỉ khách hàng để đánh dấu *có mặt tại nhà
+        khách*. Quản lý xem tổng hợp theo từng kỹ thuật viên ở
+        [Báo cáo khoảng cách check-in](FSMNext-Khoang-Cach-Check-In.html).
 
   - re:
       id: du-dk-sa
@@ -170,7 +179,8 @@ ngoai_luong:
     |---|---|---|
     | Sửa lịch hẹn đã hoàn tất | Chuyển *Completed → In Progress* | Dữ liệu thực tế **giữ nguyên** |
     | Làm lại lịch hẹn đã huỷ | Chuyển về *Scheduled* | ⚠️ **Xoá sạch** dữ liệu check-in, check-out, thời gian |
-    | Cần thêm một buổi cho cùng vụ việc | Lập **lịch hẹn mới** | An toàn hơn mở lại lịch cũ |
+    | Cần thêm một buổi cho cùng vụ việc | Lập **lịch hẹn mới** | An toàn hơn mở lại lịch cũ; tiền công chia đều cho các buổi — xem HT-16 |
+    | Nhân bản một lịch hẹn | Trên Desk: menu **⋯ → Duplicate** | Bản sao **không** mang theo check-in, check-out, giờ thực tế và dấu đóng cưỡng bức; kỹ thuật viên về *Assigned* |
 
     **Trình tự huỷ:** lịch hẹn (bắt buộc nhập lý do) → phiếu công việc → đơn bán hàng.
 
@@ -291,7 +301,7 @@ the:
     go:
       - re:
           hoi: 'Người đó có tham gia buổi làm việc?'
-          co: 'Người đó check-out trên ứng dụng'
+          co: 'Người đó check-in nếu chưa, rồi check-out'
           khong: 'Điều phối loại khỏi lịch, chia lại tỉ lệ đóng góp'
     quay_ve: {buoc: hoan-thanh-sa}
 
@@ -367,6 +377,33 @@ the:
       - buoc: 'Huỷ đơn nếu cần'
     quay_ve: {buoc: dong-mo}
 
+  - ma: HT-16
+    ten: 'Cảnh báo phiếu công việc đã có lịch hẹn'
+    gap_o: {buoc: lap-sa}
+    thong_bao: '“Lệnh công việc … đã có Service Appointment …”'
+    nguyen_nhan: 'Phiếu đã có lịch hẹn chưa huỷ. Tiền công của phiếu chia đều cho mọi lịch hẹn chưa huỷ, nên thêm lịch sẽ làm giảm phần của các buổi đã có.'
+    ai: 'Điều phối'
+    go:
+      - re:
+          hoi: 'Cần thêm một buổi thật sự?'
+          co: 'Giữ lịch mới, gán người như thường'
+          khong: 'Huỷ lịch vừa tạo, nhập lý do'
+    canh_bao: 'Lịch tạo nhầm mà không huỷ vẫn được chia tiền công dù không ai làm.'
+    quay_ve: {buoc: lap-sa}
+
+  - ma: HT-17
+    ten: 'Báo chưa check-in nên không check-out được'
+    gap_o: {buoc: hien-truong}
+    thong_bao: '“… chưa check-in nên không thể check-out.”'
+    nguyen_nhan: 'Kỹ thuật viên chưa check-in trong lịch hẹn này. Hệ thống chỉ ghi nhận check-out khi đã có giờ check-in.'
+    ai: 'Kỹ thuật viên · Điều phối'
+    go:
+      - re:
+          hoi: 'Người đó có mặt ở buổi làm việc?'
+          co: 'Check-in trên ứng dụng rồi check-out'
+          khong: 'Điều phối loại khỏi lịch, chia lại tỉ lệ đóng góp'
+    quay_ve: {buoc: hien-truong}
+
 hoi_dap:
   - hoi: 'Một lần đi không xong việc, phải làm gì?'
     dap: 'Lập **lịch hẹn mới** trên cùng phiếu công việc — xem HT-06.'
@@ -374,6 +411,10 @@ hoi_dap:
     dap: 'Lịch chưa *In Progress* thì sửa khung giờ. Đã *In Progress* rồi thì huỷ kèm lý do và lập lịch mới — xem HT-03.'
   - hoi: 'Đi hai người thì ghi công thế nào?'
     dap: 'Gán cả hai vào lịch hẹn, chia **tỉ lệ đóng góp** cộng lại bằng 100% — xem HT-05.'
+  - hoi: 'Thêm lịch hẹn cho cùng phiếu thì tiền công tính thế nào?'
+    dap: 'Tiền công của phiếu chia **đều** cho mọi lịch hẹn chưa huỷ, rồi theo tỉ lệ đóng góp trong từng lịch. Lịch tạo nhầm cần huỷ ngay — xem HT-16.'
+  - hoi: 'Quên check-in, đến lúc ra về mới nhớ thì làm gì?'
+    dap: 'Check-in trên ứng dụng rồi mới check-out; hệ thống không nhận check-out khi chưa có giờ check-in — xem HT-17.'
   - hoi: 'Lịch hẹn và đơn đã xong, sao phiếu công việc vẫn New?'
     dap: 'Còn thiếu một trong sáu điều kiện, hoặc tác vụ tự động chưa tới lượt — xem HT-11 và HT-12.'
   - hoi: 'Đóng phiếu công việc có đóng luôn đơn hàng không?'
