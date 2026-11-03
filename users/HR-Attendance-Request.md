@@ -66,10 +66,13 @@ Attendance Request (đơn "Chấm công bù") dùng cho các tình huống NV **
 | NV đi gặp khách hàng / công tác cả ngày | `On Duty` |
 | NV bù chấm công vì sự cố hệ thống | `On Duty` + `explanation` |
 
-> ⚠️ **NGÀY CHỌN quyết định đơn làm gì** (từ 18/09/2026). Đơn có `from_date` từ **hôm nay trở đi**
-> là **giấy phép chấm công ngoài văn phòng**: nó tắt kiểm tra vị trí cho ngày đó, và ngày đó
-> **chỉ có công khi nhân viên chấm công ít nhất một lần**. Từ 23/09/2026 loại đơn này **cũng tiêu
-> hạn mức tháng** như đơn khai bù. Hết ngày không có
+> ⚠️ **NGÀY CHỌN quyết định đơn làm gì** (từ 18/09/2026, sửa 03/11/2026). Ngày trong đơn **sau ngày
+> nộp** (`attendance_date > DATE(creation)`) là ngày **giấy phép chấm công ngoài văn phòng**: đơn tắt
+> kiểm tra vị trí cho ngày đó, và ngày đó **chỉ có công khi nhân viên chấm công ít nhất một lần**.
+> Ngày **bằng hoặc trước ngày nộp** (đơn cho hôm nay, đơn khai bù) thì duyệt là có công — từ 18/09 tới
+> 03/11/2026 ngày nộp cũng bị xếp là giấy phép; các phiếu bị huỷ vì vậy đã được patch `v0_057` khôi
+> phục bằng bản sửa (amend), chỉ phiếu hệ thống huỷ, không chạm phiếu người huỷ. Từ 23/09/2026 mọi
+> loại đơn đều **tiêu hạn mức tháng**. Hết ngày giấy phép không có
 > lần chấm nào thì bản Attendance do đơn tạo bị **thu hồi** và nhân viên nhận thông báo ghi rõ ngày
 > (`attendance.require_checkin`: job 02:20 quét 7 ngày + kiểm ngay lúc duyệt cho ngày đã qua).
 > Từ **30/10/2026**, phiếu mà **mọi ngày** đều bị thu hồi như vậy được hệ thống **huỷ luôn** (docstatus 2,

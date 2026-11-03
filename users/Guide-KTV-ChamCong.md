@@ -143,10 +143,11 @@ nhãn gì đặc biệt, cứ chấm như bình thường, hệ thống tự cho
   Đơn biến mất khỏi danh sách chờ, thay bằng dòng công **Có mặt** trên Bảng công. Không có cảnh báo
   *đi trễ / về sớm / quên ra* cho ngày này.
 
-> ⚠️ **Đơn tạo cho hôm nay hoặc ngày tới chỉ mở quyền chấm công ngoài văn phòng — không thay cho việc
+> ⚠️ **Đơn tạo trước cho ngày tới chỉ mở quyền chấm công ngoài văn phòng — không thay cho việc
 > chấm công.** Ngày đó bạn vẫn phải **chấm công ít nhất một lần**; cả ngày không chấm lần nào thì sáng
-> hôm sau hệ thống gỡ ngày công đó và gửi thông báo cho bạn. Muốn tính công cho một ngày **đã qua**
-> thì gửi **đơn khai bù** (chọn đúng ngày đã qua).
+> hôm sau hệ thống gỡ ngày công đó, huỷ đơn và gửi thông báo cho bạn. Đơn cho **hôm nay** hoặc cho
+> ngày **đã qua** thì khác: được duyệt là có công, không cần lần chấm công (từ 03/11/2026 — xem
+> [Có gì mới — đợt 11/2026](Cham-Cong-Co-Gi-Moi-11-2026.html)).
 
 <img src="images/guide/dexuat/04-approved.png" width="240" alt="Sau duyệt — ngày hiện Có mặt">
 
@@ -225,8 +226,8 @@ thêm bước cuối rồi ngày đó mới có công.
 | Bảng công gắn cảnh báo **"Không có ca"** | Hôm đó không có lịch hẹn dịch vụ trên hệ thống — báo điều phối tạo lịch hẹn, hoặc giải trình với HR |
 | Job kéo dài **nhiều ngày** ở tỉnh | Tạo **1 đơn** chọn khoảng ngày từ–đến là đủ, không cần mỗi ngày một đơn |
 | Đơn duyệt rồi mà Bảng công chưa thấy dòng **Có mặt** | Kéo làm mới danh sách; nếu vẫn thiếu sau vài phút → báo HR |
-| Đơn cho **hôm nay** đã duyệt, hôm sau ngày công **biến mất** | Hôm đó bạn không chấm công lần nào — đơn loại này chỉ mở quyền chấm ngoài VP. Đơn cũ đã được **hệ thống huỷ** cùng lúc (tab *Đã hủy*), nên nếu có đi làm thật thì gửi ngay **đơn khai bù** cho ngày đã qua đó |
-| Hôm nay **quên chấm công** (hết pin, mất sóng…) | **Đừng tạo đơn cho hôm nay** thay cho chấm công. Còn chấm được thì chấm ngay một lần; không chấm được thì **sáng hôm sau** gửi đơn khai bù — xem [Quên chấm công hôm nay](Guide-NhanVien-ChamCongNgoai.html#quen-cham-cong-hom-nay) |
+| Đơn tạo trước cho **ngày tới** đã duyệt, hôm sau ngày công **biến mất** | Ngày đó bạn không chấm công lần nào — đơn xin trước chỉ mở quyền chấm ngoài VP. Đơn cũ đã được **hệ thống huỷ** cùng lúc (tab *Đã hủy*), nên nếu có đi làm thật thì gửi **đơn khai bù** cho ngày đó khi còn trong hạn nộp; quá hạn thì liên hệ HR |
+| Hôm nay **quên chấm công** (hết pin, mất sóng…) | Còn chấm được thì chấm ngay một lần. Không chấm được thì tạo **đơn cho hôm nay** (hoặc đơn khai bù từ hôm sau) — được duyệt là có công, tính vào hạn mức tháng — xem [Quên chấm công hôm nay](Guide-NhanVien-ChamCongNgoai.html#quen-cham-cong-hom-nay) |
 
 ---
 

@@ -201,6 +201,10 @@ Approvers*; HR thấy hết.
 
 ## ⑨ Đơn mất công thì đơn cũng được huỷ, để nộp khai bù được ngay
 
+> 🔄 **Đã sửa từ 03/11/2026:** luật dưới đây chỉ còn áp cho đơn **xin trước cho ngày tới**. Đơn cho
+> **chính hôm nay** được tính công khi duyệt, và những đơn đã bị huỷ vì nộp trong ngày đã được hệ
+> thống khôi phục — xem [Có gì mới — đợt 11/2026](Cham-Cong-Co-Gi-Moi-11-2026.html).
+
 Từ 09/2026, đơn chấm công bù / công tác nộp cho **hôm nay hoặc ngày tới** chỉ mở quyền chấm công ngoài
 văn phòng; hết ngày không chấm lần nào thì ngày công do đơn tạo bị thu hồi lúc 02:20 sáng hôm sau
 (xem [đợt 09/2026 mục ④](Cham-Cong-Co-Gi-Moi-09-2026.html)). Nhưng **đơn vẫn còn hiệu lực**, nên khi
@@ -257,4 +261,4 @@ Từ 30/10/2026:
 - [Duyệt nghỉ phép & nghỉ bù](Duyet-Nghi-Phep.html)
 - [Quỹ giờ Nghỉ bù](Desk-HR-QuyNghiBu.html) · [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html#phieu-quyet-toan)
 - [Chính sách chấm công (HR Policy)](Desk-Admin-Policy.html)
-- [Có gì mới — đợt 09/2026](Cham-Cong-Co-Gi-Moi-09-2026.html)
+- [Có gì mới — đợt 09/2026](Cham-Cong-Co-Gi-Moi-09-2026.html) · [Có gì mới — đợt 11/2026](Cham-Cong-Co-Gi-Moi-11-2026.html)

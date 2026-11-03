@@ -26,6 +26,7 @@ has_children: true
 
 ## Vào nhanh theo tình huống
 
+- 🆕 Muốn biết **đợt cập nhật 11/2026 đổi những gì** (đơn chấm công cho hôm nay được tính công, khôi phục đơn đã huỷ) → **[Có gì mới — đợt 11/2026](Cham-Cong-Co-Gi-Moi-11-2026.html)**
 - 🆕 Muốn biết **đợt cập nhật 10/2026 đổi những gì** (ứng trước Nghỉ bù, quyết toán cuối năm, chốt đơn nghỉ) → **[Có gì mới — đợt 10/2026](Cham-Cong-Co-Gi-Moi-10-2026.html)**
 - 🆕 Muốn biết **đợt cập nhật 09/2026 đổi những gì** → **[Có gì mới — đợt 09/2026](Cham-Cong-Co-Gi-Moi-09-2026.html)**
 - 📱 Mới vào công ty, cần chấm công → **[Cài app & Chấm công](Guide-NhanVien-ChamCong.html)**

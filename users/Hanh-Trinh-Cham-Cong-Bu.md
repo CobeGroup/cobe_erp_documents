@@ -66,21 +66,21 @@ Cùng một biểu mẫu, nhưng **ngày được chọn** quyết định đơn
 
 | | Đơn xin chấm công ngoài văn phòng | Đơn khai bù |
 |---|---|---|
-| Ngày chọn | Hôm nay hoặc ngày tới | Ngày đã qua |
-| Dùng khi | Sáng mai đi thẳng tới nhà khách; hôm nay ra ngoài và sẽ chấm công tại đó | Ngày trước có đi làm nhưng quên chấm công, hoặc máy không chấm được |
-| Tác dụng | **Mở quyền chấm công ngoài vùng văn phòng** cho ngày đó | **Cấp công** cho ngày đó |
-| Bị hạn mức tháng | Không | Có |
+| Ngày chọn | **Ngày tới** (xin trước) | **Hôm nay** hoặc ngày đã qua |
+| Dùng khi | Sáng mai đi thẳng tới nhà khách | Hôm nay ra ngoài, quên chấm công hoặc máy không chấm được; ngày trước có đi làm nhưng quên chấm công |
+| Tác dụng | **Mở quyền chấm công ngoài vùng văn phòng** cho ngày đó | **Cấp công** cho ngày đó (và mở quyền chấm công ngoài VP nếu là hôm nay) |
+| Bị hạn mức tháng | Có | Có |
 | Điều kiện để ngày đó có công | **Phải có ít nhất một lần chấm công thật trong ngày** | Người duyệt đồng ý |
 
-Nói gọn: đơn cho hôm nay hoặc ngày tới là **giấy phép chấm công ở ngoài**, không phải giấy xin
-công. Tạo đơn rồi mà cả ngày không chấm công lần nào thì ngày đó **không có công**: sáng hôm sau
-hệ thống gỡ ngày công đó và gửi thông báo ghi rõ ngày. Muốn tính công cho một ngày đã qua thì gửi
-**đơn khai bù** — và đơn khai bù mới là loại bị hạn mức tháng.
+Nói gọn: đơn xin trước cho ngày tới là **giấy phép chấm công ở ngoài**, không phải giấy xin công.
+Tạo đơn rồi mà cả ngày không chấm công lần nào thì ngày đó **không có công**: sáng hôm sau hệ thống
+gỡ ngày công đó, huỷ đơn và gửi thông báo ghi rõ ngày. Đơn cho **hôm nay** hoặc ngày đã qua được
+duyệt là có công — đó là đường dành cho người quên chấm công (từ 03/11/2026; trước đó đơn cho hôm nay
+cũng phải có lần chấm công — xem [Có gì mới — đợt 11/2026](Cham-Cong-Co-Gi-Moi-11-2026.html)).
 
-> ⚠️ **Hôm nay quên chấm công** (hết pin, mất sóng…) thì **đừng tạo đơn cho hôm nay**: còn chấm được
-> thì chấm ngay một lần; không chấm được thì **sáng hôm sau** gửi đơn khai bù cho ngày đó. Lỡ tạo đơn
-> cho hôm nay và bị gỡ công thì phải nhờ **quản lý / HR huỷ đơn cũ** trước — đơn cũ còn hiệu lực nên
-> tự gửi đơn khai bù sẽ bị báo trùng ngày. Chi tiết: [Quên chấm công hôm nay](Guide-NhanVien-ChamCongNgoai.html#quen-cham-cong-hom-nay).
+> ⚠️ **Hôm nay quên chấm công** (hết pin, mất sóng…): còn chấm được thì chấm ngay một lần, không tốn
+> hạn mức; không chấm được thì tạo **đơn cho hôm nay** hoặc **sáng hôm sau** gửi đơn khai bù cho ngày đó.
+> Chi tiết: [Quên chấm công hôm nay](Guide-NhanVien-ChamCongNgoai.html#quen-cham-cong-hom-nay).
 
 
 Anh A đang ở chỗ khách, mở app. Có **2 lối** cùng mở 1 form:
@@ -102,7 +102,7 @@ Anh A đang ở chỗ khách, mở app. Có **2 lối** cùng mở 1 form:
 
 > 💡 Có đơn rồi (kể cả **chưa duyệt**), ngày đó anh A đã **chấm công ngoài VP được ngay** — hệ thống
 > tự cho qua kiểm tra vị trí. Nhưng công ngày này **không tính theo giờ chấm** mà chờ đơn duyệt
-> (xem bước ③). Và đơn chỉ mở quyền chấm công: **vẫn phải chấm công** thì ngày đó mới có công. Chi tiết: [Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html).
+> (xem bước ③). Đơn cho hôm nay hoặc ngày đã qua được duyệt là có công; riêng đơn xin trước cho **ngày tới** thì ngày đó **vẫn phải có lần chấm công**. Chi tiết: [Chấm công ngoài VP & Đề xuất chấm công bù](Guide-NhanVien-ChamCongNgoai.html).
 
 ### Hạn mức số ngày khai bù mỗi tháng
 
@@ -117,9 +117,10 @@ chặn khi vượt:
 Năm điều cần biết:
 
 - **Đếm ngày, không đếm đơn.** Một đơn phủ ba ngày thì tiêu ba suất.
-- **Chỉ những ngày ĐÃ QUA tại lúc nộp đơn mới bị đếm.** Ngày **hôm nay hoặc ngày tới** —
-  phần xin phép trước để được chấm công ngoài văn phòng, ví dụ sáng mai đi thẳng tới nhà
-  khách — không bị đếm và không bao giờ bị chặn.
+- **Mọi ngày trong đơn đều bị đếm** (từ 23/09/2026) — ngày đã qua, hôm nay hay ngày tới. Bộ phận
+  phải xin phép chấm công ngoài văn phòng gần như hằng ngày (kỹ thuật viên hiện trường) được HR
+  khai dòng **0 = không giới hạn** riêng cho bộ phận đó — xem
+  [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html).
 - **Đơn đang chờ duyệt cũng tính**, không riêng đơn đã duyệt. Đơn bị từ chối hoặc đã huỷ thì
   không tính.
 - Đơn vắt qua hai tháng thì **mỗi ngày tính vào tháng của chính nó**.
@@ -153,10 +154,11 @@ chọn → **Actions → Submit** — duyệt hàng loạt một phát. Chi ti�
 ## ③ Kết quả
 
 **Được duyệt** → hệ thống **tự tạo công "Có mặt" theo ca chuẩn** cho ngày 30/06 — anh A không phải
-làm gì thêm. Riêng đơn nộp cho **hôm nay hoặc ngày tới**, ngày công này chỉ giữ được nếu trong
-ngày anh A **có chấm công ít nhất một lần** (ở đâu cũng được, kể cả ngoài văn phòng); không có lần
-chấm công nào thì sáng hôm sau hệ thống gỡ ngày công và báo cho anh A, khi đó muốn tính công phải
-gửi **đơn khai bù**. Đơn biến mất khỏi danh sách chờ, thay bằng dòng công trên Bảng công; không có cảnh báo
+làm gì thêm, vì đơn nộp trong chính ngày 30/06 là đơn khai bù. Nếu anh A nộp **từ hôm trước** cho ngày
+30/06 (xin trước), ngày công này chỉ giữ được nếu trong ngày anh A **có chấm công ít nhất một lần** (ở
+đâu cũng được, kể cả ngoài văn phòng); không có lần chấm công nào thì sáng hôm sau hệ thống gỡ ngày
+công, huỷ đơn và báo cho anh A, khi đó muốn tính công phải gửi **đơn khai bù**. Đơn biến mất khỏi danh
+sách chờ, thay bằng dòng công trên Bảng công; không có cảnh báo
 *đi trễ / về sớm / quên ra* cho ngày này:
 
 <img src="images/guide/dexuat/04-approved.png" width="260" alt="Sau duyệt — ngày 30/06 hiện Có mặt trên Bảng công">

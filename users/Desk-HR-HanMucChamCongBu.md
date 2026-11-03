@@ -184,9 +184,10 @@ Nộp quá hạn mức thì đơn bị chặn lúc gửi:
 > Hạn mức Chấm công bù tháng 10/2026 là 5 ngày. Tháng đó bạn đã xin 4 ngày (tính cả đơn đang
 > chờ duyệt), đơn này xin thêm 2 ngày. Cần thêm thì liên hệ HR.
 
-> ℹ️ **Đơn nộp cho hôm nay / ngày tới còn một phanh thứ hai.** Ngoài hạn mức, ngày đó chỉ có
+> ℹ️ **Đơn nộp trước cho ngày tới còn một phanh thứ hai.** Ngoài hạn mức, ngày đó chỉ có
 > công khi nhân viên **thật sự chấm công ít nhất một lần**; không chấm lần nào thì hệ thống gỡ
-> ngày công vào sáng hôm sau và báo cho nhân viên — xem
+> ngày công vào sáng hôm sau, huỷ đơn và báo cho nhân viên. Đơn cho **hôm nay** hoặc ngày đã qua
+> thì chỉ có hạn mức và hạn nộp là phanh (từ 03/11/2026) — xem
 > [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html).
 
 **Được miễn hạn mức:** HR Manager, HR User, System Manager — nhưng **chỉ khi lập đơn cho

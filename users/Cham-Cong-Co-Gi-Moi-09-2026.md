@@ -27,7 +27,7 @@ Năm thay đổi về phiếu chấm công và phê duyệt, cùng những việ
 | ① | Phiếu **Làm thêm giờ** duyệt **hai cấp** (trưởng bộ phận → HR); **Chấm công bù** giữ **một bước**, có công tắc đổi | Người duyệt, HR | [Duyệt chấm công bù](Duyet-Cham-Cong-Bu.html) · [Duyệt làm thêm](Duyet-Lam-Them.html) |
 | ② | Đơn bị **từ chối / huỷ** thì ngày đó **không có công**, kể cả khi đã chấm công ngoài văn phòng theo đơn | Nhân viên, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) |
 | ③ | **Hạn mức tháng** đếm **số ngày khai bù**, tính riêng từng loại đơn (kể cả WFH), chỉ đếm ngày đã qua, và khai được **theo bộ phận** ngay trong Chính sách chấm công | Nhân viên hiện trường, HR | [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html) |
-| ④ | Đơn cho **hôm nay / ngày tới** là **giấy phép chấm công ngoài văn phòng**, không phải giấy xin công | Nhân viên hiện trường, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) |
+| ④ | Đơn cho **hôm nay / ngày tới** là **giấy phép chấm công ngoài văn phòng**, không phải giấy xin công — *từ 03/11/2026 chỉ còn áp cho đơn xin trước cho ngày tới*, xem [đợt 11/2026](Cham-Cong-Co-Gi-Moi-11-2026.html) | Nhân viên hiện trường, người duyệt | [Hành trình một Đề xuất chấm công bù](Hanh-Trinh-Cham-Cong-Bu.html) |
 | ⑤ | Báo cáo mới: **nhân viên chấm công ngoài văn phòng ở đâu** | HR, quản lý | [Soát chấm công ngoài văn phòng](Desk-HR-SoatChamCongNgoai.html) |
 | ⑥ | **Không ai tự đặt luật chấm công cho chính mình** trong Chính sách chấm công — kể cả vai trò HR | HR | [Hạn mức ngày khai bù](Desk-HR-HanMucChamCongBu.html#không-ai-tự-khai-luật-cho-chính-mình) |
 
@@ -90,6 +90,11 @@ Bốn điều đổi:
   lực ngay.
 
 ## ④ Đơn cho hôm nay là giấy phép chấm công, không phải giấy xin công
+
+> 🔄 **Đã sửa từ 03/11/2026:** đơn cho **chính hôm nay** được tính công như đơn khai bù; chỉ đơn **xin
+> trước cho ngày tới** mới phải có lần chấm công. Các đơn bị hệ thống huỷ theo luật dưới đây đã được
+> khôi phục — xem [Có gì mới — đợt 11/2026](Cham-Cong-Co-Gi-Moi-11-2026.html). Phần còn lại của mục này ghi luật tại thời điểm
+> 09/2026.
 
 Đây là thay đổi ảnh hưởng tới thói quen hằng ngày nhiều nhất.
 
