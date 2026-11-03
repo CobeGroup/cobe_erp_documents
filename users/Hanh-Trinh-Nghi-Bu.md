@@ -219,8 +219,8 @@ như thường:
 | **Chủ nhật / ngày lễ** | **0** | 8 giờ = 1 ngày |
 | Ngày **nghỉ bù** | 1 (0,5 nếu nửa ngày) — tính công lúc này | trừ quỹ |
 
-Trên bảng công (`COBE HR Attendance Sheet`) ngày Thứ 7 đi làm hiện **`P/2`**, Chủ nhật đi làm hiện
-**`P/0`**, và cột **Số công** đã quy đổi sẵn — xem
+Trên bảng công (`COBE HR Attendance Sheet`) ngày Thứ 7 đi làm hiện **`P:2`**, Chủ nhật đi làm hiện
+**`P0`**, và cột **Số công** đã quy đổi sẵn — xem
 [Bảng công tháng](Desk-HR-BangCongThang.html#5-đọc-lưới-ngày--các-mã-trạng-thái). Bản ghi *có mặt*
 ngày Chủ nhật vẫn tồn tại vì phiếu làm thêm đọc giờ thực từ đó; nó không phải một công.
 
