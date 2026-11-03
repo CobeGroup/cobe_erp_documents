@@ -45,7 +45,7 @@ Có **hai** báo cáo trùng ý tưởng; HR Cobe **nên dùng bản Cobe**:
 | Cột đầu | Employee · **Mã NV** · Tên · **Cty Trực Thuộc** · Shift · **Số công** · **Tổng giờ chuẩn** · ~~Tổng giờ thực~~ *(tạm ẩn)* · **4 cột số dư phép** | Employee · Tên · Shift |
 | **Chế độ xem** | **5 chế độ**: Chấm công · **Giờ vào-ra** · **Đầy đủ** · **Chi tiết theo ngày** · Tổng hợp | Chỉ 1 lưới + Summarized View |
 | Ô mỗi ngày | **1 ô ghép/ngày** (`1 T4`), chia 1–3 phần tuỳ chế độ: **mã** (`P`/`HD`/`WFH`/`L`…/`-`) · **giờ vào** · **giờ ra** *(phần số giờ đang tạm ẩn)* | 1 ô: chỉ ký hiệu `P`, `HD` |
-| Ký hiệu | Công `P` · nửa `HD` · WFH `WFH` · có mặt ngày nửa buổi `P:2` · có mặt CN/lễ `P0` · nghỉ `L`/`L/2`/`NB`/`KL`/`CĐ`/`BH`/`H` · `WO` · `-` không dữ liệu (kể cả sáng Thứ 7 nửa buổi) | Gộp chung `L` (On Leave); CN/T7 đi làm cũng chỉ là `P` |
+| Ký hiệu | Công `P` · nửa `HD` · WFH `WFH` · có mặt ngày nửa buổi `P:2` · có mặt CN/lễ `P0` · nghỉ `L`/`L/2`/`NB`/`NB/2`/`KL`/`KL/2`/`CĐ`/`BH`/`H` · `WO` · `-` không dữ liệu (kể cả sáng Thứ 7 nửa buổi) | Gộp chung `L` (On Leave); CN/T7 đi làm cũng chỉ là `P` |
 | **Số dư phép** | **Có** — Phép Năm & Nghỉ bù còn lại, tại **2 mốc** (cuối kỳ / tới hiện tại) | Không có |
 | **Giờ vào/ra** | **Có** — lượt bấm thật, đỡ phải mở Employee Checkin | Không có |
 | Lọc Company | **Bỏ trống = gộp MỌI công ty** | Bắt buộc chọn |
@@ -190,8 +190,8 @@ Chọn 1 nhân viên ở ô *Employee* rồi chọn chế độ này:
 | **Mã** | Y hệt mã ở lưới tháng (`P` / `HD` / `L` / `NB` / `H` / `WO` / `-`…) |
 | **Vào · Ra** | Lượt bấm vào sớm nhất / ra muộn nhất |
 | **Giờ thực** | *(tạm ẩn)* Giờ công của ngày (theo bảng công) |
-| **Giờ chuẩn** | Công chuẩn của ca ngày đó — nửa ngày & Thứ 7 nửa buổi thì bằng ½; Chủ nhật / lễ đi làm = trống (0) |
-| **Công** | Công làm việc của ngày đó: 1 · 0,5 · 0,25 · trống (0) — cùng luật với cột *Số công* ở lưới tháng |
+| **Giờ chuẩn** | Công chuẩn của ca ngày đó — nửa ngày & Thứ 7 nửa buổi thì bằng ½; Chủ nhật / lễ đi làm = `0` |
+| **Công** | Công làm việc của ngày đó: 1 · 0,5 · 0,25 · 0 — cùng luật với cột *Số công* ở lưới tháng. Ngày có bản chấm công mà không được công (vd `P0` Chủ nhật đi làm, ngày nghỉ phép) hiện **`0`**; ô **trống** nghĩa là ngày đó không có bản chấm công nào |
 | **Số lượt** | Số lần bấm trong ngày (`0` = không bấm lần nào, vd ngày nghỉ hoặc ngày công đến từ đơn duyệt) |
 | **Các lượt bấm** | **Đủ mốc giờ** trong ngày, vd `07:41, 12:15, 13:02, 18:11` |
 
