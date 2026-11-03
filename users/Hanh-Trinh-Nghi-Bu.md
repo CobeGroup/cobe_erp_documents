@@ -251,6 +251,7 @@ ngày Chủ nhật vẫn tồn tại vì phiếu làm thêm đọc giờ thực 
 | Quỹ Nghỉ bù bỗng về 0 / mất | Đã qua **cuối kỳ** — giờ dư bị cắt. Lần sau xin nghỉ trong kỳ, để ý thông báo nhắc giữa tháng 6/12 |
 | Số dư âm trên Desk, tưởng bị phạt | Âm ở Desk là **đúng thiết kế** — không trừ lương, không trừ quỹ phép; xem quỹ thật ở màn hình Nghỉ phép trên app. Ngoại lệ duy nhất: giờ **ứng trước** mà hết năm chưa bù thì trừ Phép năm, thiếu nữa mới tính Nghỉ không lương |
 | *"Đơn Nghỉ bù từ ngày … đã quá hạn nộp"* | Nộp trễ quá hạn công ty đặt (tính từ ngày nghỉ hoặc lúc quỹ đủ giờ, mốc muộn hơn) → liên hệ HR tạo thủ công |
+| Nghỉ bù **nửa ngày**, nửa còn lại có chấm công mà bảng công vẫn ghi nửa đó vắng (`NB/2 -`) | Lỗi đã sửa 03/11/2026: hệ thống từng ghi vắng **giữa ngày**, trước khi xử lý các lần chấm công. Các ngày cũ được khôi phục khi cập nhật hệ thống; còn sai thì liên hệ HR |
 | *"Attendance … is already marked …"* khi xin nghỉ bù | Hôm đó **đã chấm công**. Rất hay gặp vì nghỉ bù thường xin ngay trong ngày: làm sáng → trưa xin nghỉ chiều. Tích **Nghỉ nửa ngày** là gửi được (buổi đã làm vẫn tính công). Xin **cả ngày** cho hôm đã đi làm thì không được |
 
 ---

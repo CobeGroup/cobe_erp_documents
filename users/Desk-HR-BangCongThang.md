@@ -274,6 +274,7 @@ Mỗi ô (giao của **nhân viên × ngày**) hiển thị **một mã**:
 | **P:2** | **Có mặt ngày làm nửa buổi** (Thứ 7 khối văn phòng) = **0,5 công**; buổi chiều là làm thêm, không phải công. `HD:2` = nửa ngày công trên ngày nửa buổi (0,25); `WFH:2` tương tự. Dấu `:` đọc là **chia** (P chia 2 = nửa công), khác `L/2`, `NB/2` là **nghỉ phép nửa ngày** | số giờ thực | — |
 | **P0** | **Có mặt ngày nghỉ trọn** (Chủ nhật, lễ) = **0 công** — cả ngày là làm thêm, trả bằng tiền hoặc quỹ Nghỉ bù theo đơn làm thêm. Màu xám để không đọc nhầm thành `P`. `HD0`, `WFH0` tương tự | số giờ thực | — |
 | **NB** | Nghỉ bù | — | mục 5 |
+| **L/2 -**, **NB/2 -**, **KL/2 -** | Nghỉ phép **nửa ngày**, nửa còn lại **không đi làm** (ca đã kết thúc mà không có lần chấm công) — 0 công làm, màu đỏ. Không có dấu `-` (vd `NB/2`) nghĩa là nửa còn lại có đi làm, được 0,5 công | — | — |
 | **L** | Phép năm (đã duyệt) | — | mục 6 |
 | **L/2** | Phép năm nửa ngày | giờ nửa đã làm (nếu có) | mục 7 |
 | **H** | Nghỉ lễ (theo Holiday List) | — | mục 8 |
