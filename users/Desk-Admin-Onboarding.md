@@ -57,15 +57,16 @@ Bật **"Là Kỹ Thuật Viên"** → hiện thêm phần cấu hình:
 ![Phần cấu hình KTV — homebase, template, chọn công ty](images/desk/admin-console-ktv.png)
 
 - **Homebase** (bắt buộc) — kho/địa bàn xuất phát, VD `Kho Hà Nội`.
-- **Chọn công ty** — mỗi công ty tick sẽ được tạo **3 món** đứng tên KTV:
+- **Công ty** — mọi KTV đều cần kho ảo và tài khoản ảo ở **cả 3 công ty** (Thế Giới Điện Giải, Akanwa, Doctor Nước), vì phiếu dịch vụ và thu tiền có thể phát sinh dưới bất kỳ công ty nào. Vì vậy 3 công ty đã cấu hình được **tick sẵn và khoá**, không bỏ tick được. Mỗi công ty tạo **3 món** đứng tên KTV:
   1. **Kho ảo** `Tên KTV - {viết tắt cty}` (dưới *Technician Group*)
-  2. **Tài khoản Cash** — dùng thu tiền dịch vụ (vào FS Service Resource)
-  3. **Tài khoản Stock** — định giá tồn kho, gắn thẳng vào kho ảo
+  2. **Tài khoản Cash** `Tên KTV - Cash - {viết tắt cty}` — dùng thu tiền dịch vụ (vào FS Service Resource)
+  3. **Tài khoản Stock** `Tên KTV - Stock - {viết tắt cty}` — định giá tồn kho, gắn thẳng vào kho ảo
 - Đồng thời tạo **FS Service Resource** (hồ sơ điều phối KTV) link đủ user, employee, kho + tài khoản của từng công ty.
+- **Công ty chính** (ở phần thông tin chung) quyết định kho ảo và tài khoản ảo nào được ghi lên hồ sơ Employee; để trống thì lấy theo công ty của Employee.
 - 3 ô **template tên** để nguyên mặc định trừ khi biết rõ mình đổi gì.
 - Role Profile KTV (`Techinician`) được gán **tự động**.
 
-> Nếu cạnh tên công ty có dấu **⚠** nghĩa là công ty đó chưa được cấu hình parent kho/account trong **Admin Console Settings** — báo System Manager cấu hình trước, nếu không sẽ chỉ link được kho/account có sẵn chứ không tạo mới được.
+> Nếu cạnh tên công ty có dấu **⚠** nghĩa là công ty đó chưa được cấu hình parent kho/account trong **Admin Console Settings** — ô này không bị khoá, tick vào thì chỉ link được kho/account có sẵn chứ không tạo mới được. Báo System Manager cấu hình trước.
 
 ## 4. Bấm Tạo & đọc kết quả
 
@@ -89,12 +90,23 @@ Trước khi tạo, hệ thống dò các Employee có sẵn **trùng SĐT / ema
 
 ## 6. Chạy lại có sao không?
 
-Không sao — form theo nguyên tắc **có rồi thì dùng lại, không ghi đè**:
+Không sao — form theo nguyên tắc **có rồi thì dùng lại, chỉ tạo phần còn thiếu, không ghi đè**. Dùng được cho cả nhân viên đã có sẵn User + Employee (ví dụ KTV cũ chưa có đủ kho ảo ở 3 công ty):
 
-- User/Employee đã có → **link**, không tạo trùng (Employee nhận diện qua email đăng nhập).
-- Mật khẩu user cũ **không bị đổi** trừ khi bạn chủ động nhập ô Mật khẩu.
-- KTV đã có FS Service Resource mà tick thêm công ty → **bổ sung** kho/account công ty mới vào hồ sơ cũ, không đụng phần cũ.
-- Lỗi giữa chừng → **hủy toàn bộ**, không để lại dữ liệu nửa vời; sửa theo thông báo rồi bấm Tạo lại.
+| Đối tượng | Đã có sẵn thì |
+|---|---|
+| **User** | Dùng lại. Chỉ thêm Role Profile còn thiếu. Mật khẩu **không bị đổi** trừ khi bạn chủ động nhập ô Mật khẩu |
+| **Employee** | Dùng lại, **không sửa field nào** (phòng ban, chức danh… nhập trên form bị bỏ qua). Nhận diện qua email đăng nhập: Employee phải đang gắn **User ID** = email nhập vào |
+| **Shift Assignment** | Bỏ qua nếu đã có gán ca cùng loại |
+| **Kho ảo / tài khoản ảo** | Công ty nào FS Service Resource đã có dòng thì giữ nguyên kho/tài khoản cũ (kể cả đặt tên theo kiểu cũ). Công ty còn thiếu mới tạo; kho/tài khoản đã tồn tại đúng tên thì link vào, không tạo trùng |
+| **FS Service Resource** | **Bổ sung** dòng kho/tài khoản cho công ty còn thiếu và điền các ô đang trống (email, SĐT, homebase); không đụng dòng cũ |
+
+Lỗi giữa chừng → **hủy toàn bộ**, không để lại dữ liệu nửa vời; sửa theo thông báo rồi bấm Tạo lại.
+
+> ⚠️ Hai trường hợp cần kiểm tra trước khi chạy lại:
+> - **Employee có sẵn nhưng chưa gắn User ID** → form coi là nhân viên mới, bắt nhập Mã NV và hiện dialog nghi trùng. Đừng xác nhận; mở Employee, gắn **User ID** rồi chạy lại.
+> - **User có sẵn từng được gán role lẻ bằng tay** (tài khoản nội bộ, quản lý) → chuyển sang Role Profile sẽ gỡ các role lẻ đó. Form dò trước và hiện dialog liệt kê đủ các role sẽ mất **trước khi ghi bất cứ gì**; bấm **No** thì không có gì thay đổi. Chỉ bấm **Yes** khi đúng là muốn tài khoản đó chỉ còn role của Role Profile (role bị gỡ phải gán lại thủ công trên User).
+>
+> ![Dialog xác nhận gỡ role gán tay](images/desk/admin-console-role-strip.png)
 
 ## 7. Lỗi thường gặp
 
@@ -104,6 +116,7 @@ Không sao — form theo nguyên tắc **có rồi thì dùng lại, không ghi 
 | *Không thể tạo kho/account …: chưa cấu hình … Parent* | Công ty chưa khai parent trong Admin Console Settings — báo System Manager |
 | *Account '…' đã tồn tại nhưng type là '…'* | Trùng tên với account khác bản chất — đổi template tên hoặc xử lý account cũ |
 | *Kỹ thuật viên cần Homebase / số điện thoại* | Điền thiếu ở phần KTV |
+| Hiện dialog **nghi trùng** dù người này đã có Employee | Employee chưa gắn **User ID** nên form không nhận ra — bấm **No**, gắn User ID trên Employee rồi chạy lại |
 
 ## Liên quan
 
