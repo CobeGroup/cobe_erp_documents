@@ -67,23 +67,49 @@ Mã nguồn: `fsmnext/fsm_next/api/report_api/master_view.py` (API `get_master_v
 
 **Mô hình dòng.** Cặp *đơn bán hàng – phiếu công việc* lấy từ hợp của `FS Work Order.sales_order` và
 `FS Work Order Line Item.order`. Mỗi dòng là một tổ hợp **SO × WO × SA × kỹ thuật viên**, chỉ gồm
-lịch hẹn chưa *Canceled* và kỹ thuật viên chưa *Canceled*. Phân trang theo đơn bán hàng, nên mọi dòng
-của một đơn luôn nằm cùng một trang. Phiếu công việc không có đơn bán hàng được nối vào cuối.
+lịch hẹn chưa *Canceled* và kỹ thuật viên chưa *Canceled*.
+
+**Phân trang.** Đơn vị phân trang là đơn bán hàng, sau đó là phiếu công việc không có đơn bán hàng.
+`total_count` bằng tổng hai loại đơn vị, còn một trang có thể trả nhiều dòng hơn `page_size` vì mỗi
+đơn vị có nhiều dòng. Do đó `Table` dùng `pagination={false}` và thanh phân trang là thành phần
+`Pagination` riêng, khoá trong lúc tải. Đơn bán hàng sắp theo trường ngày rồi `name DESC`: thiếu khoá
+phụ thì `LIMIT/OFFSET` trên các đơn trùng ngày sẽ làm các trang chồng lấn.
+
+**Bộ lọc.** Lọc theo ngày lịch hẹn, trạng thái lịch hẹn và kỹ thuật viên được áp dụng ở bước chọn phiếu
+và áp dụng lại trên từng dòng (`sa_row_clauses`), để lịch hẹn khác của phiếu và người làm chung không
+xuất hiện. Dòng của phiếu không có đơn bán hàng bị bỏ khi có lọc theo đơn bán hàng hoặc khi quy tắc
+quyền có `restrict_to_own`.
 
 | Trường | Cấp | Quy tắc |
 |---|---|---|
-| `grand_total`, `total_paid` | Đơn bán hàng | Lặp trên mọi dòng của đơn; cờ `is_first_so_row` chỉ đúng ở dòng đầu. Bảng hiện dấu `〃`, tệp Excel để trống ở các dòng sau, nên cộng cột ra đúng tổng |
+| `grand_total`, `total_paid`, `invoices`, `payment_entries` | Đơn bán hàng | Lặp trên mọi dòng của đơn; cờ `is_first_so_row` chỉ đúng ở dòng đầu. Bảng hiện dấu `〃`, tệp Excel để trống ở các dòng sau, nên cộng cột ra đúng tổng |
+| `grand_total`, `closed_so_amount` | Đơn bán hàng *Closed* | `grand_total = 0`, giá trị gốc nằm ở `closed_so_amount` và chỉ dùng cho tooltip. Dòng, tiền công và `total_paid` giữ nguyên. Với đơn ở trạng thái khác, `closed_so_amount` là `null` |
+| `total_paid` | Đơn bán hàng | Tổng `allocated_amount` của `Payment Entry` đã duyệt có dòng tham chiếu tới đơn hoặc tới hoá đơn của đơn. Một phiếu thu có nhiều dòng tham chiếu cùng đơn được gộp thành một mục trong `payment_entries` |
 | `ktv_compensation`, `ktv_contribution` | Kỹ thuật viên trong một lịch hẹn | Lấy từ `FS Compensation Allocation` theo khoá **(WO, SA, kỹ thuật viên)**. Một khoá chỉ được tính một lần trong một lần gọi API (tập `seen_alloc`), để phiếu gắn với hai đơn không bị đếm hai lần |
 | `wo_compensation` | Phiếu công việc | Lặp trên mọi dòng của phiếu; không hiển thị, không xuất Excel |
+
+**Ẩn cột theo quyền** (`hidden_columns` trong `FS Report Permission Rule`):
+
+| Nơi | Hành vi |
+|---|---|
+| API | Xoá các khoá được khai khỏi từng bản ghi. Ẩn `grand_total` thì xoá cả `closed_so_amount` |
+| Bảng | Bỏ cột có `key` được khai. Cột `paid_ratio` bị bỏ khi ẩn `grand_total` hoặc `total_paid`, vì được tính từ hai trường này |
+| Excel | Bỏ hẳn cột (bảng `columns` trong `_create_master_view_excel`), không ghi cột toàn giá trị rỗng. Ẩn `ktv_compensation` thì bỏ cả cột *Distribution %*; ẩn `total_paid` hoặc `paid_ratio` thì bỏ cột *Đã thu* |
+
+**Tải dữ liệu ở giao diện.** `loadData` đánh số từng lần gọi và bỏ qua phản hồi không phải của lần gọi
+mới nhất. Ô tìm kiếm chỉ gọi API khi nhấn Enter, bấm tìm hoặc xoá trắng.
 
 Hạn chế đã biết:
 
 - Phiếu công việc gắn với hai đơn bán hàng: dòng của đơn thứ hai hiện `0` thay vì dấu lặp. Nếu hai
   đơn nằm ở hai trang khác nhau, mỗi trang đều hiện tiền công.
-- Sắp xếp phía trình duyệt theo một cột bất kỳ có thể đưa dòng đầu của một đơn xuống dưới các dòng
-  `〃` của chính đơn đó. Tổng cộng không đổi.
+- Sắp xếp phía trình duyệt chỉ sắp trong trang hiện tại và có thể đưa dòng đầu của một đơn xuống dưới
+  các dòng `〃` của chính đơn đó. Tổng cộng không đổi.
 - Báo cáo đi từ lịch hẹn: phiếu công việc chưa có lịch hẹn còn hiệu lực, hoặc lịch hẹn chưa có kỹ
-  thuật viên, không xuất hiện.
+  thuật viên, không xuất hiện. `grand_total` là tổng của các đơn có lịch hẹn trong khoảng lọc, không
+  phải doanh thu của kỳ.
+- Cột *Đã trả về*, *Cần trả kho*, *Material Requests* và *Stock Entries (SO)* lặp trên mọi dòng của
+  đơn; đếm các cột này cho ra số dòng, không phải số đơn.
 
 ---
 
@@ -98,9 +124,10 @@ Mã nguồn: `fsmnext/fsm_next/doctype/fs_service_appointment/fs_service_appoint
 | `warn_sibling_appointments` | `before_insert` | Phiếu cha đã có lịch hẹn chưa *Canceled* thì `msgprint` cảnh báo (liệt kê tên và trạng thái) và gắn cùng nội dung vào `flags.sibling_warning`. Không chặn |
 | `validate_checkout_has_checkin` | `validate` | Dòng kỹ thuật viên **chuyển sang** *Checked-out* trong lần lưu này mà chưa có `checkin_time` thì `frappe.throw`. Không áp dụng cho bản ghi mới |
 
-Cả `clear_copied_attendance` và `validate_checkout_has_checkin` bỏ qua bản ghi có
-`flags.from_data_sync`. Cờ này do `fsmnext_extend_cobe/api/data_sync.py` (`_create_sa`, `_update_sa`)
-gắn khi đồng bộ từ ứng dụng Field Service cũ, vì luồng đồng bộ ánh xạ trạng thái mà không có giờ.
+Cả ba phương thức trên đều bỏ qua bản ghi có `flags.from_data_sync`. Cờ này do
+`fsmnext_extend_cobe/api/data_sync.py` (`_create_sa`, `_update_sa`) gắn khi đồng bộ từ ứng dụng Field
+Service cũ, vì luồng đồng bộ ánh xạ trạng thái mà không có giờ, và cảnh báo của
+`warn_sibling_appointments` sẽ hiện trên biểu mẫu của ứng dụng cũ, nơi không xử lý được.
 
 Bốn trường tuỳ biến đóng cưỡng bức của lịch hẹn (`force_closed`, `force_close_reason`,
 `force_closed_by`, `force_closed_on`, khai trong fixture của `fsmnext_extend_cobe`) có `no_copy = 1`.

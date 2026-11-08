@@ -59,7 +59,7 @@ Mỗi dòng là một kỹ thuật viên, người có khoảng cách trung vị
 | **Lượt check-in** | Số lượt check-in trong khoảng ngày đã chọn |
 | **Lượt đo được** | Lượt có đủ toạ độ của cả kỹ thuật viên lẫn khách hàng. Các cột tỉ lệ bên phải tính trên số lượt này |
 | **Tại nhà khách (%)** | Check-in cách địa chỉ khách không quá ngưỡng *same_location_threshold* trong **FSM Settings** (mặc định 100 m) — cùng quy tắc với ô *có mặt tại nhà khách* trên lịch hẹn |
-| **100-500 m · 0,5-2 km · > 2 km (%)** | Các nấc xa dần. Cột **> 2 km** được tô đỏ khi từ 40% trở lên |
+| **100-500 m · 0,5-2 km · > 2 km (%)** | Các nấc xa dần. Mốc đầu của nấc thứ nhất lấy theo ngưỡng ở trên, nên tên cột đổi theo ngưỡng (mặc định *100-500 m*). Cột **> 2 km** được tô đỏ khi từ 40% trở lên |
 | **Trung vị (m)** | Một nửa số lượt gần hơn con số này, một nửa xa hơn |
 | **Ở dưới 1 phút (%)** | Lượt check-in rồi check-out trong chưa tới một phút |
 | **KTV không gửi toạ độ** | Lượt check-in không kèm vị trí, nên không đo được |

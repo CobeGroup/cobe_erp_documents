@@ -226,7 +226,17 @@ Hệ quả cần nhớ:
 | Cột | Ghi ở đâu | Cộng cột có đúng không |
 |---|---|---|
 | **Tổng tiền**, **Đã thu / Tổng** (của SO) | Chỉ ở **dòng đầu** của mỗi SO; các dòng sau hiện dấu `〃` (trên tệp Excel thì để trống) | Đúng |
+| **SINV**, **Payment Entries** | Chỉ ở **dòng đầu** của mỗi SO. Trên tệp Excel, Payment Entry chưa duyệt hoặc đã huỷ có ghi kèm *Draft* / *Cancelled* và không được tính vào **Đã thu** | Không áp dụng |
 | **Compensation** | Mỗi dòng là phần tiền công của đúng KTV đó trong đúng SA đó | Đúng |
+
+Những điểm cần lưu ý khi đọc số liệu:
+
+- **Báo cáo đi từ lịch hẹn.** Dòng chỉ xuất hiện khi có SA chưa huỷ và KTV chưa huỷ. Lọc theo ngày SA nghĩa là xem các SO **có lịch trong khoảng đó**, nên **Tổng tiền không phải doanh thu của kỳ**. Một SO có lịch ở hai tháng sẽ xuất hiện trong báo cáo của cả hai tháng.
+- **SO đã đóng (*Closed*)** không được cộng vào **Tổng tiền**: ô này hiện `0 đ`, đưa chuột vào ô sẽ thấy giá trị trên đơn. Dòng của SO, **Compensation** và số tiền đã thu thực tế vẫn giữ nguyên, vì ca làm việc đã diễn ra thì KTV vẫn được tính công. Cột **Đã thu / Tổng** hiện dạng `số đã thu / —`. Tệp Excel ghi `0` và không có giá trị trên đơn. Muốn rà các ca đã làm trên đơn đã đóng, lọc **SO Status = Closed**.
+- **WO không gắn SO** (ví dụ khảo sát, xử lý sự cố) vẫn hiện ở cuối báo cáo để đủ tiền công, phần tiền của SO để trống. Các dòng này **không hiện** khi có lọc theo thông tin SO (ngày SO, trạng thái SO, người tạo, Sales Person, mã hàng, trạng thái trả về) và với tài khoản chỉ được xem đơn của mình.
+- **Lọc theo KTV** chỉ hiện dòng của KTV đó, không kèm người làm chung.
+- **Ô tìm kiếm** chỉ tìm khi nhấn **Enter** hoặc bấm biểu tượng kính lúp; xoá trắng ô thì báo cáo tự tải lại.
+- **Tệp Excel** không có các cột mà vai trò của người xuất bị ẩn.
 
 ---
 
