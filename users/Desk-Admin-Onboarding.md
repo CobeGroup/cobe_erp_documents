@@ -12,7 +12,7 @@ nav_order: 6
 **Dành cho:** System Manager / HR Manager · **Trang:** Admin Console
 {: .fs-3 .text-grey-dk-000 }
 
-> **1 form tạo trọn bộ** khi nhân viên mới vào công ty: **User** (tài khoản đăng nhập) + **Employee** (hồ sơ nhân sự) + **Shift Assignment** (gán ca) — và nếu là **Kỹ thuật viên** thì thêm luôn **FS Service Resource + kho ảo + tài khoản ảo** cho từng công ty. Thay cho việc tạo tay từng thứ ở [Tạo User](Desk-Admin-User.html) rồi [Tạo Employee](Desk-Admin-Employee.html).
+> **1 form tạo trọn bộ** khi nhân viên mới vào công ty: **User** (tài khoản đăng nhập) + **Employee** (hồ sơ nhân sự) + **Shift Assignment** (gán ca) + **Holiday List Assignment** (gán lịch nghỉ) — và nếu là **Kỹ thuật viên** thì thêm luôn **FS Service Resource + kho ảo + tài khoản ảo** cho từng công ty. Thay cho việc tạo tay từng thứ ở [Tạo User](Desk-Admin-User.html) rồi [Tạo Employee](Desk-Admin-Employee.html).
 
 ---
 
@@ -46,9 +46,10 @@ nav_order: 6
 | **Ngày vào làm** | — | Mặc định hôm nay; cũng là ngày bắt đầu gán ca |
 | **Công ty chính, Loại NV, Department, Chức danh** | — | Như Employee chuẩn |
 | **Shift Type** | — | Chọn ca → tự tạo + submit **Shift Assignment** từ ngày vào làm |
+| **Holiday List** | — | Chọn lịch nghỉ → tự tạo + submit **Holiday List Assignment** từ **ngày 1 của tháng vào làm** (nếu lịch bắt đầu muộn hơn thì từ ngày đầu của lịch). Ô chỉ hiện lịch còn hiệu lực tính từ ngày vào làm (lịch đã hết hạn trước ngày đó bị ẩn), nên hãy nhập Ngày vào làm trước. Lịch nghỉ quyết định ngày nào là ngày nghỉ khi tính công |
 | **Role Profile** | — | Gói quyền. **Tự điền** theo Loại NV / Department (mapping khai ở Settings), sửa được, chọn nhiều được |
 
-> ⚠️ **Role đi theo Role Profile, không gán role lẻ ở đây.** Nếu user đã tồn tại và từng được gán role lẻ bằng tay, khi thêm Role Profile các role lẻ đó sẽ bị hệ thống gỡ — form sẽ hiện **cảnh báo vàng** liệt kê role bị gỡ để bạn gán lại nếu cần.
+> ⚠️ **Role đi theo Role Profile, không gán role lẻ ở đây.** Nếu user đã tồn tại và từng được gán role lẻ bằng tay, khi thêm Role Profile các role lẻ đó sẽ bị hệ thống gỡ — form sẽ hiện **dialog xác nhận** liệt kê các role sẽ mất trước khi ghi dữ liệu (xem mục 6).
 
 ## 3. Nếu là Kỹ thuật viên
 
@@ -65,6 +66,27 @@ Bật **"Là Kỹ Thuật Viên"** → hiện thêm phần cấu hình:
 - **Công ty chính** (ở phần thông tin chung) quyết định kho ảo và tài khoản ảo nào được ghi lên hồ sơ Employee; để trống thì lấy theo công ty của Employee.
 - 3 ô **template tên** để nguyên mặc định trừ khi biết rõ mình đổi gì.
 - Role Profile KTV (`Techinician`) được gán **tự động**.
+
+### Người chỉ cần kho ảo và tài khoản ảo, không làm KTV
+
+Dùng cho nhân sự cần giữ hàng hoặc tiền đứng tên mình (kho ảo, tài khoản ảo) nhưng **không nhận việc dịch vụ**. Tick ô **"Chỉ cần kho ảo + tài khoản ảo — không điều phối"** ở đầu phần cấu hình KTV:
+
+| | KTV thông thường | Tick "không điều phối" |
+|---|---|---|
+| Kho ảo + tài khoản ảo ở 3 công ty | Có | Có |
+| Kho ảo không được xuất âm, tài khoản ảo không được chi quá số dư | Có | Có |
+| Hiện trong bảng điều phối và ô chọn KTV của màn báo cáo `/fsm-report` | Có | **Không** |
+| Mở được app KTV | Có | **Không** |
+| Role Profile KTV | Tự gán | **Không tự gán** |
+| Tab **FSM** trên My Workspace | Có | **Không** |
+
+Về kỹ thuật, FS Service Resource vẫn được tạo nhưng ở trạng thái **không Active** (`Is Active` bỏ tick). Hãy chọn **Role Profile** theo công việc thực tế: nếu không chọn, tài khoản có thể không vào được Desk, khi đó kết quả sẽ hiện cảnh báo vàng.
+
+> ⚠️ Lưu ý khi dùng lựa chọn này:
+> - **Báo cáo công nợ KTV không liệt kê người này.** Hàng trong kho ảo và tiền trong tài khoản ảo của họ phải xem bằng báo cáo chuẩn (*Stock Balance*, *General Ledger*).
+> - Các ô chọn `FS Service Resource` trên Desk (ví dụ bộ lọc của report *KTV Checkin Distance*, bảng phân công trong form `FS Service Appointment`) vẫn tìm được tên người này nếu gõ tìm. Không chọn họ ở các ô đó.
+> - Form **không tự bật/tắt** FS Service Resource đã có sẵn; nếu trạng thái hiện tại khác với lựa chọn trên form, kết quả sẽ hiện cảnh báo vàng và bạn đổi `Is Active` trên Desk.
+> - Khi User bị vô hiệu hoá rồi kích hoạt lại, hệ thống tự bật lại FS Service Resource — cần bỏ tick `Is Active` lần nữa.
 
 > Nếu cạnh tên công ty có dấu **⚠** nghĩa là công ty đó chưa được cấu hình parent kho/account trong **Admin Console Settings** — ô này không bị khoá, tick vào thì chỉ link được kho/account có sẵn chứ không tạo mới được. Báo System Manager cấu hình trước.
 
@@ -95,10 +117,11 @@ Không sao — form theo nguyên tắc **có rồi thì dùng lại, chỉ tạo
 | Đối tượng | Đã có sẵn thì |
 |---|---|
 | **User** | Dùng lại. Chỉ thêm Role Profile còn thiếu. Mật khẩu **không bị đổi** trừ khi bạn chủ động nhập ô Mật khẩu |
-| **Employee** | Dùng lại, **không sửa field nào** (phòng ban, chức danh… nhập trên form bị bỏ qua). Nhận diện qua email đăng nhập: Employee phải đang gắn **User ID** = email nhập vào |
+| **Employee** | Dùng lại, **không sửa thông tin nhân sự** (phòng ban, chức danh… nhập trên form bị bỏ qua); với KTV chỉ điền hai ô kho ảo và tài khoản ảo chính nếu đang trống. Nhận diện qua email đăng nhập: Employee phải đang gắn **User ID** = email nhập vào |
 | **Shift Assignment** | Bỏ qua nếu đã có gán ca cùng loại |
-| **Kho ảo / tài khoản ảo** | Công ty nào FS Service Resource đã có dòng thì giữ nguyên kho/tài khoản cũ (kể cả đặt tên theo kiểu cũ). Công ty còn thiếu mới tạo; kho/tài khoản đã tồn tại đúng tên thì link vào, không tạo trùng |
-| **FS Service Resource** | **Bổ sung** dòng kho/tài khoản cho công ty còn thiếu và điền các ô đang trống (email, SĐT, homebase); không đụng dòng cũ |
+| **Holiday List Assignment** | Đã có lịch nghỉ: cùng lịch thì bỏ qua; **khác lịch thì giữ lịch cũ** và hiện cảnh báo vàng. Muốn đổi lịch nghỉ thì tạo Holiday List Assignment mới trên Desk. Chưa có lịch nghỉ riêng: tạo mới từ **ngày 1 của tháng ghi ở ô Ngày vào làm trên form** (mặc định tháng hiện tại), để không thay đổi lịch nghỉ của các kỳ công đã chốt |
+| **Kho ảo / tài khoản ảo** | Công ty nào FS Service Resource đã có dòng thì giữ nguyên kho/tài khoản cũ (kể cả đặt tên theo kiểu cũ). Công ty còn thiếu mới tạo; kho/tài khoản đã tồn tại đúng tên thì link vào, không tạo trùng. Nếu kho/tài khoản đó đang thuộc **người khác** (trùng họ tên) thì form báo lỗi và không tạo gì |
+| **FS Service Resource** | **Bổ sung** dòng kho/tài khoản cho công ty còn thiếu và điền các ô đang trống (email, SĐT, homebase, Resource Group, Employee); không đụng dòng cũ, **không đổi trạng thái Active** |
 
 Lỗi giữa chừng → **hủy toàn bộ**, không để lại dữ liệu nửa vời; sửa theo thông báo rồi bấm Tạo lại.
 
@@ -116,6 +139,11 @@ Lỗi giữa chừng → **hủy toàn bộ**, không để lại dữ liệu n�
 | *Không thể tạo kho/account …: chưa cấu hình … Parent* | Công ty chưa khai parent trong Admin Console Settings — báo System Manager |
 | *Account '…' đã tồn tại nhưng type là '…'* | Trùng tên với account khác bản chất — đổi template tên hoặc xử lý account cũ |
 | *Kỹ thuật viên cần Homebase / số điện thoại* | Điền thiếu ở phần KTV |
+| *Ngày vào làm … nằm sau lịch nghỉ '…'* | Lịch nghỉ đã chọn thuộc năm khác với ngày vào làm — chọn lịch nghỉ của đúng năm |
+| *'…' đang là kho/tài khoản ảo của SR-…* hoặc *'…' đang là tài khoản kho của …* | Nhân viên mới trùng họ tên với KTV đã có — đổi 3 ô template tên ở phần cấu hình KTV (ví dụ thêm mã NV) rồi tạo lại |
+| *Chỉ System Manager mới gán được Role Profile quản trị* | Role Profile đã chọn chứa quyền quản trị hoặc quyền kế toán trưởng (`Super Admin`, `Account Manager`) — System Manager thực hiện, hoặc chọn Role Profile khác |
+| *Chỉ System Manager mới đổi được Role Profile, mật khẩu hay tạo Employee cho tài khoản quản trị* | Email thuộc tài khoản có quyền `System Manager`, `Script Manager`, `Stock Manager` hoặc `Accounts Manager` — chuyển cho System Manager thực hiện |
+| *Chỉ System Manager mới được chạy form cho tài khoản quản trị …* | Lưu lại sẽ làm tài khoản đó mất quyền quản trị — chuyển cho System Manager thực hiện |
 | Hiện dialog **nghi trùng** dù người này đã có Employee | Employee chưa gắn **User ID** nên form không nhận ra — bấm **No**, gắn User ID trên Employee rồi chạy lại |
 
 ## Liên quan
