@@ -31,7 +31,7 @@ nav_order: 1
 
 > 🔒 **Chỉ HR** (HR Manager / HR User / System Manager / Payroll Officer) lập được hồ sơ nhân viên
 > mới (từ 16/10/2026). Trên hồ sơ **đã có**, chỉ HR đổi được *Leave Approver*, *Shift Request
-> Approver*, *Expense Approver*, *Reports To* và ô *Nghỉ phép gửi thẳng HR*. Không ai tự đổi tài
+> Approver*, *Expense Approver*, *Reports To*, *Date of Joining*, *Confirmation Date* và ô *Nghỉ phép gửi thẳng HR*. Không ai tự đổi tài
 > khoản, bộ phận, công ty hay người duyệt trên hồ sơ **của chính mình**.
 >
 > Trên hồ sơ **người khác**, người không phải HR cũng không đổi được *Department*, *Company* và
@@ -42,7 +42,7 @@ nav_order: 1
 > 🔒 **Thông tin cá nhân chỉ HR thấy**: ngày sinh, điện thoại, email riêng, địa chỉ, người liên hệ khẩn
 > cấp, lương (CTC), ngân hàng, hộ chiếu, bảo hiểm y tế, hôn nhân, sức khoẻ, học vấn, kinh nghiệm cũ và
 > các ô nghỉ việc. Người khác — kể cả chính chủ trên Desk — mở hồ sơ không thấy các ô này.
-7. **Confirmation Date** (tab **Joining**) — ngày hết thử việc. Phép Năm tính từ ngày này; để trống
+7. **Confirmation Date** (tab **Joining**) — ngày hết thử việc. Từ ngày này nhân viên có Phép Năm và được cộng bù các tháng thử việc; để trống
    thì hệ thống lấy ngày vào làm + 2 tháng. Xem [Cấp phép → Khai ngày hết thử việc](Desk-HR-CapPhep.html#het-thu-viec).
 8. Lưu. Hệ thống tự cấp Phép Năm cho nhân viên (thông báo xanh ở góc màn hình).
 

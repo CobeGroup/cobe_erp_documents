@@ -56,9 +56,10 @@ Mở danh sách **Phân bổ chính sách phép** (`Leave Policy Assignment`, `/
 
 | Ô | Ý nghĩa |
 |---|---|
-| **Effective From** | Ngày bắt đầu tính Phép Năm (= ngày hết thử việc, hoặc 01/01 nếu hết thử việc từ năm trước) |
+| **Effective From** | Ngày bắt đầu cộng Phép Năm hằng tháng (= ngày hết thử việc, hoặc 01/01 nếu hết thử việc từ năm trước). Các tháng thử việc trước đó được cộng bù riêng |
 | **Effective To** | 31/12 năm nay |
-| **Hệ thống tự cấp (theo ngày hết thử việc)** | Có tick = do hệ thống cấp, sẽ tự tính lại khi HR sửa Confirmation Date. Không tick = nạp từ trước hoặc HR tạo thủ công, luôn giữ nguyên |
+| **Số ngày cộng bù tháng thử việc** | Số ngày hệ thống đã cộng bù cho các tháng thử việc. Mỗi phân bổ chỉ cộng một lần |
+| **Hệ thống tự cấp (theo ngày hết thử việc)** | Có tick = do hệ thống cấp, sẽ tự tính lại khi HR sửa Confirmation Date. Không tick = nạp từ trước hoặc HR tạo thủ công: hệ thống không tự dựng lại khi đổi ngày, nhưng người chưa có số dư trước đó vẫn được cộng bù tháng thử việc |
 
 Muốn xem **lịch cộng phép các tháng tới**: mở dòng đó → mở **Leave Allocation** liên kết → bảng
 **Earned Leave Schedule** liệt kê từng ngày cộng; ngày đã cộng có tick *Is Allocated*.

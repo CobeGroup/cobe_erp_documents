@@ -46,13 +46,25 @@ một **Phân bổ chính sách phép** (`Leave Policy Assignment`) cho năm hi�
 ### Khai ngày hết thử việc
 {: #het-thu-viec }
 
-Phép Năm được tính **từ ngày hết thử việc**. Tháng hết thử việc được tính trọn tháng.
+Trong thời gian thử việc, nhân viên **chưa có** Phép Năm. Tới ngày hết thử việc, hệ thống cấp phép và
+**cộng bù một lần** cho các tháng đã thử việc. Tháng hết thử việc được tính trọn tháng. Tháng vào làm
+chỉ được tính khi nhân viên làm từ **16 ngày** trở lên trong tháng đó, tính từ ngày vào làm tới cuối
+tháng, kể cả thứ Bảy và Chủ nhật. Số ngày này khai ở **HR Policy** của công ty, ô *Số ngày làm tối
+thiểu trong tháng vào làm*. Đổi số này không ảnh hưởng người đã được cộng bù.
+
+> Ví dụ: vào làm 08/06, hết thử việc 08/08. Ngày 08/08 được cộng bù 2 ngày cho tháng 6 và tháng 7, cuối
+> tháng 8 được cộng tiếp 1 ngày như bình thường.
 
 1. Mở hồ sơ **Employee** của nhân viên.
 2. Chọn tab **Joining**.
 3. Điền ô **Confirmation Date** (ngày hết thử việc). Không điền nhầm vào ô *Offer Date* ngay cạnh,
    hệ thống không đọc ô đó.
 4. Bấm **Save**. Hệ thống xử lý ngay, không cần chờ tới đêm.
+
+> 💡 Cần tạm giữ phần cộng bù của một nhân viên để kiểm tra: tick ô **Tạm chưa cộng bù phép tháng thử
+> việc** trên hồ sơ **trước** ngày hết thử việc. Bỏ tick rồi **Save**, hệ thống sẽ cộng bù. Ô này chỉ có
+> tác dụng trong năm hết thử việc; sang năm sau, HR cộng phần còn thiếu bằng
+> [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html).
 
 > 💡 Ô **Confirmation Date** để trống thì hệ thống coi ngày hết thử việc là **ngày vào làm + 2 tháng**.
 > Nhân viên vẫn có phép; khi HR điền ngày thật, hệ thống tự tính lại.
@@ -62,6 +74,10 @@ Sau khi Save, góc màn hình hiện một trong các thông báo sau:
 | Thông báo | Ý nghĩa | Việc cần làm |
 |---|---|---|
 | 🟢 **"Đã cấp Phép Năm từ …"** | Đã cấp hoặc đã tính lại theo ngày mới | Không cần làm gì |
+| 🟢 **"Đã cộng bù … ngày Phép Năm cho các tháng thử việc"** | Ngày hết thử việc đã qua, số ngày của các tháng thử việc đã vào số dư | Không cần làm gì |
+| 🟠 **"Ngày vào làm đã đổi nên số tháng thử việc khác với số ngày đã cộng bù…"** | Hệ thống đã cộng bù theo ngày cũ và không tự chỉnh lại | Chỉnh phần chênh lệch bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
+| 🟠 **"Nhân viên hết thử việc từ năm trước và chưa từng có Phép Năm…"** | Hồ sơ lập trễ sang năm mới, hoặc ngày hết thử việc được lùi về năm trước, nên hệ thống không tự cộng bù | Cộng phần còn thiếu bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
+| 🟠 **"Thời gian từ ngày vào làm tới ngày hết thử việc quá 6 tháng…"** | Khoảng thời gian dài bất thường nên hệ thống **không** cộng bù | Kiểm tra lại ô **Confirmation Date**. Nếu ngày đúng, chỉnh số dư bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
 | 🔵 **"Phép Năm năm nay của nhân viên này được cấp từ trước…"** | Phép năm nay đã được nạp từ trước (đợt nhập số dư, hoặc HR tạo thủ công) nên được **giữ nguyên**. Ngày mới áp dụng từ năm sau | Không cần làm gì |
 | 🟠 **"Ngày hết thử việc đã đổi nhưng không tự tính lại được…"** | Nhân viên đã có đơn nghỉ trừ vào số dư cũ, hệ thống không huỷ để tính lại | Chỉnh phần chênh lệch bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
 | Không có thông báo | Nhân viên đã có Phép Năm năm nay và ngày không đổi, hoặc đang được đánh dấu *Không tự cấp Phép Năm* | Không cần làm gì |
@@ -156,7 +172,7 @@ Chuỗi ưu tiên: **Employee.leave_approver** (đặt riêng) → fallback **ng
 |---|---|
 | NV gửi đơn báo "Chưa có người duyệt phép" | Phòng chưa có Leave Approver → làm mục **B** |
 | NV chỉ thấy "Leave Without Pay" / không có Phép Năm | Chưa tới ngày hết thử việc, hoặc hồ sơ đang tick *Không tự cấp Phép Năm* → kiểm [ngày hết thử việc](#het-thu-viec) |
-| NV mới vào làm chưa có số dư Phép Năm | **Bình thường** — phép tính từ ngày hết thử việc; cuối tháng hết thử việc mới có ngày đầu tiên |
+| NV mới vào làm chưa có số dư Phép Năm | **Bình thường** khi chưa hết thử việc — tới ngày hết thử việc hệ thống cộng bù các tháng thử việc |
 | Điền Confirmation Date mà số dư không đổi | Phép năm nay được nạp từ trước nên giữ nguyên (thông báo 🔵) — xem [bảng thông báo](#het-thu-viec) |
 | Save hồ sơ báo *"This document is currently locked…"* | Hệ thống đang cập nhật quyền của một nhóm tài khoản → đợi vài giây rồi **Save lại** |
 | Đặt approver Department nhưng NV vẫn nhầm người | NV bị override ở Employee.leave_approver → kiểm field đó |
@@ -167,8 +183,17 @@ Chuỗi ưu tiên: **Employee.leave_approver** (đặt riêng) → fallback **ng
 
 **Nhân viên vào làm giữa tháng thì tháng đó có được tính phép không?**
 
-Phép Năm tính từ ngày hết thử việc, không tính từ ngày vào làm. Tháng hết thử việc được cộng trọn
-1 ngày vào cuối tháng đó.
+Tháng vào làm được tính khi nhân viên làm đủ số ngày khai ở **HR Policy** (mặc định 16 ngày), và được
+cộng bù vào ngày hết thử việc. Tháng hết thử việc được cộng trọn 1 ngày vào cuối tháng đó.
+
+**Thử việc kéo dài sang năm sau thì các tháng năm trước có mất không?**
+
+Không. Vào làm 02/11, hết thử việc 02/01: ngày 02/01 được cộng bù 2 ngày cho tháng 11 và tháng 12. Hai
+ngày này ghi nhận là phép chuyển sang, nên 12 ngày của năm mới vẫn được cộng đủ.
+
+**Nhân viên có số dư từ đợt nhập ngày 30/06/2026 có được cộng bù không?**
+
+Không. Số dư trong bảng theo dõi phép của HR đã gồm các tháng thử việc.
 
 **Hết thử việc đúng ngày 31/12 thì sao?**
 

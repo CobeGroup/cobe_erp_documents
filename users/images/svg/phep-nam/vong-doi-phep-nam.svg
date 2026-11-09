@@ -21,7 +21,7 @@
 
     <rect x="405" y="40" width="175" height="96" rx="10" fill="#dcfce7" stroke="#16a34a"/>
     <text x="492" y="68" font-weight="700" fill="#0f172a">3. Hệ thống cấp phép</text>
-    <text x="492" y="92" fill="#334155">tự động, không cần duyệt</text>
+    <text x="492" y="92" fill="#334155">cộng bù tháng thử việc</text>
     <text x="492" y="112" fill="#475569" font-size="12">Leave Policy Assignment</text>
 
     <rect x="605" y="40" width="160" height="96" rx="10" fill="#dbeafe" stroke="#2563eb"/>
