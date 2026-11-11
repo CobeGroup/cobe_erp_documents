@@ -218,6 +218,38 @@ Hiện xin được tối đa … ngày"*. Gửi đơn như bình thường, kh�
 > 💡 Sửa **giảm** đơn đã gửi (cả ngày → nửa ngày, rút ngắn ngày về) luôn được, kể cả khi đang
 > nợ. Còn **dời** đơn sang ngày khác hay **kéo dài** đơn thì hệ thống kiểm lại như một lần xin mới.
 
+#### Vì sao giờ làm thêm vào quỹ ít hơn số giờ đã làm? {#ung-truoc-sao-ke}
+
+Đã ứng trước thì giờ làm thêm kế tiếp **trả phần ứng trước**, phần dư mới vào quỹ. Ví dụ: quỹ còn
+5,44 giờ, nghỉ bù 1 ngày (8 giờ) tức là ứng trước 2,56 giờ. Lần làm thêm 8 giờ sau đó chỉ còn
+5,44 giờ vào quỹ, chưa đủ để nghỉ tiếp 1 ngày. Ứng dụng nói rõ điều này ở ba chỗ:
+
+**1. Hộp xác nhận khi gửi đơn ứng.** Đơn nào nghỉ bằng giờ chưa làm thì trước khi gửi, ứng dụng
+hỏi lại: bao nhiêu giờ lấy từ quỹ, bao nhiêu giờ là ứng trước, và đơn làm thêm đã duyệt sắp tới
+(nếu có) sẽ còn lại bao nhiêu giờ sau khi trả. Bấm **Tôi hiểu, gửi đơn** để gửi, hoặc **Xem lại**
+để sửa đơn.
+
+<img src="images/guide/nhanvien/20-comp-advance-confirm.png" width="240" alt="Hộp xác nhận đơn Nghỉ bù ứng trước">
+
+**2. Nhãn trên từng đơn nghỉ.** Đơn nghỉ bằng giờ chưa có mang nhãn cam **Ứng trước …h** (số giờ hệ
+thống ghi nhận là ứng khi nộp hoặc sửa đơn), kèm tình trạng quỹ hiện tại: *"quỹ hiện đang âm …h"*
+hoặc *"quỹ đã bù đủ"*. Muốn biết giờ làm thêm nào đã trả phần ứng, xem sao kê bên dưới.
+
+<img src="images/guide/nhanvien/18-comp-advance-tags.png" width="240" alt="Nhãn ứng trước trên đơn Nghỉ bù">
+
+**3. Sao kê quỹ Nghỉ bù.** Bấm **Xem sao kê quỹ Nghỉ bù** ngay dưới phần *Số dư phép* (hoặc trong
+khung quỹ của form tạo đơn). Sao kê gồm hai phần:
+
+| Phần | Cho biết |
+|---|---|
+| Làm thêm đã duyệt, giờ chưa vào quỹ | Đơn làm thêm chưa tới ngày làm (hoặc chờ chốt công): dự kiến bao nhiêu giờ bị trừ để trả phần ứng, bao nhiêu giờ vào quỹ. Giờ thật tính theo chấm công ngày làm thêm |
+| Diễn biến quỹ | Mọi thay đổi của quỹ trong 60 ngày gần đây, theo thứ tự xảy ra: lần làm thêm vào quỹ (khi đã duyệt và đã có chấm công ngày làm), đơn nghỉ bù nộp, phiếu HR, giờ hết hạn cuối kỳ. Mỗi dòng ghi số dư quỹ sau đó; dòng nào **trả phần đang ứng** (chữ cam) hay **ứng trước** (chữ đỏ) thì ghi rõ số giờ |
+
+Đơn nghỉ trừ quỹ từ lúc nộp, kể cả khi còn chờ duyệt. Số dư ở dòng mới nhất luôn bằng số dư quỹ ở
+đầu sao kê.
+
+<img src="images/guide/nhanvien/19-comp-advance-statement.png" width="240" alt="Sao kê quỹ Nghỉ bù">
+
 ---
 
 ## 5. Phép chế độ / BHXH / WFH — gửi thẳng HR

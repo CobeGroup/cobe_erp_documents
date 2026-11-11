@@ -252,6 +252,18 @@ HR không thêm, sửa hay xoá được dòng áp cho chính mình, cho bộ ph
 công ty** của công ty mình — vì mặc định không ai được ứng, nên mở cho cả công ty cũng là tự
 mở cho mình. Những dòng đó chỉ **System Manager** khai được.
 
+### Nhân viên thấy gì về phần ứng
+
+Từ 11/2026, ứng dụng My Workspace cho nhân viên thấy rõ phần ứng trước: hộp xác nhận khi gửi đơn
+ứng, nhãn **Ứng trước …h** trên đơn nghỉ, và **sao kê quỹ Nghỉ bù** kể lại quỹ theo thứ tự xảy ra:
+lần làm thêm nào vào lúc quỹ đang âm thì ghi rõ bao nhiêu giờ đi trả phần ứng. Khi nhân viên hỏi vì sao giờ làm thêm vào quỹ ít hơn số giờ đã làm, HR chỉ
+nhân viên mở sao kê: xem
+[Xin nghỉ phép & nghỉ bù → Vì sao giờ làm thêm vào quỹ ít hơn](Guide-NhanVien-NghiPhep.html#ung-truoc-sao-ke).
+Phía HR đối chiếu cùng số liệu ở tab **Quỹ Nghỉ bù** trên hồ sơ Employee. Sao kê của nhân viên kể
+quỹ **theo thứ tự xảy ra** (giờ vào, đơn nộp, giờ hết hạn) kèm số dư sau mỗi lần; số dư cuối luôn
+khớp tab Desk. Tab Desk thì ghi lô nào chia cho đơn nào (theo ngày nghỉ) — hai cách nhìn khác nhau
+nhưng cùng một quỹ.
+
 ### Hệ thống chốt thế nào
 
 | Tình huống | Hệ thống làm gì |
