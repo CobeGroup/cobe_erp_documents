@@ -27,12 +27,20 @@ nav_order: 1
 5. (Tuỳ chọn) **Leave Approver** — chỉ đặt khi cần **đè** người duyệt nghỉ phép của phòng.
 6. (Tuỳ chọn) **Shift Request Approver** — người duyệt **chấm công bù / công tác** riêng cho NV này
    (cộng thêm vào danh sách của phòng, không phải override). Tách khỏi Leave Approver — xem
-   [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html).
+   [Cấp phép & gán người duyệt → B2](Desk-HR-CapPhep.html#shift-request-approver).
+7. **Confirmation Date** (tab **Joining**) — ngày hết thử việc. Từ ngày này nhân viên có Phép Năm và được cộng bù các tháng thử việc; để trống
+   thì hệ thống lấy ngày vào làm + 2 tháng. Xem [Cấp phép → Khai ngày hết thử việc](Desk-HR-CapPhep.html#het-thu-viec).
+8. Lưu. Nhân viên đã hết thử việc thì hệ thống cấp Phép Năm ngay (thông báo xanh ở góc màn hình); nhân
+   viên còn thử việc thì chưa có gì, hệ thống tự cấp vào ngày hết thử việc.
+
+> 💡 Tài khoản không phải nhân viên thật (cộng tác viên, kho tạm, kiểm thử): tick **Không tự cấp
+> Phép Năm** trước khi lưu.
 
 > 🔒 **Chỉ HR** (HR Manager / HR User / System Manager / Payroll Officer) lập được hồ sơ nhân viên
 > mới (từ 16/10/2026). Trên hồ sơ **đã có**, chỉ HR đổi được *Leave Approver*, *Shift Request
-> Approver*, *Expense Approver*, *Reports To*, *Date of Joining*, *Confirmation Date* và ô *Nghỉ phép gửi thẳng HR*. Không ai tự đổi tài
-> khoản, bộ phận, công ty hay người duyệt trên hồ sơ **của chính mình**.
+> Approver*, *Expense Approver*, *Reports To*, *Date of Joining*, *Confirmation Date*, ô *Nghỉ phép gửi
+> thẳng HR (bỏ qua Manager)* và ô *Không tự cấp Phép Năm*. Không ai tự đổi tài khoản, bộ phận, công ty,
+> người duyệt, ngày vào làm, ngày hết thử việc hay ô *Không tự cấp Phép Năm* trên hồ sơ **của chính mình**.
 >
 > Trên hồ sơ **người khác**, người không phải HR cũng không đổi được *Department*, *Company* và
 > *User ID* — đổi bộ phận là đổi người duyệt nghỉ mặc định của người đó. *User ID* của hồ sơ mới
@@ -42,12 +50,6 @@ nav_order: 1
 > 🔒 **Thông tin cá nhân chỉ HR thấy**: ngày sinh, điện thoại, email riêng, địa chỉ, người liên hệ khẩn
 > cấp, lương (CTC), ngân hàng, hộ chiếu, bảo hiểm y tế, hôn nhân, sức khoẻ, học vấn, kinh nghiệm cũ và
 > các ô nghỉ việc. Người khác — kể cả chính chủ trên Desk — mở hồ sơ không thấy các ô này.
-7. **Confirmation Date** (tab **Joining**) — ngày hết thử việc. Từ ngày này nhân viên có Phép Năm và được cộng bù các tháng thử việc; để trống
-   thì hệ thống lấy ngày vào làm + 2 tháng. Xem [Cấp phép → Khai ngày hết thử việc](Desk-HR-CapPhep.html#het-thu-viec).
-8. Lưu. Hệ thống tự cấp Phép Năm cho nhân viên (thông báo xanh ở góc màn hình).
-
-> 💡 Tài khoản không phải nhân viên thật (cộng tác viên, kho tạm, kiểm thử): tick **Không tự cấp
-> Phép Năm** trước khi lưu.
 
 ![Form Employee — company, department, user, leave approver](images/desk/admin-employee-form.png)
 
@@ -75,6 +77,8 @@ Mỗi người vẫn nên có **1 Employee chính + 1 user chính** để tính 
 | "User X is already assigned to Employee Y" | User đã gắn Employee Active khác → dùng user khác / xử lý Employee cũ |
 | NV không chấm công ra công | Thiếu **Shift Assignment** hoặc chưa duyệt thiết bị |
 | NV không gửi được đơn nghỉ | Thiếu **Department + Leave Approver** hoặc thiếu số dư phép (chưa hết thử việc → xem Confirmation Date) |
+| Người dùng báo lỗi *"Chỉ HR sửa được — Không sửa được … trên hồ sơ nhân viên. Cần đổi thì báo HR."* | Người không phải HR đang sửa ô chỉ HR được đổi (khung 🔒 ở mục 1) → HR tự sửa trên hồ sơ |
+| *"Chỉ HR lập được — Chỉ HR lập hồ sơ nhân viên mới"* | Người không phải HR lập hồ sơ mới → HR lập, hoặc dùng [Tạo nhân sự nhanh](Desk-Admin-Onboarding.html) |
 
 ## Liên quan
 - [Employee & Department (kỹ thuật)](HR-Employee-Department-Setup.html) · [Ca làm việc & gán ca](Desk-Admin-Shift.html) · [Cấp phép & gán người duyệt](Desk-HR-CapPhep.html)

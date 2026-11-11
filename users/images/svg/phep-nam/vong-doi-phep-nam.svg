@@ -48,7 +48,7 @@
     <rect x="205" y="215" width="375" height="80" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-dasharray="6 4"/>
     <text x="392" y="243" font-weight="700" fill="#0f172a">HR điền hoặc sửa Confirmation Date → Save</text>
     <text x="392" y="266" fill="#334155">hệ thống tính lại phép theo ngày mới</text>
-    <text x="392" y="284" fill="#475569" font-size="12">(trừ khi nhân viên đã nghỉ phép trừ vào số dư)</text>
+    <text x="392" y="284" fill="#475569" font-size="11">(trừ phân bổ nhập/tạo tay, hoặc đã có đơn nghỉ trừ vào số dư)</text>
 
     <rect x="15" y="215" width="165" height="80" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6 4"/>
     <text x="97" y="243" font-weight="700" fill="#0f172a">Không phải</text>

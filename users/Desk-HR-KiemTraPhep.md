@@ -59,10 +59,12 @@ Mở danh sách **Phân bổ chính sách phép** (`Leave Policy Assignment`, `/
 | **Effective From** | Ngày bắt đầu cộng Phép Năm hằng tháng (= ngày hết thử việc, hoặc 01/01 nếu hết thử việc từ năm trước). Các tháng thử việc trước đó được cộng bù riêng |
 | **Effective To** | 31/12 năm nay |
 | **Số ngày cộng bù tháng thử việc** | Số ngày hệ thống đã cộng bù cho các tháng thử việc. Mỗi phân bổ chỉ cộng một lần |
-| **Hệ thống tự cấp (theo ngày hết thử việc)** | Có tick = do hệ thống cấp, sẽ tự tính lại khi HR sửa Confirmation Date. Không tick = nạp từ trước hoặc HR tạo thủ công: hệ thống không tự dựng lại khi đổi ngày, nhưng người chưa có số dư trước đó vẫn được cộng bù tháng thử việc |
+| **Hệ thống tự cấp (theo ngày hết thử việc)** | Có tick = do hệ thống cấp, sẽ tự tính lại khi HR sửa Confirmation Date. Không tick = nạp từ trước hoặc HR tạo thủ công: hệ thống không tự dựng lại khi đổi ngày, nhưng người chưa có số dư nào trước đó và có ngày hết thử việc không sớm hơn *Effective From* vẫn được cộng bù tháng thử việc. Hết thử việc sớm hơn *Effective From* mà chưa từng có số dư thì HR cộng bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
 
 Muốn xem **lịch cộng phép các tháng tới**: mở dòng đó → mở **Leave Allocation** liên kết → bảng
-**Earned Leave Schedule** liệt kê từng ngày cộng; ngày đã cộng có tick *Is Allocated*.
+**Earned Leave Schedule** liệt kê từng ngày cộng; ngày đã cộng có tick *Is Allocated*. Muốn biết những
+tháng nào đã được cộng bù: phần lịch sử của **Số dư phép** (`Leave Allocation`) đó có dòng *"Cộng bù N ngày
+Phép Năm cho M tháng thử việc (MM/YYYY – MM/YYYY)"*.
 
 > 💡 Nhân viên mới vào làm chưa có dòng nào ở đây hoặc số dư đang là 0 là **bình thường** khi chưa
 > hết thử việc. Cách hệ thống cấp Phép Năm: [Cấp phép → Phép Năm được hệ thống tự cấp](Desk-HR-CapPhep.html#he-thong-cap).
@@ -118,7 +120,9 @@ Cách dùng chung: Search tên report → đặt filter (kỳ ngày, Company, Em
 
 Mở report **Leave Ledger** → filter **Employee** + kỳ ngày → dò từng dòng: khởi điểm là dòng
 **Leave Allocation (+N)**, mỗi đơn nghỉ là một dòng **Leave Application (−n)** — cộng dồn xuống
-tới dòng cuối phải ra đúng số dư hiện tại. Lệch ở đâu, chứng từ gốc nằm ngay cột Transaction.
+tới dòng cuối phải ra đúng số dư hiện tại. Lệch ở đâu, chứng từ gốc nằm ngay cột Transaction. Người được
+cộng bù tháng thử việc có thêm một dòng **Leave Allocation (+N)** thứ hai với ngày hiệu lực là ngày hết thử
+việc; các tháng thử việc thuộc năm trước hiện là dòng phép chuyển sang (*Is Carry Forward*).
 
 ![Leave Ledger — dòng cấp +12 (Allocation) và 2 dòng trừ −1 (Phép năm, Nghỉ bù) kèm mã chứng từ](images/desk/hr-report-leave-ledger.png)
 

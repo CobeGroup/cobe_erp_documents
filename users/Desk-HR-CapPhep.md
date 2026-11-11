@@ -39,7 +39,7 @@ một **Phân bổ chính sách phép** (`Leave Policy Assignment`) cho năm hi�
 | Thời điểm | Hệ thống làm gì |
 |---|---|
 | Tạo hồ sơ nhân viên mới, hoặc Save hồ sơ | Cấp Phép Năm cho năm hiện tại nếu nhân viên chưa có |
-| Hằng đêm (01:15) | Rà lại toàn bộ nhân viên đang làm việc, cấp cho người còn thiếu |
+| Hằng đêm (01:15) | Rà lại toàn bộ nhân viên đang làm việc: cấp Phép Năm cho người còn thiếu và cộng bù tháng thử việc cho người vừa tới ngày hết thử việc |
 | Cuối mỗi tháng | Cộng 1 ngày phép (12 ngày/năm) |
 | Ngày 01/01 | Cấp Phép Năm năm mới cho mọi người, **chuyển số dư còn lại** của năm cũ sang |
 
@@ -59,11 +59,13 @@ thiểu trong tháng vào làm*. Đổi số này không ảnh hưởng người
 2. Chọn tab **Joining**.
 3. Điền ô **Confirmation Date** (ngày hết thử việc). Không điền nhầm vào ô *Offer Date* ngay cạnh,
    hệ thống không đọc ô đó.
-4. Bấm **Save**. Hệ thống xử lý ngay, không cần chờ tới đêm.
+4. Bấm **Save**. Nếu ngày hết thử việc đã tới, hệ thống cấp phép và cộng bù ngay, không cần chờ tới
+   đêm; nếu ngày đó còn ở tương lai, hệ thống tự làm vào 01:15 sáng ngày hết thử việc.
 
 > 💡 Cần tạm giữ phần cộng bù của một nhân viên để kiểm tra: tick ô **Tạm chưa cộng bù phép tháng thử
-> việc** trên hồ sơ **trước** ngày hết thử việc. Bỏ tick rồi **Save**, hệ thống sẽ cộng bù. Ô này chỉ có
-> tác dụng trong năm hết thử việc; sang năm sau, HR cộng phần còn thiếu bằng
+> việc** trên hồ sơ **trước** ngày hết thử việc (ô nằm ngay dưới ô *Không tự cấp Phép Năm*, chỉ tài khoản
+> có role HR Manager / HR User mới thấy và sửa được). Bỏ tick rồi **Save**, hệ thống sẽ cộng bù. Ô này chỉ
+> có tác dụng trong năm hết thử việc; sang năm sau, HR cộng phần còn thiếu bằng
 > [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html).
 
 > 💡 Ô **Confirmation Date** để trống thì hệ thống coi ngày hết thử việc là **ngày vào làm + 2 tháng**.
@@ -77,24 +79,28 @@ Sau khi Save, góc màn hình hiện một trong các thông báo sau:
 | 🟢 **"Đã cộng bù … ngày Phép Năm cho các tháng thử việc"** | Ngày hết thử việc đã qua, số ngày của các tháng thử việc đã vào số dư | Không cần làm gì |
 | 🟠 **"Ngày vào làm đã đổi nên số tháng thử việc khác với số ngày đã cộng bù…"** | Hệ thống đã cộng bù theo ngày cũ và không tự chỉnh lại | Chỉnh phần chênh lệch bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
 | 🟠 **"Nhân viên hết thử việc từ năm trước và chưa từng có Phép Năm…"** | Hồ sơ lập trễ sang năm mới, hoặc ngày hết thử việc được lùi về năm trước, nên hệ thống không tự cộng bù | Cộng phần còn thiếu bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
+| 🟠 **"Bỏ tick nhưng hệ thống KHÔNG tự cộng bù được vì đã qua năm hết thử việc…"** | Ô *Tạm chưa cộng bù phép tháng thử việc* được bỏ tick sau khi đã sang năm mới, hoặc nhân viên đã có số dư từ trước kỳ phân bổ, nên hệ thống không tự cộng | Cộng phần còn thiếu bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
 | 🟠 **"Thời gian từ ngày vào làm tới ngày hết thử việc quá 6 tháng…"** | Khoảng thời gian dài bất thường nên hệ thống **không** cộng bù | Kiểm tra lại ô **Confirmation Date**. Nếu ngày đúng, chỉnh số dư bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
 | 🔵 **"Phép Năm năm nay của nhân viên này được cấp từ trước…"** | Phép năm nay đã được nạp từ trước (đợt nhập số dư, hoặc HR tạo thủ công) nên được **giữ nguyên**. Ngày mới áp dụng từ năm sau | Không cần làm gì |
-| 🟠 **"Ngày hết thử việc đã đổi nhưng không tự tính lại được…"** | Nhân viên đã có đơn nghỉ trừ vào số dư cũ, hệ thống không huỷ để tính lại | Chỉnh phần chênh lệch bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
-| Không có thông báo | Nhân viên đã có Phép Năm năm nay và ngày không đổi, hoặc đang được đánh dấu *Không tự cấp Phép Năm* | Không cần làm gì |
+| 🟠 **"Ngày hết thử việc đã đổi nhưng không tự tính lại được…"** | Hệ thống không huỷ được phân bổ cũ để tính lại: thường do nhân viên đã có đơn nghỉ trừ vào số dư cũ, hoặc năm đó còn một **Số dư phép** (`Leave Allocation`) tạo thủ công. Phân bổ cũ vẫn giữ kỳ theo ngày cũ | Chỉnh phần chênh lệch bằng [Điều chỉnh số dư phép](Desk-HR-DieuChinhSoDuPhep.html) |
+| Không có thông báo | Nhân viên đã có Phép Năm năm nay và ngày không đổi, chưa tới ngày hết thử việc, hoặc đang được đánh dấu *Không tự cấp Phép Năm* | Không cần làm gì |
+
+Các thông báo màu cam, trừ thông báo *quá 6 tháng*, còn được ghi thành một bình luận trong phần lịch sử của
+hồ sơ **Employee**; HR có thể xem lại sau khi thông báo ở góc màn hình đã tắt.
 
 ### Sửa ngày hết thử việc
 {: #doi-ngay }
 
 HR sửa **Confirmation Date** rồi Save, hệ thống tự huỷ phân bổ cũ và cấp lại theo ngày mới. Việc
-tính lại chỉ áp dụng cho phân bổ **do hệ thống tự cấp** (ô *Hệ thống tự cấp* được tick trên
-`Leave Policy Assignment`). Phân bổ từ đợt nhập số dư hoặc do HR tạo thủ công luôn được giữ nguyên.
+tính lại chỉ áp dụng cho phân bổ **do hệ thống tự cấp** (ô *Hệ thống tự cấp (theo ngày hết thử việc)*
+được tick trên **Phân bổ chính sách phép** (`Leave Policy Assignment`)). Phân bổ từ đợt nhập số dư hoặc do HR tạo thủ công luôn được giữ nguyên.
 
 ### Tài khoản không phải nhân viên thật
 {: #khong-cap }
 
 Với tài khoản cộng tác viên, kho tạm, tài khoản kiểm thử…: mở **Employee** → tick
-**Không tự cấp Phép Năm** (ngay dưới ô *Nghỉ phép gửi thẳng HR*) → Save. Hệ thống sẽ không cấp Phép Năm cho
-hồ sơ này.
+**Không tự cấp Phép Năm** (ngay dưới ô *Nghỉ phép gửi thẳng HR (bỏ qua Manager)*) → Save. Hệ thống sẽ không
+cấp Phép Năm cho hồ sơ này. Chỉ HR đổi được ô này.
 
 ### Sang năm mới
 {: #nam-moi }
@@ -142,6 +148,7 @@ Chuỗi ưu tiên: **Employee.leave_approver** (đặt riêng) → fallback **ng
 > ⚠️ Hệ thống chỉ lấy **dòng ĐẦU TIÊN** trong Leave Approvers của phòng làm người duyệt mặc định. Thêm nhiều dòng chỉ là "danh sách approver hợp lệ", không tự luân phiên.
 
 ## B2. Gán người duyệt CHẤM CÔNG BÙ (Shift Request Approver)
+{: #shift-request-approver }
 
 Đơn **chấm công bù / công tác / WFH** (Attendance Request) **không dùng Leave Approver** — nó về khe
 **Shift Request Approver**, gán tương tự nhưng luật hơi khác:
