@@ -172,7 +172,8 @@ flowchart TB
 
 > 📂 **Tab "Đơn bù"** (cạnh *Chấm công* · *Bảng công*) liệt kê mọi đề xuất của bạn, chia **4 tab** — **Chờ
 > duyệt** · **Đã duyệt** · **Từ chối** · **Đã hủy** — mỗi đơn ghi **ai đã duyệt / từ chối / huỷ, lúc nào**.
-> Tab này không theo khoảng ngày ở đầu trang.
+> Tab này không theo khoảng ngày của *Bảng công*: tab **Chờ duyệt** luôn hiện đủ, ba tab còn lại có ô chọn
+> **khoảng ngày** riêng (mặc định từ đầu tháng trước đến cuối tháng sau), lọc theo ngày của đơn.
 
 <img src="images/guide/dexuat/04-approved.png" width="240" alt="Sau khi duyệt — ngày hiện Có mặt">
 

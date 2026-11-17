@@ -31,6 +31,9 @@ Mở tab **Nghỉ phép**:
 - **Số dư phép**: ngay đầu trang, mỗi loại phép là **một chip riêng** hiện số ngày **còn lại theo từng loại** (vd `Phép năm: 6,0 ngày`). Chip **xanh** = còn phép, **xám** = đã hết (0).
 - **Đơn xin nghỉ**: danh sách đơn đã gửi, chia **4 tab** — **Chờ duyệt** · **Đã duyệt** · **Từ chối** · **Đã hủy**.
   Mở app lên, nếu không còn đơn nào đang chờ thì app tự nhảy sang tab có đơn, khỏi phải bấm tìm.
+- Tab **Chờ duyệt** luôn hiện đủ mọi đơn đang chờ. Ba tab còn lại có ô chọn **khoảng ngày** (mặc định từ
+  đầu tháng trước đến cuối tháng sau) và lọc theo **ngày nghỉ** của đơn. Muốn xem đơn cũ hơn, chọn lại
+  khoảng ngày; khoảng đã chọn được giữ nguyên khi chuyển sang màn *Làm thêm giờ* hay tab *Đơn bù*.
 - Mỗi đơn ghi **ai đã xử lý, lúc nào**: *Quản lý duyệt: …*, *HR duyệt: …*, *HR từ chối: …*, *Huỷ bởi: …*
   (đơn gửi thẳng HR ghi *Bỏ qua bước quản lý*). Bấm vào đơn để xem đủ các bước.
 

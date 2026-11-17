@@ -117,7 +117,8 @@ Muốn đổi giờ làm thêm lấy **ngày nghỉ** thay vì tiền? Làm y h�
 ## 4. Theo dõi đơn & giờ được ghi nhận
 
 Danh sách đơn chia **4 tab** — **Chờ duyệt** · **Đã duyệt** · **Từ chối** · **Đã hủy** (đơn *Hết hạn* nằm ở
-*Đã duyệt*). Mỗi đơn ghi **ai đã xử lý, lúc nào**: *Quản lý duyệt: …*, *HR duyệt: …*, *HR từ chối: …*,
+*Đã duyệt*). Tab **Chờ duyệt** luôn hiện đủ; ba tab còn lại có ô chọn **khoảng ngày** (mặc định từ đầu
+tháng trước đến cuối tháng sau), lọc theo **ngày làm thêm** của đơn. Mỗi đơn ghi **ai đã xử lý, lúc nào**: *Quản lý duyệt: …*, *HR duyệt: …*, *HR từ chối: …*,
 *Huỷ bởi: …*, kèm lý do từ chối / huỷ. Bấm vào đơn bất kỳ để xem chi tiết:
 
 <img src="images/guide/overtime/04-ot-detail.png" width="240" alt="Chi tiết đơn làm thêm — giờ đã ghi nhận">

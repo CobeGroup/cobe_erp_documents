@@ -8,7 +8,7 @@ nav_order: 5.5
 # Chấm công — có gì mới (đợt 11/2026)
 {: .no_toc }
 
-Đơn chấm công cho hôm nay được tính công khi duyệt, các đơn bị huỷ vì luật cũ được khôi phục, thông báo huỷ đơn nói đúng việc cần làm, bảng công có cột Số công không đếm trùng với quỹ Nghỉ bù, và nghỉ nửa ngày không còn bị đánh vắng oan nửa còn lại
+Đơn chấm công cho hôm nay được tính công khi duyệt, các đơn bị huỷ vì luật cũ được khôi phục, thông báo huỷ đơn nói đúng việc cần làm, bảng công có cột Số công không đếm trùng với quỹ Nghỉ bù, nghỉ nửa ngày không còn bị đánh vắng oan nửa còn lại, danh sách đơn của nhân viên lọc được theo khoảng ngày, và bấm thông báo mở thẳng đơn của mình
 {: .fs-3 .text-grey-dk-000 }
 
 <details open markdown="block">
@@ -29,6 +29,8 @@ nav_order: 5.5
 | ③ | Thông báo *"Ngày … không được tính công"* nói **liên hệ HR** khi ngày đó đã quá hạn nộp, thay vì *"nộp khai bù được ngay"* | Nhân viên hiện trường | Mục ③ bên dưới |
 | ④ | Bảng công có cột **Số công**: Thứ 7 nửa buổi đi làm = **0,5** (`P:2`), Chủ nhật / lễ đi làm = **0** (`P0`) — giờ làm thêm đã vào quỹ Nghỉ bù thì không đếm thành công nữa; cột *Tổng giờ chuẩn* không còn cộng trọn ca cho Chủ nhật. Thêm cột **Nghỉ hưởng lương** (phép có lương, ngày lễ) và **Tổng công** = Số công + Nghỉ hưởng lương — **lập lương từ Tổng công** | HR lập bảng lương, kế toán | Mục ④ bên dưới · [Bảng công tháng](Desk-HR-BangCongThang.html) |
 | ⑤ | Nghỉ **nửa ngày** mà nửa còn lại có đi làm: hệ thống **không còn đánh vắng** nửa đó giữa ngày; các ngày đã bị đánh vắng oan được **khôi phục** từ lần chấm công. Nghỉ buổi chiều về lúc trưa **không còn tag "Về sớm"** | Nhân viên nghỉ nửa ngày, HR | Mục ⑤ bên dưới |
+| ⑥ | Màn **Nghỉ phép**, **Làm thêm giờ** và tab **Đơn bù** của nhân viên có ô chọn **khoảng ngày** ở ba tab *Đã duyệt · Từ chối · Đã hủy*, như màn *Duyệt đơn*; tab *Chờ duyệt* luôn hiện đủ. Đơn cũ không còn bị ẩn khi đã có hơn 100 đơn | Mọi nhân viên | Mục ⑥ bên dưới |
+| ⑦ | Bấm thông báo về **đơn của chính mình** (bị huỷ, được duyệt, bị từ chối) — trên điện thoại hay trong trang *Thông báo* (nút **Mở đơn**) — mở thẳng đơn đó trong ứng dụng, đúng nhóm, hiện sẵn chi tiết | Mọi nhân viên, nhất là trưởng bộ phận | Mục ⑦ bên dưới |
 
 ---
 
@@ -153,6 +155,53 @@ có 6 ngày, tháng 8 có 2 ngày, tháng 9 và tháng 10 mỗi tháng 27 ngày.
 
 ---
 
+## ⑥ Danh sách đơn của nhân viên lọc theo khoảng ngày
+
+Trước đợt này, mỗi màn đơn của nhân viên (Nghỉ phép, Làm thêm giờ, tab Đơn bù) chỉ tải **100 đơn gần
+nhất**, chung cho cả bốn tab. Người khai nhiều đơn (chấm công bù khoảng 20 đơn mỗi tháng) chạm mốc này
+sau vài tháng; khi đó đơn cũ, thường là đơn bị huỷ hoặc bị từ chối, không còn hiện ở đâu trên ứng dụng.
+
+Từ đợt này:
+
+- Tab **Chờ duyệt** luôn hiện **đủ mọi đơn đang chờ**, không phụ thuộc ngày.
+- Ba tab **Đã duyệt · Từ chối · Đã hủy** có ô chọn **khoảng ngày**, mặc định từ **đầu tháng trước đến
+  cuối tháng sau**. Lọc theo **ngày của đơn** (ngày nghỉ, ngày làm thêm, ngày chấm công bù), không theo
+  ngày duyệt — giống màn *Duyệt đơn* của người duyệt.
+- Khoảng ngày dùng chung cho cả ba màn và được giữ trong lúc dùng ứng dụng; mở lại ứng dụng hôm sau thì
+  về mặc định.
+- Danh sách dài được chia trang, mỗi trang 30 đơn.
+
+---
+
+## ⑦ Bấm thông báo mở thẳng đơn của mình
+
+Trước đợt này, bấm thông báo *"Đơn … đã bị huỷ"* (hay được duyệt, bị từ chối) trên điện thoại chỉ mở
+trang **Thông báo** — còn nếu ứng dụng đang mở sẵn thì chỉ đưa ứng dụng lên, đứng nguyên màn cũ. Trong
+trang Thông báo, trưởng bộ phận thấy nút *Mở để duyệt*, dẫn vào màn **Duyệt đơn** — nơi không có đơn của
+chính họ nên chỉ báo *"Đơn này không còn nằm trong danh sách chờ bạn duyệt"*; nhân viên khác thấy nút
+*Mở chứng từ*, dẫn sang trang quản trị (Desk). Nhân viên không mở được đơn của mình từ thông báo.
+
+Từ đợt này:
+
+- Thông báo về **đơn của chính mình** (đơn nghỉ phép `Leave Application`, đơn làm thêm `HR Overtime
+  Request`, đề xuất chấm công bù / WFH `Attendance Request`):
+  - **Bấm trên điện thoại** → mở thẳng màn đơn đó, đúng nhóm (*Chờ duyệt · Đã duyệt · Từ chối · Đã
+    hủy*), hiện sẵn chi tiết đơn kèm người xử lý và lý do; thông báo được đánh dấu đã đọc. Ứng dụng
+    đang mở sẵn hay đã đóng đều vậy; nếu đã hết phiên đăng nhập thì đăng nhập xong ứng dụng mở tiếp
+    đúng đơn đó. Riêng khi đang ở màn **FSM** (phiếu việc của kỹ thuật viên) hoặc màn đăng ký thiết
+    bị, ứng dụng **hỏi trước** rồi mới chuyển màn, để không làm mất nội dung đang nhập dở.
+  - **Trong trang Thông báo** → nút đổi thành **Mở đơn**, mở giống như trên.
+  - Đơn nằm ngoài khoảng ngày đang chọn thì khoảng ngày **tự nới ra** để đơn hiện trong danh sách.
+  - Đơn đã bị xoá thì không mở được: bấm thông báo trên điện thoại sẽ thấy *"Không tìm thấy đơn
+    này"*; trong trang Thông báo, thông báo về đơn đã xoá không có nút *Mở đơn*.
+- Thông báo **nhờ duyệt** (đơn của người khác) vẫn như cũ: nút *Mở để duyệt* đưa người duyệt vào màn
+  **Duyệt đơn**. Đơn của chính mình mà chính mình đang là người duyệt (ví dụ người duyệt cuối của nhân
+  sự nộp đơn nghỉ của mình) cũng vậy: thông báo gửi lúc đơn còn chờ họ duyệt được xử lý như thông báo
+  nhờ duyệt (nút *Mở để duyệt*). Duyệt xong, trong trang Thông báo nút của thông báo đó đổi thành
+  *Mở đơn*; các thông báo gửi sau mở thẳng đơn như mọi đơn khác.
+
+---
+
 ## Khi đưa lên hệ thống
 
 - **Deploy rồi chạy `bench migrate`.** Migrate chạy patch `v0_057` khôi phục các đơn ở mục ②. Ứng dụng
@@ -172,6 +221,13 @@ có 6 ngày, tháng 8 có 2 ngày, tháng 9 và tháng 10 mỗi tháng 27 ngày.
   nhưng chấm công cho thấy về trưa. Các tháng có ngày nghỉ nửa ngày được khôi phục ở mục ⑤ cũng tăng
   0,5 công cho mỗi ngày đó.
 - **Bảng công không cần migrate** — report đọc từ mã nguồn; chỉ cần deploy và xoá cache.
+- **Lọc đơn theo khoảng ngày (mục ⑥) chỉ cần deploy**, không migrate. Ứng dụng trên máy nhân viên tự lên
+  bản mới; bản cũ còn trong máy vẫn chạy như trước (100 đơn gần nhất) cho tới khi tải lại.
+- **Mở đơn từ thông báo (mục ⑦) chỉ cần deploy**, không migrate. Áp dụng cho thông báo gửi **sau khi
+  deploy**; thông báo đẩy đã gửi trước đó vẫn mở trang Thông báo, nhưng nút *Mở đơn* trong trang đó
+  dùng được cho cả thông báo cũ. Máy nhân viên (đã bật thông báo đẩy) tự nhận bản mới của ứng dụng và
+  của bộ nhận thông báo (service worker) ở lần mở ứng dụng kế tiếp; trước lúc đó, bấm thông báo khi
+  ứng dụng đang mở vẫn chỉ đưa ứng dụng lên như trước.
 
 ---
 

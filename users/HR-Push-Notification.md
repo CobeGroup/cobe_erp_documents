@@ -33,7 +33,17 @@ duyệt, chia sẻ tài liệu...
 - Khi hệ thống tạo **Notification Log** cho 1 user (phân công, duyệt đơn, mention...),
   server tự đẩy 1 push qua **Firebase Cloud Messaging (FCM)** tới mọi thiết bị mà
   user đó đã bật thông báo.
-- Bấm vào thông báo đẩy → mở thẳng **My Workspace → Thông báo**.
+- Bấm vào thông báo đẩy:
+  - Thông báo về **đơn của chính nhân viên** (đơn nghỉ phép, làm thêm giờ, chấm công bù / WFH được
+    duyệt, bị từ chối hay bị huỷ) → mở thẳng **màn đơn đó**, đúng nhóm (*Chờ duyệt · Đã duyệt · Từ
+    chối · Đã hủy*), hiện sẵn chi tiết đơn, và thông báo được đánh dấu đã đọc — ứng dụng đang mở sẵn
+    hay đã đóng đều vậy; hết phiên đăng nhập thì đăng nhập xong mở tiếp đúng đơn đó. Đang ở màn FSM
+    hoặc màn đăng ký thiết bị thì ứng dụng hỏi trước khi chuyển màn.
+  - Đơn của chính mình mà mình đang là người duyệt (ví dụ người duyệt cuối của nhân sự tự nộp đơn
+    nghỉ) → thông báo gửi lúc đơn còn chờ được xử lý như thông báo nhờ duyệt (mở trang Thông báo, nút
+    *Mở để duyệt*). Duyệt xong, trong trang Thông báo nút của thông báo đó đổi thành *Mở đơn*; các
+    thông báo gửi sau (vd "đã được duyệt") mở thẳng đơn.
+  - Các thông báo khác (đơn nhờ duyệt, phân công…) → mở **My Workspace → Thông báo** như trước.
 - Token thiết bị chết (gỡ app, hết hạn) sẽ tự bị tắt, không gửi nữa.
 
 ---
@@ -84,4 +94,5 @@ Notifications cho trang, rồi quay lại bấm Bật.
 | Không thấy thẻ "Thông báo đẩy" | HR Push Settings chưa bật, hoặc thiết bị không hỗ trợ |
 | Bấm Bật báo "Cấu hình Firebase/VAPID chưa đầy đủ" | Thiếu trường trong HR Push Settings — kiểm tra mục 2 |
 | Đã bật nhưng không nhận push | Kiểm tra quyền Notifications của trình duyệt; iOS phải cài PWA; xem **Error Log** server nếu service account sai |
+| Bấm thông báo lúc ứng dụng đang mở chỉ đưa ứng dụng lên, không mở đơn | Máy còn bản cũ của ứng dụng / bộ nhận thông báo — đóng hẳn ứng dụng rồi mở lại một lần để nhận bản mới |
 | Nhận trùng / sai app | My Workspace và FSM là 2 hệ push riêng — bật ở đâu nhận ở đó |

@@ -674,9 +674,31 @@ bù, luật tính công ngày nghỉ) chỉ đọc `status = Approved`, và chec
 - `GET notification.get_unread_count`
 - `POST notification.mark_read` — body `{ name }`
 - `POST notification.mark_all_read`
+- `GET|POST notification.locate_my_request?doctype=…&name=…` → `{ found, from_date, to_date }` — ngày
+  của một đơn **của chính người gọi** (Leave Application / HR Overtime Request / Attendance Request);
+  đơn người khác, đơn đã xoá hay doctype khác → `{ found: false }`.
 
 Raw SQL lọc cứng `for_user = session.user` (an toàn, không rò rỉ). PWA mở detail bằng
 Modal in-app (không mở Desk).
+
+**Mở đơn của chính mình (17/11/2026, `utils/my_request_link.py`).** Mỗi dòng của
+`list_my_notifications` có thêm `my_request_path`: thông báo về đơn mà `employee` = hồ sơ Employee
+**Active** gắn `user_id` của người gọi (cùng truy vấn với `api.wfh._get_current_employee`) → đường dẫn
+trong PWA, chưa kèm `/my-workspace`: `/leave?open=<tên>`, `/overtime?open=<tên>`,
+`/attendance?tab=requests&open=<tên>`; còn lại `null`. Ngoại lệ: đơn của chính người nhận đang nằm
+trong **hộp duyệt của chính họ** cũng `null` (vd người duyệt cuối của HR Policy nộp đơn nghỉ của mình:
+thông báo "chờ HR duyệt" phải dẫn vào hộp duyệt). Tiêu chí là đúng bộ lọc hộp duyệt —
+`approval.pending_in_inbox(user, doctype, names)` chạy collector của `get_my_pending_approvals` cho
+user bất kỳ (job nền đẩy push chạy dưới session của người GÂY RA thông báo — người duyệt, người huỷ —
+chứ không phải người nhận; `_user_roles(user)` / `_viewer_configs_for_user(user)` nhận user), và chỉ
+gọi khi trong danh sách có đơn của mình còn chờ. Link của push chốt lúc gửi; trang Thông báo tính lại
+mỗi lần mở.
+Màn đơn đọc `?open=` (+ `nl=<Notification Log>` khi đến từ push → `mark_read` im lặng) bằng hook
+`useOpenRequestFromLink`: mỗi lần điều hướng mang `?open=` là một link (khoá theo `location.key` — hai
+push về cùng một đơn vẫn xử lý cả hai); gọi `locate_my_request`, nới khoảng ngày (`cover`), **tải lại
+danh sách** (link tới lúc màn đang mở thì danh sách đang có là bản trước khi đơn đổi trạng thái), chọn
+đúng nhóm, mở chi tiết rồi gỡ tham số. Tải lại hỏng thì bỏ link (màn đã báo lỗi; bấm lại thông báo là
+mở).
 
 `subject` và `email_content` của Notification Log chứa HTML (vd `<strong>`, `<b class="subject-title">`) → PWA render bằng `dangerouslySetInnerHTML` ở cả list item lẫn modal (không hiển thị thô ra thẻ).
 
@@ -720,14 +742,33 @@ hr_for_cobegroup (KHÔNG dùng chung FCM Device / FSM Settings của fsmnext).
 **Luồng gửi:** hook `Notification Log.after_insert` → `on_notification_log` enqueue
 `send_notification_push` (queue short, after_commit). Job: strip HTML subject/
 email_content → build FCM **data-only message** (icon/badge my-workspace, `click_action`
-= `/my-workspace/notifications`) → `firebase_admin.messaging.send_each` tới mọi HR
+do `_click_action` dựng: thông báo về đơn của chính người nhận → `/my-workspace` + `my_request_path`
++ `&nl=<Notification Log>`; còn lại hoặc tra lỗi → `/my-workspace/notifications`) →
+`firebase_admin.messaging.send_each` tới mọi HR
 Push Device active của user. Token chết (`UNREGISTERED`/`NOT_FOUND`/`INVALID_ARGUMENT`)
 → tự set `is_active=0`. Firebase Admin app cache tên `hr_for_cobegroup_push`.
 
 **Frontend:** `usePushNotifications` + `PushProvider` (auto-register nếu đã cấp
 quyền), SW riêng `firebase-messaging-sw.js` (push event hiển thị notification,
-click điều hướng `/my-workspace`). Nút bật ở MorePage ("Thông báo đẩy"). Dep:
+click mở `click_action`). Nút bật ở MorePage ("Thông báo đẩy"). Dep:
 `firebase` (JS), `firebase-admin` (Python).
+
+> ⚠️ **SW KHÔNG điều khiển cửa sổ `/my-workspace`**: đăng ký không kèm scope nên scope là
+> `/assets/hr_for_cobegroup/attendance-pwa/`. Vì vậy `WindowClient.navigate()` trên cửa sổ app luôn bị
+> từ chối (`TypeError: This service worker is not the client's active service worker`). Khi app đang
+> mở, SW `postMessage({type: 'mw-open', url})` rồi `focus()`; app nghe ở `useServiceWorkerNavigation`
+> (gắn trong `App.tsx`) và tự `navigate` — ở route toàn màn hình (`/fsm`, `/register-device`) thì hỏi
+> trước. SW chỉ nhắn cho cửa sổ top-level có pathname bắt đầu `/my-workspace` (iframe Wiki
+> `/wiki/my-workspace` không tính). Không có cửa sổ nào thì `clients.openWindow(url)`. Hết phiên đăng
+> nhập: `www/_my_workspace.py` chuyển sang `/login?redirect-to=` **kèm query** để link `?open=` còn
+> nguyên sau khi đăng nhập; phía client `handleUnauthorized` chỉ chuyển một lần trong 10 giây (lệnh gọi
+> về sau không đè link đã gỡ tham số). Tin `mw-open` tới lúc cửa sổ app còn đang tải (bundle chưa chạy,
+> chưa ai nghe) được bộ nghe tạm trong `www/_my_workspace.html` giữ lại (`window.__mwPendingOpen`) cho
+> `useServiceWorkerNavigation` đọc khi gắn. Lần nạp lại để dọn SW cũ trong bootstrap đó cũng giữ query.
+>
+> ⚠️ **Cập nhật SW phải gọi `registration.update()`** (`usePushNotifications.registerToken`):
+> `register()` lại cùng URL không kéo bản mới (đo trên Chrome và WebKit 17/11/2026), và không có trang
+> nào nằm trong scope để trình duyệt tự kiểm khi mở app.
 
 > ⚠️ **2 chỗ purge SW** đều phải chừa `firebase-messaging-sw`: `main.tsx` **VÀ**
 > bootstrap trong `www/_my_workspace.html`. SW path chứa `attendance-pwa` nên dễ bị
